@@ -1,0 +1,46 @@
+{
+  "name": "n-ui",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Financial-Times/n-ui",
+  "authors": [
+    "Rhys Evans <rhys.evans@ft.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "main": ["main.js", "main.scss"],
+  "dependencies": {
+    "n-cookie-message": "^1.4.9",
+    "n-header-footer": "^2.1.2",
+    "next-js-setup": "^8.5.2",
+    "next-welcome": "^5.3.3",
+    "n-interactive-tour": "^1.3.2",
+    "next-ads-component": "^9.1.0",
+    "n-third-party-code": "^2.0.1",
+    "next-sass-setup": "^8.0.2",
+    "n-layout": "^7.1.0",
+    "o-icons": "^4.0.0",
+    "next-buttons": "^2.2.8",
+    "o-buttons": "^3.1.4",
+    "o-forms": "^2.0.0",
+    "o-typography": "^3.2.0",
+    "o-ft-icons": "^3.5.1",
+    "next-myft-ui": "^6.18.2",
+    "next-myft-client": "^6.4.2",
+    "n-notification": "^3.0.3",
+    "o-overlay": "^1.8.2",
+    "n-instrumentation": "^1.10.1",
+    "o-date": "^2.3.3",
+    "o-expander": "^3.0.1",
+    "o-viewport": "^2.0.0",
+    "n-message-prompts": "~2.1.8"
+  },
+  "resolutions": {
+    "o-ft-icons": "next"
+  }
+}
