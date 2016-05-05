@@ -17,7 +17,7 @@ module.exports = {
 			layout.init(flags);
 			oDate.init();
 			prompts.init();
-			return {flags};
-		}).then(cb)
+			return Promise.resolve({flags}).then(cb);
+		})
 	}
 };
