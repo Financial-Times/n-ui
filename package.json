@@ -1,0 +1,21 @@
+{
+  "name": "n-ui",
+  "description": "An experiment bunching some of Next's client-side code into a single repository.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Financial-Times/n-ui.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Financial-Times/n-ui/issues"
+  },
+  "homepage": "https://github.com/Financial-Times/n-ui#readme",
+  "devDependencies": {
+    "bower": "^1.7.9"
+  }
+}

@@ -13,7 +13,10 @@
     "test",
     "tests"
   ],
-  "main": ["main.js", "main.scss"],
+  "main": [
+    "main.js",
+    "main.scss"
+  ],
   "dependencies": {
     "n-cookie-message": "^1.4.9",
     "n-header-footer": "^2.1.2",
@@ -41,6 +44,7 @@
     "n-message-prompts": "~2.1.8"
   },
   "resolutions": {
-    "o-ft-icons": "next"
+    "o-ft-icons": "next",
+    "o-viewport": "^2.0.0"
   }
 }
