@@ -41,7 +41,8 @@
     "o-date": "^2.3.3",
     "o-expander": "^3.0.1",
     "o-viewport": "^2.0.0",
-    "n-message-prompts": "~2.1.8"
+    "n-message-prompts": "^2.1.8",
+    "o-grid": "^4.0.9"
   },
   "resolutions": {
     "o-ft-icons": "next",
