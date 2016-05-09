@@ -1,5 +1,4 @@
 import oDate from './date';
-import oExpander from './expander';
 import layout from 'n-layout';
 import setup from 'next-js-setup';
 import prompts from './message-prompts';
@@ -16,7 +15,6 @@ module.exports = {
 
 			layout.init(flags, opts);
 			oDate.init();
-			oExpander.init();
 			prompts.init();
 			myFtUi.init({ anonymous: !(/FTSession=/.test(document.cookie)) });
 			return Promise.resolve({flags}).then(cb);
