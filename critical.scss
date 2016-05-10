@@ -1,2 +1,4 @@
 @import 'variables';
+$next-sass-setup-is-silent: $n-ui-is-silent;
+$n-layout-is-silent: $n-ui-is-silent;
 @import 'n-layout/critical';
