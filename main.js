@@ -1,8 +1,11 @@
-import oDate from './date';
+import oDate from './foundation/date';
+// TODO: integrate n-layout into this repo
 import layout from 'n-layout';
+// TODO: integrate next-js-setup into this repo
 import setup from 'next-js-setup';
-import prompts from './message-prompts';
-import { client as myFtClient, ui as myFtUi } from './myft';
+// TODO: these should be configurable as they're not foundations
+import prompts from './components/message-prompts';
+import { client as myFtClient, ui as myFtUi } from './components/myft';
 
 module.exports = {
 	bootstrap: function (cb, opts = {}) {
