@@ -1,26 +1,80 @@
-import oDate from './foundation/date';
-// TODO: integrate n-layout into this repo
-import layout from 'n-layout';
 // TODO: integrate next-js-setup into this repo
 import setup from 'next-js-setup';
-// TODO: these should be configurable as they're not foundations
-import prompts from './components/message-prompts';
+import date from './foundation/date';
+import header from './components/header';
+import cookieMessage from './components/cookie-message';
+import welcomeMessage from './components/welcome-message';
+import messagePrompts from './components/message-prompts';
 import { client as myFtClient, ui as myFtUi } from './components/myft';
 
-module.exports = {
-	bootstrap: function (cb, opts = {}) {
-		return setup.bootstrap(({ flags }) => {
-			// NOTE: make sure we init myft client *before* n-layout
-			const clientOpts = [];
-			flags.get('follow') && clientOpts.push({relationship: 'followed', type: 'concept'});
-			flags.get('saveForLater') && clientOpts.push({relationship: 'saved', type: 'content'});
-			const myftClient = myFtClient.init(clientOpts);
+const presets = {
+	discrete: {
+		header: true,
+		date: true
+	},
+	all: {
+		header: true,
+		date: true,
+		cookieMessage: true,
+		welcomeMessage: true,
+		myft: true,
+		messagePrompts: true
+	}
+}
 
-			layout.init(flags, opts);
-			oDate.init();
-			prompts.init();
-			myFtUi.init({ anonymous: !(/FTSession=/.test(document.cookie)) });
-			return Promise.resolve({flags}).then(cb);
+module.exports = {
+	bootstrap: function (opts = {}, cb) {
+
+		if (opts.preset) {
+			opts = Object.assign({}, presets[opts.preset], opts);
+		}
+
+		return setup.bootstrap(({ flags }) => {
+
+			if (opts.myft) {
+
+				const clientOpts = [];
+
+				if (flags.get('follow')) {
+					clientOpts.push({relationship: 'followed', type: 'concept'});
+				}
+
+				if (flags.get('saveForLater')) {
+					clientOpts.push({relationship: 'saved', type: 'content'});
+				}
+
+				myFtClient.init(clientOpts);
+			}
+
+			if (opts.header) {
+				header.init(flags);
+			}
+
+			if (opts.cookieMessage) {
+				cookieMessage.init();
+			}
+
+			// require('n-interactive-tour').init(flags);
+
+			if (opts.welcomeMessage) {
+				flags.get('welcomePanel') && welcomeMessage.init({
+					enableOverlay: flags.get('myFTOnboardingOverlay')
+				});
+			}
+
+			if (opts.date) {
+				date.init();
+			}
+
+			if (opts.messagePrompts) {
+				messagePrompts.init();
+			}
+
+			if (opts.myft) {
+				myFtUi.init({ anonymous: !(/FTSession=/.test(document.cookie)) });
+			}
+			return Promise.resolve({flags})
+				.then(cb);
 		})
 	}
 };
