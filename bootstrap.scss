@@ -1,5 +1,17 @@
 @import 'variables';
-$next-sass-setup-is-silent: $n-ui-is-silent;
-$n-layout-is-silent: $n-ui-is-silent;
+// @import 'foundation/setup';
 
+// TODO: move n-layout and sass setup into this project
 @import 'n-layout/main';
+
+@import 'foundation/ads';
+@import 'foundation/buttons';
+@import 'foundation/date';
+// @import 'foundation/footer/main';
+@import 'foundation/grid';
+// @import 'foundation/header/main';
+@import 'foundation/icons';
+// @import 'foundation/layout';
+@import 'foundation/tracking';
+@import 'foundation/typography';
+@import 'foundation/utils';
