@@ -26,7 +26,7 @@ module.exports = {
 	bootstrap: function (opts = {}, cb) {
 
 		if (opts.preset) {
-			opts = Object.assign(presets[opts.preset], opts);
+			opts = Object.assign({}, presets[opts.preset], opts);
 		}
 
 		return setup.bootstrap(({ flags }) => {
