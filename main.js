@@ -1,23 +1,79 @@
-import oDate from './date';
-import layout from 'n-layout';
 import setup from 'next-js-setup';
-import prompts from './message-prompts';
+import date from './date';
+import header from './header';
+import cookieMessage from './cookie-message';
+import welcomeMessage from './welcome-message';
+import messagePrompts from './message-prompts';
 import { client as myFtClient, ui as myFtUi } from './myft';
 
-module.exports = {
-	bootstrap: function (cb, opts = {}) {
-		return setup.bootstrap(({ flags }) => {
-			// NOTE: make sure we init myft client *before* n-layout
-			const clientOpts = [];
-			flags.get('follow') && clientOpts.push({relationship: 'followed', type: 'concept'});
-			flags.get('saveForLater') && clientOpts.push({relationship: 'saved', type: 'content'});
-			const myftClient = myFtClient.init(clientOpts);
+const presets = {
+	discrete: {
+		header: true,
+		date: true
+	},
+	all: {
+		header: true,
+		date: true,
+		cookieMessage: true,
+		welcomeMessage: true,
+		myft: true,
+		messagePrompts: true
+	}
+}
 
-			layout.init(flags, opts);
-			oDate.init();
-			prompts.init();
-			myFtUi.init({ anonymous: !(/FTSession=/.test(document.cookie)) });
-			return Promise.resolve({flags}).then(cb);
+module.exports = {
+	bootstrap: function (opts = {}, cb) {
+
+		if (opts.preset) {
+			opts = Object.assign(presets[opts.preset], opts);
+		}
+
+		return setup.bootstrap(({ flags }) => {
+
+			if (opts.myft) {
+
+				const clientOpts = [];
+
+				if (flags.get('follow')) {
+					clientOpts.push({relationship: 'followed', type: 'concept'});
+				}
+
+				if (flags.get('saveForLater')) {
+					clientOpts.push({relationship: 'saved', type: 'content'});
+				}
+
+				myFtClient.init(clientOpts);
+			}
+
+			if (opts.header) {
+				header.init(flags);
+			}
+
+			if (opts.cookieMessage) {
+				cookieMessage.init();
+			}
+
+			// require('n-interactive-tour').init(flags);
+
+			if (opts.welcomeMessage) {
+				flags.get('welcomePanel') && welcomeMessage.init({
+					enableOverlay: flags.get('myFTOnboardingOverlay')
+				});
+			}
+
+			if (opts.date) {
+				date.init();
+			}
+
+			if (opts.messagePrompts) {
+				messagePrompts.init();
+			}
+
+			if (opts.myft) {
+				myFtUi.init({ anonymous: !(/FTSession=/.test(document.cookie)) });
+			}
+			return Promise.resolve({flags})
+				.then(cb);
 		})
 	}
 };
