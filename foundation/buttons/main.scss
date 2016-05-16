@@ -1,4 +1,10 @@
+@if nUiHas(buttons) {
+	$o-buttons-is-silent: false;
+}
+
 @import 'o-buttons/main';
+
+$o-buttons-is-silent: true;
 
 $o-buttons-sizes: map-merge($o-buttons-sizes, (
 	'medium': map-merge(map-get($o-buttons-sizes, 'medium'), (

@@ -1,3 +1,13 @@
+@if nUiHas(icons) {
+	$o-icons-is-silent: false;
+	$o-ft-icons-is-silent: false;
+}
+
 @import 'o-ft-icons/main';
 @import 'next-sass-setup/icons';
+
+
 @import 'o-icons/main';
+
+$o-icons-is-silent: true;
+$o-ft-icons-is-silent: true;

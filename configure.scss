@@ -18,7 +18,7 @@ $_n-ui-presets: (
 		header: true,
 		date: true
 	),
-	full: (
+	complete: (
 		ads: true,
 		buttons: true,
 		grid: true,
@@ -34,17 +34,32 @@ $_n-ui-presets: (
 	)
 );
 
-
+$_n-ui-configured: false !default;
 
 @mixin nUiConfigure($opts: ()) {
 
+	@if $_n-ui-configured == true {
+		@error "nUiConfigure should only be called once";
+	}
+
+	$_n-ui-configured: true !global;
+
 	@if map-has-key($opts, preset) {
 		$preset: map-get($_n-ui-presets, map-get($opts, preset));
-		$_n-ui-features: map-merge($_n-ui-features, $preset);
+		$_n-ui-features: map-merge($_n-ui-features, $preset) !global;
 		$opts: map-remove($opts, preset);
 	}
 
-	$_n-ui-features: map-merge($_n-ui-features, $opts);
+	$_n-ui-features: map-merge($_n-ui-features, $opts) !global;
+}
+
+@mixin nUiPrintConfig {
+	/* n-ui features: */
+	@each $feature, $val in $_n-ui-features {
+		@if $val == true {
+			/* #{$feature} */
+		}
+	}
 }
 
 

@@ -12,7 +12,7 @@ const presets = {
 		header: true,
 		date: true
 	},
-	all: {
+	complete: {
 		header: true,
 		date: true,
 		cookieMessage: true,

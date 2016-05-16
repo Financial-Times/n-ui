@@ -1,1 +1,8 @@
+
+@if nUiHas(ads) {
+	$next-ads-component-is-silent: false;
+}
+
 @import 'next-ads-component/main';
+
+$next-ads-component-is-silent: true;
