@@ -24,6 +24,7 @@ const presets = {
 
 module.exports = {
 	bootstrap: function (opts = {}, cb) {
+		cb = cb || (() => null);
 
 		if (opts.preset) {
 			opts = Object.assign({}, presets[opts.preset], opts);
