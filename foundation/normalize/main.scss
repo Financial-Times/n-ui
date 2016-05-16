@@ -227,4 +227,6 @@ $_n-ui-normalize-applied: false !default;
 
 	$_n-ui-normalize-applied: true !global;
 
+} @else {
+	@warn "n-ui/normalize should only be imported once.";
 }

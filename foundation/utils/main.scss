@@ -98,4 +98,6 @@ $_n-ui-util-applied: false !default;
 
 	$_n-ui-util-applied: true !global;
 
+} @else {
+	@warn "n-ui/utils should only be imported once.";
 }
