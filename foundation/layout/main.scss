@@ -1,6 +1,6 @@
-$_n-ui-layout_applied: false !default;
+$_n-layout_applied: false !default;
 
-@if $_n-ui-layout_applied == false {
+@if $_n-layout_applied == false {
 
 	.n-layout {
 		display: table;
@@ -24,7 +24,7 @@ $_n-ui-layout_applied: false !default;
 		}
 	}
 
-	$_n-ui-layout_applied: true;
+	$_n-layout_applied: true;
 
 } @else {
 	@warn "n-ui/layout should only be imported once.";
