@@ -1,1 +1,57 @@
-{{>n-layout/templates/vanilla}}
+<!DOCTYPE html>
+{{>n-ui/foundation/layout/templates/partials/html-tag}}
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>{{#title}}{{{this}}} &mdash; {{/title}}FT.com</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="theme-color" content="#fff1e0">
+		{{#if setBase}}
+		<base target="_parent" href="{{setBase}}">
+		{{/if}}
+
+		{{#if headCss}}
+		<!--[if gte IE 9]><!-->
+		<link rel="stylesheet" href="{{#hashedAsset}}head.css{{/hashedAsset}}" />
+		<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}" />
+		<!--<![endif]-->
+		<!--[if lte IE 8]>
+		<link rel="stylesheet" href="{{#hashedAsset}}head-ie8.css{{/hashedAsset}}" />
+		<link rel="stylesheet" href="{{#hashedAsset}}main-ie8.css{{/hashedAsset}}" />
+		<![endif]-->
+		{{else}}
+		{{#if hasIe8Stylesheet}}
+		<!--[if gte IE 9]><!-->
+		<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}">
+		<!--<![endif]-->
+		<!--[if lte IE 8]>
+		<link rel="stylesheet" href="{{#hashedAsset}}main-ie8.css{{/hashedAsset}}" />
+		<![endif]-->
+		{{else}}
+		<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}">
+		{{/if}}
+		{{/if}}
+		<!--[if lte IE 8]>
+		<script src="https://next-geebee.ft.com/assets/js/html5shiv.min.js"></script>
+		<![endif]-->
+
+		{{>n-ui/foundation/layout/partials/font-loader}}
+		{{#outputBlock 'head'}}{{/outputBlock}}
+		<script>
+			{{>next-js-setup/templates/ctm}}
+			{{>next-sass-setup/templates/enhance-fonts}}
+		</script>
+	</head>
+	<body class="o-hoverable-on" data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
+		{{{body}}}
+		{{#if @root.flags.javascript}}
+		<script>
+			{{>next-feature-flags-client/templates/flags}}
+			{{#if anon}}
+			window.nextIsAnonymous = {{anon.userIsAnonymous}};
+			{{/if}}
+			{{>next-js-setup/templates/bootstrapper}}
+		</script>
+		{{/if}}
+	</body>
+</html>
