@@ -1,9 +1,13 @@
 @import 'variables';
-// @import 'foundation/setup';
 
 @import 'foundation/normalize/main';
-// TODO: move n-layout and sass setup into this project
-@import 'n-layout/main';
+
+// TODO: move these components into n-ui
+@import 'next-sass-setup/main';
+@import "n-header-footer/main";
+@import "next-welcome/main";
+@import "n-cookie-message/main";
+@import "n-interactive-tour/main";
 
 @import 'foundation/ads/main';
 @import 'foundation/buttons/main';
@@ -12,7 +16,7 @@
 @import 'foundation/grid/main';
 // @import 'foundation/header/main';
 @import 'foundation/icons/main';
-// @import 'foundation/layout';
+@import 'foundation/layout/main';
 @import 'foundation/tracking/main';
 @import 'foundation/typography/main';
 @import 'foundation/utils/main';

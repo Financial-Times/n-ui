@@ -1,0 +1,31 @@
+$_n-ui-layout_applied: false !default;
+
+@if $_n-ui-layout_applied == false {
+
+	.n-layout {
+		display: table;
+		width: 100%;
+		min-height: 100vh;
+		table-layout: fixed;
+	}
+
+	.n-layout__row {
+		display: table-row;
+	}
+
+	.n-layout__row--content {
+		height: 100%;
+	}
+
+	@media print {
+		.n-layout,
+		.n-layout__row {
+			display: block;
+		}
+	}
+
+	$_n-ui-layout_applied: true;
+
+} @else {
+	@warn "n-ui/layout should only be imported once.";
+}
