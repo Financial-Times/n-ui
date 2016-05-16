@@ -1,0 +1,53 @@
+$_n-ui-features: (
+	ads: false,
+	buttons: false,
+	grid: false,
+	colors: false,
+	icons: false,
+	typography: false,
+	cookieMessage: false,
+	message-prompts: false,
+	myft: false,
+	notification: false,
+	welcomeMessage: false,
+	header: false
+);
+
+$_n-ui-presets: (
+	discrete: (
+		header: true,
+		date: true
+	),
+	full: (
+		ads: true,
+		buttons: true,
+		grid: true,
+		colors: true,
+		icons: true,
+		typography: true,
+		cookieMessage: true,
+		message-prompts: true,
+		myft: true,
+		notification: true,
+		welcomeMessage: true,
+		header: true
+	)
+);
+
+
+
+@mixin nUiConfigure($opts: ()) {
+
+	@if map-has-key($opts, preset) {
+		$preset: map-get($_n-ui-presets, map-get($opts, preset));
+		$_n-ui-features: map-merge($_n-ui-features, $preset);
+		$opts: map-remove($opts, preset);
+	}
+
+	$_n-ui-features: map-merge($_n-ui-features, $opts);
+}
+
+
+@function nUiHas($feature) {
+	@return map-get($_n-ui-fetaures, $feature) == true;
+}
