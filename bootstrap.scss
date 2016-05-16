@@ -2,8 +2,6 @@
 	@error "call @include nUiConfigure() before including n-ui/bootstrap";
 }
 
-@include nUiPrintConfig;
-
 // @import 'foundation/setup';
 
 // TODO: move n-layout and sass setup into this project
