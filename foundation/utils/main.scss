@@ -1,6 +1,6 @@
-$_n-ui-util-applied: false !default;
+$_n-normalize_applied: false !default;
 
-@if $_n-ui-util-applied == false {
+@if $_n-normalize_applied == false {
 
 	//
 	// Layout
@@ -96,7 +96,7 @@ $_n-ui-util-applied: false !default;
 		word-wrap: normal;
 	}
 
-	$_n-ui-util-applied: true !global;
+	$_n-normalize_applied: true;
 
 } @else {
 	@warn "n-ui/utils should only be imported once.";

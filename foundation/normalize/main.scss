@@ -225,7 +225,7 @@ $_n-ui-normalize-applied: false !default;
 		outline-offset: 1px;
 	}
 
-	$_n-ui-normalize-applied: true !global;
+	$_n-ui-normalize-applied: true;
 
 } @else {
 	@warn "n-ui/normalize should only be imported once.";
