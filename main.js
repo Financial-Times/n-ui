@@ -1,7 +1,7 @@
 // TODO: integrate next-js-setup into this repo
 import setup from 'next-js-setup';
 import date from './foundation/date';
-import header from './components/header';
+import header from './foundation/header';
 import cookieMessage from './components/cookie-message';
 import welcomeMessage from './components/welcome-message';
 import messagePrompts from './components/message-prompts';
@@ -24,6 +24,7 @@ const presets = {
 
 module.exports = {
 	bootstrap: function (opts = {}, cb) {
+		cb = cb || (() => null);
 
 		if (opts.preset) {
 			opts = Object.assign({}, presets[opts.preset], opts);
