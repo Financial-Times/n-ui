@@ -1,6 +1,6 @@
-$_n-ui-normalize-applied: false !default;
+$_n-normalize_applied: false !default;
 
-@if $_n-ui-normalize-applied == false {
+@if $_n-normalize_applied == false {
 
 	/**
 	 * Prevent adjustments of font size after orientation changes in IE and iOS.
@@ -225,7 +225,7 @@ $_n-ui-normalize-applied: false !default;
 		outline-offset: 1px;
 	}
 
-	$_n-ui-normalize-applied: true;
+	$_n-normalize_applied: true;
 
 } @else {
 	@warn "n-ui/normalize should only be imported once.";
