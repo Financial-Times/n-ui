@@ -1,4 +1,4 @@
-@if variable-exists($_n-ui-features) {
+@if variable-exists(_n-ui-features) {
 	@error 'n-ui/configure must only be imported once';
 }
 
@@ -44,7 +44,7 @@ $_n-ui-configured: false !default;
 		@error 'nUiConfigure must only be called once';
 	}
 
-	$_n-ui-configured: true;
+	$_n-ui-configured: true !global;
 
 	@if map-has-key($opts, preset) {
 		$preset: map-get($_n-ui-presets, map-get($opts, preset));
