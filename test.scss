@@ -1,9 +1,0 @@
-@import "configure";
-
-@include nUiConfigure((preset: "complete"));
-
-@if $_n-ui-configured == false {
-	@error "call @include nUiConfigure() before including n-ui/bootstrap";
-}
-
-@include nUiPrintConfig;

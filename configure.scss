@@ -1,18 +1,18 @@
 $_n-ui-features: (
-	ads: critical,
+	ads: true,
 	buttons: true,
-	grid: critical,
+	grid: true,
 	// always in silent mode
 	colors: false,
 	// always in silent mode
 	icons: false,
-	typography: critical,
+	typography: true,
 	cookieMessage: false,
 	message-prompts: false,
 	myft: false,
 	notification: false,
 	welcomeMessage: false,
-	header: critical,
+	header: true,
 	footer: true
 );
 
@@ -53,14 +53,18 @@ $_n-ui-configured: false !default;
 	}
 }
 
-$n-ui-output-mode: all;
+@function nUiCriticalEnd($module) {
+  @if nUiHas('critical') {
+    @return "! end:head.scss ";
+  }
+}
+
+@function nUiCriticalStart($module) {
+  @if nUiHas('critical') {
+    @return "! start:head.scss ";
+  }
+}
 
 @function nUiHas($feature) {
-  @if $n-ui-output-mode == critical {
-	  @return map-get($_n-ui-fetaures, $feature) == critical;
-  } @else if $n-ui-output-mode == non-critical {
-	  @return map-get($_n-ui-fetaures, $feature) == true;
-  } @else {
-    @return map-get($_n-ui-fetaures, $feature) == true || @return map-get($_n-ui-fetaures, $feature) == critical;
-  }
+  @return map-get($_n-ui-features, $feature) == true;
 }
