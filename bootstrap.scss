@@ -9,24 +9,22 @@ $spacing-unit: 16px;
 // @import 'setup/main';
 
 @import 'normalize/main';
+@import 'colors/main';
+@import 'grid/main';
+@import 'icons/main';
 
 // TODO: move these components into n-ui
-@import 'next-sass-setup/main';
-@import "n-header-footer/main";
+
 @import "next-welcome/main";
 @import "n-cookie-message/main";
 @import "n-interactive-tour/main";
 
 @import 'ads/main';
 @import 'buttons/main';
-// @import 'date/main';
-// @import 'footer/main';
 
-// @import 'header/main';
-@import 'colors/main';
-@import 'grid/main';
-@import 'icons/main';
 
 @import 'layout/main';
 @import 'typography/main';
 @import 'utils/main';
+@import "header/main";
+@import "footer/main";
