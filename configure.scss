@@ -1,36 +1,29 @@
 $_n-ui-features: (
-	ads: false,
-	buttons: false,
-	grid: false,
+	ads: critical,
+	buttons: true,
+	grid: critical,
+	// always in silent mode
 	colors: false,
+	// always in silent mode
 	icons: false,
-	typography: false,
+	typography: critical,
 	cookieMessage: false,
 	message-prompts: false,
 	myft: false,
 	notification: false,
 	welcomeMessage: false,
-	header: false
+	header: critical,
+	footer: true
 );
 
 $_n-ui-presets: (
-	discrete: (
-		header: true,
-		date: true
-	),
-	complete: (
-		ads: true,
-		buttons: true,
-		grid: true,
-		colors: true,
-		icons: true,
-		typography: true,
+	discrete: map-merge($_n-ui-features, ()),
+	complete: map-merge($_n-ui-features, (
 		cookieMessage: true,
 		messagePrompts: true,
 		myft: true,
 		notification: true,
-		welcomeMessage: true,
-		header: true
+		welcomeMessage: true
 	)
 );
 
@@ -60,6 +53,14 @@ $_n-ui-configured: false !default;
 	}
 }
 
+$n-ui-output-mode: all;
+
 @function nUiHas($feature) {
-	@return map-get($_n-ui-fetaures, $feature) == true;
+  @if $n-ui-output-mode == critical {
+	  @return map-get($_n-ui-fetaures, $feature) == critical;
+  } @else if $n-ui-output-mode == non-critical {
+	  @return map-get($_n-ui-fetaures, $feature) == true;
+  } @else {
+    @return map-get($_n-ui-fetaures, $feature) == true || @return map-get($_n-ui-fetaures, $feature) == critical;
+  }
 }
