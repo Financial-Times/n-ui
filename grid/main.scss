@@ -1,6 +1,25 @@
-@if nUiHas(grid) {
-	$o-grid-is-silent: false;
-}
+$_n-ui-grid-applied: false !default;
+
+// Set gutters to be slightly smaller than the default on larger screens
+$o-grid-gutters: (
+	default: 10px,
+	M:       16px,
+);
+
+$o-grid-human-friendly-selectors: false;
+$o-grid-offset-selectors: false;
 
 @import 'o-grid/main';
-$o-grid-is-silent: true;
+
+@if $_n-ui-grid-applied == false and nUiHas(grid) {
+
+  /*#{nUiCriticalStart()}*/
+	@include oGridSurfaceCurrentLayout;
+	@include oGridGenerate;
+  /*#{nUiCriticalEnd()}*/
+
+	$_n-ui-grid-applied: true;
+
+} @else {
+	@warn "n-ui/grid should only be imported once.";
+}
