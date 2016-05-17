@@ -1,5 +1,23 @@
-@if nUiHas(overlay) {
+$_n-ui-overlay-applied: false !default;
+
+@if $_n-ui-overlay-applied == false {
 	$o-overlay-is-silent: false;
 }
 @import 'o-overlay/main';
 $o-overlay-is-silent: true;
+
+@if $_n-ui-overlay-applied == false {
+
+	body .o-overlay,
+	body .o-overlay-shadow {
+		@include zIndexFor(overlay);
+	}
+
+	$_n-ui-overlay-applied: true;
+
+} @else {
+	@warn "n-ui/overlay should only be imported once.";
+}
+
+
+

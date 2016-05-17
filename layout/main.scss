@@ -1,6 +1,17 @@
 $_n-layout_applied: false !default;
 
 @if $_n-layout_applied == false {
+	.core .o--if-js,
+	.enhanced .o--if-no-js {
+		display: none !important;
+	}
+
+	html {
+		@include oColorsFor(page);
+		// Prevent navigation menus from creating
+		// extra space on sides of the page
+		overflow-x: hidden;
+	}
 
 	.n-layout {
 		display: table;
@@ -29,3 +40,8 @@ $_n-layout_applied: false !default;
 } @else {
 	@warn "n-ui/layout should only be imported once.";
 }
+
+
+
+
+
