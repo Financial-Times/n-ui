@@ -1,7 +1,10 @@
-@if nUiHas(ads) {
+$_n-ui-ads-applied: false !default;
+
+@if $_n-ui-ads-applied == false {
 	$next-ads-component-is-silent: false;
+} @else {
+	@warn "n-ui/ads should only be imported once.";
 }
 
 @import 'next-ads-component/main';
-
 $next-ads-component-is-silent: true;
