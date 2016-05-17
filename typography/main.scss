@@ -12,6 +12,8 @@ $o-typography-progressive-fonts: serifDisplay, sansData, sansDataBold, sansBold;
 
 $o-typography-is-silent: true;
 
+@import 'lists';
+
 @mixin nLinksBody($inversed: false) {
 	@if ($inversed) {
 		@include oColorsFor(link-inversed, text);
