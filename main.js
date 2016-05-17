@@ -1,11 +1,11 @@
 // TODO: integrate next-js-setup into this repo
 import setup from 'next-js-setup';
-import date from './foundation/date';
-import header from './foundation/header';
-import cookieMessage from './components/cookie-message';
-import welcomeMessage from './components/welcome-message';
-import messagePrompts from './components/message-prompts';
-import { client as myFtClient, ui as myFtUi } from './components/myft';
+import date from './date';
+import header from './header';
+import cookieMessage from './cookie-message';
+import welcomeMessage from './welcome-message';
+import messagePrompts from './message-prompts';
+import { client as myFtClient, ui as myFtUi } from './myft';
 
 const presets = {
 	discrete: {
