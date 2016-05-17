@@ -11,13 +11,13 @@ $o-grid-offset-selectors: false;
 
 @import 'o-grid/main';
 
-@if $_n-ui-grid-applied == false and nUiHas(grid) {
-
-  /*#{nUiCriticalStart()}*/
-	@include oGridSurfaceCurrentLayout;
-	@include oGridGenerate;
-  /*#{nUiCriticalEnd()}*/
-
+@if $_n-ui-grid-applied == false {
+	@if nUiHas(grid) {
+	  /*#{nUiCriticalStart()}*/
+		@include oGridSurfaceCurrentLayout;
+		@include oGridGenerate;
+	  /*#{nUiCriticalEnd()}*/
+	}
 	$_n-ui-grid-applied: true;
 
 } @else {
