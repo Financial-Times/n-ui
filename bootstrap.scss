@@ -4,7 +4,7 @@
 
 // @import 'foundation/setup';
 
-@import 'foundation/normalize/main';
+@import 'normalize/main';
 
 // TODO: move these components into n-ui
 @import 'next-sass-setup/main';
@@ -13,14 +13,13 @@
 @import "n-cookie-message/main";
 @import "n-interactive-tour/main";
 
-@import 'foundation/ads/main';
-@import 'foundation/buttons/main';
-// @import 'foundation/date/main';
-// @import 'foundation/footer/main';
-@import 'foundation/grid/main';
-// @import 'foundation/header/main';
-@import 'foundation/icons/main';
-@import 'foundation/layout/main';
-@import 'foundation/tracking/main';
-@import 'foundation/typography/main';
-@import 'foundation/utils/main';
+@import 'ads/main';
+@import 'buttons/main';
+// @import 'footer/main';
+@import 'grid/main';
+// @import 'header/main';
+@import 'icons/main';
+@import 'layout/main';
+@import 'tracking/main';
+@import 'typography/main';
+@import 'utils/main';
