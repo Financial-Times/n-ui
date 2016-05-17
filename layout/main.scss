@@ -1,6 +1,8 @@
 $_n-layout_applied: false !default;
 
 @if $_n-layout_applied == false {
+
+	/*#{nUiCriticalStart()}*/
 	.core .o--if-js,
 	.enhanced .o--if-no-js {
 		display: none !important;
@@ -13,7 +15,9 @@ $_n-layout_applied: false !default;
 		overflow-x: hidden;
 	}
 
-	/*#{nUiCriticalStart()}*/
+	body {
+		margin: 0;
+	}
 	.n-layout {
 		display: table;
 		width: 100%;
