@@ -41,7 +41,8 @@
     "o-viewport": "^2.0.0",
     "n-message-prompts": "^2.1.8",
     "o-grid": "^4.0.9",
-    "next-card": "^7.1.0"
+    "next-card": "^7.1.0",
+    "o-colors": "^3.3.2"
   },
   "resolutions": {
     "o-ft-icons": "next",

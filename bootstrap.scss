@@ -1,4 +1,8 @@
-@import 'variables';
+@if $_n-ui-configured == false {
+	@error "call @include nUiConfigure() before including n-ui/bootstrap";
+}
+
+// @import 'foundation/setup';
 
 @import 'foundation/normalize/main';
 

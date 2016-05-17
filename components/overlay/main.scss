@@ -1,1 +1,5 @@
+@if nUiHas(overlay) {
+	$o-overlay-is-silent: false;
+}
 @import 'o-overlay/main';
+$o-overlay-is-silent: true;

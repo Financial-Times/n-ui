@@ -1,2 +1,6 @@
-@import 'next-sass-setup/main';
+@if nUiHas(header) {
+	// output in here eventually.
+	// currently doesn't support silent mode
+}
+
 @import 'n-header-footer/header/header';

@@ -1,1 +1,7 @@
+@if nUiHas(welcomeMessage) {
+	$n-welcome-message-is-silent: false;
+}
 @import 'next-welcome/main';
+$n-welcome-message-is-silent: true;
+
+

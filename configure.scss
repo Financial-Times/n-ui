@@ -1,0 +1,65 @@
+$_n-ui-features: (
+	ads: true,
+	buttons: true,
+	grid: true,
+	// always in silent mode
+	colors: false,
+	// always in silent mode
+	icons: false,
+	typography: true,
+	cookieMessage: false,
+	message-prompts: false,
+	myft: false,
+	notification: false,
+	welcomeMessage: false,
+	header: true,
+	footer: true
+);
+
+$_n-ui-presets: (
+	discrete: map-merge($_n-ui-features, ()),
+	complete: map-merge($_n-ui-features, (
+		cookieMessage: true,
+		messagePrompts: true,
+		myft: true,
+		notification: true,
+		welcomeMessage: true
+	)
+);
+
+$_n-ui-configured: false !default;
+
+@mixin nUiConfigure($opts: ()) {
+
+	@if $_n-ui-configured == true {
+		@error "nUiConfigure should only be called once";
+	}
+
+	$_n-ui-configured: true !global;
+
+	@if map-has-key($opts, preset) {
+		$preset: map-get($_n-ui-presets, map-get($opts, preset));
+		$_n-ui-features: map-merge($_n-ui-features, $preset) !global;
+		$opts: map-remove($opts, preset);
+	}
+
+	$_n-ui-features: map-merge($_n-ui-features, $opts) !global;
+
+	/*! n-ui features: #{inspect($_n-ui-features)} */
+}
+
+@function nUiCriticalEnd($module) {
+  @if nUiHas('critical') {
+    @return "! end:head.scss ";
+  }
+}
+
+@function nUiCriticalStart($module) {
+  @if nUiHas('critical') {
+    @return "! start:head.scss ";
+  }
+}
+
+@function nUiHas($feature) {
+  @return map-get($_n-ui-features, $feature) == true;
+}

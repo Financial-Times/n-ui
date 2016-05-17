@@ -1,1 +1,6 @@
+@if nUiHas(grid) {
+	$o-grid-is-silent: false;
+}
+
 @import 'o-grid/main';
+$o-grid-is-silent: true;
