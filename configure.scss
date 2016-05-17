@@ -45,12 +45,7 @@ $_n-ui-configured: false !default;
 
 	$_n-ui-features: map-merge($_n-ui-features, $opts) !global;
 
-	/* n-ui features: */
-	@each $feature, $val in $_n-ui-features {
-		@if $val == true {
-			/* #{$feature} */
-		}
-	}
+	/*! n-ui features: #{inspect($_n-ui-features)} */
 }
 
 @function nUiCriticalEnd($module) {
