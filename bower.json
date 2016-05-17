@@ -40,12 +40,13 @@
     "o-expander": "^3.0.1",
     "o-viewport": "^2.0.0",
     "n-message-prompts": "^2.1.8",
-    "o-grid": "^4.0.9",
+    "o-grid": "#rhys/push-off",
     "next-card": "^7.1.0",
     "o-colors": "^3.3.2"
   },
   "resolutions": {
     "o-ft-icons": "next",
-    "o-viewport": "^2.0.0"
+    "o-viewport": "^2.0.0",
+    "o-grid": "rhys/push-off"
   }
 }
