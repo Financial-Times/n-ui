@@ -2,6 +2,10 @@
 	@error "call @include nUiConfigure() before including n-ui/bootstrap";
 }
 
+// Base unit to standardize spacing
+// Decide where it's gonna live later
+$spacing-unit: 16px;
+
 // @import 'foundation/setup';
 
 @import 'normalize/main';
