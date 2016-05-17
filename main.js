@@ -30,7 +30,7 @@ module.exports = {
 			opts = Object.assign({}, presets[opts.preset], opts);
 		}
 
-		return setup.bootstrap(({ flags }) => {
+		return setup.bootstrap(({ flags , mainCss}) => {
 
 			if (opts.myft) {
 
@@ -51,30 +51,32 @@ module.exports = {
 				header.init(flags);
 			}
 
+			if (opts.date) {
+				date.init();
+			}
+
 			if (opts.cookieMessage) {
-				cookieMessage.init();
+				mainCss.then(() => cookieMessage.init());
 			}
 
 			// require('n-interactive-tour').init(flags);
 
 			if (opts.welcomeMessage) {
-				flags.get('welcomePanel') && welcomeMessage.init({
-					enableOverlay: flags.get('myFTOnboardingOverlay')
+				mainCss.then(() => {
+					flags.get('welcomePanel') && welcomeMessage.init({
+						enableOverlay: flags.get('myFTOnboardingOverlay')
+					});
 				});
 			}
 
-			if (opts.date) {
-				date.init();
-			}
-
 			if (opts.messagePrompts) {
-				messagePrompts.init();
+				mainCss.then(() => messagePrompts.init());
 			}
 
 			if (opts.myft) {
-				myFtUi.init({ anonymous: !(/FTSession=/.test(document.cookie)) });
+				mainCss.then(() => myFtUi.init({ anonymous: !(/FTSession=/.test(document.cookie)) }));
 			}
-			return Promise.resolve({flags})
+			return Promise.resolve({flags, mainCss})
 				.then(cb);
 		})
 	}
