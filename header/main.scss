@@ -1,8 +1,5 @@
-@if nUiHas(header) {
-	// output in here eventually.
-	// currently doesn't support silent mode
-}
-
 /*#{nUiCriticalStart()}*/
+$o-header-is-silent: false;
 @import 'n-header-footer/header/header';
+$o-header-is-silent: true;
 /*#{nUiCriticalEnd()}*/
