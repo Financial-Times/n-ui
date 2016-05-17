@@ -20,39 +20,8 @@
 		<link rel="preconnect" href="{{this}}">
 		{{/each}}
 
-		{{#if headCss}}
-		<!--[if gte IE 9]><!-->
-		<style>
-		{{{headCss}}}
-		</style>
-		<!--<![endif]-->
-		<!--[if lte IE 8]>
-		<link rel="stylesheet" href="{{#hashedAsset}}head-ie8.css{{/hashedAsset}}" />
-		<![endif]-->
-		<!--[if gte IE 9]><!-->
-		<link rel="preload" href="{{#hashedAsset}}main.css{{/hashedAsset}}" as="style" onload="this.rel='stylesheet'">
-		<noscript>
-			<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}" />
-		</noscript>
-		<!--<![endif]-->
-		<!--[if lte IE 8]>
-		<link rel="stylesheet" href="{{#hashedAsset}}main-ie8.css{{/hashedAsset}}" />
-		<![endif]-->
-		{{else}}
-		{{#if hasIe8Stylesheet}}
-		<!--[if gte IE 9]><!-->
-		<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}">
-		<!--<![endif]-->
-		<!--[if lte IE 8]>
-		<link rel="stylesheet" href="{{#hashedAsset}}main-ie8.css{{/hashedAsset}}" />
-		<![endif]-->
-		{{else}}
-		<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}">
-		{{/if}}
-		{{/if}}
-		<!--[if lte IE 8]>
-		<script src="https://next-geebee.ft.com/assets/js/html5shiv.min.js"></script>
-		<![endif]-->
+		{{>n-ui/layout/partials/stylesheets}}
+
 		<link rel="icon" type="image/png" href="https://next-geebee.ft.com/assets/brand-alpha/icons/favicon-32x32.png" sizes="32x32">
 		<link rel="icon" type="image/png" href="https://next-geebee.ft.com/assets/brand-alpha/icons/favicon-194x194.png" sizes="194x194">
 		<link rel="apple-touch-icon" sizes="180x180" href="https://next-geebee.ft.com/assets/brand-alpha/icons/apple-touch-icon-180x180.png">
