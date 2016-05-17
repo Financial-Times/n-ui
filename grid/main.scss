@@ -3,7 +3,7 @@ $_n-ui-grid-applied: false !default;
 // Set gutters to be slightly smaller than the default on larger screens
 $o-grid-gutters: (
 	default: 10px,
-	M:       16px,
+	M:       16px
 );
 $o-grid-mode: snappy !default;
 $o-grid-human-friendly-selectors: false;
@@ -12,12 +12,14 @@ $o-grid-offset-selectors: false;
 @import 'o-grid/main';
 
 @if $_n-ui-grid-applied == false {
+
 	@if nUiHas(grid) {
 	  /*#{nUiCriticalStart()}*/
 		@include oGridSurfaceCurrentLayout;
 		@include oGridGenerate;
 	  /*#{nUiCriticalEnd()}*/
 	}
+
 	$_n-ui-grid-applied: true;
 
 } @else {

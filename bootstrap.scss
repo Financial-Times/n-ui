@@ -6,7 +6,7 @@
 // Decide where it's gonna live later
 $spacing-unit: 16px;
 
-// @import 'foundation/setup';
+// @import 'setup/main';
 
 @import 'normalize/main';
 
@@ -19,6 +19,7 @@ $spacing-unit: 16px;
 
 @import 'ads/main';
 @import 'buttons/main';
+// @import 'date/main';
 // @import 'footer/main';
 
 // @import 'header/main';

@@ -1,19 +1,29 @@
+@if variable-exists($_n-ui-features) {
+	@error 'n-ui/configure must only be imported once';
+}
+
 $_n-ui-features: (
 	ads: true,
 	buttons: true,
-	grid: true,
-	// always in silent mode
-	colors: false,
-	// always in silent mode
-	icons: false,
-	typography: true,
+	card: false,
+	colors: null,
 	cookieMessage: false,
-	message-prompts: false,
-	myft: false,
-	notification: false,
-	welcomeMessage: false,
+	date: null,
+	expander: false,
+	footer: true,
+	forms: false,
+	grid: true,
 	header: true,
-	footer: true
+	icons: null,
+	messagePrompts: false,
+	myft: false,
+	normalize: null,
+	notification: false,
+	overlay: false,
+	typography: true,
+	utils: null,
+	viewport: null,
+	welcomeMessage: false
 );
 
 $_n-ui-presets: (
@@ -30,34 +40,33 @@ $_n-ui-presets: (
 $_n-ui-configured: false !default;
 
 @mixin nUiConfigure($opts: ()) {
-
 	@if $_n-ui-configured == true {
-		@error "nUiConfigure should only be called once";
+		@error 'nUiConfigure must only be called once';
 	}
 
-	$_n-ui-configured: true !global;
+	$_n-ui-configured: true;
 
 	@if map-has-key($opts, preset) {
 		$preset: map-get($_n-ui-presets, map-get($opts, preset));
-		$_n-ui-features: map-merge($_n-ui-features, $preset) !global;
+		$_n-ui-features: map-merge($_n-ui-features, $preset);
 		$opts: map-remove($opts, preset);
 	}
 
-	$_n-ui-features: map-merge($_n-ui-features, $opts) !global;
+	$_n-ui-features: map-merge($_n-ui-features, $opts);
 
 	/*! n-ui features: #{inspect($_n-ui-features)} */
 }
 
 @function nUiCriticalEnd() {
   @if nUiHas('critical') {
-    @return "! end:head.scss ";
+    @return '! end:head.css ';
   }
   @return '';
 }
 
 @function nUiCriticalStart() {
   @if nUiHas('critical') {
-    @return "! start:head.scss ";
+    @return '! start:head.css ';
   }
   @return '';
 }

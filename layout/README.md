@@ -14,7 +14,7 @@ When initialising [n-express]() you need to specify the correct layout directory
 
 ```js
 const app = express({
-    layoutsDir: path.join(process.cwd(), '/bower_components/n-ui/foundation/layout'),
+    layoutsDir: path.join(process.cwd(), '/bower_components/n-ui/layout'),
 });
 ```
 
