@@ -1,4 +1,25 @@
+$_n-ui-icons-applied: false !default;
+
 /* Deliberately not able to import in noisy mode */
+$o-ft-icons-is-silent: true;
+$o-icons-is-silent: true;
+$o-icons-service-base-url: 'https://next-geebee.ft.com/image';
+
 @import 'o-ft-icons/main';
-@import 'next-sass-setup/icons';
 @import 'o-icons/main';
+
+@mixin nextIcon($icon-name, $color: null, $size: 20, $icon-only: false) {
+	@warn '`nextIcon` is deprecated, use `oIconsGetIcon` instead';
+
+	$apply-base-styles: $icon-only == false;
+
+	@include oIconsGetIcon($icon-name, $color, $size, $size, $apply-base-styles);
+}
+
+@if $_n-ui-icons-applied == false {
+
+	$_n-ui-icons-applied: true;
+
+} @else {
+	@warn "n-ui/icons should only be imported once.";
+}
