@@ -1,6 +1,6 @@
 # n-ui
 
-An experiment bunching some of Next's client-side code into a single repository. [Motivation](explainer.md)
+An experiment bunching some of Next's client-side code into a single repository. [Motivation](Explainer.md)
 
 ## API
 
