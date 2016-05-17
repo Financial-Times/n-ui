@@ -1,6 +1,104 @@
-@if nUiHas(grid) {
-	$o-grid-is-silent: false;
-}
+$_n-ui-grid-applied: false !default;
+
+// Set gutters to be slightly smaller than the default on larger screens
+$o-grid-gutters: (
+	default: 10px,
+	M:       16px,
+);
 
 @import 'o-grid/main';
-$o-grid-is-silent: true;
+
+@if $_n-ui-grid-applied == false and nUiHas(grid) {
+
+  /*#{nUiCriticalStart()}*/
+
+  // The below is a hacked version of oGridGenerate as o-grid doesn't allow global configuration of the
+	// push/pull or human friendly classes
+	// Hoping to implement soon https://github.com/Financial-Times/o-grid/issues/131
+
+
+	// Surface current layout (for the JS helper)
+	@include oGridSurfaceCurrentLayout;
+
+
+	// Generate grid helper classes and data- attributes
+	// This implements a subset of oGridGenerate
+	.o-grid-container {
+		@include oGridContainer($o-grid-mode);
+	}
+	.o-grid-row {
+		@include oGridRow;
+	}
+	[data-o-grid-colspan] {
+		@include oGridColspan();
+	}
+
+	@for $colspan from 1 through $o-grid-columns {
+		[data-o-grid-colspan~="#{$colspan}"] {
+			@include oGridColspan($colspan, $width-only: true);
+		}
+	}
+
+	// Compact, gutterless row of columns
+	.o-grid-row--compact {
+		margin-left: 0;
+
+		> [data-o-grid-colspan] {
+			padding-left: 0;
+		}
+	}
+
+	// TODO - ie8 only mode
+	// For IE 8, output grid helper classes and data- attributes
+	// for the layout defined in $o-grid-fixed-layout
+	@include oGridTargetIE8 {
+		// Output grid modifiers for layouts up to the fixed layout displayed by IE8
+		$last-layout-index: index($_o-grid-layout-names, $o-grid-fixed-layout);
+		@for $index from 1 through $last-layout-index {
+			@for $colspan from 1 through $o-grid-columns {
+				[data-o-grid-colspan~="#{nth($_o-grid-layout-names, $index)}#{$colspan}"] {
+					// scss-lint:disable DeclarationOrder
+
+					// Restore visibility from `display: none`
+					// if `data-o-grid-colspan` was set to `0` or `hide`
+					display: block;
+
+					// Apply width in %
+					@include _oGridFixSafariWrap($colspan);
+					min-width: oGridColspan($colspan);
+					max-width: oGridColspan($colspan);
+					width: oGridColspan($colspan);
+				}
+			}
+		}
+	}
+
+	// In browsers that support @media queries,
+	// output grid helper classes and data- attributes for all layouts
+	@each $layout-name in $_o-grid-layout-names {
+		@include oGridRespondTo($layout-name) {
+			@for $colspan from 1 through $o-grid-columns {
+				[data-o-grid-colspan~="#{$layout-name}#{$colspan}"] {
+					// scss-lint:disable DeclarationOrder
+
+					// Restore visibility from `display: none`
+					// if `data-o-grid-colspan` was set to `0` or `hide`
+					display: block;
+
+					// Apply width in %
+					@include _oGridFixSafariWrap($colspan);
+					min-width: oGridColspan($colspan);
+					max-width: oGridColspan($colspan);
+					width: oGridColspan($colspan);
+				}
+			}
+		}
+	}
+
+  /*#{nUiCriticalEnd()}*/
+
+	$_n-ui-grid-applied: true;
+
+} @else {
+	@warn "n-ui/grid should only be imported once.";
+}

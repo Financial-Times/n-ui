@@ -24,7 +24,7 @@ $_n-ui-presets: (
 		myft: true,
 		notification: true,
 		welcomeMessage: true
-	)
+	))
 );
 
 $_n-ui-configured: false !default;
@@ -48,16 +48,18 @@ $_n-ui-configured: false !default;
 	/*! n-ui features: #{inspect($_n-ui-features)} */
 }
 
-@function nUiCriticalEnd($module) {
+@function nUiCriticalEnd() {
   @if nUiHas('critical') {
     @return "! end:head.scss ";
   }
+  @return '';
 }
 
-@function nUiCriticalStart($module) {
+@function nUiCriticalStart() {
   @if nUiHas('critical') {
     @return "! start:head.scss ";
   }
+  @return '';
 }
 
 @function nUiHas($feature) {
