@@ -1,3 +1,6 @@
+$next-sass-setup-is-silent: true;
+$_next-sass-setup_applied: true;
+
 @if $_n-ui-configured == false {
 	@error "call @include nUiConfigure() before including n-ui/bootstrap";
 }
@@ -21,8 +24,6 @@ $spacing-unit: 16px;
 
 @import 'ads/main';
 @import 'buttons/main';
-
-
 @import 'layout/main';
 @import 'typography/main';
 @import 'utils/main';
