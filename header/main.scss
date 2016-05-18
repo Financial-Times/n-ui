@@ -1,5 +1,9 @@
+$_n-ui-header-applied == false;
 /*#{nUiCriticalStart()}*/
-$o-header-is-silent: false;
+@if $_n-ui-header-applied == false and nUiHas(header) {
+	$o-header-is-silent: false;
+	$_n-ui-header-applied == true;
+}
 @import 'n-header-footer/header/header';
 $o-header-is-silent: true;
 /*#{nUiCriticalEnd()}*/
