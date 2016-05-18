@@ -1,3 +1,19 @@
+@mixin nUiConfigure($opts: ()) {
+	@if $_n-ui-configured == true {
+		@error 'nUiConfigure must only be called once';
+	}
+
+	$_n-ui-configured: true !global;
+
+	@if map-has-key($opts, preset) {
+		$preset: map-get($_n-ui-presets, map-get($opts, preset));
+		$_n-ui-features: map-merge($_n-ui-features, $preset) !global;
+		$opts: map-remove($opts, preset);
+	}
+
+	$_n-ui-features: map-merge($_n-ui-features, $opts) !global;
+}
+
 @mixin nUiConfigureDebug() {
 	/*! n-ui features: #{inspect($_n-ui-features)} */
 }
