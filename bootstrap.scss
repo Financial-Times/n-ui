@@ -1,19 +1,20 @@
-$next-sass-setup-is-silent: true;
-$_next-sass-setup_applied: true;
-
-@if $_n-ui-configured == false {
-	@error "call @include nUiConfigure() before including n-ui/bootstrap";
+@if variable-exists('_n-ui-configured') == false or $_n-ui-configured == false {
+	@error 'you must use nUiConfigure() before importing n-ui/bootstrap';
 }
 
 // Base unit to standardize spacing
 // Decide where it's gonna live later
 $spacing-unit: 16px;
 
+// TODO: integrate sass setup
+$next-sass-setup-is-silent: true;
+$_next-sass-setup_applied: true;
 // @import 'setup/main';
 
 @import 'normalize/main';
 @import 'colors/main';
 @import 'grid/main';
+@import 'buttons/main';
 @import 'icons/main';
 
 // TODO: move these components into n-ui
@@ -23,7 +24,6 @@ $spacing-unit: 16px;
 @import "n-interactive-tour/main";
 
 @import 'ads/main';
-@import 'buttons/main';
 @import 'layout/main';
 @import 'typography/main';
 @import 'utils/main';
