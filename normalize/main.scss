@@ -1,7 +1,7 @@
 $_n-normalize_applied: false !default;
 
 @if $_n-normalize_applied == false {
-
+	/*#{nUiCriticalStart()}*/
 	/**
 	 * Prevent adjustments of font size after orientation changes in IE and iOS.
 	 */
@@ -224,7 +224,7 @@ $_n-normalize_applied: false !default;
 		outline: thin dotted;
 		outline-offset: 1px;
 	}
-
+	/*#{nUiCriticalEnd()}*/
 	$_n-normalize_applied: true;
 
 } @else {
