@@ -1,4 +1,4 @@
-@if variable-exists(_n-ui-features) {
+@if variable-exists('_n-ui-features') {
 	@error 'n-ui/configure must only be imported once';
 }
 
@@ -39,38 +39,5 @@ $_n-ui-presets: (
 
 $_n-ui-configured: false !default;
 
-@mixin nUiConfigure($opts: ()) {
-	@if $_n-ui-configured == true {
-		@error 'nUiConfigure must only be called once';
-	}
-
-	$_n-ui-configured: true !global;
-
-	@if map-has-key($opts, preset) {
-		$preset: map-get($_n-ui-presets, map-get($opts, preset));
-		$_n-ui-features: map-merge($_n-ui-features, $preset) !global;
-		$opts: map-remove($opts, preset);
-	}
-
-	$_n-ui-features: map-merge($_n-ui-features, $opts) !global;
-
-	/*! n-ui features: #{inspect($_n-ui-features)} */
-}
-
-@function nUiCriticalStart() {
-  @if nUiHas('critical') {
-    @return '! start:head.css ';
-  }
-  @return '';
-}
-
-@function nUiCriticalEnd() {
-  @if nUiHas('critical') {
-    @return '! end:head.css ';
-  }
-  @return '';
-}
-
-@function nUiHas($feature) {
-  @return map-get($_n-ui-features, $feature) == true;
-}
+@import 'sass-utils/functions';
+@import 'sass-utils/mixins';
