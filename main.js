@@ -35,7 +35,7 @@ export function configure (options = {}) {
 export function bootstrap (cb) {
 	cb = cb || (() => null);
 
-	return setup.bootstrap(({ flags }) => {
+	return setup.bootstrap(({ flags, mainCss }) => {
 
 		if (opts.myft) {
 
@@ -48,7 +48,6 @@ export function bootstrap (cb) {
 			if (flags.get('saveForLater')) {
 				clientOpts.push({relationship: 'saved', type: 'content'});
 			}
-
 			myFtClient.init(clientOpts);
 		}
 
@@ -56,30 +55,34 @@ export function bootstrap (cb) {
 			header.init(flags);
 		}
 
-		if (opts.cookieMessage) {
-			cookieMessage.init();
-		}
-
-		// require('n-interactive-tour').init(flags);
-
-		if (opts.welcomeMessage) {
-			flags.get('welcomePanel') && welcomeMessage.init({
-				enableOverlay: flags.get('myFTOnboardingOverlay')
-			});
-		}
-
 		if (opts.date) {
 			date.init();
 		}
 
-		if (opts.messagePrompts) {
-			messagePrompts.init();
-		}
+		mainCss
+			.then(() => {
+				if (opts.cookieMessage) {
+					cookieMessage.init();
+				}
 
-		if (opts.myft) {
-			myFtUi.init({ anonymous: !(/FTSession=/.test(document.cookie)) });
-		}
-		return Promise.resolve({flags})
+				if (opts.welcomeMessage) {
+					flags.get('welcomePanel') && welcomeMessage.init({
+						enableOverlay: flags.get('myFTOnboardingOverlay')
+					});
+				}
+
+				if (opts.messagePrompts) {
+					messagePrompts.init();
+				}
+
+				if (opts.myft) {
+					myFtUi.init({
+						anonymous: !(/FTSession=/.test(document.cookie))
+					});
+				}
+			});
+
+		return Promise.resolve({flags, mainCss})
 			.then(cb);
-	});
-}
+	})
+};
