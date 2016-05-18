@@ -30,7 +30,7 @@
     "o-buttons": "^3.1.4",
     "o-forms": "^2.0.0",
     "o-typography": "^3.2.0",
-    "o-ft-icons": "^3.5.1",
+    "o-ft-icons": "#next",
     "next-myft-ui": "^6.18.2",
     "next-myft-client": "^6.4.2",
     "n-notification": "^3.0.3",
