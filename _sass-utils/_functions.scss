@@ -1,3 +1,7 @@
+@function nUiHas($feature) {
+  @return map-get($_n-ui-features, $feature) == true;
+}
+
 @function nUiCriticalStart() {
 	@if nUiHas('critical') {
 		@return '! start:head.css ';

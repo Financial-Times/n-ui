@@ -16,17 +16,17 @@ $_next-sass-setup_applied: true;
 @import 'grid/main';
 @import 'buttons/main';
 @import 'icons/main';
+@import 'utils/main';
+@import 'typography/main';
+@import 'layout/main';
+@import "header/main";
+@import "footer/main";
 
+
+@import 'ads/main';
 // TODO: move these components into n-ui
 
 @import "next-welcome/main";
 @import "n-cookie-message/main";
 @import "n-interactive-tour/main";
 @import "message-prompts/main";
-
-@import 'ads/main';
-@import 'layout/main';
-@import 'typography/main';
-@import 'utils/main';
-@import "header/main";
-@import "footer/main";

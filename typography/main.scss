@@ -81,7 +81,6 @@ $o-typography-is-silent: true;
 		@include oFontsInclude(FinancierDisplayWeb);
 		@include oFontsInclude(MetricWeb);
 		@include oFontsInclude(MetricWeb, $weight: semibold);
-	  /*#{nUiCriticalEnd()}*/
 
 		html {
 			@include oColorsFor(page);
@@ -98,6 +97,7 @@ $o-typography-is-silent: true;
 	  a {
 			@include nLinksBody();
 		}
+		/*#{nUiCriticalEnd()}*/
 	}
 	$_n-ui-typography-applied: true;
 
