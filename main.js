@@ -20,62 +20,66 @@ const presets = {
 		myft: true,
 		messagePrompts: true
 	}
+};
+
+const opts = {};
+
+export function configure (options = {}) {
+	if (options.preset) {
+		Object.assign(opts, presets[options.preset], options);
+	} else {
+		throw new Error('n-ui configure options must include a preset');
+	}
 }
 
-module.exports = {
-	bootstrap: function (opts = {}, cb) {
-		cb = cb || (() => null);
+export function bootstrap (cb) {
+	cb = cb || (() => null);
 
-		if (opts.preset) {
-			opts = Object.assign({}, presets[opts.preset], opts);
+	return setup.bootstrap(({ flags }) => {
+
+		if (opts.myft) {
+
+			const clientOpts = [];
+
+			if (flags.get('follow')) {
+				clientOpts.push({relationship: 'followed', type: 'concept'});
+			}
+
+			if (flags.get('saveForLater')) {
+				clientOpts.push({relationship: 'saved', type: 'content'});
+			}
+
+			myFtClient.init(clientOpts);
 		}
 
-		return setup.bootstrap(({ flags }) => {
+		if (opts.header) {
+			header.init(flags);
+		}
 
-			if (opts.myft) {
+		if (opts.cookieMessage) {
+			cookieMessage.init();
+		}
 
-				const clientOpts = [];
+		// require('n-interactive-tour').init(flags);
 
-				if (flags.get('follow')) {
-					clientOpts.push({relationship: 'followed', type: 'concept'});
-				}
+		if (opts.welcomeMessage) {
+			flags.get('welcomePanel') && welcomeMessage.init({
+				enableOverlay: flags.get('myFTOnboardingOverlay')
+			});
+		}
 
-				if (flags.get('saveForLater')) {
-					clientOpts.push({relationship: 'saved', type: 'content'});
-				}
+		if (opts.date) {
+			date.init();
+		}
 
-				myFtClient.init(clientOpts);
-			}
+		if (opts.messagePrompts) {
+			messagePrompts.init();
+		}
 
-			if (opts.header) {
-				header.init(flags);
-			}
-
-			if (opts.cookieMessage) {
-				cookieMessage.init();
-			}
-
-			// require('n-interactive-tour').init(flags);
-
-			if (opts.welcomeMessage) {
-				flags.get('welcomePanel') && welcomeMessage.init({
-					enableOverlay: flags.get('myFTOnboardingOverlay')
-				});
-			}
-
-			if (opts.date) {
-				date.init();
-			}
-
-			if (opts.messagePrompts) {
-				messagePrompts.init();
-			}
-
-			if (opts.myft) {
-				myFtUi.init({ anonymous: !(/FTSession=/.test(document.cookie)) });
-			}
-			return Promise.resolve({flags})
-				.then(cb);
-		})
-	}
-};
+		if (opts.myft) {
+			myFtUi.init({ anonymous: !(/FTSession=/.test(document.cookie)) });
+		}
+		return Promise.resolve({flags})
+			.then(cb);
+	});
+}

@@ -11,27 +11,34 @@ Sass and JS follow similar apis. Both expect a map of feature names (see main.js
 - `complete`: all the bits and pieces you need to style and add interactivity to a typical page on next, complete with MyFT, alerts, promos, ads, tracking etc.
 - `discrete`: provides styles and scripts for just the header, footer and essential pieces of functionality such as tracking. For use on pages where we want no distractions E.G. errors, login and other forms.
 
-Examples:
+Features may also be enabled and disabled individually.
 
-```Javascript
-import { bootstrap } from n-ui;
+```js
+import { configure, bootstrap } from 'n-ui';
 
-bootstrap({
+configure({
 	preset: 'discrete',
 	welcomeMessage: true
-}, ({flags}) => {
+});
+
+bootstrap(({ flags }) => {
 	if (flags.get('konami')) {
 		easterEgg.init();
 	}
-})
+});
 ```
 
-```Sass
+```scss
 @import 'n-ui/configure';
-@include nUiConfigure((
-	preset: discrete,
-	welcomeMessage: true
+
+nUiConfigure((
+	'preset': 'discrete',
+	'welcomeMessage': true
 ));
+
+// Output a comment listing all n-ui features
+@include nUiConfigureDebug();
+
 @import 'n-ui/bootstrap';
 ```
 

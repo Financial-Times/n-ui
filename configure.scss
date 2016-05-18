@@ -39,5 +39,5 @@ $_n-ui-presets: (
 
 $_n-ui-configured: false !default;
 
-@import 'sass-utils/functions';
-@import 'sass-utils/mixins';
+@import '_sass-utils/functions';
+@import '_sass-utils/mixins';
