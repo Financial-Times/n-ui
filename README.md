@@ -31,7 +31,7 @@ bootstrap(({ flags }) => {
 ```scss
 @import 'n-ui/configure';
 
-nUiConfigure((
+@include nUiConfigure((
 	'preset': 'discrete',
 	'welcomeMessage': true
 ));
