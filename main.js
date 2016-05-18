@@ -31,7 +31,7 @@ module.exports = {
 		}
 
 		return setup.bootstrap(({ flags , mainCss}) => {
-
+			mainCss.then(() => console.log('aslkdhgsajhdgsajhg'));
 			if (opts.myft) {
 
 				const clientOpts = [];

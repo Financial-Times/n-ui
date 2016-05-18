@@ -5,6 +5,7 @@ $o-grid-gutters: (
 	default: 10px,
 	M:       16px
 );
+$o-grid-ie8-rules: none;
 $o-grid-mode: snappy !default;
 $o-grid-human-friendly-selectors: false;
 $o-grid-offset-selectors: false;
