@@ -17,3 +17,9 @@
 @mixin nUiConfigureDebug() {
 	/*! n-ui features: #{inspect($_n-ui-features)} */
 }
+
+@mixin nUiIe8Only () {
+	@if variable-exists('_n-ui-features') || $o-grid-ie8-rules == 'only' {
+	 	@content
+	}
+}
