@@ -5,7 +5,7 @@ $o-grid-gutters: (
 	default: 10px,
 	M:       16px
 );
-$o-grid-ie8-rules: none;
+$o-grid-ie8-rules: none !default;
 $o-grid-mode: snappy !default;
 // Need to turn this on as `hide` gets disabled otherwise.
 // $o-grid-human-friendly-selectors: false;
