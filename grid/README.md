@@ -8,9 +8,7 @@ No IE8 styles are output by default. To output an IE8 stylesheet the following p
 
 ```scss
 // main-ie8.scss
-
-$o-grid-mode: 'fixed';
-$o-grid-fixed-layout: 'M';
+$o-grid-ie8-rules: 'only';
 
 @import 'main';
 ```
@@ -23,4 +21,4 @@ e.g.  `@include nUiGridOffset(M, 3, pull)`
 
 ## Human readable selectors
 
-Pending a pull request to o-grid, these will be disabled, so use the numeric selectors i.e. `data-o-grid-colspan="6"` not `data-o-grid-colspan="half"`. The one exception is the `hide` keyword
+Pending a pull request to o-grid, these will be disabled, so use the numeric selectors i.e. `data-o-grid-colspan="6"` not `data-o-grid-colspan="half"`. Notably, use `0` instead of `hide`.
