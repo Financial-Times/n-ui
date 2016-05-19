@@ -22,7 +22,7 @@ $o-grid-offset-selectors: false;
 	  /*#{nUiCriticalEnd()}*/
 	}
 
-	$_n-ui-grid-applied: true;
+	$_n-ui-grid-applied: true !global;
 
 } @else {
 	@warn "n-ui/grid should only be imported once.";
