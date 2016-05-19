@@ -27,3 +27,31 @@ $o-grid-offset-selectors: false;
 } @else {
 	@warn "n-ui/grid should only be imported once.";
 }
+
+@mixin _nUiGridOffsetRules($layout, $mode, $amount) {
+	@if $mode == offset {
+		@include oGridOffset($amount);
+	} @else if $mode == pull {
+		@include oGridPull($amount);
+	} @else if $mode == push {
+		@include oGridPush($amount);
+	}
+}
+
+@mixin nUiGridOffset($layout: null, $amount: 1, $mode: offset) {
+
+	$selector: $mode + $amount;
+	@if $layout {
+		$selector: $layout + $selector;
+	}
+
+	[data-o-grid-colspan~="#{$selector}"] {
+		@if $layout {
+			@include oGridRespondTo($layout) {
+				@include _nUiGridOffsetRules($layout, $mode, $amount);
+			}
+		} @else {
+		  @include _nUiGridOffsetRules($layout, $mode, $amount);
+		}
+	}
+}
