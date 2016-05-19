@@ -21,11 +21,9 @@
     "n-cookie-message": "^1.4.9",
     "n-header-footer": "^2.1.2",
     "next-js-setup": "^8.7.0",
-    "next-welcome": "^5.3.3",
     "n-interactive-tour": "^1.3.2",
     "next-ads-component": "^9.1.0",
     "n-third-party-code": "^2.0.1",
-    "next-sass-setup": "^8.0.2",
     "o-icons": "^4.0.0",
     "o-buttons": "^3.1.4",
     "o-forms": "^2.0.0",
@@ -42,11 +40,12 @@
     "n-message-prompts": "^2.1.8",
     "o-grid": "#rhys/push-off",
     "next-card": "^7.1.0",
-    "o-colors": "^3.3.2"
+    "o-colors": "^3.3.2",
+    "superstore-sync": "^2.1.0"
   },
   "resolutions": {
     "o-ft-icons": "next",
-    "o-viewport": "^2.0.0",
-    "o-grid": "rhys/push-off"
+    "o-grid": "rhys/push-off",
+    "o-viewport": "^2.0.0"
   }
 }

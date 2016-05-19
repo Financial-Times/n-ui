@@ -19,6 +19,7 @@ $_next-sass-setup_applied: true;
 @import 'utils/main';
 @import 'typography/main';
 @import 'layout/main';
+@import 'myft/main';
 @import "header/main";
 @import "footer/main";
 
@@ -26,7 +27,7 @@ $_next-sass-setup_applied: true;
 @import 'ads/main';
 // TODO: move these components into n-ui
 
-@import "next-welcome/main";
+@import "welcome-message/main";
 @import "n-cookie-message/main";
 @import "n-interactive-tour/main";
 @import "message-prompts/main";
