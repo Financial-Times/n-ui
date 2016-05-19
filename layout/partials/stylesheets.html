@@ -3,7 +3,7 @@
 <style class="n-layout-head-css">
     {{{headCss}}}
 </style>
-<link rel="preload" href="{{#hashedAsset}}main.css{{/hashedAsset}}" as="style">
+<link rel="preload" href="{{#hashedAsset}}main.css{{/hashedAsset}}" as="style" onload="this.rel='stylesheet';window.ftNextMainCssLoaded=true">
 <noscript>
     <link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}">
 </noscript>
