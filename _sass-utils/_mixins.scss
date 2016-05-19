@@ -17,3 +17,15 @@
 @mixin nUiConfigureDebug() {
 	/*! n-ui features: #{inspect($_n-ui-features)} */
 }
+
+@mixin nUiIe8Only () {
+	@if variable-exists('_n-ui-is-ie8') or $o-grid-ie8-rules == 'only' {
+	 	@content
+	}
+}
+
+@mixin nUiNotIe8 () {
+	@if not (variable-exists('_n-ui-is-ie8') or $o-grid-ie8-rules == 'only') {
+	 	@content
+	}
+}
