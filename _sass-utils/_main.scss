@@ -1,3 +1,38 @@
+@function nUiHas($feature) {
+  @return map-get($_n-ui-features, $feature) == true;
+}
+
+@function nUiCriticalStart() {
+	@warn '`nUiCriticalStart()` function is deprecated. Use the mixin of the same name instead';
+	@if nUiHas('critical') {
+		@return '! start:head.css ';
+	}
+
+	@return '';
+}
+
+@function nUiCriticalEnd() {
+	@warn '`nUiCriticalEnd()` function is deprecated. Use the mixin of the same name instead';
+	@if nUiHas('critical') {
+		@return '! end:head.css ';
+	}
+
+	@return '';
+}
+
+
+@mixin nUiCriticalStart() {
+	@if nUiHas('critical') {
+		/*! start:head.css*/
+	}
+}
+
+@mixin nUiCriticalEnd() {
+	@if nUiHas('critical') {
+		/*! end:head.css*/
+	}
+}
+
 @mixin nUiConfigure($opts: ()) {
 	@if $_n-ui-configured == true {
 		@error 'nUiConfigure must only be called once';
