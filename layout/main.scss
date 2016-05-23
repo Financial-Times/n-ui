@@ -2,7 +2,7 @@ $_n-layout_applied: false !default;
 
 @if $_n-layout_applied == false {
 
-	/*#{nUiCriticalStart()}*/
+	@include nUiCriticalStart();
 	.core .o--if-js,
 	.enhanced .o--if-no-js {
 		display: none !important;
@@ -39,7 +39,7 @@ $_n-layout_applied: false !default;
 			display: block;
 		}
 	}
-	/*#{nUiCriticalEnd()}*/
+	@include nUiCriticalEnd();
 
 	$_n-layout_applied: true;
 

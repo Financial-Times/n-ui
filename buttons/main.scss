@@ -1,7 +1,7 @@
 @if nUiHas(buttons) {
 	$o-buttons-is-silent: false;
 }
-/*#{nUiCriticalStart()}*/
+@include nUiCriticalStart();
 @import 'o-buttons/main';
 
 $o-buttons-is-silent: true;
@@ -61,4 +61,4 @@ $o-buttons-sizes: map-merge($o-buttons-sizes, (
 	@warn '`nButtonsGroup` is deprecated, use `oButtonsGroup` instead';
 	@include oButtonsGroup($buttonClass);
 }
-/*#{nUiCriticalEnd()}*/
+@include nUiCriticalEnd();
