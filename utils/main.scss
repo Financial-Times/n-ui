@@ -38,7 +38,7 @@ $_zIndexes: (
 
 
 @if $_n-util_applied == false {
-	/*#{nUiCriticalStart()}*/
+	@include nUiCriticalStart();
 	//
 	// Layout
 	//
@@ -132,7 +132,7 @@ $_zIndexes: (
 		white-space: nowrap;
 		word-wrap: normal;
 	}
-	/*#{nUiCriticalEnd()}*/
+	@include nUiCriticalEnd();
 	$_n-util_applied: true;
 
 } @else {

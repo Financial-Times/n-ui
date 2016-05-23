@@ -78,7 +78,7 @@ $o-typography-is-silent: true;
 
 @if $_n-ui-typography-applied == false {
 	@if nUiHas(typography) {
-		/*#{nUiCriticalStart()}*/
+		@include nUiCriticalStart();
 		@include oFontsInclude(FinancierDisplayWeb);
 		@include oFontsInclude(MetricWeb);
 		@include oFontsInclude(MetricWeb, $weight: semibold);
@@ -98,7 +98,7 @@ $o-typography-is-silent: true;
 	  a {
 			@include nLinksBody();
 		}
-		/*#{nUiCriticalEnd()}*/
+		@include nUiCriticalEnd();
 	}
 	$_n-ui-typography-applied: true;
 
