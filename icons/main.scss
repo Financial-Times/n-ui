@@ -5,20 +5,19 @@ $o-ft-icons-is-silent: true;
 $o-icons-is-silent: true;
 $o-icons-service-base-url: 'https://next-geebee.ft.com/image';
 
-$_n-ui-brands-list: brand-ft-masthead, myft-bolder, brand-ft, brand-fast;
-
 @import 'o-ft-icons/main';
 @import 'o-icons/main';
 
+@mixin nextIcon($icon-name, $color: null, $size: 20, $icon-only: false) {
+	@warn '`nextIcon` is deprecated, use `oIconsGetIcon` or `nUiBrand` instead';
+	@if ($icon-only == false) {
+		display: inline-block;
+		width: $size + 0px;
+		height: $size + 0px;
+	}
 
-
-
-@mixin nUiBrand($brand-name, $size: 20, $color: null) {
-	display: inline-block;
-	width: $size + 0px;
-	height: $size + 0px;
-
-	$logo-url: 'https://next-geebee.ft.com/image/v1/images/raw/ftlogo:#{$brand-name}';
+	$service-url: 'https://next-geebee.ft.com/image/v1/images/raw/';
+	$icon-url: 'http%3A%2F%2Fnext-geebee.ft.com%2Fassets%2Ficons%2F#{$icon-name}.svg';
 	$query: '?source=next';
 
 	@if $color != null {
@@ -30,20 +29,11 @@ $_n-ui-brands-list: brand-ft-masthead, myft-bolder, brand-ft, brand-fast;
 	// ie7/8 fallback
 	background-image: url($service-url + $icon-url + $query + '&format=png&width=#{$size}')\9;
 
-	background-repeat: no-repeat;
-	background-size: contain;
-	background-position: 50%;
-	background-color: transparent;
-}
-
-@mixin nextIcon($icon-name, $color: null, $size: 20, $icon-only: false) {
-	@warn '`nextIcon` is deprecated, use `oIconsGetIcon` or `nUiBrand` instead';
-
-	@if (index($_n-ui-brands-list, $icon-name)) {
-		@include nUiBrand($icon-name, $size, $color);
-	} @else {
-		$apply-base-styles: $icon-only == false;
-		@include oIconsGetIcon($icon-name, $color, $size, $size, $apply-base-styles);
+	@if ($icon-only == false) {
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: 50%;
+		background-color: transparent;
 	}
 }
 
