@@ -47,9 +47,6 @@ $o-typography-is-silent: true;
 		border-bottom-style: dotted;
 		border-bottom-width: 1px;
 	}
-	&:visited {
-		color: oColorsGetPaletteColor('grey-tint3');
-	}
 }
 
 @mixin nLinksTopic($inversed: false) {
