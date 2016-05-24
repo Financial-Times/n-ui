@@ -1,5 +1,5 @@
 // TODO: integrate next-js-setup into this repo
-import setup from 'next-js-setup';
+import jsInit from './_js-init';
 import date from './date';
 import header from './header';
 import cookieMessage from './cookie-message';
@@ -35,7 +35,7 @@ export function configure (options = {}) {
 export function bootstrap (cb) {
 	cb = cb || (() => null);
 
-	return setup.bootstrap(({ flags, mainCss }) => {
+	return jsInit.bootstrap(({ flags, mainCss }) => {
 
 		if (opts.myft) {
 

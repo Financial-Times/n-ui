@@ -1,0 +1,23 @@
+{
+  "name": "next-js-setup",
+  "homepage": "https://github.com/Financial-Times/next-js-setup",
+  "description": "Generic global set up of common js features",
+  "main": "main.js",
+  "private": true,
+  "ignore": [
+    "bower_components"
+  ],
+  "dependencies": {
+    "fastclick": "^1.0.6",
+    "fontfaceobserver": "^1.7.1",
+    "html5shiv": "^3.7.2",
+    "loadcss": "filamentgroup/loadCSS#^1.2.0",
+    "n-instrumentation": "^1.0.0",
+    "n-service-worker": "^1.0.0",
+    "n-third-party-code": "^2.0.0",
+    "next-feature-flags-client": "^8.0.0",
+    "o-errors": "^3.1.0",
+    "o-hoverable": "^3.0.0",
+    "o-viewport": "^1.4.0"
+  }
+}

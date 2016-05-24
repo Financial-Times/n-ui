@@ -1,0 +1,8 @@
+{{#if @root.flags.javascript}}
+window.cutsTheMustard = (typeof Function.prototype.bind !== 'undefined');
+if (window.cutsTheMustard) {
+	document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, 'js').replace(/\bcore\b/, 'enhanced');
+}
+{{else}}
+window.cutsTheMustard = false;
+{{/if}}

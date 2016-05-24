@@ -14,7 +14,7 @@
 
 		{{#outputBlock 'head'}}{{/outputBlock}}
 		<script>
-			{{>next-js-setup/templates/ctm}}
+			{{>n-ui/_js-init/templates/ctm}}
 			{{>n-ui/typography/enhance-fonts}}
 		</script>
 	</head>
@@ -26,7 +26,7 @@
 			{{#if anon}}
 			window.nextIsAnonymous = {{anon.userIsAnonymous}};
 			{{/if}}
-			{{>next-js-setup/templates/bootstrapper}}
+			{{>n-ui/_js-init/templates/bootstrapper}}
 		</script>
 		{{/if}}
 	</body>
