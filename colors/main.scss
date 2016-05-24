@@ -77,7 +77,7 @@ $o-colors-is-silent: true;
 	@include oColorsSetUseCase(link-inversed-hover, text, 'warm-2');
 
 	//Page
-	@include oColorsSetUseCase(page, background, 'warm-5');
+	@include oColorsSetUseCase(page, background, 'pink');
 	@include oColorsSetUseCase(page, text, 'cold-2');
 
 	// Card
