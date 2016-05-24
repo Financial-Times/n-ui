@@ -1,4 +1,6 @@
+/npm-debug.log*
+/test.scss
+
+/.sass-cache/
 /bower_components/
 /node_modules/
-/.sass-cache/
-/test.scss
