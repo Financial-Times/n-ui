@@ -42,11 +42,11 @@
     "superstore-sync": "^2.1.0",
     "fontfaceobserver": "^1.7.1",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
-    "o-errors": "^3.1.0",
-    "next-feature-flags-client": "~8.6.0"
+    "o-errors": "^3.1.0"
   },
   "resolutions": {
     "o-ft-icons": "next",
-    "o-grid": "rhys/push-off"
+    "o-grid": "rhys/push-off",
+    "o-viewport": "^2.0.0"
   }
 }

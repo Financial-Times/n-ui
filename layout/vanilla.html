@@ -20,14 +20,6 @@
 	</head>
 	<body class="o-hoverable-on" data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
 		{{{body}}}
-		{{#if @root.flags.javascript}}
-		<script>
-			{{>next-feature-flags-client/templates/flags}}
-			{{#if anon}}
-			window.nextIsAnonymous = {{anon.userIsAnonymous}};
-			{{/if}}
-			{{>n-ui/layout/partials/bootstrapper}}
-		</script>
-		{{/if}}
+		{{>n-ui/layout/partials/bootstrapper}}
 	</body>
 </html>

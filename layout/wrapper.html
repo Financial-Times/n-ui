@@ -68,15 +68,7 @@
 				{{>n-header-footer/footer/template content=footer}}
 			</div>
 
-			{{#if @root.flags.javascript}}
-			<script>
-				{{>next-feature-flags-client/templates/flags}}
-				{{#if anon}}
-				window.nextIsAnonymous = {{anon.userIsAnonymous}};
-				{{/if}}
-				{{>n-ui/layout/partials/bootstrapper}}
-			</script>
-			{{/if}}
+			{{>n-ui/layout/partials/bootstrapper}}
 
 			{{>n-third-party-code/templates/core-analytics}}
 		</div>
