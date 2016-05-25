@@ -1,6 +1,7 @@
 /npm-debug.log*
 /test.scss
-
+.eslintrc.js
+.editorconfig
 /.sass-cache/
 /bower_components/
 /node_modules/

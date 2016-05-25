@@ -1,3 +1,6 @@
 include n.Makefile
 
-test: verify
+test: test-unit verify
+
+test-unit:
+	karma start karma.conf.js

@@ -21,10 +21,14 @@ configure({
 	welcomeMessage: true
 });
 
-bootstrap(({ flags }) => {
-	if (flags.get('konami')) {
-		easterEgg.init();
+bootstrap(({ flags , mainCss, appInfo}) => {
+	if (flags.get('feature')) {
+		component.init();
 	}
+
+	mainCss.then(() => {
+		lazyComponent.init();
+	});
 });
 ```
 
@@ -41,6 +45,3 @@ bootstrap(({ flags }) => {
 
 @import 'n-ui/bootstrap';
 ```
-
-
-

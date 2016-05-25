@@ -1,5 +1,5 @@
 @function nUiHas($feature) {
-  @return map-get($_n-ui-features, $feature) == true;
+	@return map-get($_n-ui-features, $feature) == true;
 }
 
 @function nUiCriticalStart() {
@@ -55,13 +55,13 @@
 
 @mixin nUiIe8Only () {
 	@if variable-exists('_n-ui-is-ie8') or $o-grid-ie8-rules == 'only' {
-	 	@content
+		@content
 	}
 }
 
 @mixin nUiNotIe8 () {
 	@if not (variable-exists('_n-ui-is-ie8') or $o-grid-ie8-rules == 'only') {
-	 	@content
+		@content
 	}
 }
 

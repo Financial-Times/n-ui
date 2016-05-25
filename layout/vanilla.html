@@ -14,20 +14,12 @@
 
 		{{#outputBlock 'head'}}{{/outputBlock}}
 		<script>
-			{{>next-js-setup/templates/ctm}}
+			{{>n-ui/layout/partials/ctm}}
 			{{>n-ui/typography/enhance-fonts}}
 		</script>
 	</head>
 	<body class="o-hoverable-on" data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
 		{{{body}}}
-		{{#if @root.flags.javascript}}
-		<script>
-			{{>next-feature-flags-client/templates/flags}}
-			{{#if anon}}
-			window.nextIsAnonymous = {{anon.userIsAnonymous}};
-			{{/if}}
-			{{>next-js-setup/templates/bootstrapper}}
-		</script>
-		{{/if}}
+		{{>n-ui/layout/partials/bootstrapper}}
 	</body>
 </html>

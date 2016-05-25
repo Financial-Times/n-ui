@@ -1,35 +1,35 @@
 const superstore = require('superstore-sync');
 
-function addClass(element, className){
+function addClass (element, className) {
 	element.classList.add(className);
 }
 
-function removeClass(element, className){
+function removeClass (element, className) {
 	element.classList.remove(className);
 }
 
-function store(key, value){
+function store (key, value) {
 	superstore.local.set(key, value);
 }
 
-function retrieve(key){
+function retrieve (key) {
 	return superstore.local.get(key);
 }
 
-function onButtonClose(func, storageKey, event){
+function onButtonClose (func, storageKey, event) {
 	event.preventDefault();
 	store(storageKey, 1);
 	func();
 }
 
-function fixBarSetup(floatingElement, footerElement, visibleClass, hiddenClass){
+function fixBarSetup (floatingElement, footerElement, visibleClass, hiddenClass) {
 	return () => {
 		addClass(floatingElement, visibleClass);
 		addClass(footerElement, hiddenClass);
 	};
 }
 
-function unfixBarSetup(floatingElement, footerElement, visibleClass, hiddenClass){
+function unfixBarSetup (floatingElement, footerElement, visibleClass, hiddenClass) {
 	return () => {
 		removeClass(floatingElement, visibleClass);
 		removeClass(footerElement, hiddenClass);

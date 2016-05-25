@@ -19,7 +19,6 @@
   "dependencies": {
     "n-cookie-message": "^1.4.9",
     "n-header-footer": "^2.1.2",
-    "next-js-setup": "^8.7.0",
     "n-interactive-tour": "^1.3.2",
     "next-ads-component": "^9.1.0",
     "n-third-party-code": "^2.0.1",
@@ -40,7 +39,10 @@
     "o-grid": "#rhys/push-off",
     "next-card": "^7.1.0",
     "o-colors": "^3.3.2",
-    "superstore-sync": "^2.1.0"
+    "superstore-sync": "^2.1.0",
+    "fontfaceobserver": "^1.7.1",
+    "loadcss": "filamentgroup/loadCSS#^1.2.0",
+    "o-errors": "^3.1.0"
   },
   "resolutions": {
     "o-ft-icons": "next",

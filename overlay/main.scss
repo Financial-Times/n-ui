@@ -18,6 +18,3 @@ $o-overlay-is-silent: true;
 } @else {
 	@warn "n-ui/overlay should only be imported once.";
 }
-
-
-

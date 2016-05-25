@@ -1,0 +1,56 @@
+{{#if @root.flags.javascript}}
+<script>
+	window.nextFeatureFlags = {{{json @root.flagsArray}}};
+	{{#if anon}}window.nextIsAnonymous = {{anon.userIsAnonymous}};{{/if}}
+
+	window.ftNextLoadScript = function (src) {
+		var d = document, o = d.createElement('script');
+		o.async = o.defer = true;
+		o.src = src;
+		var s = d.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(o, s.nextSibling);
+	};
+
+	window.ftNextFireCondition = function (condition) {
+		if (!window['ftNext' + condition]) {
+			try {
+				e = new Event('ftNext' + condition);
+			} catch (e) {
+				e = document.createEvent('Event');
+				e.initEvent('ftNext' + condition, true, true);
+			}
+			window['ftNext' + condition] = 1;
+			document.dispatchEvent(e);
+		}
+	};
+
+	{{>n-ui/layout/partials/css-loader}}
+
+	window.ftNextPolyfillServiceCallback = function () {
+		window.ftNextFireCondition('PolyfillLoaded');
+	};
+
+	(function () {
+		if (cutsTheMustard) {
+			ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}');
+			ftNextLoadScript('https://next-geebee.ft.com/polyfill/v2/polyfill.min.js?callback=ftNextPolyfillServiceCallback&features=' + [
+				'default',
+				'requestAnimationFrame',
+				'Promise',
+				'matchMedia',
+				'HTMLPictureElement',
+				// the following polyfills are included pending https://github.com/Financial-Times/polyfill-service/issues/653
+				'CustomEvent|always|gated',
+				'fetch|always|gated',
+				'Array.prototype.find|always|gated',
+				'Array.prototype.findIndex|always|gated'
+			].join(','));
+		} else {
+			ftNextLoadScript('https://next-geebee.ft.com/polyfill/v2/polyfill.min.js?features=HTMLPictureElement|always|gated');
+		}
+	})();
+</script>
+{{else}}
+	<!-- always load the picturefill polyfill -->
+	<script src="https://next-geebee.ft.com/polyfill/v2/polyfill.min.js?features=HTMLPictureElement|always|gated"></script>;
+{{/if}}
