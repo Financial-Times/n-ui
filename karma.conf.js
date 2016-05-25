@@ -9,7 +9,7 @@ module.exports = function(config) {
 	config.set({
 
 		// base path that will be used to resolve all patterns (eg. files, exclude)
-		basePath: '../',
+		basePath: './',
 
 
 		// frameworks to use
@@ -19,13 +19,13 @@ module.exports = function(config) {
 
 		// list of files / patterns to load in the browser
 		files: [
-			'test/js-setup.spec.js'
+			'layout/test/js-setup.spec.js'
 		],
 
 		// preprocess matching files before serving them to  the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: {
-			'test/js-setup.spec.js': ['webpack']
+			'layout/test/js-setup.spec.js': ['webpack']
 		},
 
 		webpack: {
@@ -40,7 +40,6 @@ module.exports = function(config) {
 							plugins: ['add-module-exports', ['transform-es2015-classes', { loose: true }]]
 						}
 					},
-					// force fastclick to load CommonJS
 					{
 						test: /sinon.*\.js$/,
 						loader: 'imports?define=>false,require=>false'
@@ -65,8 +64,8 @@ module.exports = function(config) {
 					sinon: 'sinon/pkg/sinon'
 				},
 				root: [
-					path.join(__dirname, '../..', 'bower_components'),
-					path.join(__dirname, '../..', 'node_modules')
+					path.join(__dirname, 'bower_components'),
+					path.join(__dirname, 'node_modules')
 				]
 			}
 		},
