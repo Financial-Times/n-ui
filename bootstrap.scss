@@ -2,22 +2,7 @@
 	@error 'you must use nUiConfigure() before importing n-ui/bootstrap';
 }
 
-// Base unit to standardize spacing
-// Decide where it's gonna live later
-$spacing-unit: 16px;
-
-// TODO: integrate sass setup
-$next-sass-setup-is-silent: true;
-$_next-sass-setup_applied: true;
-// @import 'setup/main';
-
-@import 'normalize/main';
-@import 'colors/main';
-@import 'grid/main';
-@import 'buttons/main';
-@import 'icons/main';
-@import 'utils/main';
-@import 'typography/main';
+@import 'env';
 @import 'layout/main';
 @import 'myft/main';
 @import "header/main";

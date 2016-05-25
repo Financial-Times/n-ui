@@ -4,6 +4,10 @@ An experiment bunching some of Next's client-side code into a single repository.
 
 ## API
 
+### Replacing next-sass-setup in components
+
+`@import "n-ui/env";`
+
 ### Bootstrapping your app
 
 Sass and JS follow similar apis. Both expect a map of feature names (see main.js or configure.scss for feature lists), and also recognise 2 presets:
