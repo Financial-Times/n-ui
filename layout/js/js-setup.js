@@ -8,7 +8,7 @@ if (!window.console) {
 	}
 }
 
-import {load as loadFonts} from './font-loader';
+import {load as loadFonts} from '../../typography/font-loader';
 const nThirdPartyCode = require('n-third-party-code');
 const oErrors = require('o-errors');
 
