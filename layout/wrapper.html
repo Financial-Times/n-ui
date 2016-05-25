@@ -48,7 +48,7 @@
 		{{#outputBlock 'head'}}{{/outputBlock}}
 
 		<script>
-			{{>n-ui/_js-init/templates/ctm}}
+			{{>n-ui/layout/partials/ctm}}
 			{{>n-ui/typography/enhance-fonts}}
 		</script>
 	</head>
@@ -74,7 +74,7 @@
 				{{#if anon}}
 				window.nextIsAnonymous = {{anon.userIsAnonymous}};
 				{{/if}}
-				{{>n-ui/_js-init/templates/bootstrapper}}
+				{{>n-ui/_initlayout/partialslates/bootstrapper}}
 			</script>
 			{{/if}}
 

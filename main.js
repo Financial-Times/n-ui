@@ -35,7 +35,7 @@ export function configure (options = {}) {
 export function bootstrap (cb) {
 	cb = cb || (() => null);
 
-	return jsInit.bootstrap(({ flags, mainCss }) => {
+	return jsInit.bootstrap(({ flags, mainCss, appInfo }) => {
 
 		if (opts.myft) {
 

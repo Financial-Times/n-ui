@@ -42,10 +42,6 @@ module.exports = function(config) {
 					},
 					// force fastclick to load CommonJS
 					{
-						test: /fastclick\.js$/,
-						loader: 'imports?define=>false'
-					},
-					{
 						test: /sinon.*\.js$/,
 						loader: 'imports?define=>false,require=>false'
 					},
@@ -69,8 +65,8 @@ module.exports = function(config) {
 					sinon: 'sinon/pkg/sinon'
 				},
 				root: [
-					path.join(__dirname, '..', 'bower_components'),
-					path.join(__dirname, '..', 'node_modules')
+					path.join(__dirname, '../..', 'bower_components'),
+					path.join(__dirname, '../..', 'node_modules')
 				]
 			}
 		},
@@ -105,6 +101,6 @@ module.exports = function(config) {
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
-		singleRun: true
+		singleRun: false
 	});
 };

@@ -54,7 +54,7 @@ class JsSetup {
 			return obj;
 		}, {
 			get: function (name) {
-				return this[name];
+				return !!this[name];
 			}
 		});
 
@@ -81,6 +81,7 @@ class JsSetup {
 		}
 
 		// FT and next tracking
+		// TODO - move all this into the main bootstrap file exported by n-ui
 		nThirdPartyCode.init(flags, oErrors, this.appInfo);
 		if (flags.get('nInstrumentation')) {
 			nInstrumentation.init();
@@ -88,6 +89,7 @@ class JsSetup {
 
 		return Promise.resolve({
 			flags: flags,
+			appInfo: this.appInfo,
 			mainCss: new Promise(res => {
 				// if this element exists it means the page is setup to deliver critical/main css
 				if (document.querySelector('style.n-layout-head-css')) {
@@ -105,25 +107,28 @@ class JsSetup {
 			this.bootstrapResult = this.init(opts)
 				.then(result => {
 					let promise = callback(result);
-					if (!promise || typeof promise.then !== 'function') {
+					if (!(promise && typeof promise.then === 'function')) {
 						promise = Promise.resolve();
 					}
 					return promise
 						.then(() => {
 							document.documentElement.classList.add('js-success');
 							// ads and third party tracking
+							// TODO - lazy load this
 							nThirdPartyCode.initAfterEverythingElse(result.flags);
 							dispatchLoadedEvent();
 						});
 				})
 				.catch(err => {
-					if(!this.appInfo.isProduction){
+
+					if (!this.appInfo.isProduction){
 						if (typeof err === 'object' && err.stack) {
 							console.error(err.stack);
 						} else {
 							console.error(err);
 						}
 					}
+
 					oErrors.error(err);
 				});
 		});
