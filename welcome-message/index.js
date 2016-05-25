@@ -52,7 +52,7 @@ module.exports.init = () => {
 	let storageKey = 'welcomePanelClosed';
 	let barPreviouslyHidden = Boolean(retrieve(storageKey));
 	let visibleClass = 'n-welcome--fixed-visible';
-	let hiddenClass = 'n-welcome--hidden';
+	let hiddenClass = 'n-welcome--js-hidden';
 	let fixBar = fixBarSetup(floatingElement, footerElement, visibleClass, hiddenClass);
 	let unfixBar = unfixBarSetup(floatingElement, footerElement, visibleClass, hiddenClass);
 

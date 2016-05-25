@@ -66,8 +66,12 @@
 		visibility: visible;
 	}
 
-	&--hidden {
-		visibility: hidden;
+	.js & {
+
+		&--js-hidden {
+			visibility: hidden; /* init in hidden state for js */
+		}
+
 	}
 }
 
