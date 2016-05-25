@@ -1,0 +1,14 @@
+@mixin nCrosshatchBG($background: gray, $luminance: 'darken') {
+	$foreground: if($luminance == 'darken', rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
+
+	background-color: $background;
+	background-image: repeating-linear-gradient(
+		135deg,
+		transparent,
+		$foreground 1px,
+		// allowing a little gradient reduces strobing, especially on retina
+		transparent 2px,
+		transparent 4px
+	);
+	background-size: 100%;
+}
