@@ -35,7 +35,7 @@ export function configure (options = {}) {
 export function bootstrap (cb) {
 	cb = cb || (() => null);
 
-	return layout.bootstrap(({ flags, mainCss, appInfo }) => {
+	return layout.bootstrap(({ flags, mainCss, appInfo }) => { // eslint-disable-line
 
 		if (opts.myft) {
 

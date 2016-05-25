@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
 	toggleState: function (btn, alreadyToggled) {
 

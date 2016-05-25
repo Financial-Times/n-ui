@@ -1,3 +1,4 @@
+/* globals FontFaceObserver */
 require('fontfaceobserver/fontfaceobserver.standalone.js');
 
 const fontLoadedPrefix = 'o-typography--loaded-';

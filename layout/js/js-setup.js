@@ -1,9 +1,8 @@
-/* globals FontFaceObserver */
 // for safety polyfill window.console
 if (!window.console) {
 	window.console = {};
-	var methods = ['info', 'log', 'warn', 'error'];
-	for (var i = 0; i < methods.length; i++) {
+	const methods = ['info', 'log', 'warn', 'error'];
+	for (let i = 0; i < methods.length; i++) {
 		window.console[methods[i]] = function () {};
 	}
 }
@@ -123,9 +122,9 @@ class JsSetup {
 
 					if (!this.appInfo.isProduction){
 						if (typeof err === 'object' && err.stack) {
-							console.error(err.stack);
+							console.error(err.stack); //eslint-disable-line
 						} else {
-							console.error(err);
+							console.error(err); //eslint-disable-line
 						}
 					}
 

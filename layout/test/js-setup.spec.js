@@ -1,14 +1,12 @@
 /*global require,describe,afterEach,beforeEach,it,expect*/
-'use strict';
-
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
 const nThirdPartyCode = require('n-third-party-code');
-const jsSetup = require('../main');
+const jsSetup = require('../index');
 const JsSetup = require('../js/js-setup');
 const sinon = require('sinon');
 const oErrors = require('o-errors');
 
-describe('js setup', function() {
+describe('js setup', function () {
 
 	it('should polyfill fetch', function () {
 		expect(window.fetch).to.be.a('function');
@@ -31,14 +29,14 @@ describe('js setup', function() {
 		after(() => delete window.nextFeatureFlags);
 
 		it('should disable o-errors', function (done) {
-			var spy = sinon.stub(oErrors, 'init');
-			var promise = new JsSetup().init();
+			const spy = sinon.stub(oErrors, 'init');
+			const promise = new JsSetup().init();
 			promise.then(function () {
 				expect(spy.calledOnce).to.be.true;
 				expect(spy.args[0][0].enabled).to.be.false;
 				spy.restore();
 				done();
-			}).catch(console.log.bind(console));
+			})
 		});
 
 
@@ -46,7 +44,7 @@ describe('js setup', function() {
 			document.documentElement.setAttribute('data-next-is-production', '');
 			document.documentElement.setAttribute('data-next-version', 'v1');
 			document.documentElement.setAttribute('data-next-app', 'test-app');
-			var promise = new JsSetup().init();
+			const promise = new JsSetup().init();
 			promise.then(function (result) {
 				expect(result).to.be.an('object');
 				expect(result.flags.get).to.be.a('function');
@@ -65,7 +63,6 @@ describe('js setup', function() {
 	describe('init with flags on', function () {
 
 		let thirdPartyStub;
-		let flagStub;
 		before(() => window.nextFeatureFlags = [
 			'clientErrorReporting',
 			'clientDetailedErrorReporting',
@@ -86,9 +83,9 @@ describe('js setup', function() {
 		after(() => delete window.nextFeatureFlags);
 
 		it('should configure o-errors for dev', function (done) {
-			var spy = sinon.spy(oErrors, 'init');
-			var setup = new JsSetup();
-			var promise = setup.init();
+			const spy = sinon.spy(oErrors, 'init');
+			const setup = new JsSetup();
+			const promise = setup.init();
 			promise.then(function () {
 				expect(spy.calledOnce).to.be.true;
 				expect(spy.args[0][0].enabled).to.be.false;
@@ -99,12 +96,12 @@ describe('js setup', function() {
 		});
 
 		it('should configure o-errors for prod', function (done) {
-			var spy = sinon.spy(oErrors, 'init');
+			const spy = sinon.spy(oErrors, 'init');
 			document.documentElement.setAttribute('data-next-is-production', '');
 			document.documentElement.setAttribute('data-next-version', 'i-am-at-version-x');
 			document.documentElement.setAttribute('data-next-app', 'i-am-an-app');
-			var setup = new JsSetup();
-			var promise = setup.init();
+			const setup = new JsSetup();
+			const promise = setup.init();
 			promise.then(function () {
 				expect(spy.calledOnce).to.be.true;
 				expect(spy.args[0][0].enabled).to.be.true;
@@ -121,7 +118,7 @@ describe('js setup', function() {
 		});
 
 		it('should return promise of flags', function (done) {
-			var promise = new JsSetup().init();
+			const promise = new JsSetup().init();
 			promise.then(function (result) {
 				expect(result).to.be.an('object');
 				expect(result.flags.get).to.be.a('function');
@@ -131,7 +128,7 @@ describe('js setup', function() {
 	});
 
 	describe('bootstrap', function () {
-		var result = {};
+		const result = {};
 		before(() => window.nextFeatureFlags = []);
 
 
@@ -154,9 +151,9 @@ describe('js setup', function() {
 
 		describe('simple bootstrap', function () {
 			it('should wait for dependencies to load if not yet loaded', function (done) {
-				var callback = sinon.stub();
+				const callback = sinon.stub();
 				// can't assume promises exist to do async stuff
-				var p = window.Promise;
+				const p = window.Promise;
 				window.Promise = undefined;
 				new JsSetup().bootstrap(callback);
 				setTimeout(function () {
@@ -175,7 +172,7 @@ describe('js setup', function() {
 
 			it('should run a callback with result of init immediately if dependencies already loaded', function (done) {
 				window.ftNextPolyfillLoaded = true;
-				var callback = sinon.stub();
+				const callback = sinon.stub();
 				new JsSetup().bootstrap(callback);
 				setTimeout(function () {
 					expect(callback.calledOnce).to.be.true;
@@ -193,8 +190,8 @@ describe('js setup', function() {
 
 			it('should pass an options object to init', function (done) {
 
-				var callback = sinon.stub();
-				var options = {};
+				const callback = sinon.stub();
+				const options = {};
 				const jsSetup = new JsSetup()
 				jsSetup.bootstrap(callback, options);
 				setTimeout(function () {

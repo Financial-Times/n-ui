@@ -16,10 +16,10 @@ $o-grid-offset-selectors: false;
 @if $_n-ui-grid-applied == false {
 
 	@if nUiHas(grid) {
-	  @include nUiCriticalStart();
+		@include nUiCriticalStart();
 		@include oGridSurfaceCurrentLayout;
 		@include oGridGenerate;
-	  @include nUiCriticalEnd();
+		@include nUiCriticalEnd();
 	}
 
 	$_n-ui-grid-applied: true !global;
@@ -51,7 +51,7 @@ $o-grid-offset-selectors: false;
 				@include _nUiGridOffsetRules($layout, $mode, $amount);
 			}
 		} @else {
-		  @include _nUiGridOffsetRules($layout, $mode, $amount);
+			@include _nUiGridOffsetRules($layout, $mode, $amount);
 		}
 	}
 }

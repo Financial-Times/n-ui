@@ -1,11 +1,11 @@
 <!--[if gte IE 9]><!-->
 {{#if headCss}}
 <style class="n-layout-head-css">
-    {{{headCss}}}
+	{{{headCss}}}
 </style>
 <link rel="preload" href="{{#hashedAsset}}main.css{{/hashedAsset}}" as="style" onload="this.rel='stylesheet';window.ftNextMainCssLoaded=true">
 <noscript>
-    <link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}">
+	<link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}">
 </noscript>
 {{else}}
 <link rel="stylesheet" href="{{#hashedAsset}}main.css{{/hashedAsset}}">

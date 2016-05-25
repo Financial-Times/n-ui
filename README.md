@@ -45,6 +45,3 @@ bootstrap(({ flags , mainCss, appInfo}) => {
 
 @import 'n-ui/bootstrap';
 ```
-
-
-

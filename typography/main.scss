@@ -92,7 +92,7 @@ $o-typography-is-silent: true;
 			}
 		}
 
-	  a {
+		a {
 			@include nLinksBody();
 		}
 		@include nUiCriticalEnd();
