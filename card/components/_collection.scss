@@ -1,0 +1,128 @@
+@import '../mixins';
+
+.card--collection {
+	background: transparent;
+	border: 1px solid rgba(getColorFor('myft'), 0.4);
+	margin-bottom: 8px; // make room for stack effect
+
+	&:before {
+		content: '';
+		position: absolute;
+		border: 1px solid rgba(getColorFor('myft'), 0.4);
+		border-top-color: transparent;
+
+		bottom: -5px;
+		left: 2px;
+		right: 2px;
+		height: 3px;
+	}
+
+	&:after {
+		content: '';
+		position: absolute;
+		border: 1px solid rgba(getColorFor('myft'), 0.4);
+		border-top-color: transparent;
+
+		bottom: -9px;
+		left: 5px;
+		right: 5px;
+		height: 3px;
+	}
+}
+
+.card__collection-header {
+	border-bottom: 1px solid rgba(getColorFor('myft'), 0.3);
+	overflow: hidden;
+	padding-bottom: 10px;
+}
+
+.card__collection-title {
+	@include oTypographySansBold(m);
+	margin: 0;
+	text-align: center;
+}
+
+.card__collection-sub-heading {
+	@include oTypographySansBold(s);
+	//FIXME: stop overriding mixins
+	font-size: 18px;
+	line-height: 1;
+	text-align: center;
+	margin: 10px 0 0;
+}
+
+.card__collection-concepts {
+	flex-grow: 1;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.card__collection-concept {
+	margin: 12px 0 0;
+	position: relative;
+	text-align: center;
+}
+
+.card__collection-concept-link {
+	@include oColorsFor(topic, text);
+	border-bottom-width: 0;
+	font-size: 18px;
+	line-height: 20px;
+}
+
+.card__collection-meta {
+	border-top: 1px solid rgba(getColorFor('myft'), 0.3);
+	margin-top: 10px;
+	overflow: hidden;
+	padding-top: 10px;
+}
+
+.card__collection-datum {
+	@include oTypographySansBold(s);
+	float: left;
+	margin-right: 26px;
+
+	//FIXME: stop overriding mixins
+	font-size: 13px;
+	line-height: 13px;
+}
+
+.card__collection-follow {
+	float: right;
+}
+
+.card__collection-more-button {
+	margin: 0 auto;
+}
+
+.card--collection.card--empty {
+	text-align: center;
+}
+
+.card__collection-feedback {
+	display: flex;
+	flex: 1 0 auto;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.card__collection-feedback {
+
+	//without this, p elements expand outside of flex container on ie
+	p {
+		max-width: 100%;
+	}
+}
+
+.card__collection-feedback.is-given {
+	&:before {
+		@include nextIcon(tick, getColor('link-1'), 30);
+		content: '';
+	}
+}
+
+.card__collection-feedback-email {
+	white-space: nowrap;
+}

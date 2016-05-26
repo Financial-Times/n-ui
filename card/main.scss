@@ -1,1 +1,16 @@
-@import 'next-card/main';
+@import 'o-card/main';
+@import 'n-image/main';
+
+@import 'components/card';
+@import 'components/article';
+@import 'components/concept';
+@import 'components/video';
+@import 'components/collection';
+
+@import 'components/brand/brand';
+@import 'components/image/image';
+@import 'components/related/related';
+@import 'components/standfirst/standfirst';
+@import 'components/tag/tag';
+@import 'components/timestamp/timestamp';
+@import 'components/title/title';

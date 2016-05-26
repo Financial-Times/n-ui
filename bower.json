@@ -37,13 +37,14 @@
     "o-viewport": "^2.0.0",
     "n-message-prompts": "^2.1.8",
     "o-grid": "#rhys/push-off",
-    "next-card": "^7.1.0",
     "o-colors": "^3.3.2",
     "superstore-sync": "^2.1.0",
     "fontfaceobserver": "^1.7.1",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
     "o-errors": "^3.1.0",
-    "ftdomdelegate": "~2.0.3"
+    "ftdomdelegate": "~2.0.3",
+    "n-image": "~3.0.4",
+    "o-card": "~2.1.2"
   },
   "resolutions": {
     "o-ft-icons": "next",

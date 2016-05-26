@@ -1,0 +1,95 @@
+@import '../colours';
+@import '../mixins';
+
+.card {
+	@include oCard;
+	position: relative;
+	background-color: transparent;
+	width: auto;
+	margin-top: oGridGutter();
+	padding-bottom: oGridGutter();
+	flex: 1 1 auto;
+	-ms-flex-preferred-size: auto;
+	overflow: visible;
+
+	@include oGridRespondTo(M) {
+		margin-top: oGridGutter(M);
+	}
+
+	&[data-show~="false"] {
+		display: none;
+	}
+
+	&[data-image~="left"],
+	&[data-image~="right"] {
+		@include oCardThemeLandscape;
+	}
+
+	@each $layout-name in $_o-grid-layout-names {
+		@include oGridRespondTo($layout-name) {
+			&[data-show~="#{$layout-name}--true"] {
+				@include displayFlex;
+			}
+
+			&[data-show~="#{$layout-name}--false"] {
+				display: none;
+			}
+
+			&[data-image~="#{$layout-name}--left"],
+			&[data-image~="#{$layout-name}--right"] {
+				@include oCardThemeLandscape;
+			}
+
+			&[data-image~="#{$layout-name}--top"],
+			&[data-image~="#{$layout-name}--bottom"] {
+				@include oCardThemePortrait;
+			}
+		}
+	}
+}
+
+.card--picture-story {
+	@include oCardThemeStandout;
+}
+
+.card--editors-pick,
+.card--main {
+	@include oColorsFor(card-editors-pick, background);
+}
+
+.card__content {
+	@include oCardContent;
+
+	.card[data-image~="left"] & {
+		margin-left: 40%;
+		padding-left: 10px;
+		width: 60%;
+	}
+
+	.card[data-image~="hide"] & {
+		width: 100%;
+	}
+
+	@each $layout-name in $_o-grid-layout-names {
+		@include oGridRespondTo($layout-name) {
+			.card[data-image~="#{$layout-name}--left"] & {
+				width: 60%;
+				margin-left: 40%;
+				padding-left: 10px;
+			}
+
+			.card[data-image~="#{$layout-name}--right"] &,
+			.card[data-image~="#{$layout-name}--top"] &,
+			.card[data-image~="#{$layout-name}--bottom"] &,
+			.card[data-image~="#{$layout-name}--hide"] & {
+				width: 100%;
+				margin-left: 0;
+				padding-left: 0;
+			}
+		}
+	}
+}
+
+.card__content--grow {
+	flex-grow: 1;
+}

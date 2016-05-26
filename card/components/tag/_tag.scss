@@ -1,0 +1,37 @@
+@import "../../mixins";
+
+.card__tag {
+	overflow: hidden;
+	margin: 0 0 5px;
+	padding-top: 4px;
+
+	.card--main & {
+		margin-bottom: 10px;
+		padding-bottom: 5px;
+		padding-top: 0;
+		border-bottom: 1px solid oColorsGetColorFor(card, border);
+	}
+}
+
+.card__tag__link {
+	@include oColorsFor(topic, text);
+	@include oTypographySansDataBold(m, $load-progressively: true);
+	@include oTypographyFallbackFontSize(sansDataBold, 16px);
+	line-height: 1em;
+	border-bottom: 0;
+
+	.card--main & {
+		@include oTypographyFallbackFontSize(sansDataBold, 20px);
+		display: inline-block;
+		line-height: 26px;
+	}
+}
+
+.card__tag__follow {
+	float: right;
+	padding-left: oGridGutter();
+
+	@include oGridRespondTo(M) {
+		padding-left: oGridGutter(M);
+	}
+}

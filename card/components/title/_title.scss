@@ -1,0 +1,69 @@
+@import "../../colours";
+@import "../../functions";
+@import "../../mixins";
+@import "../../vars";
+
+.card__title-link {
+	border-bottom: 0;
+	display: block;
+	line-height: normal;
+	font-size: medium;
+	margin-bottom: 0;
+}
+
+.card__live-blog-badge {
+	@include oTypographySansBold(s);
+	display: block;
+	line-height: 21px;
+	text-transform: uppercase;
+	margin-bottom: 5px;
+	color: white;
+
+	.card__title-link:hover & {
+		color: getColorFor(fast-ft, background);
+	}
+}
+
+.card__live-blog-badge__text {
+	display: inline-block;
+	padding: 0 5px;
+	background-color: oColorsGetPaletteColor('black');
+
+	.card__live-blog-badge--in-progress & {
+		background-color: oColorsGetPaletteColor('live-blog-in-progress');
+	}
+
+	.card__live-blog-badge--coming-soon & {
+		background-color: oColorsGetPaletteColor('live-blog-coming-soon');
+	}
+
+	.card__live-blog-badge--closed & {
+		background-color: oColorsGetPaletteColor('live-blog-closed');
+	}
+}
+
+.card__title {
+	@include oTypographySerifDisplay(m, $load-progressively: true);
+	color: oColorsGetPaletteColor('cold-2');
+	margin: 0;
+	display: inline;
+
+	.card__title-link:hover & {
+		border-bottom: 1px dotted;
+	}
+
+	.card--video & {
+		color: oColorsGetPaletteColor('white');
+	}
+}
+
+@each $size, $breakpoints in $card-title-sizes {
+	.card[data-size="#{$size}"] .card__title {
+		@each $breakpoint, $text-sizes in $breakpoints {
+			@include respondTo($breakpoint) {
+				@include oTypographyFallbackFontSize(serifDisplay, to-px(nth($text-sizes, 1)));
+				line-height: to-px(nth($text-sizes, 2));
+			}
+		}
+	}
+}

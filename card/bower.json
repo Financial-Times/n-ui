@@ -1,0 +1,14 @@
+{
+  "name": "n-card",
+  "main": [
+    "main.scss",
+    "main.js"
+  ],
+  "resolutions": {
+    "o-ft-icons": "next"
+  },
+  "dependencies": {
+    "n-image": "^3.0.4",
+    "o-card": "^2.0.0"
+  }
+}

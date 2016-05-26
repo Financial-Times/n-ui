@@ -1,0 +1,92 @@
+@import "../../colours";
+@import "../../mixins";
+
+$prefix-icon: (
+	size: 10px,
+	scale: 2
+);
+
+@keyframes live-blog-pulse {
+	0% {
+		transform: scale(map-get($prefix-icon, scale));
+	}
+	50% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(map-get($prefix-icon, scale));
+	}
+}
+
+.card__timestamp {
+	@include oColorsFor(o-card-timestamp, text);
+	font-size: 13px;
+	line-height: 1.2em;
+	margin: 5px 0 0;
+	padding: 0;
+	text-transform: uppercase;
+
+	&.card__timestamp--new,
+	&.card__timestamp--updated,
+	&.card__timestamp--in-progress {
+		@include oColorsFor(fast-ft, text);
+	}
+}
+
+.card__timestamp__prefix {
+	margin-right: 0.2em;
+}
+
+.card__timestamp__prefix__icon {
+	content: '';
+	position: relative;
+	top: 1px;
+	display: inline-block;
+	width: map-get($prefix-icon, size);
+	height: map-get($prefix-icon, size);
+	border-radius: 50%;
+	background-color: getColorFor(fast-ft, text);
+	margin-right: 5px;
+
+	.card__timestamp--live-blog & {
+		margin: 0 10px 0 5px;
+
+		&:before {
+			content: '';
+			display: block;
+			height: 100%;
+			border-radius: 50%;
+			opacity: 0.2;
+			transform: scale(map-get($prefix-icon, scale));
+			background-color: inherit;
+		}
+	}
+
+	.card__timestamp--in-progress & {
+		background-color: oColorsGetPaletteColor('live-blog-in-progress');
+
+		&:before {
+			animation: live-blog-pulse 1.7s ease infinite;
+		}
+	}
+
+	.card__timestamp--coming-soon & {
+		background-color: oColorsGetPaletteColor('live-blog-coming-soon');
+	}
+
+	.card__timestamp--closed & {
+		background-color: oColorsGetPaletteColor('live-blog-closed');
+	}
+}
+
+.card__timestamp__time {
+	transition: opacity 1s;
+
+	.enhanced & {
+		opacity: 0;
+	}
+
+	&[data-o-date-js] {
+		opacity: 1;
+	}
+}
