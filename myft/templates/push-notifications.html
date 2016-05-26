@@ -1,0 +1,15 @@
+
+{{#if @root.flags.myFTPushNotifications}}
+<div class="preference">
+	<span class="preference__title">Push alerts [Experimental]</span>
+	<form class="myft-ui myft-ui--prefer"
+		data-preference-name="push-notifications">
+		<button
+			type="submit"
+			class="o-buttons"
+			data-trackable="set-push-notifications" disabled
+		><span class="myft-ui__core-text">Subscribe</span></button>
+		<label class="preference__description">Get push notifications on this device for the most relevant stories in your feed.</label>
+	</form>
+</div>
+{{/if}}

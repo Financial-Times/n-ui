@@ -28,6 +28,7 @@ module.exports = {
 
 			timeout = setTimeout(later, wait);
 		};
-	}
+	},
+	uuid: require('./js/uuid')
 
 };

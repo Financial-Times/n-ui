@@ -42,7 +42,8 @@
     "superstore-sync": "^2.1.0",
     "fontfaceobserver": "^1.7.1",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
-    "o-errors": "^3.1.0"
+    "o-errors": "^3.1.0",
+    "ftdomdelegate": "~2.0.3"
   },
   "resolutions": {
     "o-ft-icons": "next",

@@ -1,0 +1,20 @@
+<form class="myft-ui myft-ui--prefer" method="POST"
+	data-myft-ui="prefer"
+	data-preference-name="{{preferenceName}}"
+	action="/__myft/api/core/preferred/preference/{{preferenceName}}?method=put">
+	{{#each relProperties}}
+		<input type="hidden" name="_rel.{{name}}" value="{{value}}">
+	{{/each}}
+	<button
+		type="submit"
+		class="o-buttons{{#variant}} o-buttons--{{this}}{{/variant}}"
+		data-trackable="set-{{preferenceName}}"
+	><span class="myft-ui__core-text">{{buttonText}}</span></button>
+	<label>
+		{{#if labelTemplate}}
+			{{{usePartial labelTemplate}}}
+		{{else}}
+			{{label}}
+		{{/if}}
+	</label>
+</form>

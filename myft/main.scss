@@ -1,1 +1,327 @@
-@import 'next-myft-ui/main';
+@import "n-ui/env";
+@import "n-notification/main";
+
+$o-overlay-is-silent: false;
+@import "o-overlay/main";
+$o-overlay-is-silent: true;
+
+$o-forms-is-silent: false;
+@import "o-forms/main";
+
+@import "scss/follow-email";
+
+// Because sass has no import_once, use this $_next-myft-ui_applied solution
+$_next-myft-ui_applied: false !default;
+
+@if (not $_next-myft-ui_applied) {
+	/*#{nUiCriticalStart()}*/
+	.myft-ui,
+	.n-myft-ui {
+		display: inline-block;
+	}
+
+	.n-myft-ui--follow {
+		position: relative;
+
+		.o-buttons {
+			padding-left: 26px;
+			position: relative;
+
+			&:before {
+				@include nextIcon(plus, getColor('link-1'), 12);
+				content: ' ';
+				left: $spacing-unit/2;
+				margin: -6px $spacing-unit/4 0 0;
+				position: absolute;
+				top: 50%;
+			}
+
+			&[aria-pressed="true"]:before {
+				@include nextIcon(tick-thin, getColor('link-1'), 12);
+			}
+		}
+
+		.o-buttons--inverse {
+			&:before {
+				@include nextIcon(plus, getColor('link-2'), 12);
+			}
+
+			&[aria-pressed="true"]:before {
+				@include nextIcon(tick-thin, getColor('link-2'), 12);
+			}
+		}
+	}
+	// 'unfollow' button
+	.o-buttons--manage, // deprecated
+	.o-buttons--myft-manage  {
+		&[aria-pressed="true"]:before {
+			@include nextIcon(cross_disk, getColor('white'), 14);
+		}
+	}
+
+	.myft-ui--prefer {
+		display: block;
+		&:after {
+			content: '';
+			clear: both;
+			display: table;
+		}
+	}
+
+	.js .myft-ui--prefer {
+		padding: 5px 0;
+	}
+
+	.myft-ui--prefer label {
+		@include oTypographySans(s);
+	}
+
+	.no-js .myft-ui--prefer label {
+		line-height: 27px;
+	}
+
+	.no-js .myft-ui--prefer button {
+		@include nButtons();
+		margin-left: 10px;
+	}
+
+	.js .myft-ui--prefer button {
+		@include oTypographySansBold(xs);
+		border: 2px solid rgba(getColor('teal-1'), 0.3);
+		width: 70px;
+		background: transparent;
+		border-radius: 3px;
+		color: getColor('teal-1');
+		text-transform: uppercase;
+		padding: 0;
+		margin-left: 10px;
+		box-sizing: border-box;
+
+		&:before,
+		&:after {
+			width: 33px;
+			display: block;
+			float: left;
+			text-align: center;
+			border: 0;
+			padding: 2px 0;
+			margin: 0;
+			box-sizing: border-box;
+			height: 16px;
+		}
+
+		&:before {
+			content: 'off';
+			background: transparent;
+			color: getColor('teal-1');
+		}
+		&:after {
+			content: '';
+			background: rgba(getColor('teal-1'), 0.3);
+		}
+		&:hover,
+		&:focus {
+			&:before {
+				background: rgba(getColor('teal-1'), 0.08);
+			}
+		}
+
+		&[aria-pressed="true"] {
+			border-color: getColor('teal-1');
+
+			&:before {
+				content: '';
+				background: rgba(getColor('teal-1'), 0.08);
+			}
+			&:after {
+				content: 'on';
+				background: getColor('teal-1');
+				color: white;
+			}
+			&:hover:after,
+			&:focus:after {
+				background: rgba(getColor('teal-1'), 0.8);
+			}
+		}
+
+		&[disabled] {
+			opacity: 0.5;
+
+			&,
+			&:hover:before,
+			&:focus:before {
+				background: transparent;
+			}
+		}
+	}
+
+	.js .myft-ui__core-text {
+		display: none;
+	}
+
+	.myft-ui__logo {
+		border: 0;
+	}
+
+	.myft-ui__icon {
+		@include nextIcon(myft-bolder, white, 16);
+		width: 34px;
+		margin: 0 8px -5px;
+	}
+	/*#{nUiCriticalEnd()}*/
+	.n-myft-ui--article-saved__list-select {
+		margin-bottom: 10px;
+	}
+
+	.n-myft-ui__error-message.o-forms-errortext {
+		display: none;
+	}
+	.n-myft-ui__error--no-name {
+		.n-myft-ui__error-message--no-name {
+			display: block;
+		}
+	}
+
+	.myft-list-form__wrapper {
+		margin-bottom: 20px;
+
+		@include oGridRespondTo(M) {
+			min-width: 640px;
+			display: flex;
+		}
+
+		.o-overlay__content & { margin-bottom: 0; }
+	}
+
+	.myft-list-form {
+		overflow: auto;
+		padding: 4px 0;
+
+		@include oGridRespondTo(M) {
+			flex: 6;
+			padding: 0 4px;
+		}
+
+		.o-forms-group {
+			padding: 0px;
+		}
+	}
+
+	.myft-list-form__select {
+		@include oGridRespondTo($until: M) {
+			max-width: 478px;
+		}
+		@include oGridRespondTo($from: M) {
+			max-width: 300px;
+		}
+	}
+
+	.myft-list-form__button {
+		float: right;
+	}
+
+	//Specificity war with Origami
+	.mypage .myft-list-form__message,
+	.o-overlay .myft-list-form__message {
+		background: getColor('pink');
+		border-radius: 0;
+		margin: 3px 0 0;
+		padding: $spacing-unit 20px;
+
+		h3 {
+			@include oTypographySansBold(m);
+			margin: 0 5px 0 0;
+		}
+
+		p {
+			@include oTypographySans(m);
+		}
+
+		h3,
+		p {
+			display: inline-block;
+			padding: 0;
+		}
+	}
+
+	.myft-list-form__message + .myft-list-form__wrapper {
+		margin-top: $spacing-unit;
+	}
+
+	.o-overlay .myft-list-form__message {
+		border-top: 1px solid getColor('warm-3');
+		margin: 0 -20px;
+
+		&:first-child {
+			border-top: 0;
+			margin-top: -20px;
+		}
+	}
+
+	.myft-list-form__message--success {
+		h3 {
+			color: getColor('green');
+
+			&:before {
+				@include nextIcon(tick, getColor('green'), 14);
+				content: '';
+				margin-right: 3px;
+			}
+		}
+	}
+
+	.myft-list-form-divider {
+		text-align: center;
+		margin-bottom: 30px;
+
+		@include oGridRespondTo(M) {
+			display: flex;
+			position: relative;
+			flex: 2;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+		}
+
+		&:after {
+			content: '';
+			display: block;
+			border-top: 1px solid getColor('pink-tint3');
+			margin-top: -10px;
+
+			@include oGridRespondTo(M) {
+				position: absolute;
+				top: 0;
+				height: 100%;
+				width: 1px;
+				margin-top: 0;
+				margin-left: -18px;
+				border-top: 0;
+				border-left: 1px solid getColor('pink-tint3');
+			}
+		}
+	}
+
+	.myft-list-form-divider__inner {
+		padding: 10px;
+		background-color: getColor('warm-5');
+
+		@include oGridRespondTo(M) {
+			z-index: 10;
+		}
+
+		.o-overlay__content & {
+			background-color: getColor('white');
+		}
+
+	}
+
+	@include oGridRespondTo($until: S) {
+		.o-overlay--myft-ui {
+			@include oOverlayFullscreen($fill: 'width');
+			@include oOverlayFullscreen($fill: 'height');
+		}
+	}
+
+	$_next-myft-ui_applied: true !global;
+}
