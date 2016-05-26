@@ -54,6 +54,9 @@ class JsSetup {
 		}, {
 			get: function (name) {
 				return !!this[name];
+			},
+			getAll: function () {
+				return this;
 			}
 		});
 
