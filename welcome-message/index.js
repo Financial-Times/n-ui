@@ -22,10 +22,9 @@ function onButtonClose (func, storageKey, event) {
 	func();
 }
 
-function fixBarSetup (floatingElement, footerElement, visibleClass, hiddenClass) {
+function fixBarSetup (floatingElement, footerElement, visibleClass) {
 	return () => {
 		addClass(floatingElement, visibleClass);
-		addClass(footerElement, hiddenClass);
 	};
 }
 
@@ -52,8 +51,8 @@ module.exports.init = () => {
 	let storageKey = 'welcomePanelClosed';
 	let barPreviouslyHidden = Boolean(retrieve(storageKey));
 	let visibleClass = 'n-welcome--fixed-visible';
-	let hiddenClass = 'n-welcome--hidden';
-	let fixBar = fixBarSetup(floatingElement, footerElement, visibleClass, hiddenClass);
+	let hiddenClass = 'n-welcome--js-hidden';
+	let fixBar = fixBarSetup(floatingElement, footerElement, visibleClass);
 	let unfixBar = unfixBarSetup(floatingElement, footerElement, visibleClass, hiddenClass);
 
 	// Don't display the welcome bar if already acknowledged, or if we can't store in storage
