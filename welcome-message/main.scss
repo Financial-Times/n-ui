@@ -7,6 +7,12 @@
 	border-top: 5px solid getColor('grey-tint3');
 	position: relative;
 
+	/* resets .n-util-hide which is used in template.html
+	 * when this feature is disabled (discrete preset) it will be hidden
+	 * when enabled this scss will be pulled in and the component will render
+	 */
+	display: block;
+
 	@include oGridRespondTo(L) {
 		padding: 15px 0;
 
