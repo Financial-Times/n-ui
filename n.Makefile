@@ -8,6 +8,17 @@ export PATH := ./node_modules/.bin:$(PATH)
 # Use bash not sh
 SHELL := /bin/bash
 
+# Some handy utilities
+GLOB = git ls-files -z $1 | tr '\0' '\n' | xargs -I {} find {} ! -type l
+NPM_INSTALL = npm prune --production=false && npm install
+BOWER_INSTALL = bower install --config.registry.search=http://registry.origami.ft.com --config.registry.search=https://bower.herokuapp.com
+JSON_GET_VALUE = grep $1 | head -n 1 | sed 's/[," ]//g' | cut -d : -f 2
+IS_GIT_IGNORED = grep -q $(if $1, $1, $@) .gitignore
+VERSION = v1.2.1
+APP_NAME = $(shell cat package.json 2>/dev/null | $(call JSON_GET_VALUE,name))
+DONE = echo ✓ $@ done
+CONFIG_VARS = curl -fsL https://ft-next-config-vars.herokuapp.com/$1/$(if $2,$2,$(call APP_NAME)).env -H "Authorization: `heroku config:get APIKEY --app ft-next-config-vars`"
+
 #
 # META TASKS
 #
@@ -26,7 +37,7 @@ clea%:
 
 # install
 instal%: node_modules bower_components _install_scss_lint .editorconfig .eslintrc.js .scss-lint.yml .env webpack.config.js
-	@$(MAKE) $(foreach f, $(shell find functions/* -type d -maxdepth 0 2>/dev/null), $f/node_modules)
+	@$(MAKE) $(foreach f, $(shell find functions/* -type d -maxdepth 0 2>/dev/null), $f/node_modules $f/bower_components)
 	@$(DONE)
 
 # deploy
@@ -37,9 +48,13 @@ deplo%: _deploy_apex
 verif%: _verify_lintspaces _verify_eslint _verify_scss_lint
 	@$(DONE)
 
+# assets (includes assets-production)
+asset%:
+	@if [ -e webpack.config.js ]; then webpack $(if $(findstring assets-production,$@),--bail,--dev); fi
+
 # build (includes build-production)
 buil%: public/__about.json
-	@if [ -e webpack.config.js ]; then webpack $(if $(findstring build-production,$@),--bail,--dev); fi
+	@if [ -e webpack.config.js ]; then $(MAKE) $(subst $@,build,assets); fi
 	@if [ -e Procfile ] && [ "$(findstring build-production,$@)" == "build-production" ]; then haikro build; fi
 	@$(DONE)
 
@@ -60,7 +75,7 @@ node_modules: package.json
 
 # Regular bower install
 bower_components: bower.json
-	@if [ -e bower.json ]; then bower install --config.registry.search=http://registry.origami.ft.com --config.registry.search=https://bower.herokuapp.com && $(DONE); fi
+	@if [ -e bower.json ]; then $(BOWER_INSTALL) && $(DONE); fi
 
 # These tasks have been intentionally left blank
 package.json:
@@ -69,6 +84,10 @@ bower.json:
 # node_modules for Lambda functions
 functions/%/node_modules:
 	@cd $(dir $@) && if [ -e package.json ]; then $(NPM_INSTALL) && $(DONE); fi
+
+# bower_components for Lambda functions
+functions/%/bower_components:
+	@cd $(dir $@) && if [ -e bower.json ]; then $(BOWER_INSTALL) && $(DONE); fi
 
 _install_scss_lint:
 	@if [ ! -x "$(shell which scss-lint)" ] && [ "$(shell $(call GLOB,'*.scss'))" != "" ]; then gem install scss-lint -v 0.35.0 && $(DONE); fi
@@ -104,18 +123,7 @@ _deploy_apex:
 public/__about.json:
 	@if [ -e Procfile ]; then mkdir -p public && echo '{"description":"$(call APP_NAME)","support":"next.team@ft.com","supportStatus":"active","appVersion":"$(shell git rev-parse HEAD | xargs echo -n)","buildCompletionTime":"$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")"}' > $@ && $(DONE); fi
 
-# Some handy utilities
-GLOB = git ls-files -z $1 | tr '\0' '\n' | xargs -I {} find {} ! -type l
-NPM_INSTALL = npm prune --production=false && npm install
-JSON_GET_VALUE = grep $1 | head -n 1 | sed 's/[," ]//g' | cut -d : -f 2
-IS_GIT_IGNORED = grep -q $(if $1, $1, $@) .gitignore
-VERSION = v1.0.9
-APP_NAME = $(shell cat package.json 2>/dev/null | $(call JSON_GET_VALUE,name))
-DONE = echo ✓ $@ done
-CONFIG_VARS = curl -fsL https://ft-next-config-vars.herokuapp.com/$1/$(if $2,$2,$(call APP_NAME)).env -H "Authorization: `heroku config:get APIKEY --app ft-next-config-vars`"
-
 # UPDATE TASK
-
 update-tools:
 	$(eval LATEST = $(shell curl -fs https://api.github.com/repos/Financial-Times/n-makefile/tags | $(call JSON_GET_VALUE,name)))
 	$(if $(filter $(LATEST), $(VERSION)), $(error Cannot update n-makefile, as it is already up to date!))

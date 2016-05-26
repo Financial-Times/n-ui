@@ -44,9 +44,9 @@ class FollowCollection extends Component {
 				data-alternate-text="Following"
 				data-trackable="follow"
 				data-concept-id={conceptIds} // duplicated here for tracking
-			  	title={'Follow all topics in the ' + this.props.name + ' collection'}
+					title={'Follow all topics in the ' + this.props.name + ' collection'}
 				type="submit">
-			  	Follow all
+					Follow all
 			</button>
 		</form>
 	}

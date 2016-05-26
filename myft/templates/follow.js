@@ -42,9 +42,9 @@ class Follow extends Component {
 				data-alternate-text={this.props.alternateText || this.props.buttonText || 'Following'}
 				data-trackable="follow"
 				data-concept-id={this.props.conceptId} // duplicated here for tracking
-			  	title={'Follow ' + this.props.name}
+					title={'Follow ' + this.props.name}
 				type="submit">
-			  	{this.props.buttonText || 'Follow'}
+					{this.props.buttonText || 'Follow'}
 			</button>
 		</form>
 	}
