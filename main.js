@@ -77,7 +77,8 @@ export function bootstrap (cb) {
 
 				if (opts.myft) {
 					myFtUi.init({
-						anonymous: !(/FTSession=/.test(document.cookie))
+						anonymous: !(/FTSession=/.test(document.cookie)),
+						flags
 					});
 				}
 			});
