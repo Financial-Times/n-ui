@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Follow from '../../myft/templates/follow';
+import Follow from '../../../myft/templates/follow';
 
 /**
  * @param {string} id

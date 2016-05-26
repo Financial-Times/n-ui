@@ -1,0 +1,63 @@
+@import "./content/content";
+@import "./meta/meta";
+
+.section--article-ranking {
+	counter-reset: ranking;
+}
+
+.section--video {
+	.core & {
+		display: none;
+	}
+}
+
+.section__column {
+	align-items: stretch;
+
+	&[aria-hidden="true"] {
+		display: none;
+
+		@include oGridRespondTo(L) {
+			display: block;
+		}
+	}
+}
+
+.section__column--hide-until-l {
+	@include oGridRespondTo($until: L) {
+		display: none;
+	}
+}
+
+.card__content {
+	.section--article-ranking & {
+		padding-left: 35px;
+
+		@include oGridRespondTo(S) {
+			padding-left: 0;
+		}
+
+		&:before {
+			counter-increment: ranking;
+			content: counter(ranking);
+			font-size: 32px;
+			font-weight: oFontsWeight(bold);
+			position: absolute;
+			left: 10px;
+
+			@include oGridRespondTo(S) {
+				position: inherit;
+			}
+		}
+	}
+}
+
+.card__content__inner {
+	.section--article-ranking & {
+		margin-left: 35px;
+
+		@include oGridRespondTo(S) {
+			margin-left: 0;
+		}
+	}
+}

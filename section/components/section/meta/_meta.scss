@@ -1,0 +1,93 @@
+@function image-service($url, $colour) {
+    @return 'https://next-geebee.ft.com/image/v1/images/raw/#{$url}?source=next&format=svg&tint=#{color-to-string($colour)},#{color-to-string($colour)}';
+}
+
+@function color-to-string($colour) {
+    @return str_slice(inspect($colour), 2);
+}
+
+$section-header-image: 'http%3a%2f%2fnext-geebee.ft.com%2fassets%2fbackgrounds%2ffront-page-section-header-v2.svg';
+
+.section-meta {
+	margin-top: oGridGutter(M) * 2;
+	position: relative;
+	text-align: center;
+
+	&:before {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 50%;
+		margin-top: -4px;
+		height: 9px;
+		width: 100%;
+		background: url(#{image-service($section-header-image, #000000)}) repeat transparent;
+
+		.section--opinion & {
+			background-image: url(#{image-service($section-header-image, oColorsGetColorFor(author, text))});
+		}
+
+		.section--myft & {
+			background-image: url(#{image-service($section-header-image, getColorFor('myft'))});
+		}
+	}
+}
+
+.section-meta__title {
+	@include oTypographySerifDisplay(l, $load-progressively: true);
+	@include oColorsFor(card, background);
+	line-height: 1em;
+	display: inline-block;
+	margin: 0;
+	padding: 0 oGridGutter();
+	color: getColor('cold-3');
+	position: relative;
+	z-index: 1;
+
+	@include oGridRespondTo(S) {
+		@include oTypographyFallbackFontSize(sansData, 36px);
+	}
+
+	@include oGridRespondTo(M) {
+		padding: 0 oGridGutter(M);
+	}
+
+	.section--opinion & {
+		@include oColorsFor(author, text);
+	}
+
+	.section--myft & {
+		color: getColorFor('myft');
+	}
+}
+
+.section-meta__link {
+	color: inherit;
+	border-bottom: 0;
+}
+
+.section-meta__link--myft-logo {
+	display: inline-block;
+}
+
+.section-meta__myft-icon {
+	@include nextIcon('myft-bolder', getColorFor('myft'), 36);
+	width: 77px;
+	text-indent: -9999px;
+
+	&:hover {
+		@include nextIcon('myft-bolder', getColor('grey-tint4'), 36, $icon-only: true);
+	}
+}
+
+.section-meta__follow {
+	@include oColorsFor(card, background);
+	padding-right: oGridGutter();
+	top: -2px;
+
+	@include oGridRespondTo(M) {
+		padding-right: oGridGutter(M);
+		top: -5px;
+	}
+
+}

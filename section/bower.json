@@ -1,0 +1,10 @@
+{
+  "name": "n-section",
+  "main": [
+    "main.scss",
+    "main.js"
+  ],
+  "dependencies": {
+    "n-card": "^3.0.0"
+  }
+}
