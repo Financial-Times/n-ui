@@ -1,0 +1,71 @@
+@import "../../functions";
+@import "../../mixins";
+@import "../../vars";
+
+$headshot-sizes: (
+	default: 40,
+	S: 60
+);
+
+.card__brand__image {
+	position: relative;
+	float: right;
+	margin: 0 0 0 oGridGutter();
+
+	@each $breakpoint, $size in $headshot-sizes {
+		@include respondTo($breakpoint) {
+			height: to-px($size);
+			width: to-px($size);
+		}
+	}
+}
+
+.card__brand__image--headshot {
+	@include oCardThemeMetaImageRounded;
+}
+
+.card__brand__quote {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	opacity: 0.4;
+
+	@each $breakpoint, $size in $headshot-sizes {
+		@include respondTo($breakpoint) {
+			$quote-width: $size / 2;
+			$quote-height: $quote-width * (4/3);
+			@include nextIcon(single-quote, oColorsGetColorFor(author, text), $quote-width, $icon-only: true);
+			background-size: to-px($quote-width) to-px($quote-height);
+		}
+	}
+}
+
+.card__brand__quote--left {
+	background-position: 20% 50%;
+}
+
+.card__brand__quote--right {
+	background-position: 80% 50%;
+}
+
+.card__brand__title {
+	@include oTypographySerifDisplay(m, $load-progressively: true);
+	line-height: 1em;
+	margin: 0 0 5px;
+
+	.card__brand--opinion & {
+		@include oColorsFor(author, text);
+	}
+
+	.card__brand--editors-pick & {
+		@include oColorsFor(topic, text);
+	}
+}
+
+.card__brand__link {
+	border-bottom: 0;
+	color: inherit;
+}

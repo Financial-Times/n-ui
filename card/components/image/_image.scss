@@ -1,0 +1,82 @@
+@import '../../mixins';
+
+.card__image-link {
+	@include oCardImageBottom;
+	display: block;
+	border-bottom-width: 0;
+
+	.card[data-image~="hide"] & {
+		display: none;
+	}
+
+	.card[data-image~="top"] & {
+		@include oCardImageTop;
+	}
+
+	.card[data-image~="left"] & {
+		@include oCardImageLeft;
+	}
+
+	.card[data-image~="right"] & {
+		@include oCardImageRight;
+	}
+
+	@each $layout-name in $_o-grid-layout-names {
+		@include oGridRespondTo($layout-name) {
+			.card[data-image~="#{$layout-name}--hide"] & {
+				display: none;
+			}
+
+			.card[data-image~="#{$layout-name}--top"] &,
+			.card[data-image~="#{$layout-name}--bottom"] &,
+			.card[data-image~="#{$layout-name}--left"] &,
+			.card[data-image~="#{$layout-name}--right"] & {
+				display: block;
+			}
+
+			.card[data-image~="#{$layout-name}--top"] &,
+			.card[data-image~="#{$layout-name}--bottom"] & {
+				width: auto;
+				padding: 0;
+				float: none;
+			}
+
+			.card[data-image~="#{$layout-name}--top"] & {
+				@include oCardImageTop;
+			}
+
+			.card[data-image~="#{$layout-name}--bottom"] & {
+				@include oCardImageBottom;
+			}
+
+			.card[data-image~="#{$layout-name}--left"] & {
+				@include oCardImageLeft;
+				padding: 0 10px 0 0;
+			}
+
+			.card[data-image~="#{$layout-name}--right"] & {
+				@include oCardImageRight;
+				padding: 0 0 0 10px;
+			}
+		}
+	}
+
+	.card--picture-story & {
+		margin: 0 0 10px;
+	}
+}
+
+.card__image-placeholder {
+	position: relative;
+	padding-bottom: 56.25%;
+}
+
+.card__image {
+	display: block;
+
+	.card__image-placeholder & {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}

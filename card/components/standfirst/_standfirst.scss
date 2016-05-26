@@ -1,0 +1,38 @@
+@import "../../mixins";
+
+.card__standfirst {
+	@include oTypographySansData(m, $load-progressively: true);
+	@include oTypographyFallbackFontSize(sansData, 16px);
+	color: getColor('cold-1');
+	line-height: 18px;
+	margin: 5px 0 0;
+
+	&[data-show~="false"] {
+		display: none;
+	}
+
+	.card[data-size="large-top-story"] &,
+	.card[data-size="large-no-image"] & {
+		@include oTypographyFallbackFontSize(sansData, 20px);
+		line-height: 22px;
+	}
+
+	.card[data-size="large"] & {
+		@include oGridRespondTo(L) {
+			@include oTypographyFallbackFontSize(sansData, 18px);
+			line-height: 18px;
+		}
+	}
+
+	@each $layout-name in $_o-grid-layout-names {
+		@include oGridRespondTo($layout-name) {
+			&[data-show~="#{$layout-name}--true"] {
+				display: block;
+			}
+
+			&[data-show~="#{$layout-name}--false"] {
+				display: none;
+			}
+		}
+	}
+}

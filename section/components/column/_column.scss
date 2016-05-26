@@ -1,0 +1,48 @@
+.column {
+	@include displayFlex;
+	flex-direction: column;
+
+	&[data-o-grid-colspan~="hide"] {
+		@include oGridRespondTo($until: S) {
+			display: none;
+		}
+	}
+
+	&[data-o-grid-colspan~="Shide"] {
+		@include oGridRespondTo(S, $until: M) {
+			display: none;
+		}
+	}
+
+	&[data-o-grid-colspan~="Mhide"] {
+		@include oGridRespondTo(M, $until: L) {
+			display: none;
+		}
+	}
+
+	&[data-o-grid-colspan~="Lhide"] {
+		@include oGridRespondTo(L, $until: XL) {
+			display: none;
+		}
+	}
+
+	&[data-o-grid-colspan~="XLhide"] {
+		@include oGridRespondTo(XL) {
+			display: none;
+		}
+	}
+
+	.o-grid-row {
+		flex: 1 1 auto;
+		-ms-flex-preferred-size: auto;
+	}
+}
+
+.column--related {
+	@include oColorsFor(card-editors-pick, background);
+	margin-top: oGridGutter();
+
+	@include oGridRespondTo(M) {
+		margin-top: oGridGutter(M);
+	}
+}

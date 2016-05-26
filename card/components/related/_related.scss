@@ -1,0 +1,58 @@
+@import '../../mixins';
+
+.card__related-items {
+	@include oCardRelatedContent;
+
+	&[data-show~="false"] {
+		display: none;
+	}
+
+	.card[data-image~="right"] & {
+		clear: none;
+	}
+
+	@each $layout-name in $_o-grid-layout-names {
+		@include oGridRespondTo($layout-name) {
+			&[data-show~="#{$layout-name}--true"] {
+				display: block;
+			}
+
+			&[data-show~="#{$layout-name}--false"] {
+				display: none;
+			}
+
+			.card[data-image~="#{$layout-name}--right"] & {
+				clear: none;
+			}
+		}
+	}
+}
+
+.card__related-item {
+	@include oTypographySerifDisplay(s, $load-progressively: true);
+	position: relative;
+	line-height: 18px;
+	margin-top: 5px;
+	padding: 0 0 0 15px;
+
+	&:before {
+		display: none;
+	}
+}
+
+.card__related-item__link {
+	border-bottom-width: 0;
+	color: inherit;
+
+	&:hover {
+		border-bottom-color: currentColor;
+	}
+
+	&:before {
+		@include nextIcon('arrow-right', getColorFor(topic, text), 10);
+		position: absolute;
+		top: 4px;
+		left: 0;
+		content: '';
+	}
+}

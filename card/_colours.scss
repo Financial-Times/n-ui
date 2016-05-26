@@ -1,0 +1,14 @@
+// colours
+@include oColorsSetColor('author-background', #d0e2e7);
+@include oColorsSetColor('author-text', #416e92);
+@include oColorsSetColor('live-blog-closed', oColorsGetPaletteColor('grey-tint4'));
+@include oColorsSetColor('live-blog-coming-soon', #fd9d00);
+@include oColorsSetColor('live-blog-in-progress', oColorsGetPaletteColor('red'));
+@include oColorsSetColor('video-card-background', #595555);
+
+// use cases
+@include oColorsSetUseCase(author, text, 'author-text');
+@include oColorsSetUseCase(card, border, 'warm-3');
+@include oColorsSetUseCase(card-editors-pick, background, 'warm-1');
+@include oColorsSetUseCase(card-video, background, 'video-card-background');
+@include oColorsSetUseCase(related-story, background, 'pink-tint1');

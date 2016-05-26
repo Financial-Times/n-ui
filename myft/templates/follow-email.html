@@ -1,0 +1,26 @@
+<section class="myft-follow" data-trackable="follow-email">
+	<h1 class="myft-follow__heading">{{name}}</h1>
+
+	<p class="myft-follow__text">You’re now following this topic.</p>
+
+{{#ifAll notSubscribedToDaily notYetDismissed}}
+	<form method="POST" action="/__myft/api/core/follow-email/set-preferences" class="myft-follow__form js-follow-email-form">
+		<p class="myft-follow__text">Get headlines in a daily email on topics you follow.</p>
+
+		<button type="submit" name="method" value="delete" class="myft-follow__btn" data-trackable="no">No thanks</button>
+		<button type="submit" name="method" value="put" class="myft-follow__btn myft-follow__btn--standout" data-trackable="yes">OK</button>
+
+		<div class="o-forms-group">
+			<input type="checkbox" name="follow-email-dismissed" id="in_checkbox" class="o-forms-checkbox o-forms-checkbox--small" data-trackable="dismiss">
+			<label for="in_checkbox" class="o-forms-label">Don’t show me this message again</label>
+		</div>
+	</form>
+	<footer class="myft-follow__footer">
+		<p>You can change <a href="/myft/alerts/{{@root.userId}}" class="myft-follow__footer-link" data-trackable="settings-link">email settings in <i>my</i>FT</a></p>
+	</footer>
+{{else}}
+	<footer class="myft-follow__footer">
+		<p><a href="/myft/explore/{{@root.userId}}" class="myft-follow__footer-link" data-trackable="settings-link">Manage your topics</a></p>
+	</footer>
+{{/ifAll}}
+</section>

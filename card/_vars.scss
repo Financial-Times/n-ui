@@ -1,0 +1,34 @@
+// font-size/line-height pairs
+$card-title-sizes: (
+	tiny: (
+		default: 18 20,
+		S: 16 16,
+		M: 16 18
+	),
+	small: (
+		default: 20 22,
+		M: 18 20,
+		L: 20 24,
+	),
+	medium: (
+		default: 22 24,
+		S: 24 26
+	),
+	large: (
+		default: 26 28,
+		S: 28 30,
+		M: 28 30,
+		L: 32 32
+	),
+	large-top-story: (
+		default: 28 30,
+		S: 34 34,
+		M: 42 40
+	),
+	large-no-image: (
+		default: 34 34,
+		M: 42 40,
+		L: 36 38,
+		XL: 44 44
+	)
+);

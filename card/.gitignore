@@ -1,0 +1,6 @@
+.DS_Store
+
+/.idea/
+/bower_components/
+/demos/build/
+/node_modules/

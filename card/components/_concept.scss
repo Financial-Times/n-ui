@@ -1,0 +1,122 @@
+@import '../colours';
+@import '../mixins';
+
+.card--concept {
+	background: mix(getColorFor('myft'), getColorFor('page', background), 10%);
+	border-bottom: 1px solid getColorFor('myft');
+}
+
+.card__concept-header {
+	border-bottom: 1px solid rgba(getColorFor('myft'), 0.3);
+	min-height: 51px;
+	overflow: hidden;
+	padding: 0 0 10px 90px;
+
+	.card--empty & {
+		padding-left: 0;
+	}
+}
+
+.card__concept-image-container {
+	left: 10px;
+	position: absolute;
+	top: 10px;
+	width: 90px;
+}
+
+.card__concept-title {
+	@include oTypographySansBold(m, $load-progressively: true);
+	margin: 0 0 0 10px;
+
+	.card--empty & {
+		margin-left: 0;
+	}
+}
+
+.card__concept-link {
+	@include oColorsFor(topic, text);
+	border-bottom: 0;
+	word-wrap: break-word;
+}
+
+.card__concept-image {
+	display: block;
+}
+
+.card__concept-sub-heading {
+	font-size: 18px;
+	line-height: 1;
+	margin: 10px 0 0;
+}
+
+.card__concept-content {
+	flex-grow: 1;
+	margin: 0;
+}
+
+.card__concept-articles-container {
+	margin: 0;
+}
+
+.card__concept-articles {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.card__concept-article {
+	margin: 8px 0 0;
+	padding-left: 15px;
+	position: relative;
+
+	&:before {
+		@include nextIcon('arrow-right', getColorFor('myft'), 10);
+		content: '';
+		left: 0;
+		position: absolute;
+		top: 4px;
+	}
+}
+
+.card__concept-article-link {
+	@include oTypographySerifDisplay(l, $load-progressively: true);
+	//FIXME: stop overriding mixins
+	@include oTypographyFallbackFontSize(sansData, 18px);
+	line-height: 20px;
+	border-bottom-width: 0;
+	color: getColor('cold-1');
+
+	&:hover,
+	&:focus {
+		border-bottom-color: inherit;
+		border-bottom-width: 1px;
+	}
+}
+
+.card__concept-meta {
+	border-top: 1px solid rgba(getColorFor('myft'), 0.3);
+	margin-top: 10px;
+	overflow: hidden;
+	padding-top: 10px;
+}
+
+.card__concept-follow {
+	float: right;
+}
+
+.card__concept-empty {
+	font-size: 18px;
+	line-height: 1.2;
+	margin: 10px 0 20px;
+	text-align: center;
+}
+
+@include oGridRespondTo($from: XL) {
+	.card__concept-header {
+		padding-left: 120px;
+		min-height: 67px;
+	}
+	.card__concept-image-container {
+		width: 120px;
+	}
+}

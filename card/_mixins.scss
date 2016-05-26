@@ -1,0 +1,22 @@
+@mixin displayFlex() {
+	display: block;
+
+	// Prevents autoprefixer from outputting display: -webkit-box;, which is buggy
+	& {
+		// scss-lint:disable VendorPrefix
+		/*autoprefixer: off*/
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+	}
+}
+
+@mixin respondTo($from: false, $until: false) {
+	@if $from == default and $until == false {
+		@content;
+	} @else {
+		@include oGridRespondTo($from, $until) {
+			@content;
+		}
+	}
+}
