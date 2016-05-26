@@ -50,3 +50,9 @@ Equivalent to `ctx.querySelector(sel)` (`ctx` defaults to `document`)
 
 #### `$$(sel, [ctx])`
 Equivalent to `Array.from(ctx.querySelectorAll(sel))` (`ctx` defaults to `document`)
+
+#### `throttle(func, wait)`
+Creates a throttled copy of a function
+
+#### `debounce(func, wait)`
+Creates a throttled copy of a function
