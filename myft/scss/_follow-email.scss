@@ -1,0 +1,87 @@
+$o-overlay-is-silent: true;
+@import "o-overlay/main";
+
+// Because sass has no import_once, use this $_next-myft-ui-follow-email_applied solution
+$_next-myft-ui-follow-email_applied: false !default;
+
+@if (not $_next-myft-ui-follow-email_applied) {
+
+	.myft-follow {
+		text-align: center;
+
+		.o-forms-group {
+			margin: $spacing-unit*1.5 0 $spacing-unit/2;
+		}
+	}
+
+	.myft-follow__form {
+		padding: 0 $spacing-unit*2 $spacing-unit;
+	}
+
+	.myft-follow__heading {
+		@include oTypographySansBold(l);
+		padding: 0 $spacing-unit*1.5 $spacing-unit;
+	}
+
+	.myft-follow__text {
+		@include oTypographySans(m);
+		margin: 10px 0;
+	}
+
+	.myft-follow__btn {
+		//TODO: switch myft-ui buttons to o-buttons
+		@include nButtons($size: big);
+		margin: $spacing-unit 0 0 $spacing-unit;
+	}
+
+	.myft-follow__btn:first-of-type {
+		margin-left: 0;
+	}
+
+	.myft-follow__btn--standout {
+		@include nButtonsTheme(standout);
+	}
+
+	@include oGridRespondTo($until: S) {
+		.o-overlay--myft-follow {
+			@include oOverlayFullscreen($fill: 'width');
+			@include oOverlayFullscreen($fill: 'height');
+
+			.o-overlay__content {
+				height: 95%;
+			}
+
+			.myft-follow__footer {
+				bottom: 0;
+				box-sizing: border-box;
+				position: absolute;
+				width: 100%;
+			}
+		}
+	}
+
+	.o-overlay--myft-follow {
+		.o-overlay__content {
+			padding: 0;
+		}
+
+		.myft-follow__heading {
+			margin: 0;
+		}
+
+		.myft-follow__footer {
+			background: getColor('cold-1');
+			color: getColor('white');
+			padding: $spacing-unit;
+
+			p {
+				margin: 0;
+			}
+		}
+
+		.myft-follow__footer-link {
+			@include nLinksBody($inversed: true);
+		}
+	}
+	$_next-myft-ui-follow-email_applied: true !global;
+}
