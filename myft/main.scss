@@ -1,4 +1,4 @@
-@import "n-ui/env";
+@import "next-buttons/main";
 @import "n-notification/main";
 
 $o-overlay-is-silent: false;
@@ -20,10 +20,26 @@ $_next-myft-ui_applied: false !default;
 		display: inline-block;
 	}
 
+	.n-myft-ui__button {
+		@include nButtons();
+	}
+
+	.n-myft-ui__button--inverse {
+		@include nButtonsTheme(inverse);
+	}
+
+	.n-myft-ui__button--medium {
+		@include nButtonsSize(medium);
+	}
+
+	.n-myft-ui__button--big {
+		@include nButtonsSize(big);
+	}
+
 	.n-myft-ui--follow {
 		position: relative;
 
-		.o-buttons {
+		.n-myft-ui__button {
 			padding-left: 26px;
 			position: relative;
 
@@ -41,7 +57,7 @@ $_next-myft-ui_applied: false !default;
 			}
 		}
 
-		.o-buttons--inverse {
+		.n-myft-ui__button--inverse {
 			&:before {
 				@include nextIcon(plus, getColor('link-2'), 12);
 			}
@@ -52,8 +68,7 @@ $_next-myft-ui_applied: false !default;
 		}
 	}
 	// 'unfollow' button
-	.o-buttons--manage, // deprecated
-	.o-buttons--myft-manage  {
+	.myft-ui__button--manage {
 		&[aria-pressed="true"]:before {
 			@include nextIcon(cross_disk, getColor('white'), 14);
 		}

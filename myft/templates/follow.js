@@ -21,10 +21,10 @@ class Follow extends Component {
 		if (this.props.classes) {
 			classes = classes.concat(classesToArray(this.props.classes));
 		}
-		const buttonClasses = ['o-buttons'];
+		const buttonClasses = ['n-myft-ui__button'];
 		[this.props.variant, this.props.size]
 			.filter(exists)
-			.map(buttonOpt => buttonClasses.push(`o-buttons--${buttonOpt}`));
+			.map(buttonOpt => buttonClasses.push(`n-myft-ui__button--${buttonOpt}`));
 
 		return <form
 			className={classes.join(' ')}
