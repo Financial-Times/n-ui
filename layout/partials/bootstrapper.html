@@ -45,7 +45,7 @@
 				'fetch|always|gated',
 				'Array.prototype.find|always|gated',
 				'Array.prototype.findIndex|always|gated'
-			].join(','));
+			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set');
 		} else {
 			ftNextLoadScript('https://next-geebee.ft.com/polyfill/v2/polyfill.min.js?features=HTMLPictureElement|always|gated');
 		}
