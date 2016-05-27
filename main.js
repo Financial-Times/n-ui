@@ -22,20 +22,23 @@ const presets = {
 	}
 };
 
-const opts = {};
+let configuration = {};
 
 export function configure (options = {}) {
-	if (options.preset) {
-		Object.assign(opts, presets[options.preset], options);
-	} else {
-		throw new Error('n-ui configure options must include a preset');
-	}
+	// NOTE: just store configuration for now, need to wait for polyfill to load before assigning
+	configuration = options;
 }
 
 export function bootstrap (cb) {
 	cb = cb || (() => null);
 
 	return layout.bootstrap(({ flags, mainCss, appInfo }) => { // eslint-disable-line
+
+		if (!configuration.preset) {
+			throw new Error('n-ui configure options must include a preset');
+		}
+
+		const opts = Object.assign({}, presets[configuration.preset], configuration);
 
 		if (opts.myft) {
 
