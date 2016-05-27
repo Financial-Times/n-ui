@@ -13,14 +13,15 @@
 
 	window.ftNextFireCondition = function (condition) {
 		if (!window['ftNext' + condition]) {
+			var ev;
 			try {
-				e = new Event('ftNext' + condition);
-			} catch (e) {
-				e = document.createEvent('Event');
-				e.initEvent('ftNext' + condition, true, true);
+				ev = new Event('ftNext' + condition);
+			} catch (er) {
+				ev = document.createEvent('Event');
+				ev.initEvent('ftNext' + condition, true, true);
 			}
 			window['ftNext' + condition] = 1;
-			document.dispatchEvent(e);
+			document.dispatchEvent(ev);
 		}
 	};
 
