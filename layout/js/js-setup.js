@@ -49,11 +49,11 @@ class JsSetup {
 		opts = opts || {};
 
 		const flags = window.nextFeatureFlags.reduce((obj, flag) => {
-			obj[flag.name] = !!flag.state;
+			obj[flag.name] = flag.state;
 			return obj;
 		}, {
 			get: function (name) {
-				return !!this[name];
+				return this[name];
 			},
 			getAll: function () {
 				return this;
