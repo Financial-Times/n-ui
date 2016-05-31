@@ -11,12 +11,12 @@ $_n-ui-features: (
 	grid: true,
 	header: true,
 	icons: null,
-	messages: true,
 	messagePrompts: false,
 	myft: false,
 	normalize: null,
 	notification: false,
 	overlay: false,
+	promoMessages: false,
 	typography: true,
 	utils: null,
 	viewport: null,
@@ -27,10 +27,10 @@ $_n-ui-presets: (
 	discrete: map-merge($_n-ui-features, ()),
 	complete: map-merge($_n-ui-features, (
 		cookieMessage: true,
-		messages: true,
 		messagePrompts: true,
 		myft: true,
 		notification: true,
+		promoMessages: true,
 		welcomeMessage: true
 	))
 );

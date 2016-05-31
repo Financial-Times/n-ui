@@ -1,4 +1,4 @@
-# messages
+# promo messages
 
 This component will soon (at some point) replace `message-prompts`. 
 For now they live side by side. 

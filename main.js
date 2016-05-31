@@ -2,7 +2,7 @@
 import layout from './layout';
 import date from './date';
 import header from './header';
-import messages from './messages';
+import promoMessages from './promo-messages';
 import cookieMessage from './cookie-message';
 import welcomeMessage from './welcome-message';
 import messagePrompts from './message-prompts';
@@ -20,7 +20,7 @@ const presets = {
 		welcomeMessage: true,
 		myft: true,
 		messagePrompts: true,
-		messages: true
+		promoMessages: true
 	}
 };
 
@@ -87,8 +87,8 @@ export function bootstrap (cb) {
 					});
 				}
 
-				if (opts.messages) {
-					messages.init(flags);
+				if (opts.promoMessages) {
+					promoMessages.init(flags);
 				}
 			});
 
