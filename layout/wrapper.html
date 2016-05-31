@@ -54,22 +54,21 @@
 	</head>
 	<body data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}" >
 		<div class="n-layout">
-			<div class="n-layout__row n-layout__row--content">
-
+			<div class="n-layout__row n-layout__row--header">
 				{{#outputBlock 'above-header'}}{{/outputBlock}}
 				{{>n-header-footer/header/template content=header}}
-
+			</div>
+			<div class="n-layout__row n-layout__row--content">
 				{{{body}}}
 			</div>
 			<div class="n-layout__row n-layout__row--footer">
+				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{#if @root.flags.welcomePanel}}
-				{{>n-ui/welcome-message/template}}
+					{{>n-ui/welcome-message/template}}
 				{{/if}}
 				{{>n-header-footer/footer/template content=footer}}
 			</div>
-
 			{{>n-ui/layout/partials/bootstrapper}}
-
 			{{>n-third-party-code/templates/core-analytics}}
 		</div>
 	</body>
