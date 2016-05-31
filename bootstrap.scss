@@ -5,14 +5,15 @@
 @import 'env';
 @import 'layout/main';
 @import 'myft/main';
-@import "header/main";
-@import "footer/main";
+@import 'header/main';
+@import 'footer/main';
 
 
 @import 'ads/main';
 // TODO: move these components into n-ui
 
-@import "welcome-message/main";
-@import "n-cookie-message/main";
-@import "n-interactive-tour/main";
-@import "message-prompts/main";
+@import 'welcome-message/main';
+@import 'n-cookie-message/main';
+@import 'n-interactive-tour/main';
+@import 'message-prompts/main';
+@import 'messages/main';
