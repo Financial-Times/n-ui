@@ -1,1 +1,7 @@
-@import 'o-expander/main'
+@if nUiHas(expander) {
+	$o-expander-is-silent: false !global;
+}
+
+@import 'o-expander/main';
+
+$o-expander-is-silent: true;

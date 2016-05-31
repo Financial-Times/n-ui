@@ -2,15 +2,15 @@
 
 ## Usage
 
-### CSS
+### Sass
 
-```scss
-@import "~n-ui/buttons/main";
-```
+This module is bundled and configured by default.
 
 See [o-buttons](https://github.com/Financial-Times/o-buttons) documentation for usage information.
 
 ### JS
+
+This module is _not_ bundled by default.
 
 ```js
 const buttons = require('n-ui/buttons');

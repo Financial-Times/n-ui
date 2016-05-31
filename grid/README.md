@@ -1,26 +1,21 @@
-# grid
+# Grid
 
-This is more or less just the [origami o-grid component](http://registry.origami.ft.com/components/o-grid) with a few modifications
+## Usage
 
-## IE8
+### Sass
 
-No IE8 styles are output by default. To output an IE8 stylesheet the following pattern should work when using n-makefile
+This module is bundled and configured by default.
+
+More or less [o-grid](http://registry.origami.ft.com/components/o-grid) with a few modifications.
+
+#### Offset columns
+
+To avoid shipping unused rulesets `offset` `pull` and `push` column selectors are disabled. To use these a mixin is provided `nUiGridOffset($layout-name, $columns, $mode)`
 
 ```scss
-// main-ie8.scss
-
-$o-grid-mode: 'fixed';
-$o-grid-fixed-layout: 'M';
-
-@import 'main';
+@include nUiGridOffset('M', 3, 'pull');
 ```
 
-## Offset columns
+#### Human readable selectors
 
-`offset` `pull` and `push` column selectors are disabled. To use these a mixin is provided `nUiGridOffset($layout: null, $amount: 1, $mode: offset)`
-
-e.g.  `@include nUiGridOffset(M, 3, pull)`
-
-## Human readable selectors
-
-Pending a pull request to o-grid, these will be disabled, so use the numeric selectors i.e. `data-o-grid-colspan="6"` not `data-o-grid-colspan="half"`. The one exception is the `hide` keyword
+Pending a pull request to o-grid, these will be disabled. Please use the numeric selectors I.eE. `data-o-grid-colspan="6"` and not `data-o-grid-colspan="half"`. The one exception is the `hide` keyword.

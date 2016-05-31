@@ -1,8 +1,11 @@
+////
+/// @group n-ui colors
+////
+
 $_n-ui-colors-applied: false !default;
 
-/* Deliberately not able to import in noisy mode */
+// Deliberately not able to import in noisy mode
 $o-colors-is-silent: true;
-
 @import 'o-colors/main';
 
 @function getColor($args...) {
@@ -19,7 +22,7 @@ $o-colors-is-silent: true;
 	@include oColorsSetColor('fastft-brand', #cf191d);
 	@include oColorsSetColor('fastft-highlight', #f5dfd9);
 
-	//TODO: remove this once we've stopped using link-1 everywhere
+	// TODO: remove this once we've stopped using link-1 everywhere
 	@include oColorsSetColor('link-1', getColor('teal-1'));
 	@include oColorsSetColor('link-2', getColor('teal-2'));
 
@@ -52,7 +55,6 @@ $o-colors-is-silent: true;
 	@include oColorsSetUseCase(n-lists-top-level-hover, border, 'white');
 	@include oColorsSetUseCase(n-lists-top-level-hover, background, 'white');
 
-
 	@include oColorsSetUseCase(n-lists-links, background, 'transparent');
 	@include oColorsSetUseCase(n-lists-links, border, 'black');
 	@include oColorsSetUseCase(n-lists-links-hover, border, 'black');
@@ -76,7 +78,7 @@ $o-colors-is-silent: true;
 	@include oColorsSetUseCase(link-inversed, text, 'teal-2');
 	@include oColorsSetUseCase(link-inversed-hover, text, 'warm-2');
 
-	//Page
+	// Page
 	@include oColorsSetUseCase(page, background, 'pink');
 	@include oColorsSetUseCase(page, text, 'cold-2');
 
@@ -89,7 +91,6 @@ $o-colors-is-silent: true;
 	@include oColorsSetUseCase(fast-ft, text, 'fastft-brand');
 	@include oColorsSetUseCase(fast-ft, border, 'fastft-brand');
 	@include oColorsSetUseCase(fast-ft, background, 'fastft-highlight');
-
 
 	$_n-ui-colors-applied: true;
 

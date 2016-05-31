@@ -1,4 +1,69 @@
-@mixin nCrosshatchBG($background: gray, $foreground: rgba(0, 0, 0, 0.2)) {
+////
+/// @group n-ui mixins
+////
+
+/// Critical block start
+/// @output A critical block start comment
+@mixin nUiCriticalStart() {
+	@if nUiHas('critical') {
+		/*! start:head.css*/
+	}
+}
+
+/// Critical block end
+/// @output A critical block start comment
+@mixin nUiCriticalEnd() {
+	@if nUiHas('critical') {
+		/*! end:head.css*/
+	}
+}
+
+/// Include rules for IE8 only block
+/// @content
+@mixin nUiIe8Only () {
+	@if variable-exists('_n-ui-is-ie8') or $o-grid-ie8-rules == 'only' {
+		@content
+	}
+}
+
+/// Exclude rules from IE8 block
+/// @content
+@mixin nUiNotIe8 () {
+	@if not (variable-exists('_n-ui-is-ie8') or $o-grid-ie8-rules == 'only') {
+		@content
+	}
+}
+
+/// Configure n-ui
+/// @output none
+@mixin nUiConfigure($opts: ()) {
+	@if $_n-ui-configured == true {
+		@error 'nUiConfigure must only be called once';
+	}
+
+	$_n-ui-configured: true !global;
+
+	@if map-has-key($opts, preset) {
+		$preset: map-get($_n-ui-presets, map-get($opts, preset));
+		$_n-ui-features: map-merge($_n-ui-features, $preset) !global;
+		$opts: map-remove($opts, preset);
+	}
+
+	$_n-ui-features: map-merge($_n-ui-features, $opts) !global;
+}
+
+
+/// Debug comment
+/// @output A loud comment listing configured n-ui features
+@mixin nUiConfigureDebug() {
+	/*! n-ui features: #{inspect($_n-ui-features)} */
+}
+
+/// Pinstripe background
+/// @param {Color} $background
+/// @param {Color} $foreground
+/// @output A repeating linear gradient background
+@mixin nUiPinstripeBG($background: gray, $foreground: rgba(0, 0, 0, 0.2)) {
 	background-color: $background;
 	background-image: repeating-linear-gradient(
 		135deg,
@@ -9,4 +74,11 @@
 		transparent 3px
 	);
 	background-size: 100%;
+}
+
+/// Crosshatch background
+/// @deprecated
+@mixin nCrosshatchBG($args...) {
+	@warn '`nCrosshatchBG` has been deprecated, use `nUiPinstripeBG` instead';
+	@include nUiPatternBackground($args...);
 }

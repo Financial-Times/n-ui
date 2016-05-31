@@ -1,3 +1,7 @@
+////
+/// @group n-ui grid
+////
+
 $_n-ui-grid-applied: false !default;
 
 // Set gutters to be slightly smaller than the default on larger screens
@@ -5,8 +9,10 @@ $o-grid-gutters: (
 	default: 10px,
 	M:       16px
 );
+
 $o-grid-ie8-rules: none !default;
 $o-grid-mode: snappy !default;
+
 // Need to turn this on as `hide` gets disabled otherwise.
 // $o-grid-human-friendly-selectors: false;
 $o-grid-offset-selectors: false;
@@ -28,30 +34,34 @@ $o-grid-offset-selectors: false;
 	@warn "n-ui/grid should only be imported once.";
 }
 
-@mixin _nUiGridOffsetRules($layout, $mode, $amount) {
+@mixin _nUiGridOffsetRules($layout, $mode, $columns) {
 	@if $mode == offset {
-		@include oGridOffset($amount);
+		@include oGridOffset($columns);
 	} @else if $mode == pull {
-		@include oGridPull($amount);
+		@include oGridPull($columns);
 	} @else if $mode == push {
-		@include oGridPush($amount);
+		@include oGridPush($columns);
 	}
 }
 
-@mixin nUiGridOffset($layout: null, $amount: 1, $mode: offset) {
+/// Grid column offset
+/// @param {Null|String} $layout-name - S to XL or null
+/// @param {Number} $columns - 1 to 12
+/// @param {String} $mode - offset, push or pull
+@mixin nUiGridOffset($layout-name: null, $columns: 1, $mode: offset) {
+	$selector: $mode + $columns;
 
-	$selector: $mode + $amount;
-	@if $layout {
-		$selector: $layout + $selector;
+	@if $layout-name {
+		$selector: $layout-name + $selector;
 	}
 
 	[data-o-grid-colspan~="#{$selector}"] {
-		@if $layout {
-			@include oGridRespondTo($layout) {
-				@include _nUiGridOffsetRules($layout, $mode, $amount);
+		@if $layout-name {
+			@include oGridRespondTo($layout-name) {
+				@include _nUiGridOffsetRules($layout-name, $mode, $columns);
 			}
 		} @else {
-			@include _nUiGridOffsetRules($layout, $mode, $amount);
+			@include _nUiGridOffsetRules($layout-name, $mode, $columns);
 		}
 	}
 }

@@ -1,0 +1,36 @@
+////
+/// @group n-ui functions
+////
+
+/// Test if the given feature is configured
+/// @param {String} $feature
+/// @returns {Bool}
+@function nUiHas($feature) {
+	@return map-get($_n-ui-features, $feature) == true;
+}
+
+/// Returns a critical block start pragma
+/// @returns {String}
+/// @deprecated
+@function nUiCriticalStart() {
+	@warn '`nUiCriticalStart()` function is deprecated. Use the mixin of the same name instead';
+
+	@if nUiHas('critical') {
+		@return '! start:head.css ';
+	}
+
+	@return '';
+}
+
+/// Returns a critical block end pragma
+/// @returns {String}
+/// @deprecated
+@function nUiCriticalEnd() {
+	@warn '`nUiCriticalEnd()` function is deprecated. Use the mixin of the same name instead';
+
+	@if nUiHas('critical') {
+		@return '! end:head.css ';
+	}
+
+	@return '';
+}
