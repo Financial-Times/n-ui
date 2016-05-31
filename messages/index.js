@@ -1,1 +1,1 @@
-module.exports = require('n-message');
+module.exports = require('n-messages');
