@@ -33,7 +33,7 @@ describe('js setup', function () {
 			const promise = new JsSetup().init();
 			promise.then(function () {
 				expect(spy.calledOnce).to.be.true;
-				expect(spy.args[0][0].enabled).to.be.false;
+				expect(spy.args[0][0].enabled).to.be.falsy;
 				spy.restore();
 				done();
 			})
