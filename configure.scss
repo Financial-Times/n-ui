@@ -16,6 +16,7 @@ $_n-ui-features: (
 	normalize: null,
 	notification: false,
 	overlay: false,
+	promoMessages: false,
 	typography: true,
 	utils: null,
 	viewport: null,
@@ -29,6 +30,7 @@ $_n-ui-presets: (
 		messagePrompts: true,
 		myft: true,
 		notification: true,
+		promoMessages: true,
 		welcomeMessage: true
 	))
 );

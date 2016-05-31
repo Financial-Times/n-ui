@@ -2,6 +2,7 @@
 /test.scss
 .eslintrc.js
 .editorconfig
+.idea
 /.sass-cache/
 /bower_components/
 /node_modules/
