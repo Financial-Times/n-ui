@@ -65,15 +65,19 @@
 /// @output A repeating linear gradient background
 @mixin nUiPinstripeBG($background: gray, $foreground: rgba(0, 0, 0, 0.2)) {
 	background-color: $background;
+	// complex: any tighter we need half pixels which are calculated
+	// or rounded differently between browsers
 	background-image: repeating-linear-gradient(
 		135deg,
-		transparent,
+		transparent 0,
+		transparent 1px,
 		$foreground 1px,
-		// allowing a little gradient reduces strobing, especially on retina
+		$foreground 2px,
 		transparent 2px,
-		transparent 3px
+		transparent 5px
 	);
-	background-size: 100%;
+	// complex: setting the size avoids rounding errors that cause odd strobing
+	background-size: 7px 7px;
 }
 
 /// Crosshatch background
