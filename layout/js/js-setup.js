@@ -118,6 +118,11 @@ class JsSetup {
 							// ads and third party tracking
 							// TODO - lazy load this
 							nThirdPartyCode.initAfterEverythingElse(result.flags);
+
+							const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+							if (performance && performance.mark) {
+								performance.mark('jsExecuted');
+							}
 							dispatchLoadedEvent();
 						});
 				})
