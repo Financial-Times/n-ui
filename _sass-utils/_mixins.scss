@@ -80,5 +80,5 @@
 /// @deprecated
 @mixin nCrosshatchBG($args...) {
 	@warn '`nCrosshatchBG` has been deprecated, use `nUiPinstripeBG` instead';
-	@include nUiPatternBackground($args...);
+	@include nUiPinstripeBG($args...);
 }
