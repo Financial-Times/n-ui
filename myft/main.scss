@@ -14,7 +14,9 @@ $o-forms-is-silent: false;
 $_next-myft-ui_applied: false !default;
 
 @if (not $_next-myft-ui_applied) {
-	/*#{nUiCriticalStart()}*/
+
+	@include nUiCriticalStart();
+
 	.myft-ui,
 	.n-myft-ui {
 		display: inline-block;
@@ -184,7 +186,9 @@ $_next-myft-ui_applied: false !default;
 		width: 34px;
 		margin: 0 8px -5px;
 	}
-	/*#{nUiCriticalEnd()}*/
+
+	@include nUiCriticalEnd();
+
 	.n-myft-ui--article-saved__list-select {
 		margin-bottom: 10px;
 	}

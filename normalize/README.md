@@ -6,6 +6,6 @@ The snippets have been taken from [normalize.css](https://github.com/necolas/nor
 
 ## Usage
 
-### CSS
+### Sass
 
-This module is bundled by default.
+This module is bundled by default and cannot be configured.

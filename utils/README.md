@@ -1,12 +1,14 @@
-# Util
+# Utils
 
 CSS and JS utilities for next
 
 ## Usage
 
-### CSS
+### Sass
 
-This module is bundled by default.
+This module is bundled by default and cannot be configured.
+
+### HTML
 
 #### Layout
 
@@ -43,16 +45,20 @@ Truncate text to a single line.
 
 ### JS
 
-This module is bundled by default.
+This module is bundled not bundled by default.
 
-#### `$(sel, [ctx])`
-Equivalent to `ctx.querySelector(sel)` (`ctx` defaults to `document`)
+```js
+const utils = require('n-ui/utils');
+```
 
-#### `$$(sel, [ctx])`
-Equivalent to `Array.from(ctx.querySelectorAll(sel))` (`ctx` defaults to `document`)
+#### `$(sel, [context])`
+Equivalent to `context.querySelector(sel)` (`context` defaults to `document`)
+
+#### `$$(sel, [context])`
+Equivalent to `Array.from(context.querySelectorAll(sel))` (`context` defaults to `document`)
 
 #### `throttle(func, wait)`
 Creates a throttled copy of a function
 
 #### `debounce(func, wait)`
-Creates a throttled copy of a function
+Creates a debounced copy of a function
