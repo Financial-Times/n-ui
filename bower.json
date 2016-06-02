@@ -1,3 +1,4 @@
+
 {
   "name": "n-ui",
   "homepage": "https://github.com/Financial-Times/n-ui",
@@ -17,38 +18,37 @@
     "main.scss"
   ],
   "dependencies": {
+    "fontfaceobserver": "^1.7.1",
+    "ftdomdelegate": "^2.0.3",
+    "loadcss": "filamentgroup/loadCSS#^1.2.0",
     "n-cookie-message": "^1.4.9",
     "n-header-footer": "^2.1.2",
-    "n-interactive-tour": "^1.3.2",
-    "next-ads-component": "^9.1.0",
-    "n-third-party-code": "^2.0.1",
-    "o-icons": "^4.0.0",
-    "o-buttons": "^3.1.4",
-    "o-forms": "^2.0.0",
-    "o-typography": "^3.2.0",
-    "o-ft-icons": "#next",
-    "next-myft-client": "^6.4.2",
-    "n-notification": "^3.0.3",
-    "o-overlay": "^1.8.2",
     "n-instrumentation": "^1.10.1",
-    "o-date": "^2.3.3",
-    "o-expander": "^3.0.1",
-    "o-viewport": "^2.0.0",
+    "n-interactive-tour": "^1.3.2",
     "n-message-prompts": "^2.1.8",
-    "o-grid": "#rhys/push-off",
+    "n-messages": "*",
+    "n-notification": "^3.0.3",
+    "n-third-party-code": "^2.0.1",
+    "next-ads-component": "^9.1.0",
     "next-card": "^7.1.0",
+    "next-myft-client": "^6.4.2",
+    "o-buttons": "^4.0.1",
     "o-colors": "^3.3.2",
-    "superstore-sync": "^2.1.0",
-    "fontfaceobserver": "^1.7.1",
-    "loadcss": "filamentgroup/loadCSS#^1.2.0",
+    "o-date": "^2.3.3",
     "o-errors": "^3.1.0",
-    "ftdomdelegate": "^2.0.3",
-    "n-messages": "*"
+    "o-expander": "^3.0.1",
+    "o-forms": "^2.0.0",
+    "o-ft-icons": "#next",
+    "o-grid": "#rhys/push-off",
+    "o-icons": "^4.0.0",
+    "o-overlay": "^1.8.2",
+    "o-typography": "^3.2.0",
+    "o-viewport": "^2.0.0",
+    "superstore-sync": "^2.1.0"
   },
   "resolutions": {
     "o-ft-icons": "next",
     "o-grid": "rhys/push-off",
-    "o-viewport": "^2.0.0",
-    "o-buttons": "^4.0.0"
+    "o-viewport": "^2.0.0"
   }
 }
