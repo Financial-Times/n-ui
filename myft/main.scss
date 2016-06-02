@@ -73,7 +73,7 @@ $_next-myft-ui_applied: false !default;
 	.myft-ui__button--manage,
 	.myft-ui__button--myft-manage {
 		&[aria-pressed="true"]:before {
-			@include oIconsGetIcon('cross_disk', getColor('white'), 14);
+			@include oIconsGetIcon('cross-disk', getColor('white'), 14);
 		}
 	}
 
