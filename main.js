@@ -1,12 +1,11 @@
 // TODO: integrate next-js-setup into this repo
 import layout from './layout';
-import ads from 'ads';
-import tracking from 'tracking';
+import ads from './ads';
+import tracking from './tracking';
 import nInstrumentation from 'n-instrumentation';
 import date from './date';
 import header from './header';
 import promoMessages from './promo-messages';
-import ads from './ads';
 import cookieMessage from './cookie-message';
 import welcomeMessage from './welcome-message';
 import messagePrompts from './message-prompts';

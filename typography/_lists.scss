@@ -54,7 +54,7 @@
 	text-decoration: none;
 	border-bottom-width: 0;
 	&:after {
-		@include nextIcon(arrow-right, oColorsGetColorFor($use-case, border), 10);
+		@include oIconsGetIcon('arrow-right', oColorsGetColorFor($use-case, border), 10);
 		content: '';
 		opacity: 0.25;
 		position: absolute;
@@ -66,8 +66,7 @@
 		background: rgba(oColorsGetColorFor(#{$use-case}-hover, background), 0.1);
 		border-bottom-width: 0;
 		&:after {
-			//TODO: split nextIcon out to avoid duping this
-			@include nextIcon(arrow-right, oColorsGetColorFor(#{$use-case}-hover, border), 10);
+			@include oIconsGetIcon('arrow-right', oColorsGetColorFor(#{$use-case}-hover, border), 10);
 		}
 	}
 }
