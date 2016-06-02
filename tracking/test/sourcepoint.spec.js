@@ -1,10 +1,7 @@
-'use strict';
-/*global require,describe,it,expect*/
+/*global require,describe,it,expect,sinon*/
 
 const flags = { get: function () { return false; }};
-
-const sinon = require('sinon');
-const n3rdParty = require('../index');
+const tracking = require('../index');
 let sandbox;
 
 let sourcepointScript;
@@ -24,7 +21,7 @@ const checkSourcepointScriptLoaded = function() {
 describe('n-third-party-code', function() {
 
 	before(function() {
-		n3rdParty.initAfterEverythingElse(flags);
+		tracking.lazyInit(flags);
 	});
 
 	beforeEach(function() {
@@ -38,7 +35,7 @@ describe('n-third-party-code', function() {
 			sourcepointScript.remove();
 		}
 		document.removeEventListener('sp.blocking', () => {});
-  });
+	});
 
 	it('should not insert the Sourcepoint script to the page when flag is off', function() {
 		sandbox.stub(flags, 'get').withArgs('sourcepoint').returns(false);

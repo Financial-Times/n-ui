@@ -77,5 +77,3 @@ exports.init = (flags) => {
 
 	});
 };
-
-

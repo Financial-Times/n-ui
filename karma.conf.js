@@ -4,9 +4,9 @@
 const path = require('path');
 const BowerWebpackPlugin = require('bower-webpack-plugin');
 const componentsToTest = [
-	// 'layout',
+	'layout',
 	'ads',
-	// 'tracking'
+	'tracking'
 ]
 
 module.exports = function (config) {
@@ -15,12 +15,12 @@ module.exports = function (config) {
 	config.set({
 
 		// base path that will be used to resolve all patterns (eg. files, exclude)
-		basePath: './',
+		basePath: '',
 
 
 		// frameworks to use
 		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-		frameworks: ['mocha', 'chai', 'sinon'],
+		frameworks: ['mocha', 'chai', 'sinon', 'sinon-chai'],
 
 		// list of files / patterns to load in the browser
 		files: componentsToTest.map(name => name + '/test/*.spec.js'),
@@ -44,10 +44,6 @@ module.exports = function (config) {
 							plugins: ['add-module-exports', ['transform-es2015-classes', { loose: true }]]
 						}
 					},
-					// {
-					// 	test: /sinon\/pkg\/sinon\.js$/,
-					// 	loader: 'imports?define=>false,require=>false'
-					// },
 					// don't use requireText plugin (use the 'raw' plugin)
 					{
 						test: /follow-email\.js$/,
@@ -61,12 +57,9 @@ module.exports = function (config) {
 				]
 			},
 			plugins: [
-				new BowerWebpackPlugin({ includes: /\.js$/ })
+				new BowerWebpackPlugin({ includes: /\.js$/ }),
 			],
 			resolve: {
-				// alias: {
-				// 	sinon: 'sinon/pkg/sinon'
-				// },
 				root: [
 					path.join(__dirname, 'bower_components'),
 					path.join(__dirname, 'node_modules')
@@ -90,7 +83,7 @@ module.exports = function (config) {
 
 		// level of logging
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel: config.LOG_DEBUG,
+		logLevel: config.LOG_INFO,
 
 
 		// enable / disable watching file and executing tests whenever any file changes
@@ -101,6 +94,23 @@ module.exports = function (config) {
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
 		browsers: ['Chrome'],
 
+		plugins: [
+			require("karma-mocha"),
+			require("karma-chai"),
+			require("karma-sinon"),
+			require("karma-sinon-chai"),
+			require("karma-sourcemap-loader"),
+			require("karma-webpack"),
+			require("karma-chrome-launcher"),
+			require("karma-html-reporter")
+		],
+		client: {
+				mocha: {
+						reporter: 'html',
+						ui: 'bdd',
+						timeout: 0
+				}
+		},
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits

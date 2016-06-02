@@ -62,6 +62,7 @@ function initOAds (flags, contextData, userData) {
 }
 
 function onAdsComplete (event) {
+	document.removeEventListener('oAds.complete', onAdsComplete);
 	/* istanbul ignore next */
 	let performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 

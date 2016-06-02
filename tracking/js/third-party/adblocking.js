@@ -181,14 +181,14 @@ function fireOTrackingEvent () {
 		context: {
 			provider: 'blockAdBlock'
 		}
-	}));
+	});
 };
 
 module.exports = function(flags) {
 
-  const isAllocated = function() {
-  	return /spoor-id=0/.test(document.cookie);
-  }
+	const isAllocated = function() {
+		return /spoor-id=0/.test(document.cookie);
+	}
 
 	if (flags && flags.get('blockAdBlock') && isAllocated()) {
 		const blockAdBlock = new BlockAdBlock();

@@ -1,4 +1,4 @@
-/*global require,describe,afterEach,beforeEach,it,expect*/
+/*global require,describe,afterEach,beforeEach,it,expect,sinon*/
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
 const nThirdPartyCode = require('n-third-party-code');
 const jsSetup = require('../index');

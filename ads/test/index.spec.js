@@ -1,9 +1,5 @@
-/* globals describe, it, beforeEach, afterEach */
+/* globals describe, it, beforeEach, afterEach,expect,sinon */
 const ads = require('o-ads');
-const chai = require('chai');
-// const sinon = require('sinon');
-const sinonChai = require('sinon-chai');
-const expect = chai.expect;
 const main = require('../index');
 const utils = require('../js/utils');
 const markup = require('./helpers/markup');
@@ -51,7 +47,7 @@ describe('Main', () => {
 		});
 	});
 
-	it.only('Should log info and performance mark for the first ad when ads are loaded in slots', (done) => {
+	it('Should log info and performance mark for the first ad when ads are loaded in slots', (done) => {
 		const flags = { get: () => true };
 		sandbox.stub(utils, 'getAppName', () => 'earle' );
 		//PhantomJS doesn't have window.performance so fake it
@@ -60,15 +56,20 @@ describe('Main', () => {
 		};
 		const perfMark = sandbox.stub(window.performance, 'mark', () => true );
 		const info = sandbox.stub(utils.log, 'info');
-		main.onload(flags);
-		document.addEventListener('oAds.complete', () => {
-			expect(info).to.have.been.calledWith('Ad loaded in slot');
-			expect(perfMark).to.have.been.calledOnce;
-			expect(perfMark).to.have.been.calledWith('firstAdLoaded');
-			done();
-		});
-		document.dispatchEvent(new CustomEvent('oAds.complete', { detail: { type: 's1', slot: { gpt: { isEmpty: false }}}}));
-		document.dispatchEvent(new CustomEvent('oAds.complete', { detail: { type: 's1', slot: { gpt: { isEmpty: false }}}}));
+		main.onload(flags)
+			.then(() =>{
+				document.addEventListener('oAdsLogTestDone', () => {
+					expect(info).to.have.been.calledWith('Ad loaded in slot');
+					expect(perfMark).to.have.been.calledOnce;
+					expect(perfMark).to.have.been.calledWith('firstAdLoaded');
+					done();
+				});
+				document.dispatchEvent(new CustomEvent('oAds.complete', { detail: { type: 's1', slot: { gpt: { isEmpty: false }}}}));
+				document.dispatchEvent(new CustomEvent('oAds.complete', { detail: { type: 's1', slot: { gpt: { isEmpty: false }}}}));
+				document.dispatchEvent(new CustomEvent('oAdsLogTestDone', { detail: { type: 's1', slot: { gpt: { isEmpty: false }}}}));
+			});
+
+
 	});
 
 	it('Should make a request to the ads API when on an article page and returns an empty object if an error occurred', () => {
