@@ -46,7 +46,7 @@ $_next-myft-ui_applied: false !default;
 			position: relative;
 
 			&:before {
-				@include nextIcon(plus, getColor('link-1'), 12);
+				@include oIconsGetIcon('plus', getColor('link-1'), 12);
 				content: ' ';
 				left: $spacing-unit/2;
 				margin: -6px $spacing-unit/4 0 0;
@@ -55,17 +55,17 @@ $_next-myft-ui_applied: false !default;
 			}
 
 			&[aria-pressed="true"]:before {
-				@include nextIcon(tick-thin, getColor('link-1'), 12);
+				@include oIconsGetIcon('tick-thin', getColor('link-1'), 12);
 			}
 		}
 
 		.n-myft-ui__button--inverse {
 			&:before {
-				@include nextIcon(plus, getColor('link-2'), 12);
+				@include oIconsGetIcon('plus', getColor('link-2'), 12);
 			}
 
 			&[aria-pressed="true"]:before {
-				@include nextIcon(tick-thin, getColor('link-2'), 12);
+				@include oIconsGetIcon('tick-thin', getColor('link-2'), 12);
 			}
 		}
 	}
@@ -73,7 +73,7 @@ $_next-myft-ui_applied: false !default;
 	.myft-ui__button--manage,
 	.myft-ui__button--myft-manage {
 		&[aria-pressed="true"]:before {
-			@include nextIcon(cross_disk, getColor('white'), 14);
+			@include oIconsGetIcon('cross_disk', getColor('white'), 14);
 		}
 	}
 
@@ -182,7 +182,7 @@ $_next-myft-ui_applied: false !default;
 	}
 
 	.myft-ui__icon {
-		@include nextIcon(myft-bolder, white, 16);
+		@include nGetImage('logo', 'brand-myft', white, 16);
 		width: 34px;
 		margin: 0 8px -5px;
 	}
@@ -283,7 +283,7 @@ $_next-myft-ui_applied: false !default;
 			color: getColor('green');
 
 			&:before {
-				@include nextIcon(tick, getColor('green'), 14);
+				@include oIconsGetIcon('tick', getColor('green'), 14);
 				content: '';
 				margin-right: 3px;
 			}
