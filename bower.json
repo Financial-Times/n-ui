@@ -49,7 +49,6 @@
   "resolutions": {
     "o-ft-icons": "next",
     "o-grid": "rhys/push-off",
-    "o-viewport": "^2.0.0",
-    "o-buttons": "^4.0.0"
+    "o-viewport": "^2.0.0"
   }
 }
