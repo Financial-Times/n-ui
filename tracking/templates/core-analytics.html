@@ -1,0 +1,13 @@
+{{#if @root.flags.oTracking}}
+	<script>
+		(function () {
+			if (!cutsTheMustard) {
+				var img = new Image();
+				img.src = 'https://spoor-api.ft.com/px.gif?data=%7b%22category%22%3a%22page%22%2c%22action%22%3a%22view%22%2c%22system%22%3a%7b%22source%22%3a%22non-ctm%22%7d%2c%22user%22%3a%7b%7d%2c%22context%22%3a%7b%22product%22%3a%22next%22%7d%7d';
+			}
+		})();
+	</script>
+	<noscript data-o-component="o-tracking">
+		<img src="https://spoor-api.ft.com/px.gif?data=%7b%22category%22%3a%22page%22%2c%22action%22%3a%22view%22%2c%22system%22%3a%7b%22source%22%3a%22non-ctm%22%7d%2c%22user%22%3a%7b%7d%2c%22context%22%3a%7b%22product%22%3a%22next%22%7d%7d"/>
+	</noscript>
+{{/if}}

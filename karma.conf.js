@@ -3,8 +3,15 @@
 
 const path = require('path');
 const BowerWebpackPlugin = require('bower-webpack-plugin');
+const componentsToTest = [
+	// 'layout',
+	'ads',
+	// 'tracking'
+]
 
 module.exports = function (config) {
+
+
 	config.set({
 
 		// base path that will be used to resolve all patterns (eg. files, exclude)
@@ -13,19 +20,17 @@ module.exports = function (config) {
 
 		// frameworks to use
 		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-		frameworks: ['mocha', 'chai'],
-
+		frameworks: ['mocha', 'chai', 'sinon'],
 
 		// list of files / patterns to load in the browser
-		files: [
-			'layout/test/js-setup.spec.js'
-		],
+		files: componentsToTest.map(name => name + '/test/*.spec.js'),
 
 		// preprocess matching files before serving them to  the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-		preprocessors: {
-			'layout/test/js-setup.spec.js': ['webpack']
-		},
+		preprocessors: componentsToTest.reduce((obj, name) => {
+			obj[name + '/test/*.spec.js'] = ['webpack', 'sourcemap']
+			return obj;
+		}, {}),
 
 		webpack: {
 			module: {
@@ -39,10 +44,10 @@ module.exports = function (config) {
 							plugins: ['add-module-exports', ['transform-es2015-classes', { loose: true }]]
 						}
 					},
-					{
-						test: /sinon.*\.js$/,
-						loader: 'imports?define=>false,require=>false'
-					},
+					// {
+					// 	test: /sinon\/pkg\/sinon\.js$/,
+					// 	loader: 'imports?define=>false,require=>false'
+					// },
 					// don't use requireText plugin (use the 'raw' plugin)
 					{
 						test: /follow-email\.js$/,
@@ -59,9 +64,9 @@ module.exports = function (config) {
 				new BowerWebpackPlugin({ includes: /\.js$/ })
 			],
 			resolve: {
-				alias: {
-					sinon: 'sinon/pkg/sinon'
-				},
+				// alias: {
+				// 	sinon: 'sinon/pkg/sinon'
+				// },
 				root: [
 					path.join(__dirname, 'bower_components'),
 					path.join(__dirname, 'node_modules')
@@ -85,11 +90,11 @@ module.exports = function (config) {
 
 		// level of logging
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel: config.LOG_INFO,
+		logLevel: config.LOG_DEBUG,
 
 
 		// enable / disable watching file and executing tests whenever any file changes
-		autoWatch: true,
+		autoWatch: false,
 
 
 		// start these browsers

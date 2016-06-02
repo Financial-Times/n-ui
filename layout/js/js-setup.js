@@ -8,14 +8,9 @@ if (!window.console) {
 }
 
 import {load as loadFonts} from '../../typography/font-loader';
-const nThirdPartyCode = require('n-third-party-code');
-const oErrors = require('o-errors');
+import {loadScript, waitForCondition} from '../../utils';
 
-function waitForCondition (conditionName, action) {
-	return window[`ftNext${conditionName}Loaded`] ?
-		action() :
-		document.addEventListener(`ftNext${conditionName}Loaded`, action);
-}
+const oErrors = require('o-errors');
 
 // Dispatch a custom `ftNextLoaded` event after the app executes.
 function dispatchLoadedEvent () {
@@ -37,7 +32,6 @@ class JsSetup {
 
 	init (opts) {
 		loadFonts(document.documentElement)
-		const nInstrumentation = require('n-instrumentation');
 
 		this.appInfo = {
 			isProduction: document.documentElement.hasAttribute('data-next-is-production'),
@@ -82,13 +76,6 @@ class JsSetup {
 			};
 		}
 
-		// FT and next tracking
-		// TODO - move all this into the main bootstrap file exported by n-ui
-		nThirdPartyCode.init(flags, oErrors, this.appInfo);
-		if (flags.get('nInstrumentation')) {
-			nInstrumentation.init();
-		}
-
 		return Promise.resolve({
 			flags: flags,
 			appInfo: this.appInfo,
@@ -115,10 +102,6 @@ class JsSetup {
 					return promise
 						.then(() => {
 							document.documentElement.classList.add('js-success');
-							// ads and third party tracking
-							// TODO - lazy load this
-							nThirdPartyCode.initAfterEverythingElse(result.flags);
-
 							const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 							if (performance && performance.mark) {
 								performance.mark('jsExecuted');
@@ -127,7 +110,6 @@ class JsSetup {
 						});
 				})
 				.catch(err => {
-
 					if (!this.appInfo.isProduction){
 						if (typeof err === 'object' && err.stack) {
 							console.error(err.stack); //eslint-disable-line
@@ -135,18 +117,13 @@ class JsSetup {
 							console.error(err); //eslint-disable-line
 						}
 					}
-
 					oErrors.error(err);
 				});
 		});
 	}
 
 	loadScript (src) {
-		return new Promise((res, rej) => {
-			const script = window.ftNextLoadScript(src);
-			script.addEventListener('load', res);
-			script.addEventListener('error', rej);
-		});
+		return loadScript(src);
 	}
 }
 

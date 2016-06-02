@@ -1,10 +1,23 @@
 $_n-ui-ads-applied: false !default;
 
 @if $_n-ui-ads-applied == false {
-	$next-ads-component-is-silent: false;
+	$o-ads-is-silent: false;
+	.core .o-ads {
+		display: none;
+	}
+
+	@media print {
+		.o-ads {
+			display: none !important;
+		}
+	}
 } @else {
-	@warn "n-ui/ads should only be imported once.";
+	$o-ads-is-silent: true;
 }
 
-@import 'next-ads-component/main';
-$next-ads-component-is-silent: true;
+@import "o-ads/main";
+
+@if $_n-ui-ads-applied == false {
+	$_n-ui-ads-applied: true;
+	$o-ads-is-silent: true;
+}

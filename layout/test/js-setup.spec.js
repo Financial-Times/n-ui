@@ -3,7 +3,6 @@ window.nextFeatureFlags = [{name: 'aFlag', state: true}];
 const nThirdPartyCode = require('n-third-party-code');
 const jsSetup = require('../index');
 const JsSetup = require('../js/js-setup');
-const sinon = require('sinon');
 const oErrors = require('o-errors');
 
 describe('js setup', function () {
