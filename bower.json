@@ -13,15 +13,11 @@
     "test",
     "tests"
   ],
-  "main": [
-    "main.js",
-    "main.scss"
-  ],
+  "main": "main.js",
   "dependencies": {
     "fontfaceobserver": "^1.7.1",
     "ftdomdelegate": "^2.0.3",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
-    "n-cookie-message": "^1.4.9",
     "n-header-footer": "^2.1.2",
     "n-instrumentation": "^1.10.1",
     "n-interactive-tour": "^1.3.2",
@@ -31,6 +27,7 @@
     "n-third-party-code": "^2.0.1",
     "next-ads-component": "^9.1.0",
     "next-card": "^7.1.0",
+    "next-feature-flags-client": "^8.1.0",
     "next-myft-client": "^6.4.2",
     "o-buttons": "^4.0.1",
     "o-colors": "^3.3.2",
