@@ -113,7 +113,6 @@ module.exports = function (config) {
 			require("karma-sinon-chai"),
 			require("karma-sourcemap-loader"),
 			require("karma-webpack"),
-			require("karma-firefox-launcher"),
 			require("karma-chrome-launcher"),
 			require("karma-html-reporter")
 		],

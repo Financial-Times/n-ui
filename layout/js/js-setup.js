@@ -8,7 +8,7 @@ if (!window.console) {
 }
 
 import {load as loadFonts} from '../../typography/font-loader';
-import {loadScript, waitForCondition} from '../../utils';
+import {loadScript, waitForCondition, perfMark} from '../../utils';
 
 const oErrors = require('o-errors');
 
@@ -102,10 +102,7 @@ class JsSetup {
 					return promise
 						.then(() => {
 							document.documentElement.classList.add('js-success');
-							const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-							if (performance && performance.mark) {
-								performance.mark('jsExecuted');
-							}
+							perfMark('appJsExecuted');
 							dispatchLoadedEvent();
 						});
 				})
