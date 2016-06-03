@@ -5,6 +5,8 @@ const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
 const jsonpFetch = require('n-jsonp');
 
+import { perfMark } from '../utils'
+
 let slotCount;
 let slotsRendered = 0;
 let containers;
@@ -63,17 +65,14 @@ function initOAds (flags, contextData, userData) {
 
 function onAdsComplete (event) {
 	document.removeEventListener('oAds.complete', onAdsComplete);
-	/* istanbul ignore next */
-	let performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-
 	const detail = event.detail;
 	/* istanbul ignore else  */
 	if (detail.type !== 'oop') {
 		/* istanbul ignore else  */
 		if (detail.slot.gpt && detail.slot.gpt.isEmpty === false) {
 			utils.log.info('Ad loaded in slot', event);
-			if (slotsRendered === 0 && performance && performance.mark) {
-				performance.mark('firstAdLoaded');
+			if (slotsRendered === 0) {
+				perfMark('firstAdLoaded');
 			}
 		} else if (detail.slot.gpt && detail.slot.gpt.isEmpty === true) {
 			utils.log.warn('Failed to load ad, details below');

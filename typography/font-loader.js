@@ -1,6 +1,6 @@
 /* globals FontFaceObserver */
 require('fontfaceobserver/fontfaceobserver.standalone.js');
-
+import { perfMark } from '../utils';
 const fontLoadedPrefix = 'o-typography--loaded-';
 const fontLoadedCookieName = 'next-fonts-loaded';
 const fontConfigs = [
@@ -40,10 +40,7 @@ export function load (el) {
 			// set cookie for subsequent visits
 			document.cookie = `${fontLoadedCookieName}=1;domain=.ft.com;path=/;max-age=${60 * 60 * 24 * 7}`;
 			// create a performance mark
-			const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-			if (performance && performance.mark) {
-				performance.mark('fontsLoaded');
-			}
+			perfMark('fontsLoaded');
 		})
 		.catch(() => { });
 };

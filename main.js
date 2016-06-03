@@ -10,6 +10,7 @@ import cookieMessage from './cookie-message';
 import welcomeMessage from './welcome-message';
 import messagePrompts from './message-prompts';
 import { client as myFtClient, ui as myFtUi } from './myft';
+import { perfMark } from './utils';
 
 const presets = {
 	discrete: {
@@ -74,7 +75,7 @@ export function bootstrap (cb) {
 		if (opts.date) {
 			date.init();
 		}
-
+		perfMark('criticalJsExecuted');
 		mainCss
 			.then(() => {
 				if (opts.cookieMessage) {
@@ -101,6 +102,7 @@ export function bootstrap (cb) {
 				if (opts.promoMessages) {
 					promoMessages.init(flags);
 				}
+				perfMark('lazyJsExecuted');
 			});
 
 		return Promise.resolve({flags, mainCss, appInfo})
