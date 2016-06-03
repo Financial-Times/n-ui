@@ -6,10 +6,6 @@ const oErrors = require('o-errors');
 
 describe('js setup', function () {
 
-	it('should polyfill fetch', function () {
-		expect(window.fetch).to.be.a('function');
-	});
-
 	it('should have an init method', function () {
 		expect(jsSetup.init).to.be.a('function');
 	});

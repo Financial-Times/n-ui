@@ -105,7 +105,7 @@ module.exports = function (config) {
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers: ['Chrome'],
+		browsers: ['Firefox'],
 
 		plugins: [
 			require("karma-mocha"),
@@ -114,6 +114,7 @@ module.exports = function (config) {
 			require("karma-sinon-chai"),
 			require("karma-sourcemap-loader"),
 			require("karma-webpack"),
+			require("karma-firefox-launcher"),
 			require("karma-chrome-launcher"),
 			require("karma-html-reporter")
 		],
