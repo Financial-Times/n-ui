@@ -24,7 +24,7 @@ module.exports = function (config) {
 
 		// list of files / patterns to load in the browser
 		files: [
-			'//cdn.polyfill.io/v2/polyfill.min.js?features=' + [
+			'http://cdn.polyfill.io/v2/polyfill.min.js?features=' + [
 				'default',
 				'requestAnimationFrame',
 				'Promise',
@@ -34,8 +34,7 @@ module.exports = function (config) {
 				'CustomEvent|always|gated',
 				'fetch|always|gated',
 				'Array.prototype.find|always|gated',
-				'Array.prototype.findIndex|always|gated',
-				'Array.from|always|gated'
+				'Array.prototype.findIndex|always|gated'
 			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
 		].concat(componentsToTest.map(name => name + '/test/*.spec.js')),
 
@@ -105,7 +104,7 @@ module.exports = function (config) {
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers: ['Firefox'],
+		browsers: ['Chrome'],
 
 		plugins: [
 			require("karma-mocha"),

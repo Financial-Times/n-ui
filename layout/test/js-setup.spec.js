@@ -56,7 +56,6 @@ describe('js setup', function () {
 
 	describe('init with flags on', function () {
 
-		let thirdPartyStub;
 		before(() => window.nextFeatureFlags = [
 			'clientErrorReporting',
 			'clientDetailedErrorReporting',
