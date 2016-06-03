@@ -24,7 +24,7 @@ module.exports = function (config) {
 
 		// list of files / patterns to load in the browser
 		files: [
-			'//cdn.polyfill.io/v2/polyfill.min.js?callback=ftNextPolyfillServiceCallback&features=' + [
+			'http://cdn.polyfill.io/v2/polyfill.min.js?features=' + [
 				'default',
 				'requestAnimationFrame',
 				'Promise',
@@ -53,7 +53,7 @@ module.exports = function (config) {
 						query: {
 							cacheDirectory: true,
 							presets: ['es2015'],
-							plugins: ['add-module-exports', 'transform-runtime', ['transform-es2015-classes', { loose: true }]]
+							plugins: ['add-module-exports', ['transform-es2015-classes', { loose: true }]]
 						}
 					},
 					// don't use requireText plugin (use the 'raw' plugin)

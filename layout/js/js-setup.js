@@ -101,6 +101,7 @@ class JsSetup {
 					}
 					return promise
 						.then(() => {
+							document.documentElement.classList.add('js-success');
 							perfMark('appJsExecuted');
 							dispatchLoadedEvent();
 						});
