@@ -3,30 +3,47 @@
 
 const path = require('path');
 const BowerWebpackPlugin = require('bower-webpack-plugin');
+const componentsToTest = [
+	'layout',
+	'ads',
+	'tracking'
+]
 
 module.exports = function (config) {
+
+
 	config.set({
 
 		// base path that will be used to resolve all patterns (eg. files, exclude)
-		basePath: './',
+		basePath: '',
 
 
 		// frameworks to use
 		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-		frameworks: ['mocha', 'chai'],
-
+		frameworks: ['mocha', 'chai', 'sinon', 'sinon-chai'],
 
 		// list of files / patterns to load in the browser
 		files: [
-			'layout/test/js-setup.spec.js'
-		],
+			'http://cdn.polyfill.io/v2/polyfill.min.js?features=' + [
+				'default',
+				'requestAnimationFrame',
+				'Promise',
+				'matchMedia',
+				'HTMLPictureElement',
+				// the following polyfills are included pending https://github.com/Financial-Times/polyfill-service/issues/653
+				'CustomEvent|always|gated',
+				'fetch|always|gated',
+				'Array.prototype.find|always|gated',
+				'Array.prototype.findIndex|always|gated'
+			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
+		].concat(componentsToTest.map(name => name + '/test/*.spec.js')),
 
 		// preprocess matching files before serving them to  the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-		preprocessors: {
-			'layout/test/js-setup.spec.js': ['webpack']
-		},
-
+		preprocessors: componentsToTest.reduce((obj, name) => {
+			obj[name + '/test/*.spec.js'] = ['webpack', 'sourcemap']
+			return obj;
+		}, {}),
 		webpack: {
 			module: {
 				loaders: [
@@ -38,10 +55,6 @@ module.exports = function (config) {
 							presets: ['es2015'],
 							plugins: ['add-module-exports', ['transform-es2015-classes', { loose: true }]]
 						}
-					},
-					{
-						test: /sinon.*\.js$/,
-						loader: 'imports?define=>false,require=>false'
 					},
 					// don't use requireText plugin (use the 'raw' plugin)
 					{
@@ -56,12 +69,9 @@ module.exports = function (config) {
 				]
 			},
 			plugins: [
-				new BowerWebpackPlugin({ includes: /\.js$/ })
+				new BowerWebpackPlugin({ includes: /\.js$/ }),
 			],
 			resolve: {
-				alias: {
-					sinon: 'sinon/pkg/sinon'
-				},
 				root: [
 					path.join(__dirname, 'bower_components'),
 					path.join(__dirname, 'node_modules')
@@ -89,13 +99,31 @@ module.exports = function (config) {
 
 
 		// enable / disable watching file and executing tests whenever any file changes
-		autoWatch: true,
+		autoWatch: false,
 
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
 		browsers: ['Chrome'],
 
+		plugins: [
+			require("karma-mocha"),
+			require("karma-chai"),
+			require("karma-sinon"),
+			require("karma-sinon-chai"),
+			require("karma-sourcemap-loader"),
+			require("karma-webpack"),
+			require("karma-firefox-launcher"),
+			require("karma-chrome-launcher"),
+			require("karma-html-reporter")
+		],
+		client: {
+				mocha: {
+						reporter: 'html',
+						ui: 'bdd',
+						timeout: 0
+				}
+		},
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits

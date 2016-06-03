@@ -29,6 +29,30 @@ module.exports = {
 			timeout = setTimeout(later, wait);
 		};
 	},
-	uuid: require('./js/uuid')
+	uuid: require('./js/uuid'),
+	loadScript: (src) => {
+		return new Promise((res, rej) => {
+			const script = window.ftNextLoadScript(src);
+			script.addEventListener('load', res);
+			script.addEventListener('error', rej);
+		});
+	},
+	waitForCondition: (conditionName, action) => {
+		return window[`ftNext${conditionName}Loaded`] ?
+			action() :
+			document.addEventListener(`ftNext${conditionName}Loaded`, action);
+	},
+	broadcast: (name, data, bubbles = true) => {
+		const rootEl = document.body;
+		const event = (function () {
+			try {
+				return new CustomEvent(name, {bubbles: bubbles, cancelable: true, detail: data});
+			} catch (e) {
+				return CustomEvent.initCustomEvent(name, true, true, data);
+			}
+		}());
+
+		rootEl.dispatchEvent(event);
+	}
 
 };

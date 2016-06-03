@@ -1,5 +1,8 @@
 // TODO: integrate next-js-setup into this repo
 import layout from './layout';
+import ads from './ads';
+import tracking from './tracking';
+import nInstrumentation from 'n-instrumentation';
 import date from './date';
 import header from './header';
 import promoMessages from './promo-messages';
@@ -20,7 +23,8 @@ const presets = {
 		welcomeMessage: true,
 		myft: true,
 		messagePrompts: true,
-		promoMessages: true
+		promoMessages: true,
+		ads: true
 	}
 };
 
@@ -38,6 +42,13 @@ export function bootstrap (cb) {
 
 		if (!configuration.preset) {
 			throw new Error('n-ui configure options must include a preset');
+		}
+
+		// FT and next tracking
+		tracking.init(flags, appInfo);
+		// TODO - move n-instrumentation in to n-ui
+		if (flags.get('nInstrumentation')) {
+			nInstrumentation.init();
 		}
 
 		const opts = Object.assign({}, presets[configuration.preset], configuration);
@@ -92,7 +103,12 @@ export function bootstrap (cb) {
 				}
 			});
 
-		return Promise.resolve({flags, mainCss})
-			.then(cb);
+		return Promise.resolve({flags, mainCss, appInfo})
+			.then(cb)
+			.then(() => {
+				// TODO - lazy load this
+				ads.init(flags, appInfo);
+				tracking.lazyInit(flags);
+			})
 	})
 }

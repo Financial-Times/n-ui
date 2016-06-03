@@ -1,16 +1,10 @@
-/*global require,describe,afterEach,beforeEach,it,expect*/
+/*global require,describe,afterEach,beforeEach,it,expect,sinon*/
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
-const nThirdPartyCode = require('n-third-party-code');
 const jsSetup = require('../index');
 const JsSetup = require('../js/js-setup');
-const sinon = require('sinon');
 const oErrors = require('o-errors');
 
 describe('js setup', function () {
-
-	it('should polyfill fetch', function () {
-		expect(window.fetch).to.be.a('function');
-	});
 
 	it('should have an init method', function () {
 		expect(jsSetup.init).to.be.a('function');
@@ -62,7 +56,6 @@ describe('js setup', function () {
 
 	describe('init with flags on', function () {
 
-		let thirdPartyStub;
 		before(() => window.nextFeatureFlags = [
 			'clientErrorReporting',
 			'clientDetailedErrorReporting',
@@ -71,14 +64,6 @@ describe('js setup', function () {
 		].map(f => {
 			return {name: f, state: true};
 		}));
-
-		beforeEach(function () {
-			thirdPartyStub = sinon.stub(nThirdPartyCode, 'init');
-		});
-
-		afterEach(function () {
-			thirdPartyStub.restore();
-		});
 
 		after(() => delete window.nextFeatureFlags);
 
