@@ -1,6 +1,5 @@
 /*global require,describe,afterEach,beforeEach,it,expect,sinon*/
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
-const nThirdPartyCode = require('n-third-party-code');
 const jsSetup = require('../index');
 const JsSetup = require('../js/js-setup');
 const oErrors = require('o-errors');
@@ -70,14 +69,6 @@ describe('js setup', function () {
 		].map(f => {
 			return {name: f, state: true};
 		}));
-
-		beforeEach(function () {
-			thirdPartyStub = sinon.stub(nThirdPartyCode, 'init');
-		});
-
-		afterEach(function () {
-			thirdPartyStub.restore();
-		});
 
 		after(() => delete window.nextFeatureFlags);
 

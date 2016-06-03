@@ -24,18 +24,19 @@ module.exports = function (config) {
 
 		// list of files / patterns to load in the browser
 		files: [
-			// '//cdn.polyfill.io/v2/polyfill.min.js?callback=ftNextPolyfillServiceCallback&features=' + [
-			// 	'default',
-			// 	'requestAnimationFrame',
-			// 	'Promise',
-			// 	'matchMedia',
-			// 	'HTMLPictureElement',
-			// 	// the following polyfills are included pending https://github.com/Financial-Times/polyfill-service/issues/653
-			// 	'CustomEvent|always|gated',
-			// 	'fetch|always|gated',
-			// 	'Array.prototype.find|always|gated',
-			// 	'Array.prototype.findIndex|always|gated'
-			// ].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
+			'//cdn.polyfill.io/v2/polyfill.min.js?features=' + [
+				'default',
+				'requestAnimationFrame',
+				'Promise',
+				'matchMedia',
+				'HTMLPictureElement',
+				// the following polyfills are included pending https://github.com/Financial-Times/polyfill-service/issues/653
+				'CustomEvent|always|gated',
+				'fetch|always|gated',
+				'Array.prototype.find|always|gated',
+				'Array.prototype.findIndex|always|gated',
+				'Array.from|always|gated'
+			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
 		].concat(componentsToTest.map(name => name + '/test/*.spec.js')),
 
 		// preprocess matching files before serving them to  the browser
@@ -53,7 +54,7 @@ module.exports = function (config) {
 						query: {
 							cacheDirectory: true,
 							presets: ['es2015'],
-							plugins: ['add-module-exports', 'transform-runtime', ['transform-es2015-classes', { loose: true }]]
+							plugins: ['add-module-exports', ['transform-es2015-classes', { loose: true }]]
 						}
 					},
 					// don't use requireText plugin (use the 'raw' plugin)
