@@ -35,7 +35,7 @@ $o-grid-shuffle-selectors: false;
 
 		@each $layout-name in $_o-grid-layout-names {
 			[data-o-grid-colspan~="#{$layout-name}hide"] {
-				@extend [data-o-grid-colspan~="#{$layout-name}0"];
+				@extend [data-o-grid-colspan~="#{$layout-name}0"] !optional;
 			}
 		}
 
