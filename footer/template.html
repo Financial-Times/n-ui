@@ -1,1 +1,6 @@
-{{>n-header-footer/footer/template}}
+{{#if @root.flags.newHeader}}
+	{{>n-header-footer/drawer/template all=nav}}
+{{else}}
+	{{>n-header-footer/footer/template}}
+{{/if}}
+
