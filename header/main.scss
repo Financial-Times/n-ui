@@ -5,5 +5,8 @@ $_n-ui-header-applied: false;
 	$_n-ui-header-applied: true !global;
 }
 @import 'n-header-footer/header/header';
+@import 'n-header-footer/header_new/header';
+@import "n-header-footer/meganav/meganav";
+@import 'n-header-footer/breadcrumb/breadcrumb';
 $o-header-is-silent: true;
 @include nUiCriticalEnd();

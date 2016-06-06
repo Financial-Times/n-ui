@@ -1,1 +1,11 @@
-{{>n-header-footer/header/template}}
+{{#if @root.flags.newHeader}}
+	{{>n-header-footer/header_new/template}}
+{{else}}
+	{{>n-header-footer/header/template}}
+{{/if}}
+
+{{#ifAll @root.flags.sectionBreadcrumbs @root.currentNav}}
+	{{>n-header-footer/breadcrumb/template}}
+{{/ifAll}}
+
+<div class="header-ad-placeholder__bottom ad-placeholder"></div>
