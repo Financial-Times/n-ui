@@ -44,7 +44,7 @@
     "o-errors": "^3.1.0",
     "o-expander": "^3.0.1",
     "o-forms": "^2.0.0",
-    "o-grid": "#rhys/push-off",
+    "o-grid": "^4.2.0",
     "o-icons": "^4.0.0",
     "o-overlay": "^1.8.2",
     "o-typography": "^3.2.0",
@@ -53,7 +53,6 @@
     "superstore-sync": "^2.1.0"
   },
   "resolutions": {
-    "o-grid": "rhys/push-off",
     "o-viewport": "^2.0.0"
   }
 }
