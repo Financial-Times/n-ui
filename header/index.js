@@ -3,7 +3,7 @@ function init (flags) {
 	if (flags.get('newHeader')) {
 		require('n-header-footer/drawer').init();
 	} else {
-		require('n-header-footer').init();
+		require('n-header-footer').init(flags);
 	}
 
 	if (flags.get('meganav')) {
