@@ -39,6 +39,10 @@ $o-grid-shuffle-selectors: false;
 			}
 		}
 
+		[data-o-grid-colspan~="center"] {
+			@include oGridCenter;
+		}
+
 		@include nUiCriticalEnd();
 	}
 
