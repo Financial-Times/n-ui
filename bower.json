@@ -1,4 +1,3 @@
-
 {
   "name": "n-ui",
   "homepage": "https://github.com/Financial-Times/n-ui",
@@ -19,7 +18,7 @@
     "ft-metadata": "https://github.com/Financial-Times/ft-metadata.git#^0.0.2",
     "ftdomdelegate": "^2.0.3",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
-    "n-header-footer": "^2.1.2",
+    "n-header-footer": "^3.0.0",
     "n-instrumentation": "^1.10.1",
     "n-interactive-tour": "^1.3.2",
     "n-jsonp": "^2.3.1",
@@ -32,13 +31,7 @@
     "next-myft-client": "^6.4.2",
     "o-ads": "^4.0.0",
     "o-buttons": "^4.0.1",
-    "n-message-prompts": "^2.1.8",
-    "n-messages": "*",
-    "n-notification": "^3.0.3",
     "n-third-party-code": "^2.0.1",
-    "next-ads-component": "^9.1.0",
-    "next-card": "^7.1.0",
-    "next-myft-client": "^6.4.2",
     "o-colors": "^3.3.2",
     "o-date": "^2.3.3",
     "o-errors": "^3.1.0",
@@ -53,6 +46,7 @@
     "superstore-sync": "^2.1.0"
   },
   "resolutions": {
-    "o-viewport": "^2.0.0"
+    "o-viewport": "^2.0.0",
+    "n-header-footer": "^3.0.0"
   }
 }
