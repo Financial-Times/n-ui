@@ -22,7 +22,7 @@ describe('Main', () => {
 
 	it('Should init if flag is set to true and appname given', () => {
 		const flags = { get: () => true };
-		const initSpy = sandbox.stub(ads, 'init', () => ({ slots: { initSlot: sinon.stub() }}));
+		const initSpy = sandbox.stub(ads, 'init', () => ({ slots: { initSlot: sinon.stub()}, config: sinon.stub() }));
 		return main.onload(flags).then(() => {
 			expect(initSpy).to.have.been.called;
 		});
@@ -41,7 +41,7 @@ describe('Main', () => {
 	it('Should bind the adverts found on page to o-ads library', () => {
 		const flags = { get: () => true };
 		const adInit = sandbox.spy(ads.slots, 'initSlot');
-		sandbox.stub(ads, 'init', () => ({slots: { initSlot: adInit } }));
+		sandbox.stub(ads, 'init', () => ({slots: { initSlot: adInit }, config: sinon.stub }));
 		return main.onload(flags).then(() => {
 			expect(adInit).to.have.been.called;
 		});
