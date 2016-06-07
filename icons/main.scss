@@ -1,7 +1,3 @@
-$_n-ui-icons-applied: false !default;
-
-/* Deliberately not able to import in noisy mode */
-$o-icons-is-silent: true;
 $o-icons-service-base-url: 'https://next-geebee.ft.com/image';
 @import 'o-icons/main';
 
@@ -64,12 +60,4 @@ $o-icons-service-base-url: 'https://next-geebee.ft.com/image';
 	@if ($apply-base-styles == true) {
 		@include oIconsBaseStyles;
 	}
-}
-
-@if $_n-ui-icons-applied == false {
-
-	$_n-ui-icons-applied: true;
-
-} @else {
-	@warn "n-ui/icons should only be imported once.";
 }

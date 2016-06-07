@@ -99,6 +99,4 @@ $o-typography-is-silent: true;
 	}
 	$_n-ui-typography-applied: true;
 
-} @else {
-	@warn "n-ui/typography should only be imported once.";
 }

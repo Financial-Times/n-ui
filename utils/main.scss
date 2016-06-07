@@ -1,5 +1,4 @@
-$_n-util_applied: false !default;
-
+$_n-ui-util-applied: false !default;
 
 // TODO: When we're using zIndexFor exclusively (we can but live in hope), it'd
 // probably be easier to maintain this file if we avoided explicit z-index
@@ -36,8 +35,7 @@ $_zIndexes: (
 	z-index: map-get($_zIndexes, $use-case);
 }
 
-
-@if $_n-util_applied == false {
+@if $_n-ui-util-applied == false {
 	@include nUiCriticalStart();
 	//
 	// Layout
@@ -133,8 +131,6 @@ $_zIndexes: (
 		word-wrap: normal;
 	}
 	@include nUiCriticalEnd();
-	$_n-util_applied: true;
+	$_n-ui-util-applied: true;
 
-} @else {
-	@warn "n-ui/utils should only be imported once.";
 }
