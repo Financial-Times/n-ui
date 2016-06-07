@@ -8,5 +8,6 @@ $_n-ui-header-applied: false;
 @import 'n-header-footer/header_new/header';
 @import "n-header-footer/meganav/meganav";
 @import 'n-header-footer/breadcrumb/breadcrumb';
+@import 'n-header-footer/marketing_promo/marketing-promo';
 $o-header-is-silent: true;
 @include nUiCriticalEnd();
