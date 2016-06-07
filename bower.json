@@ -18,7 +18,7 @@
     "ft-metadata": "https://github.com/Financial-Times/ft-metadata.git#^0.0.2",
     "ftdomdelegate": "^2.0.3",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
-    "n-header-footer": "^3.0.0",
+    "n-header-footer": "^4.0.0",
     "n-instrumentation": "^1.10.1",
     "n-interactive-tour": "^1.3.2",
     "n-jsonp": "^2.3.1",
@@ -53,6 +53,6 @@
   },
   "resolutions": {
     "o-viewport": "^2.0.0",
-    "n-header-footer": "^3.0.0"
+    "n-header-footer": "^4.0.0"
   }
 }
