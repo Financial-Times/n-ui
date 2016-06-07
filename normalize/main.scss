@@ -227,6 +227,4 @@ $_n-normalize_applied: false !default;
 	@include nUiCriticalEnd();
 	$_n-normalize_applied: true;
 
-} @else {
-	@warn "n-ui/normalize should only be imported once.";
 }

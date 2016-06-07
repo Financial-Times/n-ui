@@ -4,8 +4,6 @@
 
 $_n-ui-colors-applied: false !default;
 
-// Deliberately not able to import in noisy mode
-$o-colors-is-silent: true;
 @import 'o-colors/main';
 
 @function getColor($args...) {
@@ -94,6 +92,4 @@ $o-colors-is-silent: true;
 
 	$_n-ui-colors-applied: true;
 
-} @else {
-	@warn "n-ui/colors should only be imported once.";
 }

@@ -16,7 +16,6 @@ $o-grid-mode: snappy !default;
 $o-grid-human-friendly-selectors: false;
 $o-grid-shuffle-selectors: false;
 
-
 @import 'o-grid/main';
 
 @if $_n-ui-grid-applied == false {
@@ -48,8 +47,6 @@ $o-grid-shuffle-selectors: false;
 
 	$_n-ui-grid-applied: true !global;
 
-} @else {
-	@warn "n-ui/grid should only be imported once.";
 }
 
 @mixin _nUiGridOffsetRules($layout, $mode, $columns) {
