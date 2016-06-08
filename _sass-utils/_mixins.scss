@@ -100,3 +100,19 @@
 	@warn '`nCrosshatchBG` has been deprecated, use `nUiPinstripeBG` instead';
 	@include nUiPinstripeBG($args...);
 }
+
+/// Blackberry & old iOS safe display: flex declaration
+/// @output 'display: flex', with only the vendor prefixes we trust
+@mixin nDisplayFlex() {
+	display: block;
+
+	// Prevents autoprefixer from outputting display: -webkit-box;, which is buggy
+	& {
+		// scss-lint:disable VendorPrefix
+		/*autoprefixer: off*/
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+	}
+
+}
