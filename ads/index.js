@@ -6,6 +6,7 @@ const oAdsConfig = require('./js/oAdsConfig');
 const jsonpFetch = require('n-jsonp');
 
 import { perfMark } from '../utils'
+import { broadcast } from '../utils'
 
 let slotCount;
 let slotsRendered = 0;
@@ -73,6 +74,20 @@ function onAdsComplete (event) {
 			utils.log.info('Ad loaded in slot', event);
 			if (slotsRendered === 0) {
 				perfMark('firstAdLoaded');
+				const firstAdLoaded = performance.getEntriesByType ?
+					performance.getEntriesByType('mark')
+						.filter(mark => mark.name === 'firstAdLoaded')
+						.reduce((marks, mark) => {
+							marks[mark.name] = Math.round(mark.startTime);
+							return marks;
+						}, {}) :
+					{};
+
+				broadcast('oTracking.event', {
+					category: 'page-load',
+					action: 'timing',
+					timings: { firstAdLoaded }
+				});
 			}
 		} else if (detail.slot.gpt && detail.slot.gpt.isEmpty === true) {
 			utils.log.warn('Failed to load ad, details below');
