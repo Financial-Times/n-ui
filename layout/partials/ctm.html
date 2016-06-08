@@ -1,8 +1,11 @@
 {{#if @root.flags.javascript}}
+var classes = document.documentElement.className;
+classes = classes.replace(/\bno-js\b/, 'js');
 window.cutsTheMustard = (typeof Function.prototype.bind !== 'undefined');
 if (window.cutsTheMustard) {
-	document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, 'js').replace(/\bcore\b/, 'enhanced');
+	classes = classes.replace(/\bcore\b/, 'enhanced');
 }
+document.documentElement.className = classes;
 {{else}}
 window.cutsTheMustard = false;
 {{/if}}
