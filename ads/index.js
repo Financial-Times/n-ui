@@ -74,7 +74,7 @@ function onAdsComplete (event) {
 			utils.log.info('Ad loaded in slot', event);
 			if (slotsRendered === 0) {
 				perfMark('firstAdLoaded');
-				const firstAdLoaded = performance.getEntriesByType ?
+				const marks = performance.getEntriesByType ?
 					performance.getEntriesByType('mark')
 						.filter(mark => mark.name === 'firstAdLoaded')
 						.reduce((marks, mark) => {
@@ -86,7 +86,7 @@ function onAdsComplete (event) {
 				broadcast('oTracking.event', {
 					category: 'page-load',
 					action: 'timing',
-					timings: { firstAdLoaded }
+					timings: { marks }
 				});
 			}
 		} else if (detail.slot.gpt && detail.slot.gpt.isEmpty === true) {
