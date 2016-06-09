@@ -7,6 +7,8 @@ const jsonpFetch = require('n-jsonp');
 
 import { perfMark } from '../utils'
 import { broadcast } from '../utils'
+import { getMarks } from 'n-instrumentation';
+
 
 let slotCount;
 let slotsRendered = 0;
@@ -73,21 +75,10 @@ function onAdsComplete (event) {
 		if (detail.slot.gpt && detail.slot.gpt.isEmpty === false) {
 			utils.log.info('Ad loaded in slot', event);
 			if (slotsRendered === 0) {
-				perfMark('firstAdLoaded');
-				const marks = performance.getEntriesByType ?
-					performance.getEntriesByType('mark')
-						.filter(mark => mark.name === 'firstAdLoaded')
-						.reduce((marks, mark) => {
-							marks[mark.name] = Math.round(mark.startTime);
-							return marks;
-						}, {}) :
-					{};
-
-				broadcast('oTracking.event', {
-					category: 'page-load',
-					action: 'timing',
-					timings: { marks }
-				});
+				if (!/spoor-id=0/.test(document.cookie)) {
+					perfMark('firstAdLoaded');
+					sendAdLoadedTrackingEvent();
+				}
 			}
 		} else if (detail.slot.gpt && detail.slot.gpt.isEmpty === true) {
 			utils.log.warn('Failed to load ad, details below');
@@ -100,6 +91,24 @@ function onAdsComplete (event) {
 	if (slotsRendered === slotCount) {
 		utils.log('Ads component finished');
 	}
+}
+
+function sendAdLoadedTrackingEvent() {
+	const marks = performance.getEntriesByType ?
+		performance.getEntriesByType('mark')
+			.filter(mark => mark.name === 'firstAdLoaded')
+			.reduce((marks, mark) => {
+				marks[mark.name] = Math.round(mark.startTime);
+				return marks;
+			}, {}) :
+		{};
+
+	broadcast('oTracking.event', {
+		category: 'page-load',
+		action: 'timing',
+		timings: { marks }
+	});
+
 }
 
 
