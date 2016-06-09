@@ -93,8 +93,7 @@ function onAdsComplete (event) {
 
 function sendAdLoadedTrackingEvent() {
 	const marks = performance.getEntriesByType ?
-		performance.getEntriesByType('mark')
-			.filter(mark => mark.name === 'firstAdLoaded')
+		performance.getEntriesByName('firstAdLoaded')
 			.reduce((marks, mark) => {
 				marks[mark.name] = Math.round(mark.startTime);
 				return marks;
