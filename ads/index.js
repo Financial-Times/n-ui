@@ -92,20 +92,31 @@ function onAdsComplete (event) {
 }
 
 function sendAdLoadedTrackingEvent() {
-	const marks = performance.getEntriesByType ?
-		performance.getEntriesByName('firstAdLoaded')
-			.reduce((marks, mark) => {
-				marks[mark.name] = Math.round(mark.startTime);
-				return marks;
-			}, {}) :
-		{};
+	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+	if (performance && performance.mark) {
+		const currentTime = new Date().getTime();
+		const offsets = {
+			domContentLoadedEventEnd: {
+				firstAdLoaded: currentTime - performance.timing['domContentLoadedEventEnd'],
+				loadEventEnd: currentTime - performance.timing['loadEventEnd'],
+				domInteractive: currentTime - performance.timing['domInteractive']
+			}
+		};
 
-	broadcast('oTracking.event', {
-		category: 'page-load',
-		action: 'timing',
-		timings: { marks }
-	});
+		const marks = performance.getEntriesByType ?
+			performance.getEntriesByName('firstAdLoaded')
+				.reduce((marks, mark) => {
+					marks[mark.name] = Math.round(mark.startTime);
+					return marks;
+				}, {}) :
+			{};
 
+		broadcast('oTracking.event', {
+			category: 'ads',
+			action: 'first-load',
+			timings: { offsets, marks }
+		});
+	}
 }
 
 
