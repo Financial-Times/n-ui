@@ -7,8 +7,6 @@ const jsonpFetch = require('n-jsonp');
 
 import { perfMark } from '../utils'
 import { broadcast } from '../utils'
-import { getMarks } from 'n-instrumentation';
-
 
 let slotCount;
 let slotsRendered = 0;
