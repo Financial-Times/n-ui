@@ -12,29 +12,27 @@
 	};
 
 	window.ftNextFireCondition = function (condition) {
-		if (!window['ftNext' + condition]) {
-			var ev;
-			try {
-				ev = new Event('ftNext' + condition);
-			} catch (er) {
-				ev = document.createEvent('Event');
-				ev.initEvent('ftNext' + condition, true, true);
-			}
-			window['ftNext' + condition] = 1;
+		var evName = 'ftNext' + condition;
+		if (!window[evName]) {
+			var ev = new CustomEvent(evName);
 			document.dispatchEvent(ev);
+			window[evName] = 1;
 		}
 	};
 
 	{{>n-ui/layout/partials/css-loader}}
 
-	window.ftNextPolyfillServiceCallback = function () {
+	var polyfillUrl = 'https://next-geebee.ft.com/polyfill/v2/polyfill.js';
+	var polyfillCallbackName = 'ftNextPolyfillServiceCallback';
+
+	window[polyfillCallbackName] = function () {
 		window.ftNextFireCondition('PolyfillLoaded');
 	};
 
 	(function () {
 		if (cutsTheMustard) {
 			ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}');
-			ftNextLoadScript('https://next-geebee.ft.com/polyfill/v2/polyfill.min.js?callback=ftNextPolyfillServiceCallback&features=' + [
+			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '&features=' + [
 				'default',
 				'requestAnimationFrame',
 				'Promise',
@@ -47,7 +45,9 @@
 				'Array.prototype.findIndex|always|gated'
 			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set');
 		} else {
-			ftNextLoadScript('https://next-geebee.ft.com/polyfill/v2/polyfill.min.js?features=HTMLPictureElement|always|gated');
+			ftNextLoadScript(polyfillUrl + '?features=' + [
+				'HTMLPictureElement|always|gated'
+			].join(','));
 		}
 	})();
 </script>
