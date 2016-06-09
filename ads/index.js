@@ -73,8 +73,8 @@ function onAdsComplete (event) {
 		if (detail.slot.gpt && detail.slot.gpt.isEmpty === false) {
 			utils.log.info('Ad loaded in slot', event);
 			if (slotsRendered === 0) {
+				perfMark('firstAdLoaded');
 				if (!/spoor-id=0/.test(document.cookie)) {
-					perfMark('firstAdLoaded');
 					sendAdLoadedTrackingEvent();
 				}
 			}
