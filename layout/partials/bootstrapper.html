@@ -45,7 +45,11 @@
 				'Array.prototype.findIndex|always|gated'
 			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set');
 		} else {
-			ftNextLoadScript(polyfillUrl + '?features=' + [
+			{{#if hasMainCoreJs}}
+			ftNextLoadScript('{{#hashedAsset}}main-core.js{{/hashedAsset}}');
+			{{/if}}
+			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '&features=' + [
+				'default',
 				'HTMLPictureElement|always|gated'
 			].join(','));
 		}
