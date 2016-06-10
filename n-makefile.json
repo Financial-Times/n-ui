@@ -1,0 +1,10 @@
+{
+	"assets": {
+		"entry": {
+			"./dist/es5.js": "./bower_components/n-ui/main.js"
+		}
+	},
+	"plugins": {
+		"hashedAssets": false
+	}
+}

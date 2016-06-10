@@ -6,3 +6,5 @@
 /.sass-cache/
 /bower_components/
 /node_modules/
+webpack.config.js
+/dist/
