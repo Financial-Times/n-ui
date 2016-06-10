@@ -10,7 +10,7 @@
 
 import {broadcast} from '../../../utils';
 
-const BlockAdBlock = function() {
+const BlockAdBlock = function () {
 	this._options = {
 		checkOnLoad: true,
 		resetOnEnd: true,
@@ -50,7 +50,7 @@ const BlockAdBlock = function() {
 	}
 };
 
-BlockAdBlock.prototype._creatBait = function() {
+BlockAdBlock.prototype._creatBait = function () {
 	const bait = document.createElement('div');
 	bait.setAttribute('class', this._options.baitClass);
 	bait.setAttribute('style', this._options.baitStyle);
@@ -65,12 +65,12 @@ BlockAdBlock.prototype._creatBait = function() {
 	this._var.bait.clientWidth;
 };
 
-BlockAdBlock.prototype._destroyBait = function() {
+BlockAdBlock.prototype._destroyBait = function () {
 	window.document.body.removeChild(this._var.bait);
 	this._var.bait = null;
 };
 
-BlockAdBlock.prototype.check = function(loop) {
+BlockAdBlock.prototype.check = function (loop) {
 	if (loop === undefined) {
 		loop = true;
 	}
@@ -97,7 +97,7 @@ BlockAdBlock.prototype.check = function(loop) {
 	return true;
 };
 
-BlockAdBlock.prototype._checkBait = function(loop) {
+BlockAdBlock.prototype._checkBait = function (loop) {
 	let detected = false;
 
 	if (this._var.bait === null) {
@@ -137,13 +137,13 @@ BlockAdBlock.prototype._checkBait = function(loop) {
 	}
 };
 
-BlockAdBlock.prototype._stopLoop = function() {
+BlockAdBlock.prototype._stopLoop = function () {
 	clearInterval(this._var.loop);
 	this._var.loop = null;
 	this._var.loopNumber = 0;
 };
 
-BlockAdBlock.prototype.emitEvent = function(detected) {
+BlockAdBlock.prototype.emitEvent = function (detected) {
 	const fns = this._var.event[(detected === true ? 'detected' : 'notDetected')];
 	for (let i in fns) {
 		if (fns.hasOwnProperty(i)) {
@@ -156,21 +156,21 @@ BlockAdBlock.prototype.emitEvent = function(detected) {
 	return this;
 };
 
-BlockAdBlock.prototype.clearEvent = function() {
+BlockAdBlock.prototype.clearEvent = function () {
 	this._var.event.detected = [];
 	this._var.event.notDetected = [];
 };
 
-BlockAdBlock.prototype.on = function(detected, fn) {
+BlockAdBlock.prototype.on = function (detected, fn) {
 	this._var.event[(detected === true ? 'detected' : 'notDetected')].push(fn);
 	return this;
 };
 
-BlockAdBlock.prototype.onDetected = function(fn) {
+BlockAdBlock.prototype.onDetected = function (fn) {
 	return this.on(true, fn);
 };
 
-BlockAdBlock.prototype.onNotDetected = function(fn) {
+BlockAdBlock.prototype.onNotDetected = function (fn) {
 	return this.on(false, fn);
 };
 
@@ -184,9 +184,9 @@ function fireOTrackingEvent () {
 	});
 };
 
-module.exports = function(flags) {
+module.exports = function (flags) {
 
-	const isAllocated = function() {
+	const isAllocated = function () {
 		return /spoor-id=0/.test(document.cookie);
 	}
 

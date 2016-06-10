@@ -1,8 +1,6 @@
-'use strict';
-
 const myFtApi = require('next-myft-client');
 
-function addPref(uuid, userId) {
+function addPref (uuid, userId) {
 	//TODO: align client/server-side methods in client
 	if (typeof myFtApi.addRelationship === 'function') {
 		return myFtApi.addRelationship('user', userId, 'preferred', 'preference', { uuid });

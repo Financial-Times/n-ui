@@ -1,4 +1,3 @@
-'use strict';
 const oTracking = require('o-tracking');
 const oGrid = require('o-grid');
 const oViewport = require('o-viewport');

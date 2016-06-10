@@ -8,4 +8,10 @@
 .DS_Store
 .editorconfig
 .eslintrc.js
+.gitignore
 .scss-lint.yml
+bower.json
+circle.yml
+karma.conf.js
+Makefile
+n.Makefile

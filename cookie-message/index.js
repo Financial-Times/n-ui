@@ -7,14 +7,14 @@ const COOKIE_CONSENT = 'n-cookie-message:consented';
 
 export default class CookieMessage {
 
-	static init() {
+	static init () {
 		return CookieMessage
 			.ensureMessageIsRequired()
 			.then(CookieMessage.setupView)
 			.catch(CookieMessage.handleError);
 	}
 
-	static ensureMessageIsRequired() {
+	static ensureMessageIsRequired () {
 		return flags.init().then(flags => {
 			if(!flags.get('cookieMessage')) {
 				throw new Error(FLAG_NOT_ON);
@@ -25,7 +25,7 @@ export default class CookieMessage {
 		});
 	}
 
-	static handleError(error) {
+	static handleError (error) {
 		if(error.message !== FLAG_NOT_ON && error.message !== EXIT_PAGE) {
 			error.stack
 				? console.error(error.stack)
@@ -33,7 +33,7 @@ export default class CookieMessage {
 		}
 	}
 
-	static setupView() {
+	static setupView () {
 
 		if (userHasConsentedToCookies()) {
 			return;
@@ -43,22 +43,22 @@ export default class CookieMessage {
 
 		insertMessage();
 
-		function insertMessage() {
+		function insertMessage () {
 			message.innerHTML = CookieMessage.template();
 			message.querySelector('.cookie-message__close-btn').addEventListener('click', flagUserAsConsentingToCookies);
 			document.body.insertBefore(message, document.body.firstChild);
 		}
 
-		function hideMessage() {
+		function hideMessage () {
 			message.classList.add('cookie-message--hidden');
 		}
 
-		function flagUserAsConsentingToCookies() {
+		function flagUserAsConsentingToCookies () {
 			store.local.set(COOKIE_CONSENT, 1);
 			hideMessage();
 		}
 
-		function userHasConsentedToCookies() {
+		function userHasConsentedToCookies () {
 			if (store.local.get(COOKIE_CONSENT) === 1) {
 				return true;
 			}
@@ -73,7 +73,7 @@ export default class CookieMessage {
 
 	}
 
-	static template() {
+	static template () {
 		return `
 			<div class="cookie-message cookie-message--banner-centric"
 				data-trackable="cookie-message"

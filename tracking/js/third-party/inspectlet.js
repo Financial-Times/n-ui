@@ -13,7 +13,7 @@ const getAllocationId = function () {
 // Loads session cam tracking code
 module.exports = function (flags) {
 
-	const isSignUpApp = !!document.querySelector("html[data-next-app=signup]");
+	const isSignUpApp = !!document.querySelector('html[data-next-app=signup]');
 
 	// inspectletForce is needed for staff etc. as we'll need to force it on for testing
 	if (flags && (

@@ -62,12 +62,14 @@ $_zIndexes: (
 	}
 
 	@media screen {
+		// scss-lint:disable SelectorFormat
 		.n-util-hide\@screen {
 			display: none;
 		}
 	}
 
 	@media print {
+		// scss-lint:disable SelectorFormat
 		.n-util-hide\@print {
 			display: none;
 		}
