@@ -1,7 +1,7 @@
 function init (flags) {
 
 	if (flags.get('newHeader')) {
-		require('n-header-footer/header_new').init();
+		require('n-header-footer/header_new').init(flags);
 
 		if (flags.get('fancyDrawer')) {
 			require('n-header-footer/drawer').init();
