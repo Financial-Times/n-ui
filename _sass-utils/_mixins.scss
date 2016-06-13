@@ -2,6 +2,20 @@
 /// @group n-ui mixins
 ////
 
+/// Critical block
+/// @output A critical block start comment
+@mixin nUiCritical() {
+	@if nUiHas('critical') {
+		/*! start:head.css*/
+	}
+
+	@content
+
+	@if nUiHas('critical') {
+		/*! end:head.css*/
+	}
+}
+
 /// Critical block start
 /// @output A critical block start comment
 @mixin nUiCriticalStart() {
