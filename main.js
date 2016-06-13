@@ -1,4 +1,4 @@
-// TODO: integrate next-js-setup into this repo
+
 import layout from './layout';
 import ads from './ads';
 import tracking from './tracking';
@@ -13,21 +13,21 @@ import myft from './myft';
 import { perfMark } from './utils';
 
 
-export const ads = ads;
-export const tracking = tracking;
-export const date = date;
-export const header = header;
-export const promoMessages = promoMessages;
-export const cookieMessage = cookieMessage;
-export const welcomeMessage = welcomeMessage;
-export const messagePrompts = messagePrompts;
-export const myft = myft;
+export const _ads = ads;
+export const _tracking = tracking;
+export const _date = date;
+export const _header = header;
+export const _promoMessages = promoMessages;
+export const _cookieMessage = cookieMessage;
+export const _welcomeMessage = welcomeMessage;
+export const _messagePrompts = messagePrompts;
+export const _myft = myft;
 import utils from './utils';
-export const utils = utils;
-import react from './react';
-export const react = react;
-import reactDom from './react-dom';
-export const reactDom = reactDom;
+export const _utils = utils;
+import react from 'react';
+export const _react = react;
+import reactDom from 'react-dom';
+export const _reactDom = reactDom;
 
 const presets = {
 	discrete: {

@@ -4,16 +4,16 @@ module.exports = function (excludes) {
 	excludes = excludes || {};
 	var entry = {
 		'n-ui': 'window.ftNextUi',
-		'n-ui/ads': 'window.ftNextUi.ads',
-		'n-ui/tracking': 'window.ftNextUi.tracking',
-		'n-ui/date': 'window.ftNextUi.date',
-		'n-ui/header': 'window.ftNextUi.header',
-		'n-ui/promo-messages': 'window.ftNextUi.promoMessages',
-		'n-ui/cookie-message': 'window.ftNextUi.cookieMessage',
-		'n-ui/welcome-message': 'window.ftNextUi.welcomeMessage',
-		'n-ui/message-prompts': 'window.ftNextUi.messagePrompts',
-		'n-ui/myft': 'window.ftNextUi.myft',
-		'n-ui/utils': 'window.ftNextUi.utils'
+		'n-ui/ads': 'window.ftNextUi._ads',
+		'n-ui/tracking': 'window.ftNextUi._tracking',
+		'n-ui/date': 'window.ftNextUi._date',
+		'n-ui/header': 'window.ftNextUi._header',
+		'n-ui/promo-messages': 'window.ftNextUi._promoMessages',
+		'n-ui/cookie-message': 'window.ftNextUi._cookieMessage',
+		'n-ui/welcome-message': 'window.ftNextUi._welcomeMessage',
+		'n-ui/message-prompts': 'window.ftNextUi._messagePrompts',
+		'n-ui/myft': 'window.ftNextUi._myft',
+		'n-ui/utils': 'window.ftNextUi._utils'
 	}
 
 	if (!excludes.react) {

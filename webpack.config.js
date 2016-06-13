@@ -41,8 +41,8 @@ function AssetHashesPlugin() {
 }
 
 /**
-* NOTE: need to use `require.resolve` due to a bug in babel that breaks when linking modules
-*/
+ * NOTE: need to use `require.resolve` due to a bug in babel that breaks when linking modules
+ */
 const configBase = {
 	devtool: 'source-map',
 	output: (() => {
