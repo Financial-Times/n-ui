@@ -9,7 +9,7 @@ import promoMessages from './promo-messages';
 import cookieMessage from './cookie-message';
 import welcomeMessage from './welcome-message';
 import messagePrompts from './message-prompts';
-import { client as myFtClient, ui as myFtUi } from './myft';
+import myft from './myft';
 import { perfMark } from './utils';
 
 const presets = {
@@ -65,7 +65,7 @@ export function bootstrap (cb) {
 			if (flags.get('saveForLater')) {
 				clientOpts.push({relationship: 'saved', type: 'content'});
 			}
-			myFtClient.init(clientOpts);
+			myft.client.init(clientOpts);
 		}
 
 		if (opts.header) {
@@ -93,7 +93,7 @@ export function bootstrap (cb) {
 				}
 
 				if (opts.myft) {
-					myFtUi.init({
+					myft.ui.init({
 						anonymous: !(/FTSession=/.test(document.cookie)),
 						flags
 					});

@@ -137,7 +137,6 @@ module.exports = {
 				plugins.push(new AssetHashesPlugin());
 			}
 		}
-
 		return plugins;
 	})(),
 	resolve: {
