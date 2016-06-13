@@ -76,7 +76,7 @@ function onAdsComplete (event) {
 			utils.log.info('Ad loaded in slot', event);
 			if (slotsRendered === 0) {
 				perfMark('firstAdLoaded');
-				if (!/spoor-id=0/.test(document.cookie)) {
+				if (/spoor-id=3/.test(document.cookie)) {
 					sendAdLoadedTrackingEvent();
 				}
 			}
