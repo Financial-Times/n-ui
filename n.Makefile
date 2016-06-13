@@ -14,7 +14,7 @@ NPM_INSTALL = npm prune --production=false && npm install
 BOWER_INSTALL = bower install --config.registry.search=http://registry.origami.ft.com --config.registry.search=https://bower.herokuapp.com
 JSON_GET_VALUE = grep $1 | head -n 1 | sed 's/[," ]//g' | cut -d : -f 2
 IS_GIT_IGNORED = grep -q $(if $1, $1, $@) .gitignore
-VERSION = v1.2.1
+VERSION = v1.2.13
 APP_NAME = $(shell cat package.json 2>/dev/null | $(call JSON_GET_VALUE,name))
 DONE = echo ✓ $@ done
 CONFIG_VARS = curl -fsL https://ft-next-config-vars.herokuapp.com/$1/$(if $2,$2,$(call APP_NAME)).env -H "Authorization: `heroku config:get APIKEY --app ft-next-config-vars`"
@@ -54,7 +54,7 @@ asset%:
 
 # build (includes build-production)
 buil%: public/__about.json
-	@if [ -e webpack.config.js ]; then $(MAKE) $(subst $@,build,assets); fi
+	@if [ -e webpack.config.js ]; then $(MAKE) $(subst build,assets,$@); fi
 	@if [ -e Procfile ] && [ "$(findstring build-production,$@)" == "build-production" ]; then haikro build; fi
 	@$(DONE)
 
@@ -97,8 +97,9 @@ _install_scss_lint:
 	@if $(call IS_GIT_IGNORED); then curl -sL https://raw.githubusercontent.com/Financial-Times/n-makefile/$(VERSION)/config/$@ > $@ && $(DONE); fi
 
 .env:
-	@if $(call IS_GIT_IGNORED); then heroku auth:whoami &>/dev/null || (echo Please make sure the Heroku CLI is installed and authenticated by running ‘heroku auth:token’.  See more https://toolbelt.heroku.com/. && exit 1); fi
-	@if $(call IS_GIT_IGNORED) && [ -e package.json ]; then ($(call CONFIG_VARS,development) > .env && $(DONE)) || (echo "Cannot get config vars for this service.  Check you are added to the ft-next-config-vars service on Heroku with operate permissions.  Do that here - https://docs.google.com/spreadsheets/d/1mbJQYJOgXAH2KfgKUM1Vgxq8FUIrahumb39wzsgStu0 (or ask someone to do it for you).  Check that your package.json's name property is correct.  Check that your project has config-vars set up in models/development.js." && exit 1); fi
+	@if $(call IS_GIT_IGNORED,^.env$); then echo "WARNING: automatically updating ‘.gitignore’ to cover all files with .env in them, please commit the change" && sed -i "" "s/.env/\*.env\*/g" .gitignore; fi
+	@if $(call IS_GIT_IGNORED,*.env*); then heroku auth:whoami &>/dev/null || (echo "Please make sure the Heroku CLI is installed and authenticated by running ‘heroku auth:token’.  See more https://toolbelt.heroku.com/. If this is not an app, delete .env from .gitignore." && rm .env && exit 1); fi
+	@if $(call IS_GIT_IGNORED,*.env*) && [ -e package.json ]; then ($(call CONFIG_VARS,development) > .env && $(DONE)) || (echo "Cannot get config vars for this service.  Check you are added to the ft-next-config-vars service on Heroku with operate permissions.  Do that here - https://docs.google.com/spreadsheets/d/1mbJQYJOgXAH2KfgKUM1Vgxq8FUIrahumb39wzsgStu0 (or ask someone to do it for you).  Check that your package.json's name property is correct.  Check that your project has config-vars set up in models/development.js." && rm .env && exit 1); fi
 
 # VERIFY SUB-TASKS
 

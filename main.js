@@ -12,6 +12,23 @@ import messagePrompts from './message-prompts';
 import myft from './myft';
 import { perfMark } from './utils';
 
+
+export const ads = ads;
+export const tracking = tracking;
+export const date = date;
+export const header = header;
+export const promoMessages = promoMessages;
+export const cookieMessage = cookieMessage;
+export const welcomeMessage = welcomeMessage;
+export const messagePrompts = messagePrompts;
+export const myft = myft;
+import utils from './utils';
+export const utils = utils;
+import react from './react';
+export const react = react;
+import reactDom from './react-dom';
+export const reactDom = reactDom;
+
 const presets = {
 	discrete: {
 		header: true,

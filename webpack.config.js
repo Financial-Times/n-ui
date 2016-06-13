@@ -43,10 +43,12 @@ function AssetHashesPlugin() {
 /**
 * NOTE: need to use `require.resolve` due to a bug in babel that breaks when linking modules
 */
-module.exports = {
+const configBase = {
 	devtool: 'source-map',
-	entry: config.assets.entry,
-	output: { filename: '[name]' },
+	output: (() => {
+		return config.output || {filename: '[name]'};
+	})(),
+	externals: config.externals || null,
 	module: {
 		loaders: [
 			{
@@ -121,11 +123,14 @@ module.exports = {
 		outputStyle: 'expanded'
 	},
 	postcss: () => {
-		return [ autoprefixer({ browsers: ['> 1%', 'last 2 versions', 'ie >= 8', 'ff ESR', 'bb >= 7'] }) ];
+		return [ autoprefixer({
+			browsers: ['> 1%', 'last 2 versions', 'ie >= 8', 'ff ESR', 'bb >= 7', 'iOS >= 5'],
+			flexbox: 'no-2009'
+		}) ];
 	},
 	plugins: (() => {
 		const plugins = [
-			new BowerWebpackPlugin({ includes: /\.js$/ }),
+			new BowerWebpackPlugin({ includes: /\.js$/, modulesDirectories: path.resolve('./bower_components') }),
 			new ExtractTextPlugin('[name]'),
 			new ExtractCssBlockPlugin({ match: /main\.css$/ })
 		];
@@ -137,6 +142,7 @@ module.exports = {
 				plugins.push(new AssetHashesPlugin());
 			}
 		}
+
 		return plugins;
 	})(),
 	resolve: {
@@ -154,3 +160,26 @@ module.exports = {
 		})()
 	}
 };
+
+const enhancedEntryPoints = Object.assign({}, config.assets.entry);
+delete enhancedEntryPoints['./public/main-core.js'];
+const configs = [Object.assign({}, configBase, { entry: enhancedEntryPoints })];
+
+// if there's a `main-core.js` entry, create config for 'core' browsers
+// NOTE: bit hard-coded this. when the assets names/locations settle down, maybe make n-makefile.json not as explicit,
+// e.g. `css: ['main', 'ie8'], js: ['enhanced', 'core']
+const coreJsOutput = './public/main-core.js';
+const coreJsEntryPoint = config.assets.entry[coreJsOutput];
+if (coreJsEntryPoint) {
+	const coreLoaders = configBase.module.loaders.slice();
+	coreLoaders.unshift({
+		test: /\.js$/,
+		loader: require.resolve('es3ify-loader')
+	});
+	configs.push(Object.assign({}, configBase, {
+		entry: { [coreJsOutput]: coreJsEntryPoint },
+		module: { loaders: coreLoaders }
+	}));
+}
+
+module.exports = configs;
