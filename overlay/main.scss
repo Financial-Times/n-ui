@@ -1,20 +1,19 @@
 $_n-ui-overlay-applied: false !default;
 
-@if $_n-ui-overlay-applied == false {
+@if nUiHas(overlay) and $_n-ui-overlay-applied == false {
 	$o-overlay-is-silent: false;
 }
-@import 'o-overlay/main';
-$o-overlay-is-silent: true;
 
-@if $_n-ui-overlay-applied == false {
+@import 'o-overlay/main';
+
+@if nUiHas(overlay) and $_n-ui-overlay-applied == false {
 
 	body .o-overlay,
 	body .o-overlay-shadow {
 		@include zIndexFor(overlay);
 	}
 
-	$_n-ui-overlay-applied: true;
+	$_n-ui-overlay-applied: true !global;
+	$o-overlay-is-silent: true !global;
 
-} @else {
-	@warn "n-ui/overlay should only be imported once.";
 }
