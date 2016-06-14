@@ -76,7 +76,7 @@ function onAdsComplete (event) {
 			utils.log.info('Ad loaded in slot', event);
 			if (slotsRendered === 0) {
 				perfMark('firstAdLoaded');
-				if (!/spoor-id=0/.test(document.cookie)) {
+				if (/spoor-id=3/.test(document.cookie)) {
 					sendAdLoadedTrackingEvent();
 				}
 			}
@@ -93,7 +93,7 @@ function onAdsComplete (event) {
 	}
 }
 
-function sendAdLoadedTrackingEvent() {
+function sendAdLoadedTrackingEvent () {
 	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 	if (performance && performance.mark) {
 		const currentTime = new Date().getTime();

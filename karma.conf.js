@@ -107,14 +107,14 @@ module.exports = function (config) {
 		browsers: ['Chrome'],
 
 		plugins: [
-			require("karma-mocha"),
-			require("karma-chai"),
-			require("karma-sinon"),
-			require("karma-sinon-chai"),
-			require("karma-sourcemap-loader"),
-			require("karma-webpack"),
-			require("karma-chrome-launcher"),
-			require("karma-html-reporter")
+			require('karma-mocha'),
+			require('karma-chai'),
+			require('karma-sinon'),
+			require('karma-sinon-chai'),
+			require('karma-sourcemap-loader'),
+			require('karma-webpack'),
+			require('karma-chrome-launcher'),
+			require('karma-html-reporter')
 		],
 		client: {
 				mocha: {

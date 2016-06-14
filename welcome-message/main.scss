@@ -11,8 +11,8 @@ $_n-ui-welcome-message-applied: false;
 @if $_n-ui-welcome-message-applied == false and (nUiHas(welcomeMessage) or nUiHas(footer))  {
 
 	.n-welcome {
-		font-family: MetricWeb, Arial, sans-serif;
 		@include oTypographySansSize(s);
+		font-family: MetricWeb, Arial, sans-serif;
 		background: getColor('grey-tint5');
 		color: getColor('pink');
 		padding: 10px 0 5px;
@@ -56,8 +56,8 @@ $_n-ui-welcome-message-applied: false;
 		}
 
 		&__intro {
-			margin: 0.3em 0;
 			@include oTypographySans(xs);
+			margin: 0.3em 0;
 			max-width: 90%;
 		}
 

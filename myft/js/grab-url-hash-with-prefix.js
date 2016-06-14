@@ -1,7 +1,7 @@
 let initialized = false;
 let supportsHistory;
 
-function removeHash() {
+function removeHash () {
 	const loc = window.location;
 	const body = document.body;
 	let scrollV;

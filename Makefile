@@ -2,12 +2,10 @@ include n.Makefile
 
 .PHONY: dist
 
-test: test-unit verify dist
-
 test-unit:
 	karma start karma.conf.js
 
-test-dev:
+test-unit-dev:
 	karma start karma.conf.js --single-run false --auto-watch true
 
 pre-package:
@@ -18,4 +16,6 @@ deploy:
 
 dist: pre-package assets-production deploy
 
+test: verify test-unit dist
 
+test-dev: verify test-unit-dev
