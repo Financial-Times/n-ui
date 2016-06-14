@@ -66,4 +66,5 @@ $o-buttons-sizes: map-merge($o-buttons-sizes, (
 
 @if $_n-ui-buttons-applied == false {
 	$_n-ui-buttons-applied: true !global;
+	$o-buttons-is-silent: true !global;
 }

@@ -8,4 +8,5 @@ $_n-ui-forms-applied: false !default;
 
 @if $_n-ui-forms-applied == false {
 	$_n-ui-forms-applied: true !global;
+	$o-forms-is-silent: true !global;
 }

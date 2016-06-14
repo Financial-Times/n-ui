@@ -1,10 +1,12 @@
-@import "next-buttons/main";
+@include nUiAddFeature('buttons');
+@import "../buttons/main";
 @import "n-notification/main";
 
 $o-overlay-is-silent: false;
 @import "o-overlay/main";
 $o-overlay-is-silent: true;
 
+@include nUiAddFeature('forms');
 @import "../forms/main";
 
 @import "scss/follow-email";
