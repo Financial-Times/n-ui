@@ -74,20 +74,28 @@ const oTrackingWrapper = {
 				pageViewConf.context.barrier = true;
 				pageViewConf.context.barrierType = barrierType.getAttribute('data-barrier');
 
+				const isProductSelector = barrierType.getAttribute('data-barrier-is-product-selector');
+
+				// https://docs.google.com/document/d/18_yV2s813XCrBF7w6196FLhLJzWXK4hXT2sIpDZVvhQ/edit?ts=575e9368#
+				const opportunity = {
+					type: (isProductSelector) ? 'products' : 'barrier',
+					subtype: barrierType.getAttribute('data-barrier')
+				}
+
 				let offers = document.querySelectorAll('[data-offer-id]');
 				let acquisitionContext = document.querySelectorAll('[data-acquisition-context]');
 
 				broadcast('oTracking.event', Object.assign({
 					category: 'barrier',
 					action: 'view',
+					opportunity: opportunity,
 					type: barrierType.getAttribute('data-barrier'),
 					acquisitionContext: nodesToArray(acquisitionContext).map(e => e.getAttribute('data-acquisition-context')),
 					offers: nodesToArray(offers).map(e => e.getAttribute('data-offer-id'))
 				}, context))
-
 			}
 
-			// FIXME - should not fire on barriers, but needs to while data analytics fix their SQL
+			// FIXME - should not fire on barriers, but needs to be around for a while data analytics fix their SQL
 			oTracking.page(pageViewConf.context);
 
 		} catch (err) {
