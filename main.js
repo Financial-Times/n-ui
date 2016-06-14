@@ -24,10 +24,6 @@ export const _messagePrompts = messagePrompts;
 export const _myft = myft;
 import utils from './utils';
 export const _utils = utils;
-import react from 'react';
-export const _react = react;
-import reactDom from 'react-dom';
-export const _reactDom = reactDom;
 
 const presets = {
 	discrete: {

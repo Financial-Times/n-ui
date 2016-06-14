@@ -167,6 +167,68 @@ describe('js setup', function () {
 			});
 		});
 
+		// describe('bootstrap with shared bundle', function () {
+		// 	it('should bootstrap if shared bundle arrives before polyfills', function (done) {
+		// 		var callback = sinon.stub();
+		// 		// can't assume promises exist to do async stuff
+		// 		var p = window.Promise;
+		// 		window.Promise = undefined;
+		// 		jsSetup.bootstrap(callback);
+
+		// 		setTimeout(function () {
+		// 			expect(callback.calledOnce).to.be.false;
+		// 			jsSetup.coreLoaded();
+		// 			setTimeout(function () {
+		// 				expect(callback.calledOnce).to.be.false;
+
+		// 				// now we can assume Promise is polyfilled
+		// 				window.Promise = p;
+		// 				document.dispatchEvent(new Event('ftNextPolyfillsLoaded'));
+		// 				setTimeout(function () {
+		// 					expect(callback.calledOnce).to.be.true;
+		// 					expect(callback.calledWith(result)).to.be.true;
+		// 					done();
+		// 				}, 0);
+		// 			}, 0);
+		// 		}, 0);
+
+		// 	});
+
+		// 	it('should bootstrap if shared bundle arrives after polyfills', function (done) {
+		// 		var callback = sinon.stub();
+		// 		window.ftNextPolyfillsLoadedFlag = true;
+		// 		jsSetup.bootstrap(callback);
+
+		// 		setTimeout(function () {
+		// 			expect(callback.calledOnce).to.be.false;
+		// 			jsSetup.coreLoaded();
+		// 			setTimeout(function () {
+		// 				expect(callback.calledOnce).to.be.true;
+		// 				expect(callback.calledWith(result)).to.be.true;
+		// 				done();
+		// 			}, 0);
+		// 		}, 0);
+
+		// 	});
+
+		// 	it('should bootstrap if shared bundle arrives last', function (done) {
+		// 		// var callback = sinon.stub();
+		// 		// window.ftNextPolyfillsLoadedFlag = true;
+		// 		// jsSetup.bootstrap(callback);
+
+		// 		// setTimeout(function () {
+		// 		// 	expect(callback.calledOnce).to.be.false;
+		// 		// 	jsSetup.coreLoaded();
+		// 		// 	setTimeout(function () {
+		// 		// 		expect(callback.calledOnce).to.be.true;
+		// 		// 		expect(callback.calledWith(result)).to.be.true;
+		// 		// 		done();
+		// 		// 	}, 0);
+		// 		// }, 0);
+		// 		expect(';asdajskdj')
+		// 	});
+		// });
+
 		describe('actions carried out by bootstrap', function () {
 
 			beforeEach(function () {

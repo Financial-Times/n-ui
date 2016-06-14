@@ -1,7 +1,7 @@
 {
 	"assets": {
 		"entry": {
-			"./dist/es5.js": "./bower_components/n-ui/main.js"
+			"./dist/es5.js": "./_deploy/wrapper.js"
 		}
 	},
 	"plugins": {
@@ -9,8 +9,6 @@
 	},
 	"output": {
 		"filename": "[name]",
-		"libraryTarget": "var",
 		"library": "ftNextUi"
 	}
-
 }

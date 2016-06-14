@@ -31,7 +31,10 @@
 
 	(function () {
 		if (cutsTheMustard) {
-			ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}');
+			{{#ifAll @root.flags.nUiBundle @root.nUiBundle}}
+				ftNextLoadScript('/n-ui/v1/es5.js');
+			{{/if}}
+			ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}', []);
 			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '&features=' + [
 				'default',
 				'requestAnimationFrame',
