@@ -200,7 +200,7 @@ function sendSubscriptionToServer (subscription, isRemove) {
 	return myftClient.init()
 		.then(() => myftClient.getAll('enabled', 'endpoint'))
 		.then(function (currentSubscription) {
-			const endpoints = [];
+			let endpoints = [];
 			let thisEndpoint = endpointWorkaround(subscription);
 			if(currentSubscription && currentSubscription.items && currentSubscription.items.length) {
 				endpoints = currentSubscription.items;
