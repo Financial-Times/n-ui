@@ -1,5 +1,7 @@
-@if nUiHas(buttons) {
-	$o-buttons-is-silent: false;
+$_n-ui-buttons-applied: false !default;
+
+@if nUiHas(buttons) and $_n-ui-buttons-applied == false {
+	$o-buttons-is-silent: false !global;
 }
 
 @include nUiCriticalStart();
@@ -60,4 +62,9 @@ $o-buttons-sizes: map-merge($o-buttons-sizes, (
 @mixin nButtonsGroup($buttonClass) {
 	@warn '`nButtonsGroup` is deprecated, use `oButtonsGroup` instead';
 	@include oButtonsGroup($buttonClass);
+}
+
+@if $_n-ui-buttons-applied == false {
+	$_n-ui-buttons-applied: true !global;
+	$o-buttons-is-silent: true !global;
 }
