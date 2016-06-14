@@ -16,6 +16,6 @@ deploy:
 
 dist: pre-package assets-production deploy
 
-test: verify test-unit dist
+test: verify test-unit
 
 test-dev: verify test-unit-dev
