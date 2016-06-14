@@ -6,15 +6,15 @@ const classesToArray = thing => Array.isArray(thing) ? thing : thing.split(' ');
 const exists = thing => thing;
 
 /**
- * @param {string} conceptId - ID of the concept
- * @param {string} name - Name of the concept
- * @param {string} taxonomy - Taxonomy of the concept
- * @param {string} [variant] - Variant of the button, e.g. `inverse`
- * @param {string} [size] - Size of the button, e.g. `big`
- * @param {string} [buttonText=Follow] - Text of the button
- * @param {string} [alternateText=Following] - Text of the button
- * @param {(string|Array)} [classes] - Additional class(es) for the follow component
- */
+* @param {string} conceptId - ID of the concept
+* @param {string} name - Name of the concept
+* @param {string} taxonomy - Taxonomy of the concept
+* @param {string} [variant] - Variant of the button, e.g. `inverse`
+* @param {string} [size] - Size of the button, e.g. `big`
+* @param {string} [buttonText=Follow] - Text of the button
+* @param {string} [alternateText=Following] - Text of the button
+* @param {(string|Array)} [classes] - Additional class(es) for the follow component
+*/
 class Follow extends Component {
 	render () {
 		let classes = ['n-myft-ui', 'n-myft-ui--follow'];

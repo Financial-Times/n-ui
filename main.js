@@ -1,4 +1,4 @@
-// TODO: integrate next-js-setup into this repo
+
 import layout from './layout';
 import ads from './ads';
 import tracking from './tracking';
@@ -9,8 +9,25 @@ import promoMessages from './promo-messages';
 import cookieMessage from './cookie-message';
 import welcomeMessage from './welcome-message';
 import messagePrompts from './message-prompts';
-import { client as myFtClient, ui as myFtUi } from './myft';
+import myft from './myft';
 import { perfMark } from './utils';
+
+
+export const _ads = ads;
+export const _tracking = tracking;
+export const _date = date;
+export const _header = header;
+export const _promoMessages = promoMessages;
+export const _cookieMessage = cookieMessage;
+export const _welcomeMessage = welcomeMessage;
+export const _messagePrompts = messagePrompts;
+export const _myft = myft;
+import utils from './utils';
+export const _utils = utils;
+import react from 'react';
+export const _react = react;
+import reactDom from 'react-dom';
+export const _reactDom = reactDom;
 
 const presets = {
 	discrete: {
@@ -65,7 +82,7 @@ export function bootstrap (cb) {
 			if (flags.get('saveForLater')) {
 				clientOpts.push({relationship: 'saved', type: 'content'});
 			}
-			myFtClient.init(clientOpts);
+			myft.client.init(clientOpts);
 		}
 
 		if (opts.header) {
@@ -93,7 +110,7 @@ export function bootstrap (cb) {
 				}
 
 				if (opts.myft) {
-					myFtUi.init({
+					myft.ui.init({
 						anonymous: !(/FTSession=/.test(document.cookie)),
 						flags
 					});
