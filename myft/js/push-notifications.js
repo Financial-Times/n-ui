@@ -4,7 +4,7 @@ const nButtons = require('../../buttons');
 const isLocalOrHTTPS = document.location.protocol === 'https:' ||
 	document.location.href.indexOf('localhost:') >= 0;
 
-const isPushEnabled = false;
+let isPushEnabled = false;
 let pushButtonContainer;
 let pushButton;
 
