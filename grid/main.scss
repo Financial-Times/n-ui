@@ -21,6 +21,7 @@ $o-grid-shuffle-selectors: false;
 @if $_n-ui-grid-applied == false {
 
 	@if nUiHas(grid) {
+		// scss-lint:disable NameFormat, PlaceholderInExtend
 		@include nUiCriticalStart();
 		@include oGridSurfaceCurrentLayout;
 		@include oGridGenerate;

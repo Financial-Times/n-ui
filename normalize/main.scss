@@ -47,12 +47,13 @@ $_n-normalize_applied: false !default;
 	 * 1. Remove the bottom border in Firefox 39-.
 	 * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
 	 */
-
+	// scss-lint:disable QualifyingElement
 	abbr[title] {
-		border-bottom: none; /* 1 */
+		border-bottom: 0; /* 1 */
 		text-decoration: underline; /* 2 */
 		text-decoration: underline dotted; /* 2 */
 	}
+	// scss-lint:enable QualifyingElement
 
 	/**
 	 * Prevent the duplicate application of `bolder` by the next rule in Safari 6.

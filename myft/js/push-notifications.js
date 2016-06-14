@@ -1,16 +1,14 @@
-'use strict';
+const myftClient = require('next-myft-client');
+const nButtons = require('../../buttons');
 
-var myftClient = require('next-myft-client');
-var nButtons = require('../../buttons');
-
-var isLocalOrHTTPS = document.location.protocol === 'https:' ||
+const isLocalOrHTTPS = document.location.protocol === 'https:' ||
 	document.location.href.indexOf('localhost:') >= 0;
 
-var isPushEnabled = false;
-var pushButtonContainer;
-var pushButton;
+const isPushEnabled = false;
+let pushButtonContainer;
+let pushButton;
 
-function init() {
+function init () {
 
 	pushButtonContainer = document.querySelector('[data-preference-name="push-notifications"]');
 	pushButton = pushButtonContainer ? pushButtonContainer.querySelector('.myft-ui__button') : null;
@@ -20,7 +18,7 @@ function init() {
 		return;
 	}
 
-	pushButton.addEventListener('click', function(e) {
+	pushButton.addEventListener('click', function (e) {
 		e.preventDefault();
 		if (isPushEnabled) {
 			unsubscribe();
@@ -35,8 +33,8 @@ function init() {
 	}
 }
 
-function showExpectedCount() {
-	myftClient.personaliseUrl('/myft/average-push-frequency/').then(function(url) {
+function showExpectedCount () {
+	myftClient.personaliseUrl('/myft/average-push-frequency/').then(function (url) {
 		fetch(url, {
 			headers: {
 				'Content-Type': 'application/json',
@@ -45,7 +43,7 @@ function showExpectedCount() {
 			credentials: 'include'
 		})
 		.then(res => res.json())
-		.then(function(data) {
+		.then(function (data) {
 			if(data && data.pushesPerDay) {
 				pushButtonContainer.getElementsByTagName('label')[0].textContent +=
 				` (estimated ${data.pushesPerDay} notifications a day for the topics you follow)`;
@@ -56,7 +54,7 @@ function showExpectedCount() {
 }
 
 // Once the service worker is registered set the initial state
-function initialiseState() {
+function initialiseState () {
 	// Are Notifications supported in the service worker?
 	if (!('showNotification' in window.ServiceWorkerRegistration.prototype)) {
 		//TODO: send tracking event
@@ -78,10 +76,10 @@ function initialiseState() {
 	}
 
 	// We need the service worker registration to check for a subscription
-	navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+	navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
 		// Do we already have a push message subscription?
 		serviceWorkerRegistration.pushManager.getSubscription()
-			.then(function(subscription) {
+			.then(function (subscription) {
 				// Enable any UI which subscribes / unsubscribes from
 				// push messages.
 				pushButton.disabled = false;
@@ -101,20 +99,20 @@ function initialiseState() {
 				nButtons.toggleState(pushButton);
 				isPushEnabled = true;
 			})
-			.catch(function(err) {
+			.catch(function (err) {
 				console.warn('Error during getSubscription()', err);
 			});
 	});
 }
 
-function subscribe() {
+function subscribe () {
 	// Disable the button so it can't be changed while
 	// we process the permission request
 	pushButton.disabled = true;
 
-	navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+	navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
 		serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true})
-			.then(function(subscription) {
+			.then(function (subscription) {
 				// The subscription was successful
 				nButtons.toggleState(pushButton);
 				isPushEnabled = true;
@@ -122,7 +120,7 @@ function subscribe() {
 
 				return sendSubscriptionToServer(subscription);
 			})
-			.catch(function() {
+			.catch(function () {
 				if (Notification.permission === 'denied') {
 					// The user denied the notification permission which
 					// means we failed to subscribe and the user will need
@@ -140,14 +138,14 @@ function subscribe() {
 	});
 }
 
-function unsubscribe() {
+function unsubscribe () {
 	pushButton.disabled = true;
 
-	navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+	navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
 		// To unsubscribe from push messaging, you need get the
 		// subscription object, which you can call unsubscribe() on.
 		serviceWorkerRegistration.pushManager.getSubscription().then(
-			function(pushSubscription) {
+			function (pushSubscription) {
 				// Check we have a subscription to unsubscribe
 				if (!pushSubscription) {
 					// No subscription object, so set the state
@@ -161,11 +159,11 @@ function unsubscribe() {
 				// We have a subscription, so call unsubscribe on it
 				pushSubscription.unsubscribe()
 				.then(sendSubscriptionToServer(pushSubscription, true))
-				.then(function() {
+				.then(function () {
 					pushButton.disabled = false;
 					nButtons.toggleState(pushButton);
 					isPushEnabled = false;
-				}).catch(function() {
+				}).catch(function () {
 					// We failed to unsubscribe, this can lead to
 					// an unusual state, so may be best to remove
 					// the users data from your data store and
@@ -174,19 +172,19 @@ function unsubscribe() {
 					pushButton.disabled = false;
 					nButtons.toggleState(pushButton);
 				});
-			}).catch(function(e) {
+			}).catch(function (e) {
 				console.error('Error thrown while unsubscribing from push messaging.', e);
 			});
 	});
 }
 
-function endpointWorkaround(pushSubscription) {
+function endpointWorkaround (pushSubscription) {
 	// Make sure we only mess with GCM
 	if (pushSubscription.endpoint.indexOf('https://android.googleapis.com/gcm/send') !== 0) {
 		return pushSubscription.endpoint;
 	}
 
-	var mergedEndpoint = pushSubscription.endpoint;
+	let mergedEndpoint = pushSubscription.endpoint;
 	// Chrome 42 + 43 will not have the subscriptionId attached
 	// to the endpoint.
 	if (pushSubscription.subscriptionId &&
@@ -198,16 +196,16 @@ function endpointWorkaround(pushSubscription) {
 	return mergedEndpoint;
 }
 
-function sendSubscriptionToServer(subscription, isRemove) {
+function sendSubscriptionToServer (subscription, isRemove) {
 	return myftClient.init()
 		.then(() => myftClient.getAll('enabled', 'endpoint'))
-		.then(function(currentSubscription) {
-			var endpoints = [];
-			var thisEndpoint = endpointWorkaround(subscription);
+		.then(function (currentSubscription) {
+			const endpoints = [];
+			let thisEndpoint = endpointWorkaround(subscription);
 			if(currentSubscription && currentSubscription.items && currentSubscription.items.length) {
 				endpoints = currentSubscription.items;
 			}
-			var index = endpoints.indexOf(thisEndpoint);
+			const index = endpoints.indexOf(thisEndpoint);
 			if(isRemove || (!thisEndpoint && index >= 0)) {
 				myftClient.remove('user', null, 'enabled', 'endpoint', encodeURIComponent(thisEndpoint));
 			} else if (index < 0) {

@@ -93,7 +93,7 @@ function onAdsComplete (event) {
 	}
 }
 
-function sendAdLoadedTrackingEvent() {
+function sendAdLoadedTrackingEvent () {
 	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 	if (performance && performance.mark) {
 		const currentTime = new Date().getTime();

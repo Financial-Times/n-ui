@@ -1,5 +1,3 @@
-'use strict';
-
 const _myFtClient = require('next-myft-client');
 const _setFollowPreferences = require('./set-follow-preferences');
 
@@ -13,14 +11,14 @@ let prefs = {
 	userDismissed: null
 };
 
-function setInitialPrefs() {
+function setInitialPrefs () {
 	const allLoadedPrefs = _myFtClient.loaded['preferred.preference'].items;
 
 	prefs.subscribedToDaily = allLoadedPrefs.find(pref => pref.uuid === 'email-daily-digest');
 	prefs.userDismissed = allLoadedPrefs.find(pref => pref.uuid === 'follow-email-dismissed');
 }
 
-function _overlayFormHandler(ev, overlay) {
+function _overlayFormHandler (ev, overlay) {
 	ev.preventDefault();
 	// Default for users who hit enter
 	let method = 'put';
@@ -34,7 +32,7 @@ function _overlayFormHandler(ev, overlay) {
 		.then(() => overlay.close());
 }
 
-function setUpOverlayListeners(overlay) {
+function setUpOverlayListeners (overlay) {
 	_overlayForm = (overlay) ? overlay.content.querySelector('.js-follow-email-form') : null;
 
 	if (!_overlayForm) { return; }

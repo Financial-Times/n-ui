@@ -16,7 +16,7 @@ const exists = thing => thing;
  * @param {(string|Array)} [classes] - Additional class(es) for the follow component
  */
 class Follow extends Component {
-	render() {
+	render () {
 		let classes = ['n-myft-ui', 'n-myft-ui--follow'];
 		if (this.props.classes) {
 			classes = classes.concat(classesToArray(this.props.classes));

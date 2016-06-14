@@ -1,5 +1,3 @@
-'use strict';
-
 //TODO: refactor the massive out of this
 
 const nextButtons = require('../buttons');
@@ -61,11 +59,11 @@ function myFtFeatureFromEvent (ev) {
 	return ev.type.replace('myft.', '').split('.')[1];
 }
 
-function getUuid(item) {
+function getUuid (item) {
 	return item.UUID || item.uuid;
 }
 
-function toggleButton(buttonEl, state) {
+function toggleButton (buttonEl, state) {
 	const isPressed = buttonEl.getAttribute('aria-pressed') === 'true';
 
 	if (state !== isPressed) {
@@ -90,7 +88,7 @@ function updateUiForFeature (opts) {
 	});
 }
 
-function openOverlay(html, { name = 'myft-ui', title = '&nbsp;', shaded = true }) {
+function openOverlay (html, { name = 'myft-ui', title = '&nbsp;', shaded = true }) {
 	const overlay = new Overlay(name, {
 		heading: { title, shaded },
 		html
@@ -103,7 +101,7 @@ function openOverlay(html, { name = 'myft-ui', title = '&nbsp;', shaded = true }
 	});
 }
 
-function setUpSaveToExistingListListeners(overlay, contentId) {
+function setUpSaveToExistingListListeners (overlay, contentId) {
 
 	const saveToExistingListButton = overlay.content.querySelector('.js-save-to-existing-list');
 	const listSelect = overlay.content.querySelector('.js-list-select');
@@ -128,7 +126,7 @@ function setUpSaveToExistingListListeners(overlay, contentId) {
 	}
 }
 
-function setUpNewListListeners(overlay, contentId) {
+function setUpNewListListeners (overlay, contentId) {
 
 	const createListButton = overlay.content.querySelector('.js-create-list');
 	const nameInput = overlay.content.querySelector('.js-name');
@@ -176,7 +174,7 @@ function setUpNewListListeners(overlay, contentId) {
 
 }
 
-function showListsOverlay(overlayTitle, formHtmlUrl, contentId) {
+function showListsOverlay (overlayTitle, formHtmlUrl, contentId) {
 
 	myftClient.personaliseUrl(formHtmlUrl)
 		.then(url => fetch(url, {
@@ -191,19 +189,19 @@ function showListsOverlay(overlayTitle, formHtmlUrl, contentId) {
 
 }
 
-function showCopyToListOverlay(contentId, excludeList) {
+function showCopyToListOverlay (contentId, excludeList) {
 	showListsOverlay('Copy to list', `/myft/list?fragment=true&copy=true&contentId=${contentId}&excludeList=${excludeList}`, contentId)
 }
 
-function showArticleSavedOverlay(contentId, fromClippings) {
+function showArticleSavedOverlay (contentId, fromClippings) {
 	showListsOverlay('Article saved', `/myft/list?fragment=true&fromArticleSaved=true&contentId=${contentId}${fromClippings && '&fromClippings=true'}`, contentId)
 }
 
-function showCreateListOverlay() {
+function showCreateListOverlay () {
 	showListsOverlay('Create list', '/myft/list?fragment=true');
 }
 
-function getMessage(relationship, detail, href) {
+function getMessage (relationship, detail, href) {
 	detail.data = detail.data || {};
 
 	const messages = {
@@ -224,7 +222,7 @@ function getMessage(relationship, detail, href) {
 	return (messages.hasOwnProperty(relationship)) ? messages[relationship]: '';
 }
 
-function getPersonaliseUrlPromise(page, relationship, detail) {
+function getPersonaliseUrlPromise (page, relationship, detail) {
 	return myftClient.personaliseUrl(`/myft/${page}`)
 		.then(personalisedUrl => ({
 			type: 'default',
@@ -301,7 +299,7 @@ function updateAfterIO (myftFeature, detail) {
 
 }
 
-function onLoad(ev) {
+function onLoad (ev) {
 	const myftFeature = myFtFeatureFromEvent(ev);
 	results[myftFeature] = ev.detail.Items || ev.detail.items || [];
 
