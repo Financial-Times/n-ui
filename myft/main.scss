@@ -5,8 +5,7 @@ $o-overlay-is-silent: false;
 @import "o-overlay/main";
 $o-overlay-is-silent: true;
 
-$o-forms-is-silent: false;
-@import "o-forms/main";
+@import "../forms/main";
 
 @import "scss/follow-email";
 

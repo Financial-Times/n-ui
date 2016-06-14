@@ -1,1 +1,11 @@
+$_n-ui-forms-applied: false !default;
+
+@if nUiHas(forms) and $_n-ui-forms-applied == false {
+	$o-forms-is-silent: false !global;
+}
+
 @import 'o-forms/main';
+
+@if $_n-ui-forms-applied == false {
+	$_n-ui-forms-applied: true !global;
+}
