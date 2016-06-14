@@ -52,7 +52,7 @@
 	$_n-ui-features: map-merge($_n-ui-features, $opts) !global;
 }
 
-/// Configure n-ui
+/// Add a single feature, e.g. 'buttons', 'forms'
 /// @output none
 @mixin nUiAddFeature($feature-name) {
 	$_n-ui-features: map-merge($_n-ui-features, ($feature-name: true)) !global;
