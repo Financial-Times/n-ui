@@ -18,16 +18,16 @@
 
 /// Critical block start
 /// @output A critical block start comment
-@mixin nUiCriticalStart() {
-	@if nUiHas('critical') {
+@mixin nUiCriticalStart($feature-name: null) {
+	@if nUiHas('critical') and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
 		/*! start:head.css*/
 	}
 }
 
 /// Critical block end
 /// @output A critical block start comment
-@mixin nUiCriticalEnd() {
-	@if nUiHas('critical') {
+@mixin nUiCriticalEnd($feature-name: null) {
+	@if nUiHas('critical') and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
 		/*! end:head.css*/
 	}
 }
@@ -64,12 +64,25 @@
 	}
 
 	$_n-ui-features: map-merge($_n-ui-features, $opts) !global;
+
+	// if any required feature has a dependency, require them
+	@each $feature-name, $feature-deps in $_n-ui-feature-dependenices {
+		@if map-has-key($_n-ui-features, $feature-name) {
+			@each $feature-dep in $feature-deps {
+				// if it's already 'critical', don't go lower
+				@if map-get($_n-ui-features, $feature-dep) != 'critical' {
+					// set it to the same level as the dependent feature
+					$_n-ui-features: map-merge($_n-ui-features, ($feature-dep: map-get($_n-ui-features, $feature-name))) !global;
+				}
+			}
+		}
+	}
 }
 
 /// Add a single feature, e.g. 'buttons', 'forms'
 /// @output none
-@mixin nUiAddFeature($feature-name) {
-	$_n-ui-features: map-merge($_n-ui-features, ($feature-name: true)) !global;
+@mixin nUiAddFeature($feature-name, $feature-value: true) {
+	$_n-ui-features: map-merge($_n-ui-features, ($feature-name: $feature-value)) !global;
 }
 
 

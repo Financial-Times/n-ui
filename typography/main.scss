@@ -1,102 +1,41 @@
+@include nUiCriticalStart('typography');
+
 $_n-ui-typography-applied: false !default;
+$_n-ui-typography-is-silent: nUiHas('typography') == false or $_n-ui-typography-applied == true;
+
 $o-fonts-path: 'https://next-geebee.ft.com/build/v2/files/o-fonts-assets@1.3.0/';
+// TODO - once o-typography lets us control font loading in non-silent mode we should unsilence it
+//$o-typography-is-silent: $_n-ui-typography-is-silent;
+$o-typography-progressive-fonts: serifDisplay, sansData, sansDataBold, sansBold;
 
 @import 'o-fonts/main';
-
-$o-typography-progressive-fonts: serifDisplay, sansData, sansDataBold, sansBold;
-@if $_n-ui-typography-applied == false and nUiHas(typography) {
-	// TODO - once o-typography lets us control font loading in non-silent mode we should unsilence it
-	//$o-typography-is-silent: false;
-}
-
 @import 'o-typography/main';
-
-$o-typography-is-silent: true;
-
+@import 'mixins';
 @import 'lists';
 
-@mixin nLinksBody($inversed: false) {
-	@if ($inversed) {
-		@include oColorsFor(link-inversed, text);
-	} @else {
-		@include oColorsFor(link, text);
-	}
-	border-bottom: 1px dotted getColorFor(link, text);
-	text-decoration: none;
+@if $_n-ui-typography-is-silent == false {
+	@include oFontsInclude(FinancierDisplayWeb);
+	@include oFontsInclude(MetricWeb);
+	@include oFontsInclude(MetricWeb, $weight: semibold);
 
-	&:hover,
-	&:focus {
-		@if ($inversed) {
-			color: lighten(getColorFor(link-inversed, text), 5%);
-		} @else {
-			color: getColorFor(link-hover, text);
+	html {
+		@include oColorsFor(page);
+		font-family: sans-serif;
+		font-size: 0.82em;
+
+		// scss-lint:disable SelectorFormat
+		&.o-typography--loaded-sansData {
+			font-family: $o-typography-sans;
+			font-size: initial;
 		}
-		border-bottom-color: transparent;
 	}
+
+	a {
+		@include nLinksBody();
+	}
+
+	$_n-ui-typography-applied: true !global;
+	$o-typography-is-silent: true !global;
 }
 
-
-@mixin nLinksHeadline($article-type: article-standard) {
-	@include oColorsFor($article-type, text);
-	border-bottom-color: transparent;
-	text-decoration: none;
-
-	&:hover,
-	&:focus {
-		@include oColorsFor($article-type, border);
-		border-bottom-style: dotted;
-		border-bottom-width: 1px;
-	}
-}
-
-@mixin nLinksTopic($inversed: false) {
-	@if ($inversed) {
-		@include oColorsFor(topic-inversed, text);
-	} @else {
-		@include oColorsFor(topic, text);
-	}
-	@include oTypographySansBold(s);
-	border-bottom-color: transparent;
-	text-decoration: none;
-
-	&:hover,
-	&:focus {
-		@if ($inversed) {
-			border-bottom-color: lighten(getColorFor(topic-inversed, text), 5%);
-			color: lighten(getColorFor(topic-inversed, text), 5%);
-		} @else {
-			border-bottom-color: darken(getColorFor(topic, text), 20%);
-			color: darken(getColorFor(topic, text), 20%);
-		}
-		border-bottom-style: dotted;
-		border-bottom-width: 1px;
-	}
-}
-
-@if $_n-ui-typography-applied == false {
-	@if nUiHas(typography) {
-		@include nUiCriticalStart();
-		@include oFontsInclude(FinancierDisplayWeb);
-		@include oFontsInclude(MetricWeb);
-		@include oFontsInclude(MetricWeb, $weight: semibold);
-
-		html {
-			@include oColorsFor(page);
-			font-family: sans-serif;
-			font-size: 0.82em;
-
-			// scss-lint:disable SelectorFormat
-			&.o-typography--loaded-sansData {
-				font-family: $o-typography-sans;
-				font-size: initial;
-			}
-		}
-
-		a {
-			@include nLinksBody();
-		}
-		@include nUiCriticalEnd();
-	}
-	$_n-ui-typography-applied: true;
-
-}
+@include nUiCriticalEnd('typography');

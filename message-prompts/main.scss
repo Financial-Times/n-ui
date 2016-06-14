@@ -1,1 +1,14 @@
+@include nUiCriticalStart('message-prompts');
+
+$_n-ui-message-prompts-applied: false !default;
+$_n-ui-message-prompts-is-silent: nUiHas('message-prompts') == false or $_n-ui-message-prompts-applied == true;
+$n-message-prompts-is-silent: $_n-ui-message-prompts-is-silent;
+
 @import 'n-message-prompts/main';
+
+@if $_n-ui-message-prompts-is-silent == false {
+	$_n-ui-message-prompts-applied: true !global;
+	$n-message-prompts-is-silent: true !global;
+}
+
+@include nUiCriticalStart('message-prompts');

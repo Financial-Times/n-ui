@@ -6,7 +6,14 @@
 /// @param {String} $feature
 /// @returns {Bool}
 @function nUiHas($feature) {
-	@return map-get($_n-ui-features, $feature) == true;
+	@return nUiFeatureValue($feature) != false;
+}
+
+/// Get the value of a given feature (true|false|critical)
+/// @param {String} $feature
+/// @returns {Bool|String}
+@function nUiFeatureValue($feature) {
+	@return map-get($_n-ui-features, $feature);
 }
 
 /// Returns a critical block start pragma

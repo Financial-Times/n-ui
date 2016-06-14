@@ -1,0 +1,57 @@
+@mixin nLinksBody($inversed: false) {
+    @if ($inversed) {
+        @include oColorsFor(link-inversed, text);
+    } @else {
+        @include oColorsFor(link, text);
+    }
+    border-bottom: 1px dotted getColorFor(link, text);
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        @if ($inversed) {
+            color: lighten(getColorFor(link-inversed, text), 5%);
+        } @else {
+            color: getColorFor(link-hover, text);
+        }
+        border-bottom-color: transparent;
+    }
+}
+
+
+@mixin nLinksHeadline($article-type: article-standard) {
+    @include oColorsFor($article-type, text);
+    border-bottom-color: transparent;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        @include oColorsFor($article-type, border);
+        border-bottom-style: dotted;
+        border-bottom-width: 1px;
+    }
+}
+
+@mixin nLinksTopic($inversed: false) {
+    @if ($inversed) {
+        @include oColorsFor(topic-inversed, text);
+    } @else {
+        @include oColorsFor(topic, text);
+    }
+    @include oTypographySansBold(s);
+    border-bottom-color: transparent;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        @if ($inversed) {
+            border-bottom-color: lighten(getColorFor(topic-inversed, text), 5%);
+            color: lighten(getColorFor(topic-inversed, text), 5%);
+        } @else {
+            border-bottom-color: darken(getColorFor(topic, text), 20%);
+            color: darken(getColorFor(topic, text), 20%);
+        }
+        border-bottom-style: dotted;
+        border-bottom-width: 1px;
+    }
+}

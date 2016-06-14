@@ -1,72 +1,15 @@
+@include nUiCriticalStart('buttons');
+
 $_n-ui-buttons-applied: false !default;
+$_n-ui-buttons-is-silent: nUiHas('buttons') == false or $_n-ui-buttons-applied == true;
+$o-buttons-is-silent: $_n-ui-buttons-is-silent;
 
-@if nUiHas(buttons) and $_n-ui-buttons-applied == false {
-	$o-buttons-is-silent: false !global;
-}
-
-@include nUiCriticalStart();
 @import 'o-buttons/main';
-@include nUiCriticalEnd();
+@import 'mixins';
 
-$o-buttons-sizes: map-merge($o-buttons-sizes, (
-	'medium': map-merge(map-get($o-buttons-sizes, 'medium'), (
-		font-size: 14px
-	))
-));
-
-@mixin nextLinkButton($background: false, $color: false) {
-	@warn '`nextLinkButton` is deprecated, use standard button styles';
-	@include oTypographySansBold('xs');
-
-	@if $color {
-		color: $color;
-	} @else {
-		color: getColor('white');
-	}
-
-	@if $background {
-		background: $background;
-	}
-
-	text-decoration: none;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	display: inline-block;
-	text-align: center;
-	width: 227px;
-	text-transform: uppercase;
-	font-size: 12px;
-
-	&:hover {
-		@if $background {
-			background: darken($background, 10%);
-		}
-	}
-}
-
-@mixin nButtons($size: 'medium', $theme: 'standard') {
-	@warn '`nButtons` is deprecated, use `oButtons` instead';
-	@include oButtons($size, $theme);
-}
-
-@mixin nButtonsSize($size) {
-	@warn '`nButtonsSize` is deprecated, use `oButtonsSize` instead';
-	@include oButtonsSize($size);
-}
-
-@mixin nButtonsTheme($theme) {
-	@warn '`nButtonsTheme` is deprecated, use `oButtonsTheme` instead';
-	@include oButtonsTheme($theme);
-}
-
-@mixin nButtonsGroup($buttonClass) {
-	@warn '`nButtonsGroup` is deprecated, use `oButtonsGroup` instead';
-	@include oButtonsGroup($buttonClass);
-}
-
-@if $_n-ui-buttons-applied == false {
-
+@if $_n-ui-buttons-is-silent == false {
 	$_n-ui-buttons-applied: true !global;
 	$o-buttons-is-silent: true !global;
-
 }
+
+@include nUiCriticalEnd('buttons');

@@ -1,21 +1,29 @@
 $_n-ui-features: (
-	ads: true,
+	ads: 'critical',
 	buttons: true,
-	card: false,
+	colors: true,
 	cookieMessage: false,
 	expander: false,
 	footer: true,
 	forms: false,
-	grid: true,
-	header: true,
+	grid: 'critical',
+	header: 'critical',
+	icons: true,
+	layout: 'critical',
 	messagePrompts: false,
-	myft: false,
+	myft: true,
+	normalize: 'critical',
 	notification: false,
 	overlay: false,
 	promoMessages: false,
-	typography: true,
+	typography: 'critical',
+	utils: 'critical',
 	welcomeMessage: false
 ) !default;
+
+$_n-ui-feature-dependenices: (
+	welcomeMessage: ('footer')
+);
 
 $_n-ui-presets: (
 	discrete: map-merge($_n-ui-features, ()),

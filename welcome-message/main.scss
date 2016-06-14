@@ -1,15 +1,13 @@
-$_n-ui-welcome-message-applied: false;
+@include nUiCriticalStart('welcome-message');
+
+$_n-ui-welcome-message-applied: false !default;
+$_n-ui-welcome-message-is-silent: nUiHas('welcome-message') == false or $_n-ui-welcome-message-applied == true;
 
 .n-welcome {
 	display: none;
 }
 
-// This hackily means footer is an alias for welcome-message in the styles as the welcome message
-// is the only footer we have currently.
-// This aliasing is not replicated in the js because it woudl turn on the stickiness of the welcome
-// message, incompatible in prnciple with the 'discrete' preset
-@if $_n-ui-welcome-message-applied == false and (nUiHas(welcomeMessage) or nUiHas(footer))  {
-
+@if $_n-ui-welcome-message-is-silent == false {
 	.n-welcome {
 		@include oTypographySansSize(s);
 		font-family: MetricWeb, Arial, sans-serif;
@@ -137,3 +135,5 @@ $_n-ui-welcome-message-applied: false;
 
 	$_n-ui-welcome-message-applied: true !global;
 }
+
+@include nUiCriticalEnd('welcome-message');
