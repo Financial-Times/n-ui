@@ -9,7 +9,7 @@
 		/*! start:head.css*/
 	}
 
-	@content
+	@content;
 
 	@if nUiHas('critical') {
 		/*! end:head.css*/
