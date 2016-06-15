@@ -1,6 +1,6 @@
 $_n-ui-features: (
 	ads: 'critical',
-	buttons: true,
+	buttons: false,
 	colors: true,
 	cookieMessage: false,
 	expander: false,
@@ -11,7 +11,7 @@ $_n-ui-features: (
 	icons: true,
 	layout: 'critical',
 	messagePrompts: false,
-	myft: true,
+	myft: false,
 	normalize: 'critical',
 	notification: false,
 	overlay: false,
@@ -22,6 +22,7 @@ $_n-ui-features: (
 ) !default;
 
 $_n-ui-feature-dependenices: (
+	myft: ('forms', 'notification', 'overlay'),
 	welcomeMessage: ('footer')
 );
 

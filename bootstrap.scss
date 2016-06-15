@@ -8,11 +8,10 @@
 @import 'header/main';
 @import 'footer/main';
 
- @import 'ads/main';
+@import 'ads/main';
 
- // TODO: move these components into n-ui
- @import 'welcome-message/main';
- @import 'cookie-message/main';
- @import 'n-interactive-tour/main';
- @import 'message-prompts/main';
- @import 'promo-messages/main';
+// TODO: move these components into n-ui
+@import 'welcome-message/main';
+@import 'cookie-message/main';
+@import 'message-prompts/main';
+@import 'promo-messages/main';

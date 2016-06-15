@@ -1,3 +1,5 @@
+@import '../buttons/main';
+
 @include nUiCriticalStart('message-prompts');
 
 $_n-ui-message-prompts-applied: false !default;
