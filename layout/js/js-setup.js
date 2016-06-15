@@ -125,21 +125,3 @@ class JsSetup {
 }
 
 module.exports = JsSetup;
-
-
-
-
-// -	coreLoaded () {
-//  -
-//  -		waitForCondition('PolyfillsLoaded', () => {
-//  -			let event;
-//  -			try {
-//  -				event = new Event('ftNextDependenciesLoaded');
-//  -			} catch(e) {
-//  -				event = document.createEvent('Event');
-//  -				event.initEvent('ftNextDependenciesLoaded', true, true);
-//  -			}
-//  -			window.ftNextDependenciesLoadedFlag = true;
-//  -			document.dispatchEvent(event);
-
-// }

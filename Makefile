@@ -14,6 +14,7 @@ pre-package:
 deploy:
 	node ./_deploy/s3.js
 
+#todo minify properly and only run on master
 dist: pre-package assets-production deploy
 
 test: verify test-unit dist
