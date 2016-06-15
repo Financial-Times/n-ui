@@ -1,20 +1,16 @@
-@include nUiAddFeature('buttons');
 @import '../buttons/main';
+@import '../forms/main';
 @import '../notification/main';
-@include nUiAddFeature('overlay');
 @import '../overlay/main';
-@include nUiAddFeature('forms');
-@import "../forms/main";
 
-@import "scss/follow-email";
+@include nUiCriticalStart('myft');
 
-// Because sass has no import_once, use this $_next-myft-ui_applied solution
-$_next-myft-ui_applied: false !default;
+$_n-ui-myft-applied: false !default;
+$_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
 
-@if $_next-myft-ui_applied == false {
+@import 'scss/follow-email';
 
-	@include nUiCriticalStart();
-
+@if $_n-ui-myft-is-silent == false {
 	.myft-ui,
 	.n-myft-ui {
 		display: inline-block;
@@ -185,8 +181,6 @@ $_next-myft-ui_applied: false !default;
 		margin: 0 8px -5px;
 	}
 
-	@include nUiCriticalEnd();
-
 	.n-myft-ui--article-saved__list-select {
 		margin-bottom: 10px;
 	}
@@ -343,3 +337,5 @@ $_next-myft-ui_applied: false !default;
 
 	$_next-myft-ui_applied: true !global;
 }
+
+@include nUiCriticalEnd('myft');

@@ -1,8 +1,9 @@
-$_n-layout_applied: false !default;
+@include nUiCriticalStart('layout');
 
-@if $_n-layout_applied == false {
+$_n-ui-layout-applied: false !default;
+$_n-ui-layout-is-silent: nUiHas('layout') == false or $_n-ui-layout-applied == true;
 
-	@include nUiCriticalStart();
+@if $_n-ui-layout-is-silent == false {
 	.core .o--if-js,
 	.enhanced .o--if-no-js {
 		display: none !important;
@@ -39,10 +40,8 @@ $_n-layout_applied: false !default;
 			display: block;
 		}
 	}
-	@include nUiCriticalEnd();
 
-	$_n-layout_applied: true;
-
-} @else {
-	@warn "n-ui/layout should only be imported once.";
+	$_n-layout_applied: true !global;
 }
+
+@include nUiCriticalEnd('layout');

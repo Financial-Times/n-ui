@@ -1,7 +1,9 @@
-$_n-normalize_applied: false !default;
+@include nUiCriticalStart('normalize');
 
-@if $_n-normalize_applied == false {
-	@include nUiCriticalStart();
+$_n-ui-normalize-applied: false !default;
+$_n-ui-normalize-is-silent: nUiHas('normalize') == false or $_n-ui-normalize-applied == true;
+
+@if $_n-ui-normalize-is-silent == false {
 	/**
 	* Prevent adjustments of font size after orientation changes in IE and iOS.
 	*/
@@ -225,7 +227,8 @@ $_n-normalize_applied: false !default;
 		outline: thin dotted;
 		outline-offset: 1px;
 	}
-	@include nUiCriticalEnd();
-	$_n-normalize_applied: true;
 
+	$_n-ui-normalize-applied: true !global;
 }
+
+@include nUiCriticalEnd('normalize');

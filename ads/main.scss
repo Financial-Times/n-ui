@@ -1,7 +1,12 @@
-$_n-ui-ads-applied: false !default;
+@include nUiCriticalStart('ads');
 
-@if $_n-ui-ads-applied == false {
-	$o-ads-is-silent: false !global;
+$_n-ui-ads-applied: false !default;
+$_n-ui-ads-is-silent: nUiHas('ads') == false or $_n-ui-ads-applied == true;
+$o-ads-is-silent: $_n-ui-ads-is-silent;
+
+@import 'o-ads/main';
+
+@if $_n-ui-ads-is-silent == false {
 	.core .o-ads {
 		display: none;
 	}
@@ -11,13 +16,11 @@ $_n-ui-ads-applied: false !default;
 			display: none !important;
 		}
 	}
-} @else {
-	$o-ads-is-silent: true !global;
 }
 
-@import "o-ads/main";
-
-@if $_n-ui-ads-applied == false {
+@if $_n-ui-ads-is-silent == false {
 	$_n-ui-ads-applied: true !global;
 	$o-ads-is-silent: true !global;
 }
+
+@include nUiCriticalEnd('ads');

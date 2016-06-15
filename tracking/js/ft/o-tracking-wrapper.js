@@ -75,7 +75,7 @@ const oTrackingWrapper = {
 				pageViewConf.context.barrier = true;
 				pageViewConf.context.barrierType = barrierType.getAttribute('data-barrier');
 
-				const isProductSelector = (productSelectorFlag) ? productSelectorFlag.getAttribute('data-barrier-is-product-selector') === "true" : false;
+				const isProductSelector = (productSelectorFlag) ? productSelectorFlag.getAttribute('data-barrier-is-product-selector') === 'true' : false;
 
 				// https://docs.google.com/document/d/18_yV2s813XCrBF7w6196FLhLJzWXK4hXT2sIpDZVvhQ/edit?ts=575e9368#
 				const opportunity = {
