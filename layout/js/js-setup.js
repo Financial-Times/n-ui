@@ -30,7 +30,7 @@ function dispatchLoadedEvent () {
 
 class JsSetup {
 
-	init (opts) {
+	init () {
 		loadFonts(document.documentElement)
 
 		this.appInfo = {
@@ -38,9 +38,6 @@ class JsSetup {
 			version: document.documentElement.getAttribute('data-next-version'),
 			name: document.documentElement.getAttribute('data-next-app')
 		};
-
-		// may be used for app specific config in future
-		opts = opts || {};
 
 		const flags = window.nextFeatureFlags.reduce((obj, flag) => {
 			obj[flag.name] = flag.state;
@@ -91,9 +88,10 @@ class JsSetup {
 	}
 
 	bootstrap (callback, opts) {
-
 		waitForCondition('Polyfill', () => {
-			this.bootstrapResult = this.init(opts)
+			this.initResult = this.initResult || this.init();
+
+			this.bootstrapResult = this.initResult
 				.then(result => {
 					let promise = callback(result);
 					if (!(promise && typeof promise.then === 'function')) {
@@ -101,9 +99,13 @@ class JsSetup {
 					}
 					return promise
 						.then(() => {
-							document.documentElement.classList.add('js-success');
-							perfMark('appJsExecuted');
-							dispatchLoadedEvent();
+							if (!opts.nUiInit) {
+								document.documentElement.classList.add('js-success');
+								perfMark('appJsExecuted');
+								dispatchLoadedEvent();
+							} else {
+								perfMark('nUiJsExecuted');
+							}
 						});
 				})
 				.catch(err => {
