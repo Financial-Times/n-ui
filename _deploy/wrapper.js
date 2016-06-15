@@ -1,8 +1,8 @@
 /*global ftNextFireCondition*/
-require('n-ui');
+const nUi = require('n-ui');
 
 nUi.configure({
-	preset: discrete
+	preset: 'discrete'
 });
 
 nUi.bootstrap(null, { nUiInit: true });
