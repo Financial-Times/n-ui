@@ -14,7 +14,6 @@ module.exports = nWebpack({
 		filename: '[name]',
 		library: 'ftNextUi'
 	},
-	externals: {'n-ui': null},
 	withBabelPolyfills: true,
 	entry: {
 		"./dist/es5.js": "./_deploy/wrapper.js"
