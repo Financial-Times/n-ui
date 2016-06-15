@@ -2,12 +2,22 @@
 
 const nWebpack = require('@financial-times/n-webpack');
 const fs = require('fs');
-const deps = fs.readdirSync('./bower_components').map(dir => {
+const AsciiTable = require('ascii-table');
+
+let deps = fs.readdirSync('./bower_components').map(dir => {
 	return dir + `@` + require(`./bower_components/${dir}/.bower.json`).version;
 }).concat([
 	'preact@' + require('./node_modules/preact/package.json').version,
 	'preact-compat@' + require('./node_modules/preact-compat/package.json').version,
-]).join('\t\t\t');
+]);
+
+const depsTable = new AsciiTable('Dependencies');
+while (deps.length) {
+	depsTable.addRow(deps.splice(0, 4));
+}
+
+
+console.log(depsTable.toString())
 
 module.exports = nWebpack({
 	output: {
@@ -19,6 +29,6 @@ module.exports = nWebpack({
 		"./dist/es5.js": "./_deploy/wrapper.js"
 	},
 	wrap: {
-		before: '/*\n' + deps + '\n*/'
+		before: '/*\n' + depsTable.toString() + '\n*/'
 	}
 });
