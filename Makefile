@@ -17,6 +17,6 @@ deploy:
 #todo minify properly and only run on master
 dist: pre-package assets-production deploy
 
-test: verify test-unit dist
+test: verify test-unit
 
 test-dev: verify test-unit-dev
