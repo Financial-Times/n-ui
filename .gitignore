@@ -3,7 +3,6 @@
 /bower_components/
 /node_modules/
 /dist/
-webpack.config.js
 /npm-debug.log*
 .DS_Store
 .editorconfig
