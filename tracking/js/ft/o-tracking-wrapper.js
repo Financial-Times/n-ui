@@ -69,12 +69,14 @@ const oTrackingWrapper = {
 
 			// barriers
 			let barrierType = document.querySelector('[data-barrier]');
+			let productSelectorFlag = document.querySelector('[data-barrier-is-product-selector]');
+
 			if (barrierType) {
 
 				pageViewConf.context.barrier = true;
-				pageViewConf.context.barrierType = barrierType.getAttribute('data-barrier');
+				pageViewConf.context.barrierType = barrierTye.getAttribute('data-barrier');
 
-				const isProductSelector = barrierType.getAttribute('data-barrier-is-product-selector');
+				const isProductSelector = productSelectorFlag.getAttribute('data-barrier-is-product-selector') === "true";
 
 				// https://docs.google.com/document/d/18_yV2s813XCrBF7w6196FLhLJzWXK4hXT2sIpDZVvhQ/edit?ts=575e9368#
 				const opportunity = {
