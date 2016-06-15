@@ -74,7 +74,7 @@ const oTrackingWrapper = {
 			if (barrierType) {
 
 				pageViewConf.context.barrier = true;
-				pageViewConf.context.barrierType = barrierTye.getAttribute('data-barrier');
+				pageViewConf.context.barrierType = barrierType.getAttribute('data-barrier');
 
 				const isProductSelector = productSelectorFlag.getAttribute('data-barrier-is-product-selector') === "true";
 
