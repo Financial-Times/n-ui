@@ -9,8 +9,6 @@ import cookieMessage from './cookie-message';
 import welcomeMessage from './welcome-message';
 import messagePrompts from './message-prompts';
 import myft from './myft';
-import { perfMark } from './utils';
-
 
 export const _ads = ads;
 export const _tracking = tracking;
