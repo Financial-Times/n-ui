@@ -12,6 +12,7 @@ let deps = fs.readdirSync('./bower_components').map(dir => {
 ]);
 
 const depsTable = new AsciiTable('Dependencies');
+depsTable.removeBorder();
 while (deps.length) {
 	depsTable.addRow(deps.splice(0, 4));
 }
