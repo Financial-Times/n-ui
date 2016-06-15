@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Financial-Times/n-ui#readme",
   "devDependencies": {
     "@financial-times/n-heroku-tools": "^6.7.3",
+    "@financial-times/n-webpack": "^1.1.2",
     "autoprefixer": "^6.3.6",
     "babel-core": "^6.2.1",
     "babel-loader": "^6.2.4",
