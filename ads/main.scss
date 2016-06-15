@@ -1,7 +1,7 @@
 $_n-ui-ads-applied: false !default;
 
 @if $_n-ui-ads-applied == false {
-	$o-ads-is-silent: false;
+	$o-ads-is-silent: false !global;
 	.core .o-ads {
 		display: none;
 	}
@@ -12,12 +12,12 @@ $_n-ui-ads-applied: false !default;
 		}
 	}
 } @else {
-	$o-ads-is-silent: true;
+	$o-ads-is-silent: true !global;
 }
 
 @import "o-ads/main";
 
 @if $_n-ui-ads-applied == false {
-	$_n-ui-ads-applied: true;
-	$o-ads-is-silent: true;
+	$_n-ui-ads-applied: true !global;
+	$o-ads-is-silent: true !global;
 }
