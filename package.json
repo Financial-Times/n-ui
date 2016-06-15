@@ -1,6 +1,6 @@
 {
   "name": "@financial-times/n-ui",
-  "version": "1.14.1",
+  "version": "1.14.2",
   "description": "An experiment bunching some of Next's client-side code into a single repository.",
   "main": "main.js",
   "scripts": {
