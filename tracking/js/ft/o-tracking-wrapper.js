@@ -71,9 +71,14 @@ const oTrackingWrapper = {
 			let productSelectorFlag = document.querySelector('[data-barrier-is-product-selector]');
 
 			if (barrierType) {
-
 				pageViewConf.context.barrier = true;
 				pageViewConf.context.barrierType = barrierType.getAttribute('data-barrier');
+			};
+
+			// FIXME - should not fire on barriers, but needs to be around for a while data analytics fix their SQL
+			oTracking.page(pageViewConf.context);
+
+			if (barrierType) {
 
 				const isProductSelector = (productSelectorFlag) ? productSelectorFlag.getAttribute('data-barrier-is-product-selector') === 'true' : false;
 
@@ -83,8 +88,8 @@ const oTrackingWrapper = {
 					subtype: barrierType.getAttribute('data-barrier')
 				}
 
-				let offers = document.querySelectorAll('[data-offer-id]');
-				let acquisitionContext = document.querySelectorAll('[data-acquisition-context]');
+				const offers = document.querySelectorAll('[data-offer-id]');
+				const acquisitionContext = document.querySelectorAll('[data-acquisition-context]');
 
 				broadcast('oTracking.event', Object.assign({
 					category: 'barrier',
@@ -95,9 +100,6 @@ const oTrackingWrapper = {
 					offers: nodesToArray(offers).map(e => e.getAttribute('data-offer-id'))
 				}, context))
 			}
-
-			// FIXME - should not fire on barriers, but needs to be around for a while data analytics fix their SQL
-			oTracking.page(pageViewConf.context);
 
 		} catch (err) {
 			broadcast('oErrors.log', {
