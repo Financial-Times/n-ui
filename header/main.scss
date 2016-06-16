@@ -2,7 +2,7 @@
 
 $_n-ui-header-applied: false !default;
 $_n-ui-header-is-silent: nUiHas('header') == false or $_n-ui-header-applied == true;
-$o-header-is-silent: $_n-ui-header-is-silent;
+$n-header-is-silent: $_n-ui-header-is-silent;
 
 @import 'n-header-footer/header/header';
 @import 'n-header-footer/header_new/header';
@@ -12,7 +12,7 @@ $o-header-is-silent: $_n-ui-header-is-silent;
 
 @if $_n-ui-header-is-silent == false {
 	$_n-ui-header-applied: true !global;
-	$o-header-is-silent: true !global;
+	$n-header-is-silent: true !global;
 }
 
 @include nUiCriticalEnd('header');
