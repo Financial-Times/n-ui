@@ -53,7 +53,7 @@ module.exports = [
 			library: 'ftNextUi'
 		},
 		withBabelPolyfills: false,
-		ECMAScriptVersion: 2015
+		ECMAScriptVersion: 2015,
 		entry: {
 			"./dist/es2015.js": "./_deploy/wrapper.js"
 		},
