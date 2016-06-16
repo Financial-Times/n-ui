@@ -23,6 +23,7 @@ $_n-ui-features: (
 
 $_n-ui-feature-dependenices: (
 	myft: ('forms', 'notification', 'overlay'),
+	footer: ('welcomeMessage'),
 	welcomeMessage: ('footer')
 );
 
