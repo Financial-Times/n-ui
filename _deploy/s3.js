@@ -1,3 +1,4 @@
+'use strict';
 const shellpromise = require('shellpromise');
 let version = require("../bower_components/n-ui/.bower.json").version;
 
