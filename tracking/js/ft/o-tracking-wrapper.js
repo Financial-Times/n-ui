@@ -85,7 +85,12 @@ const oTrackingWrapper = {
 
 				let offers = document.querySelectorAll('[data-offer-id]');
 				let acquisitionContext = document.querySelectorAll('[data-acquisition-context]');
+			};
 
+			// FIXME - should not fire on barriers, but needs to be around for a while data analytics fix their SQL
+			oTracking.page(pageViewConf.context);
+
+			if (barrierType) {
 				broadcast('oTracking.event', Object.assign({
 					category: 'barrier',
 					action: 'view',
@@ -95,9 +100,6 @@ const oTrackingWrapper = {
 					offers: nodesToArray(offers).map(e => e.getAttribute('data-offer-id'))
 				}, context))
 			}
-
-			// FIXME - should not fire on barriers, but needs to be around for a while data analytics fix their SQL
-			oTracking.page(pageViewConf.context);
 
 		} catch (err) {
 			broadcast('oErrors.log', {
