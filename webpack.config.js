@@ -20,16 +20,45 @@ while (deps.length) {
 
 console.log(depsTable.toString())
 
-module.exports = nWebpack({
-	output: {
-		filename: '[name]',
-		library: 'ftNextUi'
-	},
-	withBabelPolyfills: true,
-	entry: {
-		"./dist/es5.js": "./_deploy/wrapper.js"
-	},
-	wrap: {
-		before: '/*\n' + depsTable.toString() + '\n*/'
-	}
-});
+module.exports = [
+	nWebpack({
+		output: {
+			filename: '[name]',
+			library: 'ftNextUi'
+		},
+		withBabelPolyfills: true,
+		entry: {
+			"./dist/es5-core-js.js": "./_deploy/wrapper.js"
+		},
+		wrap: {
+			before: '/*\n' + depsTable.toString() + '\n*/'
+		}
+	}),
+	nWebpack({
+		output: {
+			filename: '[name]',
+			library: 'ftNextUi'
+		},
+		withBabelPolyfills: false,
+		entry: {
+			"./dist/es5-polyfill-io.js": "./_deploy/wrapper.js"
+		},
+		wrap: {
+			before: '/*\n' + depsTable.toString() + '\n*/'
+		}
+	}),
+	nWebpack({
+		output: {
+			filename: '[name]',
+			library: 'ftNextUi'
+		},
+		withBabelPolyfills: false,
+		ECMAScriptVersion: 2015
+		entry: {
+			"./dist/es2015.js": "./_deploy/wrapper.js"
+		},
+		wrap: {
+			before: '/*\n' + depsTable.toString() + '\n*/'
+		}
+	})
+];
