@@ -335,7 +335,7 @@ $_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
 		}
 	}
 
-	$_next-myft-ui_applied: true !global;
+	$_n-ui-myft-applied: true !global;
 }
 
 @include nUiCriticalEnd('myft');
