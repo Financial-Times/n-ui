@@ -1,16 +1,5 @@
-// always hide the footer in head.css because typically its styles will not be
-// in head.css, so on short pages we'll get a FOUC
-@include nUiCriticalStart;
-	.n-layout__row--footer {
-		display: none;
-	}
-@include nUiCriticalEnd;
-
 @include nUiCriticalStart('footer');
-// undo the above hiding of the footer
-.n-layout__row--footer {
-	display: block;
-}
+
 $_n-ui-footer-applied: false !default;
 $_n-ui-footer-is-silent: nUiHas('footer') == false or $_n-ui-footer-applied == true;
 $n-footer-is-silent: $_n-ui-footer-is-silent;
