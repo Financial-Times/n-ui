@@ -2,7 +2,7 @@
 
 $_n-ui-expander-applied: false !default;
 $_n-ui-expander-is-silent: nUiHas('expander') == false or $_n-ui-expander-applied == true;
-$o-expander-is-silent: $_n-ui-buttons-is-silent;
+$o-expander-is-silent: $_n-ui-expander-is-silent;
 
 @import 'o-expander/main';
 
