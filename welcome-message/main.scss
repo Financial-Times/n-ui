@@ -12,13 +12,13 @@ $_n-ui-welcome-message-applied: false;
 // is the only footer we have currently.
 // This aliasing is not replicated in the js because it woudl turn on the stickiness of the welcome
 // message, incompatible in prnciple with the 'discrete' preset
-@if $_n-ui-welcome-message-applied == false and (nUiHas(welcomeMessage) )  {
+@if $_n-ui-welcome-message-applied == false and (nUiHas(welcomeMessage))  {
 
 	$n-welcome-spacing: 10px;
 
 	.n-welcome {
 		display: block;
-		margin: 25px auto 0 auto;
+		margin: 25px auto 0;
 		background-color: getColor('warm-1');
 	}
 
@@ -32,7 +32,7 @@ $_n-ui-welcome-message-applied: false;
 		right: 0;
 		bottom: 0;
 		display: none;
-		box-shadow: 0 -2px 4px -2px rgba(80, 80, 80, 0.5)
+		box-shadow: 0 -2px 4px -2px rgba(80, 80, 80, 0.5);
 	}
 
 	.n-welcome--fixed-visible {
@@ -73,7 +73,7 @@ $_n-ui-welcome-message-applied: false;
 
 	.n-welcome__message__heading {
 		@include oTypographySansSize(m);
-		margin: 0 0 $n-welcome-spacing 0;
+		margin: 0 0 $n-welcome-spacing;
 	}
 
 	.n-welcome__message__text {
@@ -100,14 +100,14 @@ $_n-ui-welcome-message-applied: false;
 
 	.n-welcome__feedback-button-label--default {
 		@include oGridRespondTo(M) {
-			display:none;
+			display: none;
 		}
 	}
 
 	.n-welcome__feedback-button-label--medium {
 		display: none;
 		@include oGridRespondTo(M) {
-			display:inline;
+			display: inline;
 		}
 
 	}
@@ -134,7 +134,8 @@ $_n-ui-welcome-message-applied: false;
 		}
 	}
 
-	.n-welcome__actions__action--webapp {
+	.n-welcome__actions__action--webapp,
+	.n-welcome__actions__action--android {
 		display: none;
 
 		&.visible {

@@ -1,9 +1,14 @@
 const superstore = require('superstore-sync');
 
-const IOS_DEVICE_REGEX = /OS [0-9]{1,2}(_[0-9]){1,2} like Mac OS X/;
+const IOS_DEVICE_REGEX = /OS [0-9]{1,2}(_[0-9]){1,2} like Mac OS X/i;
+const ANDROID_DEVICE_REGEX = /Android/i;
 
 function isWebAppCapableDevice(userAgent){
 	return IOS_DEVICE_REGEX.test(userAgent);
+}
+
+function isAndroidDevice(userAgent){
+	return ANDROID_DEVICE_REGEX.test(userAgent);
 }
 
 function addClass (element, className) {
@@ -59,6 +64,12 @@ function showWebAppLink(){
 	});
 }
 
+function showAndroidLink(){
+	Array.from(document.querySelectorAll('.js-android-link')).forEach(link => {
+		addClass(link, 'visible');
+	});
+}
+
 function hideOptOutLink(){
 	Array.from(document.querySelectorAll('.js-optout-link')).forEach(link => {
 		addClass(link, 'hidden');
@@ -77,6 +88,9 @@ module.exports.init = () => {
 
 	if(isWebAppCapableDevice(navigator.userAgent)){
 		showWebAppLink();
+		hideOptOutLink();
+	}else if(isAndroidDevice(navigator.userAgent)){
+		showAndroidLink();
 		hideOptOutLink();
 	}
 
