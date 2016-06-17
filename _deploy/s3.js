@@ -1,10 +1,12 @@
 'use strict';
 const shellpromise = require('shellpromise');
-let version = require("../bower_components/n-ui/.bower.json").version;
+let versions = [require('../bower_components/n-ui/.bower.json').versions];
 
-if (!/(beta|rc)/.test(version)) {
-	version = version.split(".").slice(0,2).join('.');
+if (!/(beta|rc)/.test(versions[0])) {
+	versions[0] = versions[0].split('.').slice(0,2).join('.');
+	versions.push(versions[0].split('.').slice(0,1)[0]);
 }
 
-//TODO soft purge fastly too
-shellpromise(`nht deploy-static \`find . -path "./dist/*"\` --destination n-ui/v${version}/ --strip 1 --bucket ft-next-n-ui-prod --cache-control 'no-cache, must-revalidate, max-age=3600'`, { verbose: true, env: process.env })
+Promise.all(versions.map(version => {
+	return shellpromise(`nht deploy-static \`find . -path "./dist/*"\` --destination n-ui/v${version}/ --strip 1 --bucket ft-next-n-ui-prod --cache-control 'no-cache, must-revalidate, max-age=3600'`);
+}));
