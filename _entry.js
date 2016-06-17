@@ -1,7 +1,6 @@
 // for the purposes of exposing in a shared n-ui bundle
 // This will mean webpack can find them in this bundle under n-ui/componentName
-module.exports = function (excludes) {
-	excludes = excludes || {};
+module.exports = function () {
 	var entry = {
 		'n-ui': 'window.ftNextUi',
 		'n-ui/ads': 'window.ftNextUi._ads',
@@ -14,11 +13,6 @@ module.exports = function (excludes) {
 		'n-ui/message-prompts': 'window.ftNextUi._messagePrompts',
 		'n-ui/myft': 'window.ftNextUi._myft',
 		'n-ui/utils': 'window.ftNextUi._utils'
-	}
-
-	if (!excludes.react) {
-		entry['react'] = 'window.ftNextUi.react';
-		entry['react-dom'] = 'window.ftNextUi.reactDom';
 	}
 	return entry
 }

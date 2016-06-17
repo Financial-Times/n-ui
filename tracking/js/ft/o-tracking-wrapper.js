@@ -68,26 +68,38 @@ const oTrackingWrapper = {
 
 			// barriers
 			let barrierType = document.querySelector('[data-barrier]');
-			if (barrierType) {
+			let productSelectorFlag = document.querySelector('[data-barrier-is-product-selector]');
 
+			if (barrierType) {
 				pageViewConf.context.barrier = true;
 				pageViewConf.context.barrierType = barrierType.getAttribute('data-barrier');
+			};
 
-				let offers = document.querySelectorAll('[data-offer-id]');
-				let acquisitionContext = document.querySelectorAll('[data-acquisition-context]');
+			// FIXME - should not fire on barriers, but needs to be around for a while data analytics fix their SQL
+			oTracking.page(pageViewConf.context);
+
+			if (barrierType) {
+
+				const isProductSelector = (productSelectorFlag) ? productSelectorFlag.getAttribute('data-barrier-is-product-selector') === 'true' : false;
+
+				// https://docs.google.com/document/d/18_yV2s813XCrBF7w6196FLhLJzWXK4hXT2sIpDZVvhQ/edit?ts=575e9368#
+				const opportunity = {
+					type: (isProductSelector) ? 'products' : 'barrier',
+					subtype: barrierType.getAttribute('data-barrier')
+				}
+
+				const offers = document.querySelectorAll('[data-offer-id]');
+				const acquisitionContext = document.querySelectorAll('[data-acquisition-context]');
 
 				broadcast('oTracking.event', Object.assign({
 					category: 'barrier',
 					action: 'view',
+					opportunity: opportunity,
 					type: barrierType.getAttribute('data-barrier'),
 					acquisitionContext: nodesToArray(acquisitionContext).map(e => e.getAttribute('data-acquisition-context')),
 					offers: nodesToArray(offers).map(e => e.getAttribute('data-offer-id'))
 				}, context))
-
 			}
-
-			// FIXME - should not fire on barriers, but needs to while data analytics fix their SQL
-			oTracking.page(pageViewConf.context);
 
 		} catch (err) {
 			broadcast('oErrors.log', {

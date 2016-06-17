@@ -1,1 +1,19 @@
+@include nUiCriticalStart('promoMessages');
+
+$_n-ui-promo-messages-applied: false !default;
+$_n-ui-promo-messages-is-silent: nUiHas('promoMessages') == false or $_n-ui-promo-messages-applied == true;
+$n-messages-is-silent: $_n-ui-promo-messages-is-silent;
+
 @import 'n-messages/main';
+
+@if $_n-ui-promo-messages-is-silent == false {
+	body .o-overlay,
+	body .o-overlay-shadow {
+		@include zIndexFor(overlay);
+	}
+
+	$_n-ui-promo-messages-applied: true !global;
+	$n-messages-is-silent: true !global;
+}
+
+@include nUiCriticalEnd('promoMessages');

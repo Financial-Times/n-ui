@@ -1,12 +1,14 @@
-$_n-ui-forms-applied: false !default;
+@include nUiCriticalStart('forms');
 
-@if nUiHas(forms) and $_n-ui-forms-applied == false {
-	$o-forms-is-silent: false !global;
-}
+$_n-ui-forms-applied: false !default;
+$_n-ui-forms-is-silent: nUiHas('forms') == false or $_n-ui-forms-applied == true;
+$o-forms-is-silent: $_n-ui-forms-is-silent;
 
 @import 'o-forms/main';
 
-@if $_n-ui-forms-applied == false {
+@if $_n-ui-forms-is-silent == false {
 	$_n-ui-forms-applied: true !global;
 	$o-forms-is-silent: true !global;
 }
+
+@include nUiCriticalEnd('forms');

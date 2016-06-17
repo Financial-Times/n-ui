@@ -162,8 +162,12 @@ module.exports = {
 		})
 	},
 	init: function (flags) {
-		window.addEventListener('ftNextLoaded', () => {
+		if(flags && flags.get('adsPrioritiseLoading')) {
 			this.onload(flags);
-		});
+		} else {
+			window.addEventListener('ftNextLoaded', () => {
+				this.onload(flags);
+			});
+		}
 	}
 }

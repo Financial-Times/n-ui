@@ -1,7 +1,15 @@
-@if nUiHas(footer) {
-	// output in here eventually.
-	// currently doesn't support silent mode
-}
+@include nUiCriticalStart('footer');
+
+$_n-ui-footer-applied: false !default;
+$_n-ui-footer-is-silent: nUiHas('footer') == false or $_n-ui-footer-applied == true;
+$n-footer-is-silent: $_n-ui-footer-is-silent;
 
 @import 'n-header-footer/footer/footer';
 @import 'n-header-footer/drawer/drawer';
+
+@if $_n-ui-footer-is-silent == false {
+	$_n-ui-footer-applied: true !global;
+	$n-footer-is-silent: true !global;
+}
+
+@include nUiCriticalEnd('footer');

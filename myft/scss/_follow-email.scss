@@ -1,11 +1,4 @@
-$o-overlay-is-silent: true;
-@import "o-overlay/main";
-
-// Because sass has no import_once, use this $_next-myft-ui-follow-email_applied solution
-$_next-myft-ui-follow-email_applied: false !default;
-
-@if (not $_next-myft-ui-follow-email_applied) {
-
+@if $_n-ui-myft-is-silent == false {
 	.myft-follow {
 		text-align: center;
 
@@ -83,5 +76,4 @@ $_next-myft-ui-follow-email_applied: false !default;
 			@include nLinksBody($inversed: true);
 		}
 	}
-	$_next-myft-ui-follow-email_applied: true !global;
 }

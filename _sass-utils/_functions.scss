@@ -6,16 +6,23 @@
 /// @param {String} $feature
 /// @returns {Bool}
 @function nUiHas($feature) {
-	@return map-get($_n-ui-features, $feature) == true;
+	@return nUiFeatureValue($feature) == true or nUiFeatureValue($feature) == 'critical';
+}
+
+/// Get the value of a given feature (true|false|critical)
+/// @param {String} $feature
+/// @returns {Bool|String}
+@function nUiFeatureValue($feature) {
+	@return map-get($_n-ui-features, $feature);
 }
 
 /// Returns a critical block start pragma
 /// @returns {String}
 /// @deprecated
-@function nUiCriticalStart() {
+@function nUiCriticalStart($feature-name: null) {
 	@warn '`nUiCriticalStart()` function is deprecated. Use the mixin of the same name instead';
 
-	@if nUiHas('critical') {
+	@if nUiHas('critical') and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
 		@return '! start:head.css ';
 	}
 
@@ -25,10 +32,10 @@
 /// Returns a critical block end pragma
 /// @returns {String}
 /// @deprecated
-@function nUiCriticalEnd() {
+@function nUiCriticalEnd($feature-name: null) {
 	@warn '`nUiCriticalEnd()` function is deprecated. Use the mixin of the same name instead';
 
-	@if nUiHas('critical') {
+	@if nUiHas('critical') and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
 		@return '! end:head.css ';
 	}
 

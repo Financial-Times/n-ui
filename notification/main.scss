@@ -1,5 +1,14 @@
-@if nUiHas(notification) {
-	$n-notification-is-silent: false;
-}
+@include nUiCriticalStart('notification');
+
+$_n-ui-notification-applied: false !default;
+$_n-ui-notification-is-silent: nUiHas('notification') == false or $_n-ui-notification-applied == true;
+$n-notification-is-silent: $_n-ui-notification-is-silent;
+
 @import 'n-notification/main';
-$n-notification-is-silent: true;
+
+@if $_n-ui-notification-is-silent == false {
+	$_n-ui-notification-applied: true !global;
+	$n-notification-is-silent: true !global;
+}
+
+@include nUiCriticalEnd('notification');
