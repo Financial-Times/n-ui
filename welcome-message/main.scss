@@ -20,7 +20,23 @@ $_n-ui-welcome-message-applied: false;
 		display: block;
 		margin: 25px auto 0 auto;
 		background-color: getColor('warm-1');
+	}
 
+	.n-welcome--hidden {
+		display: none;
+	}
+
+	.n-welcome--fixed {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: none;
+		box-shadow: 0 -2px 4px -2px rgba(80, 80, 80, 0.5)
+	}
+
+	.n-welcome--fixed-visible {
+		display: block;
 	}
 
 	.n-welcome__container {
@@ -79,9 +95,6 @@ $_n-ui-welcome-message-applied: false;
 	.n-welcome__actions__action {
 		display: inline-block;
 		vertical-align: middle;
-	}
-
-	.n-welcome__actions__action--feedback {
 		margin-right: 10px;
 	}
 
@@ -111,11 +124,25 @@ $_n-ui-welcome-message-applied: false;
 		@include oGridRespondTo(L) {
 			display: inline-block;
 		}
+
+		&.visible {
+			display: inline-block;
+		}
+
+		&.hidden {
+			display: none;
+		}
 	}
 
 	.n-welcome__actions__action--webapp {
 		display: none;
+
+		&.visible {
+			display: inline-block;
+		}
 	}
+
+
 
 
 
