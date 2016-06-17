@@ -1,6 +1,5 @@
-<div class="n-welcome main-body" data-trackable="welcome">
-	{{>n-ui/welcome-message/_message}}
-</div>
-<div class="n-welcome n-welcome--fixed" data-trackable="welcome">
-	{{>n-ui/welcome-message/_message}}
-</div>
+{{#if @root.flags.newFooter}}
+	{{> n-ui/welcome-message/new/template}}
+{{else}}
+	{{> n-ui/welcome-message/old/template}}
+{{/if}}
