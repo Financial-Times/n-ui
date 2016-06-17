@@ -96,7 +96,8 @@ export function bootstrap (cb) {
 				}
 
 				if (opts.welcomeMessage) {
-					flags.get('welcomePanel') && welcomeMessage.init({
+					let version = flags.get('newFooter') ? 'new' : 'old';
+					flags.get('welcomePanel') && welcomeMessage[version].init({
 						enableOverlay: flags.get('myFTOnboardingOverlay')
 					});
 				}
