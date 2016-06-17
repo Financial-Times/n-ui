@@ -70,6 +70,7 @@
 			font-weight: bold;
 			margin: 0;
 			vertical-align: middle;
+			color: getColor('grey-tint3');
 		}
 
 		.n-welcome--fixed {
@@ -86,6 +87,10 @@
 			display: inline-block;
 			vertical-align: middle;
 			margin-right: 10px;
+		}
+
+		.n-welcome__button {
+			@include nButtons($theme:'standout');
 		}
 
 		.n-welcome__feedback-button-label--default {
