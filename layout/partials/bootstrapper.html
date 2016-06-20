@@ -32,7 +32,7 @@
 	(function () {
 		if (cutsTheMustard) {
 			{{#if @root.nUiVersion}}
-				ftNextLoadScript('/n-ui/{{@root.nUiVersion}}/es5-core-js.js');
+				ftNextLoadScript('//next-geebee.ft.com/n-ui/{{@root.nUiVersion}}/es5-core-js.js');
 			{{/if}}
 			ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}', []);
 			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '&features=' + [
