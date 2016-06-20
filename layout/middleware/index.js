@@ -20,7 +20,7 @@ try {
 module.exports = function(req, res, next) {
 
 	if (versionType === 'semver' && res.locals.flags.nUiBundleMajorVersion) {
-		res.locals.nUiVersion = version[0].split('.').slice(0,1)[0];
+		res.locals.nUiVersion = version.split('.').slice(0,1)[0];
 	} else {
 		res.locals.nUiVersion = version;
 	}
