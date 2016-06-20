@@ -2,7 +2,7 @@
   "name": "@financial-times/n-ui",
   "version": "1.17.2",
   "description": "An experiment bunching some of Next's client-side code into a single repository.",
-  "main": "main.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
