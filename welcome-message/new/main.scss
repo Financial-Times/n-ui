@@ -114,15 +114,7 @@
 
 
 		.n-welcome__actions__action--optout {
-			display: none;
-
-			@include oGridRespondTo(L) {
-				display: inline-block;
-			}
-
-			&.visible {
-				display: inline-block;
-			}
+			display: inline-block;
 
 			&.hidden {
 				display: none;

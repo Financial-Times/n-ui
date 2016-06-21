@@ -4,6 +4,7 @@ const IOS_DEVICE_REGEX = /OS [0-9]{1,2}(_[0-9]){1,2} like Mac OS X/i;
 const ANDROID_DEVICE_REGEX = /Android/i;
 
 function isWebAppCapableDevice(userAgent){
+	console.log(isWebAppCapableDevice.name, userAgent);
 	return IOS_DEVICE_REGEX.test(userAgent);
 }
 
@@ -59,14 +60,25 @@ const canStore = () => {
 
 function showWebAppLink(){
 	Array.from(document.querySelectorAll('.js-webapp-link')).forEach(link => {
-		link.querySelector('a').href = 'https://app.ft.com' + location.pathname + location.search;
+		let a = link.querySelector('a');
+		a.pathname = location.pathname;
+		a.search = location.search;
 		addClass(link, 'visible');
+		hideOptOutLink();
 	});
 }
 
 function showAndroidLink(){
 	Array.from(document.querySelectorAll('.js-android-link')).forEach(link => {
+		let a = link.querySelector('a');
+		let locationParam = 'location=' + encodeURIComponent(location.pathname + location.search);
+		if(a.search){
+			a.search += '&' + locationParam;
+		}else{
+			a.search = '?' + locationParam;
+		}
 		addClass(link, 'visible');
+		hideOptOutLink();
 	});
 }
 
