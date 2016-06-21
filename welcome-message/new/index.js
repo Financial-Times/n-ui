@@ -1,14 +1,23 @@
 const superstore = require('superstore-sync');
 
 const IOS_DEVICE_REGEX = /OS [0-9]{1,2}(_[0-9]){1,2} like Mac OS X/i;
-const ANDROID_DEVICE_REGEX = /Android/i;
+const ANDROID_DEVICE_REGEX = /Android (\d+(?:\.\d+)+)/i;
 
 function isWebAppCapableDevice(userAgent){
+	console.log(isWebAppCapableDevice.name, userAgent);
 	return IOS_DEVICE_REGEX.test(userAgent);
 }
 
-function isAndroidDevice(userAgent){
-	return ANDROID_DEVICE_REGEX.test(userAgent);
+function isModernAndroidDevice(userAgent){
+	let results = ANDROID_DEVICE_REGEX.exec(userAgent);
+	if(!results){
+		return false;
+	}
+
+	let version = results[1].split('.').map(a => parseInt(a, 10));
+
+	// return true if version is 4.3 or greater
+	return !(version[0] < 4 || version[1] < 3);
 }
 
 function addClass (element, className) {
@@ -59,14 +68,25 @@ const canStore = () => {
 
 function showWebAppLink(){
 	Array.from(document.querySelectorAll('.js-webapp-link')).forEach(link => {
-		link.querySelector('a').href = 'https://app.ft.com' + location.pathname + location.search;
+		let a = link.querySelector('a');
+		a.pathname = location.pathname;
+		a.search = location.search;
 		addClass(link, 'visible');
+		hideOptOutLink();
 	});
 }
 
 function showAndroidLink(){
 	Array.from(document.querySelectorAll('.js-android-link')).forEach(link => {
+		let a = link.querySelector('a');
+		let locationParam = 'location=' + encodeURIComponent(location.pathname + location.search);
+		if(a.search){
+			a.search += '&' + locationParam;
+		}else{
+			a.search = '?' + locationParam;
+		}
 		addClass(link, 'visible');
+		hideOptOutLink();
 	});
 }
 
@@ -89,7 +109,7 @@ module.exports.init = () => {
 	if(isWebAppCapableDevice(navigator.userAgent)){
 		showWebAppLink();
 		hideOptOutLink();
-	}else if(isAndroidDevice(navigator.userAgent)){
+	}else if(isModernAndroidDevice(navigator.userAgent)){
 		showAndroidLink();
 		hideOptOutLink();
 	}
