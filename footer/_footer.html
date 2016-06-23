@@ -1,0 +1,44 @@
+<footer class="o-footer" data-o-component="o-footer" data-trackable="footer">
+	<div class="o-footer__container o-grid__container o-footer__link-lists">
+
+		<div class="o-grid__row">
+
+			<div data-o-grid-colspan="6 M3 L2">
+				{{> n-ui/footer/partials/_footer_links name="support" title="Support" links=@root.navigationLists.footer.support}}
+			</div>
+
+			<div data-o-grid-colspan="6 M3 L2">
+				{{> n-ui/footer/partials/_footer_links name="legal" title="Legal & Privacy" links=@root.navigationLists.footer.legal}}
+			</div>
+
+			<div data-o-grid-colspan="12 M3 L4">
+				{{>n-ui/footer/partials/_footer_links_collapsible name="services" title="Services" links=@root.navigationLists.footer.services}}
+			</div>
+
+			<div data-o-grid-colspan="12 M3 L4">
+				{{>n-ui/footer/partials/_footer_links_collapsible name="tools" title="Tools" links=@root.navigationLists.footer.tools}}
+			</div>
+
+			<div data-o-grid-colspan="12">
+				{{>n-ui/footer/partials/_footer_links_collapsible name="ft-group" title="More from FT Group" links=@root.navigationLists.footer.ft_group}}
+			</div>
+
+
+		</div>
+		<div class="o-grid__row o-footer__copyright">
+			<div data-o-grid-colspan="12">
+				<span>&#xA9; THE FINANCIAL TIMES LTD 2016.</span>
+				<span><abbr title="Financial Times">FT</abbr> and &#x2018;Financial Times&#x2019; are trademarks of The Financial Times Ltd.</span>
+			</div>
+		</div>
+	</div>
+	<div class="o-footer__brand">
+		<div class="o-footer__container">
+			<div class="o-footer__row">
+				<div class="o-footer__col o-footer__col--full-width">
+					<div class="o-footer__brand-logo" aria-label="A Nikkei Company"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>

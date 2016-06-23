@@ -1,0 +1,15 @@
+<div data-o-component="o-expander" class="o-expander o-expander--{{name}} js-expander--{{name}}" data-o-expander-shrink-to="hidden">
+	<nav class="o-footer__nav" data-trackable="{{name}}">
+		<h3 class="o-footer__title o-expander__toggle">{{title}}</h3>
+		<div class="o-expander__content">
+			<ul class="o-footer__link-list o-footer__link-list--{{name}}">
+				{{#each links}}
+				<li class="o-footer__link" data-track="item">
+					<a data-trackable="{{name}}" href="{{href}}">{{name}}</a>
+				</li>
+				{{/each}}
+			</ul>
+		</div>
+	</nav>
+</div>
+

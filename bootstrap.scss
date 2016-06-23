@@ -9,6 +9,7 @@
 // TODO: header has to come first, as footer indirectly depends on a mixin in it. Need to decouple
 @import 'header/main';
 @import 'footer/main';
+@import 'drawer/main.scss';
 @import 'layout/main';
 @import 'myft/main';
 
