@@ -1,0 +1,24 @@
+<form class="n-myft-ui n-myft-ui--prefer-group" method="POST"
+	data-myft-ui="prefer-group"
+	action="/__myft/api/core/preferred/preference/{{name}}?method=put">
+	<fieldset class="n-myft-ui__fieldset">
+		{{#if legend}}<legend class="n-myft-ui__legend">{{legend}}</legend>{{/if}}
+	{{#each relProperties}}
+		<input type="hidden" name="_rel.{{name}}" value="{{value}}">
+	{{/each}}
+	{{#each options}}
+		<button
+			type="submit"
+			class="n-myft-ui__button" aria-pressed="{{#if isSelected}}true{{else}}false{{/if}}"
+			data-trackable="set-{{../name}}-{{name}}"
+			name="_rel.selected" value="{{name}}"
+		>{{text}}</button>
+	{{/each}}
+		<button
+			type="submit"
+			class="n-myft-ui__button" aria-pressed="{{#if selected}}false{{else}}true{{/if}}"
+			data-trackable="set-{{name}}-off"
+			name="method" value="delete"
+		>Off</button>
+	</fieldset>
+</form>
