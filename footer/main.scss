@@ -37,25 +37,26 @@ $n-footer-is-silent: $_n-ui-footer-is-silent;
 	margin-bottom: 10px;
 }
 
-.o-footer__link-list--services, .o-footer__link-list--tools {
+.o-footer__link-list--services,
+.o-footer__link-list--tools {
 	columns: 2;
 
-	@include oGridRespondTo(M){
-		columns:1
+	@include oGridRespondTo(M) {
+		columns: 1;
 	}
 
-	@include oGridRespondTo(L){
+	@include oGridRespondTo(L) {
 		columns: 2;
 	}
 }
 
 .o-footer__link-list--ft-group {
 
-	@include oGridRespondTo(M){
+	@include oGridRespondTo(M) {
 		columns: 4;
 	}
 
-	@include oGridRespondTo(L){
+	@include oGridRespondTo(L) {
 		columns: 6;
 	}
 }
@@ -76,7 +77,7 @@ $n-footer-is-silent: $_n-ui-footer-is-silent;
 	}
 }
 
-.o-expander__content[aria-hidden="true"]{
+.o-expander__content[aria-hidden="true"] {
 	display: none;
 }
 
@@ -87,12 +88,12 @@ $n-footer-is-silent: $_n-ui-footer-is-silent;
 	position: relative;
 	cursor: pointer;
 
- 	&:after {
+	&:after {
 		content: '';
 		float: right;
 		margin-right: 10px;
 		@include oIconsGetIcon('arrow-down', getColor('white'), 20);
-	 }
+	}
 
 	&[aria-expanded="true"]:after {
 		@include oIconsGetIcon('arrow-up', getColor('white'), 20);

@@ -43,4 +43,3 @@ function listenForBreakpointChanges(){
 
 module.exports = oViewport;
 module.exports.listenForBreakpointChanges = listenForBreakpointChanges;
-
