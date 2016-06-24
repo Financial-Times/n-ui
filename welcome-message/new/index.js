@@ -4,7 +4,6 @@ const IOS_DEVICE_REGEX = /OS [0-9]{1,2}(_[0-9]){1,2} like Mac OS X/i;
 const ANDROID_DEVICE_REGEX = /Android (\d+(?:\.\d+)+)/i;
 
 function isWebAppCapableDevice(userAgent){
-	console.log(isWebAppCapableDevice.name, userAgent);
 	return IOS_DEVICE_REGEX.test(userAgent);
 }
 
@@ -16,8 +15,13 @@ function isModernAndroidDevice(userAgent){
 
 	let version = results[1].split('.').map(a => parseInt(a, 10));
 
-	// return true if version is 4.3 or greater
-	return !(version[0] < 4 || version[1] < 3);
+	if(version[0] > 4){
+		return true;
+	}else if(version[0] === 4 && version[1] > 2){
+		return true;
+	}else{
+		return false;
+	}
 }
 
 function addClass (element, className) {

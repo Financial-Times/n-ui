@@ -25,7 +25,6 @@ function destroyExpander(name, expanders){
 }
 
 function onLayoutChange(expanders, e){
-	console.log(onLayoutChange.name, e.detail);
 	let layout = e.detail.layout;
 	let func = (layout === 'default' || layout === 'S') ? createExpander : destroyExpander;
 	func('tools', expanders);
