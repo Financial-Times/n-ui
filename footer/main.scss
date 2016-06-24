@@ -69,6 +69,7 @@ $n-footer-is-silent: $_n-ui-footer-is-silent;
 	border-bottom: 0;
 	@include oTypographySansSize(s);
 	color: getColor('grey-tint1');
+	break-inside: avoid;
 }
 
 .o-footer__brand-logo {
