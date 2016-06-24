@@ -375,6 +375,11 @@ $_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
 
 	}
 
+	// Naff workaround for the new digest preference, prior to new alerts page overhaul
+	p.preference__description {
+		margin-top: 0;
+	}
+
 	@include oGridRespondTo($until: S) {
 		.o-overlay--myft-ui {
 			@include oOverlayFullscreen($fill: 'width');
