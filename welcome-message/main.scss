@@ -1,4 +1,4 @@
-@include nUiCriticalStart;
+@include nUiCriticalStart('welcome');
 
 $_n-ui-welcome-message-applied: false !default;
 $_n-ui-welcome-message-is-silent: nUiHas('welcomeMessage') == false or $_n-ui-welcome-message-applied == true;
@@ -7,8 +7,12 @@ $_n-ui-welcome-message-is-silent: nUiHas('welcomeMessage') == false or $_n-ui-we
 	display: none;
 }
 
-@import "old/main";
-@import "new/main";
+@import 'old/main';
+@import 'new/main';
+
+@if $_n-ui-welcome-message-is-silent == false {
+	$_n-ui-welcome-message-applied: true !global;
+}
 
 
-@include nUiCriticalEnd;
+@include nUiCriticalEnd('welcome');
