@@ -1,0 +1,14 @@
+@include nUiCriticalStart('drawer');
+
+$_n-ui-drawer-applied: false !default;
+$_n-ui-drawer-is-silent: nUiHas('footer') == false or $_n-ui-drawer-applied == true;
+$n-drawer-is-silent: $_n-ui-drawer-is-silent;
+
+@import 'n-header-footer/drawer/drawer';
+
+@if $_n-ui-drawer-is-silent == false {
+	$_n-ui-drawer-applied: true !global;
+	$n-drawer-is-silent: true !global;
+}
+
+@include nUiCriticalEnd('drawer');

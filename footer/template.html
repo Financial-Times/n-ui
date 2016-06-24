@@ -1,5 +1,6 @@
-{{#if @root.flags.fancyDrawer}}
-	{{>n-header-footer/drawer/template all=nav topBrands=topBrandsNav}}
+
+{{#if @root.flags.newFooter}}
+	{{>n-ui/footer/_footer}}
 {{else}}
 	{{>n-header-footer/footer/template}}
 {{/if}}

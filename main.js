@@ -9,6 +9,7 @@ import promoMessages from './promo-messages';
 import cookieMessage from './cookie-message';
 import welcomeMessage from './welcome-message';
 import messagePrompts from './message-prompts';
+import footer from './footer';
 import myft from './myft';
 import { perfMark } from './utils';
 
@@ -28,10 +29,12 @@ export const _utils = utils;
 const presets = {
 	discrete: {
 		header: true,
+		footer: true,
 		date: true
 	},
 	complete: {
 		header: true,
+		footer: true,
 		date: true,
 		cookieMessage: true,
 		welcomeMessage: true,
@@ -83,6 +86,10 @@ export function bootstrap (cb) {
 
 		if (opts.header) {
 			header.init(flags);
+		}
+
+		if(opts.footer){
+			footer.init(flags)
 		}
 
 		if (opts.date) {
