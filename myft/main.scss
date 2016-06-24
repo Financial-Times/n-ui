@@ -72,10 +72,11 @@ $_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
 	}
 
 	.n-myft-ui--prefer-group {
+		width: 100%;
+
 		@include oGridRespondTo($from: 'M') {
 			padding-left: $spacing-unit;
 		}
-		width: 100%;
 
 		.n-myft-ui__button {
 			border-radius: 0;
