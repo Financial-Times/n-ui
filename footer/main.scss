@@ -28,6 +28,10 @@ $n-footer-is-silent: $_n-ui-footer-is-silent;
 	margin-bottom: 10px;
 }
 
+.o-footer__nav {
+	margin-top: 0;
+}
+
 // 2 classes to override ".o-footer ul" selector
 .o-footer .o-footer__link-list {
 	margin-bottom: 10px;
