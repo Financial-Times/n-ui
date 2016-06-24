@@ -76,11 +76,12 @@ $n-footer-is-silent: $_n-ui-footer-is-silent;
 	display: none;
 }
 
-.o-expander__toggle {
+.o-expander--active .o-expander__toggle {
 	padding: 10px 0;
 	margin: 0;
 	border-top: 1px dotted getColor('grey-tint1');
 	position: relative;
+	cursor: pointer;
 
  	&:after {
 		content: '';
@@ -94,7 +95,7 @@ $n-footer-is-silent: $_n-ui-footer-is-silent;
 	}
 }
 
-.o-expander--ft-group .o-expander__toggle {
+.o-expander--ft-group {
 	border-bottom: 1px dotted getColor('grey-tint1');
 }
 

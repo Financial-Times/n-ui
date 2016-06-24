@@ -1,24 +1,43 @@
 "use strict";
-const oExpander = require('o-expander');
-const oViewport = require('o-viewport');
+const expander = require('../expander');
+const viewport = require('../viewport');
 
 const expanderOpts = {
 	toggleSelector:'.o-expander__toggle',
 	toggleState: 'aria'
 };
 
+function createExpander(name, expanders){
+	let selector = `.js-expander-${name}`;
+	let el = document.querySelector(selector);
+	el.classList.add('o-expander--active');
+	expanders[name] = expander.init(el, expanderOpts);
+}
 
-function createExpander(selector){
-	return oExpander.init(document.querySelector(selector), expanderOpts);
+function destroyExpander(name, expanders){
+	let selector = `.js-expander-${name}`;
+	let el = document.querySelector(selector);
+	el.classList.remove('o-expander--active');
+	if(expanders[name]){
+		expanders[name].destroy();
+		delete expanders[name];
+	}
 }
 
 function createExpanders(names){
 	let expanders = {};
 	names.forEach(name => {
-		expanders[name] = createExpander(`.js-expander-${name}`);
-	})
+		createExpander(name, expanders);
+	});
 
 	return expanders;
+}
+
+function onBreakPointChange(expanders, e){
+	let breakpoint = e.detail.size;
+	let func = (breakpoint === 'default' || breakpoint === 'S') ? createExpander : destroyExpander;
+	func('tools', expanders);
+	func('services', expanders);
 }
 
 function init(flags){
@@ -26,7 +45,9 @@ function init(flags){
 		return;
 	}
 
-	const expanders = createExpanders(['services', 'tools', 'ft-group']);
+	const expanders = createExpanders(['ft-group']);
+	document.body.addEventListener('viewport.breakpoint', onBreakPointChange.bind(null, expanders));
+	viewport.listenForBreakpointChanges();
 }
 
 module.exports = { init };
