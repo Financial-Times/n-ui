@@ -61,6 +61,10 @@ $n-footer-is-silent: $_n-ui-footer-is-silent;
 	}
 }
 
+.o-footer__link {
+	white-space: normal;
+}
+
 .o-footer__link a {
 	border-bottom: 0;
 	@include oTypographySansSize(s);
