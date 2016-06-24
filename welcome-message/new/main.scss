@@ -8,8 +8,11 @@
 			@include oGridContainer;
 			margin-top: 25px;
 			margin-bottom: 25px;
-			background-color: getColor('warm-1');
+			//todo this needs to go into o-colors
+			background-color: #FADBCB;
+			color: getColor('grey-tint4');
 			border: 0;
+			position: relative;
 		}
 
 		.n-welcome--hidden {
@@ -22,7 +25,13 @@
 			right: 0;
 			bottom: 0;
 			display: none;
+			max-width: none;
+			margin: 0;
 			box-shadow: 0 -2px 4px -2px rgba(80, 80, 80, 0.5);
+
+			.n-welcome__actions {
+				padding-right: 15px;
+			}
 		}
 
 		.n-welcome--fixed-visible {
@@ -48,7 +57,7 @@
 
 		.n-welcome__message--medium {
 			display: none;
-			color: getColor('grey-tint3');
+			color: getColor('grey-tint4');
 			padding-right: $n-welcome-spacing * 2;
 
 			@include oGridRespondTo(M) {
@@ -70,7 +79,7 @@
 			font-weight: bold;
 			margin: 0;
 			vertical-align: middle;
-			color: getColor('grey-tint3');
+			color: getColor('grey-tint4');
 		}
 
 		.n-welcome--fixed {
@@ -81,6 +90,10 @@
 		.n-welcome__actions {
 			width: 100%;
 			overflow: hidden;
+
+			@include oGridRespondTo(S) {
+				text-align: right;
+			}
 		}
 
 		.n-welcome__actions__action {
@@ -128,6 +141,18 @@
 			&.visible {
 				display: inline-block;
 			}
+		}
+
+		.n-welcome__close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			width: 20px;
+			height: 20px;
+			display: block;
+			@include oIconsGetIcon('cross-disk', #000000, 20);
+			z-index: 5;
+			border: 0;
 		}
 
 		@media print {
