@@ -9,7 +9,7 @@ $n-messages-is-silent: $_n-ui-promo-messages-is-silent;
 @if $_n-ui-promo-messages-is-silent == false {
 	body .o-overlay,
 	body .o-overlay-shadow {
-		@include zIndexFor(overlay);
+		@include nUtilZIndexFor(overlay);
 	}
 
 	$_n-ui-promo-messages-applied: true !global;
