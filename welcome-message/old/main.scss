@@ -63,7 +63,7 @@
 		}
 
 		&--fixed-visible {
-			@include zIndexFor('banner');
+			@include nUtilZIndexFor('banner');
 			display: block;
 			visibility: visible;
 		}
