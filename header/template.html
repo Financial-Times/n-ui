@@ -1,8 +1,4 @@
-{{#if @root.flags.newHeader}}
-	{{>n-header-footer/header_new/template}}
-{{else}}
-	{{>n-header-footer/header/template}}
-{{/if}}
+{{>n-header-footer/header_new/template}}
 
 {{#ifAll @root.flags.sectionBreadcrumbs @root.currentNav}}
 	{{>n-header-footer/breadcrumb/template}}
