@@ -1,10 +1,18 @@
 # n-ui
 
-# Dev workflow
+An experiment bunching some of Next's client-side code into a single repository. [Motivation](Explainer.md).
+
+This project consists of many modules. They include the primitive building blocks used by the majority of Next applications, constitute the basic look and feel of a page and integrate with upstream Origami modules for consistency across FT digital products.
+
+## Usage
+
+For usage information see [the wiki](https://github.com/Financial-Times/n-ui/wiki).
+
+## Dev workflow
 
 Run `make demo` to check if your changes work. Feel free to edit and commit whatever changes you like to th contents of the demo files... just don't expect them to still be there next time you come to the repo.
 
-# **An important note on releases **
+## **An important note on releases **
 
 n-ui is packaged indepenedntly and served on a url shared between apps. To keep our cache hit rate high for this url please observe the following conventions
 
@@ -13,53 +21,3 @@ n-ui is packaged indepenedntly and served on a url shared between apps. To keep 
 - patch releases - all other releases, including some which might normally be considered minor e.g. adding a sass mixin, adding a js method
 
 If you forget to do the above and just stick to semver nothing will break, but it will mean our cache gets diluted
-
-An experiment bunching some of Next's client-side code into a single repository. [Motivation](Explainer.md).
-
-## API
-
-### Replacing next-sass-setup in components
-
-`@import "n-ui/env";`
-
-### Bootstrapping your app
-
-Sass and JS follow similar apis. Both expect a map of feature names (see index.js or configure.scss for feature lists), and also recognise 2 presets:
-
-- `complete`: all the bits and pieces you need to style and add interactivity to a typical page on next, complete with MyFT, alerts, promos, ads, tracking etc.
-- `discrete`: provides styles and scripts for just the header, footer and essential pieces of functionality such as tracking. For use on pages where we want no distractions E.G. errors, login and other forms.
-
-Features may also be enabled and disabled individually.
-
-```js
-import { configure, bootstrap } from 'n-ui';
-
-configure({
-	preset: 'discrete',
-	welcomeMessage: true
-});
-
-bootstrap(({ flags , mainCss, appInfo}) => {
-	if (flags.get('feature')) {
-		component.init();
-	}
-
-	mainCss.then(() => {
-		lazyComponent.init();
-	});
-});
-```
-
-```scss
-@import 'n-ui/configure';
-
-@include nUiConfigure((
-	'preset': 'discrete',
-	'welcomeMessage': true
-));
-
-// Output a comment listing all n-ui features
-@include nUiConfigureDebug();
-
-@import 'n-ui/bootstrap';
-```
