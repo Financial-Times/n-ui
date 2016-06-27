@@ -68,7 +68,8 @@ module.exports = function (flags, contextData, userData) {
 		},
 		krux: kruxConfig,
 		collapseEmpty: 'after',
-		dfp_targeting: utils.keyValueString(targeting)
+		dfp_targeting: utils.keyValueString(targeting),
+		reporter_link: flags.get('brokenAdReporter')
 	};
 
 };
