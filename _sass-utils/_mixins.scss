@@ -4,31 +4,33 @@
 
 /// Critical block
 /// @output A critical block start comment
-@mixin nUiCritical() {
-	@if nUiHas('critical') {
-		/*! start:head.css*/
-	}
-
+@mixin nUiCritical($feature-name: null) {
+	@include nUiCriticalStart($feature-name);
 	@content;
-
-	@if nUiHas('critical') {
-		/*! end:head.css*/
-	}
+	@include nUiCriticalEnd($feature-name);
 }
 
 /// Critical block start
 /// @output A critical block start comment
 @mixin nUiCriticalStart($feature-name: null) {
-	@if nUiHas('critical') and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
-		/*! start:head.css*/
+	@if $_n-ui-output-critical and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
+		@if $_n-ui-variant {
+			/*! start:head-#{$_n-ui-variant}.css*/
+		} @else {
+			/*! start:head.css*/
+		}
 	}
 }
 
 /// Critical block end
 /// @output A critical block start comment
 @mixin nUiCriticalEnd($feature-name: null) {
-	@if nUiHas('critical') and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
-		/*! end:head.css*/
+	@if $_n-ui-output-critical and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
+		@if $_n-ui-variant {
+			/*! end:head-#{$_n-ui-variant}.css*/
+		} @else {
+			/*! end:head.css*/
+		}
 	}
 }
 
@@ -50,20 +52,20 @@
 
 /// Configure n-ui
 /// @output none
-@mixin nUiConfigure($opts: ()) {
+@mixin nUiConfigure($features: (), $preset: null, $output-critical: false, $variant: null) {
 	@if $_n-ui-configured == true {
 		@error 'nUiConfigure must only be called once';
 	}
 
-	$_n-ui-configured: true !global;
-
-	@if map-has-key($opts, preset) {
-		$preset: map-get($_n-ui-presets, map-get($opts, preset));
-		$_n-ui-features: map-merge($_n-ui-features, $preset) !global;
-		$opts: map-remove($opts, preset);
+	@if $preset {
+		$presetFeatures: map-get($_n-ui-presets, $preset);
+		$_n-ui-features: map-merge($_n-ui-features, $presetFeatures) !global;
 	}
 
-	$_n-ui-features: map-merge($_n-ui-features, $opts) !global;
+	$_n-ui-configured: true !global;
+	$_n-ui-output-critical: $output-critical !global;
+	$_n-ui-variant: $variant !global;
+	$_n-ui-features: map-merge($_n-ui-features, $features) !global;
 
 	// if any required feature has a dependency, require them
 	@each $feature-name, $feature-deps in $_n-ui-feature-dependenices {
