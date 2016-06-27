@@ -1,15 +1,3 @@
-@include nUiCriticalStart('colors');
-
-$_n-ui-colors-applied: false !default;
-$_n-ui-colors-is-silent: nUiHas('colors') == false or $_n-ui-colors-applied == true;
-
 @import 'o-colors/main';
 @import 'functions';
 @import 'set-use-cases';
-
-
-@if $_n-ui-colors-is-silent == false {
-	$_n-ui-colors-applied: true !global;
-}
-
-@include nUiCriticalEnd('colors');

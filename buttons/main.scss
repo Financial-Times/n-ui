@@ -1,15 +1,8 @@
 @include nUiCriticalStart('buttons');
 
-$_n-ui-buttons-applied: false !default;
-$_n-ui-buttons-is-silent: nUiHas('buttons') == false or $_n-ui-buttons-applied == true;
-$o-buttons-is-silent: $_n-ui-buttons-is-silent;
+$o-buttons-is-silent: false !default;
 
 @import 'o-buttons/main';
 @import 'mixins';
-
-@if $_n-ui-buttons-is-silent == false {
-	$_n-ui-buttons-applied: true !global;
-	$o-buttons-is-silent: true !global;
-}
 
 @include nUiCriticalEnd('buttons');

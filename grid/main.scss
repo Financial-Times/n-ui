@@ -1,8 +1,5 @@
 @include nUiCriticalStart('grid');
 
-$_n-ui-grid-applied: false !default;
-$_n-ui-grid-is-silent: nUiHas('grid') == false or $_n-ui-grid-applied == true;
-
 // Set gutters to be slightly smaller than the default on larger screens
 $o-grid-gutters: (
 	default: 10px,
@@ -18,10 +15,11 @@ $o-grid-shuffle-selectors: false;
 @import 'o-grid/main';
 @import 'mixins';
 
-@if $_n-ui-grid-is-silent == false {
+@if nUiApply('grid') {
+
 	// scss-lint:disable NameFormat, PlaceholderInExtend
-	@include oGridSurfaceCurrentLayout;
-	@include oGridGenerate;
+	@include oGridSurfaceCurrentLayout();
+	@include oGridGenerate();
 
 	// As they're quite widely used output the 'hide' selectors
 	// TODO: (for now, eventually should remove in v2 and go through the site changing them all to 0)
@@ -40,7 +38,6 @@ $o-grid-shuffle-selectors: false;
 		@include oGridCenter;
 	}
 
-	$_n-ui-grid-applied: true !global;
 }
 
 @include nUiCriticalEnd('grid');

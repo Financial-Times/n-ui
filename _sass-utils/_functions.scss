@@ -15,3 +15,20 @@
 @function nUiFeatureValue($feature) {
 	@return map-get($_n-ui-features, $feature);
 }
+
+/// Test to check if the given module is configured and whether it has been output already
+/// @param {String} $module-name
+/// @returns {Bool}
+@function nUiApply($module-name) {
+	@if nUiHas($module-name) {
+		$apply: index($n-ui-imported-modules, $module-name) == null;
+
+		@if ($apply) {
+			$n-ui-imported-modules: append($n-ui-imported-modules, $module-name) !global;
+		}
+
+		@return $apply;
+	}
+
+	@return false;
+}

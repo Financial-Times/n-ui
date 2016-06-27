@@ -1,9 +1,7 @@
 @include nUiCriticalStart('normalize');
 
-$_n-ui-normalize-applied: false !default;
-$_n-ui-normalize-is-silent: nUiHas('normalize') == false or $_n-ui-normalize-applied == true;
+@if nUiApply('normalize') {
 
-@if $_n-ui-normalize-is-silent == false {
 	/**
 	* Prevent adjustments of font size after orientation changes in IE and iOS.
 	*/
@@ -228,7 +226,6 @@ $_n-ui-normalize-is-silent: nUiHas('normalize') == false or $_n-ui-normalize-app
 		outline-offset: 1px;
 	}
 
-	$_n-ui-normalize-applied: true !global;
 }
 
 @include nUiCriticalEnd('normalize');
