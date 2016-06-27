@@ -1,4 +1,5 @@
 @if $_n-ui-welcome-message-is-silent == false {
+
 	.n-welcome {
 		@include oTypographySansSize(s);
 		font-family: MetricWeb, Arial, sans-serif;
