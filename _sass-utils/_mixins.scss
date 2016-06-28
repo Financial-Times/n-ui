@@ -84,7 +84,10 @@
 /// Add a single feature, e.g. 'buttons', 'forms'
 /// @output none
 @mixin nUiAddFeature($feature-name, $feature-value: true) {
-	$_n-ui-features: map-merge($_n-ui-features, ($feature-name: $feature-value)) !global;
+	// don't 'demote' the feature from critical
+	@if (map-get($_n-ui-features, $feature-name) != 'critical') {
+		$_n-ui-features: map-merge($_n-ui-features, ($feature-name: $feature-value)) !global;
+	}
 }
 
 
