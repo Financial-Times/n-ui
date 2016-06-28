@@ -341,7 +341,7 @@ function getInteractionHandler (myftFeature) {
 	return function (ev, el) {
 		ev.preventDefault();
 
-		const buttonWithValTriggered = !!(el.tagName.toLowerCase() === 'button' && el.name && el.value);
+		const buttonWithValTriggered = !!(flags.get('myFtDigestPrefsEnhanced') && el.tagName.toLowerCase() === 'button' && el.name && el.value);
 		const activeButton = (buttonWithValTriggered) ? el : el.querySelector('button');
 		const form = (buttonWithValTriggered) ? el.closest('form') : el;
 		const formButtons = (buttonWithValTriggered) ? $$('button', form) : [activeButton];
@@ -438,6 +438,7 @@ export function init (opts) {
 		Object.keys(uiSelectors).forEach(myftFeature => {
 			if (myftClient.loaded[`myftFeature.${types[myftFeature]}`]) {
 				results[myftFeature] = myftClient.loaded[`myftFeature.${types[myftFeature]}`];
+
 				updateUiForFeature({
 					myftFeature,
 					subjects: results[myftFeature],
@@ -456,10 +457,12 @@ export function init (opts) {
 			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.remove`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail));
 
 			delegate.on('submit', uiSelectors[myftFeature], getInteractionHandler(myftFeature));
-
 		});
 
+		if (flags.get('myFtDigestPrefsEnhanced')) {
 			delegate.on('click', '.n-myft-ui--prefer-group button', getInteractionHandler('preferred'));
+		}
+
 		//copy from list to list
 		delegate.on('click', '[data-myft-ui="copy-to-list"]', ev => {
 			ev.preventDefault();
@@ -484,6 +487,7 @@ export function	updateUi (el, ignoreLinks) {
 		if (!results[myftFeature]) {
 			return;
 		}
+
 		updateUiForFeature({
 			myftFeature,
 			subjects: results[myftFeature],
