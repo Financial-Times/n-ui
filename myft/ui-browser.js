@@ -384,7 +384,7 @@ function getInteractionHandler (myftFeature) {
 				});
 
 				Promise.all(followPromises)
-					.then(() => toggleButton(button, action === 'add'))
+					.then(() => toggleButton(activeButton, action === 'add'))
 					.catch(() => {})
 					.then(() => collectionPending = false)
 
