@@ -21,7 +21,8 @@ $_zIndexes: (
 	overlay: 22,
 	notification: 23,
 	typeahead: 11,
-	banner: 20
+	banner: 20,
+	welcome: 21
 );
 
 @mixin zIndexFor($use-case) {

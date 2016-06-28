@@ -40,22 +40,21 @@ function retrieve (key) {
 	return superstore.local.get(key);
 }
 
-function onButtonClose (func, storageKey, event) {
-	event.preventDefault();
+function onButtonClose (func, storageKey) {
 	store(storageKey, 1);
 	func();
 }
 
-function fixBarSetup (floatingElement, footerElement, visibleClass, hiddenClass) {
+function fixBarSetup (floatingElement, footerElement, hiddenClass) {
 	return () => {
-		addClass(floatingElement, visibleClass);
+		removeClass(floatingElement, hiddenClass);
 		addClass(footerElement, hiddenClass);
 	};
 }
 
-function unfixBarSetup (floatingElement, footerElement, visibleClass, hiddenClass) {
+function unfixBarSetup (floatingElement, footerElement, hiddenClass) {
 	return () => {
-		removeClass(floatingElement, visibleClass);
+		addClass(floatingElement, hiddenClass);
 		removeClass(footerElement, hiddenClass);
 	};
 }
@@ -71,44 +70,39 @@ const canStore = () => {
 };
 
 function showWebAppLink(){
-	Array.from(document.querySelectorAll('.js-webapp-link')).forEach(link => {
-		let a = link.querySelector('a');
+	Array.from(document.querySelectorAll('.js-webapp-link')).forEach(a => {
 		a.pathname = location.pathname;
 		a.search = location.search;
-		addClass(link, 'visible');
-		hideOptOutLink();
+		removeClass(a, 'is-hidden');
 	});
 }
 
 function showAndroidLink(){
-	Array.from(document.querySelectorAll('.js-android-link')).forEach(link => {
-		let a = link.querySelector('a');
+	Array.from(document.querySelectorAll('.js-android-link')).forEach(a => {
 		let locationParam = 'location=' + encodeURIComponent(location.pathname + location.search);
 		if(a.search){
 			a.search += '&' + locationParam;
 		}else{
 			a.search = '?' + locationParam;
 		}
-		addClass(link, 'visible');
-		hideOptOutLink();
+		removeClass(a, 'is-hidden');
 	});
 }
 
 function hideOptOutLink(){
 	Array.from(document.querySelectorAll('.js-optout-link')).forEach(link => {
-		addClass(link, 'hidden');
+		addClass(link, 'is-hidden');
 	});
 }
 
 module.exports.init = () => {
-	let floatingElement = document.querySelector('.n-welcome--fixed');
-	let footerElement = document.querySelector('.n-welcome');
+	let floatingElement = document.querySelector('.n-welcome-message--fixed');
+	let footerElement = document.querySelector('.n-welcome-message--static');
 	let storageKey = 'welcomePanelClosed';
 	let barPreviouslyHidden = Boolean(retrieve(storageKey));
-	let visibleClass = 'n-welcome--fixed-visible';
-	let hiddenClass = 'n-welcome--hidden';
-	let fixBar = fixBarSetup(floatingElement, footerElement, visibleClass, hiddenClass);
-	let unfixBar = unfixBarSetup(floatingElement, footerElement, visibleClass, hiddenClass);
+	let hiddenClass = 'is-hidden';
+	let fixBar = fixBarSetup(floatingElement, footerElement, hiddenClass);
+	let unfixBar = unfixBarSetup(floatingElement, footerElement, hiddenClass);
 
 	if(isWebAppCapableDevice(navigator.userAgent)){
 		showWebAppLink();
@@ -124,7 +118,7 @@ module.exports.init = () => {
 	}
 
 	// otherwise fix the bar
-	let closeButton = document.querySelector('.n-welcome__close');
+	let closeButton = floatingElement.querySelector('.n-welcome-message__close');
 	fixBar();
 	// so the bar only appears once
 	store(storageKey, 1);
