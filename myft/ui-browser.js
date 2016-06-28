@@ -319,6 +319,24 @@ function onLoad (ev) {
 	});
 }
 
+// extract properties with _rel. prefix into nested object, as expected by the API for relationship props
+function extractMetaData(inputs) {
+	const meta = {};
+
+	inputs.forEach((input) => {
+		if (input.name.startsWith('_rel.')) {
+			const key = input.name.slice('_rel.'.length);
+			meta._rel = meta._rel || {};
+			meta._rel[key] = input.value;
+
+		} else if (input.type === 'hidden') {
+			meta[input.name] = input.value;
+		}
+	});
+
+	return meta;
+}
+
 function getInteractionHandler (myftFeature) {
 	return function (ev, el) {
 		ev.preventDefault();
@@ -336,18 +354,8 @@ function getInteractionHandler (myftFeature) {
 
 		let meta = {};
 
-		$$('input[type="hidden"]', el).forEach(input => {
 
-			// extract properties with _rel. prefix into nested object, as expected by the API for relationship props
-			if(input.name.startsWith('_rel.')) {
-				const key = input.name.slice('_rel.'.length);
-				meta._rel = meta._rel || {};
-				meta._rel[key] = input.value;
 
-			} else {
-				meta[input.name] = input.value;
-			}
-		});
 
 		if (~['add', 'remove'].indexOf(action)) {
 			const actorId = el.getAttribute('data-actor-id');
