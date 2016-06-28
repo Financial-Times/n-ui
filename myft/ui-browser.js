@@ -341,24 +341,29 @@ function getInteractionHandler (myftFeature) {
 	return function (ev, el) {
 		ev.preventDefault();
 
-		const button = el.querySelector('button');
-		if (button.hasAttribute('disabled')) {
+		const buttonWithValTriggered = !!(el.tagName.toLowerCase() === 'button' && el.name && el.value);
+		const activeButton = (buttonWithValTriggered) ? el : el.querySelector('button');
+		const form = (buttonWithValTriggered) ? el.closest('form') : el;
+		const formButtons = (buttonWithValTriggered) ? $$('button', form) : [activeButton];
+
+		if (formButtons.some((button) => button.hasAttribute('disabled'))) {
 			return;
 		}
-		button.setAttribute('disabled', '');
 
-		const isPressed = button.getAttribute('aria-pressed') === 'true';
-		const action = isPressed ? 'remove' : 'add';
-		const id = el.getAttribute(idProperties[myftFeature]);
+		formButtons.forEach((button) => button.setAttribute('disabled', ''));
+
+		const isPressed = activeButton.getAttribute('aria-pressed') === 'true';
+		const action = (isPressed || activeButton.value === 'delete') ? 'remove' : 'add';
+		const id = form.getAttribute(idProperties[myftFeature]);
 		const type = types[myftFeature];
 
-		let meta = {};
+		const hiddenFields = $$('input[type="hidden"]', form);
+		const metaFields = (buttonWithValTriggered) ? [activeButton, ...hiddenFields] : hiddenFields;
 
-
-
+		let meta = extractMetaData(metaFields);
 
 		if (~['add', 'remove'].indexOf(action)) {
-			const actorId = el.getAttribute('data-actor-id');
+			const actorId = form.getAttribute('data-actor-id');
 
 			if (type === 'concept') {
 				const conceptIds = id.split(',');
