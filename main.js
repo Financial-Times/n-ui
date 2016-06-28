@@ -40,7 +40,7 @@ const presets = {
 		welcomeMessage: true,
 		myft: true,
 		messagePrompts: true,
-		promoMessages: true,
+		promoMessages: false,
 		ads: true
 	}
 };
