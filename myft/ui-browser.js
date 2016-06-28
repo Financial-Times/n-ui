@@ -234,7 +234,7 @@ function updateAfterIO (myftFeature, detail) {
 
 	updateUiForFeature({
 		myftFeature,
-		subjects: [detail.subject],
+		subjects: [{ uuid: detail.subject, '_rel': detail.data._rel }],
 		state: !!detail.results
 	});
 
@@ -310,7 +310,7 @@ function onLoad (ev) {
 
 	updateUiForFeature({
 		myftFeature,
-		subjects: results[myftFeature].map(getUuid),
+		subjects: results[myftFeature],
 		state: true
 	});
 }
@@ -423,7 +423,7 @@ export function init (opts) {
 				results[myftFeature] = myftClient.loaded[`myftFeature.${types[myftFeature]}`];
 				updateUiForFeature({
 					myftFeature,
-					subjects: results[myftFeature].map(item => getUuid(item)),
+					subjects: results[myftFeature],
 					state: true
 				});
 
@@ -468,7 +468,7 @@ export function	updateUi (el, ignoreLinks) {
 		}
 		updateUiForFeature({
 			myftFeature,
-			subjects: results[myftFeature].map(item => getUuid(item)),
+			subjects: results[myftFeature],
 			state: true,
 			context: el
 		});
