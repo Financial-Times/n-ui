@@ -81,6 +81,7 @@ $_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
 		.n-myft-ui__button {
 			border-radius: 0;
 			margin-left: -5px;
+			transition: all 0.1s ease-in-out;
 		}
 		.n-myft-ui__button:first-of-type {
 			border-bottom-left-radius: 3px;
