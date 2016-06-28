@@ -2,6 +2,10 @@
 	@error 'you must use nUiConfigure() before importing n-ui/bootstrap';
 }
 
+@if variable-exists('_n-ui-bootstrapped') {
+	@warn 'you should not import n-ui/bootstrap twice';
+}
+
 @import 'env';
 
 @import 'ads/main';
@@ -18,3 +22,5 @@
 @import 'message-prompts/main';
 @import 'promo-messages/main';
 @import 'welcome-message/main';
+
+$_n-ui-bootstrapped: true;
