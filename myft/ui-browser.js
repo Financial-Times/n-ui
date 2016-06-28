@@ -78,12 +78,16 @@ function updateUiForFeature (opts) {
 		return;
 	}
 
-	const controls = $$(uiSelectors[opts.myftFeature], opts.context);
+	const featureForms = $$(uiSelectors[opts.myftFeature], opts.context);
 	const idProperty = idProperties[opts.myftFeature];
+	const uuids = opts.subjects.map(getUuid);
 
-	controls.forEach(el => {
-		if (opts.subjects.indexOf(el.getAttribute(idProperty)) > -1) {
-			toggleButton(el.querySelector('button'), opts.state);
+	featureForms.forEach(form => {
+		const index = uuids.indexOf(form.getAttribute(idProperty));
+		if (index > -1) {
+			const type = opts.subjects[index]._rel && opts.subjects[index]._rel.type;
+			const activeMultiButton = form.querySelector(`button[value="${type || 'delete'}"]`);
+			$$('button', form).forEach(button => toggleButton(button, (activeMultiButton) ? button === activeMultiButton : opts.state));
 		}
 	});
 }
@@ -442,6 +446,7 @@ export function init (opts) {
 
 		});
 
+			delegate.on('click', '.n-myft-ui--prefer-group button', getInteractionHandler('preferred'));
 		//copy from list to list
 		delegate.on('click', '[data-myft-ui="copy-to-list"]', ev => {
 			ev.preventDefault();
