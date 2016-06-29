@@ -1,6 +1,7 @@
 'use strict';
 const path = require('path');
 let version = false;
+let majorVersion;
 let versionType = 'none';
 
 try {
@@ -11,18 +12,17 @@ try {
 	} else {
 		versionType = 'semver';
 		version = version.split(".").slice(0,2).join('.');
+		majorVersion = version.split('.').slice(0,1)[0];
 	}
 
 	version = 'v' + version;
 
 } catch (e) {}
 
-module.exports = function(req, res, next) {
+module.exports = function (req, res, next) {
 
-	if (versionType === 'semver' && res.locals.flags.nUiBundleMajorVersion) {
-		res.locals.nUiVersion = version.split('.').slice(0,1)[0];
-	} else {
-		res.locals.nUiVersion = version;
+	if (res.locals.flags.nUiBundle) {
+		res.locals.nUiVersion = (versionType === 'semver' && res.locals.flags.nUiBundleMajorVersion) ? majorVersion : version;
 	}
 
 	next()
