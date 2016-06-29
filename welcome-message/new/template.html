@@ -1,13 +1,14 @@
-<div class="main-body o-grid-container">
-	<div class="n-welcome main-body" data-trackable="welcome">
-		<div class="o-grid-row n-welcome__container">
-			{{>n-ui/welcome-message/new/_message}}
-		</div>
-
+<div class="o-grid-container">
+	<div class="n-welcome-message n-welcome-message--static" data-trackable="welcome">
+		{{>n-ui/welcome-message/new/_message}}
 	</div>
 </div>
 
-<div class="n-welcome n-welcome--fixed" data-trackable="welcome">
-	{{>n-ui/welcome-message/new/_message}}
-	<a href="#" class="n-welcome__close"><span class="n-util-visually-hidden">Close</span></a>
+<div class="n-welcome-message n-welcome-message--fixed is-hidden" data-trackable="welcome">
+	<div class="o-grid-container">
+		{{>n-ui/welcome-message/new/_message}}
+	</div>
+	<button type="button" class="n-welcome-message__close">
+		<span class="n-util-visually-hidden">Close</span>
+	</button>
 </div>

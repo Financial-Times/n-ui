@@ -1,34 +1,26 @@
-
-<div class="n-welcome__message" data-o-grid-colspan="12 S5 M6">
-	<div class="n-welcome__message--default">
-		<p class="n-welcome__message__text">
-			You're on the new FT.com
-		</p>
-	</div>
-	<div class="n-welcome__message--medium">
-		<h3 class="n-welcome__message__heading">Welcome to the new FT.com</h3>
-		<p class="n-welcome__message__text">
+<div class="n-welcome-message__wrapper">
+	<div class="n-welcome-message__column n-welcome-message__column--wrapper">
+		<h6 class="n-welcome-message__heading">
+			Welcome to the new FT.com
+		</h6>
+		<p class="n-welcome-message__intro">
 			We're constantly improving and would like to hear from you.
 		</p>
 	</div>
-
-</div>
-<div class="n-welcome__actions" data-o-grid-colspan="12 S7 M6">
-	<div class="n-welcome__actions__action n-welcome__actions__action--feedback">
-		<a data-tracking="nps-feedback" class="n-welcome__button n-welcome__feedback-button" href="/nps-feedback">
-			<span class="n-welcome__feedback-button-label--default">Feedback</span>
-			<span class="n-welcome__feedback-button-label--medium">Provide Feedback</span>
+	<div class="n-welcome-message__column n-welcome-message__column--actions">
+		<a class="n-welcome-message__button n-welcome-message__button--feedback" data-tracking="nps-feedback" href="/nps-feedback">
+			<span class="n-welcome-message__button-extended">Provide</span> Feedback
 		</a>
-	</div>
-	{{#unless @root.forceOptInDevice}}
-		<div class="js-optout-link n-welcome__actions__action n-welcome__actions__action--leave n-welcome__actions__action--optout">
-			<a data-tracking="opt-out" href="/opt-out-confirm" class="n-welcome__button o-buttons o-buttons--standout n-welcome__optout-link">Return to the old ft.com</a>
-		</div>
-	{{/unless}}
-	<div class=" js-webapp-link n-welcome__actions__action n-welcome__actions__action--leave n-welcome__actions__action--webapp">
-		<a data-tracking="visit-webapp" href="https://app.ft.com" class="n-welcome__button o-buttons o-buttons--standout n-welcome__webapp-link">Visit Webapp</a>
-	</div>
-	<div class=" js-android-link n-welcome__actions__action n-welcome__actions__action--leave n-welcome__actions__action--android">
-		<a data-tracking="open-android-app" href="http://www.ft.com/androidapp" class="n-welcome__button o-buttons o-buttons--standout n-welcome__webapp-link">Open App</a>
+		{{#unless @root.forceOptInDevice}}
+		<a class="n-welcome-message__button n-welcome-message__button--opt-out js-optout-link" data-tracking="opt-out" href="/opt-out-confirm">
+			Return to <span class="n-welcome-message__button-extended">the old</span> FT.com
+		</a>
+		{{/unless}}
+		<a class="n-welcome-message__button n-welcome-message__button--webapp is-hidden js-webapp-link" data-tracking="visit-webapp" href="https://app.ft.com">
+			Visit Webapp
+		</a>
+		<a class="n-welcome-message__button n-welcome-message__button--android is-hidden js-android-link" data-tracking="open-android-app" href="http://www.ft.com/androidapp">
+			Open App
+		</a>
 	</div>
 </div>
