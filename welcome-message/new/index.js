@@ -1,126 +1,88 @@
 const superstore = require('superstore-sync');
 
+const STORAGE_KEY = 'n-welcome-message-seen';
+const HIDDEN_CLASSNAME = 'is-hidden';
 const IOS_DEVICE_REGEX = /OS [0-9]{1,2}(_[0-9]){1,2} like Mac OS X/i;
 const ANDROID_DEVICE_REGEX = /Android (\d+(?:\.\d+)+)/i;
 
-function isWebAppCapableDevice(userAgent){
+function isWebAppCapableDevice (userAgent) {
 	return IOS_DEVICE_REGEX.test(userAgent);
 }
 
-function isModernAndroidDevice(userAgent){
-	let results = ANDROID_DEVICE_REGEX.exec(userAgent);
-	if(!results){
+function isModernAndroidDevice (userAgent) {
+	const results = ANDROID_DEVICE_REGEX.exec(userAgent);
+
+	if (!results) {
 		return false;
 	}
 
-	let version = results[1].split('.').map(a => parseInt(a, 10));
+	const version = results[1].split('.').map(a => parseInt(a, 10));
 
-	if(version[0] > 4){
+	if (version[0] > 4) {
 		return true;
-	}else if(version[0] === 4 && version[1] > 2){
+	} else if(version[0] === 4 && version[1] > 2) {
 		return true;
-	}else{
+	} else {
 		return false;
 	}
 }
 
-function addClass (element, className) {
-	element.classList.add(className);
-}
-
-function removeClass (element, className) {
-	element.classList.remove(className);
-}
-
-function store (key, value) {
-	superstore.local.set(key, value);
-}
-
-function retrieve (key) {
-	return superstore.local.get(key);
-}
-
-function onButtonClose (func, storageKey) {
-	store(storageKey, 1);
-	func();
-}
-
-function fixBarSetup (floatingElement, footerElement, hiddenClass) {
-	return () => {
-		removeClass(floatingElement, hiddenClass);
-		addClass(footerElement, hiddenClass);
-	};
-}
-
-function unfixBarSetup (floatingElement, footerElement, hiddenClass) {
-	return () => {
-		addClass(floatingElement, hiddenClass);
-		removeClass(footerElement, hiddenClass);
-	};
-}
-
-// test whether we can store in local storage
-const canStore = () => {
+function hasLocalStorage () {
 	const testKey = 'next-welcome:test-storage';
 	const testValue = 'can-store';
 	superstore.local.set(testKey, testValue);
 	const retrievedValue = superstore.local.get(testKey);
 	superstore.local.unset(testKey);
 	return (testValue === retrievedValue) && superstore.isPersisting();
-};
+}
 
-function showWebAppLink(){
+function showWebAppLink () {
 	Array.from(document.querySelectorAll('.js-webapp-link')).forEach(a => {
 		a.pathname = location.pathname;
 		a.search = location.search;
-		removeClass(a, 'is-hidden');
+		a.classList.remove(HIDDEN_CLASSNAME);
 	});
 }
 
-function showAndroidLink(){
+function showAndroidLink () {
 	Array.from(document.querySelectorAll('.js-android-link')).forEach(a => {
-		let locationParam = 'location=' + encodeURIComponent(location.pathname + location.search);
-		if(a.search){
-			a.search += '&' + locationParam;
-		}else{
-			a.search = '?' + locationParam;
-		}
-		removeClass(a, 'is-hidden');
+		const param = 'location=' + encodeURIComponent(location.pathname + location.search);
+		a.search = a.search + (a.search.length ? '&' : '?') + param;
+		a.classList.remove(HIDDEN_CLASSNAME);
 	});
 }
 
-function hideOptOutLink(){
-	Array.from(document.querySelectorAll('.js-optout-link')).forEach(link => {
-		addClass(link, 'is-hidden');
+function hideOptOutLink () {
+	Array.from(document.querySelectorAll('.js-optout-link')).forEach(a => {
+		a.classList.add(HIDDEN_CLASSNAME);
 	});
 }
 
-module.exports.init = () => {
-	let floatingElement = document.querySelector('.n-welcome-message--fixed');
-	let footerElement = document.querySelector('.n-welcome-message--static');
-	let storageKey = 'welcomePanelClosed';
-	let barPreviouslyHidden = Boolean(retrieve(storageKey));
-	let hiddenClass = 'is-hidden';
-	let fixBar = fixBarSetup(floatingElement, footerElement, hiddenClass);
-	let unfixBar = unfixBarSetup(floatingElement, footerElement, hiddenClass);
+function init () {
+	const fixedEl = document.querySelector('.n-welcome-message--fixed');
+	const staticEl = document.querySelector('.n-welcome-message--static');
 
-	if(isWebAppCapableDevice(navigator.userAgent)){
+	if (isWebAppCapableDevice(navigator.userAgent)) {
 		showWebAppLink();
 		hideOptOutLink();
-	}else if(isModernAndroidDevice(navigator.userAgent)){
+	} else if (isModernAndroidDevice(navigator.userAgent)) {
 		showAndroidLink();
 		hideOptOutLink();
 	}
 
-	// Don't display the welcome bar if already acknowledged, or if we can't store in storage
-	if (!floatingElement || barPreviouslyHidden || !canStore()) {
-		return;
-	}
+	if (Boolean(superstore.local.get(STORAGE_KEY)) === false && hasLocalStorage()) {
+		const closeButton = fixedEl.querySelector('button');
 
-	// otherwise fix the bar
-	let closeButton = floatingElement.querySelector('.n-welcome-message__close');
-	fixBar();
-	// so the bar only appears once
-	store(storageKey, 1);
-	closeButton.addEventListener('click', onButtonClose.bind(null, unfixBar, storageKey));
+		closeButton.onclick = function () {
+			fixedEl.classList.add(HIDDEN_CLASSNAME);
+		};
+
+		fixedEl.classList.remove(HIDDEN_CLASSNAME);
+		staticEl.classList.add(HIDDEN_CLASSNAME);
+
+		// only display the bar the first time
+		superstore.local.set(STORAGE_KEY, 1);
+	}
 };
+
+module.exports = { init };
