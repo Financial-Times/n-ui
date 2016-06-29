@@ -1,5 +1,14 @@
-{{#if @root.flags.newFooter}}
-	{{> n-ui/welcome-message/new/template}}
-{{else}}
-	{{> n-ui/welcome-message/old/template}}
-{{/if}}
+<div class="o-grid-container">
+	<div class="n-welcome-message n-welcome-message--static" data-trackable="welcome">
+		{{>n-ui/welcome-message/_message}}
+	</div>
+</div>
+
+<div class="n-welcome-message n-welcome-message--fixed is-hidden" data-trackable="welcome">
+	<div class="o-grid-container">
+		{{>n-ui/welcome-message/_message}}
+	</div>
+	<button type="button" class="n-welcome-message__close">
+		<span class="n-util-visually-hidden">Close</span>
+	</button>
+</div>
