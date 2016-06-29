@@ -55,6 +55,8 @@ $_n-ui-welcome-message-is-silent: nUiHas('welcomeMessage') == false or $_n-ui-we
 	}
 
 	.n-welcome-message__column {
+		white-space: nowrap;
+
 		@include oGridRespondTo('M') {
 			display: table-cell;
 			vertical-align: middle;
@@ -66,7 +68,6 @@ $_n-ui-welcome-message-is-silent: nUiHas('welcomeMessage') == false or $_n-ui-we
 	.n-welcome-message__column--actions {
 		@include oGridRespondTo('M') {
 			text-align: right;
-			width: 35%;
 		}
 	}
 
@@ -102,7 +103,7 @@ $_n-ui-welcome-message-is-silent: nUiHas('welcomeMessage') == false or $_n-ui-we
 		}
 	}
 
-	.n-welcome-message__button-extended {
+	.n-welcome-message__extended {
 		display: none;
 
 		@include oGridRespondTo('L') {
