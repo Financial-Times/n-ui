@@ -23,7 +23,6 @@ module.exports = function (req, res, next) {
 
 	if (res.locals.flags.nUiBundle) {
 		res.locals.nUiVersion = (versionType === 'semver' && res.locals.flags.nUiBundleMajorVersion) ? majorVersion : version;
-		res.locals.assetsDirectory = 'external-n-ui/';
 	}
 
 	next()

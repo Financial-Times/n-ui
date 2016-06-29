@@ -32,10 +32,13 @@
 
 	(function () {
 		if (cutsTheMustard) {
-			{{#if @root.nUiVersion}}
+			{{#if @root.nUiVersion}} {{!note this only exists if the flag is on and the app has enabled n-ui bundle}}
 				ftNextLoadScript('//next-geebee.ft.com/n-ui/{{@root.nUiVersion}}/es5-core-js.js');
+				ftNextLoadScript('{{#hashedAsset}}main-without-n-ui.js{{/hashedAsset}}', []);
+			{{else}}
+				ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}', []);
 			{{/if}}
-			ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}', []);
+
 			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '&features=' + [
 				'default',
 				'requestAnimationFrame',
