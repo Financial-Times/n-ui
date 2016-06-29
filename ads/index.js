@@ -75,7 +75,10 @@ function onAdsComplete (event) {
 			if (slotsRendered === 0) {
 				perfMark('firstAdLoaded');
 				if (/spoor-id=3/.test(document.cookie)) {
-					sendAdLoadedTrackingEvent();
+					sendAdLoadedTrackingEvent('firstAdLoaded', 'first-load');
+					document.body.addEventListener('oAds.adIframeLoaded', () => {
+						sendAdLoadedTrackingEvent('adIframeLoaded', 'ads-iframe-load')
+					});
 				}
 			}
 		} else if (detail.slot.gpt && detail.slot.gpt.isEmpty === true) {
@@ -91,20 +94,20 @@ function onAdsComplete (event) {
 	}
 }
 
-function sendAdLoadedTrackingEvent () {
+function sendAdLoadedTrackingEvent (trackingEventName, beaconActionName) {
 	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 	if (performance && performance.mark) {
 		const currentTime = new Date().getTime();
 		const offsets = {
 			domContentLoadedEventEnd: {
-				firstAdLoaded: currentTime - performance.timing['domContentLoadedEventEnd'],
+				[trackingEventName]: currentTime - performance.timing['domContentLoadedEventEnd'],
 				loadEventEnd: currentTime - performance.timing['loadEventEnd'],
 				domInteractive: currentTime - performance.timing['domInteractive']
 			}
 		};
 
 		const marks = performance.getEntriesByType ?
-			performance.getEntriesByName('firstAdLoaded')
+			performance.getEntriesByName(trackingEventName)
 				.reduce((marks, mark) => {
 					marks[mark.name] = Math.round(mark.startTime);
 					return marks;
@@ -113,7 +116,7 @@ function sendAdLoadedTrackingEvent () {
 
 		broadcast('oTracking.event', {
 			category: 'ads',
-			action: 'first-load',
+			action: beaconActionName,
 			timings: { offsets, marks }
 		});
 	}
