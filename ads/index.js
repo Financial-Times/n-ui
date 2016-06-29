@@ -49,21 +49,19 @@ function getUserTargetingPromise () {
 		.catch(() => ({}));
 };
 
+function initOAds (flags, contextData, userData) {
+	const initObj = oAdsConfig(flags, contextData, userData);
 
-//Init oAds without targeting data, to force parallel loading of gpt library
-function initOAds (flags) {
-	const initObj = oAdsConfig(flags);
+	utils.log('dfp_targeting', initObj.dfp_targeting);
 	document.addEventListener('oAds.complete', onAdsComplete);
-	return Ads.init(initObj);
-}
 
-//Reset the oAds config with the targeting data from the API, and then initialise the slots
-function initAdSlots (oAds, flags, contextData, userData) {
-	const initObjWithTargeting = oAdsConfig(flags, contextData, userData);
-	oAds.config(initObjWithTargeting);
 	slotCount = containers.length;
+
 	utils.log.info(slotCount + ' ad slots found on page');
-	containers.forEach(oAds.slots.initSlot.bind(oAds.slots));
+
+	const ads = Ads.init(initObj);
+	containers.forEach(ads.slots.initSlot.bind(ads.slots));
+
 }
 
 function onAdsComplete (event) {
@@ -133,21 +131,17 @@ module.exports = {
 
 					return Promise.resolve()
 						.then(() => {
-
-							const oAds = initOAds(flags);
-
 							slotsRendered = 0; // Note - this is a global var fro this module
 							// TODO get appName from appInfo
 							const appName = utils.getAppName();
-							if (appName) {
-
+							if (flags && flags.get('ads') && appName) {
 								let targetingPromises = [
 									getContextualTargetingPromise(appName),
 									flags.get('adTargetingUserApi') ? getUserTargetingPromise() : Promise.resolve({})
 								];
 								containers = [].slice.call(document.querySelectorAll('.o-ads'));
 								return Promise.all(targetingPromises)
-									.then(data => initAdSlots(oAds, flags, data[0], data[1]));
+									.then(data => initOAds(flags, data[0], data[1]));
 							}
 						})
 						.then(() => {

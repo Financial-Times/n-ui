@@ -8,6 +8,7 @@ import promoMessages from './promo-messages';
 import cookieMessage from './cookie-message';
 import welcomeMessage from './welcome-message';
 import messagePrompts from './message-prompts';
+import footer from './footer';
 import myft from './myft';
 
 export const _ads = ads;
@@ -25,16 +26,18 @@ export const _utils = utils;
 const presets = {
 	discrete: {
 		header: true,
+		footer: true,
 		date: true
 	},
 	complete: {
 		header: true,
+		footer: true,
 		date: true,
 		cookieMessage: true,
 		welcomeMessage: true,
 		myft: true,
 		messagePrompts: true,
-		promoMessages: true,
+		promoMessages: false,
 		ads: true
 	}
 };
@@ -89,7 +92,10 @@ export function bootstrap (cb) {
 			header.init(flags);
 			initializedComponents.header = true;
 		}
-
+		if(opts.footer && !initializedComponents.footer){
+			footer.init(flags);
+			initializedComponents.footer = true
+		}
 		if (opts.date && !initializedComponents.date) {
 			date.init();
 			initializedComponents.date = true
@@ -103,11 +109,13 @@ export function bootstrap (cb) {
 				}
 
 				if (opts.welcomeMessage && !initializedComponents.welcomeMessage) {
-					flags.get('welcomePanel') && welcomeMessage.init({
+					let version = flags.get('newFooter') ? 'new' : 'old';
+					flags.get('welcomePanel') && welcomeMessage[version].init({
 						enableOverlay: flags.get('myFTOnboardingOverlay')
 					});
 					initializedComponents.welcomeMessage = true
 				}
+
 
 				if (opts.messagePrompts && !initializedComponents.messagePrompts) {
 					messagePrompts.init();

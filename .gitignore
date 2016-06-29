@@ -8,3 +8,7 @@
 .editorconfig
 .eslintrc.js
 .scss-lint.yml
+/public/main.css
+/public/main.css.map
+/public/main.js
+/public/main.js.map

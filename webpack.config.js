@@ -17,19 +17,61 @@ while (deps.length) {
 	depsTable.addRow(deps.splice(0, 4));
 }
 
-
-console.log(depsTable.toString())
-
-module.exports = nWebpack({
-	output: {
-		filename: '[name]',
-		library: 'ftNextUi'
-	},
-	withBabelPolyfills: true,
-	entry: {
-		"./dist/es5.js": "./_deploy/wrapper.js"
-	},
-	wrap: {
-		before: '/*\n' + depsTable.toString() + '\n*/'
-	}
-});
+module.exports = [
+	nWebpack({
+		output: {
+			filename: '[name]',
+			library: 'ftNextUi'
+		},
+		withBabelPolyfills: true,
+		env: 'dev',
+		entry: {
+			"./dist/es5-core-js.js": "./_deploy/wrapper.js"
+		},
+		wrap: {
+			before: '/*\n' + depsTable.toString() + '\n*/'
+		}
+	}),
+	nWebpack({
+		output: {
+			filename: '[name]',
+			library: 'ftNextUi'
+		},
+		withBabelPolyfills: false,
+		env: 'dev',
+		entry: {
+			"./dist/es5-polyfill-io.js": "./_deploy/wrapper.js"
+		},
+		wrap: {
+			before: '/*\n' + depsTable.toString() + '\n*/'
+		}
+	}),
+	nWebpack({
+		output: {
+			filename: '[name]',
+			library: 'ftNextUi'
+		},
+		withBabelPolyfills: true,
+		env: 'prod',
+		entry: {
+			"./dist/es5-core-js.min.js": "./_deploy/wrapper.js"
+		},
+		wrap: {
+			before: '/*\n' + depsTable.toString() + '\n*/'
+		}
+	}),
+	nWebpack({
+		output: {
+			filename: '[name]',
+			library: 'ftNextUi'
+		},
+		withBabelPolyfills: false,
+		env: 'prod',
+		entry: {
+			"./dist/es5-polyfill-io.min.js": "./_deploy/wrapper.js"
+		},
+		wrap: {
+			before: '/*\n' + depsTable.toString() + '\n*/'
+		}
+	})
+];

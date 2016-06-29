@@ -6,6 +6,7 @@ module.exports = {
 		window.addEventListener('ftNextLoaded', function () {
 			require('./js/third-party/floodlight')(flags);
 			require('./js/third-party/inspectlet')(flags);
+			require('./js/third-party/mouseflow')(flags);
 			require('./js/third-party/sourcepoint')(flags);
 			require('./js/third-party/adblocking')(flags);
 		});

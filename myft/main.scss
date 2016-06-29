@@ -71,6 +71,55 @@ $_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
 		}
 	}
 
+	.n-myft-ui--prefer-group {
+		width: 100%;
+
+		@include oGridRespondTo($from: 'M') {
+			padding-left: $spacing-unit;
+		}
+
+		.n-myft-ui__button {
+			border-radius: 0;
+			margin-left: -5px;
+			transition: all 0.1s ease-in-out;
+		}
+		.n-myft-ui__button:first-of-type {
+			border-bottom-left-radius: 3px;
+			border-top-left-radius: 3px;
+			border-left-width: 1px;
+		}
+
+		.n-myft-ui__button:last-child {
+			border-bottom-right-radius: 3px;
+			border-top-right-radius: 3px;
+		}
+
+		.n-myft-ui__button[aria-pressed="true"] {
+			padding-left: 26px;
+			position: relative;
+		}
+
+		.n-myft-ui__button[aria-pressed="true"]:before {
+			@include oIconsGetIcon('tick-thin', getColor('link-1'), 12);
+			content: ' ';
+			left: $spacing-unit/2;
+			margin: -6px $spacing-unit/4 0 0;
+			position: absolute;
+			top: 50%;
+		}
+	}
+
+	.n-myft-ui__fieldset {
+		border: 0;
+		padding: 0;
+		margin: 0;
+	}
+
+	.n-myft-ui__legend {
+		@include oTypographySans(s);
+		margin-bottom: 10px;
+	}
+
 	.myft-ui--prefer {
 		display: block;
 		&:after {
@@ -328,6 +377,13 @@ $_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
 
 	}
 
+	// Naff workaround for the new digest preference, prior to new alerts page overhaul
+	// scss-lint:disable QualifyingElement
+	p.preference__description {
+		margin-top: 0;
+	}
+	// scss-lint:enable QualifyingElement
+
 	@include oGridRespondTo($until: S) {
 		.o-overlay--myft-ui {
 			@include oOverlayFullscreen($fill: 'width');
@@ -335,7 +391,7 @@ $_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
 		}
 	}
 
-	$_next-myft-ui_applied: true !global;
+	$_n-ui-myft-applied: true !global;
 }
 
 @include nUiCriticalEnd('myft');

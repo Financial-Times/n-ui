@@ -1,7 +1,7 @@
-@include nUiCriticalStart('cookie-message');
+@include nUiCriticalStart('cookieMessage');
 
 $_n-ui-cookie-message-applied: false !default;
-$_n-ui-cookie-message-is-silent: nUiHas('cookie-message') == false or $_n-ui-cookie-message-applied == true;
+$_n-ui-cookie-message-is-silent: nUiHas('cookieMessage') == false or $_n-ui-cookie-message-applied == true;
 
 @if $_n-ui-cookie-message-is-silent == false {
 
@@ -121,4 +121,4 @@ $_n-ui-cookie-message-is-silent: nUiHas('cookie-message') == false or $_n-ui-coo
 	$_n-ui-cookie-message-applied: true !global;
 }
 
-@include nUiCriticalEnd('cookie-message');
+@include nUiCriticalEnd('cookieMessage');

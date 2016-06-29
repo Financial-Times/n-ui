@@ -78,12 +78,16 @@ function updateUiForFeature (opts) {
 		return;
 	}
 
-	const controls = $$(uiSelectors[opts.myftFeature], opts.context);
+	const featureForms = $$(uiSelectors[opts.myftFeature], opts.context);
 	const idProperty = idProperties[opts.myftFeature];
+	const uuids = opts.subjects.map(getUuid);
 
-	controls.forEach(el => {
-		if (opts.subjects.indexOf(el.getAttribute(idProperty)) > -1) {
-			toggleButton(el.querySelector('button'), opts.state);
+	featureForms.forEach(form => {
+		const index = uuids.indexOf(form.getAttribute(idProperty));
+		if (index > -1) {
+			const type = opts.subjects[index]._rel && opts.subjects[index]._rel.type;
+			const activeMultiButton = form.querySelector(`button[value="${type || 'delete'}"]`);
+			$$('button', form).forEach(button => toggleButton(button, (activeMultiButton) ? button === activeMultiButton : opts.state));
 		}
 	});
 }
@@ -234,7 +238,7 @@ function updateAfterIO (myftFeature, detail) {
 
 	updateUiForFeature({
 		myftFeature,
-		subjects: [detail.subject],
+		subjects: [{ uuid: detail.subject, '_rel': detail.data._rel }],
 		state: !!detail.results
 	});
 
@@ -244,7 +248,7 @@ function updateAfterIO (myftFeature, detail) {
 		case 'followed':
 			if (flags.get('myFtFollowEmail') && detail.results && !collectionPending) {
 
-				if (!followEmail.prefs.subscribedToDaily && !followEmail.prefs.userDismissed && detail.data.name) {
+				if (!followEmail.prefs.subscribedToDigest && !followEmail.prefs.userDismissed && detail.data.name) {
 
 					return myftClient.personaliseUrl(`/myft/api/onsite/follow-email/form?fragment=true&name=${encodeURIComponent(detail.data.name)}`)
 						.then(url => fetch(url, { credentials: 'same-origin' }))
@@ -277,8 +281,8 @@ function updateAfterIO (myftFeature, detail) {
 			break;
 		case 'preferred':
 			//FIXME: remove this and make myFtClient.loaded update after client-side changes
-			if (detail.subject === 'email-daily-digest') {
-				followEmail.prefs.subscribedToDaily = true;
+			if (detail.subject === 'email-digest') {
+				followEmail.prefs.subscribedToDigest = true;
 			} else if (detail.subject === 'follow-email-dismissed') {
 				followEmail.prefs.userDismissed = true;
 			}
@@ -310,43 +314,56 @@ function onLoad (ev) {
 
 	updateUiForFeature({
 		myftFeature,
-		subjects: results[myftFeature].map(getUuid),
+		subjects: results[myftFeature],
 		state: true
 	});
+}
+
+// extract properties with _rel. prefix into nested object, as expected by the API for relationship props
+function extractMetaData(inputs) {
+	const meta = {};
+
+	inputs.forEach((input) => {
+		if (input.name.startsWith('_rel.')) {
+			const key = input.name.slice('_rel.'.length);
+			meta._rel = meta._rel || {};
+			meta._rel[key] = input.value;
+
+		} else if (input.type === 'hidden') {
+			meta[input.name] = input.value;
+		}
+	});
+
+	return meta;
 }
 
 function getInteractionHandler (myftFeature) {
 	return function (ev, el) {
 		ev.preventDefault();
 
-		const button = el.querySelector('button');
-		if (button.hasAttribute('disabled')) {
+		const buttonWithValTriggered = !!(flags.get('myFtDigestPrefsEnhanced') && el.tagName.toLowerCase() === 'button' && el.name && el.value);
+		const activeButton = (buttonWithValTriggered) ? el : el.querySelector('button');
+		const form = (buttonWithValTriggered) ? el.closest('form') : el;
+		const formButtons = (buttonWithValTriggered) ? $$('button', form) : [activeButton];
+
+		if (formButtons.some((button) => button.hasAttribute('disabled'))) {
 			return;
 		}
-		button.setAttribute('disabled', '');
 
-		const isPressed = button.getAttribute('aria-pressed') === 'true';
-		const action = isPressed ? 'remove' : 'add';
-		const id = el.getAttribute(idProperties[myftFeature]);
+		formButtons.forEach((button) => button.setAttribute('disabled', ''));
+
+		const isPressed = activeButton.getAttribute('aria-pressed') === 'true';
+		const action = (isPressed || activeButton.value === 'delete') ? 'remove' : 'add';
+		const id = form.getAttribute(idProperties[myftFeature]);
 		const type = types[myftFeature];
 
-		let meta = {};
+		const hiddenFields = $$('input[type="hidden"]', form);
+		const metaFields = (buttonWithValTriggered) ? [activeButton, ...hiddenFields] : hiddenFields;
 
-		$$('input[type="hidden"]', el).forEach(input => {
-
-			// extract properties with _rel. prefix into nested object, as expected by the API for relationship props
-			if(input.name.startsWith('_rel.')) {
-				const key = input.name.slice('_rel.'.length);
-				meta._rel = meta._rel || {};
-				meta._rel[key] = input.value;
-
-			} else {
-				meta[input.name] = input.value;
-			}
-		});
+		let meta = extractMetaData(metaFields);
 
 		if (~['add', 'remove'].indexOf(action)) {
-			const actorId = el.getAttribute('data-actor-id');
+			const actorId = form.getAttribute('data-actor-id');
 
 			if (type === 'concept') {
 				const conceptIds = id.split(',');
@@ -367,7 +384,7 @@ function getInteractionHandler (myftFeature) {
 				});
 
 				Promise.all(followPromises)
-					.then(() => toggleButton(button, action === 'add'))
+					.then(() => toggleButton(activeButton, action === 'add'))
 					.catch(() => {})
 					.then(() => collectionPending = false)
 
@@ -421,9 +438,10 @@ export function init (opts) {
 		Object.keys(uiSelectors).forEach(myftFeature => {
 			if (myftClient.loaded[`myftFeature.${types[myftFeature]}`]) {
 				results[myftFeature] = myftClient.loaded[`myftFeature.${types[myftFeature]}`];
+
 				updateUiForFeature({
 					myftFeature,
-					subjects: results[myftFeature].map(item => getUuid(item)),
+					subjects: results[myftFeature],
 					state: true
 				});
 
@@ -439,8 +457,11 @@ export function init (opts) {
 			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.remove`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail));
 
 			delegate.on('submit', uiSelectors[myftFeature], getInteractionHandler(myftFeature));
-
 		});
+
+		if (flags.get('myFtDigestPrefsEnhanced')) {
+			delegate.on('click', '.n-myft-ui--prefer-group button', getInteractionHandler('preferred'));
+		}
 
 		//copy from list to list
 		delegate.on('click', '[data-myft-ui="copy-to-list"]', ev => {
@@ -466,9 +487,10 @@ export function	updateUi (el, ignoreLinks) {
 		if (!results[myftFeature]) {
 			return;
 		}
+
 		updateUiForFeature({
 			myftFeature,
-			subjects: results[myftFeature].map(item => getUuid(item)),
+			subjects: results[myftFeature],
 			state: true,
 			context: el
 		});

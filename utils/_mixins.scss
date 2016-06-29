@@ -1,4 +1,4 @@
-// TODO: When we're using zIndexFor exclusively (we can but live in hope), it'd
+// TODO: When we're using nUtilZIndexFor exclusively (we can but live in hope), it'd
 // probably be easier to maintain this file if we avoided explicit z-index
 // numbers and instead relied on the index of a given use-case within a list
 // (rather than a map), like so:
@@ -9,11 +9,11 @@
 //					overlay,
 //					notification;
 //
-// @mixin zIndexFor($use-case) {
+// @mixin nUtilZIndexFor($use-case) {
 //		z-index: index($_stackingOrder, $use-case);
 // }
 //
-// Usage: `@include zIndexFor(header);`
+// Usage: `@include nUtilZIndexFor(header);`
 // Output: `z-index: 2;`
 
 // TODO: add the other use-cases
@@ -21,7 +21,8 @@ $_zIndexes: (
 	overlay: 22,
 	notification: 23,
 	typeahead: 11,
-	banner: 20
+	banner: 20,
+	welcome: 21
 );
 
 @mixin zIndexFor($use-case) {

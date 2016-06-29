@@ -4,6 +4,11 @@ $_n-ui-ads-applied: false !default;
 $_n-ui-ads-is-silent: nUiHas('ads') == false or $_n-ui-ads-applied == true;
 $o-ads-is-silent: $_n-ui-ads-is-silent;
 
+// Ad breakpoint where leaderboards start working
+$ad-medium-breakpoint: 760px;
+// Ad breakpoint where responsive ads stop growing
+$ad-max-responsive-width: 1440px;
+
 @import 'o-ads/main';
 
 @if $_n-ui-ads-is-silent == false {
@@ -14,6 +19,61 @@ $o-ads-is-silent: $_n-ui-ads-is-silent;
 	@media print {
 		.o-ads {
 			display: none !important;
+		}
+	}
+
+
+	//Common classes used by ads on Next
+	.advert--background {
+		@include nUiPinstripeBG(getColor('pink-tint2'));
+	}
+
+	.advert--transition {
+		will-change: min-height, padding, height;
+		transform: translate3d(0, 0, 0);
+		transition: height 0.35s ease-in-out, min-height 0.35s ease-in-out, padding 0.35s ease-in-out;
+	}
+
+	.advert--reserve-90 {
+		min-height: 90px;
+		height: 90px;
+
+		&[data-o-ads-loaded="MediumRectangle"],
+		&[data-o-ads-loaded="Billboard"] {
+			height: 250px;
+		}
+	}
+
+	.advert--reserve-250 {
+		height: 250px;
+		min-height: 250px;
+		padding: 10px 0;
+		&[data-o-ads-loaded="Leaderboard"],
+		&[data-o-ads-loaded="SuperLeaderboard"] {
+			.o-ads__outer {
+				position: relative;
+				top: 50%;
+				margin-top: -45px;
+			}
+		}
+	}
+
+
+	.advert--reserve-90,
+	.advert--reserve-250 {
+		&[data-o-ads-loaded="Responsive"] {
+			height: 250px;
+			min-height: 250px;
+			padding: 10px 0;
+			@include oGridRespondTo($until: $ad-max-responsive-width) {
+				height: auto;
+				min-height: calc(100vw * 0.1734);
+				padding: 0;
+			} //aspect ratio of responsive creatives
+			@include oGridRespondTo($until: S) {
+				height: auto;
+				min-height: calc(100vw * 0.481);
+			}
 		}
 	}
 }

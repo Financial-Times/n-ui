@@ -1,9 +1,9 @@
-@include nUiCriticalStart('layout');
-
 $_n-ui-layout-applied: false !default;
 $_n-ui-layout-is-silent: nUiHas('layout') == false or $_n-ui-layout-applied == true;
 
 @if $_n-ui-layout-is-silent == false {
+
+	@include nUiCriticalStart('layout');
 	.core .o--if-js,
 	.enhanced .o--if-no-js {
 		display: none !important;
@@ -41,7 +41,18 @@ $_n-ui-layout-is-silent: nUiHas('layout') == false or $_n-ui-layout-applied == t
 		}
 	}
 
+	// always hide the footer in head.css because typically its styles will not be
+	// in head.css, so on short pages we'll get a FOUC
+	.n-layout__row--footer {
+		display: none;
+	}
+
+	@include nUiCriticalEnd('layout');
+
+	// undo the above hiding of the footer
+	.n-layout__row--footer {
+		display: table-row;
+	}
+
 	$_n-layout_applied: true !global;
 }
-
-@include nUiCriticalEnd('layout');

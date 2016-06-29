@@ -9,7 +9,7 @@ $o-overlay-is-silent: $_n-ui-overlay-is-silent;
 @if $_n-ui-overlay-is-silent == false {
 	body .o-overlay,
 	body .o-overlay-shadow {
-		@include zIndexFor(overlay);
+		@include nUtilZIndexFor(overlay);
 	}
 
 	$_n-ui-overlay-applied: true !global;

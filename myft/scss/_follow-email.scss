@@ -1,6 +1,4 @@
-$_next-myft-ui-follow-email_applied: false !default;
-
-@if $_next-myft-ui-follow-email_applied == false {
+@if $_n-ui-myft-is-silent == false {
 	.myft-follow {
 		text-align: center;
 
@@ -78,6 +76,4 @@ $_next-myft-ui-follow-email_applied: false !default;
 			@include nLinksBody($inversed: true);
 		}
 	}
-
-	$_next-myft-ui-follow-email_applied: true !global;
 }

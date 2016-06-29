@@ -1,8 +1,14 @@
+$_n-ui-variant: null !default;
+
+$_n-ui-output-critical: false !default;
+
+// default feature values
 $_n-ui-features: (
 	ads: 'critical',
 	buttons: false,
 	colors: true,
 	cookieMessage: false,
+	drawer: true,
 	expander: false,
 	footer: true,
 	forms: false,
@@ -23,6 +29,7 @@ $_n-ui-features: (
 
 $_n-ui-feature-dependenices: (
 	myft: ('forms', 'notification', 'overlay'),
+	footer: ('welcomeMessage'),
 	welcomeMessage: ('footer')
 );
 
@@ -33,7 +40,7 @@ $_n-ui-presets: (
 		messagePrompts: true,
 		myft: true,
 		notification: true,
-		promoMessages: true,
+		promoMessages: false,
 		welcomeMessage: true
 	))
 );
