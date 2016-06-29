@@ -116,7 +116,6 @@ export function bootstrap (cb) {
 					initializedComponents.welcomeMessage = true
 				}
 
-
 				if (opts.messagePrompts && !initializedComponents.messagePrompts) {
 					messagePrompts.init();
 					initializedComponents.messagePrompts = true;
