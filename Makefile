@@ -14,7 +14,7 @@ pre-package:
 deploy:
 	node ./_deploy/s3.js
 
-dist: pre-package assets-production deploy
+dist: pre-package assets deploy
 
 test: verify test-unit
 
