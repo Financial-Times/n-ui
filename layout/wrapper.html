@@ -18,7 +18,7 @@
 		<link rel="preconnect" href="https://spoor-api.ft.com">
 		<link rel="preconnect" href="https://next-session.ft.com" crossorigin="use-credentials">
 		{{#each preconnect}}
-		<link rel="preconnect" href="{{this}}">
+		<link rel="preconnect" href="{{host}}"{{#if crossorigin}} crossorigin="{{crossorigin}}"{{/if}}>
 		{{/each}}
 
 		{{>n-ui/layout/partials/stylesheets}}
