@@ -47,7 +47,6 @@
     "o-visual-effects": "^0.1.0"
   },
   "resolutions": {
-    "o-viewport": "^2.0.0",
-    "n-header-footer": "^4.0.0"
+    "o-viewport": "^2.0.0"
   }
 }

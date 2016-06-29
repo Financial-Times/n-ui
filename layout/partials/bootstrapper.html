@@ -23,7 +23,7 @@
 
 	{{>n-ui/layout/partials/css-loader}}
 
-	var polyfillUrl = 'https://next-geebee.ft.com/polyfill/v2/polyfill.js';
+	var polyfillUrl = 'https://next-geebee.ft.com/polyfill/v2/polyfill.min.js';
 	var polyfillCallbackName = 'ftNextPolyfillServiceCallback';
 
 	window[polyfillCallbackName] = function () {
@@ -33,7 +33,7 @@
 	(function () {
 		if (cutsTheMustard) {
 			{{#if @root.nUiVersion}} {{!note this only exists if the flag is on and the app has enabled n-ui bundle}}
-				ftNextLoadScript('//next-geebee.ft.com/n-ui/{{@root.nUiVersion}}/es5-core-js.js');
+				ftNextLoadScript('//next-geebee.ft.com/n-ui/{{@root.nUiVersion}}/es5-core-js.min.js');
 				ftNextLoadScript('{{#hashedAsset}}main-without-n-ui.js{{/hashedAsset}}');
 			{{else}}
 				ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}');
