@@ -248,7 +248,7 @@ function updateAfterIO (myftFeature, detail) {
 		case 'followed':
 			if (flags.get('myFtFollowEmail') && detail.results && !collectionPending) {
 
-				if (!followEmail.prefs.subscribedToDaily && !followEmail.prefs.userDismissed && detail.data.name) {
+				if (!followEmail.prefs.subscribedToDigest && !followEmail.prefs.userDismissed && detail.data.name) {
 
 					return myftClient.personaliseUrl(`/myft/api/onsite/follow-email/form?fragment=true&name=${encodeURIComponent(detail.data.name)}`)
 						.then(url => fetch(url, { credentials: 'same-origin' }))
@@ -281,8 +281,8 @@ function updateAfterIO (myftFeature, detail) {
 			break;
 		case 'preferred':
 			//FIXME: remove this and make myFtClient.loaded update after client-side changes
-			if (detail.subject === 'email-daily-digest') {
-				followEmail.prefs.subscribedToDaily = true;
+			if (detail.subject === 'email-digest') {
+				followEmail.prefs.subscribedToDigest = true;
 			} else if (detail.subject === 'follow-email-dismissed') {
 				followEmail.prefs.userDismissed = true;
 			}

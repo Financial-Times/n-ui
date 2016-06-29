@@ -7,14 +7,14 @@ let _overlayForm;
 
 //FIXME: remove this and make myFtClient.loaded update after client-side changes
 let prefs = {
-	subscribedToDaily: null,
+	subscribedToDigest: null,
 	userDismissed: null
 };
 
 function setInitialPrefs () {
 	const allLoadedPrefs = _myFtClient.loaded['preferred.preference'].items;
 
-	prefs.subscribedToDaily = allLoadedPrefs.find(pref => pref.uuid === 'email-daily-digest');
+	prefs.subscribedToDigest = allLoadedPrefs.find(pref => pref.uuid === 'email-digest');
 	prefs.userDismissed = allLoadedPrefs.find(pref => pref.uuid === 'follow-email-dismissed');
 }
 
