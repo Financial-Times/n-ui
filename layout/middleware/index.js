@@ -20,7 +20,7 @@ try {
 module.exports = function (req, res, next) {
 
 	if (res.locals.flags.nUiBundle) {
-		res.locals.nUiVersion = 'v' + (versionType === 'semver' && res.locals.flags.nUiBundleMajorVersion) ? majorVersion : version;
+		res.locals.nUiVersion = 'v' + ((versionType === 'semver' && res.locals.flags.nUiBundleMajorVersion) ? majorVersion : version);
 	}
 
 	next()
