@@ -100,12 +100,12 @@ class JsSetup {
 					}
 					return promise
 						.then(() => {
-							if (!opts.nUiInit) {
+							if (opts.preload) {
+								perfMark('nUiJsExecuted');
+							} else {
 								document.documentElement.classList.add('js-success');
 								perfMark('appJsExecuted');
 								dispatchLoadedEvent();
-							} else {
-								perfMark('nUiJsExecuted');
 							}
 						});
 				})

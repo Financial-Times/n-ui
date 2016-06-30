@@ -5,7 +5,8 @@ nUi.configure(window.ftNextUiConfig || {
 	preset: 'discrete'
 });
 
-nUi.bootstrap(null, { nUiInit: true });
+// using `!== false` because while rolling it out it will be undefined in many apps
+nUi.bootstrap(null, { preload: window.ftNextHasCustomJs !== false });
 
 module.exports = nUi
 

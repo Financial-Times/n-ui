@@ -195,6 +195,15 @@ describe('js setup', function () {
 				}, 0);
 			});
 
+			it('should not carry out success actions if a preload', function (done) {
+				const jsSetup = new JsSetup()
+				jsSetup.bootstrap(function () {}, {preload: true});
+				setTimeout(function () {
+					expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
+					done();
+				}, 0);
+			});
+
 
 			describe('Error handling', function () {
 
