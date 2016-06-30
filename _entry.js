@@ -1,7 +1,7 @@
 // for the purposes of exposing in a shared n-ui bundle
 // This will mean webpack can find them in this bundle under n-ui/componentName
-module.exports = function () {
-	return {
+module.exports = function (withPreact) {
+	const entry = {
 		// n-ui components
 		'n-ui': 'window.ftNextUi',
 		'n-ui/ads': 'window.ftNextUi._ads',
@@ -29,5 +29,10 @@ module.exports = function () {
 		'ftdomdelegate': 'window.ftNextUi._ftdomdelegate',
 		'superstore': 'window.ftNextUi._superstore',
 		'superstore-sync': 'window.ftNextUi._superstoreSync',
+	}
+
+	if (withPreact) {
+		entry.React = 'window.ftNextUi._React';
+		entry.ReactDom = 'window.ftNextUi._ReactDom';
 	}
 }
