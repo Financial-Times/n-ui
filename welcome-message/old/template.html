@@ -1,0 +1,41 @@
+<div class="n-welcome n-welcome--bar" data-trackable="welcome">
+	<div class="o-grid-container">
+		<div class="o-grid-row">
+			<div data-o-grid-colspan="11 L6">
+				<h2 class="n-welcome__heading">Welcome to our new site.</h2>
+				<a href="http://help.ft.com/2015/03/25/your-chance-to-shape-the-new-ft-com/" class="n-welcome__link" target="_blank" data-trackable="blog-link">Find out more</a>
+				| <a class="n-welcome__link" target="_blank" href="http://www.ft.com/servicestools/help/terms" data-trackable="Terms &amp; Conditions">Terms &amp; Conditions</a>
+				| <a class="n-welcome__link" target="_blank" href="http://help.ft.com/tools-services/financial-times-privacy-policy/?ft_site=falcon#axzz3goHcFH3m" data-trackable="Privacy Policy">Privacy Policy</a>
+				| <a class="n-welcome__link" target="_blank" href="http://help.ft.com/tools-services/how-the-ft-manages-cookies-on-its-websites/#axzz3goHcFH3m" data-trackable="Cookie Policy">Cookie Policy</a>
+				| <a class="n-welcome__link" target="_blank" href="http://help.ft.com/tools-services/copyright-policy/?ft_site=falcon#axzz3goHcFH3m" data-trackable="Copyright">Copyright</a>
+			</div>
+			<ul class="n-welcome__btns o-hoverable-on" data-o-grid-colspan="12 L6">
+				{{#if @root.flags.npsFeedbackForm}}
+				<li><a href="/nps-feedback" class="n-welcome__btn" data-trackable="nps-feedback">Provide feedback?</a></li>
+				{{/if}}
+				{{#unless @root.forceOptInDevice}}
+				<li><a href="/opt-out-confirm" class="n-welcome__btn" data-trackable="opt-out">Return to FT.com</a></li>
+				{{/unless}}
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="n-welcome n-welcome--bar n-welcome--fixed" data-trackable="welcome">
+	<div class="o-grid-container">
+		<div class="o-grid-row">
+			<div data-o-grid-colspan="11 L5">
+				<h2 class="n-welcome__heading">Welcome to our new site.</h2>
+				<p class="n-welcome__intro">It’s currently in a beta phase and we’re making improvements every day</p>
+			</div>
+			<ul class="n-welcome__btns o-hoverable-on" data-o-grid-colspan="12 L7">
+				{{#if @root.flags.npsFeedbackForm}}
+				<li><a href="/nps-feedback" class="n-welcome__btn" data-trackable="nps-feedback">Provide feedback?</a></li>
+				{{/if}}
+				{{#unless @root.forceOptInDevice}}
+				<li><a href="/opt-out-confirm" class="n-welcome__btn" data-trackable="opt-out">Return to FT.com</a></li>
+				{{/unless}}
+				<li><a href="#" class="n-welcome__btn n-welcome__close" data-trackable="close-fixed-welcome">Hide this message</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
