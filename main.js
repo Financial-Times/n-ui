@@ -11,18 +11,6 @@ import messagePrompts from './message-prompts';
 import footer from './footer';
 import myft from './myft';
 
-export const _ads = ads;
-export const _tracking = tracking;
-export const _date = date;
-export const _header = header;
-export const _promoMessages = promoMessages;
-export const _cookieMessage = cookieMessage;
-export const _welcomeMessage = welcomeMessage;
-export const _messagePrompts = messagePrompts;
-export const _myft = myft;
-import utils from './utils';
-export const _utils = utils;
-
 const presets = {
 	discrete: {
 		header: true,
@@ -152,3 +140,33 @@ export function bootstrap (cb) {
 			})
 	})
 }
+
+// Expose entry points to shared bundle
+export const _ads = ads;
+export const _tracking = tracking;
+export const _date = date;
+export const _header = header;
+export const _promoMessages = promoMessages;
+export const _cookieMessage = cookieMessage;
+export const _welcomeMessage = welcomeMessage;
+export const _messagePrompts = messagePrompts;
+export const _myft = myft;
+
+import utils from './utils';
+export const _utils = utils;
+import ftdomdelegate from 'ftdomdelegate';
+export const _ftdomdelegate = ftdomdelegate;
+import superstore from 'superstore';
+export const _superstore = superstore;
+import superstoreSync from 'superstore-sync';
+export const _superstoreSync = superstoreSync;
+import notification from './notification';
+export const _notification = notification;
+import expander from './expander';
+export const _expander = expander;
+import grid from './grid';
+export const _grid = grid;
+import overlay = './overlay';
+export const _overlay = overlay;
+import viewport from './viewport';
+export const _viewport = viewport;
