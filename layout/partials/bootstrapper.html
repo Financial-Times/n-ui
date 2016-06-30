@@ -4,6 +4,14 @@
 	{{#if @root.nUiConfig}}
 		window.ftNextUiConfig = {{{json @root.nUiConfig}}};
 	{{/if}}
+
+	// convoluted, but needed for backwards compatibility for now
+	{{#ifEqual @root.hasCustomJs true}}
+		window.ftNextHasCustomJs = true;
+	{{/ifEqual}}
+	{{#ifEqual @root.hasCustomJs false}}
+		window.ftNextHasCustomJs = false;
+	{{/ifEqual}}
 	{{#if anon}}window.nextIsAnonymous = {{anon.userIsAnonymous}};{{/if}}
 
 	window.ftNextLoadScript = function (src) {
