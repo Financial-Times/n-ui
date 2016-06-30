@@ -12,5 +12,3 @@ module.exports = nWebpack({
 		__dirname
 	]
 });
-
-console.log(module.exports);
