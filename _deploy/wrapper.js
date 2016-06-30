@@ -1,5 +1,5 @@
 /*global ftNextFireCondition*/
-const nUi = require('n-ui');
+var nUi = require('n-ui');
 
 nUi.configure(window.ftNextUiConfig || {
 	preset: 'discrete'
