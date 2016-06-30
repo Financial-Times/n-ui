@@ -4,9 +4,9 @@ const Ads = window.oAds = require('o-ads');
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
 const jsonpFetch = require('n-jsonp');
+const sendMetrics = require('./js/metrics')
 
 import { perfMark } from '../utils'
-import { broadcast } from '../utils'
 
 let slotCount;
 let slotsRendered = 0;
@@ -81,7 +81,7 @@ function onAdsComplete (event) {
 					const sendTimings = () => {
 						customTimings.adIframeLoaded = new Date().getTime();
 						perfMark('adIframeLoaded');
-						sendAdLoadedTrackingEvent(customTimings)
+						sendMetrics(customTimings)
 						document.body.removeEventListener('oAds.adIframeLoaded', sendTimings);
 					}
 					document.body.addEventListener('oAds.adIframeLoaded', sendTimings);
@@ -99,37 +99,6 @@ function onAdsComplete (event) {
 		utils.log('Ads component finished');
 	}
 }
-
-function sendAdLoadedTrackingEvent (timingsObject) {
-	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-	if (performance && performance.mark) {
-		const offsets = {};
-		const marks = {}
-
-		Object.keys(timingsObject).forEach((timingName) => {
-			offsets[timingName] = {
-				domContentLoadedEventEnd: timingsObject[timingName] - performance.timing['domContentLoadedEventEnd'],
-				loadEventEnd: timingsObject[timingName] - performance.timing['loadEventEnd'],
-				domInteractive: timingsObject[timingName] - performance.timing['domInteractive']
-			}
-		})
-
-		if (performance.getEntriesByName) {
-			Object.keys(timingsObject).forEach((timingName) => {
-				performance.getEntriesByName(timingName).forEach((mark) => {
-					marks[mark.name] = Math.round(mark.startTime);
-				})
-			})
-		}
-
-		broadcast('oTracking.event', {
-			category: 'ads',
-			action: 'first-load',
-			timings: { offsets, marks }
-		});
-	}
-}
-
 
 module.exports = {
 	onload: flags => {
