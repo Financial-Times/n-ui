@@ -1,6 +1,6 @@
 {
   "name": "@financial-times/n-ui",
-  "version": "2.5.2",
+  "version": "2.6.4",
   "description": "An experiment bunching some of Next's client-side code into a single repository.",
   "main": "server.js",
   "scripts": {
@@ -68,7 +68,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-runtime": "^6.9.2",
     "preact": "^4.8.0",
-    "preact-compat": "^1.7.1",
+    "preact-compat": "1.8.3",
     "proptypes": "^0.14.3"
   }
 }
