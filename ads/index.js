@@ -4,6 +4,7 @@ const Ads = window.oAds = require('o-ads');
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
 const jsonpFetch = require('n-jsonp');
+const Reporter = require('./js/reporter');
 
 import { perfMark } from '../utils'
 import { broadcast } from '../utils'
@@ -11,6 +12,7 @@ import { broadcast } from '../utils'
 let slotCount;
 let slotsRendered = 0;
 let containers;
+let onAdsCompleteCallback;
 
 function getContextualTargetingPromise (appName) {
 	let promise = Promise.resolve({});
@@ -53,7 +55,9 @@ function initOAds (flags, contextData, userData) {
 	const initObj = oAdsConfig(flags, contextData, userData);
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
-	document.addEventListener('oAds.complete', onAdsComplete);
+	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
+
+	document.addEventListener('oAds.complete', onAdsCompleteCallback);
 
 	slotCount = containers.length;
 
@@ -64,12 +68,19 @@ function initOAds (flags, contextData, userData) {
 
 }
 
-function onAdsComplete (event) {
-	document.removeEventListener('oAds.complete', onAdsComplete);
+function onAdsComplete (flags, event) {
 	const detail = event.detail;
 	/* istanbul ignore else  */
 	if (detail.type !== 'oop') {
 		/* istanbul ignore else  */
+
+		if(flags && flags.get('brokenAdReporter')) {
+			if(detail.slot.reporter) {
+				detail.slot.reporter.destroy();
+			}
+			detail.slot.reporter = new Reporter(detail.slot);
+		}
+
 		if (detail.slot.gpt && detail.slot.gpt.isEmpty === false) {
 			utils.log.info('Ad loaded in slot', event);
 			if (slotsRendered === 0) {
@@ -90,6 +101,7 @@ function onAdsComplete (event) {
 		utils.log('Ads component finished');
 	}
 }
+
 
 function sendAdLoadedTrackingEvent () {
 	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
