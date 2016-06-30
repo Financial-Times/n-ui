@@ -4,12 +4,18 @@ const relData = {
 	type: 'daily'
 };
 
-function addPref (uuid, userId) {
+function addPref (uuid, userId, rel) {
+	const data = {};
+
+	if (rel) {
+		data._rel = rel;
+	}
+
 	//TODO: align client/server-side methods in client
 	if (typeof myFtApi.addRelationship === 'function') {
-		return myFtApi.addRelationship('user', userId, 'preferred', 'preference', { uuid, '_rel': relData });
+		return myFtApi.addRelationship('user', userId, 'preferred', 'preference', Object.assign({}, data, { uuid }));
 	} else {
-		return myFtApi.add('user', userId, 'preferred', 'preference', uuid, { '_rel': relData });
+		return myFtApi.add('user', userId, 'preferred', 'preference', uuid, data);
 	}
 }
 
@@ -17,8 +23,13 @@ module.exports = (userId, method, userDismissed) => {
 	let emailPrefPromise = Promise.resolve();
 	let dismissPrefPromise = Promise.resolve();
 
+	//FIXME: remove after diagnosing bug in core experience
+	console.log('userId:', userId);
+	console.log('method:', method);
+	console.log('userDismissed:', userDismissed);
+
 	if (method === 'put') {
-		emailPrefPromise = addPref('email-digest', userId);
+		emailPrefPromise = addPref('email-digest', userId, relData);
 	}
 
 	if (userDismissed) {
