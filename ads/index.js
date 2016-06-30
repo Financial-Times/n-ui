@@ -11,6 +11,8 @@ import { broadcast } from '../utils'
 let slotCount;
 let slotsRendered = 0;
 let containers;
+const customTimings = {};
+
 
 function getContextualTargetingPromise (appName) {
 	let promise = Promise.resolve({});
@@ -75,10 +77,14 @@ function onAdsComplete (event) {
 			if (slotsRendered === 0) {
 				perfMark('firstAdLoaded');
 				if (/spoor-id=3/.test(document.cookie)) {
-					sendAdLoadedTrackingEvent('firstAdLoaded', 'first-load');
-					document.body.addEventListener('oAds.adIframeLoaded', () => {
-						sendAdLoadedTrackingEvent('adIframeLoaded', 'ads-iframe-load')
-					});
+					customTimings.firstAdLoaded = new Date().getTime();
+					const sendTimings = () => {
+						customTimings.adIframeLoaded = new Date().getTime();
+						perfMark('adIframeLoaded');
+						sendAdLoadedTrackingEvent(customTimings)
+						document.body.removeEventListener('oAds.adIframeLoaded', sendTimings);
+					}
+					document.body.addEventListener('oAds.adIframeLoaded', sendTimings);
 				}
 			}
 		} else if (detail.slot.gpt && detail.slot.gpt.isEmpty === true) {
@@ -94,29 +100,31 @@ function onAdsComplete (event) {
 	}
 }
 
-function sendAdLoadedTrackingEvent (trackingEventName, beaconActionName) {
+function sendAdLoadedTrackingEvent (timingsObject) {
 	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 	if (performance && performance.mark) {
-		const currentTime = new Date().getTime();
-		const offsets = {
-			domContentLoadedEventEnd: {
-				[trackingEventName]: currentTime - performance.timing['domContentLoadedEventEnd'],
-				loadEventEnd: currentTime - performance.timing['loadEventEnd'],
-				domInteractive: currentTime - performance.timing['domInteractive']
-			}
-		};
+		const offsets = {};
+		const marks = {}
 
-		const marks = performance.getEntriesByType ?
-			performance.getEntriesByName(trackingEventName)
-				.reduce((marks, mark) => {
+		Object.keys(timingsObject).forEach((timingName) => {
+			offsets[timingName] = {
+				domContentLoadedEventEnd: timingsObject[timingName] - performance.timing['domContentLoadedEventEnd'],
+				loadEventEnd: timingsObject[timingName] - performance.timing['loadEventEnd'],
+				domInteractive: timingsObject[timingName] - performance.timing['domInteractive']
+			}
+		})
+
+		if (performance.getEntriesByName) {
+			Object.keys(timingsObject).forEach((timingName) => {
+				performance.getEntriesByName(timingName).forEach((mark) => {
 					marks[mark.name] = Math.round(mark.startTime);
-					return marks;
-				}, {}) :
-			{};
+				})
+			})
+		}
 
 		broadcast('oTracking.event', {
 			category: 'ads',
-			action: beaconActionName,
+			action: 'first-load',
 			timings: { offsets, marks }
 		});
 	}
