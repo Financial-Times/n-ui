@@ -3,129 +3,16 @@
 $_n-ui-welcome-message-applied: false !default;
 $_n-ui-welcome-message-is-silent: nUiHas('welcomeMessage') == false or $_n-ui-welcome-message-applied == true;
 
-@import 'o-visual-effects/main';
+.n-welcome {
+	display: none;
+}
+
+@import 'old/main';
+@import 'new/main';
 
 @if $_n-ui-welcome-message-is-silent == false {
-
-	.n-welcome-message {
-		position: relative;
-		padding: 16px 12px;
-		// not in o-colors ಠ_ಠ
-		background: #FADBCB;
-		color: getColor('grey-tint4');
-
-		@include oGridRespondTo('L') {
-			padding: 24px 16px;
-		}
-
-		@media print {
-			display: none;
-		}
-
-		&.is-hidden {
-			display: none;
-		}
-	}
-
-	.n-welcome-message--static {
-		margin: 16px 0;
-
-		@include oGridRespondTo('M') {
-			margin: 24px 0;
-		}
-	}
-
-	.n-welcome-message--fixed {
-		@include nUtilZIndexFor('welcome');
-		@include oEffectsShadowsElevation('mid');
-		position: fixed;
-		right: 0;
-		bottom: 0;
-		left: 0;
-	}
-
-	.n-welcome-message--hidden {
-		display: none;
-	}
-
-	.n-welcome-message__wrapper {
-		display: table;
-		table-layout: fixed;
-		width: 100%;
-	}
-
-	.n-welcome-message__column {
-		white-space: nowrap;
-
-		@include oGridRespondTo('M') {
-			display: table-cell;
-			vertical-align: middle;
-		}
-	}
-
-	.n-welcome-message__column--message {}
-
-	.n-welcome-message__column--actions {
-		@include oGridRespondTo('M') {
-			text-align: right;
-		}
-	}
-
-	.n-welcome-message__heading {
-		@include oTypographySansSize('m');
-		margin: 0 0 12px;
-	}
-
-	.n-welcome-message__intro {
-		display: none;
-
-		@include oGridRespondTo('S') {
-			display: block;
-			margin: 0 0 12px;
-		}
-
-		@include oGridRespondTo('M') {
-			margin-bottom: 0;
-		}
-	}
-
-	.n-welcome-message__button {
-		@include nButtons($theme:'standout');
-		margin-left: 12px;
-		white-space: nowrap;
-
-		&:first-child {
-			margin-left: 0;
-		}
-
-		&.is-hidden {
-			display: none;
-		}
-	}
-
-	.n-welcome-message__extended {
-		display: none;
-
-		@include oGridRespondTo('L') {
-			display: inline;
-		}
-	}
-
-	.n-welcome-message__close {
-		@include oIconsGetIcon('cross-disk', getColor('grey-tint4'), 20);
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		width: 20px;
-		height: 20px;
-		border: 0;
-		opacity: 0.8;
-
-		&:hover {
-			opacity: 1;
-		}
-	}
-
+	$_n-ui-welcome-message-applied: true !global;
 }
+
 
 @include nUiCriticalEnd('welcome');
