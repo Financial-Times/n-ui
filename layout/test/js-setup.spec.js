@@ -173,18 +173,6 @@ describe('js setup', function () {
 				window.ftNextPolyfillLoaded = true;
 			});
 
-			it('should pass an options object to init', function (done) {
-
-				const callback = sinon.stub();
-				const options = {};
-				const jsSetup = new JsSetup()
-				jsSetup.bootstrap(callback, options);
-				setTimeout(function () {
-					expect(jsSetup.init.calledWith(options)).to.be.true;
-					done();
-				}, 0);
-			});
-
 			it('should add js-success class if callback executes ok', function (done) {
 				const jsSetup = new JsSetup()
 				jsSetup.bootstrap(function () {});
@@ -204,6 +192,15 @@ describe('js setup', function () {
 						expect(document.querySelector('html').classList.contains('js-success')).to.be.true;
 						done();
 					});
+				}, 0);
+			});
+
+			it('should not carry out success actions if a preload', function (done) {
+				const jsSetup = new JsSetup()
+				jsSetup.bootstrap(function () {}, {preload: true});
+				setTimeout(function () {
+					expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
+					done();
 				}, 0);
 			});
 
