@@ -1,3 +1,4 @@
+/* globals describe, it, beforeEach, afterEach,expect,sinon */
 const sendMetrics = require('../js/metrics')
 const utils = require('../../utils')
 
