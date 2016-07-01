@@ -52,7 +52,7 @@ module.exports = function (config) {
 						test: /\.js$/,
 						loader: 'babel',
 						exclude: [
-							'./node_modules'
+							path.resolve('./node_modules')
 						],
 						query: {
 							cacheDirectory: true,
@@ -78,7 +78,8 @@ module.exports = function (config) {
 			resolve: {
 				alias: {
 					'react': 'preact-compat',
-					'react-dom': 'preact-compat'
+					'react-dom': 'preact-compat',
+					'n-ui/utils': require.resolve('./utils')
 				},
 				root: [
 					path.join(__dirname, 'bower_components'),

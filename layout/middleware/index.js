@@ -19,7 +19,7 @@ try {
 } catch (e) {}
 
 try {
-	nUiConfig = require(path.join(process.cwd(), 'client/n-ui.json'))
+	nUiConfig = require(path.join(process.cwd(), 'client/n-ui-config'))
 } catch (e) {}
 
 module.exports = function (req, res, next) {
