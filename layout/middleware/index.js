@@ -19,7 +19,7 @@ try {
 } catch (e) {}
 
 try {
-	nUiConfig = require(path.join(process.cwd(), 'client/n-ui-config'))
+	nUiConfig = Object.assign({}, require(path.join(process.cwd(), 'client/n-ui-config')), {preload: true})
 } catch (e) {}
 
 module.exports = function (req, res, next) {

@@ -68,7 +68,7 @@ export function bootstrap (config, cb) {
 
 	config.features = Object.assign({}, presets[config.preset], config.features);
 
-	return layout.bootstrap(({ flags, mainCss, appInfo }) => { // eslint-disable-line
+	return layout.bootstrap(config, ({ flags, mainCss, appInfo }) => { // eslint-disable-line
 
 		if (!isInitialized('tracking')) {
 			// FT and next tracking

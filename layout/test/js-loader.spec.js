@@ -140,7 +140,7 @@ describe('js loader', function () {
 				// can't assume promises exist to do async stuff
 				const p = window.Promise;
 				window.Promise = undefined;
-				new JsLoader().bootstrap(callback);
+				new JsLoader().bootstrap({}, callback);
 				setTimeout(function () {
 					expect(callback.calledOnce).to.be.false;
 					// now we can assume Promise is polyfilled
@@ -158,7 +158,7 @@ describe('js loader', function () {
 			it('should run a callback with result of init immediately if dependencies already loaded', function (done) {
 				window.ftNextPolyfillLoaded = true;
 				const callback = sinon.stub();
-				new JsLoader().bootstrap(callback);
+				new JsLoader().bootstrap({}, callback);
 				setTimeout(function () {
 					expect(callback.calledOnce).to.be.true;
 					expect(callback.calledWith(result)).to.be.true;
@@ -175,7 +175,7 @@ describe('js loader', function () {
 
 			it('should add js-success class if callback executes ok', function (done) {
 				const jsLoader = new JsLoader()
-				jsLoader.bootstrap(function () {});
+				jsLoader.bootstrap({}, function () {});
 				setTimeout(function () {
 					expect(document.querySelector('html').classList.contains('js-success')).to.be.true;
 					done();
@@ -184,7 +184,7 @@ describe('js loader', function () {
 
 			it('should add js-success class if callback returns resolved promise', function (done) {
 				const jsLoader = new JsLoader()
-				jsLoader.bootstrap(function () {
+				jsLoader.bootstrap({}, function () {
 					return Promise.resolve();
 				});
 				setTimeout(function () {
@@ -197,7 +197,7 @@ describe('js loader', function () {
 
 			it('should not carry out success actions if a preload', function (done) {
 				const jsLoader = new JsLoader()
-				jsLoader.bootstrap(function () {}, {preload: true});
+				jsLoader.bootstrap({preload: true}, function () {});
 				setTimeout(function () {
 					expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
 					done();
@@ -217,7 +217,7 @@ describe('js loader', function () {
 
 				it('should not add js-success class and log error if callback fails', function (done) {
 					const jsLoader = new JsLoader()
-					jsLoader.bootstrap(function () {
+					jsLoader.bootstrap({}, function () {
 						throw 'error';
 					});
 					setTimeout(function () {
@@ -231,7 +231,7 @@ describe('js loader', function () {
 
 				it('should not add js-success class and log error if callback returns rejected promise', function (done) {
 					const jsLoader = new JsLoader()
-					jsLoader.bootstrap(function () {
+					jsLoader.bootstrap({}, function () {
 						return Promise.reject();
 					});
 					setTimeout(function () {
@@ -245,7 +245,7 @@ describe('js loader', function () {
 
 				it('should not add js-success class if callback returns hanging promise', function (done) {
 					const jsLoader = new JsLoader()
-					jsLoader.bootstrap(function () {
+					jsLoader.bootstrap({}, function () {
 						return new Promise(function (){});
 					});
 					setTimeout(function () {

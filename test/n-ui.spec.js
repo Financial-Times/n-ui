@@ -16,7 +16,7 @@ describe('n-ui', () => {
 			sinon.stub(date, 'init');
 			sinon.stub(ads, 'init');
 			sinon.stub(tracking, 'init');
-			sinon.stub(layout, 'bootstrap', cb => {
+			sinon.stub(layout, 'bootstrap', (opts, cb) => {
 				return cb({
 					flags: {
 						get: () => true
