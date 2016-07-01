@@ -22,6 +22,9 @@ $ad-max-responsive-width: 1440px;
 		}
 	}
 
+	.advert {
+		position: relative;
+	}
 
 	//Common classes used by ads on Next
 	.advert--background {
@@ -74,6 +77,22 @@ $ad-max-responsive-width: 1440px;
 				height: auto;
 				min-height: calc(100vw * 0.481);
 			}
+		}
+	}
+
+	.advert__report-link {
+		font-size: 12px;
+		line-height: 22px;
+		padding: 4px;
+		font-weight: bold;
+		position: absolute;
+		top: 0;
+
+		&:before,
+		&:after {
+			content: "";
+			display: block;
+			clear: both;
 		}
 	}
 }

@@ -45,7 +45,7 @@
     "superstore-sync": "^2.1.0",
     "o-footer": "^4.1.3",
     "o-visual-effects": "^0.1.0",
-    "babel-polyfill-silencer": "~1.1.0"
+    "babel-polyfill-silencer": "^1.1.0"
   },
   "resolutions": {
     "o-viewport": "^2.0.0"

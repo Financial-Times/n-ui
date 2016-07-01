@@ -1,5 +1,5 @@
 'use strict';
-
+const path = require('path');
 const nWebpack = require('@financial-times/n-webpack');
 const fs = require('fs');
 const AsciiTable = require('ascii-table');
@@ -17,61 +17,44 @@ while (deps.length) {
 	depsTable.addRow(deps.splice(0, 4));
 }
 
+const coreConfig = {
+	output: {
+		filename: '[name]',
+		library: 'ftNextUi'
+	},
+	include: [path.resolve('./_deploy')],
+	wrap: {
+		before: '/*\n' + depsTable.toString() + '\n*/'
+	}
+};
+
 module.exports = [
-	nWebpack({
-		output: {
-			filename: '[name]',
-			library: 'ftNextUi'
-		},
+	nWebpack(Object.assign({}, coreConfig, {
 		withBabelPolyfills: true,
 		env: 'dev',
 		entry: {
 			"./dist/es5-core-js.js": "./_deploy/wrapper.js"
 		},
-		wrap: {
-			before: '/*\n' + depsTable.toString() + '\n*/'
-		}
-	}),
-	nWebpack({
-		output: {
-			filename: '[name]',
-			library: 'ftNextUi'
-		},
+	})),
+	nWebpack(Object.assign({}, coreConfig, {
 		withBabelPolyfills: false,
 		env: 'dev',
 		entry: {
 			"./dist/es5-polyfill-io.js": "./_deploy/wrapper.js"
 		},
-		wrap: {
-			before: '/*\n' + depsTable.toString() + '\n*/'
-		}
-	}),
-	nWebpack({
-		output: {
-			filename: '[name]',
-			library: 'ftNextUi'
-		},
+	})),
+	nWebpack(Object.assign({}, coreConfig, {
 		withBabelPolyfills: true,
 		env: 'prod',
 		entry: {
 			"./dist/es5-core-js.min.js": "./_deploy/wrapper.js"
 		},
-		wrap: {
-			before: '/*\n' + depsTable.toString() + '\n*/'
-		}
-	}),
-	nWebpack({
-		output: {
-			filename: '[name]',
-			library: 'ftNextUi'
-		},
+	})),
+	nWebpack(Object.assign({}, coreConfig, {
 		withBabelPolyfills: false,
 		env: 'prod',
 		entry: {
 			"./dist/es5-polyfill-io.min.js": "./_deploy/wrapper.js"
 		},
-		wrap: {
-			before: '/*\n' + depsTable.toString() + '\n*/'
-		}
-	})
+	}))
 ];
