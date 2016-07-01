@@ -1,17 +1,17 @@
 /*global require,describe,afterEach,beforeEach,it,expect,sinon*/
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
-const jsSetup = require('../index');
-const JsSetup = require('../js/js-setup');
+const jsLoader = require('../index');
+const JsLoader = require('../js/js-loader');
 const oErrors = require('o-errors');
 
-describe('js setup', function () {
+describe('js loader', function () {
 
 	it('should have an init method', function () {
-		expect(jsSetup.init).to.be.a('function');
+		expect(jsLoader.init).to.be.a('function');
 	});
 
 	it('should have an bootstrap method', function () {
-		expect(jsSetup.bootstrap).to.be.a('function');
+		expect(jsLoader.bootstrap).to.be.a('function');
 	});
 
 	it('should stub console, if applicable', function () {
@@ -24,7 +24,7 @@ describe('js setup', function () {
 
 		it('should disable o-errors', function (done) {
 			const spy = sinon.stub(oErrors, 'init');
-			const promise = new JsSetup().init();
+			const promise = new JsLoader().init();
 			promise.then(function () {
 				expect(spy.calledOnce).to.be.true;
 				expect(spy.args[0][0].enabled).to.be.falsy;
@@ -38,7 +38,7 @@ describe('js setup', function () {
 			document.documentElement.setAttribute('data-next-is-production', '');
 			document.documentElement.setAttribute('data-next-version', 'v1');
 			document.documentElement.setAttribute('data-next-app', 'test-app');
-			const promise = new JsSetup().init();
+			const promise = new JsLoader().init();
 			promise.then(function (result) {
 				expect(result).to.be.an('object');
 				expect(result.flags.get).to.be.a('function');
@@ -69,8 +69,8 @@ describe('js setup', function () {
 
 		it('should configure o-errors for dev', function (done) {
 			const spy = sinon.spy(oErrors, 'init');
-			const setup = new JsSetup();
-			const promise = setup.init();
+			const Loader = new JsLoader();
+			const promise = Loader.init();
 			promise.then(function () {
 				expect(spy.calledOnce).to.be.true;
 				expect(spy.args[0][0].enabled).to.be.false;
@@ -85,8 +85,8 @@ describe('js setup', function () {
 			document.documentElement.setAttribute('data-next-is-production', '');
 			document.documentElement.setAttribute('data-next-version', 'i-am-at-version-x');
 			document.documentElement.setAttribute('data-next-app', 'i-am-an-app');
-			const setup = new JsSetup();
-			const promise = setup.init();
+			const Loader = new JsLoader();
+			const promise = Loader.init();
 			promise.then(function () {
 				expect(spy.calledOnce).to.be.true;
 				expect(spy.args[0][0].enabled).to.be.true;
@@ -103,7 +103,7 @@ describe('js setup', function () {
 		});
 
 		it('should return promise of flags', function (done) {
-			const promise = new JsSetup().init();
+			const promise = new JsLoader().init();
 			promise.then(function (result) {
 				expect(result).to.be.an('object');
 				expect(result.flags.get).to.be.a('function');
@@ -118,7 +118,7 @@ describe('js setup', function () {
 
 
 		beforeEach(function () {
-			sinon.stub(JsSetup.prototype, 'init', function () {
+			sinon.stub(JsLoader.prototype, 'init', function () {
 				this.appInfo = {
 					isProduction: true
 				};
@@ -129,7 +129,7 @@ describe('js setup', function () {
 		afterEach(function () {
 			window.ftNextPolyfillLoaded = undefined;
 			document.documentElement.classList.remove('js-success');
-			JsSetup.prototype.init.restore();
+			JsLoader.prototype.init.restore();
 		});
 
 		after(() => delete window.nextFeatureFlags);
@@ -140,7 +140,7 @@ describe('js setup', function () {
 				// can't assume promises exist to do async stuff
 				const p = window.Promise;
 				window.Promise = undefined;
-				new JsSetup().bootstrap(callback);
+				new JsLoader().bootstrap(callback);
 				setTimeout(function () {
 					expect(callback.calledOnce).to.be.false;
 					// now we can assume Promise is polyfilled
@@ -158,7 +158,7 @@ describe('js setup', function () {
 			it('should run a callback with result of init immediately if dependencies already loaded', function (done) {
 				window.ftNextPolyfillLoaded = true;
 				const callback = sinon.stub();
-				new JsSetup().bootstrap(callback);
+				new JsLoader().bootstrap(callback);
 				setTimeout(function () {
 					expect(callback.calledOnce).to.be.true;
 					expect(callback.calledWith(result)).to.be.true;
@@ -174,8 +174,8 @@ describe('js setup', function () {
 			});
 
 			it('should add js-success class if callback executes ok', function (done) {
-				const jsSetup = new JsSetup()
-				jsSetup.bootstrap(function () {});
+				const jsLoader = new JsLoader()
+				jsLoader.bootstrap(function () {});
 				setTimeout(function () {
 					expect(document.querySelector('html').classList.contains('js-success')).to.be.true;
 					done();
@@ -183,12 +183,12 @@ describe('js setup', function () {
 			});
 
 			it('should add js-success class if callback returns resolved promise', function (done) {
-				const jsSetup = new JsSetup()
-				jsSetup.bootstrap(function () {
+				const jsLoader = new JsLoader()
+				jsLoader.bootstrap(function () {
 					return Promise.resolve();
 				});
 				setTimeout(function () {
-					jsSetup.bootstrapResult.then(function () {
+					jsLoader.bootstrapResult.then(function () {
 						expect(document.querySelector('html').classList.contains('js-success')).to.be.true;
 						done();
 					});
@@ -196,8 +196,8 @@ describe('js setup', function () {
 			});
 
 			it('should not carry out success actions if a preload', function (done) {
-				const jsSetup = new JsSetup()
-				jsSetup.bootstrap(function () {}, {preload: true});
+				const jsLoader = new JsLoader()
+				jsLoader.bootstrap(function () {}, {preload: true});
 				setTimeout(function () {
 					expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
 					done();
@@ -216,12 +216,12 @@ describe('js setup', function () {
 				});
 
 				it('should not add js-success class and log error if callback fails', function (done) {
-					const jsSetup = new JsSetup()
-					jsSetup.bootstrap(function () {
+					const jsLoader = new JsLoader()
+					jsLoader.bootstrap(function () {
 						throw 'error';
 					});
 					setTimeout(function () {
-						jsSetup.bootstrapResult.then(function () {
+						jsLoader.bootstrapResult.then(function () {
 							expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
 							expect(oErrors.error.called).to.be.true;
 							done();
@@ -230,12 +230,12 @@ describe('js setup', function () {
 				});
 
 				it('should not add js-success class and log error if callback returns rejected promise', function (done) {
-					const jsSetup = new JsSetup()
-					jsSetup.bootstrap(function () {
+					const jsLoader = new JsLoader()
+					jsLoader.bootstrap(function () {
 						return Promise.reject();
 					});
 					setTimeout(function () {
-						jsSetup.bootstrapResult.then(function () {
+						jsLoader.bootstrapResult.then(function () {
 							expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
 							expect(oErrors.error.called).to.be.true;
 							done();
@@ -244,8 +244,8 @@ describe('js setup', function () {
 				});
 
 				it('should not add js-success class if callback returns hanging promise', function (done) {
-					const jsSetup = new JsSetup()
-					jsSetup.bootstrap(function () {
+					const jsLoader = new JsLoader()
+					jsLoader.bootstrap(function () {
 						return new Promise(function (){});
 					});
 					setTimeout(function () {
