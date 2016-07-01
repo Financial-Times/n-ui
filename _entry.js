@@ -32,8 +32,8 @@ module.exports = function (withPreact) {
 	}
 
 	if (withPreact) {
-		entry.React = 'window.ftNextUi._React';
-		entry.ReactDom = 'window.ftNextUi._ReactDom';
+		entry.react = 'window.ftNextUi._React';
+		entry['react-dom'] = 'window.ftNextUi._ReactDom';
 	}
 	return entry;
 }

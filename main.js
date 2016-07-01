@@ -1,3 +1,6 @@
+// to avoid race conditions relating to Symbol polyfills
+import 'babel-polyfill-silencer';
+
 import layout from './layout';
 import ads from './ads';
 import tracking from './tracking';
@@ -160,9 +163,9 @@ import superstore from 'superstore';
 export const _superstore = superstore;
 import superstoreSync from 'superstore-sync';
 export const _superstoreSync = superstoreSync;
-import React from 'React';
+import React from 'react';
 export const _React = React;
-import ReactDom from 'ReactDom';
+import ReactDom from 'react-dom';
 export const _ReactDom = ReactDom;
 import notification from './notification';
 export const _notification = notification;
