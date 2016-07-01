@@ -51,10 +51,13 @@ module.exports = function (config) {
 					{
 						test: /\.js$/,
 						loader: 'babel',
+						exclude: [
+							'./node_modules'
+						],
 						query: {
 							cacheDirectory: true,
-							presets: ['es2015'],
-							plugins: ['add-module-exports', ['transform-es2015-classes', { loose: true }]]
+							presets: ['es2015', 'react'],
+							plugins: [['add-module-exports', {loose: true}], ['transform-es2015-classes', { loose: true }]]
 						}
 					},
 					// don't use requireText plugin (use the 'raw' plugin)
