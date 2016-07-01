@@ -4,7 +4,8 @@
   "description": "An experiment bunching some of Next's client-side code into a single repository.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "commit": "commit-wizard"
   },
   "repository": {
     "type": "git",
@@ -53,6 +54,7 @@
     "node-sass": "^3.7.0",
     "nodemon": "^1.9.2",
     "postcss-loader": "^0.9.1",
+    "pre-git": "^3.10.0",
     "sass-loader": "^3.2.0",
     "shellpromise": "^1.4.0",
     "sinon": "^1.17.4",
@@ -70,5 +72,15 @@
     "preact": "^4.8.0",
     "preact-compat": "^1.8.3",
     "proptypes": "^0.14.3"
+  },
+  "config": {
+    "pre-git": {
+      "commit-msg": [],
+      "pre-commit": [],
+      "pre-push": ["make verify -j3"],
+      "post-commit": [],
+      "post-checkout": [],
+      "post-merge": []
+    }
   }
 }
