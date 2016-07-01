@@ -1,4 +1,3 @@
-
 import layout from './layout';
 import ads from './ads';
 import tracking from './tracking';
@@ -11,8 +10,6 @@ import welcomeMessage from './welcome-message';
 import messagePrompts from './message-prompts';
 import footer from './footer';
 import myft from './myft';
-import { perfMark } from './utils';
-
 
 export const _ads = ads;
 export const _tracking = tracking;
@@ -45,6 +42,8 @@ const presets = {
 	}
 };
 
+const initializedComponents = {};
+
 let configuration = {};
 
 export function configure (options = {}) {
@@ -61,17 +60,20 @@ export function bootstrap (cb) {
 			throw new Error('n-ui configure options must include a preset');
 		}
 
-		// FT and next tracking
-		tracking.init(flags, appInfo);
-		// TODO - move n-instrumentation in to n-ui
-		if (flags.get('nInstrumentation')) {
-			nInstrumentation.init();
+		if (!initializedComponents.tracking) {
+				// FT and next tracking
+			tracking.init(flags, appInfo);
+			// TODO - move n-instrumentation in to n-ui
+			if (flags.get('nInstrumentation')) {
+				nInstrumentation.init();
+			}
+			initializedComponents.tracking = true;
 		}
+
 
 		const opts = Object.assign({}, presets[configuration.preset], configuration);
 
-		if (opts.myft) {
-
+		if (opts.myft && !initializedComponents.myftclient) {
 			const clientOpts = [];
 
 			if (flags.get('follow')) {
@@ -82,56 +84,71 @@ export function bootstrap (cb) {
 				clientOpts.push({relationship: 'saved', type: 'content'});
 			}
 			myft.client.init(clientOpts);
+
+			initializedComponents.myftClient = true
 		}
 
-		if (opts.header) {
+		if (opts.header && !initializedComponents.header) {
 			header.init(flags);
+			initializedComponents.header = true;
 		}
-
-		if(opts.footer){
-			footer.init(flags)
+		if(opts.footer && !initializedComponents.footer){
+			footer.init(flags);
+			initializedComponents.footer = true
 		}
-
-		if (opts.date) {
+		if (opts.date && !initializedComponents.date) {
 			date.init();
+			initializedComponents.date = true
 		}
-		perfMark('criticalJsExecuted');
+
 		mainCss
 			.then(() => {
-				if (opts.cookieMessage) {
+				if (opts.cookieMessage && !initializedComponents.cookieMessage) {
 					cookieMessage.init();
+					initializedComponents.cookieMessage = true;
 				}
 
-				if (opts.welcomeMessage) {
+				if (opts.welcomeMessage && !initializedComponents.welcomeMessage) {
 					let version = flags.get('newFooter') ? 'new' : 'old';
 					flags.get('welcomePanel') && welcomeMessage[version].init({
 						enableOverlay: flags.get('myFTOnboardingOverlay')
 					});
+					initializedComponents.welcomeMessage = true
 				}
 
-				if (opts.messagePrompts) {
+				if (opts.messagePrompts && !initializedComponents.messagePrompts) {
 					messagePrompts.init();
+					initializedComponents.messagePrompts = true;
 				}
 
-				if (opts.myft) {
+				if (opts.myft && !initializedComponents.myftUi) {
 					myft.ui.init({
 						anonymous: !(/FTSession=/.test(document.cookie)),
 						flags
 					});
+					initializedComponents.myftUi = true;
 				}
 
-				if (opts.promoMessages) {
+				if (opts.promoMessages && !initializedComponents.promoMessages) {
 					promoMessages.init(flags);
+					initializedComponents.promoMessages = true;
 				}
-				perfMark('lazyJsExecuted');
 			});
 
 		return Promise.resolve({flags, mainCss, appInfo})
 			.then(cb)
 			.then(() => {
 				// TODO - lazy load this
-				ads.init(flags, appInfo);
-				tracking.lazyInit(flags);
+				if (!initializedComponents.ads) {
+					ads.init(flags, appInfo);
+					initializedComponents.ads = true
+				}
+
+				if (!initializedComponents.lazyTracking) {
+					tracking.lazyInit(flags);
+					initializedComponents.lazyTracking = true;
+				}
+				return {flags, mainCss, appInfo}
 			})
 	})
 }

@@ -27,3 +27,5 @@ callbacks passed to the bootstrap method are passed an object with 3 properties 
 Use `make demo` to run a demo application which delivers the app defined in `/_demo`. Feel free to edit and commit anything in there as it's for dev use only; just be sure to leave it in a runnable condition.
 - - -
 To output critical path css you need 3 things: `hasHeadCss: true` in your n-express options, `withHeadCss: true` in your n-webpack options and `$output-critical: true` in your sass
+- - -
+To test changes that affect the interaction of multiple bundles you can deploy a beta to next-geebeee just by creating a beta tag e.g. `v2.3.4-beta.1`. If you `bower install n-ui#2.3.4-beta.1` in your local app it should pick up your beta version

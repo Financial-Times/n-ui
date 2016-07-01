@@ -9,6 +9,6 @@ module.exports = nWebpack({
 		"./public/main.css": "./_demo/client/main.scss"
 	},
 	includes: [
-		"/Users/wheresrhys/Projects/next/n-ui"
+		__dirname
 	]
 });

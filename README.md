@@ -12,6 +12,8 @@ For usage information see [the wiki](https://github.com/Financial-Times/n-ui/wik
 
 Run `make demo` to check if your changes work. Feel free to edit and commit whatever changes you like to th contents of the demo files... just don't expect them to still be there next time you come to the repo.
 
+Most of the time you should be ok to test stuff in the demo, merge to master when happy and `bottle`, which will also take care of pushing a new version up to the CDN. It can take up to an hour for every node of the CDN to pick up the changes. If you want to test something out create a beta tag in your branch and then install n-ui at this beta version in your app. You can also turn off the `nUiBundle` flag to force your app to not use the copy of n-ui from the CDN
+
 ## **An important note on releases **
 
 n-ui is packaged indepenedntly and served on a url shared between apps. To keep our cache hit rate high for this url please observe the following conventions

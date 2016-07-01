@@ -128,7 +128,7 @@ SOFTWARE.
 			if (preloadSupported) {
 				onloadCSS(link, function () {
 					this.rel = "stylesheet";
-					if (/\/.*\/main\.css/.test(this.href)) {
+					if (/\/.*\/main[-a-z]*\.css/.test(this.href)) {
 						w.ftNextFireCondition('MainCssLoaded');
 					}
 				});
@@ -136,7 +136,7 @@ SOFTWARE.
 				newLink = w.loadCSS( link.href, link );
 				link.rel = null;
 				onloadCSS(newLink, function () {
-					if (/\/main\.css/.test(this.href)) {
+					if (/\/main[-a-z]*\.css/.test(this.href)) {
 						w.ftNextFireCondition('MainCssLoaded');
 					}
 				});

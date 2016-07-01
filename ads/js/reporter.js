@@ -23,7 +23,7 @@ function Reporter (slot) {
 		targeting: slot.targeting
 	};
 	this.container = slot.container; // store ref to container
-	this.link = this.container.querySelector(`.${this.config.cssClass}`) ||this.addLinkToContainer(); // add link and store ref
+	this.link = this.addLinkToContainer(); // add link and store ref
 	this.onClickHandler = this.addEvent('click', this.onClick, this); // store ref to handler for use within promise
 	this.hasReported = false;
 }
