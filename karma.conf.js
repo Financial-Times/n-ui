@@ -4,6 +4,7 @@
 const path = require('path');
 const BowerWebpackPlugin = require('bower-webpack-plugin');
 const componentsToTest = [
+	'test',
 	'layout',
 	'ads',
 	'tracking'
@@ -36,12 +37,12 @@ module.exports = function (config) {
 				'Array.prototype.find|always|gated',
 				'Array.prototype.findIndex|always|gated'
 			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
-		].concat(componentsToTest.map(name => name + '/test/*.spec.js')),
+		].concat(componentsToTest.map(name => name + '/**/*.spec.js')),
 
 		// preprocess matching files before serving them to  the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: componentsToTest.reduce((obj, name) => {
-			obj[name + '/test/*.spec.js'] = ['webpack', 'sourcemap']
+			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap']
 			return obj;
 		}, {}),
 		webpack: {
@@ -72,6 +73,10 @@ module.exports = function (config) {
 				new BowerWebpackPlugin({ includes: /\.js$/ }),
 			],
 			resolve: {
+				alias: {
+					'react': 'preact-compat',
+					'react-dom': 'preact-compat'
+				},
 				root: [
 					path.join(__dirname, 'bower_components'),
 					path.join(__dirname, 'node_modules')

@@ -33,7 +33,15 @@ const presets = {
 	}
 };
 
-const initializedFeatures = {};
+let initializedFeatures = {};
+
+export function isInitialized (feature) {
+	return !!initializedFeatures[feature];
+}
+
+export function reset () {
+	initializedFeatures = {};
+}
 
 let configuration = {};
 
@@ -55,14 +63,14 @@ export function bootstrap (config, cb) {
 
 	// belt and braces backwards compatibility for old api, which expected a flat config object
 	if (!config.features) {
-		config.features = config;
+		config.features = Object.assign({}, config);
 	}
 
 	config.features = Object.assign({}, presets[config.preset], config.features);
 
 	return layout.bootstrap(({ flags, mainCss, appInfo }) => { // eslint-disable-line
 
-		if (!initializedFeatures.tracking) {
+		if (!isInitialized('tracking')) {
 			// FT and next tracking
 			tracking.init(flags, appInfo);
 			// TODO - move n-instrumentation in to n-ui
@@ -72,7 +80,7 @@ export function bootstrap (config, cb) {
 			initializedFeatures.tracking = true;
 		}
 
-		if (config.features.myft && !initializedFeatures.myftclient) {
+		if (config.features.myft && !isInitialized('myftclient')) {
 			const clientOpts = [];
 
 			if (flags.get('follow')) {
@@ -87,27 +95,27 @@ export function bootstrap (config, cb) {
 			initializedFeatures.myftClient = true
 		}
 
-		if (config.features.header && !initializedFeatures.header) {
+		if (config.features.header && !isInitialized('header')) {
 			header.init(flags);
 			initializedFeatures.header = true;
 		}
-		if(config.features.footer && !initializedFeatures.footer){
+		if(config.features.footer && !isInitialized('footer')){
 			footer.init(flags);
 			initializedFeatures.footer = true
 		}
-		if (config.features.date && !initializedFeatures.date) {
+		if (config.features.date && !isInitialized('date')) {
 			date.init();
 			initializedFeatures.date = true
 		}
 
 		mainCss
 			.then(() => {
-				if (config.features.cookieMessage && !initializedFeatures.cookieMessage) {
+				if (config.features.cookieMessage && !isInitialized('cookieMessage')) {
 					cookieMessage.init();
 					initializedFeatures.cookieMessage = true;
 				}
 
-				if (config.features.welcomeMessage && !initializedFeatures.welcomeMessage) {
+				if (config.features.welcomeMessage && !isInitialized('welcomeMessage')) {
 					let version = flags.get('newFooter') ? 'new' : 'old';
 					flags.get('welcomePanel') && welcomeMessage[version].init({
 						enableOverlay: flags.get('myFTOnboardingOverlay')
@@ -115,12 +123,12 @@ export function bootstrap (config, cb) {
 					initializedFeatures.welcomeMessage = true
 				}
 
-				if (config.features.messagePrompts && !initializedFeatures.messagePrompts) {
+				if (config.features.messagePrompts && !isInitialized('messagePrompts')) {
 					messagePrompts.init();
 					initializedFeatures.messagePrompts = true;
 				}
 
-				if (config.features.myft && !initializedFeatures.myftUi) {
+				if (config.features.myft && !isInitialized('myftUi')) {
 					myft.ui.init({
 						anonymous: !(/FTSession=/.test(document.cookie)),
 						flags
@@ -128,7 +136,7 @@ export function bootstrap (config, cb) {
 					initializedFeatures.myftUi = true;
 				}
 
-				if (config.features.promoMessages && !initializedFeatures.promoMessages) {
+				if (config.features.promoMessages && !isInitialized('promoMessages')) {
 					promoMessages.init(flags);
 					initializedFeatures.promoMessages = true;
 				}
@@ -138,12 +146,12 @@ export function bootstrap (config, cb) {
 			.then(cb)
 			.then(() => {
 				// TODO - lazy load this
-				if (!initializedFeatures.ads) {
+				if (!isInitialized('ads')) {
 					ads.init(flags, appInfo);
 					initializedFeatures.ads = true
 				}
 
-				if (!initializedFeatures.lazyTracking) {
+				if (!isInitialized('lazyTracking')) {
 					tracking.lazyInit(flags);
 					initializedFeatures.lazyTracking = true;
 				}

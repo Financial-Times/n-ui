@@ -1,3 +1,3 @@
-const JsSetup = require('./js/js-setup');
+const JsLoader = require('./js/js-loader');
 
-module.exports = new JsSetup();
+module.exports = new JsLoader();
