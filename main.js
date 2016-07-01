@@ -33,38 +33,46 @@ const presets = {
 	}
 };
 
-const initializedComponents = {};
+const initializedFeatures = {};
 
 let configuration = {};
 
 export function configure (options = {}) {
 	// NOTE: just store configuration for now, need to wait for polyfill to load before assigning
+	console.log('n-ui.configure is deprecated - pass in your config object as a first argument to bootstrap instead')
 	configuration = options;
 }
 
-export function bootstrap (cb) {
+export function bootstrap (config, cb) {
+	// backwards compatible with previous signature of bootstrap(cb);
+	if (!cb && typeof config === 'function') {
+		cb = config;
+		config = null;
+	}
+
 	cb = cb || (() => null);
+	config = config || configuration;
+
+	// belt and braces backwards compatibility for old api, which expected a flat config object
+	if (!config.features) {
+		config.features = config;
+	}
+
+	config.features = Object.assign({}, presets[config.preset], config.features);
 
 	return layout.bootstrap(({ flags, mainCss, appInfo }) => { // eslint-disable-line
 
-		if (!configuration.preset) {
-			throw new Error('n-ui configure options must include a preset');
-		}
-
-		if (!initializedComponents.tracking) {
-				// FT and next tracking
+		if (!initializedFeatures.tracking) {
+			// FT and next tracking
 			tracking.init(flags, appInfo);
 			// TODO - move n-instrumentation in to n-ui
 			if (flags.get('nInstrumentation')) {
 				nInstrumentation.init();
 			}
-			initializedComponents.tracking = true;
+			initializedFeatures.tracking = true;
 		}
 
-
-		const opts = Object.assign({}, presets[configuration.preset], configuration);
-
-		if (opts.myft && !initializedComponents.myftclient) {
+		if (config.features.myft && !initializedFeatures.myftclient) {
 			const clientOpts = [];
 
 			if (flags.get('follow')) {
@@ -76,53 +84,53 @@ export function bootstrap (cb) {
 			}
 			myft.client.init(clientOpts);
 
-			initializedComponents.myftClient = true
+			initializedFeatures.myftClient = true
 		}
 
-		if (opts.header && !initializedComponents.header) {
+		if (config.features.header && !initializedFeatures.header) {
 			header.init(flags);
-			initializedComponents.header = true;
+			initializedFeatures.header = true;
 		}
-		if(opts.footer && !initializedComponents.footer){
+		if(config.features.footer && !initializedFeatures.footer){
 			footer.init(flags);
-			initializedComponents.footer = true
+			initializedFeatures.footer = true
 		}
-		if (opts.date && !initializedComponents.date) {
+		if (config.features.date && !initializedFeatures.date) {
 			date.init();
-			initializedComponents.date = true
+			initializedFeatures.date = true
 		}
 
 		mainCss
 			.then(() => {
-				if (opts.cookieMessage && !initializedComponents.cookieMessage) {
+				if (config.features.cookieMessage && !initializedFeatures.cookieMessage) {
 					cookieMessage.init();
-					initializedComponents.cookieMessage = true;
+					initializedFeatures.cookieMessage = true;
 				}
 
-				if (opts.welcomeMessage && !initializedComponents.welcomeMessage) {
+				if (config.features.welcomeMessage && !initializedFeatures.welcomeMessage) {
 					let version = flags.get('newFooter') ? 'new' : 'old';
 					flags.get('welcomePanel') && welcomeMessage[version].init({
 						enableOverlay: flags.get('myFTOnboardingOverlay')
 					});
-					initializedComponents.welcomeMessage = true
+					initializedFeatures.welcomeMessage = true
 				}
 
-				if (opts.messagePrompts && !initializedComponents.messagePrompts) {
+				if (config.features.messagePrompts && !initializedFeatures.messagePrompts) {
 					messagePrompts.init();
-					initializedComponents.messagePrompts = true;
+					initializedFeatures.messagePrompts = true;
 				}
 
-				if (opts.myft && !initializedComponents.myftUi) {
+				if (config.features.myft && !initializedFeatures.myftUi) {
 					myft.ui.init({
 						anonymous: !(/FTSession=/.test(document.cookie)),
 						flags
 					});
-					initializedComponents.myftUi = true;
+					initializedFeatures.myftUi = true;
 				}
 
-				if (opts.promoMessages && !initializedComponents.promoMessages) {
+				if (config.features.promoMessages && !initializedFeatures.promoMessages) {
 					promoMessages.init(flags);
-					initializedComponents.promoMessages = true;
+					initializedFeatures.promoMessages = true;
 				}
 			});
 
@@ -130,14 +138,14 @@ export function bootstrap (cb) {
 			.then(cb)
 			.then(() => {
 				// TODO - lazy load this
-				if (!initializedComponents.ads) {
+				if (!initializedFeatures.ads) {
 					ads.init(flags, appInfo);
-					initializedComponents.ads = true
+					initializedFeatures.ads = true
 				}
 
-				if (!initializedComponents.lazyTracking) {
+				if (!initializedFeatures.lazyTracking) {
 					tracking.lazyInit(flags);
-					initializedComponents.lazyTracking = true;
+					initializedFeatures.lazyTracking = true;
 				}
 				return {flags, mainCss, appInfo}
 			})
