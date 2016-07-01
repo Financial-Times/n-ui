@@ -25,6 +25,7 @@ function Reporter (slot) {
 	this.container = slot.container; // store ref to container
 	this.link = this.container.querySelector(`.${this.config.cssClass}`) ||this.addLinkToContainer(); // add link and store ref
 	this.onClickHandler = this.addEvent('click', this.onClick, this); // store ref to handler for use within promise
+	this.hasReported = false;
 }
 
 /**
@@ -60,11 +61,11 @@ Reporter.prototype.destroy = function() {
 * @returns link
 */
 Reporter.prototype.addLinkToContainer = function () {
-	let href = document.createElement('button');
-	href.classList.add(this.config.cssClass);
-	href.innerHTML = this.config.defaultText;
+	let btn = document.createElement('button');
+	btn.classList.add(this.config.cssClass);
+	btn.innerHTML = this.config.defaultText;
 	// attatch the link
-	this.container.appendChild(href);
+	this.container.appendChild(btn);
 	return this.container.lastChild;
 };
 
@@ -84,7 +85,12 @@ Reporter.prototype.updateLink = function (html) {
 */
 Reporter.prototype.onClick = function (e) {
 	e.preventDefault();
-	this.dispatch(this.adData);
+	if(this.hasReported) {
+		window.open(this.config.slackChannel, '_blank');
+	} else {
+		this.dispatch(this.adData);
+	}
+
 };
 
 /**
@@ -93,7 +99,7 @@ Reporter.prototype.onClick = function (e) {
 Reporter.prototype.dispatch = function (data) {
 	// remove the event listener, we dont want to trigger dispatch again
 	// will revert to href link whether success or fail
-	this.removeEvent('click', this.onClickHandler);
+	this.hasReported = true;
 
 	if (!this.adData) {
 		this.updateLink('Insufficient Ad data, try #slack');
