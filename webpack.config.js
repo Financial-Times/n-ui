@@ -1,5 +1,5 @@
 'use strict';
-
+const path = require('path');
 const nWebpack = require('@financial-times/n-webpack');
 const fs = require('fs');
 const AsciiTable = require('ascii-table');
@@ -25,6 +25,7 @@ module.exports = [
 		},
 		withBabelPolyfills: true,
 		env: 'dev',
+		include: [path.resolve('./_deploy')],
 		entry: {
 			"./dist/es5-core-js.js": "./_deploy/wrapper.js"
 		},
@@ -39,6 +40,7 @@ module.exports = [
 		},
 		withBabelPolyfills: false,
 		env: 'dev',
+		include: [path.resolve('./_deploy')],
 		entry: {
 			"./dist/es5-polyfill-io.js": "./_deploy/wrapper.js"
 		},
@@ -53,6 +55,7 @@ module.exports = [
 		},
 		withBabelPolyfills: true,
 		env: 'prod',
+		include: [path.resolve('./_deploy')],
 		entry: {
 			"./dist/es5-core-js.min.js": "./_deploy/wrapper.js"
 		},
@@ -67,6 +70,7 @@ module.exports = [
 		},
 		withBabelPolyfills: false,
 		env: 'prod',
+		include: [path.resolve('./_deploy')],
 		entry: {
 			"./dist/es5-polyfill-io.min.js": "./_deploy/wrapper.js"
 		},
