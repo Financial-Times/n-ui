@@ -1,7 +1,14 @@
 import React from 'react';
 
-export default ({ myFtApiWrite, contentId, variant, buttonText }) => {
-	return !myFtApiWrite ? null : (
+/**
+ * @param {string} contentId
+ * @param {boolean} [myFtApiWrite = false]
+ * @param {string} [variant]
+ * @param {string} [buttonText]
+ */
+
+export default ({ contentId, myFtApiWrite, variant, buttonText }) => {
+	return myFtApiWrite ? (
 		<form className="n-myft-ui n-myft-ui--save" method="POST"
 				data-content-id={contentId}
 				data-myft-ui="saved"
@@ -17,5 +24,5 @@ export default ({ myFtApiWrite, contentId, variant, buttonText }) => {
 					title="Save to myFT"
 			>{buttonText || 'Save'}</button>
 		</form>
-	)
+	) : null;
 }
