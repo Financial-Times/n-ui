@@ -4,13 +4,15 @@ const Ads = window.oAds = require('o-ads');
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
 const jsonpFetch = require('n-jsonp');
+const sendMetrics = require('./js/metrics')
 
 import { perfMark } from '../utils'
-import { broadcast } from '../utils'
 
 let slotCount;
 let slotsRendered = 0;
 let containers;
+const customTimings = {};
+
 
 function getContextualTargetingPromise (appName) {
 	let promise = Promise.resolve({});
@@ -75,7 +77,14 @@ function onAdsComplete (event) {
 			if (slotsRendered === 0) {
 				perfMark('firstAdLoaded');
 				if (/spoor-id=3/.test(document.cookie)) {
-					sendAdLoadedTrackingEvent();
+					customTimings.firstAdLoaded = new Date().getTime();
+					const sendTimings = () => {
+						customTimings.adIframeLoaded = new Date().getTime();
+						perfMark('adIframeLoaded');
+						sendMetrics(customTimings)
+						document.body.removeEventListener('oAds.adIframeLoaded', sendTimings);
+					}
+					document.body.addEventListener('oAds.adIframeLoaded', sendTimings);
 				}
 			}
 		} else if (detail.slot.gpt && detail.slot.gpt.isEmpty === true) {
@@ -90,35 +99,6 @@ function onAdsComplete (event) {
 		utils.log('Ads component finished');
 	}
 }
-
-function sendAdLoadedTrackingEvent () {
-	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-	if (performance && performance.mark) {
-		const currentTime = new Date().getTime();
-		const offsets = {
-			domContentLoadedEventEnd: {
-				firstAdLoaded: currentTime - performance.timing['domContentLoadedEventEnd'],
-				loadEventEnd: currentTime - performance.timing['loadEventEnd'],
-				domInteractive: currentTime - performance.timing['domInteractive']
-			}
-		};
-
-		const marks = performance.getEntriesByType ?
-			performance.getEntriesByName('firstAdLoaded')
-				.reduce((marks, mark) => {
-					marks[mark.name] = Math.round(mark.startTime);
-					return marks;
-				}, {}) :
-			{};
-
-		broadcast('oTracking.event', {
-			category: 'ads',
-			action: 'first-load',
-			timings: { offsets, marks }
-		});
-	}
-}
-
 
 module.exports = {
 	onload: flags => {
