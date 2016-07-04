@@ -353,10 +353,16 @@ function getInteractionHandler (myftFeature) {
 		formButtons.forEach((button) => button.setAttribute('disabled', ''));
 
 		const isPressed = activeButton.getAttribute('aria-pressed') === 'true';
-		const action = (isPressed || activeButton.value === 'delete') ? 'remove' : 'add';
+
+		let action;
+		if (buttonWithValTriggered) {
+			action = (activeButton.value === 'delete') ? 'remove' : 'add';
+		} else {
+			action = (isPressed) ? 'remove' : 'add';
+		}
+
 		const id = form.getAttribute(idProperties[myftFeature]);
 		const type = types[myftFeature];
-
 		const hiddenFields = $$('input[type="hidden"]', form);
 		const metaFields = (buttonWithValTriggered) ? [activeButton, ...hiddenFields] : hiddenFields;
 
