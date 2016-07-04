@@ -33,3 +33,5 @@ To test changes that affect the interaction of multiple bundles you can deploy a
 The webpack build for karma can be a bit flaky in node 4 (no idea why). Try upgrading to node 6 and reinstalling your node modules
 - - -
 To initialise your app's js superquick define an `n-ui-config.js` file in your `./client/` directory. This will be use inline to kick off initialisation instantly (you should still require it and pass in to `n-ui/bootstrap` in your app's js file though, as this is the fallback if the `nUiBundle` flag is off)
+- - -
+If you get lots of bower conflicts when installing, **always** cancel the build and try `rm -rf bower_components && bower install`. Bower often adds unnecessary resolutions when the install is not completely fresh
