@@ -1,6 +1,6 @@
 {
   "name": "@financial-times/n-ui",
-  "version": "2.7.2",
+  "version": "2.7.6",
   "description": "An experiment bunching some of Next's client-side code into a single repository.",
   "main": "server.js",
   "scripts": {
@@ -62,6 +62,7 @@
     "sinon-chai": "^2.8.0",
     "webpack": "^1.13.1"
   },
+  "IMPORTANT_NOTE": "PREACT-COMPAT must be pinned to v1.8.3",
   "dependencies": {
     "babel-core": "^6.9.1",
     "babel-plugin-add-module-exports": "^0.2.1",
@@ -71,7 +72,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-runtime": "^6.9.2",
     "preact": "^4.8.0",
-    "preact-compat": "^1.8.3",
+    "preact-compat": "1.8.3",
     "proptypes": "^0.14.3"
   },
   "config": {
