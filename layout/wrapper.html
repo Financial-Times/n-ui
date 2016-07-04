@@ -14,9 +14,14 @@
 		<link rel="dns-prefetch" href="{{this}}">
 		{{/each}}
 		<link rel="preconnect" href="https://next-geebee.ft.com">
-		<link rel="preconnect" href="https://ads-api.ft.com">
 		<link rel="preconnect" href="https://spoor-api.ft.com">
 		<link rel="preconnect" href="https://next-session.ft.com" crossorigin="use-credentials">
+		{{#if @root.flags.adsPrioritiseLoading }}
+			<link rel="preconnect" href="https://ads-api.ft.com">
+			<link rel="preconnect" href="https://www.googletagservices.com">
+			<link rel="preconnect" href="https://partner.googleadservices.com">
+			<link rel="preconnect" href="https://securepubads.g.doubleclick.net">
+		{{/if}}
 		{{#each preconnect}}
 		<link rel="preconnect" href="{{host}}"{{#if crossorigin}} crossorigin="{{crossorigin}}"{{/if}}>
 		{{/each}}

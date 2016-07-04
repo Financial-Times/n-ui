@@ -111,7 +111,7 @@ function onAdsComplete (flags, event) {
 }
 
 module.exports = {
-	onload: flags => {
+	init: flags => {
 		return Promise.resolve()
 			.then(() => {
 				if (flags && flags.get('ads')) {
@@ -144,14 +144,5 @@ module.exports = {
 				}
 
 		})
-	},
-	init: function (flags) {
-		if(flags && flags.get('adsPrioritiseLoading')) {
-			this.onload(flags);
-		} else {
-			window.addEventListener('ftNextLoaded', () => {
-				this.onload(flags);
-			});
-		}
 	}
 }
