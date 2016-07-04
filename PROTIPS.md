@@ -31,3 +31,5 @@ To output critical path css you need 3 things: `hasHeadCss: true` in your n-expr
 To test changes that affect the interaction of multiple bundles you can deploy a beta to next-geebeee just by creating a beta tag e.g. `v2.3.4-beta.1`. If you `bower install n-ui#2.3.4-beta.1` in your local app it should pick up your beta version
 - - -
 The webpack build for karma can be a bit flaky in node 4 (no idea why). Try upgrading to node 6 and reinstalling your node modules
+- - -
+To initialise your app's js superquick define an `n-ui-config.js` file in your `./client/` directory. This will be use inline to kick off initialisation instantly (you should still require it and pass in to `n-ui/bootstrap` in your app's js file though, as this is the fallback if the `nUiBundle` flag is off)
