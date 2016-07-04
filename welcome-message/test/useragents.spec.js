@@ -39,15 +39,15 @@ describe('welcome message user agents', () => {
 		});
 	});
 
-	it('isModernAndroidDevice should return false for web app compatible Android UAs', () => {
-		webAppIncompatibleAndroid.forEach(ua => {
-			useragent.isModernAndroidDevice(ua).should.be.false;
-		});
-	});
-
 	it('isModernAndroidDevice should return true for web app compatible Android UAs', () => {
 		webAppCompatibleAndroid.forEach(ua => {
 			useragent.isModernAndroidDevice(ua).should.be.true;
+		});
+	});
+
+	it('isModernAndroidDevice should return false for web app compatible Android UAs', () => {
+		webAppIncompatibleAndroid.forEach(ua => {
+			useragent.isModernAndroidDevice(ua).should.be.false;
 		});
 	});
 });
