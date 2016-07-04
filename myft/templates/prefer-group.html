@@ -10,20 +10,13 @@
 	{{#each options}}
 		<button
 			type="submit"
-			name="_rel.type" value="{{name}}"
+			name="{{name}}" value="{{value}}"
 			aria-label="{{text}}"
 			aria-pressed="{{#if isSelected}}true{{else}}false{{/if}}"
 			class="n-myft-ui__button"
 			data-alternate-label="{{text}}"
-			data-trackable="set-{{../name}}-{{name}}"
+			data-trackable="set-{{../name}}-{{value}}"
 		>{{text}}</button>
 	{{/each}}
-		<button
-			type="submit"
-			name="method" value="delete"
-			class="n-myft-ui__button" aria-pressed="{{#if type}}false{{else}}true{{/if}}"
-			data-alternate-label="Off"
-			data-trackable="set-{{name}}-off"
-		>Off</button>
 	</fieldset>
 </form>
