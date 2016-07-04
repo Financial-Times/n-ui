@@ -1,4 +1,4 @@
-const IOS_DEVICE_REGEX = /OS [0-9]{1,2}(_[0-9]){1,2} like Mac OS X/i;
+const IOS_DEVICE_REGEX = /OS (7|8|9|10).* like Mac OS X.*/i;
 const ANDROID_DEVICE_REGEX = /Android (\d+(?:\.\d+)+)/i;
 
 function isWebAppCapableDevice (userAgent) {
