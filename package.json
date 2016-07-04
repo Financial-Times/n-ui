@@ -63,6 +63,7 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
+    "@financial-times/n-heroku-tools": "financial-times/n-heroku-tools#rhys/static-size",
     "babel-core": "^6.9.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-es2015-classes": "^6.9.0",
