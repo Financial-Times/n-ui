@@ -13,6 +13,19 @@ const webAppCompatibleIos = [
 	'Mozilla/5.0 (iPad; CPU OS 9_0 like Mac OS X) AppleWebKit/601.1.17 (KHTML, like Gecko) Version/8.0 Mobile/13A175 Safari/600.1.4',
 ];
 
+const webAppIncompatibleAndroid = [
+	'Mozilla/5.0 (Linux; U; Android 4.1.1; en-gb; Build/KLP) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30',
+	'Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30',
+	'Mozilla/5.0 (Linux; U; Android 4.0.3; de-ch; HTC Sensation Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30',
+	'Mozilla/5.0 (Linux; U; Android 2.3; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9',
+];
+
+const webAppCompatibleAndroid = [
+	'Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/_BuildID_) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36',
+	'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36',
+	'Mozilla/5.0 (Linux; Android 4.3.0; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19',
+];
+
 describe('welcome message user agents', () => {
 	it('isWebAppCapableDevice should return true for web app compatible iOS UAs', () => {
 		webAppCompatibleIos.forEach(ua => {
@@ -23,6 +36,18 @@ describe('welcome message user agents', () => {
 	it('isWebAppCapableDevice should return false for web app compatible iOS UAs', () => {
 		webAppIncompatibleIos.forEach(ua => {
 			useragent.isWebAppCapableDevice(ua).should.be.false;
+		});
+	});
+
+	it('isModernAndroidDevice should return false for web app compatible Android UAs', () => {
+		webAppIncompatibleAndroid.forEach(ua => {
+			useragent.isModernAndroidDevice(ua).should.be.false;
+		});
+	});
+
+	it('isModernAndroidDevice should return true for web app compatible Android UAs', () => {
+		webAppCompatibleAndroid.forEach(ua => {
+			useragent.isModernAndroidDevice(ua).should.be.true;
 		});
 	});
 });
