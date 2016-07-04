@@ -8,5 +8,10 @@ if (!/(beta|rc)/.test(versions[0])) {
 }
 
 Promise.all(versions.map(version => {
-	return shellpromise(`nht deploy-static \`find . -path "./dist/*"\` --destination n-ui/v${version}/ --strip 1 --bucket ft-next-n-ui-prod --cache-control 'must-revalidate, max-age=3600' --monitor`);
+	return shellpromise(`nht deploy-static \`find . -path "./dist/*"\` --destination n-ui/v${version}/ --strip 1 --bucket ft-next-n-ui-prod --cache-control 'must-revalidate, max-age=3600' --monitor`)
+		.catch(err => {
+			console.error(err)
+			process.exit(2);
+		});
+
 }));
