@@ -7,7 +7,8 @@ const componentsToTest = [
 	'test',
 	'layout',
 	'ads',
-	'tracking'
+	'tracking',
+	'welcome-message'
 ]
 
 module.exports = function (config) {
