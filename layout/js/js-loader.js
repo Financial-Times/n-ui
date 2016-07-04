@@ -87,7 +87,7 @@ class JsSetup {
 		});
 	}
 
-	bootstrap (callback, opts) {
+	bootstrap (opts, callback) {
 		opts = opts || {};
 		waitForCondition('Polyfill', () => {
 			this.initResult = this.initResult || this.init();

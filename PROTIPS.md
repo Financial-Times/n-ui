@@ -29,3 +29,5 @@ Use `make demo` to run a demo application which delivers the app defined in `/_d
 To output critical path css you need 3 things: `hasHeadCss: true` in your n-express options, `withHeadCss: true` in your n-webpack options and `$output-critical: true` in your sass
 - - -
 To test changes that affect the interaction of multiple bundles you can deploy a beta to next-geebeee just by creating a beta tag e.g. `v2.3.4-beta.1`. If you `bower install n-ui#2.3.4-beta.1` in your local app it should pick up your beta version
+- - -
+The webpack build for karma can be a bit flaky in node 4 (no idea why). Try upgrading to node 6 and reinstalling your node modules

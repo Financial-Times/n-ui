@@ -3,6 +3,7 @@ const path = require('path');
 let version = false;
 let majorVersion;
 let versionType = 'none';
+let nUiConfig;
 
 try {
 	version = require(path.join(process.cwd(), 'bower_components/n-ui/.bower.json')).version;
@@ -17,10 +18,15 @@ try {
 
 } catch (e) {}
 
+try {
+	nUiConfig = Object.assign({}, require(path.join(process.cwd(), 'client/n-ui-config')), {preload: true})
+} catch (e) {}
+
 module.exports = function (req, res, next) {
 
 	if (res.locals.flags.nUiBundle) {
 		res.locals.nUiVersion = 'v' + ((versionType === 'semver' && res.locals.flags.nUiBundleMajorVersion) ? majorVersion : version);
+		res.locals.nUiConfig = nUiConfig;
 	}
 
 	next()

@@ -1,11 +1,10 @@
 /*global ftNextFireCondition*/
 const nUi = require('n-ui');
 
-nUi.configure(window.ftNextUiConfig || {
-	preset: 'discrete'
+nUi.bootstrap(window.ftNextUiConfig || {
+	preset: 'discrete',
+	preload: true
 });
-
-nUi.bootstrap(null, { preload: true });
 
 module.exports = nUi
 

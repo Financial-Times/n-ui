@@ -4,6 +4,7 @@
 const path = require('path');
 const BowerWebpackPlugin = require('bower-webpack-plugin');
 const componentsToTest = [
+	'test',
 	'layout',
 	'ads',
 	'tracking'
@@ -36,12 +37,12 @@ module.exports = function (config) {
 				'Array.prototype.find|always|gated',
 				'Array.prototype.findIndex|always|gated'
 			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
-		].concat(componentsToTest.map(name => name + '/test/*.spec.js')),
+		].concat(componentsToTest.map(name => name + '/**/*.spec.js')),
 
 		// preprocess matching files before serving them to  the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: componentsToTest.reduce((obj, name) => {
-			obj[name + '/test/*.spec.js'] = ['webpack', 'sourcemap']
+			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap']
 			return obj;
 		}, {}),
 		webpack: {
@@ -50,10 +51,13 @@ module.exports = function (config) {
 					{
 						test: /\.js$/,
 						loader: 'babel',
+						exclude: [
+							path.resolve('./node_modules')
+						],
 						query: {
 							cacheDirectory: true,
-							presets: ['es2015'],
-							plugins: ['add-module-exports', ['transform-es2015-classes', { loose: true }]]
+							presets: ['es2015', 'react'],
+							plugins: [['add-module-exports', {loose: true}], ['transform-es2015-classes', { loose: true }]]
 						}
 					},
 					// don't use requireText plugin (use the 'raw' plugin)
@@ -72,6 +76,11 @@ module.exports = function (config) {
 				new BowerWebpackPlugin({ includes: /\.js$/ }),
 			],
 			resolve: {
+				alias: {
+					'react': 'preact-compat',
+					'react-dom': 'preact-compat',
+					'n-ui/utils': require.resolve('./utils')
+				},
 				root: [
 					path.join(__dirname, 'bower_components'),
 					path.join(__dirname, 'node_modules')
