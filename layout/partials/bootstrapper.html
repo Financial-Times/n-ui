@@ -36,7 +36,7 @@
 	(function () {
 		if (cutsTheMustard) {
 			{{#if @root.nUiVersion}} {{!note this only exists if the flag is on and the app has enabled n-ui bundle}}
-				ftNextLoadScript('//next-geebee.ft.com/n-ui/{{@root.nUiVersion}}/es5-core-js.min.js');
+				ftNextLoadScript('//next-geebee.ft.com/n-ui/{{@root.nUiVersion}}/es5-core-js{{#unless @root.flags.nUiBundleUnminified}}.min{{/unless}}.js');
 				ftNextLoadScript('{{#hashedAsset}}main-without-n-ui.js{{/hashedAsset}}');
 			{{else}}
 				ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}');
