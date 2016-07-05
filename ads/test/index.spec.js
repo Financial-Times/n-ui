@@ -23,7 +23,7 @@ describe('Main', () => {
 	it('Should init if flag is set to true and appname given', () => {
 		const flags = { get: () => true };
 		const initSpy = sandbox.stub(ads, 'init', () => ({ slots: { initSlot: sinon.stub()}, config: sinon.stub() }));
-		return main.onload(flags).then(() => {
+		return main.init(flags).then(() => {
 			expect(initSpy).to.have.been.called;
 		});
 	});
@@ -33,7 +33,7 @@ describe('Main', () => {
 		sandbox.stub(utils, 'getAppName', () => false );
 		const initSpy = sandbox.stub(ads, 'init', () => ({ slots: { initSlot: sinon.stub() }}));
 		sandbox.stub(ads.slots, 'initSlot');
-		return main.onload(flags).then(() => {
+		return main.init(flags).then(() => {
 			expect(initSpy).not.to.have.been.called;
 		});
 	});
@@ -42,7 +42,7 @@ describe('Main', () => {
 		const flags = { get: () => true };
 		const adInit = sandbox.spy(ads.slots, 'initSlot');
 		sandbox.stub(ads, 'init', () => ({slots: { initSlot: adInit }, config: sinon.stub }));
-		return main.onload(flags).then(() => {
+		return main.init(flags).then(() => {
 			expect(adInit).to.have.been.called;
 		});
 	});
@@ -56,7 +56,7 @@ describe('Main', () => {
 		};
 		const perfMark = sandbox.stub(window.performance, 'mark', () => true );
 		const info = sandbox.stub(utils.log, 'info');
-		main.onload(flags)
+		main.init(flags)
 			.then(() =>{
 				document.addEventListener('oAdsLogTestDone', () => {
 					expect(info).to.have.been.calledWith('Ad loaded in slot');
@@ -83,7 +83,7 @@ describe('Main', () => {
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
 		const fetchSpy = sandbox.stub(jsonpFetch, 'default', () => Promise.reject() );
 
-		return main.onload(flags).then(() => {
+		return main.init(flags).then(() => {
 			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/content/' + fakeArticleUuid + '?referrer=https%3A%2F%2Ftest-referrer.com%2Fpath');
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/' + fakeDfpSiteAndZone + '/' + fakeDfpSiteAndZone);
 		});
@@ -100,7 +100,7 @@ describe('Main', () => {
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
 		const fetchSpy = sandbox.stub(jsonpFetch, 'default', () => Promise.reject() );
 
-		return main.onload(flags).then(() => {
+		return main.init(flags).then(() => {
 			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/content/' + fakeArticleUuid);
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/' + fakeDfpSiteAndZone + '/' + fakeDfpSiteAndZone);
 		});
@@ -118,7 +118,7 @@ describe('Main', () => {
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
 		const fetchSpy = sandbox.stub(jsonpFetch, 'default', () => Promise.reject() );
 
-		return main.onload(flags).then(() => {
+		return main.init(flags).then(() => {
 			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/content/' + fakeArticleUuid);
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/unclassified');
 		});
@@ -148,7 +148,7 @@ describe('Main', () => {
 			});
 		});
 
-		return main.onload(flags).then(() => {
+		return main.init(flags).then(() => {
 			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/content/' + fakeArticleUuid);
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/successful-site/successful-zone');
 			expect(ads.config().krux.id).to.be.ok;
@@ -177,7 +177,7 @@ describe('Main', () => {
 			});
 		});
 
-		return main.onload(flags).then(() => {
+		return main.init(flags).then(() => {
 			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/concept/' + fakeConceptId);
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/successful-site/successful-zone');
 			expect(ads.config().krux.id).to.be.ok;
@@ -204,7 +204,7 @@ describe('Main', () => {
 			});
 		});
 
-		return main.onload(flags).then(() => {
+		return main.init(flags).then(() => {
 			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/user');
 		});
 	});
@@ -216,7 +216,7 @@ describe('Main', () => {
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => '12345'}));
 		const fetchSpy = sandbox.stub(window, 'fetch');
 
-		return main.onload(flags).then(() => {
+		return main.init(flags).then(() => {
 			expect(fetchSpy).not.to.have.been.calledWith('https://ads-api.ft.com/v1/user');
 		});
 	});
@@ -246,7 +246,7 @@ describe('Main', () => {
 			});
 		});
 
-		return main.onload(flags).then(() => {
+		return main.init(flags).then(() => {
 			expect(fetchSpy).to.have.been.calledWith('/__ads-api/v1/user');
 			Object.defineProperty(XMLHttpRequest.prototype, 'withCredentials', {
 				configurable: true, // defaults to false
