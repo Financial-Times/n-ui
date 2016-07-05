@@ -16,12 +16,21 @@
 		<link rel="preconnect" href="https://next-geebee.ft.com">
 		<link rel="preconnect" href="https://spoor-api.ft.com">
 		<link rel="preconnect" href="https://session-next.ft.com" crossorigin="use-credentials">
-		{{#if @root.flags.adsPrioritiseLoading }}
+
+		{{#ifEquals @root.flags.adsPreconnect 'preconnect' }}
 			<link rel="preconnect" href="https://ads-api.ft.com">
 			<link rel="preconnect" href="https://www.googletagservices.com">
 			<link rel="preconnect" href="https://partner.googleadservices.com">
 			<link rel="preconnect" href="https://securepubads.g.doubleclick.net">
-		{{/if}}
+		{{/ifEquals}}
+
+		{{#ifEquals @root.flags.adsPreconnect 'dns' }}
+			<link rel="dns-prefetch" href="https://ads-api.ft.com">
+			<link rel="dns-prefetch" href="https://www.googletagservices.com">
+			<link rel="dns-prefetch" href="https://partner.googleadservices.com">
+			<link rel="dns-prefetch" href="https://securepubads.g.doubleclick.net">
+		{{/ifEquals}}
+
 		{{#each preconnect}}
 		<link rel="preconnect" href="{{host}}"{{#if crossorigin}} crossorigin="{{crossorigin}}"{{/if}}>
 		{{/each}}
