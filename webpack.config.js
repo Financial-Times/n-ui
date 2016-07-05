@@ -20,7 +20,8 @@ while (deps.length) {
 const coreConfig = {
 	output: {
 		filename: '[name]',
-		library: 'ftNextUi'
+		library: 'ftNextUi',
+		devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
 	},
 	include: [path.resolve('./_deploy')],
 	wrap: {
