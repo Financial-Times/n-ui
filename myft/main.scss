@@ -3,13 +3,11 @@
 @import '../notification/main';
 @import '../overlay/main';
 
-$n-ui-myft: nUiApply('myft');
-
 @include nUiCriticalStart('myft');
 
 @import 'scss/follow-email';
 
-@if $n-ui-myft {
+@if nUiApply('myft') {
 
 	.myft-ui,
 	.n-myft-ui {

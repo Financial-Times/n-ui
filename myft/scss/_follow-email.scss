@@ -1,4 +1,4 @@
-@if $n-ui-myft {
+@if nUiApply('myft', 'follow-email') {
 
 	.myft-follow {
 		text-align: center;
