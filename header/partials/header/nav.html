@@ -17,22 +17,7 @@
       <li class="o-header__nav-item">
         <a class="o-header__nav-link o-header__nav-link--primary {{#ifEquals @root.currentNav.topLevelRelative.href href}}o-header-nav__list-link--highlight{{/ifEquals}}" href="{{href}}" aria-selected="{{selected}}" data-trackable="{{name}}">{{name}}</a>
         {{#if @root.flags.meganav}}
-          <!-- partials/meganav/meganav.html -->
-          <!-- {{> n-header-footer/meganav/template}} -->
-          {{#if meganav}}
-          <div class="n-meganav" data-trackable="meganav">
-            <div class="o-header__container">
-              <div class="n-meganav__wrapper">
-              {{#each meganav}}
-              {{#if data}}
-              {{{usePartial component path='n-header-footer/meganav/partials'}}}
-              {{/if}}
-              {{/each}}
-              </div>
-            </div>
-          </div>
-          {{/if}}
-          <!-- end partial -->
+          {{> n-ui/header/partials/meganav/template}}
         {{/if}}
       </li>
       {{/each}}
