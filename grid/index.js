@@ -22,7 +22,6 @@ function listenForBreakpointChanges(){
 	viewport.listenTo('resize');
 	document.body.addEventListener('oViewport.resize', () => {
 		let breakpoint = getCurrentBreakpoint();
-		console.log('viewport.resize', breakpoint);
 		if(breakpoint !== lastBreakpoint){
 			fireBreakpointEvent(breakpoint);
 			lastBreakpoint = breakpoint;
