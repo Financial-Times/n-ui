@@ -1,7 +1,7 @@
 const Typeahead = require('./typeahead');
 
 function init (flags) {
-	require('o-header').init(flags);
+	require('o-header').init();
 
 	if (flags.get('fancyDrawer')) {
 		require('n-header-footer/drawer').init();
