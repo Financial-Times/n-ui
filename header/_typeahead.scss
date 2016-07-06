@@ -1,0 +1,59 @@
+// awesomeplete will wrap input when instantiated
+.awesomplete {
+	position: relative;
+	flex-grow: 1;
+
+	input {
+		width: 100%;
+	}
+
+	[aria-live] {
+		position: absolute;
+		clip: rect(0, 0, 0, 0);
+	}
+
+	ul {
+		@include zIndexFor('typeahead');
+		position: absolute;
+		top: 100%;
+		left: 0;
+		box-sizing: border-box;
+		width: 100%;
+		padding: 0;
+		margin: -4px 0 0;
+		border: 1px solid rgba(0, 0, 0, 0.3);
+		border-radius: 0.3em;
+		overflow: hidden;
+		background: getColor('white');
+		list-style: none;
+
+		@include oGridRespondTo('S') {
+			width: 240px;
+		}
+
+		&[hidden] {
+			display: none;
+		}
+
+		li {
+			padding: 8px 16px;
+			cursor: pointer;
+
+			&:hover,
+			&[aria-selected="true"] {
+				background: getColor('teal-1');
+				color: getColor('white');
+			}
+
+			&:hover mark,
+			&[aria-selected="true"] mark {
+				color: inherit;
+			}
+		}
+
+		mark {
+			background: none;
+			font-weight: 600;
+		}
+	}
+}
