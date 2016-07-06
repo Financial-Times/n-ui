@@ -1,0 +1,11 @@
+{{#if @root.anon.userIsAnonymous}}
+<div class="o-header__row o-header__anon" data-trackable="header-anon">
+  <ul class="o-header__anon-list">
+    {{#each @root.navigationLists.navbar_right.anon}}
+      <li class="o-header__anon-item">
+        <a class="o-header__anon-link" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
+      </li>
+    {{/each}}
+  </ul>
+</div>
+{{/if}}
