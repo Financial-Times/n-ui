@@ -3,14 +3,14 @@
 @import '../notification/main';
 @import '../overlay/main';
 
-@include nUiCriticalStart('myft');
+$n-ui-myft: nUiApply('myft');
 
-$_n-ui-myft-applied: false !default;
-$_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
+@include nUiCriticalStart('myft');
 
 @import 'scss/follow-email';
 
-@if $_n-ui-myft-is-silent == false {
+@if $n-ui-myft {
+
 	.myft-ui,
 	.n-myft-ui {
 		display: inline-block;
@@ -391,7 +391,6 @@ $_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
 		}
 	}
 
-	$_n-ui-myft-applied: true !global;
 }
 
 @include nUiCriticalEnd('myft');

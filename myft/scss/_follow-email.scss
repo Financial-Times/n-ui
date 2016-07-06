@@ -1,4 +1,5 @@
-@if $_n-ui-myft-is-silent == false {
+@if $n-ui-myft {
+
 	.myft-follow {
 		text-align: center;
 
@@ -76,4 +77,5 @@
 			@include nLinksBody($inversed: true);
 		}
 	}
+
 }
