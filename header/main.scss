@@ -1,20 +1,9 @@
 @include nUiCriticalStart('header');
 
-$_n-ui-header-applied: false !default;
-$_n-ui-header-is-silent: nUiHas('header') == false or $_n-ui-header-applied == true;
-$n-header-is-silent: $_n-ui-header-is-silent;
-// NOTE: for now, also needed, until n-header has its own silent mode
-$o-header-is-silent: $_n-ui-header-is-silent;
+$o-header-is-silent: false !default;
 
 @import 'n-header-footer/breadcrumb/breadcrumb';
 @import 'n-header-footer/marketing_promo/marketing-promo';
 @import 'o-header/main';
-
-
-@if $_n-ui-header-is-silent == false {
-	$_n-ui-header-applied: true !global;
-	$n-header-is-silent: true !global;
-	$o-header-is-silent: true !global;
-}
 
 @include nUiCriticalEnd('header');
