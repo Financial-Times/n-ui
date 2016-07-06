@@ -1,11 +1,9 @@
 @include nUiCriticalStart('utils');
 
-$_n-ui-utils-applied: false !default;
-$_n-ui-utils-is-silent: nUiHas('utils') == false or $_n-ui-utils-applied == true;
-
 @import 'mixins';
 
-@if $_n-ui-utils-is-silent == false {
+@if nUiApply('utils') {
+
 	//
 	// Layout
 	//
@@ -102,7 +100,6 @@ $_n-ui-utils-is-silent: nUiHas('utils') == false or $_n-ui-utils-applied == true
 		word-wrap: normal;
 	}
 
-	$_n-ui-utils-applied: true !global;
 }
 
 @include nUiCriticalEnd('utils');
