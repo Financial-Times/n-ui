@@ -99,10 +99,12 @@ export function bootstrap (config, cb) {
 			header.init(flags);
 			initializedFeatures.header = true;
 		}
-		if(config.features.footer && !isInitialized('footer')){
+
+		if (config.features.footer && !isInitialized('footer')) {
 			footer.init(flags);
 			initializedFeatures.footer = true
 		}
+
 		if (config.features.date && !isInitialized('date')) {
 			date.init();
 			initializedFeatures.date = true

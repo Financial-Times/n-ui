@@ -17,7 +17,7 @@ $o-typography-progressive-fonts: serifDisplay, sansData, sansDataBold, sansBold;
 	html {
 		@include oColorsFor(page);
 		font-family: sans-serif;
-		font-size: 0.82em;
+		font-size: 0.8125em;
 
 		// scss-lint:disable SelectorFormat
 		&.o-typography--loaded-sansData {
