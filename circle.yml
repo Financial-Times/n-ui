@@ -3,7 +3,7 @@ machine:
     version: 5.5.0
 deployment:
   release:
-    tag: /v.*/
+    tag: /^v[0-9]+(.[0-9]+)*/
     owner: Financial-Times
     commands:
       - make dist
