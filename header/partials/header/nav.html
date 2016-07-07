@@ -1,5 +1,5 @@
 {{#ifAll @root.flags.frontPageFastFTJourney}}
-<nav id="o-header-nav-mobile" class="o-header__row o-header__nav o-header__nav--mobile" role="navigation" data-trackable="header-nav:mobile">
+<nav id="o-header-nav-mobile" class="o-header__row o-header__nav o-header__nav--mobile" aria-hidden="true" data-trackable="header-nav:mobile">
 	<ul class="o-header__nav-list">
 		{{#each @root.navigationLists.navbar_mobile}}
 		<li class="o-header__nav-item">
@@ -10,9 +10,9 @@
 </nav>
 {{/ifAll}}
 
-<nav id="o-header-nav-desktop" class="o-header__row o-header__nav o-header__nav--desktop" role="navigation" data-trackable="header-nav:desktop">
+<nav id="o-header-nav-desktop" class="o-header__row o-header__nav o-header__nav--desktop" role="navigation" aria-label="Primary navigation" data-trackable="header-nav:desktop">
 	<div class="o-header__container">
-		<ul class="o-header__nav-list o-header__nav-list--left">
+		<ul class="o-header__nav-list o-header__nav-list--left" data-trackable="primary-nav">
 			{{#each @root.navigationLists.navbar_desktop}}
 			<li class="o-header__nav-item">
 				<a class="o-header__nav-link o-header__nav-link--primary {{#ifEquals @root.currentNav.topLevelRelative.href href}}o-header-nav__list-link--highlight{{/ifEquals}}" href="{{href}}" id="o-header-link-{{@index}}" aria-selected="{{selected}}" data-trackable="{{name}}">{{name}}</a>
@@ -22,7 +22,7 @@
 			</li>
 			{{/each}}
 		</ul>
-		<ul class="o-header__nav-list o-header__nav-list--right">
+		<ul class="o-header__nav-list o-header__nav-list--right" data-trackable="user-nav">
 			{{#if @root.anon.userIsAnonymous}}
 				{{#each @root.navigationLists.navbar_right.anon}}
 					<li class="o-header__nav-item">
@@ -31,11 +31,11 @@
 				{{/each}}
 			{{/if}}
 			{{#if @root.anon.userIsLoggedIn}}
-			{{#each @root.navigationLists.navbar_right.user}}
-			<li class="o-header__nav-item">
-				<a class="o-header__nav-link" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
-			</li>
-			{{/each}}
+				{{#each @root.navigationLists.navbar_right.user}}
+					<li class="o-header__nav-item">
+						<a class="o-header__nav-link" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
+					</li>
+				{{/each}}
 			{{/if}}
 		</ul>
 	</div>
