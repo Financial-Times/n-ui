@@ -14,7 +14,7 @@ function init (flags) {
 	const typeaheadElements = document.querySelectorAll('[data-typeahead]');
 	if (flags.get('typeahead') && typeaheadElements.length) {
 		for (const element of typeaheadElements) {
-			new Typeahead( element, `//{window.location.host}/search-suggestions?q=` );
+			new Typeahead( element, `//${window.location.host}/search-suggestions?q=` );
 		};
 	}
 }
