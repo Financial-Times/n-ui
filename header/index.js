@@ -11,15 +11,11 @@ function init (flags) {
 		require('n-header-footer/breadcrumb').init();
 	}
 
-	// TODO: refactor into for...loop
-	const typeaheadEls = [...document.querySelectorAll('[data-typeahead]')];
-	if (flags.get('typeahead') && typeaheadEls.length) {
-		typeaheadEls.forEach(function (element) {
-			new Typeahead(
-				element,
-				'//' + window.location.host + '/search-suggestions?q='
-			);
-		});
+	const typeaheadElements = document.querySelectorAll('[data-typeahead]');
+	if (flags.get('typeahead') && typeaheadElements.length) {
+		for (const element of typeaheadElements) {
+			new Typeahead( element, `//{window.location.host}/search-suggestions?q=` );
+		};
 	}
 }
 
