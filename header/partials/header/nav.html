@@ -24,11 +24,16 @@
 		</ul>
 		<ul class="o-header__nav-list o-header__nav-list--right" data-trackable="user-nav">
 			{{#if @root.anon.userIsAnonymous}}
-				{{#each @root.navigationLists.navbar_right.anon}}
-					<li class="o-header__nav-item">
+				<li class="o-header__nav-item">
+					{{#with @root.navigationLists.account.signin}}
 						<a class="o-header__nav-link" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
-					</li>
-				{{/each}}
+					{{/with}}
+				</li>
+				<li class="o-header__nav-item">
+					{{#with @root.navigationLists.account.subscribe}}
+						<a class="o-header__nav-button" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
+					{{/with}}
+				</li>
 			{{/if}}
 			{{#if @root.anon.userIsLoggedIn}}
 				{{#each @root.navigationLists.navbar_right.user}}
