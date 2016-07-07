@@ -50,6 +50,8 @@
     "superstore-sync": "^2.1.0"
   },
   "resolutions": {
-    "o-viewport": "^2.0.0"
+    "o-viewport": "^2.0.0",
+    "o-header": "~6.0.3",
+    "awesomplete": "~1.1.1"
   }
 }
