@@ -6,6 +6,12 @@ const getCookieValue = function (key) {
 	return (a) ? a[1] : undefined;
 }
 
+function enableMouseflow () {
+	window._mfq = window._mfq || [];
+	window._mfq.push(['setVariable', 'spoorId', getCookieValue('spoor-id')]);
+	loadScript('https://cdn.mouseflow.com/projects/3d6fc486-2914-4efc-a5ae-35a5eac972f2.js');
+}
+
 // Loads mouseflow tracking code
 module.exports = function (flags) {
 
@@ -40,10 +46,4 @@ module.exports = function (flags) {
 			});
 		}
 	}
-}
-
-function enableMouseflow () {
-	window._mfq = window._mfq || [];
-	window._mfq.push(['setVariable', 'spoorId', getCookieValue('spoor-id')]);
-	loadScript('https://cdn.mouseflow.com/projects/3d6fc486-2914-4efc-a5ae-35a5eac972f2.js');
 }
