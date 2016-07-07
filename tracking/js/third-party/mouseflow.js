@@ -9,7 +9,6 @@ const getCookieValue = function (key) {
 // Loads mouseflow tracking code
 module.exports = function (flags) {
 
-	const mouseFlowFlags = flags && (flags.get('mouseflowForce') || flags.get('mouseflow'));
 	const isSignUpApp = !!document.querySelector('html[data-next-app=signup]');
 
 	if (flags.get('mouseflowForce')) {
