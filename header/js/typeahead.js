@@ -1,6 +1,6 @@
 /*global fetch*/
 const Awesomplete = require('awesomplete');
-const debounce = require('../utils').debounce;
+const debounce = require('../../utils').debounce;
 
 const MIN_LENGTH = 2;
 const DISPLAY_ITEMS = 6;
