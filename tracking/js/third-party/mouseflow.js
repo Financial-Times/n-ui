@@ -23,7 +23,7 @@ module.exports = function (flags) {
 	else if (flags.get('mouseflow')) {
 
 		if (isSignUpApp) {
-				enableMouseflow();
+			enableMouseflow();
 		}
 		else  {
 			fetch('https://session-next.ft.com/', {
