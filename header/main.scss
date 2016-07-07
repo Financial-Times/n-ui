@@ -3,9 +3,9 @@
 $o-header-is-silent: false !default;
 
 @import 'n-header-footer/breadcrumb/breadcrumb';
-@import 'n-header-footer/marketing_promo/marketing-promo';
+@import 'scss/marketing-promo';
 @import 'o-header/main';
 
 @include nUiCriticalEnd('header');
 
-@import 'typeahead';
+@import 'scss/typeahead';

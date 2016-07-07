@@ -1,7 +1,9 @@
-const Typeahead = require('./typeahead');
+const Typeahead = require('./js/typeahead');
+const promoHandler = require('./js/promoHandler');
 
 function init (flags) {
 	require('o-header').init();
+	promoHandler.init(flags);
 
 	if (flags.get('fancyDrawer')) {
 		require('n-header-footer/drawer').init();
