@@ -25,7 +25,7 @@ module.exports = function (flags) {
 		if (isSignUpApp) {
 			enableMouseflow();
 		}
-		else  {
+		else {
 			fetch('https://session-next.ft.com/', {
 				timeout: 2000,
 				credentials: 'include'
@@ -41,8 +41,9 @@ module.exports = function (flags) {
 				}
 			})
 			.then (function (session) {
-				let isNavigationSample = parseInt(session.passportId) % 100 === 0; // 1%
-				enableMouseflow();
+				if (parseInt(session.passportId) % 100 === 0) { // 1%
+					enableMouseflow();
+				}
 			});
 		}
 	}
