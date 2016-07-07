@@ -67,7 +67,7 @@ module.exports = function (flags, contextData, userData) {
 			unitName:	gptUnitName
 		},
 		krux: kruxConfig,
-		collapseEmpty: 'after',
+		collapseEmpty: 'before',
 		dfp_targeting: utils.keyValueString(targeting)
 	};
 
