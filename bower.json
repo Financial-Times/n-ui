@@ -10,7 +10,9 @@
     "karma.conf.js",
     "Makefile",
     "n.Makefile",
-    "package.json"
+    "package.json",
+    "webpack.config.js",
+    "webpack.config.demo.js"
   ],
   "main": "main.js",
   "dependencies": {
@@ -39,7 +41,7 @@
     "o-grid": "^4.2.0",
     "o-icons": "^4.0.0",
     "o-overlay": "^1.8.2",
-    "o-typography": "^3.2.0",
+    "o-typography": "^4.2.0",
     "o-viewport": "^2.0.0",
     "superstore": "^2.1.0",
     "superstore-sync": "^2.1.0",
