@@ -42,7 +42,10 @@ module.exports = function (flags) {
 				}
 			})
 			.then (function (session) {
-				if (parseInt(session.passportId) % 100 === 0) { // 1%
+
+				const lastUuidSegmentHex = session.uuid.substring(session.uuid.lastIndexOf('-') + 1);
+
+				if (parseInt(lastUuidSegmentHex, 16) % 100 === 0) { // 1%
 					enableMouseflow();
 				}
 			});
