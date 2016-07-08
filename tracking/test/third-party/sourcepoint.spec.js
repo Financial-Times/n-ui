@@ -1,7 +1,7 @@
 /*global require,describe,it,expect,sinon*/
 
 const flags = { get: function () { return false; }};
-const tracking = require('../index');
+const tracking = require('../../index');
 let sandbox;
 
 let sourcepointScript;
@@ -18,7 +18,7 @@ const checkSourcepointScriptLoaded = function () {
 		});
 }
 
-describe('n-third-party-code', function () {
+describe('sourcepoint', function () {
 
 	before(function () {
 		tracking.lazyInit(flags);

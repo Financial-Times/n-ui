@@ -1,4 +1,4 @@
-import {broadcast} from '../../../utils';
+import {broadcast} from '../../utils';
 
 const isAllocated = function () {
 	return /spoor-id=0/.test(document.cookie);

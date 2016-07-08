@@ -1,4 +1,4 @@
-import {loadScript} from '../../../utils';
+import {loadScript} from '../../utils';
 
 const getSessionToken = function () {
 	const s = /FTSession=([^;]+)/i.exec(document.cookie);

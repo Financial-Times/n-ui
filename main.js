@@ -4,7 +4,6 @@ import 'babel-polyfill-silencer';
 import layout from './layout';
 import ads from './ads';
 import tracking from './tracking';
-import nInstrumentation from 'n-instrumentation';
 import date from './date';
 import header from './header';
 import promoMessages from './promo-messages';
@@ -73,10 +72,6 @@ export function bootstrap (config, cb) {
 		if (!isInitialized('tracking')) {
 			// FT and next tracking
 			tracking.init(flags, appInfo);
-			// TODO - move n-instrumentation in to n-ui
-			if (flags.get('nInstrumentation')) {
-				nInstrumentation.init();
-			}
 			initializedFeatures.tracking = true;
 		}
 
