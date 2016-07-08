@@ -4,7 +4,7 @@
 	<p class="myft-follow__text">You’re now following this topic.</p>
 
 {{#ifAll notSubscribedToDigest notYetDismissed}}
-	<form method="POST" action="/{{#unless @root.flags.myFtTestFollowEmailAuth}}__{{/unless}}myft/api/core/follow-email/set-preferences" class="myft-follow__form js-follow-email-form">
+	<form method="POST" action="/{{#unless @root.flags.myFtTestFollowEmailAuth}}__{{/unless}}myft/{{#if @root.flags.myFtTestFollowEmailAltRoute}}api/core/test-route{{else}}api/core/follow-email/set-preferences{{/if}}" class="myft-follow__form js-follow-email-form">
 		<p class="myft-follow__text">Get headlines in a daily email on topics you follow.</p>
 
 		<button type="submit" name="method" value="delete" class="myft-follow__btn" data-trackable="no">No thanks</button>
