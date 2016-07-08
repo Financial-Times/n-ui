@@ -16,13 +16,14 @@ function enableMouseflow () {
 module.exports = function (flags) {
 
 	const isSignUpApp = !!document.querySelector('html[data-next-app=signup]');
+	const isAutomatedTest = window.location.href.indexOf('backend') !== -1;
 
 	if (flags.get('mouseflowForce')) {
 		enableMouseflow();
 	}
 	else if (flags.get('mouseflow')) {
 
-		if (isSignUpApp) {
+		if (isSignUpApp && !isAutomatedTest) {
 			enableMouseflow();
 		}
 		else {
@@ -41,7 +42,10 @@ module.exports = function (flags) {
 				}
 			})
 			.then (function (session) {
-				if (parseInt(session.passportId) % 100 === 0) { // 1%
+
+				const lastUuidSegmentHex = session.uuid.substring(session.uuid.lastIndexOf('-') + 1);
+
+				if (parseInt(lastUuidSegmentHex, 16) % 100 === 0) { // 1%
 					enableMouseflow();
 				}
 			});
