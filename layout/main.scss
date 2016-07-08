@@ -1,9 +1,7 @@
-$_n-ui-layout-applied: false !default;
-$_n-ui-layout-is-silent: nUiHas('layout') == false or $_n-ui-layout-applied == true;
-
-@if $_n-ui-layout-is-silent == false {
+@if nUiApply('layout') {
 
 	@include nUiCriticalStart('layout');
+
 	.core .o--if-js,
 	.enhanced .o--if-no-js {
 		display: none !important;
@@ -54,5 +52,4 @@ $_n-ui-layout-is-silent: nUiHas('layout') == false or $_n-ui-layout-applied == t
 		display: table-row;
 	}
 
-	$_n-layout_applied: true !global;
 }

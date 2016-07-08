@@ -1,14 +1,4 @@
-@include nUiCriticalStart('icons');
-
-$_n-ui-icons-applied: false !default;
-$_n-ui-icons-is-silent: nUiHas('icons') == false or $_n-ui-icons-applied == true;
 $o-icons-service-base-url: 'https://next-geebee.ft.com/image';
 
 @import 'o-icons/main';
 @import 'mixins';
-
-@if $_n-ui-icons-is-silent == false {
-	$_n-ui-icons-applied: true !global;
-}
-
-@include nUiCriticalEnd('icons');

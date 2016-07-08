@@ -5,12 +5,10 @@
 
 @include nUiCriticalStart('myft');
 
-$_n-ui-myft-applied: false !default;
-$_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
-
 @import 'scss/follow-email';
 
-@if $_n-ui-myft-is-silent == false {
+@if nUiApply('myft') {
+
 	.myft-ui,
 	.n-myft-ui {
 		display: inline-block;
@@ -391,7 +389,6 @@ $_n-ui-myft-is-silent: nUiHas('myft') == false or $_n-ui-myft-applied == true;
 		}
 	}
 
-	$_n-ui-myft-applied: true !global;
 }
 
 @include nUiCriticalEnd('myft');

@@ -1,19 +1,16 @@
 @include nUiCriticalStart('overlay');
 
-$_n-ui-overlay-applied: false !default;
-$_n-ui-overlay-is-silent: nUiHas('overlay') == false or $_n-ui-overlay-applied == true;
-$o-overlay-is-silent: $_n-ui-overlay-is-silent;
+$o-overlay-is-silent: not nUiHas('overlay') !default;
 
 @import 'o-overlay/main';
 
-@if $_n-ui-overlay-is-silent == false {
+@if nUiApply('overlay') {
+
 	body .o-overlay,
 	body .o-overlay-shadow {
 		@include nUtilZIndexFor(overlay);
 	}
 
-	$_n-ui-overlay-applied: true !global;
-	$o-overlay-is-silent: true !global;
 }
 
 @include nUiCriticalEnd('overlay');

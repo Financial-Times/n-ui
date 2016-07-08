@@ -1,8 +1,6 @@
 @include nUiCriticalStart('ads');
 
-$_n-ui-ads-applied: false !default;
-$_n-ui-ads-is-silent: nUiHas('ads') == false or $_n-ui-ads-applied == true;
-$o-ads-is-silent: $_n-ui-ads-is-silent;
+$o-ads-is-silent: not nUiHas('ads') !default;
 
 // Ad breakpoint where leaderboards start working
 $ad-medium-breakpoint: 760px;
@@ -11,7 +9,8 @@ $ad-max-responsive-width: 1440px;
 
 @import 'o-ads/main';
 
-@if $_n-ui-ads-is-silent == false {
+@if nUiApply('ads') {
+
 	.core .o-ads {
 		display: none;
 	}
@@ -95,11 +94,7 @@ $ad-max-responsive-width: 1440px;
 			clear: both;
 		}
 	}
-}
 
-@if $_n-ui-ads-is-silent == false {
-	$_n-ui-ads-applied: true !global;
-	$o-ads-is-silent: true !global;
 }
 
 @include nUiCriticalEnd('ads');

@@ -59,6 +59,8 @@
 	.n-welcome-message__column--message {}
 
 	.n-welcome-message__column--actions {
+		white-space: nowrap;
+
 		@include oGridRespondTo('M') {
 			text-align: right;
 			width: 35%;
