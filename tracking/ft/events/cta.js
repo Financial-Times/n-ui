@@ -33,7 +33,7 @@ CTA.prototype.track = function (root) {
 		meta.textContent = element.textContent;
 
 		if (href) {
-			meta.destination = getHref(href);
+			meta.destination = href;
 		}
 
 		// Reflect ARIA state so people can track open/close actions
@@ -57,7 +57,6 @@ CTA.prototype.track = function (root) {
 
 		const position = element.getAttribute('data-position');
 		const siblings = element.getAttribute('data-siblings');
-		const destination = element.getAttribute('href');
 
 		if (position) {
 			meta.position = parseInt(position);
@@ -65,10 +64,6 @@ CTA.prototype.track = function (root) {
 
 		if (siblings) {
 			meta.siblings = parseInt(siblings);
-		}
-
-		if (destination) {
-			meta.destination = destination;
 		}
 
 		meta.category = 'click';
