@@ -1,10 +1,10 @@
-<footer class="o-footer o-footer--theme-dark" data-o-component="o-footer" data-o-footer--no-js>
+<footer class="o-footer o-footer--theme-dark" data-o-component="o-footer" data-o-footer--no-js data-trackable="footer" data-trackable-terminate>
 	<div class="o-footer__container">
 
 		<div class="o-footer__row">
 			<nav class="o-footer__matrix" role="navigation" aria-label="Useful links">
 				{{#each @root.navigationLists.footer}}
-				<div class="o-footer__matrix-group o-footer__matrix-group--{{items.length}}">
+				<div class="o-footer__matrix-group o-footer__matrix-group--{{items.length}}" data-trackable="group | {{title}}">
 					<h6 class="o-footer__matrix-title" {{#collapsible}}aria-controls="o-footer-section-{{@index}}"{{/collapsible}}>
 						{{{title}}}
 					</h6>
@@ -12,7 +12,7 @@
 						{{#each items}}
 							<div class="o-footer__matrix-column">
 								{{#.}}
-									<a class="o-footer__matrix-link" href="{{href}}">{{{name}}}</a>
+									<a class="o-footer__matrix-link" href="{{href}}" data-trackable="{{name}}">{{{name}}}</a>
 								{{/.}}
 							</div>
 						{{/each}}
@@ -22,7 +22,7 @@
 			</nav>
 		</div>
 
-		<div class="o-footer__copyright" role="contentinfo">
+		<div class="o-footer__copyright" role="contentinfo" data-trackable="small-print">
 			<small>
 				Markets data delayed by at least 15 minutes. &#169; THE FINANCIAL TIMES LTD {{copyrightYear}}.
 				<abbr title="Financial Times">FT</abbr> and ‘Financial Times’ are trademarks of The Financial Times Ltd.<br>

@@ -10,7 +10,7 @@ if (!versions[0]) {
 }
 
 Promise.all(versions.map(version => {
-	return shellpromise(`nht deploy-static \`find . -path "./dist/*"\` --destination n-ui/v${version}/ --strip 1 --bucket ft-next-n-ui-prod --cache-control 'must-revalidate, max-age=3600' --monitor`, {verbose: true})
+	return shellpromise(`nht deploy-static \`find . -path "./dist/*"\` --destination n-ui/no-cache/v${version}/ --strip 1 --bucket ft-next-n-ui-prod --cache-control 'must-revalidate, max-age=3600' --monitor`, {verbose: true})
 		.catch(err => {
 			console.error(err)
 			process.exit(2);
