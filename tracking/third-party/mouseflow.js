@@ -1,4 +1,4 @@
-import {loadScript} from '../../../utils';
+import {loadScript} from '../../utils';
 
 const getCookieValue = function (key) {
 	const regex = new RegExp(`${key}=([^;]+)`, 'i');

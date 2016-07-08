@@ -1,7 +1,10 @@
 const oTracking = require('o-tracking');
 const oGrid = require('o-grid');
 const oViewport = require('o-viewport');
-import {broadcast} from '../../../utils'
+const nextEvents = require('./next-events');
+
+import {broadcast} from '../../utils'
+
 
 function nodesToArray (nodelist) {
 	return [].slice.call(nodelist);
@@ -109,6 +112,8 @@ const oTrackingWrapper = {
 				}
 			});
 		}
+
+		nextEvents.init();
 	}
 };
 

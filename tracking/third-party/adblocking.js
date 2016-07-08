@@ -8,7 +8,7 @@
 */
 
 
-import {broadcast} from '../../../utils';
+import {broadcast} from '../../utils';
 
 const BlockAdBlock = function () {
 	this._options = {

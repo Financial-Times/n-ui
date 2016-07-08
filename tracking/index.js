@@ -1,14 +1,14 @@
 module.exports = {
 	init: function (flags, appInfo) {
-		require('./js/ft/o-tracking-wrapper').init(flags, appInfo);
+		require('./ft').init(flags, appInfo);
 	},
 	lazyInit: function (flags) {
 		window.addEventListener('ftNextLoaded', function () {
-			require('./js/third-party/floodlight')(flags);
-			require('./js/third-party/inspectlet')(flags);
-			require('./js/third-party/mouseflow')(flags);
-			require('./js/third-party/sourcepoint')(flags);
-			require('./js/third-party/adblocking')(flags);
+			require('./third-party/floodlight')(flags);
+			require('./third-party/inspectlet')(flags);
+			require('./third-party/mouseflow')(flags);
+			require('./third-party/sourcepoint')(flags);
+			require('./third-party/adblocking')(flags);
 		});
 	}
 };
