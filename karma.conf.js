@@ -7,6 +7,7 @@ const componentsToTest = [
 	'test',
 	'layout',
 	'ads',
+	'myft',
 	'tracking',
 	'welcome-message'
 ]
