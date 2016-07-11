@@ -1,3 +1,4 @@
+import {$, $$} from '../utils';
 const superstore = require('superstore-sync');
 const useragent = require('./useragent');
 const isWebAppCapableDevice = useragent.isWebAppCapableDevice;
@@ -16,7 +17,7 @@ function hasLocalStorage () {
 }
 
 function showWebAppLink () {
-	Array.from(document.querySelectorAll('.js-webapp-link')).forEach(a => {
+	$$('.js-webapp-link').forEach(a => {
 		a.pathname = location.pathname;
 		a.search = location.search;
 		a.classList.remove(HIDDEN_CLASSNAME);
@@ -24,7 +25,7 @@ function showWebAppLink () {
 }
 
 function showAndroidLink () {
-	Array.from(document.querySelectorAll('.js-android-link')).forEach(a => {
+	$$('.js-android-link').forEach(a => {
 		const param = 'location=' + encodeURIComponent(location.pathname + location.search);
 		a.search = a.search + (a.search.length ? '&' : '?') + param;
 		a.classList.remove(HIDDEN_CLASSNAME);
@@ -32,14 +33,14 @@ function showAndroidLink () {
 }
 
 function hideOptOutLink () {
-	Array.from(document.querySelectorAll('.js-optout-link')).forEach(a => {
+	$$('.js-optout-link').forEach(a => {
 		a.classList.add(HIDDEN_CLASSNAME);
 	});
 }
 
 function init () {
-	const fixedEl = document.querySelector('.n-welcome-message--fixed');
-	const staticEl = document.querySelector('.n-welcome-message--static');
+	const fixedEl = $('.n-welcome-message--fixed');
+	const staticEl = $('.n-welcome-message--static');
 
 	if (isWebAppCapableDevice(navigator.userAgent)) {
 		showWebAppLink();
@@ -50,7 +51,7 @@ function init () {
 	}
 
 	if (Boolean(superstore.local.get(STORAGE_KEY)) === false && hasLocalStorage()) {
-		const closeButton = fixedEl.querySelector('button');
+		const closeButton = $('button', fixedEl);
 
 		closeButton.onclick = function () {
 			fixedEl.classList.add(HIDDEN_CLASSNAME);
