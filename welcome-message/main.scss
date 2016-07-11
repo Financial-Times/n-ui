@@ -64,8 +64,9 @@
 		white-space: nowrap;
 
 		@include oGridRespondTo('M') {
-			text-align: right;
 			width: 35%;
+			// in combination with nowrap it will force elements to flow from right
+			direction: rtl;
 		}
 	}
 
