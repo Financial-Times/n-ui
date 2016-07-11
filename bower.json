@@ -35,7 +35,7 @@
     "o-date": "^2.3.3",
     "o-errors": "^3.1.0",
     "o-expander": "^3.0.1",
-    "o-footer": "Financial-Times/o-footer#matth/v5-grid",
+    "o-footer": "^5.0.0",
     "o-forms": "^2.0.0",
     "o-grid": "^4.2.0",
     "o-header": "^6.0.3",
