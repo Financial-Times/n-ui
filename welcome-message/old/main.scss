@@ -99,14 +99,14 @@
 	}
 
 	.n-welcome__btn {
-		@include nButtons($theme: inverse);
+		@include oButtons($theme: inverse);
 
 		@include oGridRespondTo(M) {
-			@include nButtonsSize(big);
+			@include oButtonsSize(big);
 		}
 
 		&--standout {
-			@include nButtons($theme: standout);
+			@include oButtons($theme: standout);
 		}
 	}
 

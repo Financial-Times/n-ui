@@ -86,7 +86,7 @@
 	}
 
 	.n-welcome-message__button {
-		@include nButtons($theme:'standout');
+		@include oButtons($theme:'standout');
 		margin-left: 12px;
 		white-space: nowrap;
 
