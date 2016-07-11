@@ -4,15 +4,15 @@ const isWebAppCapableDevice = useragent.isWebAppCapableDevice;
 const isModernAndroidDevice = useragent.isModernAndroidDevice;
 
 const STORAGE_KEY = 'n-welcome-message-seen';
+const TEST_KEY = 'n-welcome-message-test';
+const TEST_VAL = 'can-store';
 const HIDDEN_CLASSNAME = 'is-hidden';
 
 function hasLocalStorage () {
-	const testKey = 'n-welcome-message-test';
-	const testValue = 'can-store';
-	superstore.local.set(testKey, testValue);
-	const retrievedValue = superstore.local.get(testKey);
-	superstore.local.unset(testKey);
-	return (testValue === retrievedValue) && superstore.isPersisting();
+	superstore.local.set(TEST_KEY, TEST_VAL);
+	const retrieved = superstore.local.get(TEST_KEY);
+	superstore.local.unset(TEST_KEY);
+	return TEST_VAL === retrieved && superstore.isPersisting();
 }
 
 function showWebAppLink () {
