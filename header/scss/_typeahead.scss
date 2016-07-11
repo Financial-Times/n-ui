@@ -2,6 +2,7 @@
 .awesomplete {
 	position: relative;
 	flex-grow: 1;
+	text-align: left;
 
 	input {
 		width: 100%;
@@ -20,7 +21,7 @@
 		box-sizing: border-box;
 		width: 100%;
 		padding: 0;
-		margin: -4px 0 0;
+		margin: -2px 0 0;
 		border: 1px solid rgba(0, 0, 0, 0.3);
 		border-radius: 0.3em;
 		overflow: hidden;
@@ -29,10 +30,6 @@
 
 		@include oGridRespondTo('S') {
 			width: 240px;
-		}
-
-		&[hidden] {
-			display: none;
 		}
 
 		li {
