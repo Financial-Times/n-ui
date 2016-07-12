@@ -35,42 +35,10 @@ module.exports = function (flags) {
 				return;
 			}
 
-
 			const lastSegmentHex = spoorId.substring(spoorId.lastIndexOf('-') + 1);
 
-			if (parseInt(lastSegmentHex, 16) % 100 === 0) { // 1% of everyone with a uuid-style spoor id
+			if (parseInt(lastSegmentHex, 16) % 50 === 0) { // 2% of everyone with a uuid-style spoor id
 				enableMouseflow();
 			}
-
-		// 	fetch('https://session-next.ft.com/', {
-		// 		timeout: 2000,
-		// 		credentials: 'include'
-		// 	})
-		// 	.then (function (response) {
-		// 		switch (response.status) {
-		// 			case 404:
-		// 				return {};
-		// 			case 200:
-		// 				return response.json();
-		// 			default:
-		// 				throw new Error(`${response.status} - ${response.statusTest}`);
-		// 		}
-		// 	})
-		// 	.then (function (session) {
-
-		// 		const lastUuidSegmentHex = session.uuid.substring(session.uuid.lastIndexOf('-') + 1);
-
-		// 		if (parseInt(lastUuidSegmentHex, 16) % 100 === 0) { // 1% of registered & subscribers
-		// 			enableMouseflow();
-		// 		}
-		// 	})
-		// 	.catch(function () {
-
-		// 		// Session API unreachable; most likely anon user
-		// 		if (Math.floor(Math.random() * 100) === 0) { // 1% of anon page views
-		// 			enableMouseflow();
-		// 		}
-		// 	});
-		// }
 	}
 }
