@@ -28,7 +28,6 @@ module.exports = function (flags) {
 			enableMouseflow();
 		}
 		else {
-
 			const spoorId = getCookieValue('spoor-id');
 			const oldSpoorId = spoorId.indexOf('-') === -1;
 
@@ -41,5 +40,6 @@ module.exports = function (flags) {
 			if (parseInt(lastSegmentHex, 16) % 50 === 0) { // 2% of everyone with a uuid-style spoor id
 				enableMouseflow();
 			}
+		}
 	}
 }
