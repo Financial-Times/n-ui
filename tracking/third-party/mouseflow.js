@@ -50,7 +50,7 @@ module.exports = function (flags) {
 					enableMouseflow();
 				}
 			})
-			.catch(function (error) {
+			.catch(function () {
 
 				// Session API unreachable; most likely anon user
 
