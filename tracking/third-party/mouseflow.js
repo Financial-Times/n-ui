@@ -28,36 +28,49 @@ module.exports = function (flags) {
 		}
 		else {
 
-			fetch('https://session-next.ft.com/', {
-				timeout: 2000,
-				credentials: 'include'
-			})
-			.then (function (response) {
-				switch (response.status) {
-					case 404:
-						return {};
-					case 200:
-						return response.json();
-					default:
-						throw new Error(`${response.status} - ${response.statusTest}`);
-				}
-			})
-			.then (function (session) {
+			const spoorId = getCookieValue('spoor-id');
+			const oldSpoorId = spoorId.indexOf('-') === -1;
 
-				const lastUuidSegmentHex = session.uuid.substring(session.uuid.lastIndexOf('-') + 1);
+			if (oldSpoorId) {
+				return;
+			}
 
-				if (parseInt(lastUuidSegmentHex, 16) % 100 === 0) { // 1% of registered & subscribers
-					enableMouseflow();
-				}
-			})
-			.catch(function () {
 
-				// Session API unreachable; most likely anon user
+			const lastSegmentHex = spoorId.substring(spoorId.lastIndexOf('-') + 1);
 
-				if (Math.floor(Math.random() * 100) === 0) { // 1% of anon
-					enableMouseflow();
-				}
-			});
-		}
+			if (parseInt(lastSegmentHex, 16) % 100 === 0) { // 1% of everyone with a uuid-style spoor id
+				enableMouseflow();
+			}
+
+		// 	fetch('https://session-next.ft.com/', {
+		// 		timeout: 2000,
+		// 		credentials: 'include'
+		// 	})
+		// 	.then (function (response) {
+		// 		switch (response.status) {
+		// 			case 404:
+		// 				return {};
+		// 			case 200:
+		// 				return response.json();
+		// 			default:
+		// 				throw new Error(`${response.status} - ${response.statusTest}`);
+		// 		}
+		// 	})
+		// 	.then (function (session) {
+
+		// 		const lastUuidSegmentHex = session.uuid.substring(session.uuid.lastIndexOf('-') + 1);
+
+		// 		if (parseInt(lastUuidSegmentHex, 16) % 100 === 0) { // 1% of registered & subscribers
+		// 			enableMouseflow();
+		// 		}
+		// 	})
+		// 	.catch(function () {
+
+		// 		// Session API unreachable; most likely anon user
+		// 		if (Math.floor(Math.random() * 100) === 0) { // 1% of anon page views
+		// 			enableMouseflow();
+		// 		}
+		// 	});
+		// }
 	}
 }
