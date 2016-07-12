@@ -1,4 +1,5 @@
 import {loadScript} from '../../utils';
+
 const getCookieValue = function (key) {
 	const regex = new RegExp(`${key}=([^;]+)`, 'i');
 	const a = regex.exec(document.cookie);
