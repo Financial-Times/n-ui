@@ -1,6 +1,6 @@
 (function () {
 	if (/(^|\s)next-fonts-loaded=1(;|$)/.test(document.cookie)) {
-		var fontLabels = ['serifDisplay', 'sansData', 'sansDataBold', 'sansBold'];
+		var fontLabels = ['sans', 'sansBold', 'sansData', 'sansDataBold', 'serifDisplay'];
 		for (var i = 0; i < fontLabels.length; i++) {
 			document.documentElement.className += ' o-typography--loaded-' + fontLabels[i];
 		}
