@@ -1,9 +1,11 @@
-$_n-ui-variant: null !default;
+////
+/// @group n-ui features
+////
 
-$_n-ui-output-critical: false !default;
-
-// default feature values
-$_n-ui-features: (
+/// Configurable features
+/// @type List
+/// @private
+$n-ui-features: (
 	ads: 'critical',
 	buttons: false,
 	colors: true,
@@ -28,15 +30,17 @@ $_n-ui-features: (
 	welcomeMessage: true
 ) !default;
 
-$_n-ui-feature-dependenices: (
-	myft: ('forms', 'notification', 'overlay', 'myftCommon'),
-	footer: ('welcomeMessage'),
-	welcomeMessage: ('footer')
+/// Declare any feature dependencies
+/// @type Map
+$n-ui-feature-dependenices: (
+	myft: ('forms', 'notification', 'overlay', 'myftCommon')
 );
 
-$_n-ui-presets: (
-	discrete: map-merge($_n-ui-features, ()),
-	complete: map-merge($_n-ui-features, (
+/// Preset groups of features
+/// @type Map
+$n-ui-presets: (
+	discrete: (),
+	complete: (
 		cookieMessage: true,
 		messagePrompts: true,
 		myftCommon: 'critical',
@@ -44,9 +48,7 @@ $_n-ui-presets: (
 		notification: true,
 		promoMessages: false,
 		welcomeMessage: true
-	))
+	)
 );
-
-$_n-ui-configured: false !default;
 
 @import '_sass-utils/main';
