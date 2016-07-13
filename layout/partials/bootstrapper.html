@@ -42,7 +42,7 @@
 				ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}');
 			{{/if}}
 
-			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '{{#if polyfillsRUM}}&rum=1{{/if}}&features=' + [
+			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '{{#if @root.flags.polyfillsRUM}}&rum=1{{/if}}&features=' + [
 				'default',
 				'requestAnimationFrame',
 				'Promise',
