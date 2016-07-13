@@ -7,7 +7,7 @@ const broadcast = sinon.stub(utils, 'broadcast', () => {})
 const timingsObject = {
 	firstAdLoaded: 1000,
 	adIframeLoaded: 1000
-}
+};
 
 describe('Metrics', () => {
 	let saveWindowPerformance
@@ -48,9 +48,9 @@ describe('Metrics', () => {
 			}
 		}
 
-		sendMetrics(timingsObject, { 
-			gpt: { 
-			creativeId: '1234', 
+		sendMetrics(timingsObject, {
+			gpt: {
+			creativeId: '1234',
 			serviceName: 'gpt'
 			},
 			container: { getAttribute: () => 'Billboard' }
