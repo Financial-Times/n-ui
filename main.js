@@ -17,7 +17,8 @@ const presets = {
 	discrete: {
 		header: true,
 		footer: true,
-		date: true
+		date: true,
+		welcomeMessage: true
 	},
 	complete: {
 		header: true,

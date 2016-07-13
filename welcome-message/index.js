@@ -31,22 +31,14 @@ function showAndroidLink () {
 	});
 }
 
-function hideOptOutLink () {
-	Array.from(document.querySelectorAll('.js-optout-link')).forEach(a => {
-		a.classList.add(HIDDEN_CLASSNAME);
-	});
-}
-
 function init () {
 	const fixedEl = document.querySelector('.n-welcome-message--fixed');
 	const staticEl = document.querySelector('.n-welcome-message--static');
 
 	if (isWebAppCapableDevice(navigator.userAgent)) {
 		showWebAppLink();
-		hideOptOutLink();
 	} else if (isModernAndroidDevice(navigator.userAgent)) {
 		showAndroidLink();
-		hideOptOutLink();
 	}
 
 	if (Boolean(superstore.local.get(STORAGE_KEY)) === false && hasLocalStorage()) {
