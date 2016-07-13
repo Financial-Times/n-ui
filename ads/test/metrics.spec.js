@@ -7,7 +7,7 @@ const broadcast = sinon.stub(utils, 'broadcast', () => {})
 const timingsObject = {
 	firstAdLoaded: 1000,
 	adIframeLoaded: 1000
-}
+};
 
 describe('Metrics', () => {
 	let saveWindowPerformance
@@ -34,6 +34,11 @@ describe('Metrics', () => {
 		const expectedTrackingObject = {
 			category: 'ads',
 			action: 'first-load',
+			creative: {
+				id: '1234',
+				serviceName: 'gpt',
+				size: 'Billboard'
+			},
 			timings: {
 				offsets: {
 					firstAdLoaded: { domContentLoadedEventEnd: 900, loadEventEnd: 900, domInteractive: 900 },
@@ -43,7 +48,13 @@ describe('Metrics', () => {
 			}
 		}
 
-		sendMetrics(timingsObject)
+		sendMetrics(timingsObject, {
+			gpt: {
+			creativeId: '1234',
+			serviceName: 'gpt'
+			},
+			container: { getAttribute: () => 'Billboard' }
+		})
 		expect(broadcast).to.have.been.calledWith('oTracking.event', expectedTrackingObject)
 	})
 
