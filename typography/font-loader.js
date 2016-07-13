@@ -12,7 +12,7 @@ const fontConfigs = [
 	{
 		family: 'MetricWeb',
 		weight: 'normal',
-		labels: ['sansData']
+		labels: ['sans', 'sansData']
 	},
 	{
 		family: 'MetricWeb',

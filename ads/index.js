@@ -91,7 +91,7 @@ function onAdsComplete (flags, event) {
 					const sendTimings = () => {
 						customTimings.adIframeLoaded = new Date().getTime();
 						perfMark('adIframeLoaded');
-						sendMetrics(customTimings)
+						sendMetrics(customTimings, detail.slot);
 						document.body.removeEventListener('oAds.adIframeLoaded', sendTimings);
 					}
 					document.body.addEventListener('oAds.adIframeLoaded', sendTimings);
