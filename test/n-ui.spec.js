@@ -16,6 +16,7 @@ describe('n-ui', () => {
 			sinon.stub(date, 'init');
 			sinon.stub(ads, 'init');
 			sinon.stub(tracking, 'init');
+			sinon.stub(tracking, 'lazyInit');
 			sinon.stub(layout, 'bootstrap', (opts, cb) => {
 				return cb({
 					flags: {
@@ -33,6 +34,7 @@ describe('n-ui', () => {
 			footer.init.restore();
 			date.init.restore();
 			tracking.init.restore();
+			tracking.lazyInit.restore();
 			ads.init.restore();
 			nUi.reset();
 		})
@@ -145,7 +147,5 @@ describe('n-ui', () => {
 				})
 			})
 	});
-
-
 
 })

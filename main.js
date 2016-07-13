@@ -4,7 +4,6 @@ import 'babel-polyfill-silencer';
 import layout from './layout';
 import ads from './ads';
 import tracking from './tracking';
-import nInstrumentation from 'n-instrumentation';
 import date from './date';
 import header from './header';
 import promoMessages from './promo-messages';
@@ -18,7 +17,8 @@ const presets = {
 	discrete: {
 		header: true,
 		footer: true,
-		date: true
+		date: true,
+		welcomeMessage: true
 	},
 	complete: {
 		header: true,
@@ -73,10 +73,6 @@ export function bootstrap (config, cb) {
 		if (!isInitialized('tracking')) {
 			// FT and next tracking
 			tracking.init(flags, appInfo);
-			// TODO - move n-instrumentation in to n-ui
-			if (flags.get('nInstrumentation')) {
-				nInstrumentation.init();
-			}
 			initializedFeatures.tracking = true;
 		}
 
@@ -99,10 +95,12 @@ export function bootstrap (config, cb) {
 			header.init(flags);
 			initializedFeatures.header = true;
 		}
-		if(config.features.footer && !isInitialized('footer')){
+
+		if (config.features.footer && !isInitialized('footer')) {
 			footer.init(flags);
 			initializedFeatures.footer = true
 		}
+
 		if (config.features.date && !isInitialized('date')) {
 			date.init();
 			initializedFeatures.date = true
@@ -116,10 +114,7 @@ export function bootstrap (config, cb) {
 				}
 
 				if (config.features.welcomeMessage && !isInitialized('welcomeMessage')) {
-					let version = flags.get('newFooter') ? 'new' : 'old';
-					flags.get('welcomePanel') && welcomeMessage[version].init({
-						enableOverlay: flags.get('myFTOnboardingOverlay')
-					});
+					flags.get('welcomePanel') && welcomeMessage.init();
 					initializedFeatures.welcomeMessage = true
 				}
 
