@@ -37,6 +37,19 @@ describe('bootstrapping', () => {
 		ads.init.restore();
 	})
 
+	it('binds bootstrap and configure to itself', () => {
+		const CI = new ComponentInitializer();
+
+		const parasite = {
+			bootstrap: CI.bootstrap,
+			configure: CI.configure
+		};
+		parasite.configure({parasite: true});
+		expect(CI.configuration.parasite).to.be.true;
+		parasite.bootstrap();
+		expect(jsLoader.prototype.bootstrap.calledOnce).to.be.true;
+	})
+
 	it('always initialise tracking', () => {
 		const cb = sinon.stub();
 		const CI = new ComponentInitializer();

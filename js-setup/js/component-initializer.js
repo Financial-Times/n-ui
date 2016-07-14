@@ -35,6 +35,8 @@ export class ComponentInitializer {
 		this.initializedFeatures = {};
 		this.configuration = {};
 		this.loader = new Loader();
+		this.configure = this.configure.bind(this);
+		this.bootstrap = this.bootstrap.bind(this);
 	}
 
 	isInitialized (feature) {
@@ -55,7 +57,7 @@ export class ComponentInitializer {
 		}
 
 		cb = cb || (() => null);
-		config = config || this.configuration;
+		config = config || this.configuration || {};
 
 		// belt and braces backwards compatibility for old api, which expected a flat config object
 		if (!config.features) {
@@ -66,13 +68,13 @@ export class ComponentInitializer {
 
 		return this.loader.bootstrap(config, ({ flags, mainCss, appInfo }) => { // eslint-disable-line
 
-			if (!this.isInitialized('tracking')) {
+			if (!this.initializedFeatures.tracking) {
 				// FT and next tracking
 				tracking.init(flags, appInfo);
 				this.initializedFeatures.tracking = true;
 			}
 
-			if (config.features.myft && !this.isInitialized('myftclient')) {
+			if (config.features.myft && !this.initializedFeatures.myftclient) {
 				const clientOpts = [];
 
 				if (flags.get('follow')) {
@@ -87,39 +89,39 @@ export class ComponentInitializer {
 				this.initializedFeatures.myftClient = true
 			}
 
-			if (config.features.header && !this.isInitialized('header')) {
+			if (config.features.header && !this.initializedFeatures.header) {
 				header.init(flags);
 				this.initializedFeatures.header = true;
 			}
 
-			if (config.features.footer && !this.isInitialized('footer')) {
+			if (config.features.footer && !this.initializedFeatures.footer) {
 				footer.init(flags);
 				this.initializedFeatures.footer = true
 			}
 
-			if (config.features.date && !this.isInitialized('date')) {
+			if (config.features.date && !this.initializedFeatures.date) {
 				date.init();
 				this.initializedFeatures.date = true
 			}
 
 			mainCss
 				.then(() => {
-					if (config.features.cookieMessage && !this.isInitialized('cookieMessage')) {
+					if (config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
 						cookieMessage.init();
 						this.initializedFeatures.cookieMessage = true;
 					}
 
-					if (config.features.welcomeMessage && !this.isInitialized('welcomeMessage')) {
+					if (config.features.welcomeMessage && !this.initializedFeatures.welcomeMessage) {
 						flags.get('welcomePanel') && welcomeMessage.init();
 						this.initializedFeatures.welcomeMessage = true
 					}
 
-					if (config.features.messagePrompts && !this.isInitialized('messagePrompts')) {
+					if (config.features.messagePrompts && !this.initializedFeatures.messagePrompts) {
 						messagePrompts.init();
 						this.initializedFeatures.messagePrompts = true;
 					}
 
-					if (config.features.myft && !this.isInitialized('myftUi')) {
+					if (config.features.myft && !this.initializedFeatures.myftUi) {
 						myft.ui.init({
 							anonymous: !(/FTSession=/.test(document.cookie)),
 							flags
@@ -127,7 +129,7 @@ export class ComponentInitializer {
 						this.initializedFeatures.myftUi = true;
 					}
 
-					if (config.features.promoMessages && !this.isInitialized('promoMessages')) {
+					if (config.features.promoMessages && !this.initializedFeatures.promoMessages) {
 						promoMessages.init(flags);
 						this.initializedFeatures.promoMessages = true;
 					}
@@ -137,12 +139,12 @@ export class ComponentInitializer {
 				.then(cb)
 				.then(() => {
 					// TODO - lazy load this
-					if (!this.isInitialized('ads')) {
+					if (!this.initializedFeatures.ads) {
 						ads.init(flags, appInfo);
 						this.initializedFeatures.ads = true
 					}
 
-					if (!this.isInitialized('lazyTracking')) {
+					if (!this.initializedFeatures.lazyTracking) {
 						tracking.lazyInit(flags);
 						this.initializedFeatures.lazyTracking = true;
 					}
