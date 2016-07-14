@@ -1,7 +1,7 @@
 @import '../buttons/main';
 
-@mixin nUiMyFtCommon () {
-	@include nUiCriticalStart('myft-common');
+@mixin nUiMyftCommon () {
+	@include nUiCriticalStart('myftCommon');
 	.myft-ui,
 	.n-myft-ui {
 		display: inline-block;
@@ -68,9 +68,9 @@
 		width: 34px;
 		margin: 0 8px -5px;
 	}
-	@include nUiCriticalEnd('myft-common');
+	@include nUiCriticalEnd('myftCommon');
 }
 
-@if nUiApply('myft-common') {
-	@include nUiMyFtCommon;
+@if nUiApply('myftCommon') {
+	@include nUiMyftCommon;
 }
