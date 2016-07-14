@@ -26,11 +26,9 @@
 
 	.cookie-message__close-btn {
 		position: relative;
-		border-radius: 50%;
 		padding: 0;
 		width: 24px;
 		height: 24px;
-		border: 1px solid getColor('grey-tint5');
 		background: none;
 		cursor: pointer;
 		opacity: 0.75;
@@ -43,7 +41,8 @@
 			left: 5px;
 		}
 
-		&:hover {
+		&:hover,
+		&:focus {
 			opacity: 1;
 		}
 	}
