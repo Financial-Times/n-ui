@@ -10,23 +10,24 @@
     "karma.conf.js",
     "Makefile",
     "n.Makefile",
-    "package.json"
+    "package.json",
+    "webpack.config.js",
+    "webpack.config.demo.js"
   ],
   "main": "main.js",
   "dependencies": {
+    "awesomplete": "^1.1.1",
+    "babel-polyfill-silencer": "^1.1.0",
     "fontfaceobserver": "^1.7.1",
     "ft-metadata": "https://github.com/Financial-Times/ft-metadata.git#^0.0.2",
     "ftdomdelegate": "^2.0.3",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
     "n-header-footer": "^4.0.0",
-    "n-instrumentation": "^1.10.1",
     "n-jsonp": "^2.3.1",
     "n-message-prompts": "^3.0.0",
     "n-messages": "^2.0.0",
     "n-notification": "^4.0.0",
-    "n-third-party-code": "^2.0.1",
-    "next-ads-component": "^9.1.0",
-    "next-card": "^7.1.0",
+    "n-service-worker": "^1.0.4",
     "next-feature-flags-client": "^8.1.0",
     "next-myft-client": "^6.4.2",
     "o-ads": "^4.0.0",
@@ -35,19 +36,21 @@
     "o-date": "^2.3.3",
     "o-errors": "^3.1.0",
     "o-expander": "^3.0.1",
+    "o-footer": "^5.0.0",
     "o-forms": "^2.0.0",
     "o-grid": "^4.2.0",
+    "o-header": "^6.0.3",
     "o-icons": "^4.0.0",
     "o-overlay": "^1.8.2",
-    "o-typography": "^3.2.0",
+    "o-tracking": "^1.1.8",
+    "o-typography": "^4.2.0",
     "o-viewport": "^2.0.0",
-    "superstore": "^2.1.0",
-    "superstore-sync": "^2.1.0",
-    "o-footer": "^4.1.3",
     "o-visual-effects": "^0.1.0",
-    "babel-polyfill-silencer": "^1.1.0"
+    "superstore": "^2.1.0",
+    "superstore-sync": "^2.1.0"
   },
   "resolutions": {
-    "o-viewport": "^2.0.0"
+    "o-header": "^6.0.3",
+    "awesomplete": "^1.1.1"
   }
 }

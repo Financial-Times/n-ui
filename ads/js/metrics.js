@@ -1,6 +1,6 @@
 import { broadcast } from '../../utils'
 
-module.exports = (timingsObject) => {
+module.exports = (timingsObject, slotDetails) => {
 	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance
 	if (performance && performance.mark && timingsObject) {
 		const offsets = _calculateOffsets(performance, timingsObject)
@@ -9,7 +9,13 @@ module.exports = (timingsObject) => {
 		broadcast('oTracking.event', {
 			category: 'ads',
 			action: 'first-load',
-			timings: { offsets, marks }
+			timings: { offsets, marks },
+			creative: {
+				id: slotDetails.gpt.creativeId,
+				serviceName: slotDetails.gpt.serviceName,
+				size: slotDetails.container.getAttribute('data-o-ads-loaded')
+			}
+
 		});
 	}
 }

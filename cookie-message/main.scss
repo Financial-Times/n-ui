@@ -1,9 +1,6 @@
 @include nUiCriticalStart('cookieMessage');
 
-$_n-ui-cookie-message-applied: false !default;
-$_n-ui-cookie-message-is-silent: nUiHas('cookieMessage') == false or $_n-ui-cookie-message-applied == true;
-
-@if $_n-ui-cookie-message-is-silent == false {
+@if nUiApply('cookieMessage') {
 
 	/*------------------------------------*\
 			#BLOCK-DESKTOP
@@ -118,7 +115,6 @@ $_n-ui-cookie-message-is-silent: nUiHas('cookieMessage') == false or $_n-ui-cook
 		opacity: 0;
 	}
 
-	$_n-ui-cookie-message-applied: true !global;
 }
 
 @include nUiCriticalEnd('cookieMessage');

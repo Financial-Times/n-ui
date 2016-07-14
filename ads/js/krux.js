@@ -23,7 +23,7 @@ const frequencyCap = (name, limit, fn) => {
 
 exports.init = (flags) => {
 
-	window.addEventListener('load', () => {
+	document.body.addEventListener('oAds.kruxScriptLoaded', () => {
 		//If local/sessionStorage unavailable, don't run any of these scripts.
 		if(typeof window.Krux === 'undefined' || !Superstore.isPersisting()) {
 			return;

@@ -1,14 +1,7 @@
 @include nUiCriticalStart('expander');
 
-$_n-ui-expander-applied: false !default;
-$_n-ui-expander-is-silent: nUiHas('expander') == false or $_n-ui-expander-applied == true;
-$o-expander-is-silent: $_n-ui-expander-is-silent;
+$o-expander-is-silent: not nUiHas('expander') !default;
 
 @import 'o-expander/main';
-
-@if $_n-ui-expander-is-silent == false {
-	$_n-ui-expander-applied: true !global;
-	$o-expander-is-silent: true !global;
-}
 
 @include nUiCriticalEnd('expander');

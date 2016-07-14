@@ -14,6 +14,7 @@
 		<link rel="dns-prefetch" href="{{this}}">
 		{{/each}}
 		<link rel="preconnect" href="https://next-geebee.ft.com">
+		<link rel="preconnect" href="https://next-geebee.ft.com" crossorigin="use-credentials">
 		<link rel="preconnect" href="https://spoor-api.ft.com">
 		<link rel="preconnect" href="https://session-next.ft.com" crossorigin="use-credentials">
 
@@ -21,7 +22,6 @@
 		<link rel="preconnect" href="https://www.googletagservices.com">
 		<link rel="preconnect" href="https://partner.googleadservices.com">
 		<link rel="preconnect" href="https://securepubads.g.doubleclick.net">
-
 
 		{{#each preconnect}}
 		<link rel="preconnect" href="{{host}}"{{#if crossorigin}} crossorigin="{{crossorigin}}"{{/if}}>
@@ -76,8 +76,8 @@
 				{{>n-ui/footer/template}}
 				{{>n-ui/drawer/template}}
 			</div>
-			{{>n-ui/layout/partials/bootstrapper}}
-			{{>n-ui/tracking/templates/core-analytics}}
 		</div>
+	{{>n-ui/layout/partials/bootstrapper}}
+	{{>n-ui/tracking/templates/core-analytics}}
 	</body>
 </html>

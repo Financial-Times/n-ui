@@ -15,3 +15,22 @@
 @function nUiFeatureValue($feature) {
 	@return map-get($_n-ui-features, $feature);
 }
+
+/// Test to check if the given module is configured and whether it has been output already
+/// @param {String} $module-name
+/// @param {String} $partial-name
+/// @returns {Bool}
+@function nUiApply($module-name, $partial-name: '') {
+	@if nUiHas($module-name) {
+		$full-name: $module-name + $partial-name;
+		$should-apply: index($n-ui-imported-modules, $full-name) == null;
+
+		@if ($should-apply) {
+			$n-ui-imported-modules: append($n-ui-imported-modules, $full-name) !global;
+		}
+
+		@return $should-apply;
+	}
+
+	@return false;
+}
