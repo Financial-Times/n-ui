@@ -17,7 +17,8 @@ const presets = {
 	discrete: {
 		header: true,
 		footer: true,
-		date: true
+		date: true,
+		welcomeMessage: true
 	},
 	complete: {
 		header: true,
@@ -113,10 +114,7 @@ export function bootstrap (config, cb) {
 				}
 
 				if (config.features.welcomeMessage && !isInitialized('welcomeMessage')) {
-					let version = flags.get('newFooter') ? 'new' : 'old';
-					flags.get('welcomePanel') && welcomeMessage[version].init({
-						enableOverlay: flags.get('myFTOnboardingOverlay')
-					});
+					flags.get('welcomePanel') && welcomeMessage.init();
 					initializedFeatures.welcomeMessage = true
 				}
 

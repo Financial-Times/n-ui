@@ -15,40 +15,31 @@ function enableMouseflow () {
 // Loads mouseflow tracking code
 module.exports = function (flags) {
 
-	const isSignUpApp = !!document.querySelector('html[data-next-app=signup]');
 	const isAutomatedTest = window.location.href.indexOf('backend') !== -1;
+	const isSignUpApp = !!document.querySelector('html[data-next-app=signup]') && !isAutomatedTest;
+	const hasLightSignup = !!document.querySelector('.o-email-only-signup');
 
 	if (flags.get('mouseflowForce')) {
 		enableMouseflow();
 	}
 	else if (flags.get('mouseflow')) {
 
-		if (isSignUpApp && !isAutomatedTest) {
+		if (isSignUpApp || hasLightSignup) {
 			enableMouseflow();
 		}
 		else {
-			fetch('https://session-next.ft.com/', {
-				timeout: 2000,
-				credentials: 'include'
-			})
-			.then (function (response) {
-				switch (response.status) {
-					case 404:
-						return {};
-					case 200:
-						return response.json();
-					default:
-						throw new Error(`${response.status} - ${response.statusTest}`);
-				}
-			})
-			.then (function (session) {
+			const spoorId = getCookieValue('spoor-id');
+			const oldSpoorId = spoorId.indexOf('-') === -1;
 
-				const lastUuidSegmentHex = session.uuid.substring(session.uuid.lastIndexOf('-') + 1);
+			if (oldSpoorId) {
+				return;
+			}
 
-				if (parseInt(lastUuidSegmentHex, 16) % 100 === 0) { // 1%
-					enableMouseflow();
-				}
-			});
+			const lastSegmentHex = spoorId.substring(spoorId.lastIndexOf('-') + 1);
+
+			if (parseInt(lastSegmentHex, 16) % 20 === 0) { // 5% of everyone with a uuid-style spoor id
+				enableMouseflow();
+			}
 		}
 	}
 }
