@@ -1,10 +1,13 @@
 @if nUiApply('header', 'typeahead') {
 
-	// awesomeplete will wrap input when instantiated
+	// awesomplete will wrap the search term input when instantiated
 	.awesomplete {
 		position: relative;
+		// if a child of a flex container, always grow
 		flex-grow: 1;
-		text-align: left;
+		// but for browsers that don't support flexing...
+		display: inline-block;
+		min-width: 50%;
 
 		input {
 			width: 100%;
@@ -29,6 +32,7 @@
 			overflow: hidden;
 			background: getColor('white');
 			list-style: none;
+			text-align: left;
 
 			@include oGridRespondTo('S') {
 				width: 240px;
