@@ -4,6 +4,9 @@
 	classes = classes.replace(/\bno-js\b/, 'js');
 
 	// HACK: make the following browsers core as they're unsupported by the polyfill service
+	var isSupported = true;
+
+	{{#if @root.flags.forceCoreExperience}}
 	var unsupported = {
 		'iOS Facebook in-app browser': function (ua) {
 			var iOS = /OS [1-9].* like Mac OS X/.test(ua);
@@ -17,7 +20,6 @@
 		}
 	};
 
-	var isSupported = true;
 
 	for (var browser in unsupported) {
 		if (unsupported[browser](navigator.userAgent)) {
@@ -25,6 +27,7 @@
 			break;
 		}
 	}
+	{{/if}}
 
 	window.cutsTheMustard = isSupported && (typeof Function.prototype.bind !== 'undefined');
 
