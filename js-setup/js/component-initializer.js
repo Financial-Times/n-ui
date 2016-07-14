@@ -124,7 +124,7 @@ export class ComponentInitializer {
 					}
 
 					if (config.features.messagePrompts && !this.initializedFeatures.messagePrompts) {
-						messagePrompts.init();
+						messagePrompts.init(flags);
 						this.initializedFeatures.messagePrompts = true;
 					}
 
