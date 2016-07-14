@@ -1,14 +1,42 @@
 {{#if @root.flags.javascript}}
-var classes = document.documentElement.className;
-classes = classes.replace(/\bno-js\b/, 'js');
+(function () {
+	var classes = document.documentElement.className;
+	classes = classes.replace(/\bno-js\b/, 'js');
 
-// HACK: Make FB in-app browser on iOS not cut the mustard, temporarily
-var isFBInAppBrowser = /OS [1-9].* like Mac OS X/.test(navigator.userAgent) && /(FBAN|FBAV)/.test(navigator.userAgent);
-window.cutsTheMustard = (typeof Function.prototype.bind !== 'undefined') && !isFBInAppBrowser;
-if (window.cutsTheMustard) {
-	classes = classes.replace(/\bcore\b/, 'enhanced');
-}
-document.documentElement.className = classes;
+	// HACK: make the following browsers core as they're unsupported by the polyfill service
+	var isSupported = true;
+
+	{{#if @root.flags.forceCoreExperience}}
+	var unsupported = {
+		'iOS Facebook in-app browser': function (ua) {
+			var iOS = /OS [1-9].* like Mac OS X/.test(ua);
+			var fb = /(FBAN|FBAV)/.test(ua);
+			return iOS && fb;
+		},
+		'Samsung frankenchromium': function (ua) {
+			var android = /Android/.test(ua);
+			var samsung = /SamsungBrowser/.test(ua);
+			return android && samsung;
+		}
+	};
+
+
+	for (var browser in unsupported) {
+		if (unsupported[browser](navigator.userAgent)) {
+			isSupported = false;
+			break;
+		}
+	}
+	{{/if}}
+
+	window.cutsTheMustard = isSupported && (typeof Function.prototype.bind !== 'undefined');
+
+	if (window.cutsTheMustard) {
+		classes = classes.replace(/\bcore\b/, 'enhanced');
+	}
+
+	document.documentElement.className = classes;
+})();
 {{else}}
 window.cutsTheMustard = false;
 {{/if}}

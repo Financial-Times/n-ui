@@ -37,7 +37,7 @@ module.exports = function (flags) {
 
 			const lastSegmentHex = spoorId.substring(spoorId.lastIndexOf('-') + 1);
 
-			if (parseInt(lastSegmentHex, 16) % 20 === 0) { // 5% of everyone with a uuid-style spoor id
+			if (parseInt(lastSegmentHex, 16) % 100 === 0) { // 1% of everyone with a uuid-style spoor id
 				enableMouseflow();
 			}
 		}

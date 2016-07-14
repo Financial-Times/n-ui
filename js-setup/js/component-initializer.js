@@ -9,6 +9,7 @@ import welcomeMessage from '../../welcome-message';
 import messagePrompts from '../../message-prompts';
 import footer from '../../footer';
 import myft from '../../myft';
+import * as serviceWorker from 'n-service-worker';
 
 export const presets = {
 	discrete: {
@@ -72,6 +73,12 @@ export class ComponentInitializer {
 				// FT and next tracking
 				tracking.init(flags, appInfo);
 				this.initializedFeatures.tracking = true;
+			}
+
+			if (flags.get('serviceWorker')) {
+				serviceWorker.register(flags);
+			} else {
+				serviceWorker.unregister();
 			}
 
 			if (config.features.myft && !this.initializedFeatures.myftclient) {

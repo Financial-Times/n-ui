@@ -1,8 +1,6 @@
 // to avoid race conditions relating to Symbol polyfills
 import 'babel-polyfill-silencer';
-
 export {bootstrap, configure} from './js-setup';
-
 
 // Expose entry points to shared bundle
 import ads from './ads';
