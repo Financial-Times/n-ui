@@ -27,6 +27,7 @@
     "n-message-prompts": "^3.0.0",
     "n-messages": "^2.0.0",
     "n-notification": "^4.0.0",
+    "n-service-worker": "^1.0.4",
     "next-feature-flags-client": "^8.1.0",
     "next-myft-client": "^6.4.2",
     "o-ads": "^4.0.0",
@@ -41,12 +42,12 @@
     "o-header": "^6.0.3",
     "o-icons": "^4.0.0",
     "o-overlay": "^1.8.2",
+    "o-tracking": "^1.1.8",
     "o-typography": "^4.2.0",
     "o-viewport": "^2.0.0",
     "o-visual-effects": "^0.1.0",
     "superstore": "^2.1.0",
-    "superstore-sync": "^2.1.0",
-    "o-tracking": "^1.1.8"
+    "superstore-sync": "^2.1.0"
   },
   "resolutions": {
     "o-header": "^6.0.3",
