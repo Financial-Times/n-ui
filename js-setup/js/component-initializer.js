@@ -10,7 +10,7 @@ import messagePrompts from '../../message-prompts';
 import footer from '../../footer';
 import myft from '../../myft';
 
-const presets = {
+export const presets = {
 	discrete: {
 		header: true,
 		footer: true,
@@ -30,9 +30,7 @@ const presets = {
 	}
 };
 
-let initializedFeatures = {};
-
-class ComponentInitializer {
+export class ComponentInitializer {
 	constructor () {
 		this.initializedFeatures = {};
 		this.configuration = {};
@@ -153,5 +151,3 @@ class ComponentInitializer {
 		})
 	}
 }
-
-module.exports = ComponentInitializer;

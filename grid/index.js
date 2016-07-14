@@ -4,10 +4,6 @@ const utils = require('../utils');
 
 let listening = false;
 
-function getCurrentBreakpoint(){
-	return oGrid.getCurrentLayout();
-}
-
 function fireBreakpointEvent(breakpoint){
 	utils.broadcast('grid.layoutChange', {layout:breakpoint});
 }
@@ -17,11 +13,11 @@ function listenForBreakpointChanges(){
 		return;
 	}
 
-	let lastBreakpoint = getCurrentBreakpoint();
+	let lastBreakpoint = oGrid.getCurrentLayout();
 	fireBreakpointEvent(lastBreakpoint);
 	viewport.listenTo('resize');
 	document.body.addEventListener('oViewport.resize', () => {
-		let breakpoint = getCurrentBreakpoint();
+		let breakpoint = oGrid.getCurrentLayout();
 		if(breakpoint !== lastBreakpoint){
 			fireBreakpointEvent(breakpoint);
 			lastBreakpoint = breakpoint;
@@ -32,3 +28,4 @@ function listenForBreakpointChanges(){
 
 module.exports = oGrid;
 module.exports.listenForBreakpointChanges = listenForBreakpointChanges;
+module.exports.__wrapsOrigami = true;

@@ -1,6 +1,5 @@
 /*global require,describe,afterEach,beforeEach,it,expect,sinon*/
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
-const jsLoader = require('../index');
 const JsLoader = require('../js/loader');
 const oErrors = require('o-errors');
 

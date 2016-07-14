@@ -1,3 +1,3 @@
-const ComponentInitializer = require('./js/component-initializer');
+import { ComponentInitializer } from './js/component-initializer';
 
-module.exports = new ComponentInitializer();
+export default new ComponentInitializer();
