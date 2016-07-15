@@ -18,6 +18,7 @@ $_n-ui-features: (
 	layout: 'critical',
 	messagePrompts: false,
 	myft: false,
+	myftCommon: false,
 	normalize: 'critical',
 	notification: false,
 	overlay: false,
@@ -28,7 +29,7 @@ $_n-ui-features: (
 ) !default;
 
 $_n-ui-feature-dependenices: (
-	myft: ('forms', 'notification', 'overlay'),
+	myft: ('forms', 'notification', 'overlay', 'myftCommon'),
 	footer: ('welcomeMessage'),
 	welcomeMessage: ('footer')
 );
@@ -38,6 +39,7 @@ $_n-ui-presets: (
 	complete: map-merge($_n-ui-features, (
 		cookieMessage: true,
 		messagePrompts: true,
+		myftCommon: 'critical',
 		myft: true,
 		notification: true,
 		promoMessages: false,

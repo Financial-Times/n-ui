@@ -1,0 +1,19 @@
+{{#if @root.flags.myFtApiWrite}}
+<form class="n-myft-ui n-myft-ui--save" method="POST"
+	data-content-id="{{contentId}}"
+	data-myft-ui="saved"
+	action="/__myft/api/core/saved/content/{{contentId}}?method=put">
+<button
+	type="submit"
+	class="n-myft-ui__button{{#variant}} n-myft-ui__button--{{this}}{{/variant}}"
+	data-trackable="save-for-later"
+	data-alternate-label="Saved to myFT"
+	data-alternate-text="Saved"
+	data-content-id="{{contentId}}" {{! duplicated here for tracking}}
+	aria-label="Save to myFT"
+	title="Save to myFT"
+>{{#if buttonText}}{{buttonText}}{{else}}Save{{/if}}</button>
+</form>
+{{else}}
+<!-- Save button hidden due to myFtApiWrite being off -->
+{{/if }}
