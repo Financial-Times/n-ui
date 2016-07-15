@@ -4,15 +4,19 @@
 @import '../overlay/main';
 @import '../myft-common/main';
 
-@include nUiCriticalStart('myft');
-@if not nUiApply('myftCommon') {
-	@include nUiMyftCommon;
-}
-@include nUiCriticalEnd('myft');
+
 
 @import 'scss/follow-email';
 
 @if nUiApply('myft') {
+	@include nUiCriticalStart('myft');
+
+	// hacky fix for now as myft and myftCommon are not totally decoupled
+	@if not nUiApply('myftCommon') {
+		@include nUiMyftCommon;
+	}
+
+	@include nUiCriticalEnd('myft');
 
 	// 'unfollow' button
 	.myft-ui__button--manage,
