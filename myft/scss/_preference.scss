@@ -1,0 +1,147 @@
+@if nUiApply('myft') {
+	@include nUiCriticalStart('myft');
+
+	.myft-ui--prefer {
+		display: block;
+
+		&:after {
+			clear: both;
+			content: '';
+			display: table;
+		}
+	}
+
+	.js .myft-ui--prefer {
+		padding: 5px 0;
+	}
+
+	.myft-ui--prefer label {
+		@include oTypographySans(s);
+	}
+
+	.no-js .myft-ui--prefer label {
+		line-height: 27px;
+	}
+
+	.no-js .myft-ui--prefer button {
+		@include oButtons();
+		margin-left: 10px;
+	}
+
+	.js .myft-ui--prefer button {
+		@include oTypographySansBold(xs);
+		background: transparent;
+		border-radius: 3px;
+		border: 2px solid rgba(getColor('teal-1'), 0.3);
+		box-sizing: border-box;
+		color: getColor('teal-1');
+		margin-left: 10px;
+		padding: 0;
+		text-transform: uppercase;
+		width: 70px;
+
+		&:before,
+		&:after {
+			border: 0;
+			box-sizing: border-box;
+			display: block;
+			float: left;
+			height: 16px;
+			margin: 0;
+			padding: 2px 0;
+			text-align: center;
+			width: 33px;
+		}
+
+		&:before {
+			background: transparent;
+			color: getColor('teal-1');
+			content: 'off';
+		}
+		&:after {
+			background: rgba(getColor('teal-1'), 0.3);
+			content: '';
+		}
+		&:hover,
+		&:focus {
+			&:before {
+				background: rgba(getColor('teal-1'), 0.08);
+			}
+		}
+
+		&[aria-pressed="true"] {
+			border-color: getColor('teal-1');
+
+			&:before {
+				background: rgba(getColor('teal-1'), 0.08);
+				content: '';
+			}
+			&:after {
+				background: getColor('teal-1');
+				color: white;
+				content: 'on';
+			}
+			&:hover:after,
+			&:focus:after {
+				background: rgba(getColor('teal-1'), 0.8);
+			}
+		}
+
+		&[disabled] {
+			opacity: 0.5;
+
+			&,
+			&:hover:before,
+			&:focus:before {
+				background: transparent;
+			}
+		}
+	}
+
+	.n-myft-ui--prefer-group {
+		width: 100%;
+
+		@include oGridRespondTo($from: 'M') {
+			padding-left: $spacing-unit;
+		}
+
+		.n-myft-ui__button {
+			border-radius: 0;
+			margin-left: -5px;
+			transition: all 0.1s ease-in-out;
+		}
+		.n-myft-ui__button:first-of-type {
+			border-bottom-left-radius: 3px;
+			border-left-width: 1px;
+			border-top-left-radius: 3px;
+		}
+
+		.n-myft-ui__button:last-child {
+			border-bottom-right-radius: 3px;
+			border-top-right-radius: 3px;
+		}
+
+		.n-myft-ui__button[aria-pressed="true"] {
+			padding-left: 26px;
+			position: relative;
+		}
+
+		.n-myft-ui__button[aria-pressed="true"]:before {
+			@include oIconsGetIcon('tick-thin', getColor('link-1'), 12);
+			content: ' ';
+			left: $spacing-unit/2;
+			margin: -6px $spacing-unit/4 0 0;
+			position: absolute;
+			top: 50%;
+		}
+	}
+
+	// Naff workaround for the new digest preference, prior to new alerts page overhaul
+	// scss-lint:disable QualifyingElement
+	p.preference__description {
+		margin-top: 0;
+	}
+	// scss-lint:enable QualifyingElement
+
+	@include nUiCriticalEnd('myft');
+}
