@@ -1,4 +1,4 @@
-@if variable-exists('n-ui-configured') {
+@if not variable-exists('n-ui-configured') {
 	@error 'you must use nUiConfigure() before importing n-ui/bootstrap';
 }
 

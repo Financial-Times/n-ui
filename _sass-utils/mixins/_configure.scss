@@ -7,7 +7,7 @@
 /// @output none
 /// @private
 @mixin nUiConfigureFeatures($features: ()) {
-	@each $feature-name, $feature-value in $feature-names {
+	@each $feature-name, $feature-value in $features {
 		@include nUiConfigureFeature($feature-name, $feature-value);
 	}
 }
@@ -39,8 +39,10 @@
 /// Configure n-ui
 /// @param {Map} $features
 /// @param {String} $preset
+/// @param {Boolean} $output-critical DEPRECATED
+/// @param {String} $variant DEPRECATED
 /// @output none
-@mixin nUiConfigure($features: (), $preset: null) {
+@mixin nUiConfigure($features: (), $preset: null, $output-critical: false, $variant: null) {
 	@if variable-exists('n-ui-configured') {
 		@error 'nUiConfigure must only be called once';
 	}
@@ -56,6 +58,17 @@
 
 	// add manually configured features
 	@include nUiConfigureFeatures($features);
+
+	// deprecated features
+	@if $output-critical {
+		$n-ui-output-critical: true !global;
+		@warn '$output-critical parameter has been deprecated. Please use global $n-ui-output-critical flag instead.';
+	}
+
+	@if $variant {
+		$n-ui-variant: $variant !global;
+		@warn '$variant parameter has been deprecated. Please use global $n-ui-variant flag instead.';
+	}
 
 	$n-ui-configured: true !global;
 }
