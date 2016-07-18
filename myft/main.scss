@@ -3,8 +3,8 @@
 @import '../notification/main';
 @import '../overlay/main';
 @import '../myft-common/main';
-@import 'scss/preference';
-
+@import 'scss/form-common';
+@import 'scss/form-preference';
 @import 'scss/follow-email';
 
 @if nUiApply('myft') {
@@ -23,17 +23,6 @@
 		&[aria-pressed="true"]:before {
 			@include oIconsGetIcon('cross-disk', getColor('white'), 14);
 		}
-	}
-
-	.n-myft-ui__fieldset {
-		border: 0;
-		padding: 0;
-		margin: 0;
-	}
-
-	.n-myft-ui__legend {
-		@include oTypographySans(s);
-		margin-bottom: 10px;
 	}
 
 	.n-myft-ui--article-saved__list-select {
