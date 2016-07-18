@@ -74,7 +74,9 @@
 					{{>n-ui/welcome-message/template}}
 				{{/if}}
 				{{>n-ui/footer/template}}
-				{{>n-ui/drawer/template}}
+				{{#if @root.flags.fancyDrawer}}
+					{{>n-ui/header/partials/drawer/template}}
+				{{/if}}
 			</div>
 		</div>
 	{{>n-ui/js-setup/templates/bootstrapper}}
