@@ -1,6 +1,4 @@
-@if nUiApply('myft') {
-	@include nUiCriticalStart('myft');
-
+@mixin nUiMyftPrefs () {
 	.myft-ui--prefer {
 		display: block;
 
@@ -142,6 +140,4 @@
 		margin-top: 0;
 	}
 	// scss-lint:enable QualifyingElement
-
-	@include nUiCriticalEnd('myft');
 }
