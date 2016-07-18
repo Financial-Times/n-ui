@@ -1,3 +1,39 @@
-{{#if @root.flags.newFooter}}
-	{{>n-ui/footer/_footer}}
-{{/if}}
+<footer class="o-footer o-footer--theme-dark" data-o-component="o-footer" data-o-footer--no-js data-trackable="footer" data-trackable-terminate>
+	<div class="o-footer__container">
+
+		<div class="o-footer__row">
+			<nav class="o-footer__matrix" role="navigation" aria-label="Useful links">
+				{{#each @root.navigationLists.footer}}
+				<div class="o-footer__matrix-group o-footer__matrix-group--{{items.length}}" data-trackable="group | {{title}}">
+					<h6 class="o-footer__matrix-title" {{#collapsible}}aria-controls="o-footer-section-{{@index}}"{{/collapsible}}>
+						{{{title}}}
+					</h6>
+					<div class="o-footer__matrix-content" id="o-footer-section-{{@index}}">
+						{{#each items}}
+							<div class="o-footer__matrix-column">
+								{{#.}}
+									<a class="o-footer__matrix-link" href="{{href}}" data-trackable="{{name}}">{{{name}}}</a>
+								{{/.}}
+							</div>
+						{{/each}}
+					</div>
+				</div>
+				{{/each}}
+			</nav>
+		</div>
+
+		<div class="o-footer__copyright" role="contentinfo" data-trackable="small-print">
+			<small>
+				Markets data delayed by at least 15 minutes. &#169; THE FINANCIAL TIMES LTD {{copyrightYear}}.
+				<abbr title="Financial Times">FT</abbr> and ‘Financial Times’ are trademarks of The Financial Times Ltd.<br>
+				The Financial Times and its journalism are subject to a self-regulation regime under the <a href="http://www.ft.com/editorialcode">FT Editorial Code of Practice</a>.
+			</small>
+		</div>
+
+	</div>
+	<div class="o-footer__brand">
+		<div class="o-footer__container">
+			<div class="o-footer__brand-logo"></div>
+		</div>
+	</div>
+</footer>
