@@ -3,8 +3,7 @@
 @import '../notification/main';
 @import '../overlay/main';
 @import '../myft-common/main';
-@import 'scss/form-common';
-@import 'scss/form-preference';
+@import 'scss/preference';
 @import 'scss/follow-email';
 
 @if nUiApply('myft') {
@@ -14,6 +13,8 @@
 	@if not nUiApply('myftCommon') {
 		@include nUiMyftCommon;
 	}
+
+	@include nUiMyftPrefs;
 
 	@include nUiCriticalEnd('myft');
 

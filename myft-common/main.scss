@@ -23,6 +23,17 @@
 		@include nButtonsSize(big);
 	}
 
+	.n-myft-ui__fieldset {
+		border: 0;
+		margin: 0;
+		padding: 0;
+	}
+
+	.n-myft-ui__legend {
+		@include oTypographySans(s);
+		margin-bottom: 10px;
+	}
+
 	.n-myft-ui--follow {
 		position: relative;
 
