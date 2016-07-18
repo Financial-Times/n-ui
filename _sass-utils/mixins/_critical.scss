@@ -1,0 +1,35 @@
+////
+/// @group n-ui critical mixins
+////
+
+/// Critical block
+/// @output Wraps the block with critical start and end comments
+@mixin nUiCritical($feature-name: null) {
+	@include nUiCriticalStart($feature-name);
+	@content;
+	@include nUiCriticalEnd($feature-name);
+}
+
+/// Critical block start
+/// @output A critical block start comment
+@mixin nUiCriticalStart($feature-name: null) {
+	@if $n-ui-output-critical and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
+		@if $n-ui-variant {
+			/*! start:head-#{$n-ui-variant}.css*/
+		} @else {
+			/*! start:head.css*/
+		}
+	}
+}
+
+/// Critical block end
+/// @output A critical block start comment
+@mixin nUiCriticalEnd($feature-name: null) {
+	@if $n-ui-output-critical and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
+		@if $n-ui-variant {
+			/*! end:head-#{$n-ui-variant}.css*/
+		} @else {
+			/*! end:head.css*/
+		}
+	}
+}
