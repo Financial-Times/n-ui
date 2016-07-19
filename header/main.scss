@@ -15,6 +15,13 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 		display: block;
 	}
 
+	// add next opt-out buttons
+	.o-header__drawer-menu-opt-out {
+		@include oButtons('medium', 'standout');
+		display: block;
+		margin: $_o-header-drawer-padding-x;
+	}
+
 }
 
 @include nUiCriticalEnd('header');

@@ -2,21 +2,21 @@
 	<div class="o-header__drawer-inner">
 
 		<div class="o-header__drawer-tools">
-			<a class="o-header__drawer-tools-logo" href="/">
+			<a class="o-header__drawer-tools-logo" href="/" data-trackable="logo">
 				<span class="o-header__visually-hidden">Financial Times</span>
 			</a>
-			<button type="button" class="o-header__drawer-tools-close" aria-controls="o-header-drawer">
+			<button type="button" class="o-header__drawer-tools-close" aria-controls="o-header-drawer" data-trackable="close">
 				<span class="o-header__visually-hidden">Close</span>
 			</button>
 		</div>
 
 		{{#if editions}}
-		<nav class="o-header__drawer-editions" role="navigation" aria-label="Edition switcher">
+		<nav class="o-header__drawer-editions" role="navigation" aria-label="Edition switcher" data-trackable="edition-switcher">
 			{{#with editions.current}}
 			<a class="o-header__drawer-editions-link" href="/{{id}}?edition={{id}}" data-trackable="{{id}}" aria-selected="true">{{name}} Edition</a>
 			{{/with}}
 			{{#each editions.others}}
-			<a class="o-header__drawer-editions-link" href="/{{id}}?edition={{id}}">{{name}} Edition</a>
+			<a class="o-header__drawer-editions-link" href="/{{id}}?edition={{id}}" data-trackable="{{id}}">{{name}} Edition</a>
 			{{/each}}
 		</nav>
 		{{/if}}
@@ -24,14 +24,14 @@
 		<div class="o-header__drawer-search">
 			<form class="o-header__drawer-search-form" action="/search" role="search" aria-label="Site search" data-typeahead>
 				<label class="o-header__visually-hidden" for="o-header-drawer-search-term">Search the <abbr title="Financial Times">FT</abbr></label>
-				<input class="o-header__drawer-search-term" id="o-header-drawer-search-term" name="q" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search the FT">
-				<button class="o-header__drawer-search-submit" type="submit">
+				<input class="o-header__drawer-search-term" id="o-header-drawer-search-term" name="q" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search the FT" data-trackable="search-term">
+				<button class="o-header__drawer-search-submit" type="submit" data-trackable="search-submit">
 					<span class="o-header__visually-hidden">Search</span>
 				</button>
 			</form>
 		</div>
 
-		<nav class="o-header__drawer-menu o-header__drawer-menu--primary" role="navigation" aria-label="Primary navigation">
+		<nav class="o-header__drawer-menu o-header__drawer-menu--primary" role="navigation" aria-label="Primary navigation" data-trackable="primary-nav">
 			<ul class="o-header__drawer-menu-list">
 				{{#each @root.navigationLists.drawer}}
 					{{#each this}}
@@ -97,6 +97,15 @@
 							<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
 						</li>
 					{{/with}}
+				{{/if}}
+				{{#if @root.flags.optInOut}}
+				<li class="o-header__drawer-menu-item">
+					{{#unless @root.forceOptInDevice}}
+						<a class="o-header__drawer-menu-opt-out js-optout-link" data-trackable="opt-out" href="/opt-out-confirm">Return to the old FT.com</a>
+					{{/unless}}
+					<a class="o-header__drawer-menu-opt-out js-webapp-link" data-trackable="visit-webapp" href="https://app.ft.com" hidden>Open in app</a>
+					<a class="o-header__drawer-menu-opt-out js-android-link" data-trackable="open-android-app" href="http://www.ft.com/androidapp" hidden>Open in app</a>
+				</li>
 				{{/if}}
 			</ul>
 		</nav>
