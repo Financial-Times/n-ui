@@ -1,8 +1,16 @@
 @include nUiCriticalStart('drawer');
 
+.n-drawer {
+	display: none;
+}
+
+@include nUiCriticalEnd('drawer');
+
 // TODO: will be a part of o-header
 $n-drawer-is-silent: nUiHas('header') !default;
 
-@import 'n-header-footer/drawer/drawer';
+.n-drawer {
+	display: block;
+}
 
-@include nUiCriticalEnd('drawer');
+@import 'n-header-footer/drawer/drawer';
