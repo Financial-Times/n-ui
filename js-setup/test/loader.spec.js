@@ -1,18 +1,9 @@
 /*global require,describe,afterEach,beforeEach,it,expect,sinon*/
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
-const jsLoader = require('../index');
-const JsLoader = require('../js/js-loader');
+const JsLoader = require('../js/loader');
 const oErrors = require('o-errors');
 
 describe('js loader', function () {
-
-	it('should have an init method', function () {
-		expect(jsLoader.init).to.be.a('function');
-	});
-
-	it('should have an bootstrap method', function () {
-		expect(jsLoader.bootstrap).to.be.a('function');
-	});
 
 	it('should stub console, if applicable', function () {
 		expect(window.console).to.exist;

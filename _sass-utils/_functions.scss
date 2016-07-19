@@ -3,17 +3,17 @@
 ////
 
 /// Test if the given feature is configured
-/// @param {String} $feature
+/// @param {String} $feature-name
 /// @returns {Bool}
-@function nUiHas($feature) {
-	@return nUiFeatureValue($feature) == true or nUiFeatureValue($feature) == 'critical';
+@function nUiHas($feature-name) {
+	@return nUiFeatureValue($feature-name) == true or nUiFeatureValue($feature-name) == 'critical';
 }
 
 /// Get the value of a given feature (true|false|critical)
 /// @param {String} $feature
 /// @returns {Bool|String}
-@function nUiFeatureValue($feature) {
-	@return map-get($_n-ui-features, $feature);
+@function nUiFeatureValue($feature-name) {
+	@return map-get($n-ui-features, $feature-name);
 }
 
 /// Test to check if the given module is configured and whether it has been output already

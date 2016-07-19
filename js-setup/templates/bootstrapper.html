@@ -42,7 +42,7 @@
 				ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}');
 			{{/if}}
 
-			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '&features=' + [
+			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '{{#if @root.flags.polyfillsRUM}}&rum=1{{/if}}&features=' + [
 				'default',
 				'requestAnimationFrame',
 				'Promise',
@@ -52,7 +52,8 @@
 				'CustomEvent|always|gated',
 				'fetch|always|gated',
 				'Array.prototype.find|always|gated',
-				'Array.prototype.findIndex|always|gated'
+				'Array.prototype.findIndex|always|gated',
+				'IntersectionObserver'
 			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set');
 		} else {
 			{{#if hasMainCoreJs}}

@@ -7,6 +7,7 @@ module.exports = function (withPreact) {
 		'n-ui/ads': 'window.ftNextUi._ads',
 		'n-ui/tracking': 'window.ftNextUi._tracking',
 		'n-ui/header': 'window.ftNextUi._header',
+		'n-ui/footer': 'window.ftNextUi._footer',
 		'n-ui/promo-messages': 'window.ftNextUi._promoMessages',
 		'n-ui/cookie-message': 'window.ftNextUi._cookieMessage',
 		'n-ui/welcome-message': 'window.ftNextUi._welcomeMessage',

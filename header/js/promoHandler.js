@@ -51,7 +51,7 @@ function showPromo (flags) {
 		const discountSpan = document.querySelector('#discountPercent');
 
 		if (discountSpan) {
-			discountSpan.innerText = `${discount[flags.brexitDiscountType || 'S']}%`;
+			discountSpan.innerText = `${discount[flags.barrierDiscountByCohort]}%`;
 		}
 		promo.classList.add('visible');
 	}

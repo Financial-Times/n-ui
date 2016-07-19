@@ -2,230 +2,28 @@
 @import '../forms/main';
 @import '../notification/main';
 @import '../overlay/main';
-
-@include nUiCriticalStart('myft');
-
+@import '../myft-common/main';
+@import 'scss/preference';
 @import 'scss/follow-email';
 
 @if nUiApply('myft') {
+	@include nUiCriticalStart('myft');
 
-	.myft-ui,
-	.n-myft-ui {
-		display: inline-block;
+	// hacky fix for now as myft and myftCommon are not totally decoupled
+	@if not nUiApply('myftCommon') {
+		@include nUiMyftCommon;
 	}
 
-	.n-myft-ui__button {
-		@include nButtons();
-	}
+	@include nUiMyftPrefs;
 
-	.n-myft-ui__button--inverse {
-		@include nButtonsTheme(inverse);
-	}
+	@include nUiCriticalEnd('myft');
 
-	.n-myft-ui__button--medium {
-		@include nButtonsSize(medium);
-	}
-
-	.n-myft-ui__button--big {
-		@include nButtonsSize(big);
-	}
-
-	.n-myft-ui--follow {
-		position: relative;
-
-		.n-myft-ui__button {
-			padding-left: 26px;
-			position: relative;
-
-			&:before {
-				@include oIconsGetIcon('plus', getColor('link-1'), 12);
-				content: ' ';
-				left: $spacing-unit/2;
-				margin: -6px $spacing-unit/4 0 0;
-				position: absolute;
-				top: 50%;
-			}
-
-			&[aria-pressed="true"]:before {
-				@include oIconsGetIcon('tick-thin', getColor('link-1'), 12);
-			}
-		}
-
-		.n-myft-ui__button--inverse {
-			&:before {
-				@include oIconsGetIcon('plus', getColor('link-2'), 12);
-			}
-
-			&[aria-pressed="true"]:before {
-				@include oIconsGetIcon('tick-thin', getColor('link-2'), 12);
-			}
-		}
-	}
 	// 'unfollow' button
 	.myft-ui__button--manage,
 	.myft-ui__button--myft-manage {
 		&[aria-pressed="true"]:before {
 			@include oIconsGetIcon('cross-disk', getColor('white'), 14);
 		}
-	}
-
-	.n-myft-ui--prefer-group {
-		width: 100%;
-
-		@include oGridRespondTo($from: 'M') {
-			padding-left: $spacing-unit;
-		}
-
-		.n-myft-ui__button {
-			border-radius: 0;
-			margin-left: -5px;
-			transition: all 0.1s ease-in-out;
-		}
-		.n-myft-ui__button:first-of-type {
-			border-bottom-left-radius: 3px;
-			border-top-left-radius: 3px;
-			border-left-width: 1px;
-		}
-
-		.n-myft-ui__button:last-child {
-			border-bottom-right-radius: 3px;
-			border-top-right-radius: 3px;
-		}
-
-		.n-myft-ui__button[aria-pressed="true"] {
-			padding-left: 26px;
-			position: relative;
-		}
-
-		.n-myft-ui__button[aria-pressed="true"]:before {
-			@include oIconsGetIcon('tick-thin', getColor('link-1'), 12);
-			content: ' ';
-			left: $spacing-unit/2;
-			margin: -6px $spacing-unit/4 0 0;
-			position: absolute;
-			top: 50%;
-		}
-	}
-
-	.n-myft-ui__fieldset {
-		border: 0;
-		padding: 0;
-		margin: 0;
-	}
-
-	.n-myft-ui__legend {
-		@include oTypographySans(s);
-		margin-bottom: 10px;
-	}
-
-	.myft-ui--prefer {
-		display: block;
-		&:after {
-			content: '';
-			clear: both;
-			display: table;
-		}
-	}
-
-	.js .myft-ui--prefer {
-		padding: 5px 0;
-	}
-
-	.myft-ui--prefer label {
-		@include oTypographySans(s);
-	}
-
-	.no-js .myft-ui--prefer label {
-		line-height: 27px;
-	}
-
-	.no-js .myft-ui--prefer button {
-		@include nButtons();
-		margin-left: 10px;
-	}
-
-	.js .myft-ui--prefer button {
-		@include oTypographySansBold(xs);
-		border: 2px solid rgba(getColor('teal-1'), 0.3);
-		width: 70px;
-		background: transparent;
-		border-radius: 3px;
-		color: getColor('teal-1');
-		text-transform: uppercase;
-		padding: 0;
-		margin-left: 10px;
-		box-sizing: border-box;
-
-		&:before,
-		&:after {
-			width: 33px;
-			display: block;
-			float: left;
-			text-align: center;
-			border: 0;
-			padding: 2px 0;
-			margin: 0;
-			box-sizing: border-box;
-			height: 16px;
-		}
-
-		&:before {
-			content: 'off';
-			background: transparent;
-			color: getColor('teal-1');
-		}
-		&:after {
-			content: '';
-			background: rgba(getColor('teal-1'), 0.3);
-		}
-		&:hover,
-		&:focus {
-			&:before {
-				background: rgba(getColor('teal-1'), 0.08);
-			}
-		}
-
-		&[aria-pressed="true"] {
-			border-color: getColor('teal-1');
-
-			&:before {
-				content: '';
-				background: rgba(getColor('teal-1'), 0.08);
-			}
-			&:after {
-				content: 'on';
-				background: getColor('teal-1');
-				color: white;
-			}
-			&:hover:after,
-			&:focus:after {
-				background: rgba(getColor('teal-1'), 0.8);
-			}
-		}
-
-		&[disabled] {
-			opacity: 0.5;
-
-			&,
-			&:hover:before,
-			&:focus:before {
-				background: transparent;
-			}
-		}
-	}
-
-	.js .myft-ui__core-text {
-		display: none;
-	}
-
-	.myft-ui__logo {
-		border: 0;
-	}
-
-	.myft-ui__icon {
-		@include nGetImage('logo', 'brand-myft', white, 16);
-		width: 34px;
-		margin: 0 8px -5px;
 	}
 
 	.n-myft-ui--article-saved__list-select {
@@ -375,13 +173,6 @@
 
 	}
 
-	// Naff workaround for the new digest preference, prior to new alerts page overhaul
-	// scss-lint:disable QualifyingElement
-	p.preference__description {
-		margin-top: 0;
-	}
-	// scss-lint:enable QualifyingElement
-
 	@include oGridRespondTo($until: S) {
 		.o-overlay--myft-ui {
 			@include oOverlayFullscreen($fill: 'width');
@@ -390,5 +181,3 @@
 	}
 
 }
-
-@include nUiCriticalEnd('myft');

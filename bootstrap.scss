@@ -1,8 +1,8 @@
-@if variable-exists('_n-ui-configured') == false or $_n-ui-configured == false {
+@if not variable-exists('n-ui-configured') {
 	@error 'you must use nUiConfigure() before importing n-ui/bootstrap';
 }
 
-@if variable-exists('_n-ui-bootstrapped') {
+@if variable-exists('n-ui-bootstrapped') {
 	@warn 'you should not import n-ui/bootstrap twice';
 }
 
@@ -23,4 +23,4 @@
 @import 'promo-messages/main';
 @import 'welcome-message/main';
 
-$_n-ui-bootstrapped: true;
+$n-ui-bootstrapped: true;
