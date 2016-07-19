@@ -341,7 +341,7 @@ function getInteractionHandler (myftFeature) {
 	return function (ev, el) {
 		ev.preventDefault();
 
-		const buttonWithValTriggered = !!(flags.get('myFtDigestPrefsEnhanced') && el.tagName.toLowerCase() === 'button' && el.name && el.value);
+		const buttonWithValTriggered = !!(el.tagName.toLowerCase() === 'button' && el.name && el.value);
 		const activeButton = (buttonWithValTriggered) ? el : el.querySelector('button');
 		const form = (buttonWithValTriggered) ? el.closest('form') : el;
 		const formButtons = (buttonWithValTriggered) ? $$('button', form) : [activeButton];
@@ -465,9 +465,7 @@ export function init (opts) {
 			delegate.on('submit', uiSelectors[myftFeature], getInteractionHandler(myftFeature));
 		});
 
-		if (flags.get('myFtDigestPrefsEnhanced')) {
-			delegate.on('click', '.n-myft-ui--prefer-group button', getInteractionHandler('preferred'));
-		}
+		delegate.on('click', '.n-myft-ui--prefer-group button', getInteractionHandler('preferred'));
 
 		//copy from list to list
 		delegate.on('click', '[data-myft-ui="copy-to-list"]', ev => {
