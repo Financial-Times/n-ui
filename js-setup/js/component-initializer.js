@@ -3,7 +3,7 @@ import ads from '../../ads';
 import tracking from '../../tracking';
 import date from '../../date';
 import header from '../../header';
-import optInOut from '../../opt-in-out';
+import optOut from '../../opt-out';
 import promoMessages from '../../promo-messages';
 import cookieMessage from '../../cookie-message';
 import welcomeMessage from '../../welcome-message';
@@ -83,7 +83,7 @@ export class ComponentInitializer {
 			}
 
 			if (flags.get('optInOut')) {
-				optInOut.init();
+				optOut.init();
 			}
 
 			if (config.features.myft && !this.initializedFeatures.myftclient) {

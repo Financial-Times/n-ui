@@ -98,15 +98,9 @@
 						</li>
 					{{/with}}
 				{{/if}}
-				{{#if @root.flags.optInOut}}
 				<li class="o-header__drawer-menu-item">
-					{{#unless @root.forceOptInDevice}}
-						<a class="o-header__drawer-menu-opt-out js-optout-link" data-trackable="opt-out" href="/opt-out-confirm">Return to the old FT.com</a>
-					{{/unless}}
-					<a class="o-header__drawer-menu-opt-out js-webapp-link" data-trackable="visit-webapp" href="https://app.ft.com" hidden>Open in app</a>
-					<a class="o-header__drawer-menu-opt-out js-android-link" data-trackable="open-android-app" href="http://www.ft.com/androidapp" hidden>Open in app</a>
+					{{>n-ui/opt-out/template classname='o-header__drawer-menu-button'}}
 				</li>
-				{{/if}}
 			</ul>
 		</nav>
 
