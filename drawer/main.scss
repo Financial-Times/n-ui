@@ -4,5 +4,4 @@
 $n-drawer-is-silent: nUiHas('header') !default;
 
 @import 'n-header-footer/drawer/drawer';
-
 @include nUiCriticalEnd('drawer');
