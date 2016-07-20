@@ -11,16 +11,6 @@
 		<a class="n-welcome-message__button n-welcome-message__button--feedback" data-trackable="nps-feedback" href="/nps-feedback">
 			<span class="n-welcome-message__button-extended">Provide</span> Feedback
 		</a>
-		{{#unless @root.forceOptInDevice}}
-		<a class="n-welcome-message__button n-welcome-message__button--opt-out js-optout-link" data-trackable="opt-out" href="/opt-out-confirm">
-			Return to <span class="n-welcome-message__button-extended">the old</span> FT.com
-		</a>
-		{{/unless}}
-		<a class="n-welcome-message__button n-welcome-message__button--webapp is-hidden js-webapp-link" data-trackable="visit-webapp" href="https://app.ft.com">
-			Open in app
-		</a>
-		<a class="n-welcome-message__button n-welcome-message__button--android is-hidden js-android-link" data-trackable="open-android-app" href="http://www.ft.com/androidapp">
-			Open in app
-		</a>
+		{{>n-ui/opt-out/template classname='n-welcome-message__button'}}
 	</div>
 </div>

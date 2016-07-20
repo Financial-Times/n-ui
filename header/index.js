@@ -5,10 +5,6 @@ function init (flags) {
 	require('o-header').init();
 	promoHandler.init(flags);
 
-	if (flags.get('fancyDrawer')) {
-		require('n-header-footer/drawer').init();
-	}
-
 	if (flags.get('sectionBreadcrumbs')) {
 		require('n-header-footer/breadcrumb').init();
 	}
