@@ -2,7 +2,8 @@
 // Update flags and next-product selector accordingly
 const discount = {
 	L: 50,
-	S: 25
+	S: 25,
+	S_5: 25
 }
 
 function fetchSession () {
