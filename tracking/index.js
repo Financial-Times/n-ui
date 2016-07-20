@@ -8,7 +8,6 @@ module.exports = {
 			require('./third-party/inspectlet')(flags);
 			require('./third-party/mouseflow')(flags);
 			require('./third-party/sourcepoint')(flags);
-			require('./third-party/adblocking')(flags);
 		});
 	}
 };
