@@ -23,8 +23,7 @@
 	}
 
 	.myft-follow__btn {
-		//TODO: switch myft-ui buttons to o-buttons
-		@include nButtons($size: big);
+		@include oButtons($size: big);
 		margin: $spacing-unit 0 0 $spacing-unit;
 	}
 
@@ -33,7 +32,7 @@
 	}
 
 	.myft-follow__btn--standout {
-		@include nButtonsTheme(standout);
+		@include oButtonsTheme(standout);
 	}
 
 	@include oGridRespondTo($until: S) {
