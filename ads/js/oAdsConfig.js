@@ -66,6 +66,11 @@ module.exports = function (flags, contextData, userData) {
 		gpt: {
 			unitName:	gptUnitName
 		},
+		formats: {
+			PaidPost: {
+				sizes: "fluid"
+			}
+		},
 		krux: kruxConfig,
 		collapseEmpty: 'before',
 		dfp_targeting: utils.keyValueString(targeting)
