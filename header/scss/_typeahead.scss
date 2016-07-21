@@ -19,7 +19,7 @@
 		}
 
 		ul {
-			@include zIndexFor('typeahead');
+			@include nUtilZIndexFor('typeahead');
 			position: absolute;
 			top: 100%;
 			left: 0;
