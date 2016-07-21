@@ -22,12 +22,19 @@ const enableChartbeat = () => {
 	loadScript('//static.chartbeat.com/js/chartbeat.js');
 }
 
+// The chartbeat Heads-Up-Display (HUD) requires the chartbeat script to be loaded.
+// Editorial users who wish to use the HUD will need to toggle "chartbeatHud" on.
+// For non-HUD uses, load chartbeat for a cohort of spoor IDs.
 module.exports = flags => {
-	if (flags && flags.get('chartbeat')) {
+	if (flags && (flags.get('chartbeat') || flags.get('chartbeatHud'))) {
+		if (flags.get('chartbeatHud')) {
+			enableChartbeat();
+			return;
+		}
 
-		// spoorIdCohort = Cohort of spoor IDs to load chartbeat for.
-		// E.g. { min:0, max:99 } = 100%
-		// Arbitrarily decided on this 20% cohort.
+		// E.g. `spoorIdCohort = { min:0, max:99 }` is a 100% cohort.
+		// Note: Arbitrarily decided on this cohort, merely so it's
+		// less likely to correspond with other third-party-scripts.
 		const spoorIdCohort = { min:60, max:80 };
 
 		const spoorId = getCookieValue('spoor-id');
