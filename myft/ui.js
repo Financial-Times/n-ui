@@ -238,7 +238,7 @@ function updateAfterIO (myftFeature, detail) {
 
 	updateUiForFeature({
 		myftFeature,
-		subjects: [{ uuid: detail.subject, '_rel': detail.data._rel }],
+		subjects: [{ uuid: detail.subject, '_rel': detail.data && detail.data._rel }],
 		state: !!detail.results
 	});
 
