@@ -77,7 +77,9 @@ export class ComponentInitializer {
 			}
 
 			if (flags.get('serviceWorker')) {
-				serviceWorker.register(flags);
+				serviceWorker
+					.register(flags)
+					.catch(() => { });
 			} else {
 				serviceWorker.unregister();
 			}
