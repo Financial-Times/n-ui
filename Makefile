@@ -8,8 +8,8 @@ test-unit:
 test-unit-dev:
 	karma start karma.conf.js --single-run false --auto-watch true
 
-test-sass-build:
-	webpack --config webpack.config.test.js
+test-build:
+	webpack --config webpack.config.demo.js
 
 pre-package:
 	bower install n-ui#$(CIRCLE_TAG) -f --config.registry.search=http://registry.origami.ft.com --config.registry.search=https://bower.herokuapp.com
@@ -19,7 +19,7 @@ deploy:
 
 dist: npm-publish pre-package assets deploy
 
-test: verify test-unit test-sass-build
+test: verify test-unit test-build
 
 test-dev: verify test-unit-dev
 
