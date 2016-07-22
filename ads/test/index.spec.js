@@ -40,7 +40,7 @@ describe('Main', () => {
 
 	it('Should bind the adverts found on page to o-ads library', () => {
 		const flags = { get: () => true };
-		const adInit = sandbox.spy(ads.slots, 'initSlot');
+		const adInit = sandbox.stub(ads.slots, 'initSlot');
 		sandbox.stub(ads, 'init', () => ({slots: { initSlot: adInit }, config: sinon.stub }));
 		return main.init(flags).then(() => {
 			expect(adInit).to.have.been.called;
