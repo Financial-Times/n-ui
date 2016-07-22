@@ -191,6 +191,7 @@ describe('Main', () => {
 
 		sandbox.stub(utils, 'getAppName', () => 'stream-page' );
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
+		sandbox.stub(jsonpFetch, 'default', () => Promise.resolve({}));
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeConceptId}));
 		const fetchSpy = sandbox.stub(window, 'fetch', () => {
 			return Promise.resolve({
@@ -214,6 +215,7 @@ describe('Main', () => {
 
 		sandbox.stub(utils, 'getAppName', () => 'stream-page' );
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => '12345'}));
+		sandbox.stub(jsonpFetch, 'default', () => Promise.resolve({}));
 		const fetchSpy = sandbox.stub(window, 'fetch');
 
 		return main.init(flags).then(() => {
@@ -234,6 +236,7 @@ describe('Main', () => {
 		sandbox.stub(utils, 'getAppName', () => 'stream-page' );
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeConceptId}));
+		sandbox.stub(jsonpFetch, 'default', () => Promise.resolve({}));
 		const fetchSpy = sandbox.stub(window, 'fetch', () => {
 			return Promise.resolve({
 				json: () => {
