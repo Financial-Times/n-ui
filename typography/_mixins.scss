@@ -38,7 +38,7 @@
 	} @else {
 		@include oColorsFor(topic, text);
 	}
-	@include oTypographySansBold(s);
+	@include oTypographySansBold('s', $load-progressively: true);
 	border-bottom-color: transparent;
 	text-decoration: none;
 
