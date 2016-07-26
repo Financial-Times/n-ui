@@ -63,7 +63,7 @@ const oTrackingWrapper = {
 			}
 
 			const edition = document.querySelector('[data-next-edition]') ? document.querySelector('[data-next-edition]').getAttribute('data-next-edition') : null;
-			context.editon = edition;
+			context.edition = edition;
 
 			oTracking.init({
 				server: 'https://spoor-api.ft.com/ingest',
