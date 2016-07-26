@@ -1,12 +1,13 @@
 const Typeahead = require('./js/typeahead');
 const promoHandler = require('./js/promoHandler');
+const subnav = require('./js/subnav');
 
 function init (flags) {
 	require('o-header').init();
 	promoHandler.init(flags);
 
 	if (flags.get('sectionBreadcrumbs')) {
-		require('n-header-footer/breadcrumb').init();
+		subnav.init();
 	}
 
 	const typeaheadElements = document.querySelectorAll('[data-typeahead]');
