@@ -1,4 +1,34 @@
 {{#if @root.flags.myFtApiWrite}}
+{{#if @root.flags.myFtAddCopyAbV1}}
+<form class="n-myft-ui n-myft-ui--follow" method="POST"
+	data-myft-ui="follow"
+	data-concept-id="{{conceptId}}"
+	action="/__myft/api/core/followed/concept/{{conceptId}}?method=put">
+	<input type="hidden" value="{{name}}" name="name">
+	<input type="hidden" value="{{taxonomy}}" name="taxonomy">
+	<button
+		aria-label="Add {{name}}"
+		aria-pressed="false"
+		class="n-myft-ui__button
+			{{#variant}} n-myft-ui__button--{{this}}{{/variant}}
+			{{#size}} n-myft-ui__button--{{this}}{{/size}}"
+		data-alternate-label="Remove {{name}}"
+		{{#if alternateText}}
+			data-alternate-text="{{alternateText}}"
+		{{else}}
+		{{#if buttonText}}
+			data-alternate-text="{{buttonText}}"
+		{{else}}
+			data-alternate-text="Added"
+		{{/if}}
+		{{/if}}
+		data-concept-id="{{conceptId}}" {{! duplicated here for tracking}}
+		data-trackable="follow"
+		title="Add {{name}}"
+		type="submit"
+	>{{#if buttonText}}{{buttonText}}{{else}}Add to myFT{{/if}}</button>
+</form>
+{{else}}
 <form class="n-myft-ui n-myft-ui--follow" method="POST"
 	data-myft-ui="follow"
 	data-concept-id="{{conceptId}}"
@@ -27,6 +57,7 @@
 		type="submit"
 	>{{#if buttonText}}{{buttonText}}{{else}}Follow{{/if}}</button>
 </form>
+{{/if}}
 {{else}}
 <!-- Follow button hidden due to myFtApiWrite being off -->
 {{/if }}
