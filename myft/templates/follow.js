@@ -26,27 +26,49 @@ class Follow extends Component {
 			.filter(exists)
 			.map(buttonOpt => buttonClasses.push(`n-myft-ui__button--${buttonOpt}`));
 
-		return <form
-			className={classes.join(' ')}
-			method="POST"
-			data-myft-ui="follow"
-			data-concept-id={this.props.conceptId}
-			action={'/__myft/api/core/followed/concept/' + this.props.conceptId + '?method=put'}>
-			<input type="hidden" value={this.props.name} name="name" />
-			<input type="hidden" value={this.props.taxonomy} name="taxonomy" />
-			<button
-				aria-label={'Follow ' + this.props.name}
-				aria-pressed='false'
-				className={buttonClasses.join(' ')}
-				data-alternate-label={'Unfollow ' + this.props.name}
-				data-alternate-text={this.props.alternateText || this.props.buttonText || 'Following'}
-				data-trackable="follow"
-				data-concept-id={this.props.conceptId} // duplicated here for tracking
-					title={'Follow ' + this.props.name}
-				type="submit">
-					{this.props.buttonText || 'Follow'}
-			</button>
-		</form>
+		return this.props.isVariant
+			? <form
+				className={classes.join(' ')}
+				method="POST"
+				data-myft-ui="follow"
+				data-concept-id={this.props.conceptId}
+				action={'/__myft/api/core/followed/concept/' + this.props.conceptId + '?method=put'}>
+				<input type="hidden" value={this.props.name} name="name" />
+				<input type="hidden" value={this.props.taxonomy} name="taxonomy" />
+				<button
+					aria-label={'Add ' + this.props.name}
+					aria-pressed='false'
+					className={buttonClasses.join(' ')}
+					data-alternate-label={'Remove ' + this.props.name}
+					data-alternate-text={this.props.alternateText || this.props.buttonText || 'Added'}
+					data-trackable="follow"
+					data-concept-id={this.props.conceptId} // duplicated here for tracking
+						title={'Add ' + this.props.name}
+					type="submit">
+						{this.props.buttonText || 'Add to myFT'}
+				</button>
+			</form>
+			: <form
+				className={classes.join(' ')}
+				method="POST"
+				data-myft-ui="follow"
+				data-concept-id={this.props.conceptId}
+				action={'/__myft/api/core/followed/concept/' + this.props.conceptId + '?method=put'}>
+				<input type="hidden" value={this.props.name} name="name" />
+				<input type="hidden" value={this.props.taxonomy} name="taxonomy" />
+				<button
+					aria-label={'Follow ' + this.props.name}
+					aria-pressed='false'
+					className={buttonClasses.join(' ')}
+					data-alternate-label={'Unfollow ' + this.props.name}
+					data-alternate-text={this.props.alternateText || this.props.buttonText || 'Following'}
+					data-trackable="follow"
+					data-concept-id={this.props.conceptId} // duplicated here for tracking
+						title={'Follow ' + this.props.name}
+					type="submit">
+						{this.props.buttonText || 'Follow'}
+				</button>
+			</form>
 	}
 }
 
