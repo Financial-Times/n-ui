@@ -1,36 +1,38 @@
-// TODO: When we're using nUtilZIndexFor exclusively (we can but live in hope), it'd
-// probably be easier to maintain this file if we avoided explicit z-index
-// numbers and instead relied on the index of a given use-case within a list
-// (rather than a map), like so:
-//
-// $_stackingOrder: default,
-// 					tray,
-//					header,
-//					overlay,
-//					notification;
-//
-// @mixin nUtilZIndexFor($use-case) {
-//		z-index: index($_stackingOrder, $use-case);
-// }
-//
-// Usage: `@include nUtilZIndexFor(meganav);`
-// Output: `z-index: 8;`
+////
+/// @group n-ui utility mixins
+////
 
-// TODO: add the other use-cases
-$_zIndexes: (
-	meganav: 8,
-	typeahead: 11,
-	banner: 20,
-	welcome: 21,
-	overlay: 22,
-	notification: 23
+/// Basis of n-ui z-indexes
+/// @type Number
+$n-ui-z-index-basis: 100;
+
+/// Ordered list of z-indexes use cases
+/// @type List
+$n-ui-z-index-order: (
+	'typeahead',
+	'banner',
+	'meganav',
+	'sticky-header',
+	'drawer',
+	'welcome',
+	'overlay',
+	'notification'
 );
 
+/// Utility for setting z-indexes
+/// @param {String} $use-case
+/// @output A z-index rule
 @mixin zIndexFor($use-case) {
 	@warn '`zindexFor` is deprecated, use `nUtilZIndexFor` instead';
-	z-index: map-get($_zIndexes, $use-case);
+	@include nUtilZIndexFor($use-case);
 }
 
 @mixin nUtilZIndexFor($use-case) {
-	z-index: map-get($_zIndexes, $use-case);
+	$index: index($n-ui-z-index-order, $use-case);
+
+	@if $index {
+		z-index: $n-ui-z-index-basis + $index;
+	} @else {
+		@warn 'z-index for use case "#{$use-case}" not found.';
+	}
 }
