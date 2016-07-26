@@ -16,7 +16,7 @@ describe("CTA", function () {
 
 	it("Track call-to-actions that are marked 'trackable'", function(done) {
 		const rootEl = document.body;
-		rootEl.innerHTML += '<div data-trackable="abc"><a data-trackable="xyz" id="a" href="http://foo.com/foo" data-position="1" data-siblings="4">hello</a></div>';
+		rootEl.innerHTML += '<div data-trackable="abc"><a data-trackable="xyz" id="a" target="_blank" href="http://foo.com/foo" data-position="1" data-siblings="4">hello</a></div>';
 		rootEl.addEventListener('oTracking.event', function listener(e) {
 			expect(e.detail.nodeName).to.equal('a');
 			expect(e.detail.domPath).to.equal('abc | xyz');
