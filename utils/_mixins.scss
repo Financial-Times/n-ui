@@ -13,16 +13,17 @@
 //		z-index: index($_stackingOrder, $use-case);
 // }
 //
-// Usage: `@include nUtilZIndexFor(header);`
-// Output: `z-index: 2;`
+// Usage: `@include nUtilZIndexFor(meganav);`
+// Output: `z-index: 8;`
 
 // TODO: add the other use-cases
 $_zIndexes: (
-	overlay: 22,
-	notification: 23,
+	meganav: 8,
 	typeahead: 11,
 	banner: 20,
-	welcome: 21
+	welcome: 21,
+	overlay: 22,
+	notification: 23
 );
 
 @mixin zIndexFor($use-case) {

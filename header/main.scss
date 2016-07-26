@@ -24,7 +24,7 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 
 	// force meganav above editors pick 'bookmark' triangle
 	.o-header__mega {
-		z-index: 2;
+		@include nUtilZIndexFor(meganav);
 	}
 
 }
