@@ -3,7 +3,7 @@ const ads = require('o-ads');
 const main = require('../index');
 const utils = require('../js/utils');
 const markup = require('./helpers/markup');
-const jsonpFetch = require('n-jsonp');
+const fetchMock = require('fetch-mock');
 let sandbox;
 
 
@@ -81,11 +81,13 @@ describe('Main', () => {
 		sandbox.stub(utils, 'getReferrer', () => 'https://test-referrer.com/path?ignore=this#and-this');
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone);
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
-		const fetchSpy = sandbox.stub(jsonpFetch, 'default', () => Promise.reject() );
-
+		fetchMock
+			.mock('^https://ads-api.ft.com/v1/content', Promise.reject())
+			.catch(Promise.reject());
 		return main.init(flags).then(() => {
-			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/content/' + fakeArticleUuid + '?referrer=https%3A%2F%2Ftest-referrer.com%2Fpath');
+			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/content')[0]).to.equal('https://ads-api.ft.com/v1/content/' + fakeArticleUuid + '?referrer=https%3A%2F%2Ftest-referrer.com%2Fpath');
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/' + fakeDfpSiteAndZone + '/' + fakeDfpSiteAndZone);
+			fetchMock.restore();
 		});
 	});
 
@@ -98,15 +100,16 @@ describe('Main', () => {
 		sandbox.stub(utils, 'getReferrer', () => null );
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
-		const fetchSpy = sandbox.stub(jsonpFetch, 'default', () => Promise.reject() );
+		fetchMock
+			.mock('^https://ads-api.ft.com/v1/content', Promise.reject())
+			.catch(Promise.reject());
 
 		return main.init(flags).then(() => {
-			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/content/' + fakeArticleUuid);
+			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/content')[0]).to.equal('https://ads-api.ft.com/v1/content/' + fakeArticleUuid);
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/' + fakeDfpSiteAndZone + '/' + fakeDfpSiteAndZone);
+			fetchMock.restore();
 		});
 	});
-
-
 
 	it('Should make make gpt unit name unclassified if API fails and no page metadata', () => {
 		const flags = { get: () => true };
@@ -116,11 +119,14 @@ describe('Main', () => {
 		sandbox.stub(utils, 'getReferrer', () => null );
 		sandbox.stub(utils, 'getMetaData', () => null );
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
-		const fetchSpy = sandbox.stub(jsonpFetch, 'default', () => Promise.reject() );
+		fetchMock
+			.mock('^https://ads-api.ft.com/v1/content', Promise.reject())
+			.catch(Promise.reject());
 
 		return main.init(flags).then(() => {
-			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/content/' + fakeArticleUuid);
+			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/content')[0]).to.equal('https://ads-api.ft.com/v1/content/' + fakeArticleUuid);
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/unclassified');
+			fetchMock.restore();
 		});
 	});
 
@@ -133,26 +139,23 @@ describe('Main', () => {
 		sandbox.stub(utils, 'getReferrer', () => null );
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
-		const fetchSpy = sandbox.stub(jsonpFetch, 'default', () => {
-			return Promise.resolve({
-				json: () => {
-					return {
-						dfp: {
-							adUnit: ['successful-site', 'successful-zone']
-						},
-						krux: {
-							attributes: [ { key: 'topics', value: ['News'] } ]
-						}
-					};
+		fetchMock
+			.mock('^https://ads-api.ft.com/v1/content', {
+				dfp: {
+					adUnit: ['successful-site', 'successful-zone']
+				},
+				krux: {
+					attributes: [ { key: 'topics', value: ['News'] } ]
 				}
-			});
-		});
+			})
+			.catch(Promise.reject());
 
 		return main.init(flags).then(() => {
-			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/content/' + fakeArticleUuid);
+			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/content')[0]).to.equal('https://ads-api.ft.com/v1/content/' + fakeArticleUuid);
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/successful-site/successful-zone');
 			expect(ads.config().krux.id).to.be.ok;
 			expect(ads.config().krux.attributes.page.topics).to.be.ok;
+			fetchMock.restore();
 		});
 	});
 
@@ -165,22 +168,19 @@ describe('Main', () => {
 		sandbox.stub(utils, 'getAppName', () => 'stream-page' );
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeConceptId}));
-		const fetchSpy = sandbox.stub(jsonpFetch, 'default', () => {
-			return Promise.resolve({
-				json: () => {
-					return {
-						dfp: {
-							adUnit: ['successful-site','successful-zone']
-						}
-					};
+		fetchMock
+			.mock('^https://ads-api.ft.com/v1/concept', {
+				dfp: {
+					adUnit: ['successful-site', 'successful-zone']
 				}
-			});
-		});
+			})
+			.catch(Promise.reject());
 
 		return main.init(flags).then(() => {
-			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/concept/' + fakeConceptId);
+			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/concept')[0]).to.equal('https://ads-api.ft.com/v1/concept/' + fakeConceptId);
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/successful-site/successful-zone');
 			expect(ads.config().krux.id).to.be.ok;
+			fetchMock.restore();
 		});
 	});
 
@@ -191,22 +191,18 @@ describe('Main', () => {
 
 		sandbox.stub(utils, 'getAppName', () => 'stream-page' );
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
-		sandbox.stub(jsonpFetch, 'default', () => Promise.resolve({}));
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeConceptId}));
-		const fetchSpy = sandbox.stub(window, 'fetch', () => {
-			return Promise.resolve({
-				json: () => {
-					return {
-						dfp: {
-							targeting: [{key: '1', value: 'a'}]
-						}
-					};
+		fetchMock
+			.mock('https://ads-api.ft.com/v1/user', {
+				dfp: {
+					targeting: [{key: '1', value: 'a'}]
 				}
-			});
-		});
+			})
+			.catch(Promise.reject());
 
 		return main.init(flags).then(() => {
-			expect(fetchSpy).to.have.been.calledWith('https://ads-api.ft.com/v1/user');
+			expect(fetchMock.called('https://ads-api.ft.com/v1/user')).to.be.true;
+			fetchMock.restore();
 		});
 	});
 
@@ -215,11 +211,13 @@ describe('Main', () => {
 
 		sandbox.stub(utils, 'getAppName', () => 'stream-page' );
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => '12345'}));
-		sandbox.stub(jsonpFetch, 'default', () => Promise.resolve({}));
-		const fetchSpy = sandbox.stub(window, 'fetch');
+		fetchMock
+			.mock('https://ads-api.ft.com/v1/user', 200)
+			.catch(Promise.reject());
 
 		return main.init(flags).then(() => {
-			expect(fetchSpy).not.to.have.been.calledWith('https://ads-api.ft.com/v1/user');
+			expect(fetchMock.called('https://ads-api.ft.com/v1/user')).to.be.false;
+			fetchMock.restore();
 		});
 	});
 
@@ -236,26 +234,28 @@ describe('Main', () => {
 		sandbox.stub(utils, 'getAppName', () => 'stream-page' );
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
 		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeConceptId}));
-		sandbox.stub(jsonpFetch, 'default', () => Promise.resolve({}));
-		const fetchSpy = sandbox.stub(window, 'fetch', () => {
-			return Promise.resolve({
-				json: () => {
-					return {
-						dfp: {
-							targeting: [{key: '1', value: 'a'}]
-						}
-					};
+		fetchMock
+			.mock('/__ads-api/v1/user', {
+				dfp: {
+					targeting: [{key: '1', value: 'a'}]
 				}
-			});
-		});
+			})
+			.mock('https://ads-api.ft.com/v1/user', {
+				dfp: {
+					targeting: [{key: '1', value: 'a'}]
+				}
+			})
+			.catch(Promise.reject());;
 
 		return main.init(flags).then(() => {
-			expect(fetchSpy).to.have.been.calledWith('/__ads-api/v1/user');
+			expect(fetchMock.called('/__ads-api/v1/user')).to.be.true;
+			expect(fetchMock.called('https://ads-api.ft.com/v1/user')).to.be.false	;
 			Object.defineProperty(XMLHttpRequest.prototype, 'withCredentials', {
 				configurable: true, // defaults to false
 				writable: false,
 				value: true
 			});
+			fetchMock.restore();
 		});
 	});
 

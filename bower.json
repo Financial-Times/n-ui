@@ -22,7 +22,6 @@
     "ft-metadata": "https://github.com/Financial-Times/ft-metadata.git#^0.0.2",
     "ftdomdelegate": "^2.0.3",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
-    "n-jsonp": "^2.3.1",
     "n-message-prompts": "^3.0.0",
     "n-messages": "^2.0.0",
     "n-notification": "^4.0.0",
