@@ -34,6 +34,7 @@ CTA.prototype.track = function (root) {
 
 		if (href) {
 			meta.destination = href;
+			meta.isInternal = /.*\.ft\.com.*/i.test(href);
 		}
 
 		// Reflect ARIA state so people can track open/close actions

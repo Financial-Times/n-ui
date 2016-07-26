@@ -24,6 +24,7 @@ describe("CTA", function () {
 			expect(e.detail.target).to.equal('xyz');
 			expect(e.detail.textContent).to.equal('hello');
 			expect(e.detail.destination).to.equal('http://foo.com/foo');
+			expect(e.detail.isInternal).to.equal(false);
 			expect(e.detail.position).to.equal(1);
 			expect(e.detail.siblings).to.equal(4);
 			rootEl.removeEventListener('oTracking.event', listener);
