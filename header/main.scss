@@ -21,12 +21,12 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 		display: block;
 		margin: $_o-header-drawer-padding-x;
 	}
-	
+
 	// force meganav above editors pick 'bookmark' triangle
 	.o-header__mega {
 		z-index: 2;
 	}
-	
+
 }
 
 @include nUiCriticalEnd('header');
