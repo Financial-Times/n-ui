@@ -8,19 +8,19 @@
 	}
 
 	.n-myft-ui__button {
-		@include nButtons();
+		@include oButtons();
 	}
 
 	.n-myft-ui__button--inverse {
-		@include nButtonsTheme(inverse);
+		@include oButtonsTheme(inverse);
 	}
 
 	.n-myft-ui__button--medium {
-		@include nButtonsSize(medium);
+		@include oButtonsSize(medium);
 	}
 
 	.n-myft-ui__button--big {
-		@include nButtonsSize(big);
+		@include oButtonsSize(big);
 	}
 
 	.n-myft-ui__fieldset {

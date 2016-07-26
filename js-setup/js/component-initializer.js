@@ -3,6 +3,7 @@ import ads from '../../ads';
 import tracking from '../../tracking';
 import date from '../../date';
 import header from '../../header';
+import optOut from '../../opt-out';
 import promoMessages from '../../promo-messages';
 import cookieMessage from '../../cookie-message';
 import welcomeMessage from '../../welcome-message';
@@ -76,9 +77,15 @@ export class ComponentInitializer {
 			}
 
 			if (flags.get('serviceWorker')) {
-				serviceWorker.register(flags);
+				serviceWorker
+					.register(flags)
+					.catch(() => { });
 			} else {
 				serviceWorker.unregister();
+			}
+
+			if (flags.get('optInOut')) {
+				optOut.init();
 			}
 
 			if (config.features.myft && !this.initializedFeatures.myftclient) {

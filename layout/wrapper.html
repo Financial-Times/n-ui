@@ -32,7 +32,7 @@
 		<link rel="icon" type="image/png" href="https://next-geebee.ft.com/assets/brand-ft/icons/favicon-32x32.png" sizes="32x32">
 		<link rel="icon" type="image/png" href="https://next-geebee.ft.com/assets/brand-ft/icons/favicon-194x194.png" sizes="194x194">
 		<link rel="apple-touch-icon" sizes="180x180" href="https://next-geebee.ft.com/assets/brand-ft/icons/apple-touch-icon-180x180.png">
-		<link rel="manifest" href="/assets/brand-ft/icons/android-manifest.json">
+		<link rel="manifest" href="/assets/manifest/manifest-v3.json">
 
 		<meta name="msapplication-TileColor" content="#fff1e0">
 		<meta name="msapplication-TileImage" content="https://next-geebee.ft.com/assets/brand-ft/icons/mstile-144x144.png">
@@ -74,7 +74,9 @@
 					{{>n-ui/welcome-message/template}}
 				{{/if}}
 				{{>n-ui/footer/template}}
-				{{>n-ui/drawer/template}}
+				{{#if @root.flags.fancyDrawer}}
+					{{>n-ui/header/partials/drawer/template}}
+				{{/if}}
 			</div>
 		</div>
 	{{>n-ui/js-setup/templates/bootstrapper}}
