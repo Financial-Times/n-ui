@@ -85,7 +85,7 @@ function updateUiForFeature (opts) {
 		const index = uuids.indexOf(form.getAttribute(idProperty));
 		const isRelChange = opts.subjects[index]._rel;
 		if (index > -1) {
-			let typeValue = null;
+			let fieldValue = null;
 			if (isRelChange) {
 				const relBtn = form.querySelector('button[name^="_rel."]');
 				const field = (relBtn) ? relBtn.getAttribute('name').replace('_rel.', '') : null;
@@ -93,10 +93,10 @@ function updateUiForFeature (opts) {
 				if (!opts.subjects[index]._rel[field]) {
 					return;
 				}
-				typeValue = opts.subjects[index]._rel[field];
+				fieldValue = opts.subjects[index]._rel[field];
 			}
 
-			const activeMultiButton = form.querySelector(`button[value="${typeValue || 'delete'}"]`);
+			const activeMultiButton = form.querySelector(`button[value="${fieldValue}"]`);
 			$$('button', form).forEach(button => toggleButton(button, (activeMultiButton) ? button === activeMultiButton : opts.state));
 		}
 	});
