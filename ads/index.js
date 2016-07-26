@@ -14,6 +14,7 @@ let slotsRendered = 0;
 let containers;
 let onAdsCompleteCallback;
 const customTimings = {};
+const apiUrlRoot = ('withCredentials' in new XMLHttpRequest()) ? 'https://ads-api.ft.com/v1/' : '/__ads-api/v1/';
 
 function getContextualTargetingPromise (appName) {
 	let promise = Promise.resolve({});
@@ -24,13 +25,13 @@ function getContextualTargetingPromise (appName) {
 		uuid = document.querySelector('[data-content-id]').getAttribute('data-content-id');
 
 		const referrer = utils.getReferrer();
-		url = `https://ads-api.ft.com/v1/content/${uuid}`;
+		url = `${apiUrlRoot}content/${uuid}`;
 		if(referrer) {
 			url += `?referrer=${encodeURIComponent(referrer.split(/[?#]/)[0])}`;
 		}
 	} else if (appName === 'stream-page') {
 		uuid = document.querySelector('[data-concept-id]').getAttribute('data-concept-id');
-		url = `https://ads-api.ft.com/v1/concept/${uuid}`;
+		url = `${apiUrlRoot}concept/${uuid}`;
 	}
 
 	if(uuid && url) {
@@ -43,8 +44,7 @@ function getContextualTargetingPromise (appName) {
 };
 
 function getUserTargetingPromise () {
-	const apiUrl = ('withCredentials' in new XMLHttpRequest()) ? 'https://ads-api.ft.com/v1/user' : '/__ads-api/v1/user';
-	return fetch(apiUrl, {
+	return fetch(`${apiUrlRoot}/user`, {
 		credentials: 'include',
 		timeout: 2000
 	})
