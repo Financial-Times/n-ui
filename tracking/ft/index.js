@@ -62,6 +62,9 @@ const oTrackingWrapper = {
 				context.errorStatus = pageViewConf.context.errorStatus = errorStatus;
 			}
 
+			const edition = document.querySelector('[data-next-edition]') ? document.querySelector('[data-next-edition]').getAttribute('data-next-edition') : null;
+			context.edition = edition;
+
 			oTracking.init({
 				server: 'https://spoor-api.ft.com/ingest',
 				context: context,
