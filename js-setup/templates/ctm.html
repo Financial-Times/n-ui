@@ -8,11 +8,6 @@
 
 	{{#if @root.flags.forceCoreExperience}}
 	var unsupported = {
-		'iOS Facebook in-app browser': function (ua) {
-			var iOS = /OS [1-9].* like Mac OS X/.test(ua);
-			var fb = /(FBAN|FBAV)/.test(ua);
-			return iOS && fb;
-		},
 		'Samsung frankenchromium': function (ua) {
 			var android = /Android/.test(ua);
 			var samsung = /SamsungBrowser/.test(ua);
