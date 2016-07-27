@@ -17,7 +17,7 @@ pre-package:
 deploy:
 	node ./_deploy/s3.js
 
-dist: npm-publish pre-package assets deploy
+dist: pre-package assets deploy npm-publish
 
 test: verify test-unit test-build
 
