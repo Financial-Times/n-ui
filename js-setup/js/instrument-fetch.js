@@ -1,5 +1,5 @@
 let theFetch;
-export default function (flags) {
+export default function (flags, oErrors) {
 	theFetch = theFetch || window.fetch;
 	// allow use of our proxy for apis when cors not available
 	if (!('withCredentials' in new XMLHttpRequest())) {

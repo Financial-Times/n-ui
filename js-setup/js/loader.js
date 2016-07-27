@@ -61,7 +61,8 @@ class JsSetup {
 			errorBuffer: window.errorBuffer || []
 		});
 
-		instrumentFetch(flags);
+		instrumentFetch(flags, oErrors);
+
 		if (flags.get('clientAjaxErrorReporting')) {
 
 			const realFetch = window.fetch;

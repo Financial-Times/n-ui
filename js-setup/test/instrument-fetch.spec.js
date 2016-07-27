@@ -1,3 +1,4 @@
+/*global describe,it,expect*/
 import instrumentFetch from '../js/instrument-fetch';
 import {restore as restoreFetch} from '../js/instrument-fetch';
 import fetchMock from 'fetch-mock';
