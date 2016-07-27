@@ -1,12 +1,17 @@
+const OHeader = require('o-header');
 const Typeahead = require('./js/typeahead');
 const promoHandler = require('./js/promoHandler');
 
 function init (flags) {
-	require('o-header').init();
+	OHeader.init();
 	promoHandler.init(flags);
 
 	if (flags.get('sectionBreadcrumbs')) {
 		require('n-header-footer/breadcrumb').init();
+	}
+
+	if (flags.get('stickyNav')) {
+		new OHeader(document.querySelector('[data-o-header--sticky]'));
 	}
 
 	const typeaheadElements = document.querySelectorAll('[data-typeahead]');
