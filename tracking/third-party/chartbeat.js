@@ -19,6 +19,12 @@ const enableChartbeat = () => {
 		domain: 'next.ft.com', // Leave this as next.ft.com, even after it changes to ft.com
 		useCanonical: true
 	};
+
+	// HACK: If the user is on the front page override the path so that it is different depending on the edition.
+	// Use a path that looks like the old-style FT.com front pages so that they still sort of make sense.
+	if (location.pathname === '/' && document.querySelector('[data-next-edition]')) {
+		window._sf_async_config.path = '/home/' + (document.querySelector('[data-next-edition]').getAttribute('data-next-edition') || '');
+	}
 	loadScript('//static.chartbeat.com/js/chartbeat.js');
 }
 
