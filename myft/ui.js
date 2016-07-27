@@ -83,7 +83,7 @@ function updateUiForFeature (opts) {
 	const uuids = opts.subjects.map(getUuid);
 	featureForms.forEach(form => {
 		const index = uuids.indexOf(form.getAttribute(idProperty));
-		const isRelChange = opts.subjects[index]._rel;
+		const isRelChange = opts.subjects[index] && opts.subjects[index]._rel;
 		if (index > -1) {
 			let fieldValue = null;
 			if (isRelChange) {
@@ -96,7 +96,7 @@ function updateUiForFeature (opts) {
 				fieldValue = opts.subjects[index]._rel[field];
 			}
 
-			const activeMultiButton = form.querySelector(`button[value="${fieldValue}"]`);
+			const activeMultiButton = form.querySelector(`button[value="${fieldValue || 'delete'}"]`);
 			$$('button', form).forEach(button => toggleButton(button, (activeMultiButton) ? button === activeMultiButton : opts.state));
 		}
 	});
