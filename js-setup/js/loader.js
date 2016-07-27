@@ -9,7 +9,7 @@ if (!window.console) {
 
 import {load as loadFonts} from '../../typography/font-loader';
 import {loadScript, waitForCondition, perfMark} from '../../utils';
-
+import instrumentFetch from './instrument-fetch';
 const oErrors = require('o-errors');
 
 // Dispatch a custom `ftNextLoaded` event after the app executes.
@@ -31,6 +31,7 @@ function dispatchLoadedEvent () {
 class JsSetup {
 
 	init () {
+
 		loadFonts(document.documentElement)
 
 		this.appInfo = {
@@ -60,6 +61,7 @@ class JsSetup {
 			errorBuffer: window.errorBuffer || []
 		});
 
+		instrumentFetch(flags);
 		if (flags.get('clientAjaxErrorReporting')) {
 
 			const realFetch = window.fetch;
