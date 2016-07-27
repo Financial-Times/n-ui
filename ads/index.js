@@ -3,7 +3,6 @@ const Ads = window.oAds = require('o-ads');
 // TODO move to central shared utils
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
-const jsonpFetch = require('n-jsonp');
 const Reporter = require('./js/reporter');
 const sendMetrics = require('./js/metrics')
 
@@ -15,36 +14,32 @@ let containers;
 let onAdsCompleteCallback;
 const customTimings = {};
 
+
 function getContextualTargetingPromise (appName) {
-	let promise = Promise.resolve({});
 	let uuid;
 	let url;
-
-	if(appName === 'article') {
+	const apiUrlRoot = ('withCredentials' in new XMLHttpRequest()) ? 'https://ads-api.ft.com/v1/' : '/__ads-api/v1/';
+	if (appName === 'article') {
 		uuid = document.querySelector('[data-content-id]').getAttribute('data-content-id');
 
 		const referrer = utils.getReferrer();
-		url = `https://ads-api.ft.com/v1/content/${uuid}`;
+		url = `${apiUrlRoot}content/${uuid}`;
 		if(referrer) {
 			url += `?referrer=${encodeURIComponent(referrer.split(/[?#]/)[0])}`;
 		}
 	} else if (appName === 'stream-page') {
 		uuid = document.querySelector('[data-concept-id]').getAttribute('data-concept-id');
-		url = `https://ads-api.ft.com/v1/concept/${uuid}`;
+		url = `${apiUrlRoot}concept/${uuid}`;
 	}
 
-	if(uuid && url) {
-		promise = jsonpFetch.default(url, { timeout: 2000 })
+	return (uuid && url) ? fetch(url, { timeout: 2000 })
 			.then(res => res.json())
-			.catch(() => ({}));
-	}
-
-	return promise;
+			.catch(() => ({})) : Promise.resolve({});
 };
 
 function getUserTargetingPromise () {
-	const apiUrl = ('withCredentials' in new XMLHttpRequest()) ? 'https://ads-api.ft.com/v1/user' : '/__ads-api/v1/user';
-	return fetch(apiUrl, {
+	const apiUrlRoot = ('withCredentials' in new XMLHttpRequest()) ? 'https://ads-api.ft.com/v1/' : '/__ads-api/v1/';
+	return fetch(`${apiUrlRoot}user`, {
 		credentials: 'include',
 		timeout: 2000
 	})

@@ -81,12 +81,22 @@ function updateUiForFeature (opts) {
 	const featureForms = $$(uiSelectors[opts.myftFeature], opts.context);
 	const idProperty = idProperties[opts.myftFeature];
 	const uuids = opts.subjects.map(getUuid);
-
 	featureForms.forEach(form => {
 		const index = uuids.indexOf(form.getAttribute(idProperty));
+		const isRelChange = opts.subjects[index]._rel;
 		if (index > -1) {
-			const type = opts.subjects[index]._rel && opts.subjects[index]._rel.type;
-			const activeMultiButton = form.querySelector(`button[value="${type || 'delete'}"]`);
+			let fieldValue = null;
+			if (isRelChange) {
+				const relBtn = form.querySelector('button[name^="_rel."]');
+				const field = (relBtn) ? relBtn.getAttribute('name').replace('_rel.', '') : null;
+				// these are not the preferences you are looking for
+				if (!opts.subjects[index]._rel[field]) {
+					return;
+				}
+				fieldValue = opts.subjects[index]._rel[field];
+			}
+
+			const activeMultiButton = form.querySelector(`button[value="${fieldValue}"]`);
 			$$('button', form).forEach(button => toggleButton(button, (activeMultiButton) ? button === activeMultiButton : opts.state));
 		}
 	});
