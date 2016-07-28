@@ -13,6 +13,10 @@
 		padding: 5px 0;
 	}
 
+	.myft-ui__message {
+		margin-left: 10px;
+	}
+
 	.myft-ui--prefer label {
 		@include oTypographySans(s);
 	}
