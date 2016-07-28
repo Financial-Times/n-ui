@@ -47,7 +47,7 @@ function showExpectedCount () {
 			const el = pushButtonContainer.querySelector('.js-myft-ui__message') || pushButtonContainer.getElementsByTagName('label')[0];
 
 			if(data && data.pushesPerDay && el) {
-				el.textContent += ` (estimated ${data.pushesPerDay} notifications a day for the topics you follow)`;
+				el.textContent += ` (~${data.pushesPerDay} alerts a day)`;
 			}
 		});
 	});
