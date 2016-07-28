@@ -72,6 +72,7 @@ function toggleButton (buttonEl, state) {
 	buttonEl.removeAttribute('disabled');
 }
 
+
 function updateUiForFeature (opts) {
 
 	if (!uiSelectors[opts.myftFeature]) {
