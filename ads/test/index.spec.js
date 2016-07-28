@@ -86,6 +86,7 @@ describe('Main', () => {
 			.catch(Promise.reject());
 		return main.init(flags).then(() => {
 			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/content')[0]).to.equal('https://ads-api.ft.com/v1/content/' + fakeArticleUuid + '?referrer=https%3A%2F%2Ftest-referrer.com%2Fpath');
+			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/content')[1].useCorsProxy).to.be.true;
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/' + fakeDfpSiteAndZone + '/' + fakeDfpSiteAndZone);
 			fetchMock.restore();
 		});
@@ -178,6 +179,7 @@ describe('Main', () => {
 
 		return main.init(flags).then(() => {
 			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/concept')[0]).to.equal('https://ads-api.ft.com/v1/concept/' + fakeConceptId);
+			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/concept')[1].useCorsProxy).to.be.true;
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/successful-site/successful-zone');
 			expect(ads.config().krux.id).to.be.ok;
 			fetchMock.restore();
@@ -202,6 +204,7 @@ describe('Main', () => {
 
 		return main.init(flags).then(() => {
 			expect(fetchMock.called('https://ads-api.ft.com/v1/user')).to.be.true;
+			expect(fetchMock.lastCall('https://ads-api.ft.com/v1/user')[1].useCorsProxy).to.be.true;
 			fetchMock.restore();
 		});
 	});
@@ -217,44 +220,6 @@ describe('Main', () => {
 
 		return main.init(flags).then(() => {
 			expect(fetchMock.called('https://ads-api.ft.com/v1/user')).to.be.false;
-			fetchMock.restore();
-		});
-	});
-
-	it('Should use the next.ft.com proxy if client does not support CORS with credentials', () => {
-		const flags = { get: () => true };
-		const fakeConceptId = '123456';
-		const fakeDfpSiteAndZone = 'this-should-be-overwritten';
-		Object.defineProperty(XMLHttpRequest.prototype, 'withCredentials', {
-			configurable: true, // defaults to false
-			writable: false,
-			value: false
-		});
-		delete XMLHttpRequest.prototype.withCredentials;
-		sandbox.stub(utils, 'getAppName', () => 'stream-page' );
-		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
-		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeConceptId}));
-		fetchMock
-			.mock('/__ads-api/v1/user', {
-				dfp: {
-					targeting: [{key: '1', value: 'a'}]
-				}
-			})
-			.mock('https://ads-api.ft.com/v1/user', {
-				dfp: {
-					targeting: [{key: '1', value: 'a'}]
-				}
-			})
-			.catch(Promise.reject());;
-
-		return main.init(flags).then(() => {
-			expect(fetchMock.called('/__ads-api/v1/user')).to.be.true;
-			expect(fetchMock.called('https://ads-api.ft.com/v1/user')).to.be.false	;
-			Object.defineProperty(XMLHttpRequest.prototype, 'withCredentials', {
-				configurable: true, // defaults to false
-				writable: false,
-				value: true
-			});
 			fetchMock.restore();
 		});
 	});
