@@ -22,11 +22,18 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 		margin: $_o-header-drawer-padding-x;
 	}
 
-	// force meganav above editors pick 'bookmark' triangle
-	.o-header__mega {
-		@include nUtilZIndexFor(meganav);
+	// fix up z-indexes
+	.o-header__drawer {
+		@include nUtilZIndexFor('drawer');
 	}
 
+	.o-header__mega {
+		@include nUtilZIndexFor('meganav');
+	}
+
+	.o-header--sticky {
+		@include nUtilZIndexFor('sticky-header');
+	}
 }
 
 @include nUiCriticalEnd('header');
