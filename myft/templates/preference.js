@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 * @param {string} relProperties[].name — Key of the relationship property
 * @param {string} relProperties[].value — Val of the relationship property
 * @param {string[]} [variants] — Vary styling of the button via BEM modifiers, e.g. `inverse`
+* @param {boolean} [isOn] — Used to reflect the preference’s state in the database
 */
 class Preference extends Component {
 	render () {
@@ -16,13 +17,14 @@ class Preference extends Component {
 		const relProperties = (this.props.relProperties||[]).map(relProperty => (
 			<input type='hidden' name={`_rel.${relProperty.name}`} value={relProperty.value}/>
 		));
+		const gatewayHttpMethod = (this.props.isOn) ? 'delete' : 'put';
 
 		const variants = (this.props.variants||[]).map(variant => ` n-ui-myft-cta__button--${variant}`);
 
 		return <form className='myft-ui myft-ui--prefer' method='POST'
 			data-myft-ui='prefer'
 			data-preference-name={this.props.preferenceName}
-			action={`/__myft/api/core/preferred/preference/${this.props.preferenceName}?method=put`}>
+			action={`/__myft/api/core/preferred/preference/${this.props.preferenceName}?method=${gatewayHttpMethod}`}>
 			{relProperties}
 			<button
 				type='submit'
