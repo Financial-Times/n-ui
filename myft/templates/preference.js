@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 /**
 * React component of the myFT on/off preference toggler
 *
-* @param {string} preferenceName — The uuid of the Preference in neo4j
+* @param {string} preferenceName — The uuid of the preference in the database
 * @param {string} buttonText — The button text for core experience/screen-reader users
 * @param {Object[]} [relProperties] — Properties to add to the relationship in Neo4j
 * @param {string} relProperties[].name — Key of the relationship property
@@ -19,8 +19,9 @@ class Preference extends Component {
 			<input type='hidden' name={`_rel.${relProperty.name}`} value={relProperty.value}/>
 		));
 		const gatewayHttpMethod = (this.props.isOn) ? 'delete' : 'put';
+		const variants = (this.props.variants||[]).map(variant => ` myft-ui__button--${variant}`);
+		const buttonClasses = ['myft-ui__button', ...variants];
 
-		const variants = (this.props.variants||[]).map(variant => ` n-ui-myft-cta__button--${variant}`);
 
 		return <form className='myft-ui myft-ui--prefer' method='POST'
 			data-myft-ui='prefer'
@@ -30,7 +31,7 @@ class Preference extends Component {
 			{this.props.coreMessage ? <p className='myft-ui__message n-util-hide-enhanced'>{this.props.coreMessage}</p> : ''}
 			<button
 				type='submit'
-				className={`n-ui-myft-cta__button${variants}`}
+				className={buttonClasses.join(' ')}
 				data-trackable={`set-${this.props.preferenceName}`}
 			><span className='n-util-visually-hidden'>{this.props.buttonText}</span></button>
 		</form>
