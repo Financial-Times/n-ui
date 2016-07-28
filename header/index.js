@@ -3,8 +3,9 @@ const Typeahead = require('./js/typeahead');
 const promoHandler = require('./js/promoHandler');
 
 function init (flags) {
-	OHeader.init();
 	promoHandler.init(flags);
+
+	new OHeader();
 
 	if (flags.get('sectionBreadcrumbs')) {
 		require('n-header-footer/breadcrumb').init();
