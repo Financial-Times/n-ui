@@ -7,13 +7,19 @@
 	var isSupported = true;
 
 	{{#if @root.flags.forceCoreExperience}}
-	var unsupported = {
-		'Samsung frankenchromium': function (ua) {
-			var android = /Android/.test(ua);
-			var samsung = /SamsungBrowser/.test(ua);
-			return android && samsung;
-		}
-	};
+
+	// Add any browsers we want to force core experience upon here by adding to
+	// a property to the `unsupported` object. E.g
+
+	// var unsupported = {
+	//	'Samsung frankenchromium': function (ua) {
+	//		var android = /Android/.test(ua);
+	//		var samsung = /SamsungBrowser/.test(ua);
+	//		return android && samsung;
+	//	}
+	// }
+
+	var unsupported = {};
 
 
 	for (var browser in unsupported) {
