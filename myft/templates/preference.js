@@ -40,7 +40,7 @@ class Preference extends Component {
 				className={buttonClasses.join(' ')}
 				disabled={this.props.enhancedOnly}
 				data-trackable={`set-${this.props.preferenceName}`}
-			><span className='n-util-visually-hidden'>{this.props.buttonText}</span></button>
+			><span className='n-util-hide-enhanced'>{this.props.buttonText}</span></button>
 		</form>
 	}
 }
