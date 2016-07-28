@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 * @param {string} relProperties[].name — Key of the relationship property
 * @param {string} relProperties[].value — Val of the relationship property
 * @param {string[]} [variants] — Vary styling of the button via BEM modifiers, e.g. `inverse`
+* @param {boolean} [enhancedOnly] — For when the preference only works for enhanced users (disabling the button for core)
 * @param {string} [coreMessage] — An optional message for core users
 * @param {boolean} [isOn] — Used to reflect the preference’s state in the database
 */
@@ -22,6 +23,9 @@ class Preference extends Component {
 		const variants = (this.props.variants||[]).map(variant => ` myft-ui__button--${variant}`);
 		const buttonClasses = ['myft-ui__button', ...variants];
 
+		if (this.props.enhancedOnly) {
+			buttonClasses.push('n-util-hide-core');
+		}
 
 		return <form className='myft-ui myft-ui--prefer' method='POST'
 			data-myft-ui='prefer'
@@ -32,6 +36,7 @@ class Preference extends Component {
 			<button
 				type='submit'
 				className={buttonClasses.join(' ')}
+				disabled={this.props.enhancedOnly}
 				data-trackable={`set-${this.props.preferenceName}`}
 			><span className='n-util-visually-hidden'>{this.props.buttonText}</span></button>
 		</form>
