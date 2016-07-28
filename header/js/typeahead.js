@@ -54,7 +54,7 @@ class Typeahead {
 	}
 
 	getSuggestions (value) {
-		return fetch(this.dataUrl + encodeURIComponent(value))
+		return fetch(this.dataUrl + encodeURIComponent(value), { credentials: 'same-origin' })
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(response.statusText);
