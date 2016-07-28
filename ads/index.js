@@ -18,7 +18,7 @@ const customTimings = {};
 function getContextualTargetingPromise (appName) {
 	let uuid;
 	let url;
-	const apiUrlRoot = ('withCredentials' in new XMLHttpRequest()) ? 'https://ads-api.ft.com/v1/' : '/__ads-api/v1/';
+	const apiUrlRoot = 'https://ads-api.ft.com/v1/';
 	if (appName === 'article') {
 		uuid = document.querySelector('[data-content-id]').getAttribute('data-content-id');
 
@@ -32,16 +32,20 @@ function getContextualTargetingPromise (appName) {
 		url = `${apiUrlRoot}concept/${uuid}`;
 	}
 
-	return (uuid && url) ? fetch(url, { timeout: 2000 })
+	return (uuid && url) ? fetch(url, {
+		timeout: 2000,
+		useCorsProxy: true
+	})
 			.then(res => res.json())
 			.catch(() => ({})) : Promise.resolve({});
 };
 
 function getUserTargetingPromise () {
-	const apiUrlRoot = ('withCredentials' in new XMLHttpRequest()) ? 'https://ads-api.ft.com/v1/' : '/__ads-api/v1/';
+	const apiUrlRoot = 'https://ads-api.ft.com/v1/';
 	return fetch(`${apiUrlRoot}user`, {
 		credentials: 'include',
-		timeout: 2000
+		timeout: 2000,
+		useCorsProxy: true
 	})
 		.then(res => res.json())
 		.catch(() => ({}));
