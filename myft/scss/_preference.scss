@@ -13,6 +13,15 @@
 		padding: 5px 0;
 	}
 
+	//TODO: Work around this BEM sin
+	.myft-ui--prefer[data-preference-name="publish-rss-feeds"] .myft-ui__info {
+		display: none;
+	}
+
+	.myft-ui--preferred-on[data-preference-name="publish-rss-feeds"] .myft-ui__info {
+		display: block;
+	}
+
 	.myft-ui__info {
 		margin: 0 0 5px 10px;
 	}

@@ -27,15 +27,20 @@ class Preference extends Component {
 			buttonClasses.push('n-util-hide-core');
 		}
 
-		return <form className='myft-ui myft-ui--prefer' method='POST'
+		//TODO: Make RSS pref its own component to avoid having to commit this sin?
+		//typing-dog.gif
+		const createMarkup = (prop) => ({__html: prop});
+
+		return <form className={`myft-ui myft-ui--prefer${this.props.isOn ? ' myft-ui--preferred-on' : ''}`} method='POST'
 			data-myft-ui='prefer'
 			data-preference-name={this.props.preferenceName}
 			action={`/__myft/api/core/preferred/preference/${this.props.preferenceName}?method=${gatewayHttpMethod}`}>
 			{relProperties}
-			<p className='myft-ui__info js-myft-ui__info'>{this.props.info}</p>
+			<p className='myft-ui__info js-myft-ui__info' dangerouslySetInnerHTML={createMarkup(this.props.info)}></p>
 			<button
 				type='submit'
 				className={buttonClasses.join(' ')}
+				aria-pressed={!!this.props.isOn}
 				disabled={this.props.enhancedOnly}
 				data-trackable={`set-${this.props.preferenceName}`}
 			><span className='n-util-hide-enhanced'>{this.props.buttonText}</span></button>
