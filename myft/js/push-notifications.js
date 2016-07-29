@@ -12,7 +12,7 @@ let infoText;
 function init () {
 
 	pushButtonContainer = document.querySelector('[data-preference-name="push-notifications"]');
-	pushButton = pushButtonContainer ? pushButtonContainer.querySelector('.myft-ui__button') : null;
+	pushButton = pushButtonContainer ? pushButtonContainer.querySelector('.js-myft-ui__button') : null;
 	infoText = pushButtonContainer ? pushButtonContainer.querySelector('.js-myft-ui__info') : null;
 
 	if(!isLocalOrHTTPS || !pushButton) {
