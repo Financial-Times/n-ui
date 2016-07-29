@@ -104,6 +104,9 @@ function updateUiForFeature (opts) {
 				const newButtonState = (hasRelBtns) ? (button === activeMultiButton) : opts.state;
 				toggleButton(button, newButtonState);
 			});
+
+			// add a BEM modifier for on/off-only styling of the form (e.g. show RSS link if RSS pref is on)
+			form.classList.toggle(`myft-ui--${opts.myftFeature}-on`, !!opts.state);
 		}
 	});
 }
