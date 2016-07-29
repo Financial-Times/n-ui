@@ -21,7 +21,7 @@ class Preference extends Component {
 		));
 		const gatewayHttpMethod = (this.props.isOn) ? 'delete' : 'put';
 		const variants = (this.props.variants||[]).map(variant => ` myft-ui__button--${variant}`);
-		const buttonClasses = ['myft-ui__button', ...variants];
+		const buttonClasses = ['myft-ui__button', 'js-myft-ui__button', ...variants];
 
 		if (this.props.enhancedOnly) {
 			buttonClasses.push('n-util-hide-core');
