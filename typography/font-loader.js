@@ -26,7 +26,7 @@ export function load (el) {
 		return Promise.resolve();
 	}
 	const fontPromises = fontConfigs.map(fontConfig => {
-		new FontFaceObserver(fontConfig.family, { weight: fontConfig.weight })
+		return new FontFaceObserver(fontConfig.family, { weight: fontConfig.weight })
 			.load()
 			.then(() =>
 				el.className += fontConfig.labels.reduce(

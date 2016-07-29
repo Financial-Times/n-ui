@@ -74,7 +74,6 @@ function toggleButton (buttonEl, state) {
 
 
 function updateUiForFeature (opts) {
-
 	if (!uiSelectors[opts.myftFeature]) {
 		return;
 	}
@@ -83,14 +82,38 @@ function updateUiForFeature (opts) {
 	const idProperty = idProperties[opts.myftFeature];
 	const uuids = opts.subjects.map(getUuid);
 
+	// if there are multiple buttons, use the button with the same value as the rel property
+	// if there are no multiple buttons, use opts.state
 	featureForms.forEach(form => {
 		const index = uuids.indexOf(form.getAttribute(idProperty));
 		if (index > -1) {
-			const type = opts.subjects[index]._rel && opts.subjects[index]._rel.type;
-			const activeMultiButton = form.querySelector(`button[value="${type || 'delete'}"]`);
-			$$('button', form).forEach(button => toggleButton(button, (activeMultiButton) ? button === activeMultiButton : opts.state));
+			const relBtns = form.querySelectorAll('button[name^="_rel."]');
+			const hasRelBtns = (relBtns.length > 0);
+			let activeMultiButton;
+
+			// if the form has _rel.foo buttons, but there is no _rel.foo in the subject object nor an 'off' ('delete') button, then go to next iteration
+			// this is for when 1 item is changed on a page with > 1 form, and the returned rel object only has a property for the changed item
+			if (hasRelBtns) {
+				activeMultiButton = getActiveMultiButton(relBtns, form, opts.subjects[index]);
+				if (!activeMultiButton) {
+					return;
+				}
+			}
+
+			$$('button', form).forEach(button => {
+				const newState = (hasRelBtns) ? (button === activeMultiButton) : opts.state;
+				toggleButton(button, newState);
+			});
 		}
 	});
+}
+
+function getActiveMultiButton (relBtns, form, subject) {
+	const relName = relBtns[0].getAttribute('name').replace('_rel.', '');
+	const relValue = subject._rel && subject._rel[relName];
+	// can remove delete button part once old myft alerts page is retired
+	const activeButton = form.querySelector(`button[value="${relValue || 'delete'}"]`);
+	return activeButton;
 }
 
 function openOverlay (html, { name = 'myft-ui', title = '&nbsp;', shaded = true }) {

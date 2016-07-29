@@ -10,6 +10,8 @@ $n-ui-z-index-basis: 100;
 /// @type List
 $n-ui-z-index-order: (
 	'meganav',
+	'sticky-header',
+	'drawer',
 	'typeahead',
 	'welcome',
 	'overlay',
@@ -28,7 +30,7 @@ $n-ui-z-index-order: (
 	$index: index($n-ui-z-index-order, $use-case);
 
 	@if $index {
-		z-index: $n-ui-z-index-basis + $index;
+		z-index: $n-ui-z-index-basis + $index !important;
 	} @else {
 		@warn 'z-index for use case "#{$use-case}" not found.';
 	}

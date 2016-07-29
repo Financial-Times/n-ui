@@ -44,9 +44,10 @@ function showExpectedCount () {
 		})
 		.then(res => res.json())
 		.then(function (data) {
-			if(data && data.pushesPerDay) {
-				pushButtonContainer.getElementsByTagName('label')[0].textContent +=
-				` (estimated ${data.pushesPerDay} notifications a day for the topics you follow)`;
+			const el = pushButtonContainer.querySelector('.js-myft-ui__message') || pushButtonContainer.getElementsByTagName('label')[0];
+
+			if(data && data.pushesPerDay && el) {
+				el.textContent += ` (~${data.pushesPerDay} alerts a day)`;
 			}
 		});
 	});
