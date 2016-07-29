@@ -31,7 +31,7 @@ class Preference extends Component {
 		//typing-dog.gif
 		const createMarkup = (prop) => ({__html: prop});
 
-		return <form className={`myft-ui myft-ui--prefer myft-ui--preferred-${this.props.isOn ? 'on' : 'off'}`} method='POST'
+		return <form className={`myft-ui myft-ui--prefer${this.props.isOn ? ' myft-ui--preferred-on' : ''}`} method='POST'
 			data-myft-ui='prefer'
 			data-preference-name={this.props.preferenceName}
 			action={`/__myft/api/core/preferred/preference/${this.props.preferenceName}?method=${gatewayHttpMethod}`}>
