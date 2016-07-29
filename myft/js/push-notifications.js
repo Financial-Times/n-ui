@@ -7,12 +7,13 @@ const isLocalOrHTTPS = document.location.protocol === 'https:' ||
 let isPushEnabled = false;
 let pushButtonContainer;
 let pushButton;
+let infoText;
 
 function init () {
 
 	pushButtonContainer = document.querySelector('[data-preference-name="push-notifications"]');
-	pushButton = pushButtonContainer ? pushButtonContainer.querySelector('.myft-ui__button') : null;
-
+	pushButton = pushButtonContainer ? pushButtonContainer.querySelector('.js-myft-ui__button') : null;
+	infoText = pushButtonContainer ? pushButtonContainer.querySelector('.js-myft-ui__info') : null;
 
 	if(!isLocalOrHTTPS || !pushButton) {
 		return;
@@ -44,7 +45,8 @@ function showExpectedCount () {
 		})
 		.then(res => res.json())
 		.then(function (data) {
-			const el = pushButtonContainer.querySelector('.js-myft-ui__message') || pushButtonContainer.getElementsByTagName('label')[0];
+			// TODO: Remove the label[0] selector after launching the new prefs page
+			const el = infoText || pushButtonContainer.getElementsByTagName('label')[0];
 
 			if(data && data.pushesPerDay && el) {
 				el.textContent += ` (~${data.pushesPerDay} alerts a day)`;
@@ -74,6 +76,11 @@ function initialiseState () {
 	if (!('PushManager' in window)) {
 		//TODO: send tracking event
 		return;
+	}
+
+	if (infoText) {
+		// Wipe out the “not supported” message
+		infoText.textContent = '';
 	}
 
 	// We need the service worker registration to check for a subscription
