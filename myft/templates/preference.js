@@ -10,8 +10,7 @@ import React, { Component } from 'react';
 * @param {string} relProperties[].value — Val of the relationship property
 * @param {string[]} [variants] — Vary styling of the button via BEM modifiers, e.g. `inverse`
 * @param {boolean} [enhancedOnly] — For when the preference only works for enhanced users (disabling the button for core)
-* @param {string} [enhancedMessage] — An optional message for enhanced users
-* @param {string} [coreMessage] — An optional message for core users
+* @param {string} [info] — An optional message area for dynamic info, or core/enhanced differences
 * @param {boolean} [isOn] — Used to reflect the preference’s state in the database
 */
 class Preference extends Component {
@@ -33,8 +32,7 @@ class Preference extends Component {
 			data-preference-name={this.props.preferenceName}
 			action={`/__myft/api/core/preferred/preference/${this.props.preferenceName}?method=${gatewayHttpMethod}`}>
 			{relProperties}
-			{this.props.coreMessage ? <p className='myft-ui__message n-util-hide-enhanced'>{this.props.coreMessage}</p> : ''}
-			<p className='myft-ui__message js-myft-ui__message n-util-hide-core'>{this.props.enhancedMessage}</p>
+			<p className='myft-ui__info js-myft-ui__info'>{this.props.info}</p>
 			<button
 				type='submit'
 				className={buttonClasses.join(' ')}
