@@ -40,6 +40,7 @@ class Preference extends Component {
 			<button
 				type='submit'
 				className={buttonClasses.join(' ')}
+				aria-pressed={!!this.props.isOn}
 				disabled={this.props.enhancedOnly}
 				data-trackable={`set-${this.props.preferenceName}`}
 			><span className='n-util-hide-enhanced'>{this.props.buttonText}</span></button>
