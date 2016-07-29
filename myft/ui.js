@@ -101,8 +101,8 @@ function updateUiForFeature (opts) {
 			}
 
 			$$('button', form).forEach(button => {
-				const newState = (hasRelBtns) ? (button === activeMultiButton) : opts.state;
-				toggleButton(button, newState);
+				const newButtonState = (hasRelBtns) ? (button === activeMultiButton) : opts.state;
+				toggleButton(button, newButtonState);
 			});
 		}
 	});
