@@ -44,7 +44,6 @@
     "o-viewport": "^2.0.0",
     "o-visual-effects": "^0.1.0",
     "superstore": "^2.1.0",
-    "superstore-sync": "^2.1.0",
-    "n-header-footer": "^4.8.1"
+    "superstore-sync": "^2.1.0"
   }
 }

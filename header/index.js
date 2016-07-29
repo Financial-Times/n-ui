@@ -7,10 +7,6 @@ function init (flags) {
 
 	new OHeader();
 
-	if (flags.get('sectionBreadcrumbs')) {
-		require('n-header-footer/breadcrumb').init();
-	}
-
 	if (flags.get('stickyNav')) {
 		new OHeader(document.querySelector('[data-o-header--sticky]'));
 	}
