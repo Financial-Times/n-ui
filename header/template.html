@@ -15,9 +15,15 @@
 
 	{{#outputBlock 'sub-header'}}{{/outputBlock}}
 
+	{{!-- old compatibility template --}}
+	{{!-- TODO: switch all uses to res.locals.subnav = { breadcrumb: [], subsections: [] } --}}
 	{{#ifAll @root.flags.sectionBreadcrumbs @root.currentNav}}
-		{{>n-ui/header/partials/subnav/template}}
+		{{>n-ui/header/partials/subnav/template-old}}
 	{{/ifAll}}
+
+	{{#if @root.subnav}}
+		{{>n-ui/header/partials/subnav/template-new}}
+	{{/if}}
 </header>
 
 {{#if @root.flags.stickyNav}}
