@@ -25,7 +25,7 @@
 					<ul class="o-header__subnav-list o-header__subnav-list--children" aria-label="Subsections" data-trackable="subsections">
 						{{#each currentNav.children}}
 						<li class="o-header__subnav-item">
-							<a class="o-header__subnav-link" href="{{href}}" data-trackable="{{name}}">
+							<a class="o-header__subnav-link {{#if selected}}o-header__subnav-link--highlight{{/if}}" href="{{href}}" aria-selected="{{selected}}" data-trackable="{{name}}">
 								{{name}}
 							</a>
 						</li>
