@@ -27,7 +27,7 @@
 	}
 
 	.myft-ui--prefer label {
-		@include oTypographySans(s);
+		@include oTypographySans('s', $load-progressively: true);
 	}
 
 	.no-js .myft-ui--prefer label {
