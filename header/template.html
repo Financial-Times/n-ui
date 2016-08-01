@@ -12,7 +12,18 @@
 	{{> n-ui/header/partials/header/top}}
 	{{> n-ui/header/partials/header/search context="primary"}}
 	{{> n-ui/header/partials/header/nav}}
+
 	{{#outputBlock 'sub-header'}}{{/outputBlock}}
+
+	{{!-- old compatibility template --}}
+	{{!-- TODO: switch all uses to res.locals.subnav = { breadcrumb: [], subsections: [] } --}}
+	{{#ifAll @root.flags.sectionBreadcrumbs @root.currentNav}}
+		{{>n-ui/header/partials/subnav/template-old}}
+	{{/ifAll}}
+
+	{{#if @root.subnav}}
+		{{>n-ui/header/partials/subnav/template-new}}
+	{{/if}}
 </header>
 
 {{#if @root.flags.stickyNav}}
@@ -21,7 +32,3 @@
 		{{> n-ui/header/partials/header/search context="sticky"}}
 	</header>
 {{/if}}
-
-{{#ifAll @root.flags.sectionBreadcrumbs @root.currentNav}}
-	{{>n-header-footer/breadcrumb/template}}
-{{/ifAll}}

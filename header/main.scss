@@ -3,7 +3,6 @@
 $o-header-is-silent: not nUiHas('header') !default;
 $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 
-@import 'n-header-footer/breadcrumb/breadcrumb';
 @import 'scss/marketing-promo';
 @import 'o-header/main';
 
