@@ -27,7 +27,7 @@
 </header>
 
 {{#if @root.flags.stickyNav}}
-	<header class="o-header o-header--simple o-header--sticky o--if-js" data-o-header--sticky>
+	<header class="o-header o-header--simple o-header--sticky o--if-js" aria-hidden="true" role="presentation" data-o-header--sticky>
 		{{> n-ui/header/partials/header/sticky}}
 		{{> n-ui/header/partials/header/search context="sticky"}}
 	</header>
