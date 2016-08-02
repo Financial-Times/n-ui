@@ -49,8 +49,7 @@
 @include oColorsSetUseCase(topic-inversed, text, 'claret-inverse');
 @include oColorsSetUseCase(topic-block, background, 'claret');
 @include oColorsSetUseCase(topic-block, text, 'white');
-// myFT (hopefully will replace ^Topics at some point)
-@include oColorsSetUseCase(myft, all, 'purple-tint1');
+@include oColorsSetUseCase(myft, all, 'claret');
 
 @include oColorsSetUseCase(link, text, 'teal-1');
 @include oColorsSetUseCase(link-hover, text, 'cold-1');
