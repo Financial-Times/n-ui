@@ -117,14 +117,18 @@
 		}
 
 		.n-myft-ui__button {
+			@include clearfix();
 			border-radius: 0;
-			margin-left: -5px;
+			float: left;
+			display: block;
+			margin-left: -1px;
 			transition: all 0.1s ease-in-out;
 		}
 		.n-myft-ui__button:first-of-type {
 			border-bottom-left-radius: 3px;
 			border-left-width: 1px;
 			border-top-left-radius: 3px;
+			margin: 0;
 		}
 
 		.n-myft-ui__button:last-child {

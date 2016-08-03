@@ -35,3 +35,17 @@ $n-ui-z-index-order: (
 		@warn 'z-index for use case "#{$use-case}" not found.';
 	}
 }
+
+@mixin clearfix() {
+	&:before,
+	&:after {
+		content: " ";
+		display: table;
+	}
+
+	&:after {
+		clear: both;
+	}
+
+	*zoom: 1;
+}
