@@ -112,10 +112,6 @@
 	.n-myft-ui--prefer-group {
 		width: 100%;
 
-		@include oGridRespondTo($from: 'M') {
-			padding-left: $spacing-unit;
-		}
-
 		.n-myft-ui__button {
 			@include clearfix();
 			border-radius: 0;
