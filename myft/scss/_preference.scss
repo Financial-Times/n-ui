@@ -9,7 +9,7 @@
 		}
 	}
 
-	.js .myft-ui--prefer {
+	.enhanced .myft-ui--prefer {
 		padding: 5px 0;
 	}
 
@@ -30,16 +30,16 @@
 		@include oTypographySans('s', $load-progressively: true);
 	}
 
-	.no-js .myft-ui--prefer label {
+	.core .myft-ui--prefer label {
 		line-height: 27px;
 	}
 
-	.no-js .myft-ui--prefer button {
+	.core .myft-ui--prefer button {
 		@include oButtons();
 		margin-left: 10px;
 	}
 
-	.js .myft-ui--prefer button {
+	.enhanced .myft-ui--prefer button {
 		@include oTypographySansBold(xs);
 		background: transparent;
 		border-radius: 3px;
