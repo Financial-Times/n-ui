@@ -20,11 +20,24 @@ function getGPTUnitName (contextData) {
 	return area.concat(pageSpecific).join('/');
 };
 
+function getLazyLoadConfig(flags) {
+	switch(flags.adsLazyLoadPosition) {
+		case 'onload':
+			return false;
+		case '50pc':
+			return { viewportMargin: "0% 0% 50% 0%", threshold: 0 };
+		case '100pc':
+			return { viewportMargin: "0% 0% 100% 0%", threshold: 0 };
+		default:
+			return { viewportMargin: "0% 0% 0% 0%", threshold: 0 };
+	}
+}
+
 module.exports = function (flags, contextData, userData) {
 	const gptUnitName = getGPTUnitName(contextData);
 	const targeting = extend({
 		pt: pageType.toLowerCase().substr(0, 3),
-		nlayout: pageType + '-' + utils.getLayoutName()
+		nlayout: utils.getLayoutName()
 	}, metadata.user(true));
 
 	const kruxConfig = (flags.get('krux')) && {
@@ -73,7 +86,8 @@ module.exports = function (flags, contextData, userData) {
 		},
 		krux: kruxConfig,
 		collapseEmpty: 'before',
-		dfp_targeting: utils.keyValueString(targeting)
+		dfp_targeting: utils.keyValueString(targeting),
+		lazyLoad: getLazyLoadConfig(flags)
 	};
 
 };

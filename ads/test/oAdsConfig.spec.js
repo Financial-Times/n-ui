@@ -112,7 +112,7 @@ describe('Config', () => {
 	it('Should set dfp_targeting config', () => {
 		const flags = { get: () => true };
 		const config = oAdsConfig(flags, {});
-		const expectation = 'pt=unk;02=02;05=null;06=06;07=07;19=19;40=40;41=41;42=42;46=46;51=null;slv=lv2;98=98;nlayout=unknown-custom'.split(';');
+		const expectation = 'pt=unk;02=02;05=null;06=06;07=07;19=19;40=40;41=41;42=42;46=46;51=null;slv=lv2;98=98;nlayout=custom'.split(';');
 		expectation.forEach((value) => expect(config.dfp_targeting).to.contain(value));
 	});
 
