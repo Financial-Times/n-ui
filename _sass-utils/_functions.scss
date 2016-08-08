@@ -2,11 +2,16 @@
 /// @group n-ui functions
 ////
 
+$_n-ui-core: ads grid header layout normalize typography utils;
+
 /// Test if the given feature is configured
 /// @param {String} $feature-name
 /// @returns {Bool}
 @function nUiHas($feature-name) {
-	@return nUiFeatureValue($feature-name) == true or nUiFeatureValue($feature-name) == 'critical';
+	$feature-is-on: nUiFeatureValue($feature-name) == true or nUiFeatureValue($feature-name) == 'critical';
+	$feature-is-not-in-excluded-core: $n-ui-include-core == true or nUiFeatureIsCore($feature-name) == false;
+
+	@return $feature-is-on and $feature-is-not-in-excluded-core;
 }
 
 /// Get the value of a given feature (true|false|critical)
@@ -14,6 +19,13 @@
 /// @returns {Bool|String}
 @function nUiFeatureValue($feature-name) {
 	@return map-get($n-ui-features, $feature-name);
+}
+
+/// Test whether a feature is part of the core of n-ui
+/// @param {String} $feature
+/// @returns {Bool}
+@function nUiFeatureIsCore($feature-name) {
+	@return (null != index($_n-ui-core, $feature-name));
 }
 
 /// Test to check if the given module is configured and whether it has been output already
