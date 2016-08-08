@@ -36,8 +36,8 @@ function getContextualTargetingPromise (appName) {
 		timeout: 2000,
 		useCorsProxy: true
 	})
-			.then(res => res.json())
-			.catch(() => ({})) : Promise.resolve({});
+	.then(res => res.json())
+	.catch(() => ({})) : Promise.resolve({});
 };
 
 function getUserTargetingPromise () {

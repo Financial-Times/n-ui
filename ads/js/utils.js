@@ -27,12 +27,21 @@ function getAppName () {
 
 
 function getLayoutName () {
+	let layout = 'default';
+	const abStateEl = document.querySelector('[data-ab-state]');
 	const element = document.querySelector('[data-ads-layout]');
 	if (element) {
-		return element.getAttribute('data-ads-layout');
+		layout = element.getAttribute('data-ads-layout');
+	}
+	if(abStateEl) {
+		const abState = abStateEl.getAttribute('data-ab-state');
+		const adsLayoutAB = abState && abState.match(/adsLazyLoadPosition:(control|50pc|100pc|onload)/);
+		if(adsLayoutAB && adsLayoutAB.length > 1) {
+			layout = `lazyload-${adsLayoutAB[1]}`;
+		}
 	}
 
-	return 'default';
+	return layout;
 }
 
 function getMetaData (name) {
