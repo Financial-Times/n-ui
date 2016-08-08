@@ -1,0 +1,8 @@
+@import "../configure";
+@include nUiConfigure(
+	$features: (
+		footer: false,
+	),
+	$preset: 'discrete'
+);
+@import "../bootstrap";

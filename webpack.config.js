@@ -57,5 +57,13 @@ module.exports = [
 		entry: {
 			"./dist/es5-polyfill-io.min.js": "./_deploy/wrapper.js"
 		},
+	})),
+	nWebpack(Object.assign({}, coreConfig, {
+		withBabelPolyfills: false,
+		env: 'prod',
+		entry: {
+			"./dist/main.css": "./_deploy/shared-head.scss"
+		},
+		wrap: undefined
 	}))
 ];
