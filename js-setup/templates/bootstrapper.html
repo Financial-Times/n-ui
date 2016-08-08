@@ -35,11 +35,18 @@
 
 	(function () {
 		if (cutsTheMustard) {
-			{{#if @root.nUiVersion}} {{!note this only exists if the flag is on and the app has enabled n-ui bundle}}
-				ftNextLoadScript('//next-geebee.ft.com/n-ui/no-cache/{{@root.nUiVersion}}/es5-core-js{{#unless @root.flags.nUiBundleUnminified}}.min{{/unless}}.js');
-				ftNextLoadScript('{{#hashedAsset}}main-without-n-ui.js{{/hashedAsset}}');
+			{{#if @root.javascriptBundles}}
+				{{#each @root.javascriptBundles}}
+					ftNextLoadScript('{{this}}');
+				{{/each}}
 			{{else}}
-				ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}');
+				{{!deprecated - logic for picking which javascripts to include now done in n-express}}
+				{{#if @root.nUiVersion}} {{!note this only exists if the flag is on and the app has enabled n-ui bundle}}
+					ftNextLoadScript('//next-geebee.ft.com/n-ui/no-cache/{{@root.nUiVersion}}/es5-core-js{{#unless @root.flags.nUiBundleUnminified}}.min{{/unless}}.js');
+					ftNextLoadScript('{{#hashedAsset}}main-without-n-ui.js{{/hashedAsset}}');
+				{{else}}
+					ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}');
+				{{/if}}
 			{{/if}}
 
 			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '{{#if @root.flags.polyfillsRUM}}&rum=1{{/if}}&features=' + [
@@ -56,9 +63,6 @@
 				'IntersectionObserver'
 			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set' + '&flags=gated&unknown=polyfill');
 		} else {
-			{{#if hasMainCoreJs}}
-			ftNextLoadScript('{{#hashedAsset}}main-core.js{{/hashedAsset}}');
-			{{/if}}
 			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '&features=' + [
 				'default',
 				'HTMLPictureElement|always|gated'
