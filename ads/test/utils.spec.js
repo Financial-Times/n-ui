@@ -34,6 +34,12 @@ describe('Utils', () => {
 		expect(utils.getLayoutName()).to.equal(layoutName);
 	});
 
+	it('Should return a layout name for the lazy load test if in a variant', () => {
+		const layoutName = 'test-layout-name';
+		markup.set('<div data-ab-state="adsLazyLoadPosition:50pc" data-ads-layout="' + layoutName + '"></div>');
+		expect(utils.getLayoutName()).to.equal('lazyload-50pc');
+	});
+
 	it('Should return a default layout name when no data-ads-layout is present', () => {
 		expect(utils.getLayoutName()).to.equal('default');
 	});
