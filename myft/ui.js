@@ -7,7 +7,6 @@ const myftClient = require('next-myft-client');
 const Delegate = require('ftdomdelegate');
 
 const delegate = new Delegate(document.body);
-const pushNotifications = require('./js/push-notifications');
 const grabUrlHashWithPrefix = require('./js/grab-url-hash-with-prefix');
 const followEmail = require('./js/follow-email');
 const uuid = require('../utils').uuid;
@@ -504,8 +503,6 @@ export function init (opts) {
 			ev.preventDefault();
 			showCreateListOverlay();
 		});
-
-		pushNotifications.init(opts.pushNotifications);
 	}
 }
 
