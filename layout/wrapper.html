@@ -60,7 +60,7 @@
 		</script>
 	</head>
 	<body data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
-		{{#ifAll @root.flags.googleConsumerSurvey withGcs}}
+		{{#if withGcs}}
 			<script type="text/javascript">
 				(function() {
 					var ARTICLE_URL = window.location.href;
@@ -75,7 +75,7 @@
 					);
 				})();
 			</script>
-		{{/ifAll}}
+		{{/if}}
 		<div class="n-layout">
 			<div class="n-layout__row n-layout__row--header">
 				{{#outputBlock 'above-header'}}{{/outputBlock}}
