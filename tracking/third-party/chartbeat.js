@@ -7,12 +7,6 @@ Eventually this will be replaced by FT's in-house "lantern" application, utilisi
 
 import {loadScript} from '../../utils';
 
-const getCookieValue = key => {
-	const regex = new RegExp(`${key}=([^;]+)`, 'i');
-	const a = regex.exec(document.cookie);
-	return (a) ? a[1] : undefined;
-}
-
 const enableChartbeat = () => {
 	window._sf_async_config = {
 		uid: 14181,
@@ -30,28 +24,12 @@ const enableChartbeat = () => {
 
 // The chartbeat Heads-Up-Display (HUD) requires the chartbeat script to be loaded.
 // Editorial users who wish to use the HUD will need to toggle "chartbeatHud" on.
-// For non-HUD uses, load chartbeat for a cohort of spoor IDs.
+// For non-HUD uses, load chartbeat for a random 20% of page views.
 module.exports = flags => {
 	if (flags && (flags.get('chartbeat') || flags.get('chartbeatHud'))) {
-		if (flags.get('chartbeatHud')) {
+		if (flags.get('chartbeatHud') || Math.random() < 0.2) {
 			enableChartbeat();
 			return;
-		}
-
-		// E.g. `spoorIdCohort = { min:0, max:99 }` is a 100% cohort.
-		// Note: Arbitrarily decided on this cohort, merely so it's
-		// less likely to correspond with other third-party-scripts.
-		const spoorIdCohort = { min:60, max:80 };
-
-		const spoorId = getCookieValue('spoor-id');
-		if (spoorId.indexOf('-') === -1) return; // Only accept uuid-format spoor ids
-
-		const lastSegmentHex = spoorId.substring(spoorId.lastIndexOf('-') + 1);
-		const lastSegmentPercentoid = parseInt(lastSegmentHex, 16) % 100 // Always a number from 0 to 99
-
-		// Other trackers also cohort based on spoorId. So bump this cohort up by 10%
-		if (lastSegmentPercentoid >= spoorIdCohort.min && lastSegmentPercentoid <= spoorIdCohort.max) {
-			enableChartbeat();
 		}
 	}
 }
