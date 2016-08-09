@@ -1,7 +1,7 @@
-import fireTracking from './utils/fire-tracking';
+const broadcast = require('../../../utils').broadcast;
 
 const track = (componentId, componentPos) =>
-	fireTracking('oTracking.event', { category: 'page', action: 'scrolldepth', componentId, componentPos });
+	broadcast('oTracking.event', { category: 'page', action: 'scrolldepth', componentId, componentPos });
 
 const intersectionCallback = (observer, changes) =>
 	changes.forEach(change => {
