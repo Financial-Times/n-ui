@@ -25,11 +25,11 @@ function getLazyLoadConfig(flags) {
 		case 'onload':
 			return false;
 		case '50pc':
-			return { viewportMargin: "0% 0% 50% 0%", threshold: 0 };
+			return { viewportMargin: "0% 0% 50% 0%" };
 		case '100pc':
-			return { viewportMargin: "0% 0% 100% 0%", threshold: 0 };
+			return { viewportMargin: "0% 0% 100% 0%" };
 		default:
-			return { viewportMargin: "0% 0% 0% 0%", threshold: 0 };
+			return { viewportMargin: "0% 0% 0% 0%" };
 	}
 }
 
