@@ -24,7 +24,7 @@
 		$variant: "-#{$n-ui-variant}";
 	}
 	@if nUiFeatureIsCore($feature-name) {
-		$variant: $variant "-n-ui-core";
+		$variant: "#{$variant}-n-ui-core";
 	}
 	@return $variant
 }

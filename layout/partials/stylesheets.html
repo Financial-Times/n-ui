@@ -1,19 +1,43 @@
 <!--[if gte IE 9]><!-->
-{{#if headCsses}}
-<style class="n-layout-head-css">
-	{{#if cssVariant}}
-		{{{lookup headCsses (concat 'head-' cssVariant)}}}
-	{{else}}
-		{{{headCsses.head}}}
+	{{#if criticalCss}}
+		<style class="n-layout-head-css">
+			{{#each criticalCss}}
+				{{{this}}}
+			{{/each}}
+		</style>
+	{{else if headCsses}}
+		{{!deprecated  - logic for css bundle selection is now in n-express}}
+		<style class="n-layout-head-css">
+			{{#if cssVariant}}
+				{{{lookup headCsses (concat 'head-' cssVariant)}}}
+			{{else}}
+				{{{headCsses.head}}}
+			{{/if}}
+		</style>
 	{{/if}}
-</style>
-<link rel="preload" href="{{#hashedAsset}}main{{#if cssVariant}}-{{cssVariant}}{{/if}}.css{{/hashedAsset}}" as="style" onload="this.rel='stylesheet';window.ftNextMainCssLoaded=true">
-<noscript>
-	<link rel="stylesheet" href="{{#hashedAsset}}main{{#if cssVariant}}-{{cssVariant}}{{/if}}.css{{/hashedAsset}}">
-</noscript>
-{{else}}
-<link rel="stylesheet" href="{{#hashedAsset}}main{{#if cssVariant}}-{{cssVariant}}{{/if}}.css{{/hashedAsset}}">
-{{/if}}
+
+	{{#if @root.cssBundles}}
+		{{#each @root.cssBundles}}
+			{{#if criticalCss}}
+				<link rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';{{#if isMain}}window.ftNextMainCssLoaded=true{{/if}}">
+				<noscript>
+					<link rel="stylesheet" href="{{path}}">
+				</noscript>
+			{{else}}
+				<link rel="stylesheet" href="{{#hashedAsset}}main{{#if cssVariant}}-{{cssVariant}}{{/if}}.css{{/hashedAsset}}">
+			{{/if}}
+		{{/each}}
+	{{else}}
+		{{!deprecated  - logic for css bundle selection is now in n-express}}
+		{{#if headCsses}}
+			<link rel="preload" href="{{#hashedAsset}}main{{#if cssVariant}}-{{cssVariant}}{{/if}}.css{{/hashedAsset}}" as="style" onload="this.rel='stylesheet';window.ftNextMainCssLoaded=true">
+			<noscript>
+				<link rel="stylesheet" href="{{#hashedAsset}}main{{#if cssVariant}}-{{cssVariant}}{{/if}}.css{{/hashedAsset}}">
+			</noscript>
+		{{else}}
+			<link rel="stylesheet" href="{{#hashedAsset}}main{{#if cssVariant}}-{{cssVariant}}{{/if}}.css{{/hashedAsset}}">
+		{{/if}}
+	{{/if}}
 <!--<![endif]-->
 
 <!--[if lte IE 8]>
