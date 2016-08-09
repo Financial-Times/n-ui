@@ -10,15 +10,31 @@
 	@include nUiCriticalEnd($feature-name);
 }
 
+
+/// Test whether a feature is part of the core of n-ui
+/// @param {String} $feature
+/// @returns {Bool}
+@function nUiFeatureIsCore($feature-name) {
+	@return (null != index($_n-ui-core, $feature-name));
+}
+
+@function nUiGetHeadCssVariant ($feature-name) {
+	$variant: "";
+	@if $n-ui-variant {
+		$variant: "-#{$n-ui-variant}";
+	}
+	@if nUiFeatureIsCore($feature-name) {
+		$variant: "#{$variant}-n-ui-core";
+	}
+	@return $variant
+}
+
+
 /// Critical block start
 /// @output A critical block start comment
 @mixin nUiCriticalStart($feature-name: null) {
 	@if $n-ui-output-critical and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
-		@if $n-ui-variant {
-			/*! start:head-#{$n-ui-variant}.css*/
-		} @else {
-			/*! start:head.css*/
-		}
+		/*! start:head#{nUiGetHeadCssVariant($feature-name)}.css*/
 	}
 }
 
@@ -26,10 +42,6 @@
 /// @output A critical block start comment
 @mixin nUiCriticalEnd($feature-name: null) {
 	@if $n-ui-output-critical and if($feature-name, nUiFeatureValue($feature-name) == 'critical', true) {
-		@if $n-ui-variant {
-			/*! end:head-#{$n-ui-variant}.css*/
-		} @else {
-			/*! end:head.css*/
-		}
+		/*! end:head#{nUiGetHeadCssVariant($feature-name)}.css*/
 	}
 }

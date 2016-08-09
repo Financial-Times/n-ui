@@ -19,3 +19,8 @@ $n-ui-imported-modules: () !default;
 /// @type List
 /// @private
 $n-ui-features: () !default;
+
+/// List of features which make up n-ui core, required in the critical css of every page
+/// @type List
+/// @private
+$_n-ui-core: ads grid header layout normalize typography utils;
