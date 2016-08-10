@@ -121,7 +121,7 @@ export class ComponentInitializer {
 			mainCss
 				.then(() => {
 					if (config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
-						cookieMessage.init();
+						cookieMessage.init(flags);
 						this.initializedFeatures.cookieMessage = true;
 					}
 
