@@ -1,4 +1,3 @@
-import flags from 'next-feature-flags-client';
 import store from 'superstore-sync';
 
 const FLAG_NOT_ON = 'Flag not on';
@@ -7,22 +6,21 @@ const COOKIE_CONSENT = 'n-cookie-message:consented';
 
 export default class CookieMessage {
 
-	static init () {
+	static init (flags) {
 		return CookieMessage
-			.ensureMessageIsRequired()
+			.ensureMessageIsRequired(flags)
 			.then(CookieMessage.setupView)
 			.catch(CookieMessage.handleError);
 	}
 
-	static ensureMessageIsRequired () {
-		return flags.init().then(flags => {
-			if(!flags.get('cookieMessage')) {
-				throw new Error(FLAG_NOT_ON);
-			}
-			if (/^\/(errors|opt-out-confirm)/.test(location.pathname)) {
-				throw new Error(EXIT_PAGE);
-			}
-		});
+	static ensureMessageIsRequired (flags) {
+		if(!flags.get('cookieMessage')) {
+			return Promise.reject(FLAG_NOT_ON);
+		}
+		if (/^\/(errors|opt-out-confirm)/.test(location.pathname)) {
+			return Promise.reject(EXIT_PAGE);
+		}
+		return Promise.resolve();
 	}
 
 	static handleError (error) {
