@@ -18,6 +18,10 @@ function showAndroidLink () {
 }
 
 function init () {
+	$$('.js-optout-link').forEach(a => {
+		const referrer = encodeURIComponent(location.pathname);
+		a.href += `?referrer=${referrer}`;
+	});
 	if (useragent.isWebAppCapableDevice(navigator.userAgent)) {
 		showWebAppLink();
 	} else if (useragent.isModernAndroidDevice(navigator.userAgent)) {
