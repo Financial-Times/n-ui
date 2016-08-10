@@ -17,16 +17,20 @@ function showAndroidLink () {
 	});
 }
 
-function init () {
+function addReferrerToOptoutLink () {
 	$$('.js-optout-link').forEach(a => {
-		const referrer = encodeURIComponent(location.pathname);
-		a.href += `?referrer=${referrer}`;
+		const param = 'referrer=' + encodeURIComponent(location.href);
+		a.search = a.search + (a.search.length ? '&' : '?') + param;
 	});
+}
+
+function init () {
 	if (useragent.isWebAppCapableDevice(navigator.userAgent)) {
 		showWebAppLink();
 	} else if (useragent.isModernAndroidDevice(navigator.userAgent)) {
 		showAndroidLink();
 	}
+	addReferrerToOptoutLink();
 }
 
 module.exports = { init };
