@@ -9,5 +9,7 @@ module.exports = {
 			require('./third-party/mouseflow')(flags);
 			require('./third-party/sourcepoint')(flags);
 		});
-	}
+	},
+	scrollDepthComponents: require('./ft/events/scroll-depth-components')
+
 };
