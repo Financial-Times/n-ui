@@ -12,7 +12,7 @@ try {
 		versionType = 'beta';
 	} else {
 		versionType = 'semver';
-		version = version.split(".").slice(0,2).join('.');
+		version = version.split('.').slice(0,2).join('.');
 		majorVersion = version.split('.').slice(0,1)[0];
 	}
 

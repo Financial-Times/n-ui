@@ -5,12 +5,12 @@ let mockedWindowHeight;
 // these are what scroll depth are bucketed into
 const percentageBuckets = [25, 50, 75, 100];
 
-function getPercentageViewable(elementQuerySelector) {
+function getPercentageViewable (elementQuerySelector) {
 	const scrollableElement = document.querySelector(elementQuerySelector);
 	const windowHeight = mockedWindowHeight || window.innerHeight;
 	return (100 / scrollableElement.getBoundingClientRect().height) * (windowHeight - scrollableElement.getBoundingClientRect().top);
 }
-function fireBeacon(percentage, contextSource) {
+function fireBeacon (percentage, contextSource) {
 	// need to also send all 'smaller' percentages
 	const currentBuckets = percentageBuckets.filter(function (bucket) {
 		return bucket <= percentage;
