@@ -48,7 +48,7 @@ Reporter.prototype.removeEvent = function (event, handler) {
 	this.link.removeEventListener(event, handler);
 };
 
-Reporter.prototype.destroy = function() {
+Reporter.prototype.destroy = function () {
 	this.removeEvent('click', this.onClickHandler);
 	if(this.link) {
 		this.link.parentElement.removeChild(this.link);

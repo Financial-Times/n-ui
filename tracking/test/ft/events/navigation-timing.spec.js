@@ -13,7 +13,7 @@ describe('Navigation timing', function () {
 	});
 
 	it('should record the window.performance.timing data', function (done) {
-		document.body.addEventListener('oTracking.event', function listener(e) {
+		document.body.addEventListener('oTracking.event', function listener (e) {
 			expect(e.detail.timings).to.exist;
 			expect(e.detail.timings.offsets.navigationStart.loadEventStart).to.be.a('number');
 			expect(e.detail.timings.offsets.domLoading.domInteractive).to.be.a('number');

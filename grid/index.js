@@ -4,11 +4,11 @@ const utils = require('../utils');
 
 let listening = false;
 
-function fireBreakpointEvent(breakpoint){
+function fireBreakpointEvent (breakpoint) {
 	utils.broadcast('grid.layoutChange', {layout:breakpoint});
 }
 
-function listenForBreakpointChanges(){
+function listenForBreakpointChanges () {
 	if(listening){
 		return;
 	}
