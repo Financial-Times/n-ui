@@ -1,7 +1,7 @@
 /* jshint browser:true */
 /* global module:true */
 
-function click(el) {
+function click (el) {
 	const evt = new Event('click');
 	el.dispatchEvent(evt);
 }

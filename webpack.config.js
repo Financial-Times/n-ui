@@ -5,7 +5,7 @@ const fs = require('fs');
 const AsciiTable = require('ascii-table');
 
 let deps = fs.readdirSync('./bower_components').map(dir => {
-	return dir + `@` + require(`./bower_components/${dir}/.bower.json`).version;
+	return dir + '@' + require(`./bower_components/${dir}/.bower.json`).version;
 }).concat([
 	'preact@' + require('./node_modules/preact/package.json').version,
 	'preact-compat@' + require('./node_modules/preact-compat/package.json').version,
@@ -34,35 +34,35 @@ module.exports = [
 		withBabelPolyfills: true,
 		env: 'dev',
 		entry: {
-			"./dist/es5-core-js.js": "./_deploy/wrapper.js"
+			'./dist/es5-core-js.js': './_deploy/wrapper.js'
 		},
 	})),
 	nWebpack(Object.assign({}, coreConfig, {
 		withBabelPolyfills: false,
 		env: 'dev',
 		entry: {
-			"./dist/es5-polyfill-io.js": "./_deploy/wrapper.js"
+			'./dist/es5-polyfill-io.js': './_deploy/wrapper.js'
 		},
 	})),
 	nWebpack(Object.assign({}, coreConfig, {
 		withBabelPolyfills: true,
 		env: 'prod',
 		entry: {
-			"./dist/es5-core-js.min.js": "./_deploy/wrapper.js"
+			'./dist/es5-core-js.min.js': './_deploy/wrapper.js'
 		},
 	})),
 	nWebpack(Object.assign({}, coreConfig, {
 		withBabelPolyfills: false,
 		env: 'prod',
 		entry: {
-			"./dist/es5-polyfill-io.min.js": "./_deploy/wrapper.js"
+			'./dist/es5-polyfill-io.min.js': './_deploy/wrapper.js'
 		},
 	})),
 	nWebpack(Object.assign({}, coreConfig, {
 		withBabelPolyfills: false,
 		env: 'prod',
 		entry: {
-			"./dist/main.css": "./_deploy/shared-head.scss"
+			'./dist/main.css': './_deploy/shared-head.scss'
 		},
 		wrap: undefined
 	}))

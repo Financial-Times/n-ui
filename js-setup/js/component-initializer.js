@@ -26,7 +26,7 @@ export const presets = {
 		cookieMessage: true,
 		welcomeMessage: true,
 		myft: true,
-		messagePrompts: true,
+		messagePrompts: false,
 		promoMessages: false,
 		ads: true
 	}
