@@ -7,7 +7,7 @@ import optOut from '../../opt-out';
 import promoMessages from '../../promo-messages';
 import cookieMessage from '../../cookie-message';
 import welcomeMessage from '../../welcome-message';
-import messagePrompts from '../../message-prompts';
+// import messagePrompts from '../../message-prompts';
 import footer from '../../footer';
 import myft from '../../myft';
 import * as serviceWorker from 'n-service-worker';
@@ -26,7 +26,7 @@ export const presets = {
 		cookieMessage: true,
 		welcomeMessage: true,
 		myft: true,
-		messagePrompts: true,
+		messagePrompts: false,
 		promoMessages: false,
 		ads: true
 	}
