@@ -1,10 +1,8 @@
 {{#if @root.flags.optInOut}}
 	{{#unless @root.forceOptInDevice}}
-		{{#with @root.navigation.lists.account.optout}}
-			<a class="{{classname}} js-optout-link" data-trackable="opt-out" href="{{href}}">
-				Return to <span class="{{classname}}-extended">the old</span> FT.com
-			</a>
-		{{/with}}
+		<a class="{{classname}} js-optout-link" data-trackable="opt-out" href="{{@root.navigation.lists.account.optout.href}}">
+			Return to <span class="{{classname}}-extended">the old</span> FT.com
+		</a>
 	{{/unless}}
 	<a class="{{classname}} js-webapp-link" data-trackable="visit-webapp" href="https://app.ft.com" hidden>Open in app</a>
 	<a class="{{classname}} js-android-link" data-trackable="open-android-app" href="http://www.ft.com/androidapp" hidden>Open in app</a>
