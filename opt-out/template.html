@@ -1,6 +1,6 @@
 {{#if @root.flags.optInOut}}
 	{{#unless @root.forceOptInDevice}}
-		<a class="{{classname}} js-optout-link" data-trackable="opt-out" href="/opt-out-confirm">
+		<a class="{{classname}} js-optout-link" data-trackable="opt-out" href="{{@root.navigation.lists.account.optout.href}}">
 			Return to <span class="{{classname}}-extended">the old</span> FT.com
 		</a>
 	{{/unless}}
