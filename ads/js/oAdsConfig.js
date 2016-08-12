@@ -20,16 +20,16 @@ function getGPTUnitName (contextData) {
 	return area.concat(pageSpecific).join('/');
 };
 
-function getLazyLoadConfig(flags) {
+function getLazyLoadConfig (flags) {
 	switch(flags.adsLazyLoadPosition) {
 		case 'onload':
 			return false;
 		case '50pc':
-			return { viewportMargin: "50% 0%" };
+			return { viewportMargin: '50% 0%' };
 		case '100pc':
-			return { viewportMargin: "100% 0%" };
+			return { viewportMargin: '100% 0%' };
 		default:
-			return { viewportMargin: "0%" };
+			return { viewportMargin: '0%' };
 	}
 }
 
@@ -81,7 +81,7 @@ module.exports = function (flags, contextData, userData) {
 		},
 		formats: {
 			PaidPost: {
-				sizes: "fluid"
+				sizes: 'fluid'
 			}
 		},
 		krux: kruxConfig,

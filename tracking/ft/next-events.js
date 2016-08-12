@@ -6,7 +6,7 @@ const Positional = require('./events/positional');
 
 const NextEvents = function () {};
 
-NextEvents.prototype.init = function() {
+NextEvents.prototype.init = function () {
 
 	// Initialise any call-to-action tracking code
 	this.cta = new Cta();

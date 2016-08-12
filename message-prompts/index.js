@@ -1,1 +1,2 @@
-module.exports = require('n-message-prompts');
+// deprecated
+module.exports = {};//require('n-message-prompts');

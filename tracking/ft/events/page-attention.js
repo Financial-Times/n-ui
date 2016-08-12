@@ -75,7 +75,7 @@ class Attention {
 		if (window.FTVideo) {
 			this.videoPlayers = document.getElementsByClassName('BrightcoveExperience');
 			for (let i = 0; i < this.videoPlayers.length; i++) {
-				window.FTVideo.createPlayerAsync(this.videoPlayers[i].id, function(player) {
+				window.FTVideo.createPlayerAsync(this.videoPlayers[i].id, function (player) {
 					player.on(player.MEDIA_PLAY_EVENT, ev => this.startConstantAttention(ev));
 					player.on(player.MEDIA_STOP_EVENT, ev => this.endConstantAttention(ev));
 				});
