@@ -87,7 +87,10 @@
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{#if @root.flags.welcomePanel}}
-					{{>n-ui/welcome-message/template}}
+					{{#ifEquals withWelcomeMessage false}}
+					{{else}}
+						{{>n-ui/welcome-message/template}}
+					{{/ifEquals}}
 				{{/if}}
 				{{>n-ui/footer/template}}
 				{{#if @root.flags.fancyDrawer}}
