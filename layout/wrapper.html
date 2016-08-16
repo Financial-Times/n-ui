@@ -87,7 +87,7 @@
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{#if @root.flags.welcomePanel}}
-					{{#ifEquals withWelcomeMessage false}}
+					{{#ifEquals nUi.welcomeMessage false}}
 					{{else}}
 						{{>n-ui/welcome-message/template}}
 					{{/ifEquals}}
