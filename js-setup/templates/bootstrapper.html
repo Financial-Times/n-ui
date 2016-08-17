@@ -48,7 +48,7 @@
 				'Array.prototype.find',
 				'Array.prototype.findIndex',
 				'IntersectionObserver'
-			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set' + '&flags=gated&unknown=polyfill');
+			].join(',') + '&flags=gated&unknown=polyfill{{#unless @root.flags.polyfillSymbol}}&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set{{/unless}}');
 		} else {
 			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '&features=' + [
 				'default',
