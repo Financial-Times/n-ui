@@ -6,14 +6,14 @@
 			{{/each}}
 		</style>
 		{{#each @root.cssBundles}}
-			{{#if @root.criticalCss}}
+			{{#ifAll @root.criticalCss isLazy}}
 				<link rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';{{#if isMain}}window.ftNextMainCssLoaded=true{{/if}}">
 				<noscript>
 					<link rel="stylesheet" href="{{path}}">
 				</noscript>
 			{{else}}
-				<link rel="stylesheet" href="{{#hashedAsset}}main{{#if @root.cssVariant}}-{{@root.cssVariant}}{{/if}}.css{{/hashedAsset}}">
-			{{/if}}
+				<link rel="stylesheet" href="{{path}}">
+			{{/ifAll}}
 		{{/each}}
 	{{else}}
 		<link rel="stylesheet" href="{{#hashedAsset}}main{{#if @root.cssVariant}}-{{@root.cssVariant}}{{/if}}.css{{/hashedAsset}}">
