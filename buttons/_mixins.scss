@@ -10,12 +10,12 @@ $o-buttons-sizes: map-merge($o-buttons-sizes, (
 	position: relative;
 	padding-left: #{$iconSpace}px;
 	&:before {
+		@include oIconsGetIcon($iconOff, $color, $iconSize);
 		content: ' ';
 		position: absolute;
 		top: 50%;
 		left: $horizontalMargin;
 		margin: $topMargin $horizontalMargin 0 0;
-		@include oIconsGetIcon($iconOff, $color, $iconSize);
 	}
 	&[aria-pressed="true"]:before {
 		@include oIconsGetIcon($iconOn, $color, $iconSize);
