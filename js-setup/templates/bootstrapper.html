@@ -35,31 +35,18 @@
 
 	(function () {
 		if (cutsTheMustard) {
-			{{#if @root.javascriptBundles}}
-				{{#each @root.javascriptBundles}}
-					ftNextLoadScript('{{this}}');
-				{{/each}}
-			{{else}}
-				{{!deprecated - logic for picking which javascripts to include now done in n-express}}
-				{{#if @root.nUiVersion}} {{!note this only exists if the flag is on and the app has enabled n-ui bundle}}
-					ftNextLoadScript('//next-geebee.ft.com/n-ui/no-cache/{{@root.nUiVersion}}/es5-core-js{{#unless @root.flags.nUiBundleUnminified}}.min{{/unless}}.js');
-					ftNextLoadScript('{{#hashedAsset}}main-without-n-ui.js{{/hashedAsset}}');
-				{{else}}
-					ftNextLoadScript('{{#hashedAsset}}main.js{{/hashedAsset}}');
-				{{/if}}
-			{{/if}}
-
+			{{#each @root.javascriptBundles}}
+				ftNextLoadScript('{{this}}');
+			{{/each}}
 			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '{{#if @root.flags.polyfillsRUM}}&rum=1{{/if}}&features=' + [
 				'default',
 				'requestAnimationFrame',
 				'Promise',
 				'matchMedia',
 				'HTMLPictureElement',
-				// the following polyfills are included pending https://github.com/Financial-Times/polyfill-service/issues/653
-				'CustomEvent|always|gated',
-				'fetch|always|gated',
-				'Array.prototype.find|always|gated',
-				'Array.prototype.findIndex|always|gated',
+				'fetch',
+				'Array.prototype.find',
+				'Array.prototype.findIndex',
 				'IntersectionObserver'
 			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set' + '&flags=gated&unknown=polyfill');
 		} else {

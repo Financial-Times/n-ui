@@ -15,19 +15,6 @@
 				<link rel="stylesheet" href="{{#hashedAsset}}main{{#if @root.cssVariant}}-{{@root.cssVariant}}{{/if}}.css{{/hashedAsset}}">
 			{{/if}}
 		{{/each}}
-	{{else if headCsses}}
-		{{!deprecated  - logic for css bundle selection is now in n-express}}
-		<style class="n-layout-head-css">
-			{{#if @root.cssVariant}}
-				{{{lookup headCsses (concat 'head-' @root.cssVariant)}}}
-			{{else}}
-				{{{headCsses.head}}}
-			{{/if}}
-		</style>
-		<link rel="preload" href="{{#hashedAsset}}main{{#if @root.cssVariant}}-{{@root.cssVariant}}{{/if}}.css{{/hashedAsset}}" as="style" onload="this.rel='stylesheet';window.ftNextMainCssLoaded=true">
-		<noscript>
-			<link rel="stylesheet" href="{{#hashedAsset}}main{{#if @root.cssVariant}}-{{@root.cssVariant}}{{/if}}.css{{/hashedAsset}}">
-		</noscript>
 	{{else}}
 		<link rel="stylesheet" href="{{#hashedAsset}}main{{#if @root.cssVariant}}-{{@root.cssVariant}}{{/if}}.css{{/hashedAsset}}">
 	{{/if}}
