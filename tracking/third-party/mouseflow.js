@@ -32,7 +32,7 @@ module.exports = function (flags) {
 
 			const lastNumberHex = spoorId.substring(spoorId.length - 1);
 
-			if (parseInt(lastNumberHex, 16) % 10 < 2) { // 2%
+			if (parseInt(lastNumberHex, 16) % 10 === 0) { // 1%
 				enableMouseflow();
 			}
 		}
