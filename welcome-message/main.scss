@@ -86,14 +86,6 @@
 		white-space: nowrap;
 	}
 
-	.n-welcome-message__button-extended {
-		display: none;
-
-		@include oGridRespondTo('L') {
-			display: inline;
-		}
-	}
-
 	.n-welcome-message__close {
 		@include oIconsGetIcon('cross-disk', getColor('grey-tint4'), 20);
 		position: absolute;
