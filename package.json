@@ -19,7 +19,7 @@
   "homepage": "https://github.com/Financial-Times/n-ui#readme",
   "devDependencies": {
     "@financial-times/n-express": "^16.14.1",
-    "@financial-times/n-heroku-tools": "^6.7.3",
+    "@financial-times/n-heroku-tools": "^6.12.4",
     "@financial-times/n-webpack": "^1.4.0",
     "ascii-table": "0.0.9",
     "autoprefixer": "^6.3.6",
