@@ -62,7 +62,7 @@ module.exports = [
 		withBabelPolyfills: false,
 		env: 'prod',
 		entry: {
-			'./dist/main.css': './_deploy/shared-head.scss'
+			'./dist/n-ui-core.css': './_deploy/shared-head.scss'
 		},
 		wrap: undefined
 	}))
