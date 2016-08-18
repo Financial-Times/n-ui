@@ -57,8 +57,6 @@
 	.n-welcome-message__column--message {}
 
 	.n-welcome-message__column--actions {
-		white-space: nowrap;
-
 		@include oGridRespondTo('L') {
 			text-align: right;
 		}
@@ -66,7 +64,7 @@
 
 	.n-welcome-message__heading {
 		@include oTypographySansSize('m');
-		margin: 0 0 12px;
+		margin: 0 0 $spacing-unit/4;
 	}
 
 	.n-welcome-message__intro {
@@ -84,12 +82,8 @@
 
 	.n-welcome-message__button {
 		@include oButtons($theme:'standout');
-		margin-left: 6px;
+		margin: $spacing-unit/2 $spacing-unit/2 0 0;
 		white-space: nowrap;
-
-		&:first-child {
-			margin-left: 0;
-		}
 	}
 
 	.n-welcome-message__button-extended {
