@@ -29,15 +29,10 @@ module.exports = function (flags) {
 		}
 		else {
 			const spoorId = getCookieValue('spoor-id');
-			const oldSpoorId = spoorId.indexOf('-') === -1;
 
-			if (oldSpoorId) {
-				return;
-			}
+			const lastNumberHex = spoorId.substring(spoorId.length - 1);
 
-			const lastSegmentHex = spoorId.substring(spoorId.lastIndexOf('-') + 1);
-
-			if (parseInt(lastSegmentHex, 16) % 100 === 0) { // 1% of everyone with a uuid-style spoor id
+			if (parseInt(lastNumberHex, 16) % 10 < 2) { // 2%
 				enableMouseflow();
 			}
 		}
