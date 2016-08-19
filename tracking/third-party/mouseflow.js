@@ -29,10 +29,11 @@ module.exports = function (flags) {
 		}
 		else {
 			const spoorId = getCookieValue('spoor-id');
+			const spoorNumber = spoorId.replace(/-/g, '');
+			const spoorNumberTrim = spoorNumber.substring(spoorNumber.length - 12, spoorNumber.length); // Don't overflow the int
+			const spoorNumberDec = parseInt(spoorNumberTrim, 16)
 
-			const lastNumberHex = spoorId.substring(spoorId.length - 1);
-
-			if (parseInt(lastNumberHex, 16) % 10 === 0) { // 1%
+			if (spoorNumberDec % 100 === 0) { // 1%
 				enableMouseflow();
 			}
 		}
