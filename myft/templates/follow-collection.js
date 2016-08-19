@@ -38,16 +38,16 @@ class FollowCollection extends Component {
 			<input type="hidden" value={this.props.concepts.map(c => c.name).join(',')} name="name" />
 			{(this.props.flags.myFtApiWrite) ? (
 				<button
-					aria-label={'Add all topics in the ' + this.props.name + ' collection to MyFT'}
+					aria-label={'Add all topics in the ' + this.props.name + ' collection to my F T'}
 					aria-pressed='false'
 					className={buttonClasses.join(' ')}
-					data-alternate-label={'Remove all topics in the ' + this.props.name + ' collection for MyFT'}
+					data-alternate-label={'Remove all topics in the ' + this.props.name + ' collection from my F T'}
 					data-alternate-text="Added"
 					data-trackable="follow"
 					data-concept-id={conceptIds} // duplicated here for tracking
-						title={'Add all topics in the ' + this.props.name + ' collection to MyFT'}
+						title={'Add all topics in the ' + this.props.name + ' collection to my F T'}
 					type="submit">
-						Add all to MyFT
+						Add all to myFT
 				</button>) : ''}
 		</form>
 	}
