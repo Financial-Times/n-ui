@@ -1,28 +1,32 @@
 <div class="o-header__row o-header__top" data-trackable="header-top">
 	<div class="o-header__container">
 		<div class="o-header__top-wrapper">
-			<div class="o-header__top-column o-header__top-column--left">
-				{{#if @root.flags.fancyDrawer}}
-				<a href="#o-header-drawer" class="o-header__top-link o-header__top-link--menu" aria-controls="o-header-drawer" data-trackable="drawer-toggle">
-					<span class="o-header__top-link-label">Menu</span>
-				</a>
-				{{/if}}
-				<a href="#o-header-search-primary" class="o-header__top-link o-header__top-link--search" aria-controls="o-header-search-primary" data-trackable="search-toggle">
-					<span class="o-header__top-link-label">Search</span>
-				</a>
-			</div>
+			{{#unlessEquals nUi.header.variant 'logo-only'}}
+				<div class="o-header__top-column o-header__top-column--left">
+					{{#if @root.flags.fancyDrawer}}
+					<a href="#o-header-drawer" class="o-header__top-link o-header__top-link--menu" aria-controls="o-header-drawer" data-trackable="drawer-toggle">
+						<span class="o-header__top-link-label">Menu</span>
+					</a>
+					{{/if}}
+					<a href="#o-header-search-primary" class="o-header__top-link o-header__top-link--search" aria-controls="o-header-search-primary" data-trackable="search-toggle">
+						<span class="o-header__top-link-label">Search</span>
+					</a>
+				</div>
+			{{/unlessEquals}}
 			<div class="o-header__top-column o-header__top-column--center">
 				<a class="o-header__top-logo" data-trackable="logo" href="/" title="Go to Financial Times homepage">
 					<span class="o-header__visually-hidden">Financial Times</span>
 				</a>
 			</div>
-			<div class="o-header__top-column o-header__top-column--right" role="navigation" aria-label="Account and personalisation links">
-				{{#with @root.navigationLists.account.myft}}
-				<a class="o-header__top-link o-header__top-link--myft" href="{{href}}" data-trackable="my-ft" data-tour-stage="myFt" aria-label="My F T">
-					<span class="o-header__visually-hidden">myFT</span>
-				</a>
-				{{/with}}
-			</div>
+			{{#unlessEquals nUi.header.variant 'logo-only'}}
+				<div class="o-header__top-column o-header__top-column--right" role="navigation" aria-label="Account and personalisation links">
+					{{#with @root.navigationLists.account.myft}}
+					<a class="o-header__top-link o-header__top-link--myft" href="{{href}}" data-trackable="my-ft" data-tour-stage="myFt" aria-label="My F T">
+						<span class="o-header__visually-hidden">myFT</span>
+					</a>
+					{{/with}}
+				</div>
+			{{/unlessEquals}}
 		</div>
 	</div>
 </div>
