@@ -24,12 +24,18 @@ const enableChartbeat = () => {
 
 // The chartbeat Heads-Up-Display (HUD) requires the chartbeat script to be loaded.
 // Editorial users who wish to use the HUD will need to toggle "chartbeatHud" on.
-// For non-HUD uses, load chartbeat for a random 20% of page views.
+// For non-HUD uses, load chartbeat for a random 20% of device IDs (i.e. users).
 module.exports = flags => {
-	if (flags && (flags.get('chartbeat') || flags.get('chartbeatHud'))) {
-		if (flags.get('chartbeatHud') || Math.random() < 0.2) {
+	if (flags.get('chartbeatHud')) {
+		enableChartbeat();
+	}
+	else if (flags.get('chartbeat')) {
+		const spoorId = getCookieValue('spoor-id');
+		const spoorNumber = spoorId.replace(/-/g, '');
+		const spoorNumberTrim = spoorNumber.substring(spoorNumber.length - 12, spoorNumber.length); // Don't overflow the int
+		const spoorNumberDec = parseInt(spoorNumberTrim, 16);
+		if (spoorNumberDec % 10 < 20) { // 20%
 			enableChartbeat();
-			return;
 		}
 	}
 }
