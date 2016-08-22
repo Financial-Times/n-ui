@@ -17,6 +17,15 @@ function init () {
 	const fixedEl = $('.n-welcome-message--fixed');
 	const staticEl = $('.n-welcome-message--static');
 
+	const segmentId = String(document.cookie).match(/(?:^|;)\s*segmentID=/);
+	if (segmentId) {
+		if (hasLocalStorage()) {
+			superstore.local.set(STORAGE_KEY, 1);
+		}
+		fixedEl.hidden = true;
+		staticEl.hidden = true;
+	}
+
 	if (Boolean(superstore.local.get(STORAGE_KEY)) === false && hasLocalStorage()) {
 		const closeButton = $('button', fixedEl);
 
