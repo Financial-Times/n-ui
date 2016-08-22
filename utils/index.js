@@ -59,6 +59,11 @@ module.exports = {
 		if (performance && performance.mark) {
 			performance.mark(name);
 		}
+	},
+	getCookieValue: key => {
+		const regex = new RegExp(`${key}=([^;]+)`, 'i');
+		const a = regex.exec(document.cookie);
+		return (a) ? a[1] : undefined;
 	}
 
 };
