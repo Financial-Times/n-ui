@@ -20,6 +20,7 @@ build: pre-package assets
 
 deploy: build
 	node ./_deploy/s3.js
+	$(MAKE) npm-publish
 
 test: verify test-unit test-build
 
