@@ -16,9 +16,7 @@
 			{{#each @root.navigationLists.navbar_desktop}}
 			<li class="o-header__nav-item">
 				<a class="o-header__nav-link o-header__nav-link--primary {{#ifEquals @root.currentNav.topLevelRelative.href href}}o-header-nav__list-link--highlight{{/ifEquals}}" href="{{href}}" id="o-header-link-{{@index}}" aria-selected="{{selected}}" data-trackable="{{name}}">{{name}}</a>
-				{{#if @root.flags.meganav}}
-					{{> n-ui/header/partials/meganav/template}}
-				{{/if}}
+				{{> n-ui/header/partials/meganav/template}}
 			</li>
 			{{/each}}
 		</ul>

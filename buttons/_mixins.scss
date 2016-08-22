@@ -4,6 +4,24 @@ $o-buttons-sizes: map-merge($o-buttons-sizes, (
 	))
 ));
 
+@mixin buttonWithIcon($iconSpace, $iconSize, $color, $iconOff, $iconOn: $iconOff) {
+	$topMargin: #{$iconSize * -0.5}px;
+	$horizontalMargin: #{($iconSpace - $iconSize) / 2}px;
+	position: relative;
+	padding-left: #{$iconSpace}px;
+	&:before {
+		@include oIconsGetIcon($iconOff, $color, $iconSize);
+		content: ' ';
+		position: absolute;
+		top: 50%;
+		left: $horizontalMargin;
+		margin: $topMargin $horizontalMargin 0 0;
+	}
+	&[aria-pressed="true"]:before {
+		@include oIconsGetIcon($iconOn, $color, $iconSize);
+	}
+}
+
 @mixin nextLinkButton($background: false, $color: false) {
 	@warn '`nextLinkButton` is deprecated, use standard button styles';
 	@include oTypographySansBold('xs');

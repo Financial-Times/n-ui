@@ -36,33 +36,21 @@
 
 	.n-myft-ui--follow {
 		position: relative;
-
 		.n-myft-ui__button {
-			padding-left: 26px;
-			position: relative;
-
-			&:before {
-				@include oIconsGetIcon('plus', getColor('link-1'), 12);
-				content: ' ';
-				left: $spacing-unit/2;
-				margin: -6px $spacing-unit/4 0 0;
-				position: absolute;
-				top: 50%;
-			}
-
-			&[aria-pressed="true"]:before {
-				@include oIconsGetIcon('tick-thin', getColor('link-1'), 12);
-			}
+			@include buttonWithIcon(26, 12, getColor('link-1'), 'plus', 'tick-thin');
 		}
-
 		.n-myft-ui__button--inverse {
-			&:before {
-				@include oIconsGetIcon('plus', getColor('link-2'), 12);
-			}
+			@include buttonWithIcon(26, 12, getColor('link-2'), 'plus', 'tick-thin');
+		}
+	}
 
-			&[aria-pressed="true"]:before {
-				@include oIconsGetIcon('tick-thin', getColor('link-2'), 12);
-			}
+	.n-myft-ui--instant {
+		position: relative;
+		.n-myft-ui__button {
+			@include buttonWithIcon(26, 20, getColor('link-1'), 'email');
+		}
+		.n-myft-ui__button--inverse {
+			@include buttonWithIcon(26, 20, getColor('link-2'), 'email');
 		}
 	}
 

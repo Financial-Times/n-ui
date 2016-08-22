@@ -26,7 +26,7 @@
 
 	{{>n-ui/layout/partials/css-loader}}
 
-	var polyfillUrl = 'https://next-geebee.ft.com/polyfill/v2/polyfill.min.js';
+	var polyfillUrl = '{{#if @root.flags.polyfillQA}}https://qa.polyfill.io{{else}}https://next-geebee.ft.com/polyfill{{/if}}/v2/polyfill.min.js';
 	var polyfillCallbackName = 'ftNextPolyfillServiceCallback';
 
 	window[polyfillCallbackName] = function () {
