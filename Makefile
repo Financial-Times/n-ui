@@ -9,7 +9,7 @@ test-unit-dev:
 	karma start karma.conf.js --single-run false --auto-watch true
 
 test-build:
-	webpack --config webpack.config.demo.js
+	webpack --config webpack.config.demo.js --bail
 
 pre-package:
 	rm -rf bower_components/n-ui 2>/dev/null
