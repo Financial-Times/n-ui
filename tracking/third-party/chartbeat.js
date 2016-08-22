@@ -34,7 +34,7 @@ module.exports = flags => {
 		const spoorNumber = spoorId.replace(/-/g, '');
 		const spoorNumberTrim = spoorNumber.substring(spoorNumber.length - 12, spoorNumber.length); // Don't overflow the int
 		const spoorNumberDec = parseInt(spoorNumberTrim, 16);
-		if (spoorNumberDec % 10 < 20) { // 20%
+		if (spoorNumberDec % 100 < 20) { // 20%
 			enableChartbeat();
 		}
 	}
