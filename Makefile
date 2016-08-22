@@ -12,12 +12,14 @@ test-build:
 	webpack --config webpack.config.demo.js
 
 pre-package:
-	bower install n-ui#$(CIRCLE_TAG) -f --config.registry.search=http://registry.origami.ft.com --config.registry.search=https://bower.herokuapp.com
+	rm -rf bower_components/n-ui 2>/dev/null
+	mkdir bower_components/n-ui 2>/dev/null
+	cp -f env.scss bower_components/n-ui/env.scss
 
-deploy:
+build: pre-package assets
+
+deploy: build
 	node ./_deploy/s3.js
-
-dist: pre-package assets deploy npm-publish
 
 test: verify test-unit test-build
 
