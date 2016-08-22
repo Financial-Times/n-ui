@@ -3,7 +3,7 @@ machine:
     version: 5.5.0
 deployment:
   release:
-    tag: /v.*/
+    tag: /.*/
     owner: Financial-Times
     commands:
-      - make dist
+      - make deploy
