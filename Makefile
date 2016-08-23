@@ -11,14 +11,7 @@ test-unit-dev:
 test-build:
 	webpack --config webpack.config.demo.js --bail
 
-pre-package:
-	rm -rf bower_components/n-ui 2>/dev/null
-	mkdir bower_components/n-ui 2>/dev/null
-	cp -f env.scss bower_components/n-ui/env.scss
-
-build: pre-package assets
-
-deploy: build
+deploy: assets
 	node ./_deploy/s3.js
 	$(MAKE) npm-publish
 
