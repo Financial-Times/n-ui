@@ -9,15 +9,11 @@ test-unit-dev:
 	karma start karma.conf.js --single-run false --auto-watch true
 
 test-build:
-	webpack --config webpack.config.demo.js
+	webpack --config webpack.config.demo.js --bail
 
-pre-package:
-	bower install n-ui#$(CIRCLE_TAG) -f --config.registry.search=http://registry.origami.ft.com --config.registry.search=https://bower.herokuapp.com
-
-deploy:
+deploy: assets
 	node ./_deploy/s3.js
-
-dist: pre-package assets deploy npm-publish
+	$(MAKE) npm-publish
 
 test: verify test-unit test-build
 

@@ -36,18 +36,19 @@ class FollowCollection extends Component {
 			action="#">
 			<input type="hidden" value={this.props.concepts.map(c => c.taxonomy).join(',')} name="taxonomy" />
 			<input type="hidden" value={this.props.concepts.map(c => c.name).join(',')} name="name" />
-			<button
-				aria-label={'Follow all topics in the ' + this.props.name + ' collection'}
-				aria-pressed='false'
-				className={buttonClasses.join(' ')}
-				data-alternate-label={'Unfollow all topics in the ' + this.props.name + ' collection'}
-				data-alternate-text="Following"
-				data-trackable="follow"
-				data-concept-id={conceptIds} // duplicated here for tracking
-					title={'Follow all topics in the ' + this.props.name + ' collection'}
-				type="submit">
-					Follow all
-			</button>
+			{(this.props.flags.myFtApiWrite) ? (
+				<button
+					aria-label={'Add all topics in the ' + this.props.name + ' collection to my F T'}
+					aria-pressed='false'
+					className={buttonClasses.join(' ')}
+					data-alternate-label={'Remove all topics in the ' + this.props.name + ' collection from my F T'}
+					data-alternate-text="Added"
+					data-trackable="follow"
+					data-concept-id={conceptIds} // duplicated here for tracking
+						title={'Add all topics in the ' + this.props.name + ' collection to my F T'}
+					type="submit">
+						Add all to myFT
+				</button>) : ''}
 		</form>
 	}
 }

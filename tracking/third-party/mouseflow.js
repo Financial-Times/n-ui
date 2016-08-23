@@ -1,10 +1,4 @@
-import {loadScript} from '../../utils';
-
-const getCookieValue = function (key) {
-	const regex = new RegExp(`${key}=([^;]+)`, 'i');
-	const a = regex.exec(document.cookie);
-	return (a) ? a[1] : undefined;
-}
+import {loadScript, getCookieValue} from '../../utils';
 
 function enableMouseflow () {
 	window._mfq = window._mfq || [];
@@ -29,15 +23,11 @@ module.exports = function (flags) {
 		}
 		else {
 			const spoorId = getCookieValue('spoor-id');
-			const oldSpoorId = spoorId.indexOf('-') === -1;
+			const spoorNumber = spoorId.replace(/-/g, '');
+			const spoorNumberTrim = spoorNumber.substring(spoorNumber.length - 12, spoorNumber.length); // Don't overflow the int
+			const spoorNumberDec = parseInt(spoorNumberTrim, 16)
 
-			if (oldSpoorId) {
-				return;
-			}
-
-			const lastSegmentHex = spoorId.substring(spoorId.lastIndexOf('-') + 1);
-
-			if (parseInt(lastSegmentHex, 16) % 100 === 0) { // 1% of everyone with a uuid-style spoor id
+			if (spoorNumberDec % 100 === 0) { // 1%
 				enableMouseflow();
 			}
 		}

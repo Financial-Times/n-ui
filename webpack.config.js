@@ -1,15 +1,19 @@
 'use strict';
-const path = require('path');
 const nWebpack = require('@financial-times/n-webpack');
 const fs = require('fs');
 const AsciiTable = require('ascii-table');
 
 let deps = fs.readdirSync('./bower_components').map(dir => {
-	return dir + '@' + require(`./bower_components/${dir}/.bower.json`).version;
-}).concat([
-	'preact@' + require('./node_modules/preact/package.json').version,
-	'preact-compat@' + require('./node_modules/preact-compat/package.json').version,
-]);
+	if (dir === 'n-ui') {
+		return 'n-ui@' + process.env.CIRCLE_TAG;
+	} else {
+		return dir + '@' + require(`./bower_components/${dir}/.bower.json`).version;
+	}
+})
+	.concat([
+		'preact@' + require('./node_modules/preact/package.json').version,
+		'preact-compat@' + require('./node_modules/preact-compat/package.json').version,
+	]);
 
 const depsTable = new AsciiTable('Dependencies');
 depsTable.removeBorder();
@@ -23,7 +27,8 @@ const coreConfig = {
 		library: 'ftNextUi',
 		devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
 	},
-	include: [path.resolve('./_deploy')],
+	include: /.*/,
+	exclude: [/node_modules/],
 	wrap: {
 		before: '/*\n' + depsTable.toString() + '\n*/'
 	}

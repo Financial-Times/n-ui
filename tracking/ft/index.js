@@ -64,6 +64,10 @@ const oTrackingWrapper = {
 
 			const edition = document.querySelector('[data-next-edition]') ? document.querySelector('[data-next-edition]').getAttribute('data-next-edition') : null;
 			context.edition = edition;
+			const segmentID = String(document.cookie).match(/(?:^|;)\s*segmentID=([^;]+)/) || [];
+			if (segmentID[1]) {
+				context.segmentID = segmentID[1];
+			}
 
 			oTracking.init({
 				server: 'https://spoor-api.ft.com/ingest',
