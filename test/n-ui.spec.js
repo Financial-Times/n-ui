@@ -3,7 +3,7 @@ window.nextFeatureFlags = [{name: 'aFlag', state: true}];
 const nUi = require('../main');
 const jsSetup = require('../js-setup');
 const entry = require('../_entry');
-// import { presets } from '../js-setup/js/component-initializer';
+import { presets } from '../js-setup/js/component-initializer';
 
 describe('n-ui', () => {
 
@@ -12,11 +12,11 @@ describe('n-ui', () => {
 		expect(nUi.configure).to.equal(jsSetup.configure);
 	});
 
-	// Ideally this hould read the list from presets complete, but there's a hangover from the old flags client which
-	// causes weird test failures :()
-	// Array.from(new Set(Object.keys(presets.complete).filter(key => !!presets.complete[key]).concat([
-	['header', 'footer', 'date', 'cookieMessage', 'welcomeMessage', 'myft', 'messagePrompts', 'promoMessages', 'ads']
-	.concat([
+	Array.from(
+		new Set(
+			Object.keys(presets.complete).filter(key => !!presets.complete[key])
+		)
+	).concat([
 		'tracking',
 		'utils',
 		'ftdomdelegate',
@@ -29,8 +29,8 @@ describe('n-ui', () => {
 		'grid',
 		'overlay',
 		'viewport',
+		'video'
 	])
-	// ])))
 		.forEach(mod => {
 			it(`should export _${mod}`, () => {
 				expect(nUi['_' + mod]).to.exist;
@@ -63,7 +63,7 @@ describe('n-ui', () => {
 						}
 					} else if (/^o-/.test(alias)) {
 						it(`should expect a ${alias} to be aliased`, () => {
-							expect(nUi[aliases[alias].replace('window.ftNextUi.', '')].__wrapsOrigami).to.be.true;
+							expect(nUi[aliases[alias].replace('window.ftNextUi.', '')]).to.exist;
 						});
 					}
 				})

@@ -26,6 +26,8 @@ module.exports = function (withPreact) {
 		'o-overlay': 'window.ftNextUi._overlay',
 		'n-ui/viewport': 'window.ftNextUi._viewport',
 		'o-viewport': 'window.ftNextUi._viewport',
+		'o-video': 'window.ftNextUi._video',
+
 		// other components
 		'ftdomdelegate': 'window.ftNextUi._ftdomdelegate',
 		'superstore': 'window.ftNextUi._superstore',

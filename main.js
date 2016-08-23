@@ -35,6 +35,8 @@ import overlay from './overlay';
 export const _overlay = overlay;
 import viewport from './viewport';
 export const _viewport = viewport;
+import video from 'o-video';
+export const _video = video;
 
 // Export some third party components we're unlikely to remove in a hurry
 import ftdomdelegate from 'ftdomdelegate';
