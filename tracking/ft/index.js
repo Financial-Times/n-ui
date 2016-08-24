@@ -64,9 +64,9 @@ const oTrackingWrapper = {
 
 			const edition = document.querySelector('[data-next-edition]') ? document.querySelector('[data-next-edition]').getAttribute('data-next-edition') : null;
 			context.edition = edition;
-			const segmentID = String(document.cookie).match(/(?:^|;)\s*segmentID=([^;]+)/) || [];
-			if (segmentID[1]) {
-				context.segmentID = segmentID[1];
+			const segmentId = String(window.location.search).match(/[?&]segmentId=([^?&])/) || [];
+			if (segmentId[1]) {
+				context['marketing_segment_id'] = segmentId[1];
 			}
 
 			oTracking.init({

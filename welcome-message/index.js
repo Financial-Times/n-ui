@@ -17,7 +17,7 @@ function init () {
 	const fixedEl = $('.n-welcome-message--fixed');
 	const staticEl = $('.n-welcome-message--static');
 
-	const segmentId = String(document.cookie).match(/(?:^|;)\s*segmentID=/);
+	const segmentId = String(window.location.search).match(/[?&]segmentId=([^?&])/);
 	if (segmentId) {
 		if (hasLocalStorage()) {
 			superstore.local.set(STORAGE_KEY, 1);
