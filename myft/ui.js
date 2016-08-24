@@ -49,8 +49,8 @@ const idProperties = {
 };
 
 const nNotificationMsgs = {
-	followAnon: `Please <a href="${subscribeUrl}">subscribe</a> or <a href="${signInLink}">sign in</a> to follow this topic.`,
-	saveAnon: `Please <a href="${subscribeUrl}">subscribe</a> or <a href="${signInLink}">sign in</a> to save this article.`,
+	followAnon: `Please <a href="${subscribeUrl}" data-trackable="Subscribe">subscribe</a> or <a href="${signInLink}" data-trackable="Sign In">sign in</a> to follow this topic.`,
+	saveAnon: `Please <a href="${subscribeUrl}" data-trackable="Subscribe">subscribe</a> or <a href="${signInLink}" data-trackable="Sign In">sign in</a> to save this article.`,
 	opted: 'You‘ve opted into our new site. You can return to FT.com at any time.'
 };
 
@@ -461,7 +461,10 @@ export function init (opts) {
 		['follow', 'save'].forEach(action => {
 			delegate.on('submit', `.n-myft-ui--${action}`, ev => {
 				ev.preventDefault();
-				nNotification.show({ content: nNotificationMsgs[`${action}Anon`] });
+				nNotification.show({
+					content: nNotificationMsgs[`${action}Anon`],
+					trackable: 'myft-anon'
+				});
 			});
 		});
 	} else {
