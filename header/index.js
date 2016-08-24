@@ -7,7 +7,7 @@ function init (flags) {
 
 	new OHeader();
 
-	if (flags.get('stickyNav')) {
+	if (flags.get('stickyNav') && (flags.get('barrierOverlay') !== 'overlay' && flags.get('barrierOverlay') !== 'overlayText')) {
 		new OHeader(document.querySelector('[data-o-header--sticky]'));
 	}
 
