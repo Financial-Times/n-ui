@@ -68,6 +68,15 @@ const oTrackingWrapper = {
 			if (segmentId[1]) {
 				context['marketing_segment_id'] = segmentId[1];
 			}
+			const pageMetaEl = document.querySelector('[data-page-meta]');
+			let pageMeta;
+			if (pageMetaEl) {
+				try {
+					pageMeta = JSON.parse(pageMetaEl.innerHTML);
+				} catch (e) {
+				}
+			}
+			if (pageMeta) Object.assign(context, pageMeta);
 
 			oTracking.init({
 				server: 'https://spoor-api.ft.com/ingest',
