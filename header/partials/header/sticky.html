@@ -34,16 +34,15 @@
 			</div>
 
 			<div class="o-header__top-column o-header__top-column--right">
-				{{!-- anon menu (shown on large screens) --}}
 				{{#if @root.anon.userIsAnonymous}}
-				<div class="o-header__top-takeover">
+				<div class="o-header__nav">
 					<ul class="o-header__nav-list o-header__nav-list--right" data-trackable="user-nav">
 						<li class="o-header__nav-item">
 							{{#with @root.navigationLists.account.signin}}
 								<a class="o-header__nav-link" href="{{href}}" data-trackable="{{name}}" tabindex="-1">{{name}}</a>
 							{{/with}}
 						</li>
-						<li class="o-header__nav-item">
+						<li class="o-header__nav-item o-header__nav-item--expanded">
 							{{#with @root.navigationLists.account.subscribe}}
 								<a class="o-header__nav-button" href="{{href}}" data-trackable="{{name}}" tabindex="-1">{{name}}</a>
 							{{/with}}
@@ -52,12 +51,13 @@
 				</div>
 				{{/if}}
 
-				{{!-- myft link (hidden on large screens) --}}
-				{{#with @root.navigationLists.account.myft}}
-				<a class="o-header__top-link o-header__top-link--myft" href="{{href}}" data-trackable="my-ft" tabindex="-1">
-					<span class="o-header__visually-hidden">myFT</span>
-				</a>
-				{{/with}}
+				{{#if @root.anon.userIsLoggedIn}}
+					{{#with @root.navigationLists.account.myft}}
+					<a class="o-header__top-link o-header__top-link--myft" href="{{href}}" data-trackable="my-ft" tabindex="-1">
+						<span class="o-header__visually-hidden">myFT</span>
+					</a>
+					{{/with}}
+				{{/if}}
 			</div>
 
 		</div>
