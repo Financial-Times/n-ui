@@ -1,8 +1,18 @@
-.n-my-ft-digest-promo {
+
+.n-myft-digest-promo {
   background-color: #fdf8f2;
   border: 1px solid #505050;
 }
 
-.n-my-ft-digest-promo__heading {
-  margin: 0px;
+.dismiss-icon {
+  &::before {
+  @include oIconsGetIcon('cross', #ffffff, 10);
+		content: '';
+    top: 1px;
+  }
+  float: right;
+}
+
+.n-myft-digest-promo-ui__button {
+  float: right;
 }
