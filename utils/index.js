@@ -55,7 +55,7 @@ module.exports = {
 		rootEl.dispatchEvent(event);
 	},
 	perfMark: name => {
-		const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+		const performance = window.LUX || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 		if (performance && performance.mark) {
 			performance.mark(name);
 		}
