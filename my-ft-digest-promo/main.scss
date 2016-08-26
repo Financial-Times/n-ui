@@ -1,11 +1,23 @@
 
 .n-myft-digest-promo {
+  position: relative;
   background-color: #fdf8f2;
   border: 1px solid #505050;
 }
 
+.sign-up-content {
+  position: relative;
+}
+
+.n-myft-digest-promo__heading {
+  vertical-align: top;
+}
+
 .digest-promo-button {
-  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 10px;
+  clear: both;
 }
 
 .o-buttons--standout {
@@ -21,7 +33,6 @@
   float: right;
 }
 
-.digest-promo-button {
-  clear: both;
-  width: 100%;
+.n-imafe card__image {
+  float: left;
 }
