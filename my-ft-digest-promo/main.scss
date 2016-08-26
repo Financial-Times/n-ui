@@ -1,14 +1,15 @@
 
-.email-icon-element, .sign-up-content, .digest-promo-buttons-col {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
 .n-myft-digest-promo {
   background-color: #fdf8f2;
   border: 1px solid #505050;
+}
+
+.digest-promo-button {
+  width: 100%;
+}
+
+.o-buttons--standout {
+  width: 100%;
 }
 
 .dismiss-icon {
@@ -20,7 +21,7 @@
   float: right;
 }
 
-.n-myft-digest-promo-ui__button {
-  clear: right;
-  float: right;
+.digest-promo-button {
+  clear: both;
+  width: 100%;
 }
