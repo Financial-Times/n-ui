@@ -1,3 +1,19 @@
+const getCookieValue = key => {
+	const regex = new RegExp(`${key}=([^;]+)`, 'i');
+	const a = regex.exec(document.cookie);
+	return (a) ? a[1] : undefined;
+}
+const spoorNumber;
+
+const getSpoorNumber () {
+	if (!spoorNumber) {
+		let spoorId = getCookieValue('spoor-id').replace(/-/g, '');
+		spoorId = spoorId.substring(spoorId.length - 12, spoorId.length); // Don't overflow the int
+		spoorNumber = parseInt(spoorId, 16);
+	}
+	return spoorNumber;
+}
+
 module.exports = {
 	$: function (sel, ctx) { return (ctx || document).querySelector(sel) },
 	$$: function (sel, ctx) { return [].slice.call((ctx || document).querySelectorAll(sel))},
@@ -60,10 +76,13 @@ module.exports = {
 			performance.mark(name);
 		}
 	},
-	getCookieValue: key => {
-		const regex = new RegExp(`${key}=([^;]+)`, 'i');
-		const a = regex.exec(document.cookie);
-		return (a) ? a[1] : undefined;
+	getCookieValue: getCookieValue,
+	sampleUsers: (pct, seed) => {
+		if (!seed) {
+			throw new Error('sampleUsers needs a seed string to be passed in as the second parameter')
+		}
+		const seedAsNumber = seed.split('').reduce((num, str) => return num + str.charCodeAt(0));
+		return (getSpoorNumber() + seedAsNumber) % 100 < pct)
 	}
 
 };
