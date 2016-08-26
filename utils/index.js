@@ -3,9 +3,9 @@ const getCookieValue = key => {
 	const a = regex.exec(document.cookie);
 	return (a) ? a[1] : undefined;
 }
-const spoorNumber;
+let spoorNumber;
 
-const getSpoorNumber () {
+const getSpoorNumber = () => {
 	if (!spoorNumber) {
 		let spoorId = getCookieValue('spoor-id').replace(/-/g, '');
 		spoorId = spoorId.substring(spoorId.length - 12, spoorId.length); // Don't overflow the int
@@ -81,8 +81,8 @@ module.exports = {
 		if (!seed) {
 			throw new Error('sampleUsers needs a seed string to be passed in as the second parameter')
 		}
-		const seedAsNumber = seed.split('').reduce((num, str) => return num + str.charCodeAt(0));
-		return (getSpoorNumber() + seedAsNumber) % 100 < pct)
+		const seedAsNumber = seed.split('').reduce((num, str) => num + str.charCodeAt(0));
+		return (getSpoorNumber() + seedAsNumber) % 100 < pct
 	}
 
 };
