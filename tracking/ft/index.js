@@ -68,17 +68,10 @@ const oTrackingWrapper = {
 			if (segmentId[1]) {
 				context['marketing_segment_id'] = segmentId[1];
 			}
-			const pageMetaEl = window.FT && window.FT.pageMeta;
-			console.log('XXXXXXX window.FT ', window.FT);
-			let pageMeta;
-			if (pageMetaEl) {
-				try {
-					pageMeta = JSON.parse(pageMetaEl);
-				} catch (e) {
-				}
+			const pageMeta = window.FT && window.FT.pageMeta;
+			if (pageMeta && (pageMeta === Object(pageMeta))) {
+				Object.assign(context, pageMeta);
 			}
-			console.log('XXXXXXX pageMeta ', pageMeta);
-			if (pageMeta) Object.assign(context, pageMeta);
 
 			oTracking.init({
 				server: 'https://spoor-api.ft.com/ingest',
