@@ -68,14 +68,16 @@ const oTrackingWrapper = {
 			if (segmentId[1]) {
 				context['marketing_segment_id'] = segmentId[1];
 			}
-			const pageMetaEl = document.querySelector('[data-page-meta]');
+			const pageMetaEl = window.FT && window.FT.pageMeta;
+			console.log('XXXXXXX window.FT ', window.FT);
 			let pageMeta;
 			if (pageMetaEl) {
 				try {
-					pageMeta = JSON.parse(pageMetaEl.innerHTML);
+					pageMeta = JSON.parse(pageMetaEl);
 				} catch (e) {
 				}
 			}
+			console.log('XXXXXXX pageMeta ', pageMeta);
 			if (pageMeta) Object.assign(context, pageMeta);
 
 			oTracking.init({
