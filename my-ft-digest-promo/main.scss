@@ -1,20 +1,53 @@
 
 .n-myft-digest-promo {
+  @include clearfix();
+  @include oGridColspan($span: 12);
+
   position: relative;
   background-color: #fdf8f2;
   border-bottom: 1px solid #cec6b9;
   border-top: 1px solid #cec6b9;
 }
 
-.sign-up-content {
+.n-myft-digest-promo__container {
+  @include oGridRespondTo('M') {
+    @include oGridColspan($span: 8);
+    @include oGridCenter;
+  }
+}
+
+.n-myft-digest-promo__content {
+  $icon-width-s: 80px;
+  $icon-width-m: 120px;
+
   position: relative;
+  padding-left: $icon-width-s;
+
+  &::before {
+    position: absolute;
+    content: '';
+    display: block;
+    width: $icon-width-s;
+    height: 80px;
+    left: 0px;
+    background-image: url("https://next-geebee.ft.com/image/v1/images/raw/https%3A%2F%2Fnext-geebee.ft.com%2Fassets%2Fmyft-alerts-prefs%2Fenvelope.svg?source=next&fit=scale-down&compression=best&width=50https://next-geebee.ft.com/image/v1/images/raw/https%3A%2F%2Fnext-geebee.ft.com%2Fassets%2Fmyft-alerts-prefs%2Fenvelope.svg?source=next&fit=scale-down&compression=best&width=50");
+    background-repeat: no-repeat;
+  }
+
+  @include oGridRespondTo('M') {
+    padding-left: $icon-width-m;
+
+    &::before {
+      width: $icon-width-m;
+    }
+  }
 }
 
 .n-myft-digest-promo__heading {
-  vertical-align: top;
+  margin-top: 0px;
 }
 
-.digest-promo-button {
+.n-myft-digest-promo__cta-btn {
   display: flex;
   align-items: flex-end;
   padding-bottom: 10px;
@@ -23,17 +56,16 @@
 
 .o-buttons--standout {
   width: 100%;
+  text-transform: none;
 }
 
-.dismiss-icon {
+.n-myft-digest-promo__dismiss-btn {
   &::before {
-  @include oIconsGetIcon('cross', #ffffff, 10);
+  @include oIconsGetIcon('cross', #666666, 10);
 		content: '';
     top: 1px;
   }
   float: right;
-}
-
-.n-imafe card__image {
-  float: left;
+  background-color: transparent;
+  border-color: transparent;
 }
