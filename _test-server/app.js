@@ -8,7 +8,7 @@ const app = module.exports = express({
 	withNavigation: true,
 	withAnonMiddleware: true,
 	layoutsDir: path.join(process.cwd(), '/layout'),
-	viewsDirectory: '/_demo/views',
+	viewsDirectory: '/_test-server/views',
 	directory: process.cwd()
 });
 
@@ -21,4 +21,8 @@ app.get('/', (req, res) => {
 
 app.listen(5005, () => {
 	console.log('Demo app up and running on port 5005');
+
+	fetch('http://localhost:5005/')
+		.then(res => res.text())
+		.then(console.log.bind(console))
 });

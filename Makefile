@@ -9,19 +9,21 @@ test-unit-dev:
 	karma start karma.conf.js --single-run false --auto-watch true
 
 test-build:
-	webpack --config webpack.config.demo.js --bail
+	webpack --config webpack.config.test.js
+
+test-server:
+	rm -rf bower_components/n-ui
+	mkdir bower_components/n-ui
+	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
+	node _test-server/app
 
 deploy: assets
 	node ./_deploy/s3.js
 	$(MAKE) npm-publish
 
-test: verify test-unit test-build
+test: verify test-unit test-build test-server
 
 test-dev: verify test-unit-dev
-
-demo:
-	webpack --config webpack.config.demo.js --dev
-	nodemon _demo/app
 
 MSG_N_UI_CERT = "Please copy key.pem and key-cert.pem from next-router into this directory to start the server on https"
 run:
