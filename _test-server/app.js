@@ -4,7 +4,7 @@ const path = require('path');
 const shellpromise = require('shellpromise');
 
 const app = module.exports = express({
-	name: `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/public`,
+	name: process.env.CIRCLE_BUILD_NUM ? `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/public` : 'public',
 	withFlags: true,
 	withHandlebars: true,
 	withNavigation: true,
@@ -25,7 +25,7 @@ app.listen(5005)
 	.then(app => {
 
 		console.log('Demo app up and running on port 5005');
-		// generate a test page and send it to S3
+		//generate a test page and send it to S3
 		fetch('http://localhost:5005/')
 			.then(res => res.text())
 			.then(text => fs.writeFileSync(path.join(process.cwd(), 'test-page.html'), text))
@@ -39,5 +39,4 @@ app.listen(5005)
 						process.exit(2);
 					});
 			})
-			.catch(console.log.bind(console))
 	});

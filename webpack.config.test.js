@@ -10,5 +10,6 @@ module.exports = nWebpack({
 	},
 	includes: [
 		__dirname
-	]
+	],
+	exclude: [/node_modules/]
 });
