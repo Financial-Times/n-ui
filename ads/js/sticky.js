@@ -10,7 +10,7 @@ function Sticky (el, sibling, stickUntil) {
 		return;
 	};
 
- 	this.init();
+	this.init();
 }
 
 /*istanbul ignore next*/
@@ -70,7 +70,6 @@ Sticky.prototype.init = function () {
 	window.addEventListener('resize', debounce(this.onResize).bind(this));
 
 	this.bindScroll();
-
 };
 
 

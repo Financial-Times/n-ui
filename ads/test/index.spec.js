@@ -4,7 +4,9 @@ const main = require('../index');
 const utils = require('../js/utils');
 const markup = require('./helpers/markup');
 const fetchMock = require('fetch-mock');
-let sandbox;
+const fakeArticleUuid = '123456';
+
+let sandbox, targeting;
 
 
 describe('Main', () => {
@@ -13,6 +15,9 @@ describe('Main', () => {
 		sandbox = sinon.sandbox.create();
 		markup.setupContainer();
 		markup.set('<div class="o-ads"></div>');
+		targeting = sandbox.stub(document, 'querySelector');
+		targeting.withArgs('[data-concept-id]').returns({getAttribute: () => fakeArticleUuid});
+		targeting.withArgs('[data-content-id]').returns({getAttribute: () => fakeArticleUuid});
 	});
 
 	afterEach(() => {
@@ -74,13 +79,11 @@ describe('Main', () => {
 
 	it('Should make a request to the ads API when on an article page and returns an empty object if an error occurred', () => {
 		const flags = { get: () => true };
-		const fakeArticleUuid = '123456';
 		const fakeDfpSiteAndZone = 'test-unclassified';
 
 		sandbox.stub(utils, 'getAppName', () => 'article' );
 		sandbox.stub(utils, 'getReferrer', () => 'https://test-referrer.com/path?ignore=this#and-this');
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone);
-		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
 		fetchMock
 			.mock('^https://ads-api.ft.com/v1/content', Promise.reject())
 			.catch(Promise.reject());
@@ -94,13 +97,11 @@ describe('Main', () => {
 
 	it('Should only pass referrer to API if it exists', () => {
 		const flags = { get: () => true };
-		const fakeArticleUuid = '123456';
 		const fakeDfpSiteAndZone = 'test-unclassified';
 
 		sandbox.stub(utils, 'getAppName', () => 'article' );
 		sandbox.stub(utils, 'getReferrer', () => null );
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
-		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
 		fetchMock
 			.mock('^https://ads-api.ft.com/v1/content', Promise.reject())
 			.catch(Promise.reject());
@@ -114,16 +115,12 @@ describe('Main', () => {
 
 	it('Should make make gpt unit name unclassified if API fails and no page metadata', () => {
 		const flags = { get: () => true };
-		const fakeArticleUuid = '123456';
 
 		sandbox.stub(utils, 'getAppName', () => 'article' );
 		sandbox.stub(utils, 'getReferrer', () => null );
 		sandbox.stub(utils, 'getMetaData', () => null );
-		let targeting = sandbox.stub(document, 'querySelector');
-		targeting.withArgs('[data-concept-id]').returns({getAttribute: () => fakeArticleUuid});
-		targeting.withArgs('[data-content-id]').returns({getAttribute: () => fakeArticleUuid});
 
-		// sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
+
 		fetchMock
 			.mock('^https://ads-api.ft.com/v1/content', Promise.reject())
 			.catch(Promise.reject());
@@ -137,13 +134,11 @@ describe('Main', () => {
 
 	it('Should make a request to the ads API when on an article page and returns the articles\' site and zone to the config', () => {
 		const flags = { get: () => true };
-		const fakeArticleUuid = '123456';
 		const fakeDfpSiteAndZone = 'this-should-be-overwritten';
 
 		sandbox.stub(utils, 'getAppName', () => 'article' );
 		sandbox.stub(utils, 'getReferrer', () => null );
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
-		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
 		fetchMock
 			.mock('^https://ads-api.ft.com/v1/content', {
 				dfp: {
@@ -167,12 +162,10 @@ describe('Main', () => {
 
 	it('Should make a request to the ads API when on an stream page and returns the stream site and zone to the config', () => {
 		const flags = { get: () => true };
-		const fakeConceptId = '123456';
 		const fakeDfpSiteAndZone = 'this-should-be-overwritten';
 
 		sandbox.stub(utils, 'getAppName', () => 'stream-page' );
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
-		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeConceptId}));
 		fetchMock
 			.mock('^https://ads-api.ft.com/v1/concept', {
 				dfp: {
@@ -182,7 +175,7 @@ describe('Main', () => {
 			.catch(Promise.reject());
 
 		return main.init(flags).then(() => {
-			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/concept')[0]).to.equal('https://ads-api.ft.com/v1/concept/' + fakeConceptId);
+			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/concept')[0]).to.equal('https://ads-api.ft.com/v1/concept/' + fakeArticleUuid);
 			expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/concept')[1].useCorsProxy).to.be.true;
 			expect(ads.config().gpt.unitName).to.equal('5887/ft.com/successful-site/successful-zone');
 			expect(ads.config().krux.id).to.be.ok;
@@ -192,12 +185,10 @@ describe('Main', () => {
 
 	it('Should make a request to the ads API for user data if flag on', () => {
 		const flags = { get: () => true };
-		const fakeConceptId = '123456';
 		const fakeDfpSiteAndZone = 'this-should-be-overwritten';
 
 		sandbox.stub(utils, 'getAppName', () => 'stream-page' );
 		sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
-		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeConceptId}));
 		fetchMock
 			.mock('https://ads-api.ft.com/v1/user', {
 				dfp: {
@@ -217,7 +208,6 @@ describe('Main', () => {
 		const flags = { get: (name) => name !== 'adTargetingUserApi'};
 
 		sandbox.stub(utils, 'getAppName', () => 'stream-page' );
-		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => '12345'}));
 		fetchMock
 			.mock('https://ads-api.ft.com/v1/user', 200)
 			.catch(Promise.reject());
