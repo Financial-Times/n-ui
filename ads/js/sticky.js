@@ -1,9 +1,10 @@
 const debounce = require('./utils').debounce;
 
 /*istanbul ignore next*/
-function Sticky (el, opts) {
+function Sticky (el, sibling, stickUntil) {
 	this.el = el;
-	this.opts = opts;
+	this.sibling = sibling
+	this.stickUntil = stickUntil;
 }
 
 /*istanbul ignore next*/
@@ -40,7 +41,7 @@ Sticky.prototype.onResize = function () {
 	} else if (!this.onScrollListener && this.el.offsetHeight >= 10) {
 		this.bindScroll();
 	}
-	this.stickyUntilPoint = (this.opts.stickUntil.offsetTop + this.opts.stickUntil.offsetHeight - this.el.offsetHeight);
+	this.stickyUntilPoint = (this.stickUntil.offsetTop - this.el.offsetHeight);
 
 };
 /*istanbul ignore next*/
@@ -57,21 +58,16 @@ Sticky.prototype.unbindScroll = function () {
 /*istanbul ignore next*/
 Sticky.prototype.init = function () {
 
-	if(!this.el) {
+	if(!this.el || window.pageYOffset > 0) {
 		return;
 	};
 
-	this.sibling = this.el.nextElementSibling;
-	this.stickyUntilPoint = (this.opts.stickUntil.offsetTop + this.opts.stickUntil.offsetHeight - this.el.offsetHeight);
+	this.stickyUntilPoint = (this.stickUntil.offsetTop - this.el.offsetHeight);
 	this.el.style.zIndex = '23';
 
 	window.addEventListener('resize', debounce(this.onResize).bind(this));
 
 	this.bindScroll();
-
-	if(window.pageYOffset > 0) {
-		this.unstick();
-	}
 };
 
 
