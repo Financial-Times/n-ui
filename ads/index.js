@@ -124,6 +124,13 @@ module.exports = {
 						stickyAd.init();
 					}
 
+					let stickyRight = new Sticky(
+						document.querySelector('.sidebar-advert'),
+						document.querySelector('.article__header--wrapper'),
+						document.querySelector('.next-up__bottom__wrapper')
+					);
+					stickyRight.init();
+
 					return Promise.resolve()
 						.then(() => {
 							slotsRendered = 0; // Note - this is a global var fro this module
