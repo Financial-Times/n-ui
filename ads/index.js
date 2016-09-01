@@ -120,8 +120,8 @@ module.exports = {
 					}
 
 					if(flags && flags.get('stickyHeaderAd')) {
-						new Sticky(document.querySelector('.above-header-advert'), document.querySelector('.header-ad-placeholder__top'), document.querySelector('#o-header-nav-desktop'));
-						// stickyAd.init();
+						let stickyAd = new Sticky(document.querySelector('.above-header-advert'), document.querySelector('.header-ad-placeholder__top'), document.querySelector('#o-header-nav-desktop'));
+						stickyAd.init();
 					}
 
 					return Promise.resolve()

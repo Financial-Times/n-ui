@@ -6,7 +6,8 @@ const markup = require('./helpers/markup');
 const fetchMock = require('fetch-mock');
 const fakeArticleUuid = '123456';
 
-let sandbox, targeting;
+let sandbox;
+let targeting;
 
 
 describe('Main', () => {
