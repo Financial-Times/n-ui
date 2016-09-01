@@ -14,7 +14,6 @@ const app = module.exports = express({
 	directory: process.cwd()
 });
 
-
 app.get('/', (req, res) => {
 	res.render('default', {
 		layout: 'wrapper'
@@ -26,7 +25,11 @@ app.listen(5005)
 
 		console.log('Demo app up and running on port 5005');
 		//generate a test page and send it to S3
-		fetch('http://localhost:5005/')
+		fetch('http://localhost:5005/', {
+			headers: {
+				'FT-Flags': 'ads:off'
+			}
+		})
 			.then(res => res.text())
 			.then(text => fs.writeFileSync(path.join(process.cwd(), 'test-page.html'), text))
 			.then(() => app.close())

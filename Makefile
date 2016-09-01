@@ -16,6 +16,7 @@ test-server:
 	mkdir bower_components/n-ui
 	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
 	node _test-server/app
+	nht nightwatch test/js-success.nightwatch.js
 
 deploy: assets
 	node ./_deploy/s3.js
