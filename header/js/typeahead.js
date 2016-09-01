@@ -107,6 +107,8 @@ function trackSearchEvent (context) {
 	document.body.dispatchEvent(tracking);
 }
 
+// HACK: we should return the normalized `searchLabel` field and provide awesomeplete with that
+// TODO: fix the above, see MH.
 // This is purposefully quite rubbish to be small, fast and target only the most-problematic chars.
 function latinize (text) {
 	const replacements = {
