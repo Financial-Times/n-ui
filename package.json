@@ -57,6 +57,7 @@
     "lolex": "^1.5.0",
     "mocha": "^2.1.0",
     "nightwatch": "^0.9.8",
+    "node-fetch": "^1.6.0",
     "node-sass": "^3.8.0",
     "nodemon": "^1.9.2",
     "npm-prepublish": "^1.2.1",

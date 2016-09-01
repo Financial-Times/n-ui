@@ -1,6 +1,8 @@
 'use strict';
 const shellpromise = require('shellpromise');
 const semver = require('semver');
+const fetch = require('node-fetch');
+
 const tag = process.env.CIRCLE_TAG;
 let versions;
 
