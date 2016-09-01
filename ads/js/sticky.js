@@ -5,6 +5,10 @@ function Sticky (el, sibling, stickUntil) {
 	this.el = el;
 	this.sibling = sibling
 	this.stickUntil = stickUntil;
+
+	if(!this.el || window.pageYOffset > 0) {
+		return;
+	};
 }
 
 /*istanbul ignore next*/
@@ -58,9 +62,6 @@ Sticky.prototype.unbindScroll = function () {
 /*istanbul ignore next*/
 Sticky.prototype.init = function () {
 
-	if(!this.el || window.pageYOffset > 0) {
-		return;
-	};
 
 	this.stickyUntilPoint = (this.stickUntil.offsetTop - this.el.offsetHeight);
 	this.el.style.zIndex = '23';
