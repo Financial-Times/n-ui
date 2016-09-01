@@ -20,6 +20,28 @@ Promise.all(versions.map((version, i) => {
 		--strip 1 --bucket ft-next-n-ui-prod \\
 		--surrogate-control 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400' \\
 		--cache-control 'no-cache, must-revalidate, max-age=3600'${i === 0 ? ' --monitor' : ''}`, {verbose: true})
+		.then(() => {
+			return shellpromise('find . -path "./dist/*"')
+				.then(files => files.split('\n')
+					.map(file => {
+						return fetch(`https://next-geebee.ft.com/n-ui/no-cache/${version}/${file.split('/').pop()}`, {
+							method: 'PURGE',
+							headers: {
+								'Fastly-Soft-Purge': 1,
+								'Fastly-Key': process.env.FASTLY_API_KEY
+							}
+						})
+						.then(res => {
+							if(!res.ok) {
+								throw new Error(`failed to purge ${file}`)
+							}
+						})
+						.catch(err => {
+							console.error(err);
+						})
+					})
+				);
+		})
 		.catch(err => {
 			console.error(err)
 			process.exit(2);
