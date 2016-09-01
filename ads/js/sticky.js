@@ -9,6 +9,8 @@ function Sticky (el, sibling, stickUntil) {
 	if(!this.el || window.pageYOffset > 0) {
 		return;
 	};
+
+ 	this.init();
 }
 
 /*istanbul ignore next*/
@@ -61,7 +63,6 @@ Sticky.prototype.unbindScroll = function () {
 };
 /*istanbul ignore next*/
 Sticky.prototype.init = function () {
-
 
 	this.stickyUntilPoint = (this.stickUntil.offsetTop - this.el.offsetHeight);
 	this.el.style.zIndex = '23';

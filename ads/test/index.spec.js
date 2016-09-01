@@ -119,7 +119,11 @@ describe('Main', () => {
 		sandbox.stub(utils, 'getAppName', () => 'article' );
 		sandbox.stub(utils, 'getReferrer', () => null );
 		sandbox.stub(utils, 'getMetaData', () => null );
-		sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
+		let targeting = sandbox.stub(document, 'querySelector');
+		targeting.withArgs('[data-concept-id]').returns({getAttribute: () => fakeArticleUuid});
+		targeting.withArgs('[data-content-id]').returns({getAttribute: () => fakeArticleUuid});
+
+		// sandbox.stub(document, 'querySelector', () => ({getAttribute: () => fakeArticleUuid}));
 		fetchMock
 			.mock('^https://ads-api.ft.com/v1/content', Promise.reject())
 			.catch(Promise.reject());
