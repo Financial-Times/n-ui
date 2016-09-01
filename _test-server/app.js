@@ -37,6 +37,7 @@ app.listen(5005)
 				return shellpromise(`nht deploy-static test-page.html public/main.css public/main.js public/main.css.map public/main.js.map --destination n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/ \\
 					--bucket ft-next-n-ui-prod \\
 					--cache-control 'no-cache, must-revalidate'`, {verbose: true})
+					.then(() => process.exit(0))
 					.catch(err => {
 						console.error(err)
 						process.exit(2);
