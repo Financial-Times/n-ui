@@ -120,7 +120,6 @@ module.exports = {
 					}
 
 					let stickyAd = new Sticky(document.querySelector('.o-ads'), document.querySelector('.markets-data-wrapper'), document.querySelector('#o-header-nav-desktop'));
-					console.log(stickyAd.sibling.style)
 					stickyAd.init();
 
 					return Promise.resolve()
