@@ -16,7 +16,15 @@ class Typeahead {
 		this.searchTerm = '';
 
 		this.awesomplete = new Awesomplete(this.input, {
-			maxItems: DISPLAY_ITEMS
+			maxItems: DISPLAY_ITEMS,
+			filter: function (text, input) {
+				// eslint-disable-next-line
+				return Awesomplete.FILTER_CONTAINS(latinize(text), latinize(input));
+			},
+			item: function (text, input) {
+				// eslint-disable-next-line
+				return Awesomplete.ITEM(latinize(text), latinize(input));
+			}
 		});
 
 		this.target.addEventListener('submit', this.handleSubmit.bind(this));
@@ -84,7 +92,7 @@ function getParentElDataTrackableValue (el) {
 }
 
 function makeAwesompleteReadable (suggestion) {
-	return { label: suggestion.name, value: suggestion.url || `/stream/${suggestion.taxonomy}Id/${suggestion.id}` };
+	return [ suggestion.name, suggestion.url || `/stream/${suggestion.taxonomy}Id/${suggestion.id}` ];
 }
 
 function trackSearchEvent (context) {
@@ -97,6 +105,25 @@ function trackSearchEvent (context) {
 	});
 
 	document.body.dispatchEvent(tracking);
+}
+
+// This is purposefully quite rubbish to be small, fast and target only the most-problematic chars.
+function latinize (text) {
+	const replacements = {
+		'a': ['à', 'á', 'â', 'ä', 'ã', 'å'],
+		'e': ['è', 'é', 'ê', 'ë'],
+		'i': ['î', 'ï', 'í', 'ì'],
+		'o': ['ô', 'ö', 'ò', 'ó', 'ø', 'õ'],
+		'u': ['û', 'ü', 'ù', 'ú']
+	};
+
+	Object.keys(replacements).forEach(letter => {
+		replacements[letter].forEach(diacritic => {
+			text = text.replace(diacritic, letter);
+		});
+	});
+
+	return text;
 }
 
 export default Typeahead;
