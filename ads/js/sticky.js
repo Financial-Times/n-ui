@@ -41,7 +41,7 @@ Sticky.prototype.onResize = function () {
 	} else if (!this.onScrollListener && this.el.offsetHeight >= 10) {
 		this.bindScroll();
 	}
-	this.stickyUntilPoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
+	this.stickyUntilPoint = (this.stickUntil.offsetTop - this.el.offsetHeight);
 
 };
 /*istanbul ignore next*/
@@ -62,7 +62,7 @@ Sticky.prototype.init = function () {
 		return;
 	};
 
-	this.stickyUntilPoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
+	this.stickyUntilPoint = (this.stickUntil.offsetTop - this.el.offsetHeight);
 	this.el.style.zIndex = '23';
 
 	window.addEventListener('resize', debounce(this.onResize).bind(this));
