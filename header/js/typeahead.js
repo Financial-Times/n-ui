@@ -110,11 +110,20 @@ function trackSearchEvent (context) {
 // This is purposefully quite rubbish to be small, fast and target only the most-problematic chars.
 function latinize (text) {
 	const replacements = {
-		'a': ['à', 'á', 'â', 'ä', 'ã', 'å'],
-		'e': ['è', 'é', 'ê', 'ë'],
-		'i': ['î', 'ï', 'í', 'ì'],
-		'o': ['ô', 'ö', 'ò', 'ó', 'ø', 'õ'],
-		'u': ['û', 'ü', 'ù', 'ú']
+		'a': ['à', 'á', 'â', 'ä', 'ã', 'å', 'ā'],
+		'ae': ['æ'],
+		'c': ['ç', 'č'],
+		'e': ['è', 'é', 'ê', 'ë', 'ē'],
+		'g': ['ğ'],
+		'i': ['î', 'ï', 'í', 'ì', 'ī'],
+		'l': ['ł'],
+		'n': ['ñ', 'ń'],
+		'o': ['ô', 'ö', 'ò', 'ó', 'ø', 'õ', 'ō'],
+		'oe': ['œ'],
+		's': ['ş', 'š'],
+		'ss': ['ß'],
+		'u': ['û', 'ü', 'ù', 'ú', 'ū'],
+		'z': ['ž']
 	};
 
 	Object.keys(replacements).forEach(letter => {
