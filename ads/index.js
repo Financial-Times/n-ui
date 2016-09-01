@@ -4,7 +4,8 @@ const Ads = window.oAds = require('o-ads');
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
 const Reporter = require('./js/reporter');
-const sendMetrics = require('./js/metrics')
+const sendMetrics = require('./js/metrics');
+const Sticky = require('./js/sticky');
 
 import { perfMark } from '../utils'
 
@@ -116,6 +117,11 @@ module.exports = {
 				if (flags && flags.get('ads')) {
 					if (/(BlackBerry|BBOS|PlayBook|BB10)/.test(navigator.userAgent)) {
 						return;
+					}
+
+					if(flags && flags.get('stickyHeaderAd')) {
+						let stickyAd = new Sticky(document.querySelector('.above-header-advert'), document.querySelector('.header-ad-placeholder__top'), document.querySelector('#o-header-nav-desktop'));
+						stickyAd.init();
 					}
 
 					return Promise.resolve()
