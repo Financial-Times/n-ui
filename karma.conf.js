@@ -149,7 +149,7 @@ module.exports = function (karma) {
 			if (browserName === 'default' || unstableBrowsers.indexOf(browserName) > -1 || whitelistedBrowsers.indexOf(browserName) === -1) {
 				return browserList;
 			}
-			browserList[browserName] = Object.assign({base: 'SauceLabs'}, nightwatchBrowsers[browserName].desiredCababilities);
+			browserList[`${browserName}_sauce`] = Object.assign({base: 'SauceLabs'}, nightwatchBrowsers[browserName].desiredCababilities);
 			return browserList;
 		}, {})
 		config.customLaunchers = sauceBrowsers;
@@ -159,6 +159,7 @@ module.exports = function (karma) {
 			accessKey: process.env.SAUCE_KEY,
 			recordScreenshots: false
 		}
+
 		config.browsers = Object.keys(sauceBrowsers);
 		config.reporters.push('saucelabs');
 	}
