@@ -144,6 +144,8 @@ module.exports = function (karma) {
 	if (process.env.CI) {
 		const nightwatchBrowsers = require('@financial-times/n-heroku-tools/config/nightwatch').test_settings;
 		const unstableBrowsers = (process.env.SAUCELABS_UNSTABLE_BROWSERS_JS || '').split(',').concat((process.env.SAUCELABS_UNSTABLE_BROWSERS || '').split(','));
+		// FIXME - mocha + chai do not support ie9. Can we switch to something else I wonder? Or try to polyfill the features it needs
+		unstableBrowsers.push('ie9');
 		const whitelistedBrowsers = process.env.SAUCELABS_BROWSERS.split(',');
 		const sauceBrowsers = Object.keys(nightwatchBrowsers).reduce((browserList, browserName) => {
 			if (browserName === 'default' || unstableBrowsers.indexOf(browserName) > -1 || whitelistedBrowsers.indexOf(browserName) === -1) {
@@ -157,7 +159,7 @@ module.exports = function (karma) {
 			testName: 'n-ui unit tests',
 			username: process.env.SAUCE_USER,
 			accessKey: process.env.SAUCE_KEY,
-			recordScreenshots: false
+			recordScreenshots: true
 		}
 
 		config.browsers = Object.keys(sauceBrowsers);
