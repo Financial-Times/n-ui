@@ -1,5 +1,4 @@
 const utils = require('./utils');
-const metadata = require('ft-metadata');
 const sandbox = require('./sandbox');
 const extend = require('o-ads').utils.extend;
 const pageType = utils.getAppName();
@@ -35,15 +34,23 @@ function getLazyLoadConfig (flags) {
 
 module.exports = function (flags, contextData, userData) {
 	const gptUnitName = getGPTUnitName(contextData);
+	const eidMatch = document.cookie.match(/EID=(\d+)/);
+
+	//Temporarily get EID from FT_U cookie until all ad systems stop using it
+	const userCookieMetadata = {
+		eid: eidMatch && eidMatch.length > 1 ? eidMatch[1] : null
+	};
+
 	const targeting = extend({
 		pt: pageType.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName()
-	}, metadata.user(true));
+	}, userCookieMetadata);
+
 
 	const kruxConfig = (flags.get('krux')) && {
 		id: 'KHUSeE3x',
 		attributes: {
-			user: metadata.user(),
+			user: userCookieMetadata,
 			page: {
 				unitName: gptUnitName
 			}
