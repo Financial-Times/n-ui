@@ -25,10 +25,10 @@ export default class UpdateMyFtForm extends Component {
 		}
 	}
 	renderBtnName () {
-		return (this.props.btnName && this.props.btnValue) ? this.props.btnName : null;
+		return (typeof this.props.btnName !== 'undefined') ? this.props.btnName : null;
 	}
 	renderBtnValue () {
-		return (this.props.btnValue) ? this.props.btnValue : null;
+		return (typeof this.props.btnValue !== 'undefined') ? this.props.btnValue : null;
 	}
 	render () {
 		const classes = classNames('n-myft-ui', this.props.classes);
