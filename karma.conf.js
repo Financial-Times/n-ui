@@ -12,10 +12,10 @@ const componentsToTest = [
 	'welcome-message'
 ]
 
-module.exports = function (config) {
+module.exports = function (karma) {
 
 
-	config.set({
+	const config = {
 
 		// base path that will be used to resolve all patterns (eg. files, exclude)
 		basePath: '',
@@ -104,8 +104,8 @@ module.exports = function (config) {
 
 
 		// level of logging
-		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel: config.LOG_INFO,
+		// possible values: karma.LOG_DISABLE || karma.LOG_ERROR || karma.LOG_WARN || karma.LOG_INFO || karma.LOG_DEBUG
+		logLevel: karma.LOG_INFO,
 
 
 		// enable / disable watching file and executing tests whenever any file changes
@@ -137,5 +137,27 @@ module.exports = function (config) {
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
 		singleRun: true
-	});
+	};
+
+	if (process.env.CI) {
+		const nightwatchBrowsers = require('@financial-times/n-heroku-tools/config/nightwatch').testSettings;
+		const unstableBrowsers = process.env.SAUCELABS_UNSTABLE_BROWSERS_JS.split(',');
+		const whitelistedBrowsers = process.env.SAUCELABS_BROWSERS.split(',');
+		const sauceBrowsers = Object.keys(nightwatchBrowsers).reduce((browserList, browserName) => {
+			if (browserName === 'default' || unstableBrowsers.indexOf(browserName) > -1 || whitelistedBrowsers.indexOf(browserName) === -1) {
+				return;
+			}
+			browserList[browserName] = Object.assign({base: 'SauceLabs'}, nightwatchBrowsers[browserName].desiredCababilities);
+			return browserList;
+		}, {})
+		config.customLaunchers = sauceBrowsers;
+		config.sauceLabs = {
+			testName: 'n-ui unit tests',
+			username: process.env.SAUCE_USER,
+			accessKey: process.env.SAUCE_KEY,
+			recordScreenshots: false
+		}
+	}
+
+	karma.set(config);
 };
