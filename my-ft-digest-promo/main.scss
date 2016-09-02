@@ -4,6 +4,7 @@
   @include oGridColspan($span: 12);
 
   position: relative;
+  float: none;
   background-color: #fdf8f2;
   border-bottom: 1px solid #cec6b9;
   border-top: 1px solid #cec6b9;
@@ -11,7 +12,7 @@
 
 .n-myft-digest-promo__container {
   @include oGridRespondTo('M') {
-    @include oGridColspan($span: 6);
+    @include oGridColspan($span: 7);
     @include oGridCenter;
   }
   top: -10px;
@@ -19,7 +20,7 @@
 
 .n-myft-digest-promo-dismiss-btn__container {
   @include oGridRespondTo('M') {
-    @include oGridColspan($span: 6);
+    @include oGridColspan($span: 7);
     @include oGridCenter;
   }
 }
@@ -65,7 +66,8 @@
 .n-myft-digest-promo__cta-btn {
   display: flex;
   align-items: flex-end;
-  padding-bottom: 15px;
+  justify-content: flex-end;
+  padding-bottom: 12px;
   clear: both;
 }
 
@@ -87,5 +89,5 @@
 
 .n-myft-digest-promo-subscribe {
   display: inline-block;
-  width: 100%;
+  min-width: 150px;
 }

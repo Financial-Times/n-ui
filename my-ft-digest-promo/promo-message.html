@@ -1,36 +1,51 @@
 <!-- Signed in
-Subscriber
-All users
-Not first visit -->
+ALl logged in users
+On stream page
+On both followed and not followed topics
+When user is not signed up to myFT Digest
+Not first visit
+Stop after three close events-->
 
 <div class="n-myft-digest-promo">
 
 	<div class="o-grid-container n-myft-digest-promo-dismiss-btn__container">
 		<div class="o-grid-row">
 			<div data-o-grid-colspan="12" class="n-myft-digest-promo-dismiss-btn__content">
-				<button class="n-myft-digest-promo__dismiss-btn"></button>
+				<button class="n-myft-digest-promo__dismiss-btn" data-trackable="digest-promo-dismiss"></button>
 			</div>
 		</div>
 	</div>
 
 		<div class="o-grid-container n-myft-digest-promo__container">
 			<div class="o-grid-row">
-				<div data-o-grid-colspan="12 M8" class="n-myft-digest-promo__content">
+				<div data-o-grid-colspan="12 M8 L10" class="n-myft-digest-promo__content">
 					<h2 class="n-myft-digest-promo__heading">
 					  Add to <span style="font-weight:normal;"><i>my</i>FT <i>Digest</i></span>
 					</h2>
 					<p class ="n-myft-digest-promo__para">Add this topic to a <i>my</i>FT, straight to your inbox</p>
 				</div>
-				<div data-o-grid-colspan="12 M4" class="n-myft-digest-promo__cta-btn">
-					<form action='/' method="POST" class="n-myft-digest-promo-subscribe">
+				<div data-o-grid-colspan="12 M4 L2" class="n-myft-digest-promo__cta-btn">
 
-						<button aria-label="Add to my F T"
-						 				title="Add to my F T"
-										type="submit"
-										class="o-buttons o-buttons--standout">
-										Add to <i>my</i>FT <i>Digest</i>
-						</button>
-					</form>
+				<form class="n-myft-digest-promo-subscribe"
+							method="POST"
+							data-myft-ui="digest-promo"
+            	data-concept-id="MTQ4-U2VjdGlvbnM="
+							action="/__myft/api/core/followed/concept/MTQ4-U2VjdGlvbnM=?method=put">
+					<input type="hidden" value="Life &amp; Arts" name="name">
+					<input type="hidden" value="sections" name="taxonomy">
+					<button aria-label="Add Life &amp; Arts"
+									aria-pressed="false"
+									class="o-buttons o-buttons--standout"
+									data-alternate-label="Remove Life &amp; Arts"
+									data-alternate-text="Added"
+									data-concept-id="MTQ4-U2VjdGlvbnM="
+									data-trackable="digest-promo"
+									title="Add Life &amp; Arts"
+									type="submit">
+									Add to <i>my</i>FT <i>Digest</i>
+					</button>
+				</form>
+
 				</div>
 			</div>
 		</div>
