@@ -29,18 +29,18 @@ Stop after three close events-->
 				<form class="n-myft-digest-promo-subscribe"
 							method="POST"
 							data-myft-ui="digest-promo"
-            	data-concept-id="MTQ4-U2VjdGlvbnM="
-							action="/__myft/api/core/followed/concept/MTQ4-U2VjdGlvbnM=?method=put">
-					<input type="hidden" value="Life &amp; Arts" name="name">
-					<input type="hidden" value="sections" name="taxonomy">
-					<button aria-label="Add Life &amp; Arts"
+            	data-concept-id="{{conceptId}}"
+							action="/__myft/api/core/followed/concept/{{conceptId}}?method=put">
+					<input type="hidden" value="{{title}}" name="name">
+					<input type="hidden" value="{{taxonomy}}" name="taxonomy">
+					<button aria-label="Add {{title}}"
 									aria-pressed="false"
 									class="o-buttons o-buttons--standout"
-									data-alternate-label="Remove Life &amp; Arts"
+									data-alternate-label="Remove {{title}}"
 									data-alternate-text="Added"
-									data-concept-id="MTQ4-U2VjdGlvbnM="
+									data-concept-id="{{conceptId}}"
 									data-trackable="digest-promo"
-									title="Add Life &amp; Arts"
+									title="Add {{title}}"
 									type="submit">
 									Add to <i>my</i>FT <i>Digest</i>
 					</button>
