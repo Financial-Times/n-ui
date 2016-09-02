@@ -120,15 +120,12 @@ module.exports = {
 					}
 
 					if(flags && flags.get('stickyHeaderAd')) {
-						let stickyAd = new Sticky(document.querySelector('.above-header-advert'), document.querySelector('.header-ad-placeholder__top'), document.querySelector('#o-header-nav-desktop'));
+						let stickyAd = new Sticky(document.querySelector('.above-header-advert'), document.querySelector('.header-ad-placeholder__top'), document.querySelector('#primary-nav .o-header__top'));
 						stickyAd.init();
 					}
-
-					let stickyRight = new Sticky(
-						document.querySelector('.sidebar-advert'),
-						document.querySelector('.article__header--wrapper'),
-						document.querySelector('.next-up__bottom__wrapper')
-					);
+					let stickyRight = new Sticky(document.querySelector('.sidebar-advert'), document.querySelector('.next-up__bottom__wrapper'),
+					document.querySelector('footer'),
+					{'topOffset' : '70px'});
 					stickyRight.init();
 
 					return Promise.resolve()
