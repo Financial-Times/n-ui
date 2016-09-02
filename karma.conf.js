@@ -9,7 +9,7 @@ const componentsToTest = [
 	'ads',
 	'myft',
 	'tracking',
-	'welcome-message'
+	'opt-out'
 ]
 
 module.exports = function (karma) {
@@ -124,6 +124,7 @@ module.exports = function (karma) {
 			require('karma-sourcemap-loader'),
 			require('karma-webpack'),
 			require('karma-chrome-launcher'),
+			require('karma-sauce-launcher'),
 			require('karma-html-reporter')
 		],
 		client: {
@@ -139,13 +140,14 @@ module.exports = function (karma) {
 		singleRun: true
 	};
 
+
 	if (process.env.CI) {
-		const nightwatchBrowsers = require('@financial-times/n-heroku-tools/config/nightwatch').testSettings;
-		const unstableBrowsers = process.env.SAUCELABS_UNSTABLE_BROWSERS_JS.split(',');
+		const nightwatchBrowsers = require('@financial-times/n-heroku-tools/config/nightwatch').test_settings;
+		const unstableBrowsers = (process.env.SAUCELABS_UNSTABLE_BROWSERS_JS || '').split(',').concat((process.env.SAUCELABS_UNSTABLE_BROWSERS || '').split(','));
 		const whitelistedBrowsers = process.env.SAUCELABS_BROWSERS.split(',');
 		const sauceBrowsers = Object.keys(nightwatchBrowsers).reduce((browserList, browserName) => {
 			if (browserName === 'default' || unstableBrowsers.indexOf(browserName) > -1 || whitelistedBrowsers.indexOf(browserName) === -1) {
-				return;
+				return browserList;
 			}
 			browserList[browserName] = Object.assign({base: 'SauceLabs'}, nightwatchBrowsers[browserName].desiredCababilities);
 			return browserList;
@@ -157,6 +159,8 @@ module.exports = function (karma) {
 			accessKey: process.env.SAUCE_KEY,
 			recordScreenshots: false
 		}
+		config.browsers = Object.keys(sauceBrowsers);
+		config.reporters.push('saucelabs');
 	}
 
 	karma.set(config);
