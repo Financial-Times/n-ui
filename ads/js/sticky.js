@@ -99,8 +99,11 @@ Sticky.prototype.bindScroll = function () {
 Sticky.prototype.unstick = function () {
 
 	this.el.style.position = 'absolute';
-	this.el.style.top = this.stickyUntilPoint + 'px';
-	this.sibling.style.marginTop = this.el.offsetHeight + 'px';
+	console.log(this.stickyUntilPoint);
+	console.log(this.el.style.offsetHeight);
+	console.log(this.el);
+	this.el.style.top = (this.stickyUntilPoint - this.el.offsetHeight) + 'px';
+	//this.sibling.style.marginTop = this.el.offsetHeight + 'px';
 };
 
 Sticky.prototype.init = function () {
