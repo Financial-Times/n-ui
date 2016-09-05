@@ -46,5 +46,9 @@ app.listen(5005)
 							process.exit(2);
 						});
 				})
+				.then(() => {
+					console.log('deployed test static site to s3');
+					process.exit(0);
+				})
 		}
 	});
