@@ -88,6 +88,8 @@ export class ComponentInitializer {
 				optOut.init();
 			}
 
+			digestPromo.init();
+
 			if (config.features.myft && !this.initializedFeatures.myftclient) {
 				const clientOpts = [];
 
