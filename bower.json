@@ -19,7 +19,6 @@
     "awesomplete": "^1.1.1",
     "babel-polyfill-silencer": "^1.1.0",
     "fontfaceobserver": "^1.7.1",
-    "ft-metadata": "https://github.com/Financial-Times/ft-metadata.git#^0.0.2",
     "ftdomdelegate": "^2.0.3",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
     "n-message-prompts": "^3.0.0",
