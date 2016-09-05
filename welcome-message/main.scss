@@ -1,8 +1,8 @@
 @import 'o-visual-effects/main';
 
-@include nUiCriticalStart('welcomeMessage');
-
 @if nUiApply('welcomeMessage') {
+
+	@include nUiCriticalStart('welcomeMessage');
 
 	.n-welcome-message {
 		position: relative;
@@ -100,7 +100,5 @@
 			opacity: 1;
 		}
 	}
-
+	@include nUiCriticalEnd('welcomeMessage');
 }
-
-@include nUiCriticalEnd('welcomeMessage');

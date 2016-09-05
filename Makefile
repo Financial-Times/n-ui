@@ -16,13 +16,19 @@ test-server:
 	mkdir bower_components/n-ui
 	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
 	node _test-server/app
+
+nightwatch:
 	nht nightwatch test/js-success.nightwatch.js
+
+demo:
+	webpack --config webpack.config.test.js --dev
+	$(MAKE) test-server
 
 deploy: assets
 	node ./_deploy/s3.js
 	$(MAKE) npm-publish
 
-test: verify test-unit test-build test-server
+test: verify test-unit test-build test-server nightwatch
 
 test-dev: verify test-unit-dev
 

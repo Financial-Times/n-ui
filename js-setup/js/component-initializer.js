@@ -108,11 +108,6 @@ export class ComponentInitializer {
 				this.initializedFeatures.header = true;
 			}
 
-			if (config.features.footer && !this.initializedFeatures.footer) {
-				footer.init(flags);
-				this.initializedFeatures.footer = true
-			}
-
 			if (config.features.date && !this.initializedFeatures.date) {
 				date.init();
 				this.initializedFeatures.date = true
@@ -120,6 +115,12 @@ export class ComponentInitializer {
 
 			mainCss
 				.then(() => {
+
+					if (config.features.footer && !this.initializedFeatures.footer) {
+						footer.init(flags);
+						this.initializedFeatures.footer = true
+					}
+
 					if (config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
 						cookieMessage.init(flags);
 						this.initializedFeatures.cookieMessage = true;

@@ -1,5 +1,15 @@
-import useragent from './useragent';
 import { $$ } from '../utils';
+
+const IOS_DEVICE_REGEX = /OS (7|8|9|10).* like Mac OS X.*/i;
+const ANDROID_DEVICE_REGEX = /Android (4\.[3-9]|[5-9])/i;
+
+function isWebAppCapableDevice (userAgent) {
+	return IOS_DEVICE_REGEX.test(userAgent);
+}
+
+function isModernAndroidDevice (userAgent) {
+	return ANDROID_DEVICE_REGEX.test(userAgent);
+}
 
 function showWebAppLink () {
 	$$('.js-webapp-link').forEach(a => {
@@ -18,11 +28,15 @@ function showAndroidLink () {
 }
 
 function init () {
-	if (useragent.isWebAppCapableDevice(navigator.userAgent)) {
+	if (isWebAppCapableDevice(navigator.userAgent)) {
 		showWebAppLink();
-	} else if (useragent.isModernAndroidDevice(navigator.userAgent)) {
+	} else if (isModernAndroidDevice(navigator.userAgent)) {
 		showAndroidLink();
 	}
 }
 
-module.exports = { init };
+module.exports = {
+	init,
+	isWebAppCapableDevice,
+	isModernAndroidDevice
+};
