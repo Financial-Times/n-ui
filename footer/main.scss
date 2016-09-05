@@ -1,14 +1,7 @@
 $o-footer-is-silent: not nUiHas('footer') !default;
 
 @include nUiCriticalStart('footer');
-	.o-footer {
-		display: none;
-	}
-@include nUiCriticalEnd('footer');
-
-.o-footer {
-	display: block;
-}
 
 @import "o-footer/main";
 
+@include nUiCriticalEnd('footer');

@@ -3,13 +3,8 @@
 @if nUiApply('welcomeMessage') {
 
 	@include nUiCriticalStart('welcomeMessage');
-	.n-welcome-message {
-		display: none;
-	}
-	@include nUiCriticalEnd('welcomeMessage');
 
 	.n-welcome-message {
-		display: block;
 		position: relative;
 		padding: 16px 12px;
 		// not in o-colors ಠ_ಠ
@@ -105,7 +100,5 @@
 			opacity: 1;
 		}
 	}
-
+	@include nUiCriticalEnd('welcomeMessage');
 }
-
-
