@@ -1,5 +1,4 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
-const metadata = require('ft-metadata');
 const utils = require('../js/utils');
 const oAdsConfig = require('../js/oAdsConfig');
 const adsSandbox = require('../js/sandbox');
@@ -27,37 +26,7 @@ describe('Config', () => {
 					break;
 			}
 		});
-		sandbox.stub(metadata, 'user', (param) => {
-			if(param){
-				return {
-					'02': '02',
-					'05': null,
-					'06': '06',
-					'07': '07',
-					'19': '19',
-					'40': '40',
-					'41': '41',
-					'42': '42',
-					'46': '46',
-					'51': null,
-					'slv': 'lv2',
-					'98': '98'
-				};
-			} else {
-				return {
-					gender: '02',
-					job_responsibility: '06',
-					job_position: '07',
-					company_size: '19',
-					DB_company_size: '40',
-					DB_industry: '41',
-					DB_company_turnover: '42',
-					cameo_investor_code: '46',
-					'slv': 'lv2',
-					'98': '98'
-				};
-			}
-		});
+
 	});
 
 	afterEach(() => {
@@ -83,18 +52,10 @@ describe('Config', () => {
 
 	it('Should set krux configuration when flag is set to false', () => {
 		const flags = { get: () => true };
+		document.cookie = "FT_U=EID=1234_PID=abc";
 		const config = oAdsConfig(flags, {});
 		const userExpectation = {
-			gender: '02',
-			job_responsibility: '06',
-			job_position: '07',
-			company_size: '19',
-			DB_company_size: '40',
-			DB_industry: '41',
-			DB_company_turnover: '42',
-			cameo_investor_code: '46',
-			'slv': 'lv2',
-			'98': '98'
+			eid: '1234'
 		};
 
 		expect(config.krux.id).to.be.ok;
@@ -112,7 +73,9 @@ describe('Config', () => {
 	it('Should set dfp_targeting config', () => {
 		const flags = { get: () => true };
 		const config = oAdsConfig(flags, {});
-		const expectation = 'pt=unk;02=02;05=null;06=06;07=07;19=19;40=40;41=41;42=42;46=46;51=null;slv=lv2;98=98;nlayout=custom'.split(';');
+		document.cookie = "FT_U=EID=1234_PID=abc";
+		const expectation = 'pt=unk;eid=1234;nlayout=custom'.split(';');
+
 		expectation.forEach((value) => expect(config.dfp_targeting).to.contain(value));
 	});
 
