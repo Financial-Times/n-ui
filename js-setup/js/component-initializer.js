@@ -10,6 +10,7 @@ import welcomeMessage from '../../welcome-message';
 import messagePrompts from '../../message-prompts';
 import footer from '../../footer';
 import myft from '../../myft';
+import digestPromo from '../../my-ft-digest-promo';
 import * as serviceWorker from 'n-service-worker';
 
 export const presets = {
