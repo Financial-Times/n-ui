@@ -1,7 +1,7 @@
 const fs = require('fs');
 const express = require('@financial-times/n-express');
 const path = require('path');
-const shellpromise = require('shellpromise');
+const deployStatic = require('@financial-times/n-heroku-tools').deployStatic.task;
 
 const app = module.exports = express({
 	name: process.env.CIRCLE_BUILD_NUM ? `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/public` : 'public',
@@ -23,10 +23,8 @@ app.get('/', (req, res) => {
 
 app.listen(5005)
 	.then(app => {
-
-		console.log('Demo app up and running on port 5005');
 		// in CI generate a test page and send it to S3
-		if (process.env.CI) {
+		if (process.env.CIRCLE_BUILD_NUM) {
 
 			fetch('http://localhost:5005/', {
 				headers: {
@@ -37,10 +35,12 @@ app.listen(5005)
 				.then(text => fs.writeFileSync(path.join(process.cwd(), 'test-page.html'), text))
 				.then(() => app.close())
 				.then(() => {
-					return shellpromise(`nht deploy-static test-page.html public/main.css public/main.js public/main.css.map public/main.js.map --destination n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/ \\
-						--bucket ft-next-n-ui-prod \\
-						--cache-control 'no-cache, must-revalidate'`, {verbose: true})
-						.then(() => process.exit(0))
+					return deployStatic({
+						files: ['test-page.html', 'public/main.css', 'public/main.js', 'public/main.css.map', 'public/main.js.map'],
+						destination: `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/`,
+						bucket: 'ft-next-n-ui-prod',
+						cacheControl: 'no-cache, must-revalidate',
+					})
 						.catch(err => {
 							console.error(err)
 							process.exit(2);
