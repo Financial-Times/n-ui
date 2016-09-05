@@ -23,19 +23,33 @@ shellpromise('find . -path "./dist/*"')
 	.then(files => {
 
 		files = files.split('\n').filter(f => !!f);
+		const deploys = versions.reduce((arr, version, i) => {
+			return arr.concat([{
+				version,
+				monitor: i === 0, // only monitor the size of the first copy deployed
+				cacheControl: 'no-cache, must-revalidate, max-age=3600',
+				directory: 'no-cache'
+			}, {
+				version,
+				monitor: false,
+				cacheControl: 'must-revalidate, max-age=3600',
+				directory: 'cached'
+			}])
+		}, []);
 
-		return Promise.all(versions.map((version, i) => {
+		return Promise.all(deploys.map(conf => {
 			return deployStatic({
 				files: files,
-				destination: `n-ui/no-cache/${version}`,
+				destination: `n-ui/${conf.directory}/${conf.version}`,
 				bucket: 'ft-next-n-ui-prod',
 				strip: 1,
-				monitor: isOfficialRelease && i === 0,
-				cacheControl: 'no-cache, must-revalidate, max-age=3600',
+				monitor: isOfficialRelease && conf.monitor,
+				cacheControl: conf.cacheControl,
 				surrogateControl: 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400'
 			})
 				.then(() => files.map(file => {
-					return fetch(`https://next-geebee.ft.com/n-ui/no-cache/${version}/${file.split('/').pop()}`, {
+					const path = `https://next-geebee.ft.com/n-ui/${conf.directory}/${conf.version}/${file.split('/').pop()}`;
+					return fetch(path, {
 						method: 'PURGE',
 						headers: {
 							'Fastly-Soft-Purge': 1,
@@ -44,7 +58,7 @@ shellpromise('find . -path "./dist/*"')
 					})
 					.then(res => {
 						if(!res.ok) {
-							throw new Error(`failed to purge ${file}`)
+							throw new Error(`failed to purge ${path}`)
 						}
 					})
 					.catch(err => {
