@@ -3,11 +3,16 @@
   @include clearfix();
   @include oGridColspan($span: 12);
 
+  display: none;
   position: relative;
   float: none;
   background-color: #fdf8f2;
   border-bottom: 1px solid #cec6b9;
   border-top: 1px solid #cec6b9;
+}
+
+.n-myft-digest-promo--enabled {
+  display: block;
 }
 
 .n-myft-digest-promo__container {
