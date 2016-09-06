@@ -24,9 +24,9 @@
 	{{#unlessEquals nUi.header.variant 'logo-only'}}
 		{{!-- old compatibility template --}}
 		{{!-- TODO: switch all uses to res.locals.subnav = { breadcrumb: [], subsections: [] } --}}
-		{{#ifAll @root.flags.sectionBreadcrumbs @root.currentNav}}
+		{{#if @root.currentNav}}
 			{{>n-ui/header/partials/subnav/template-old}}
-		{{/ifAll}}
+		{{/if}}
 
 		{{#if @root.subnav}}
 			{{>n-ui/header/partials/subnav/template-new}}
@@ -34,9 +34,7 @@
 	{{/unlessEquals}}
 </header>
 
-{{#if @root.flags.stickyNav}}
-	<header class="o-header o-header--simple o-header--sticky o--if-js" aria-hidden="true" role="presentation" data-o-header--sticky>
-		{{> n-ui/header/partials/header/sticky}}
-		{{> n-ui/header/partials/header/search context="sticky"}}
-	</header>
-{{/if}}
+<header class="o-header o-header--simple o-header--sticky o--if-js" aria-hidden="true" role="presentation" data-o-header--sticky>
+	{{> n-ui/header/partials/header/sticky}}
+	{{> n-ui/header/partials/header/search context="sticky"}}
+</header>
