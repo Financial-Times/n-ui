@@ -141,6 +141,10 @@ export class ComponentInitializer {
 							anonymous: !(/FTSession=/.test(document.cookie)),
 							flags
 						});
+						myft.uiInstant.init({
+							anonymous: !(/FTSession=/.test(document.cookie)),
+							flags
+						});
 						this.initializedFeatures.myftUi = true;
 					}
 

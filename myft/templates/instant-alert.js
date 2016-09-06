@@ -10,9 +10,8 @@ export default class InstantAlert extends Component {
 		const instantAttrs = {
 			classes: classNames('n-myft-ui--instant', this.props.classes),
 			action: '/__myft/api/core/followed/concept/' + this.props.conceptId + '?method=put',
-			uiHandle: 'follow',
+			uiHandle: 'instant',
 			ariaPressed: !!this.props.hasInstantAlert,
-			trackable: 'instant',
 			activateLabel: 'Get instant alerts for ',
 			deactivateLabel: 'Stop instant alerts for ',
 			buttonText: (this.props.hasInstantAlert) ? isOnText : isOffText,

@@ -488,8 +488,10 @@ export function init (opts) {
 			} else {
 				document.body.addEventListener(`myft.user.${myftFeature}.${types[myftFeature]}.load`, onLoad);
 			}
+
 			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.add`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail));
 			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.remove`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail));
+			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.update`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail));
 
 			delegate.on('submit', uiSelectors[myftFeature], getInteractionHandler(myftFeature));
 		});
