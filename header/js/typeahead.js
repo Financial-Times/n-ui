@@ -24,7 +24,8 @@ class Typeahead {
 			item: function (text, input) {
 				// eslint-disable-next-line
 				return Awesomplete.ITEM(latinize(text), latinize(input));
-			}
+			},
+			sort: new Function()
 		});
 
 		this.target.addEventListener('submit', this.handleSubmit.bind(this));
