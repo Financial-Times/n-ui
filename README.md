@@ -10,9 +10,17 @@ For usage information see [the wiki](https://github.com/Financial-Times/n-ui/wik
 
 ## Dev workflow
 
-Run `make demo` to check if your changes work. Feel free to edit and commit whatever changes you like to th contents of the demo files... just don't expect them to still be there next time you come to the repo.
+## Standalone development
 
-Most of the time you should be ok to test stuff in the demo, merge to master when happy and `bottle`, which will also take care of pushing a new version up to the CDN. It can take up to an hour for every node of the CDN to pick up the changes. If you want to test something out create a beta tag in your branch and then install n-ui at this beta version in your app. You can also turn off the `nUiBundle` flag to force your app to not use the copy of n-ui from the CDN
+* `make -j2 serve build-demo` will
+	- start a server on `localhost:5005` which serves a demo page of most of the core n-ui components
+	- build, and watch, an n-ui bundle that will bootstrap the js and css for the page
+* `make test-unit-dev` will run unit tests in Chrome using karma. To add tests for a new subcomponents, or to only run tests for a single subcomponent, modify the `componentsToTest` list in karma.config.js. In CI these tests are run in more browsers using saucelabs
+
+## Bower linking
+
+To work with n-ui when it's bower linked into an app you will need to run `make -j2 build run`, which will start a https server on port `3456` and build and watch an n-ui bundle. Your app will need to be on `n-express@17.6.3` or later for this to work.
+
 
 ## **An important note on releases **
 
