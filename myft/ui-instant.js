@@ -22,8 +22,8 @@ function apiBackwardsCompatibility (response) {
 	return (response._rel) ? response._rel.instant : response.results[0].rel.properties.instant;
 }
 
-function updateConceptData (actorId, subjectId, data) {
-	myftClient.updateRelationship('user', actorId, 'followed', 'concept', subjectId, data);
+function updateConceptData (subjectId, data) {
+	myftClient.updateRelationship('user', null, 'followed', 'concept', subjectId, data);
 }
 
 function toggleButton (buttonEl, state) {
@@ -82,15 +82,27 @@ function formSubmitted (event, element) {
 		showAnonNotification();
 	} else {
 		const subjectId = element.getAttribute('data-concept-id');
-		const actorId = element.getAttribute('data-actor-id');
 		const submitEl = $('button', element);
 		const inputs = $$('input', element);
 		inputs.push(submitEl);
-		updateConceptData(actorId, subjectId, extractMetaData(inputs));
+		updateConceptData(subjectId, extractMetaData(inputs));
+	}
+}
+
+// update UI to show real state of instant alerts
+// until we have ESI, we cannot do this server-side as it could cache the wrong state
+function applyModel () {
+	if (myftClient.loaded && myftClient.loaded['followed.concept']) {
+		myftClient.loaded['followed.concept'].items.forEach((item) => {
+			if (item._rel.instant) {
+				updateButtons(item.uuid, true);
+			}
+		});
 	}
 }
 
 function eventListeners () {
+	document.body.addEventListener('myft.user.followed.concept.load', applyModel);
 	document.body.addEventListener('myft.user.followed.concept.remove', ev => conceptRemoved(ev.detail));
 	document.body.addEventListener('myft.user.followed.concept.update', ev => conceptUpdated(ev.detail));
 	delegate.on('submit', `${UI_HOOK}`, formSubmitted);
@@ -102,6 +114,7 @@ export function init (opts) {
 	const instantAlertForms = $$(UI_HOOK);
 	config = opts;
 	if (instantAlertForms.length > 0) {
+		applyModel();
 		eventListeners();
 	}
 }

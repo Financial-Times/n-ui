@@ -11,13 +11,13 @@ export default class InstantAlert extends Component {
 			classes: classNames('n-myft-ui--instant', this.props.classes),
 			action: '/__myft/api/core/followed/concept/' + this.props.conceptId + '?method=put',
 			uiHandle: 'instant',
-			ariaPressed: !!this.props.hasInstantAlert,
+			ariaPressed: false,
 			activateLabel: 'Get instant alerts for ',
 			deactivateLabel: 'Stop instant alerts for ',
-			buttonText: (this.props.hasInstantAlert) ? isOnText : isOffText,
-			alternateText: (this.props.hasInstantAlert) ? isOffText: isOnText,
+			buttonText: isOffText,
+			alternateText: isOnText,
 			btnName: '_rel.instant',
-			btnValue: !this.props.hasInstantAlert
+			btnValue: true
 
 		};
 		Object.assign(attrs, instantAttrs);
