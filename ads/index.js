@@ -11,7 +11,6 @@ import { perfMark } from '../utils'
 
 let slotCount;
 let slotsRendered = 0;
-let containers;
 let onAdsCompleteCallback;
 const customTimings = {};
 
@@ -54,6 +53,7 @@ function getUserTargetingPromise () {
 
 function initOAds (flags, contextData, userData) {
 	const initObj = oAdsConfig(flags, contextData, userData);
+	const containers = [].slice.call(document.querySelectorAll('.o-ads'));
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
@@ -63,7 +63,6 @@ function initOAds (flags, contextData, userData) {
 	slotCount = containers.length;
 
 	utils.log.info(slotCount + ' ad slots found on page');
-
 	const ads = Ads.init(initObj);
 	containers.forEach(ads.slots.initSlot.bind(ads.slots));
 
@@ -134,7 +133,6 @@ module.exports = {
 									getContextualTargetingPromise(appName),
 									flags.get('adTargetingUserApi') ? getUserTargetingPromise() : Promise.resolve({})
 								];
-								containers = [].slice.call(document.querySelectorAll('.o-ads'));
 								return Promise.all(targetingPromises)
 									.then(data => initOAds(flags, data[0], data[1]));
 							}
