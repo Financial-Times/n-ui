@@ -29,13 +29,11 @@ function shouldShowPromo(conceptId) {
     myFtClient.get('preferred', 'preference', 'email-digest')
   ]).then(values => {
     return values[0].length === 0 && values[1].length === 0 && !getDismissState();
-    console.log(values);
   });
 }
 
 function showPromo() {
   const element = document.querySelector(CLASSES.promoComponent);
-  console.log(element);
   element.classList.add(CLASSES.promoEnabled);
 }
 
@@ -74,14 +72,11 @@ function addToDigest(event) {
 }
 
 function init() {
-  console.log("init func runs");
   if(!superstore.isPersisting()) { return; }
-  console.log("superstore persisting");
   btn = document.querySelector(CLASSES.ctaBtn);
   conceptId = btn.getAttribute('data-concept-id');
   shouldShowPromo(conceptId).then(shouldShow => {
     if(shouldShow) {
-      console.log("shouldShow = true");
       showPromo();
       bindListeners();
     }
