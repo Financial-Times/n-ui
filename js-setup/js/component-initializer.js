@@ -10,6 +10,7 @@ import welcomeMessage from '../../welcome-message';
 import messagePrompts from '../../message-prompts';
 import footer from '../../footer';
 import myft from '../../myft';
+import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 
 export const presets = {
@@ -111,6 +112,11 @@ export class ComponentInitializer {
 			if (config.features.date && !this.initializedFeatures.date) {
 				date.init();
 				this.initializedFeatures.date = true
+			}
+
+			if (config.features.lazyLoadImages && !this.initializedFeatures.lazyLoadImages) {
+				lazyLoadImages();
+				this.initializedFeatures.lazyLoadImages = true
 			}
 
 			mainCss

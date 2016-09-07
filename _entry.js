@@ -27,6 +27,7 @@ module.exports = function (withPreact, exclusions) {
 		'n-ui/viewport': 'window.ftNextUi._viewport',
 		'o-viewport': 'window.ftNextUi._viewport',
 		'o-video': 'window.ftNextUi._video',
+		'n-image': 'window.ftNextUi._image',
 
 		// other components
 		'ftdomdelegate': 'window.ftNextUi._ftdomdelegate',
