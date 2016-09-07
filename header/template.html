@@ -34,7 +34,9 @@
 	{{/unlessEquals}}
 </header>
 
-<header class="o-header o-header--simple o-header--sticky o--if-js" aria-hidden="true" role="presentation" data-o-header--sticky>
-	{{> n-ui/header/partials/header/sticky}}
-	{{> n-ui/header/partials/header/search context="sticky"}}
-</header>
+{{#unless nUi.header.disableSticky}}
+	<header class="o-header o-header--simple o-header--sticky o--if-js" aria-hidden="true" role="presentation" data-o-header--sticky>
+		{{> n-ui/header/partials/header/sticky}}
+		{{> n-ui/header/partials/header/search context="sticky"}}
+	</header>
+{{/unless}}
