@@ -17,11 +17,8 @@ function init(){
     }
   };
 
-
   shouldShowPromo(conceptId).then(shouldShow => {
-
     console.log('SHOULD SHOW PROMO', shouldShow);
-
     if(shouldShow) {
       showPromo();
       btn.addEventListener('click', function(){
@@ -63,10 +60,3 @@ function addToDigest(conceptId, metaConcept, metaEmail) {
 }
 
 module.exports = { init };
-
-//init function - check for signed in status & digest preference status
-//then display css (add the class to the promo)
-//set up button event handlers
-
-//onclick listener - send put requests to two routes using next-myft-client
-//then change button status

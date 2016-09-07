@@ -30,6 +30,17 @@
   }
 }
 
+.n-myft-digest-promo__dismiss-btn {
+  &::before {
+    @include oIconsGetIcon('cross', #666666, 11);
+    content: '';
+    top: 1px;
+  }
+  float: right;
+  background-color: transparent;
+  border-color: transparent;
+}
+
 .n-myft-digest-promo__content {
   $icon-width-s: 90px;
   $icon-width-m: 90px;
@@ -68,7 +79,7 @@
   margin-top: 0px;
 }
 
-.n-myft-digest-promo__cta-btn {
+.n-myft-digest-promo__cta-wrapper {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
@@ -76,23 +87,8 @@
   clear: both;
 }
 
-.o-buttons--standout {
-  width: 100%;
-  text-transform: none;
-}
-
-.n-myft-digest-promo__dismiss-btn {
-  &::before {
-  @include oIconsGetIcon('cross', #666666, 11);
-		content: '';
-    top: 1px;
-  }
-  float: right;
-  background-color: transparent;
-  border-color: transparent;
-}
-
-.n-myft-digest-promo-subscribe {
+.n-myft-digest-promo__cta-btn {
   display: inline-block;
+  text-transform: none;
   min-width: 150px;
 }
