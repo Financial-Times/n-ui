@@ -1,6 +1,10 @@
 <div class="o-grid-container">
-	<div class="n-welcome-message n-welcome-message--static" data-trackable="welcome">
-		{{>n-ui/welcome-message/message}}
+	<div class="{{#if @root.flags.nextFtTour}}n-banner-message{{else}}n-welcome-message{{/if}} n-welcome-message--static" data-trackable="welcome">
+		{{#if @root.flags.nextFtTour}}
+			{{>n-ui/welcome-message/banner}}
+		{{else}}
+			{{>n-ui/welcome-message/message}}
+		{{/if}}
 	</div>
 </div>
 

@@ -4,6 +4,7 @@
 
 	@include nUiCriticalStart('welcomeMessage');
 
+	.n-banner-message,
 	.n-welcome-message {
 		position: relative;
 		padding: 16px 12px;
@@ -37,14 +38,93 @@
 		left: 0;
 	}
 
-	.n-welcome-message--hidden {
+	.n-welcome-banner__wrapper {
+		display: table;
+		width: 100%;
+	}
+
+	.n-welcome-banner__column {
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	.n-welcome-banner__column-fill {
+		width: 100%;
+	}
+
+	.n-welcome-banner__column-actions {
+		text-align: right;
+		white-space: nowrap;
+	}
+
+	.n-welcome-banner__column-m {
 		display: none;
+		@include oGridRespondTo('M') {
+			display: table-cell;
+		}
+	}
+
+	.n-welcome-banner__column-xl {
+		display: none;
+		@include oGridRespondTo('XL') {
+			display: table-cell;
+		}
+	}
+
+	.n-banner-message {
+		background: getColor('teal-1');
+		color: getColor('white');
+	}
+
+	.n-welcome-banner__heading {
+		@include oTypographySans('m');
+		padding: 2px $spacing-unit 0 0;
+		white-space: nowrap;
+	}
+
+	.n-welcome-banner__strapline {
+		@include oTypographySans('m');
+		padding: 0 $spacing-unit 0 0;
+		white-space: nowrap;
+	}
+
+	.n-welcome-banner__button {
+		@include oButtons($size: 'big', $theme: 'standout');
+		text-transform: uppercase;
+		background: getColor('white');
+		color: getColor('teal-1');
+	}
+
+	.n-welcome-banner__link-action {
+		display: inline-block;
+		margin: 0 0 0 $spacing-unit/2;
+		color: getColor('white');
+		border-bottom-color: getColor('white');
+		&:hover {
+			color: getColor('white');
+		}
+	}
+
+	/* START styles only for old welcome message (pre 'banner layout') */
+	.n-welcome-message__heading {
+		@include oTypographySansSize('m');
+		margin: 0 0 $spacing-unit/4;
 	}
 
 	.n-welcome-message__wrapper {
 		display: table;
 		table-layout: fixed;
 		width: 100%;
+	}
+
+	.n-welcome-message__button {
+		@include oButtons($theme:'standout');
+		white-space: nowrap;
+		margin: $spacing-unit/2 $spacing-unit/2 0 0;
+	}
+
+	.n-welcome-message--hidden {
+		display: none;
 	}
 
 	.n-welcome-message__column {
@@ -54,17 +134,10 @@
 		}
 	}
 
-	.n-welcome-message__column--message {}
-
 	.n-welcome-message__column--actions {
 		@include oGridRespondTo('L') {
 			text-align: right;
 		}
-	}
-
-	.n-welcome-message__heading {
-		@include oTypographySansSize('m');
-		margin: 0 0 $spacing-unit/4;
 	}
 
 	.n-welcome-message__intro {
@@ -78,12 +151,6 @@
 		@include oGridRespondTo('L') {
 			margin-bottom: 0;
 		}
-	}
-
-	.n-welcome-message__button {
-		@include oButtons($theme:'standout');
-		margin: $spacing-unit/2 $spacing-unit/2 0 0;
-		white-space: nowrap;
 	}
 
 	.n-welcome-message__close {
@@ -100,5 +167,8 @@
 			opacity: 1;
 		}
 	}
+
+	/* END styles only for old welcome message (pre 'banner' layout) */
+
 	@include nUiCriticalEnd('welcomeMessage');
 }
