@@ -10,6 +10,8 @@ const CLASSES = {
   promoEnabled: 'n-myft-digest-promo--enabled'
 };
 
+console.log(CLASSES);
+
 let btn, conceptId;
 
 function bindListeners() {

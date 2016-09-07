@@ -1,3 +1,5 @@
+$icon-width-s: 90px;
+$icon-width-m: 90px;
 
 .n-myft-digest-promo {
   @include clearfix();
@@ -24,7 +26,7 @@
 }
 
 .n-myft-digest-promo-dismiss-btn__container {
-  @include oGridRespondTo('M') {
+    @include oGridRespondTo('M') {
     @include oGridColspan($span: 7);
     @include oGridCenter;
   }
@@ -42,8 +44,6 @@
 }
 
 .n-myft-digest-promo__content {
-  $icon-width-s: 90px;
-  $icon-width-m: 90px;
 
   position: relative;
   padding-left: $icon-width-s;
@@ -90,5 +90,11 @@
 .n-myft-digest-promo__cta-btn {
   display: inline-block;
   text-transform: none;
-  min-width: 150px;
+  width: 100%;
+  margin-left: 80px;
+
+  @include oGridRespondTo('M') {
+    min-width: 150px;
+    margin-left: 0;
+  }
 }

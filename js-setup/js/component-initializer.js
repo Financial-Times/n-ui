@@ -10,7 +10,7 @@ import welcomeMessage from '../../welcome-message';
 import messagePrompts from '../../message-prompts';
 import footer from '../../footer';
 import myft from '../../myft';
-import digestPromo from '../../my-ft-digest-promo';
+import digestPromo from '../../myft-digest-promo';
 import * as serviceWorker from 'n-service-worker';
 
 export const presets = {
@@ -89,7 +89,9 @@ export class ComponentInitializer {
 				optOut.init();
 			}
 
-			digestPromo.init();
+			if (flags.get('myFtDigestPromo')) {
+				digestPromo.init();
+			}
 
 			if (config.features.myft && !this.initializedFeatures.myftclient) {
 				const clientOpts = [];
