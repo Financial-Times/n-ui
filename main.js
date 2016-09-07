@@ -37,6 +37,8 @@ import viewport from './viewport';
 export const _viewport = viewport;
 import video from 'o-video';
 export const _video = video;
+import * as image from 'n-image';
+export const _image = image;
 
 // Export some third party components we're unlikely to remove in a hurry
 import ftdomdelegate from 'ftdomdelegate';
