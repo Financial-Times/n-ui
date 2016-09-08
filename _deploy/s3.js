@@ -59,6 +59,8 @@ shellpromise('find . -path "./dist/*"')
 					.then(res => {
 						if(!res.ok) {
 							throw new Error(`failed to purge ${path}`)
+						} else {
+							console.log(`successfully purged ${path}`)
 						}
 					})
 					.catch(err => {
