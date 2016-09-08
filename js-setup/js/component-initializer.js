@@ -11,6 +11,7 @@ import messagePrompts from '../../message-prompts';
 import footer from '../../footer';
 import myft from '../../myft';
 import digestPromo from '../../myft-digest-promo';
+import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 
 export const presets = {
@@ -113,18 +114,24 @@ export class ComponentInitializer {
 				this.initializedFeatures.header = true;
 			}
 
-			if (config.features.footer && !this.initializedFeatures.footer) {
-				footer.init(flags);
-				this.initializedFeatures.footer = true
-			}
-
 			if (config.features.date && !this.initializedFeatures.date) {
 				date.init();
 				this.initializedFeatures.date = true
 			}
 
+			if (config.features.lazyLoadImages && !this.initializedFeatures.lazyLoadImages) {
+				lazyLoadImages();
+				this.initializedFeatures.lazyLoadImages = true
+			}
+
 			mainCss
 				.then(() => {
+
+					if (config.features.footer && !this.initializedFeatures.footer) {
+						footer.init(flags);
+						this.initializedFeatures.footer = true
+					}
+
 					if (config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
 						cookieMessage.init(flags);
 						this.initializedFeatures.cookieMessage = true;
@@ -142,6 +149,10 @@ export class ComponentInitializer {
 
 					if (config.features.myft && !this.initializedFeatures.myftUi) {
 						myft.ui.init({
+							anonymous: !(/FTSession=/.test(document.cookie)),
+							flags
+						});
+						myft.uiInstant.init({
 							anonymous: !(/FTSession=/.test(document.cookie)),
 							flags
 						});

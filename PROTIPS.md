@@ -10,7 +10,7 @@ or prefix the block with `@include nUiCriticalStart` and follow with `@include n
 - - -
 For brand images and logos (as opposed to icons) use the `nGetImage()` mixin. It can be used for any image in any image set supported by the origami image service e.g.
 ```
-@include @include nGetImage('logo', 'brand-fastft', null, 60, 17);
+@include nGetImage('logo', 'brand-fastft', null, 60, 17);
 ```
 - - -
 To check all styles that should be critical are being included in the critical path css delete the `<link ... href="/appname/main.css">` tag from your page's html. Alternatively, set your network throttling to _Regular 3G_ or worse

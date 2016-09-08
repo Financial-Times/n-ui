@@ -64,9 +64,17 @@ const oTrackingWrapper = {
 
 			const edition = document.querySelector('[data-next-edition]') ? document.querySelector('[data-next-edition]').getAttribute('data-next-edition') : null;
 			context.edition = edition;
-			const segmentID = String(document.cookie).match(/(?:^|;)\s*segmentID=([^;]+)/) || [];
-			if (segmentID[1]) {
-				context.segmentID = segmentID[1];
+			const segmentId = String(window.location.search).match(/[?&]segmentId=([^?&])/) || [];
+			if (segmentId[1]) {
+				context['marketing_segment_id'] = segmentId[1];
+			}
+			const pageMeta = window.FT && window.FT.pageMeta;
+			if (pageMeta && (pageMeta === Object(pageMeta))) {
+				for (var key in pageMeta) {
+					if (pageMeta.hasOwnProperty(key)) {
+						context[key] = pageMeta[key];
+					}
+				}
 			}
 
 			oTracking.init({

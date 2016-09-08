@@ -1,6 +1,6 @@
 // for the purposes of exposing in a shared n-ui bundle
 // This will mean webpack can find them in this bundle under n-ui/componentName
-module.exports = function (withPreact) {
+module.exports = function (withPreact, exclusions) {
 	const entry = {
 		// n-ui components
 		'n-ui': 'window.ftNextUi',
@@ -28,6 +28,7 @@ module.exports = function (withPreact) {
 		'n-ui/viewport': 'window.ftNextUi._viewport',
 		'o-viewport': 'window.ftNextUi._viewport',
 		'o-video': 'window.ftNextUi._video',
+		'n-image': 'window.ftNextUi._image',
 
 		// other components
 		'ftdomdelegate': 'window.ftNextUi._ftdomdelegate',
@@ -39,5 +40,10 @@ module.exports = function (withPreact) {
 		entry.react = 'window.ftNextUi._React';
 		entry['react-dom'] = 'window.ftNextUi._ReactDom';
 	}
+
+	if (exclusions) {
+		exclusions.forEach(exc => delete entry[exc]);
+	}
+
 	return entry;
 }

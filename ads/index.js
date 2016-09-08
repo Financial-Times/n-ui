@@ -4,13 +4,13 @@ const Ads = window.oAds = require('o-ads');
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
 const Reporter = require('./js/reporter');
-const sendMetrics = require('./js/metrics')
+const sendMetrics = require('./js/metrics');
+const Sticky = require('./js/sticky');
 
 import { perfMark } from '../utils'
 
 let slotCount;
 let slotsRendered = 0;
-let containers;
 let onAdsCompleteCallback;
 const customTimings = {};
 
@@ -53,6 +53,7 @@ function getUserTargetingPromise () {
 
 function initOAds (flags, contextData, userData) {
 	const initObj = oAdsConfig(flags, contextData, userData);
+	const containers = [].slice.call(document.querySelectorAll('.o-ads'));
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
@@ -62,7 +63,6 @@ function initOAds (flags, contextData, userData) {
 	slotCount = containers.length;
 
 	utils.log.info(slotCount + ' ad slots found on page');
-
 	const ads = Ads.init(initObj);
 	containers.forEach(ads.slots.initSlot.bind(ads.slots));
 
@@ -118,6 +118,11 @@ module.exports = {
 						return;
 					}
 
+					if(flags && flags.get('stickyHeaderAd')) {
+						let stickyAd = new Sticky(document.querySelector('.above-header-advert'), document.querySelector('.header-ad-placeholder__top'), document.querySelector('#primary-nav .o-header__top'));
+						stickyAd.init();
+					}
+
 					return Promise.resolve()
 						.then(() => {
 							slotsRendered = 0; // Note - this is a global var fro this module
@@ -128,7 +133,6 @@ module.exports = {
 									getContextualTargetingPromise(appName),
 									flags.get('adTargetingUserApi') ? getUserTargetingPromise() : Promise.resolve({})
 								];
-								containers = [].slice.call(document.querySelectorAll('.o-ads'));
 								return Promise.all(targetingPromises)
 									.then(data => initOAds(flags, data[0], data[1]));
 							}

@@ -7,9 +7,8 @@ function init (flags) {
 
 	new OHeader();
 
-	if (flags.get('stickyNav')) {
-		new OHeader(document.querySelector('[data-o-header--sticky]'));
-	}
+	// initialise separate sticky header
+	new OHeader(document.querySelector('[data-o-header--sticky]'));
 
 	const typeaheadElements = document.querySelectorAll('[data-typeahead]');
 	if (flags.get('typeahead') && typeaheadElements.length) {

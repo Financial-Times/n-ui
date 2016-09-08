@@ -1,3 +1,6 @@
+// tricky recursive function, but it works
+function uuid (a){return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,uuid)}
+
 module.exports = {
 	$: function (sel, ctx) { return (ctx || document).querySelector(sel) },
 	$$: function (sel, ctx) { return [].slice.call((ctx || document).querySelectorAll(sel))},
@@ -29,7 +32,8 @@ module.exports = {
 			timeout = setTimeout(later, wait);
 		};
 	},
-	uuid: require('./js/uuid'),
+	uuid: uuid,
+	ascii: require('./js/to-ascii'),
 	loadScript: (src) => {
 		return new Promise((res, rej) => {
 			const script = window.ftNextLoadScript(src);
@@ -55,7 +59,7 @@ module.exports = {
 		rootEl.dispatchEvent(event);
 	},
 	perfMark: name => {
-		const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+		const performance = window.LUX || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 		if (performance && performance.mark) {
 			performance.mark(name);
 		}

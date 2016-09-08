@@ -1,16 +1,14 @@
-@include nUiCriticalStart('overlay');
-
 $o-overlay-is-silent: not nUiHas('overlay') !default;
 
 @import 'o-overlay/main';
 
 @if nUiApply('overlay') {
+	@include nUiCriticalStart('overlay');
 
 	body .o-overlay,
 	body .o-overlay-shadow {
 		@include nUtilZIndexFor(overlay);
 	}
 
+	@include nUiCriticalEnd('overlay');
 }
-
-@include nUiCriticalEnd('overlay');

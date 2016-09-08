@@ -1,7 +1,8 @@
 @import '../../configure';
 
 @include nUiConfigure(
-	$preset: 'complete'
+	$preset: 'complete',
+	$output-critical: true
 );
 
 @import '../../bootstrap';
