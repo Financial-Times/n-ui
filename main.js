@@ -23,6 +23,8 @@ import footer from './footer';
 export const _footer = footer;
 import myft from './myft';
 export const _myft = myft;
+import myftDigestPromo from './myft-digest-promo';
+export const _myftDigestPromo = myftDigestPromo;
 import utils from './utils';
 export const _utils = utils;
 import notification from './notification';

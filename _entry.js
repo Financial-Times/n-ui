@@ -15,6 +15,7 @@ module.exports = function (withPreact, exclusions) {
 		'n-ui/notification': 'window.ftNextUi._notification',
 		'n-ui/myft': 'window.ftNextUi._myft',
 		'n-ui/utils': 'window.ftNextUi._utils',
+		'n-ui/myft-digest-promo': 'window.ftNextUi._myftDigestPromo',
 		// wrapped origami components
 		'n-ui/date': 'window.ftNextUi._date',
 		'o-date': 'window.ftNextUi._date',

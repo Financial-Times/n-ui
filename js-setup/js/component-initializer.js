@@ -10,6 +10,7 @@ import welcomeMessage from '../../welcome-message';
 import messagePrompts from '../../message-prompts';
 import footer from '../../footer';
 import myft from '../../myft';
+import digestPromo from '../../myft-digest-promo';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 
@@ -100,6 +101,10 @@ export class ComponentInitializer {
 					clientOpts.push({relationship: 'saved', type: 'content'});
 				}
 				myft.client.init(clientOpts);
+
+				if (flags.get('myFtDigestPromo')) {
+					digestPromo.init();
+				}
 
 				this.initializedFeatures.myftClient = true
 			}
