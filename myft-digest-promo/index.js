@@ -10,7 +10,8 @@ const CLASSES = {
 	promoEnabled:'n-myft-digest-promo--enabled'
 };
 
-let btn
+let btn;
+let element;
 let conceptId;
 
 function bindListeners () {
@@ -34,12 +35,12 @@ function shouldShowPromo (conceptId){
 }
 
 function showPromo () {
-	const element = document.querySelector(CLASSES.promoComponent);
+	element = document.querySelector(CLASSES.promoComponent);
 	element.classList.add(CLASSES.promoEnabled);
 }
 
 function hidePromo () {
-	const element = document.querySelector(CLASSES.promoComponent);
+	element = document.querySelector(CLASSES.promoComponent);
 	element.classList.remove(CLASSES.promoEnabled);
 }
 
@@ -73,7 +74,8 @@ return Promise.all([
 }
 
 function init () {
-	if(!superstore.isPersisting()) { return; }
+	element = document.querySelector(CLASSES.promoComponent);
+	if(!superstore.isPersisting() || !element) { return; }
 	btn = document.querySelector(CLASSES.ctaBtn);
 	conceptId = btn.getAttribute('data-concept-id');
 	shouldShowPromo(conceptId).then(shouldShow => {
