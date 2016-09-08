@@ -1,8 +1,7 @@
-//tourTip sizes:      S------------>M/L--------->
-//o-grid breakpoints: default-->S-->M-->L-->XL--> (for reference)
-//Styling wise, ‘L’ is the same as ‘M’ (there are only differences at the data layer)
+@include nUiCriticalStart('tourTip');
 
-@mixin tourS() {
+@if nUiApply('tourTip') {
+
 	.tour-tip {
 		background: getColor('warm-5');
 		color: getColor('cold-1');
@@ -12,15 +11,11 @@
 		overflow: hidden;
 	}
 
-	.tour-tip__img-container {
-	}
-
 	.tour-tip__text {
 		margin: $spacing-unit;
 	}
 
 	.tour-tip__link {
-		// @include nLinksTopic;
 		@include oColorsFor(topic, text);
 		@include oTypographySansDataBold('m', $load-progressively: true);
 		@include oTypographyFallbackFontSize('sansDataBold', 16px);
@@ -37,70 +32,62 @@
 	.tour-tip__cta {
 		margin: $spacing-unit 0 0;
 	}
-}
-
-@mixin tourM() {
-	.tour-tip__main {
-		align-items: center;
-		display: flex;
-		overflow: hidden;
-		padding: $spacing-unit*3;
-	}
-
-	.tour-tip__img-container {
-		float: left;
-		margin: 0 $spacing-unit*3 0 0;
-		order: 1;
-		text-align: center;
-		width: 50%;
-	}
-
-	.tour-tip__text {
-		float: right;
-		margin: 0;
-		order: 2;
-		width: 50%;
-	}
-
-	.tour-tip__link {
-		margin: 0 0 $spacing-unit;
-	}
-
-	.tour-tip__standout {
-		@include oTypographySerifSize('l');
-	}
-
-	.tour-tip__cta {
-		@include oButtonsSize('big');
-		margin-top: $spacing-unit*2;
-	}
-}
-
-@include nUiCriticalStart('tourTip');
-
-@if nUiApply('tourTip') {
-
-	@include tourS;
 
 	@include oGridRespondTo($from: 'M') {
+		// Styling wise, ‘m’ is the same as ‘l’
+		// (there are only differences at the data layer)
 		.tour-tip--m,
 		.tour-tip--l {
-			@include tourM;
+			.tour-tip__main {
+				align-items: center;
+				display: flex;
+				overflow: hidden;
+				padding: $spacing-unit*3;
+			}
+
+			.tour-tip__img-container {
+				float: left;
+				margin: 0 $spacing-unit*3 0 0;
+				order: 1;
+				text-align: center;
+				width: 50%;
+			}
+
+			.tour-tip__text {
+				float: right;
+				margin: 0;
+				order: 2;
+				width: 50%;
+			}
+
+			.tour-tip__link {
+				margin: 0 0 $spacing-unit;
+			}
+
+			.tour-tip__standout {
+				@include oTypographySerifSize('l');
+			}
+
+			.tour-tip__cta {
+				@include oButtonsSize('big');
+				margin-top: $spacing-unit*2;
+			}
+		}
+
+		.tour-tip--reversed {
+			.tour-tip__img-container {
+				float: right;
+				margin: 0 0 0 $spacing-unit*3;
+				order: 2;
+			}
+
+			.tour-tip__text {
+				float: left;
+				order: 1;
+			}
 		}
 	}
 
-	.tour-tip--reversed {
-		.tour-tip__img-container {
-			float: right;
-			margin: 0 0 0 $spacing-unit*3;
-			order: 2;
-		}
-
-		.tour-tip__text {
-			float: left;
-			order: 1;
-		}
-	}
 }
 
 @include nUiCriticalEnd('tourTip');
