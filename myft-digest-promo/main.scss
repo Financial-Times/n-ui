@@ -6,6 +6,7 @@ $icon-width-m: 90px;
 	@include oGridColspan($span: 12);
 
 	display: none;
+	float: none;
 	position: relative;
 	background-color: getColor('warm-5'); //#fdf8f2;
 	border-bottom: 1px solid getColor('warm-3'); //#cec6b9; //warm-3
