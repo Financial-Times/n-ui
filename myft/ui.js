@@ -58,6 +58,11 @@ function myFtFeatureFromEvent (ev) {
 	return ev.type.replace('myft.', '').split('.')[1];
 }
 
+function actionFromEvent (ev) {
+	const eventType = ev.type.split('.');
+	return eventType[eventType.length - 1];
+}
+
 function getUuid (item) {
 	return item.UUID || item.uuid;
 }
@@ -260,7 +265,7 @@ function getPersonaliseUrlPromise (page, relationship, detail) {
 		}));
 }
 
-function updateAfterIO (myftFeature, detail) {
+function updateAfterIO (myftFeature, detail, action) {
 
 	updateUiForFeature({
 		myftFeature,
@@ -272,7 +277,7 @@ function updateAfterIO (myftFeature, detail) {
 
 	switch (myftFeature) {
 		case 'followed':
-			if (flags.get('myFtFollowEmail') && detail.results && !collectionPending) {
+			if (flags.get('myFtFollowEmail') && detail.results && !collectionPending && action !== 'update') {
 
 				if (!followEmail.prefs.subscribedToDigest && !followEmail.prefs.userDismissed && detail.data.name) {
 
@@ -489,9 +494,9 @@ export function init (opts) {
 				document.body.addEventListener(`myft.user.${myftFeature}.${types[myftFeature]}.load`, onLoad);
 			}
 
-			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.add`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail));
-			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.remove`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail));
-			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.update`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail));
+			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.add`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail, actionFromEvent(ev)));
+			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.remove`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail, actionFromEvent(ev)));
+			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.update`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail, actionFromEvent(ev)));
 
 			delegate.on('submit', uiSelectors[myftFeature], getInteractionHandler(myftFeature));
 		});
