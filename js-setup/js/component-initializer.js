@@ -90,10 +90,6 @@ export class ComponentInitializer {
 				optOut.init();
 			}
 
-			if (flags.get('myFtDigestPromo')) {
-				digestPromo.init();
-			}
-
 			if (config.features.myft && !this.initializedFeatures.myftclient) {
 				const clientOpts = [];
 
@@ -105,6 +101,10 @@ export class ComponentInitializer {
 					clientOpts.push({relationship: 'saved', type: 'content'});
 				}
 				myft.client.init(clientOpts);
+
+				if (flags.get('myFtDigestPromo')) {
+					digestPromo.init();
+				}
 
 				this.initializedFeatures.myftClient = true
 			}
