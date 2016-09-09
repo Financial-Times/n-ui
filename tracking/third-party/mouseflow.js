@@ -28,7 +28,7 @@ module.exports = function (flags) {
 			const spoorNumberDec = parseInt(spoorNumberTrim, 16)
 
 			if (spoorNumberDec % 1000 === 0) {
-				enableMouseflow();
+				// enableMouseflow();
 			}
 		}
 	}
