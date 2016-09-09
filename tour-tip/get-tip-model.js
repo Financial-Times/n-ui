@@ -1,10 +1,10 @@
 import tipsConfig from './config';
 
 const getTipModel = (id) => {
-	const tipOriginal = tipsConfig.find(tip => tip.id === id);
-	const tipModel = Object.assign({}, tipOriginal);
-
-	return tipModel;
+	const tipFound = tipsConfig.find(tip => tip.id === id);
+	if (!tipFound) { return; }
+	const tipClone = JSON.parse(JSON.stringify(tipFound));
+	return tipClone;
 }
 
 export default getTipModel;
