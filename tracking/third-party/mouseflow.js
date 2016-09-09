@@ -21,7 +21,7 @@ module.exports = function (flags) {
 		if (isSignUpApp) {
 			enableMouseflow();
 		}
-		if (hasLightSignup && Math.round(Math.random() * 100) === 1) {
+		if (hasLightSignup && Math.random() <= 0.01) {
 			enableMouseflow();
 		}
 		else {
