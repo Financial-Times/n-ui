@@ -18,7 +18,10 @@ module.exports = function (flags) {
 	}
 	else if (flags.get('mouseflow')) {
 
-		if (isSignUpApp || hasLightSignup) {
+		if (isSignUpApp) {
+			enableMouseflow();
+		}
+		if (hasLightSignup && Math.round(Math.random() * 100) === 1) {
 			enableMouseflow();
 		}
 		else {
@@ -27,8 +30,8 @@ module.exports = function (flags) {
 			const spoorNumberTrim = spoorNumber.substring(spoorNumber.length - 12, spoorNumber.length); // Don't overflow the int
 			const spoorNumberDec = parseInt(spoorNumberTrim, 16)
 
-			if (spoorNumberDec % 1000 === 0) {
-				// enableMouseflow();
+			if (spoorNumberDec % 100 === 0) {
+				enableMouseflow();
 			}
 		}
 	}
