@@ -4,7 +4,7 @@
 			<div class="o-header__subnav-wrap-inside" data-o-header-subnav-wrapper>
 				<div class="o-header__subnav-content">
 
-					{{#ifAll @root.subnav.breadcrumb @root.flags.sectionBreadcrumbs}}
+					{{#if @root.subnav.breadcrumb}}
 					<ol class="o-header__subnav-list o-header__subnav-list--breadcrumb" aria-label="Breadcrumb" data-trackable="breadcrumb">
 						{{#each @root.subnav.breadcrumb}}
 						<li class="o-header__subnav-item">
@@ -14,7 +14,7 @@
 						</li>
 						{{/each}}
 					</ol>
-					{{/ifAll}}
+					{{/if}}
 
 					{{#if @root.subnav.subsections}}
 					<ul class="o-header__subnav-list o-header__subnav-list--subsections" aria-label="Subsections" data-trackable="subsections">

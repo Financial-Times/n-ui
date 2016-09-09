@@ -32,7 +32,7 @@ const coreConfig = {
 		library: 'ftNextUi',
 		devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
 	},
-	include: /.*/,
+	include: [/.*/],
 	exclude: [/node_modules/],
 	wrap: {
 		before: '/*\n' + depsTable.toString() + '\n*/'

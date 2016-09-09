@@ -27,7 +27,7 @@ module.exports = function (flags) {
 			const spoorNumberTrim = spoorNumber.substring(spoorNumber.length - 12, spoorNumber.length); // Don't overflow the int
 			const spoorNumberDec = parseInt(spoorNumberTrim, 16)
 
-			if (spoorNumberDec % 100 === 0) { // 1%
+			if (spoorNumberDec % 1000 === 0) {
 				enableMouseflow();
 			}
 		}

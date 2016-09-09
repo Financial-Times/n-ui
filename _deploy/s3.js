@@ -27,12 +27,12 @@ shellpromise('find . -path "./dist/*"')
 			return arr.concat([{
 				version,
 				monitor: i === 0, // only monitor the size of the first copy deployed
-				cacheControl: 'no-cache, must-revalidate, max-age=3600',
+				cacheControl: 'no-cache, must-revalidate, max-age=1200',
 				directory: 'no-cache'
 			}, {
 				version,
 				monitor: false,
-				cacheControl: 'must-revalidate, max-age=3600',
+				cacheControl: 'must-revalidate, max-age=1200',
 				directory: 'cached'
 			}])
 		}, []);
@@ -59,6 +59,8 @@ shellpromise('find . -path "./dist/*"')
 					.then(res => {
 						if(!res.ok) {
 							throw new Error(`failed to purge ${path}`)
+						} else {
+							console.log(`successfully purged ${path}`)
 						}
 					})
 					.catch(err => {

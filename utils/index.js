@@ -33,6 +33,7 @@ module.exports = {
 		};
 	},
 	uuid: uuid,
+	ascii: require('./js/to-ascii'),
 	loadScript: (src) => {
 		return new Promise((res, rej) => {
 			const script = window.ftNextLoadScript(src);

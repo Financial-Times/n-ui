@@ -1,6 +1,6 @@
 /*global fetch*/
 const Awesomplete = require('awesomplete');
-const debounce = require('../../utils').debounce;
+const utils = require('../../utils');
 
 const MIN_LENGTH = 2;
 const DISPLAY_ITEMS = 6;
@@ -19,16 +19,17 @@ class Typeahead {
 			maxItems: DISPLAY_ITEMS,
 			filter: function (text, input) {
 				// eslint-disable-next-line
-				return Awesomplete.FILTER_CONTAINS(latinize(text), latinize(input));
+				return Awesomplete.FILTER_CONTAINS(utils.ascii(text.label), utils.ascii(input));
 			},
 			item: function (text, input) {
 				// eslint-disable-next-line
-				return Awesomplete.ITEM(latinize(text), latinize(input));
-			}
+				return Awesomplete.ITEM(utils.ascii(text.label), utils.ascii(input));
+			},
+			sort: new Function()
 		});
 
 		this.target.addEventListener('submit', this.handleSubmit.bind(this));
-		this.input.addEventListener('keyup', debounce(this.handleType.bind(this), 300));
+		this.input.addEventListener('keyup', utils.debounce(this.handleType.bind(this), 300));
 		this.input.addEventListener('awesomplete-select', this.handleSelect.bind(this));
 		this.input.addEventListener('focus', this.handleFocus.bind(this));
 	}
@@ -105,36 +106,6 @@ function trackSearchEvent (context) {
 	});
 
 	document.body.dispatchEvent(tracking);
-}
-
-// HACK: we should return the normalized `searchLabel` field and provide awesomeplete with that
-// TODO: fix the above, see MH.
-// This is purposefully quite rubbish to be small, fast and target only the most-problematic chars.
-function latinize (text) {
-	const replacements = {
-		'a': ['à', 'á', 'â', 'ä', 'ã', 'å', 'ā'],
-		'ae': ['æ'],
-		'c': ['ç', 'č'],
-		'e': ['è', 'é', 'ê', 'ë', 'ē'],
-		'g': ['ğ'],
-		'i': ['î', 'ï', 'í', 'ì', 'ī'],
-		'l': ['ł'],
-		'n': ['ñ', 'ń'],
-		'o': ['ô', 'ö', 'ò', 'ó', 'ø', 'õ', 'ō'],
-		'oe': ['œ'],
-		's': ['ş', 'š'],
-		'ss': ['ß'],
-		'u': ['û', 'ü', 'ù', 'ú', 'ū'],
-		'z': ['ž']
-	};
-
-	Object.keys(replacements).forEach(letter => {
-		replacements[letter].forEach(diacritic => {
-			text = text.replace(diacritic, letter);
-		});
-	});
-
-	return text;
 }
 
 export default Typeahead;
