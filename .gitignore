@@ -9,7 +9,6 @@
 .editorconfig
 .eslintrc.js
 .scss-lint.yml
-/public
 /public/head-n-ui-core.css
 /public/head.css
 /public/main.css
