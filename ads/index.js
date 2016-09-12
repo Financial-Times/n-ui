@@ -118,22 +118,22 @@ module.exports = {
 					if (/(BlackBerry|BBOS|PlayBook|BB10)/.test(navigator.userAgent)) {
 						return;
 					}
-
-					if(flags && flags.get('stickyHeaderAd')) {
-						let stickyAd = new Sticky(document.querySelector('.above-header-advert'),
+				if(flags && flags.get('stickyHeaderAd')) {
+					let stickyAd = new Sticky(
+						document.querySelector('.above-header-advert'),
 						{ 'sibling' : '.header-ad-placeholder__top',
-							'stickUntil' : '#primary-nav .o-header__top'
+						'stickUntil' : '#primary-nav .o-header__top'
 						});
-						stickyAd.init();
-					}
-			if(flags && flags.get('stickyRightAd')) {
+					stickyAd.init();
+				}
+//				if(flags && flags.get('stickyRightAd')) {
 					let stickyRight = new Sticky(
 						document.querySelector('.sidebar-advert'),
 						{	'topOffset' : '70px',
 							'stickUntil' : 'footer'
 						});
 					stickyRight.init();
-					}
+//				}
 					return Promise.resolve()
 						.then(() => {
 							slotsRendered = 0; // Note - this is a global var fro this module
