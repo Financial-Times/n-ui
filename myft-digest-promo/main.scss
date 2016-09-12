@@ -22,19 +22,15 @@ $icon-width-m: 90px;
 }
 .n-myft-digest-promo__container {
 	@include oGridRespondTo('M') {
-		@include oGridColspan($span: 7.5);
+		@include oGridColspan($span: 8);
 		@include oGridCenter;
 	}
 	margin-top: -25px;
 }
 
-.n-myft-digest-promo__cta-wrapper {
-	padding-left: 2px;
-}
-
 .n-myft-digest-promo-dismiss-btn__container {
 		@include oGridRespondTo('M') {
-		@include oGridColspan($span: 7.5);
+		@include oGridColspan($span: 8);
 		@include oGridCenter;
 	}
 }
@@ -84,7 +80,6 @@ $icon-width-m: 90px;
 
 .n-myft-digest-promo__para {
 	margin-top: 0px;
-	padding-right: 10px;
 }
 
 .n-myft-digest-promo__branding {
@@ -99,9 +94,6 @@ $icon-width-m: 90px;
 	justify-content: flex-end;
 	padding-bottom: 15px;
 	clear: both;
-	@include oGridRespondTo('M') {
-			padding-left: 2px;
-		}
 }
 
 .n-myft-digest-promo__cta-btn {
