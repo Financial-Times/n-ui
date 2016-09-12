@@ -10,6 +10,8 @@ import welcomeMessage from '../../welcome-message';
 import messagePrompts from '../../message-prompts';
 import footer from '../../footer';
 import myft from '../../myft';
+import digestPromo from '../../myft-digest-promo';
+import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 
 export const presets = {
@@ -100,6 +102,10 @@ export class ComponentInitializer {
 				}
 				myft.client.init(clientOpts);
 
+				if (flags.get('myFtDigestPromo')) {
+					digestPromo.init();
+				}
+
 				this.initializedFeatures.myftClient = true
 			}
 
@@ -111,6 +117,11 @@ export class ComponentInitializer {
 			if (config.features.date && !this.initializedFeatures.date) {
 				date.init();
 				this.initializedFeatures.date = true
+			}
+
+			if (config.features.lazyLoadImages && !this.initializedFeatures.lazyLoadImages) {
+				lazyLoadImages();
+				this.initializedFeatures.lazyLoadImages = true
 			}
 
 			mainCss
@@ -138,6 +149,10 @@ export class ComponentInitializer {
 
 					if (config.features.myft && !this.initializedFeatures.myftUi) {
 						myft.ui.init({
+							anonymous: !(/FTSession=/.test(document.cookie)),
+							flags
+						});
+						myft.uiInstant.init({
 							anonymous: !(/FTSession=/.test(document.cookie)),
 							flags
 						});
