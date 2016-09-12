@@ -17,26 +17,30 @@ $icon-width-m: 90px;
 	display: block;
 }
 
+.n-myft-digest-promo__wrapper {
+	position: relative;
+}
 .n-myft-digest-promo__container {
 	@include oGridRespondTo('M') {
-		@include oGridColspan($span: 7);
+		@include oGridColspan($span: 8);
 		@include oGridCenter;
 	}
-	top: -10px;
+	margin-top: -25px;
 }
 
 .n-myft-digest-promo-dismiss-btn__container {
 		@include oGridRespondTo('M') {
-		@include oGridColspan($span: 7);
+		@include oGridColspan($span: 8);
 		@include oGridCenter;
 	}
 }
 
 .n-myft-digest-promo__dismiss-btn {
 	&::before {
-		@include oIconsGetIcon('cross', getColor('grey-tint5'), 11);
+		@include oIconsGetIcon('cross-disk', getColor('grey-tint5'), 20);
 		content: '';
 		top: 1px;
+		padding-top: 15px;
 	}
 	float: right;
 	background-color: transparent;
@@ -85,9 +89,10 @@ $icon-width-m: 90px;
 
 .n-myft-digest-promo__cta-wrapper {
 	display: flex;
+	overflow: auto;
 	align-items: flex-end;
 	justify-content: flex-end;
-	padding-bottom: 12px;
+	padding-bottom: 15px;
 	clear: both;
 }
 
@@ -99,6 +104,8 @@ $icon-width-m: 90px;
 
 @include oGridRespondTo('M') {
 		min-width: 150px;
+		width: 150px;
 		margin-left: 0;
+		float: right;
 	}
 }
