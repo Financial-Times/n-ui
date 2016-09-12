@@ -3,14 +3,13 @@ $icon-width-m: 90px;
 
 .n-myft-digest-promo {
 	@include clearfix();
-	@include oGridColspan($span: 12);
 
 	display: none;
 	float: none;
 	position: relative;
-	background-color: getColor('warm-5'); //#fdf8f2;
-	border-bottom: 1px solid getColor('warm-3'); //#cec6b9; //warm-3
-	border-top: 1px solid getColor('warm-3'); //#cec6b9; //warm-3
+	background-color: getColor('warm-5');
+	border-bottom: 1px solid getColor('warm-3');
+	border-top: 1px solid getColor('warm-3');
 }
 
 .n-myft-digest-promo--enabled {
@@ -22,7 +21,6 @@ $icon-width-m: 90px;
 }
 .n-myft-digest-promo__container {
 	@include oGridRespondTo('M') {
-		@include oGridColspan($span: 8);
 		@include oGridCenter;
 	}
 	margin-top: -25px;
@@ -30,7 +28,6 @@ $icon-width-m: 90px;
 
 .n-myft-digest-promo-dismiss-btn__container {
 		@include oGridRespondTo('M') {
-		@include oGridColspan($span: 8);
 		@include oGridCenter;
 	}
 }
@@ -42,6 +39,7 @@ $icon-width-m: 90px;
 		top: 1px;
 		padding-top: 15px;
 	}
+	@include oGridOffset(4);
 	float: right;
 	background-color: transparent;
 	border-color: transparent;
@@ -65,6 +63,7 @@ $icon-width-m: 90px;
 	}
 
 	@include oGridRespondTo('M') {
+		@include oGridOffset(2);
 		padding-left: $icon-width-m;
 
 		&::before {
@@ -85,6 +84,9 @@ $icon-width-m: 90px;
 .n-myft-digest-promo__branding {
 	font-weight: normal;
 	white-space: nowrap;
+}
+
+.n-myft-digest-promo__content {
 }
 
 .n-myft-digest-promo__cta-wrapper {
