@@ -120,14 +120,20 @@ module.exports = {
 					}
 
 					if(flags && flags.get('stickyHeaderAd')) {
-						let stickyAd = new Sticky(document.querySelector('.above-header-advert'), document.querySelector('.header-ad-placeholder__top'), document.querySelector('#primary-nav .o-header__top'));
+						let stickyAd = new Sticky(document.querySelector('.above-header-advert'),
+						{ 'sibling' : '.header-ad-placeholder__top',
+							'stickUntil' : '#primary-nav .o-header__top'
+						});
 						stickyAd.init();
 					}
-					let stickyRight = new Sticky(document.querySelector('.sidebar-advert'), document.querySelector('.next-up__bottom__wrapper'),
-					document.querySelector('footer'),
-					{'topOffset' : '70px'});
+			if(flags && flags.get('stickyRightAd')) {
+					let stickyRight = new Sticky(
+						document.querySelector('.sidebar-advert'),
+						{	'topOffset' : '70px',
+							'stickUntil' : 'footer'
+						});
 					stickyRight.init();
-
+					}
 					return Promise.resolve()
 						.then(() => {
 							slotsRendered = 0; // Note - this is a global var fro this module
