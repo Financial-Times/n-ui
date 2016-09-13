@@ -14,21 +14,21 @@ export default class TourTip extends Component {
 		};
 
 		const tourLink = (attrs.settings.hasTourPageLink) ?
-			(<p className='tour-tip__link'><a href='/tour' className='tour-tip__link' data-trackable='tour-link'>New hints and tips</a></p>)
+			(<p className="tour-tip__link"><a href="/tour" className="tour-tip__link" data-trackable="tour-link">New hints and tips</a></p>)
 			: null;
 
 		const body = (attrs.data.body) ?
-			(<p className='tour-tip__body'>{attrs.data.body}</p>) : null;
+			(<p className="tour-tip__body">{attrs.data.body}</p>) : null;
 
 		return <aside className={classNames(classes)} data-trackable={`tour-tip-${attrs.id}`}>
-			<div className='tour-tip__main'>
-				<div className='tour-tip__text'>
+			<div className="tour-tip__main">
+				<div className="tour-tip__text">
 					{tourLink}
-					<h2 className='tour-tip__standout'>{attrs.data.title}</h2>
+					<h2 className="tour-tip__standout">{attrs.data.title}</h2>
 					{body}
-					<a href={attrs.data.ctaUrl} className='tour-tip__cta o-buttons o-buttons--standout' data-trackable='cta'>{attrs.data.ctaLabel}</a>
+					<a href={attrs.data.ctaUrl} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{attrs.data.ctaLabel}</a>
 				</div>
-				<div className='tour-tip__img-container'>
+				<div className="tour-tip__img-container">
 					<Image
 						src={buildImageServiceUrl(attrs.data.imageUrl, {format: 'svg'})}
 						alt={attrs.data.imageAlt}
