@@ -48,23 +48,23 @@
 		vertical-align: middle;
 	}
 
-	.n-welcome-banner__column-fill {
+	.n-welcome-banner__column--fill {
 		width: 100%;
 	}
 
-	.n-welcome-banner__column-actions {
+	.n-welcome-banner__column--actions {
 		text-align: right;
 		white-space: nowrap;
 	}
 
-	.n-welcome-banner__column-m {
+	.n-welcome-banner__column--m {
 		display: none;
 		@include oGridRespondTo('M') {
 			display: table-cell;
 		}
 	}
 
-	.n-welcome-banner__column-xl {
+	.n-welcome-banner__column--xl {
 		display: none;
 		@include oGridRespondTo('XL') {
 			display: table-cell;
