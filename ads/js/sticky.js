@@ -5,6 +5,7 @@ function Sticky (el, opts) {
 	this.opts = opts || {};
 	this.sibling = (opts.sibling) ? document.querySelector(opts.sibling) : null;
 	this.stickUntil = (opts.stickUntil) ? document.querySelector(opts.stickUntil) : null;
+	if (typeof el === "undefined") return;
 	this.opts.stickAfter = this.el.getBoundingClientRect().top;
 }
 
