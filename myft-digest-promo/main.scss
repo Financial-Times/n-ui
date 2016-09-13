@@ -43,7 +43,7 @@ $icon-width-m: 90px;
 .n-myft-digest-promo__content {
 	position: relative;
 	padding-left: $icon-width-s;
-	padding-top: 15px;
+	padding-top: $spacing-unit;
 
 	&::before {
 		position: absolute;
@@ -86,7 +86,7 @@ $icon-width-m: 90px;
 	overflow: auto;
 	align-items: flex-end;
 	justify-content: flex-end;
-	padding-bottom: 15px;
+	padding-bottom: $spacing-unit;
 	clear: both;
 }
 
