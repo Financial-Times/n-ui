@@ -57,6 +57,7 @@
     "lintspaces-cli": "^0.3.0",
     "lolex": "^1.5.0",
     "mocha": "^2.1.0",
+    "mockery": "^1.7.0",
     "nightwatch": "^0.9.8",
     "node-fetch": "^1.6.0",
     "node-sass": "^3.8.0",
