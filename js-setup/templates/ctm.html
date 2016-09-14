@@ -1,32 +1,8 @@
 {{#if @root.flags.javascript}}
-(function () {
-	var classes = document.documentElement.className;
-	classes = classes.replace(/\bno-js\b/, 'js');
-
-	// HACK: make the following browsers core as they're unsupported by the polyfill service
-	var isSupported = true;
-
-	{{#if @root.flags.forceCoreExperience}}
-
-	var unsupported = {};
-
-
-	for (var browser in unsupported) {
-		if (unsupported[browser](navigator.userAgent)) {
-			isSupported = false;
-			break;
-		}
-	}
-	{{/if}}
-
-	window.cutsTheMustard = isSupported && (typeof Function.prototype.bind !== 'undefined');
-
-	if (window.cutsTheMustard) {
-		classes = classes.replace(/\bcore\b/, 'enhanced');
-	}
-
-	document.documentElement.className = classes;
-})();
+window.cutsTheMustard = (typeof Function.prototype.bind !== 'undefined');
+if (window.cutsTheMustard) {
+	document.documentElement.className = document.documentElement.className.replace(/\bcore\b/, 'enhanced'); {{!note: once we ditch support we can just use classlist}}
+}
 {{else}}
 window.cutsTheMustard = false;
 {{/if}}
