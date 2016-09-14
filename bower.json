@@ -44,7 +44,7 @@
     "o-visual-effects": "^0.1.0",
     "superstore": "^2.1.0",
     "superstore-sync": "^2.1.0",
-    "o-video": "#next-rb",
+    "o-video": "^2.0.0",
     "n-image": "^4.2.3"
   }
 }

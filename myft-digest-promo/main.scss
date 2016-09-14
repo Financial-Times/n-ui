@@ -3,53 +3,47 @@ $icon-width-m: 90px;
 
 .n-myft-digest-promo {
 	@include clearfix();
-	@include oGridColspan($span: 12);
 
 	display: none;
 	float: none;
 	position: relative;
-	background-color: getColor('warm-5'); //#fdf8f2;
-	border-bottom: 1px solid getColor('warm-3'); //#cec6b9; //warm-3
-	border-top: 1px solid getColor('warm-3'); //#cec6b9; //warm-3
+	background-color: getColor('warm-5');
+	border-bottom: 1px solid getColor('warm-3');
+	border-top: 1px solid getColor('warm-3');
 }
 
 .n-myft-digest-promo--enabled {
 	display: block;
 }
 
-.n-myft-digest-promo__wrapper {
-	position: relative;
-}
 .n-myft-digest-promo__container {
+	position: relative;
 	@include oGridRespondTo('M') {
-		@include oGridColspan($span: 8);
 		@include oGridCenter;
-	}
-	margin-top: -25px;
-}
-
-.n-myft-digest-promo-dismiss-btn__container {
-		@include oGridRespondTo('M') {
-		@include oGridColspan($span: 8);
-		@include oGridCenter;
+		@include oGridOffset(2);
 	}
 }
 
 .n-myft-digest-promo__dismiss-btn {
-	&::before {
-		@include oIconsGetIcon('cross-disk', getColor('grey-tint5'), 20);
-		content: '';
-		top: 1px;
-		padding-top: 15px;
-	}
-	float: right;
+	position: absolute;
+	top: 5px;
+	right: 0;
 	background-color: transparent;
 	border-color: transparent;
+
+	&::before {
+		@include oIconsGetIcon('cross-disk', getColor('grey-tint5'), 20);
+		position: absolute;
+		top: 0;
+		right: 0;
+		content: '';
+	}
 }
 
 .n-myft-digest-promo__content {
 	position: relative;
 	padding-left: $icon-width-s;
+	padding-top: $spacing-unit;
 
 	&::before {
 		position: absolute;
@@ -92,7 +86,7 @@ $icon-width-m: 90px;
 	overflow: auto;
 	align-items: flex-end;
 	justify-content: flex-end;
-	padding-bottom: 15px;
+	padding-bottom: $spacing-unit;
 	clear: both;
 }
 
