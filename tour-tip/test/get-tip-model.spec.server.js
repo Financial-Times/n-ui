@@ -1,8 +1,25 @@
-/*global describe,afterEach,beforeEach,it,expect*/
-
-import {default as getTipModelDefault, getById, getRandomOfSize} from '../get-tip-model';
+import mockery from 'mockery';
+import {expect} from 'chai';
+import configFixture from './config-fixture.json';
 
 describe('tour tip get tip model', () => {
+	let getTipModel;
+	let getById;
+	let getRandomOfSize;
+
+	before(() => {
+		mockery.enable();
+		// Mockery warns about >20 Babel plugins if we don’t silence this 
+		mockery.warnOnUnregistered(false);
+		mockery.registerMock('./config.json', configFixture);
+		getTipModel = require('../get-tip-model');
+		getById = getTipModel.getById;
+		getRandomOfSize = getTipModel.getRandomOfSize;
+	});
+
+	after(() => {
+		mockery.disable();
+	});
 
 	describe('getById', () => {
 
@@ -15,7 +32,7 @@ describe('tour tip get tip model', () => {
 		});
 
 		it('is the default function', () => {
-			expect(getTipModelDefault === getById).to.be.true;
+			expect(getTipModel.default === getById).to.be.true;
 		});
 
 	});
