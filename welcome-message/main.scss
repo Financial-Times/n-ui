@@ -1,15 +1,16 @@
 @import 'o-visual-effects/main';
+@import 'o-icons/main';
 
 @if nUiApply('welcomeMessage') {
 
 	@include nUiMaybeCriticalStart('welcomeMessage');
 
-	.n-banner-message,
+	.n-welcome-banner,
 	.n-welcome-message {
 		position: relative;
 		padding: 16px 12px;
 		// not in o-colors ಠ_ಠ
-		background: #FADBCB;
+		background: #fadbcb;
 		color: getColor('grey-tint4');
 
 		@include oGridRespondTo('L') {
@@ -19,6 +20,13 @@
 		@media print {
 			display: none;
 		}
+	}
+
+	.n-welcome-banner {
+		background: getColor('teal-1');
+		color: getColor('white');
+		padding-left: 16px;
+		padding-right: 16px;
 	}
 
 	.n-welcome-message--static {
@@ -34,8 +42,22 @@
 		@include oEffectsShadowsElevation('mid');
 		position: fixed;
 		right: 0;
-		bottom: 0;
+		bottom: -1px;
 		left: 0;
+	}
+
+	.n-welcome-banner--collapsed {
+		left: auto;
+		right: $spacing-unit/2;
+		bottom: $spacing-unit/2;
+		border-radius: 6px;
+		padding: $spacing-unit/2;
+		.n-welcome-banner__heading {
+			@include oTypographySans('s');
+		}
+		@include oGridRespondTo('L') {
+			bottom: $spacing-unit;
+		}
 	}
 
 	.n-welcome-banner__wrapper {
@@ -57,13 +79,6 @@
 		white-space: nowrap;
 	}
 
-	.n-welcome-banner__column--m {
-		display: none;
-		@include oGridRespondTo('M') {
-			display: table-cell;
-		}
-	}
-
 	.n-welcome-banner__column--xl {
 		display: none;
 		@include oGridRespondTo('XL') {
@@ -71,15 +86,17 @@
 		}
 	}
 
-	.n-banner-message {
-		background: getColor('teal-1');
-		color: getColor('white');
-	}
-
 	.n-welcome-banner__heading {
+		display: none;
+		@at-root .n-welcome-banner--collapsed & {
+			display: table-cell;
+		}
 		@include oTypographySans('m');
 		padding: 2px $spacing-unit 0 0;
 		white-space: nowrap;
+		@include oGridRespondTo('M') {
+			display: table-cell;
+		}
 	}
 
 	.n-welcome-banner__strapline {
@@ -102,6 +119,28 @@
 		border-bottom-color: getColor('white');
 		&:hover {
 			color: getColor('white');
+		}
+	}
+
+	.n-welcome-banner__button--toggler {
+		background: transparent;
+		border: 1px solid getColor('white');
+		border-radius: 3px;
+		margin: 1px 0 1px $spacing-unit;
+		padding: 2px 0 0;
+		width: 34px;
+		height: 34px;
+		float: right;
+		overflow: hidden;
+		&:before {
+			content: '';
+			margin: $spacing-unit/2 0;
+		}
+		&[aria-expanded="true"]:before {
+			@include oIconsGetIcon('arrow-down', getColor('white'), 14);
+		}
+		&[aria-expanded="false"]:before {
+			@include oIconsGetIcon('arrow-up', getColor('white'), 14);
 		}
 	}
 
