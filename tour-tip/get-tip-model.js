@@ -1,4 +1,4 @@
-import tipsConfig from './config';
+import tipsConfig from './config.json';
 
 function deepCopy(obj) {
 	return JSON.parse(JSON.stringify(obj));
