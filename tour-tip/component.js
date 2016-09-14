@@ -5,7 +5,7 @@ import { buildImageServiceUrl } from '@financial-times/n-image/src/helpers';
 
 export default class TourTip extends Component {
 	render () {
-		let attrs = Object.assign({}, this.props.data.data);
+		let attrs = Object.assign({}, this.props.data.content);
 
 		const classes = {
 			'tour-tip': true,
@@ -17,21 +17,21 @@ export default class TourTip extends Component {
 			(<p className="tour-tip__link"><a href="/tour" className="tour-tip__link" data-trackable="tour-link">New hints and tips</a></p>)
 			: null;
 
-		const body = (attrs.data.body) ?
-			(<p className="tour-tip__body">{attrs.data.body}</p>) : null;
+		const body = (attrs.content.body) ?
+			(<p className="tour-tip__body">{attrs.content.body}</p>) : null;
 
 		return <aside className={classNames(classes)} data-trackable={`tour-tip-${attrs.id}`}>
 			<div className="tour-tip__main">
 				<div className="tour-tip__text">
 					{tourLink}
-					<h2 className="tour-tip__standout">{attrs.data.title}</h2>
+					<h2 className="tour-tip__standout">{attrs.content.title}</h2>
 					{body}
-					<a href={attrs.data.ctaUrl} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{attrs.data.ctaLabel}</a>
+					<a href={attrs.content.ctaUrl} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{attrs.content.ctaLabel}</a>
 				</div>
 				<div className="tour-tip__img-container">
 					<Image
-						src={buildImageServiceUrl(attrs.data.imageUrl, {format: 'svg'})}
-						alt={attrs.data.imageAlt}
+						src={buildImageServiceUrl(attrs.content.imageUrl, {format: 'svg'})}
+						alt={attrs.content.imageAlt}
 					/>
 				</div>
 			</div>

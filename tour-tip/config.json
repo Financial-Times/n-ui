@@ -7,7 +7,7 @@
       "isReversed": false,
       "size": "s"
     },
-    "data": {
+    "content": {
       "title": "Track topics most important to you in myFT.",
       "imageAlt": "Illustation of the \"Companies\" page, showing an \"Added\" button next to it",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/topics-1.svg",
@@ -23,7 +23,7 @@
       "isReversed": false,
       "size": "m"
     },
-    "data": {
+    "content": {
       "title": "Track topics most important to you in myFT.",
       "imageAlt": "Illustation of the \"Companies\" page, showing an \"Added\" button next to it",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/topics-1.svg",
@@ -39,7 +39,7 @@
       "isReversed": false,
       "size": "l"
     },
-    "data": {
+    "content": {
       "title": "Add topics to myFT",
       "body": "Track topics important to you in myFT and get Instant, Daily or Weekly email digests on them.",
       "imageAlt": "Illustation of the \"Companies\" page, showing an \"Added\" button next to it",
