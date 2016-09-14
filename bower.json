@@ -24,7 +24,7 @@
     "n-message-prompts": "^3.0.0",
     "n-messages": "^2.0.0",
     "n-notification": "^4.0.0",
-    "n-service-worker": "^1.0.4",
+    "n-service-worker": "^1.4.2",
     "next-myft-client": "^6.4.2",
     "o-ads": "^5.0.0",
     "o-buttons": "^4.0.1",
