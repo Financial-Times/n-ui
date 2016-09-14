@@ -6,7 +6,9 @@
 		<title>{{#title}}{{{this}}} &mdash; {{/title}}FT.com</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="theme-color" content="#333333">
-
+		{{#unless @root.flags.serviceWorker}}
+		{{>n-service-worker/unregister}}
+		{{/unless}}
 		{{#if setBase}}
 		<base target="_parent" href="{{setBase}}">
 		{{/if}}
