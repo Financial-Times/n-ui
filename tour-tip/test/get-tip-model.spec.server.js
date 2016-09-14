@@ -9,7 +9,7 @@ describe('tour tip get tip model', () => {
 
 	before(() => {
 		mockery.enable();
-		// Mockery warns about >20 Babel plugins if we don’t silence this 
+		// Mockery warns about >20 Babel plugins if we don’t silence this
 		mockery.warnOnUnregistered(false);
 		mockery.registerMock('./config.json', configFixture);
 		getTipModel = require('../get-tip-model');
