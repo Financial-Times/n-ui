@@ -9,8 +9,7 @@ const componentsToTest = [
 	'ads',
 	'myft',
 	'tracking',
-	'opt-out',
-	'tour-tip'
+	'opt-out'
 ];
 
 module.exports = function (karma) {
