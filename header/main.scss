@@ -1,6 +1,5 @@
 @include nUiCriticalStart('header');
 
-$o-header-is-silent: not nUiHas('header') !default;
 $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 
 @import 'scss/marketing-promo';
@@ -8,6 +7,7 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 
 @if nUiApply('header') {
 
+	@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu', 'simple'));
 	// force display of search row
 	// <https://github.com/Financial-Times/o-header/blob/2ebf2cbe6b7508a03e0989ff57f1029e12c0506c/src/scss/rows/_search.scss#L13-L15>
 	.core [data-o-header-search] {
@@ -21,20 +21,31 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 		margin: $_o-header-drawer-padding-x;
 	}
 
-	// fix up z-indexes
-	.o-header__drawer {
-		@include nUtilZIndexFor('drawer');
-	}
-
 	.o-header__mega {
 		@include nUtilZIndexFor('meganav');
 	}
 
+	.o-header__drawer,
 	.o-header--sticky {
-		@include nUtilZIndexFor('sticky-header');
+		display: none;
 	}
 }
 
 @include nUiCriticalEnd('header');
+
+// fix up z-indexes
+.o-header__drawer {
+	@include nUtilZIndexFor('drawer');
+}
+.o-header--sticky {
+	@include nUtilZIndexFor('sticky-header');
+}
+
+@include oHeader(('drawer', 'sticky'));
+
+.o-header__drawer,
+.o-header--sticky {
+	display: block;
+}
 
 @import 'scss/typeahead';
