@@ -1,10 +1,10 @@
 import tipsConfig from './config.json';
 
-function deepCopy(obj) {
+function deepCopy (obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
-export function getById(id) {
+export function getById (id) {
 	const tipFound = tipsConfig.find(tip => tip.id === id);
 	if (tipFound) {
 		return deepCopy(tipFound);

@@ -30,7 +30,7 @@ function getLayoutName () {
 	let layout = 'default';
 	const abStateEl = document.querySelector('[data-ab-state]');
 	if (window.location.search.indexOf('adsLayout') === 1) {
-		var regex = new RegExp("(adsLayout=([^&#]*)|&|#|$)");
+		const regex = new RegExp('(adsLayout=([^&#]*)|&|#|$)');
 		layout = regex.exec(window.location.search.substring(1))[2];
 	}
 	else if (document.querySelector('[data-ads-layout]')) {

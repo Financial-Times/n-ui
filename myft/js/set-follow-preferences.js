@@ -23,11 +23,6 @@ module.exports = (userId, method, userDismissed) => {
 	let emailPrefPromise = Promise.resolve();
 	let dismissPrefPromise = Promise.resolve();
 
-	//FIXME: remove after diagnosing bug in core experience
-	console.log('userId:', userId);
-	console.log('method:', method);
-	console.log('userDismissed:', userDismissed);
-
 	if (method === 'put') {
 		emailPrefPromise = addPref('email-digest', userId, relData);
 	}
