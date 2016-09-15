@@ -42,12 +42,12 @@ app.listen(5005)
 						cacheControl: 'no-cache, must-revalidate',
 					})
 						.catch(err => {
-							console.error(err)
+							console.error(err) //eslint-disable-line
 							process.exit(2);
 						});
 				})
 				.then(() => {
-					console.log('deployed test static site to s3');
+					console.log('deployed test static site to s3'); //eslint-disable-line
 					process.exit(0);
 				})
 		}

@@ -68,7 +68,7 @@ function initialiseState () {
 	// If its denied, it's a permanent block until the
 	// user changes the permission
 	if (Notification.permission === 'denied') {
-		console.warn('Notification permissions denied');
+		console.warn('Notification permissions denied'); //eslint-disable-line
 		return;
 	}
 
@@ -108,7 +108,7 @@ function initialiseState () {
 				isPushEnabled = true;
 			})
 			.catch(function (err) {
-				console.warn('Error during getSubscription()', err);
+				console.warn('Error during getSubscription()', err); //eslint-disable-line
 			});
 	});
 }
@@ -181,7 +181,7 @@ function unsubscribe () {
 					nButtons.toggleState(pushButton);
 				});
 			}).catch(function (e) {
-				console.error('Error thrown while unsubscribing from push messaging.', e);
+				console.error('Error thrown while unsubscribing from push messaging.', e); //eslint-disable-line
 			});
 	});
 }

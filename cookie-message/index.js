@@ -10,7 +10,6 @@ export default class CookieMessage {
 		return CookieMessage
 			.ensureMessageIsRequired(flags)
 			.then(CookieMessage.setupView)
-			.catch(CookieMessage.handleError);
 	}
 
 	static ensureMessageIsRequired (flags) {
@@ -21,14 +20,6 @@ export default class CookieMessage {
 			return Promise.reject(EXIT_PAGE);
 		}
 		return Promise.resolve();
-	}
-
-	static handleError (error) {
-		if(error.message !== FLAG_NOT_ON && error.message !== EXIT_PAGE) {
-			error.stack
-				? console.error(error.stack)
-				: console.error(error);
-		}
 	}
 
 	static setupView () {

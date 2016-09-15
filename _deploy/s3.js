@@ -60,18 +60,21 @@ shellpromise('find . -path "./dist/*"')
 						if(!res.ok) {
 							throw new Error(`failed to purge ${path}`)
 						} else {
-							console.log(`successfully purged ${path}`)
+							console.log(`successfully purged ${path}`) //eslint-disable-line
 						}
 					})
 					.catch(err => {
-						console.error(err);
+						console.error(err); //eslint-disable-line
 					})
 				}))
 				.catch(err => {
-					console.error(err)
+					console.error(err) //eslint-disable-line
 					process.exit(2);
 				});
 
 		}));
 	})
-	.catch(console.log.bind(console))
+	.catch(err => {
+		console.log(err) //eslint-disable-line
+		throw err;
+	})

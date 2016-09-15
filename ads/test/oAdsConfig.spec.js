@@ -55,7 +55,7 @@ describe('Config', () => {
 
 	it('Should set krux configuration when flag is set to false', () => {
 		const flags = { get: () => true };
-		document.cookie = "FT_U=EID=1234_PID=abc";
+		document.cookie = 'FT_U=EID=1234_PID=abc';
 		const config = oAdsConfig(flags);
 		const userExpectation = {
 			eid: '1234'
@@ -80,7 +80,7 @@ describe('Config', () => {
 		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
 		const flags = { get: () => true };
 		const config = oAdsConfig(flags);
-		document.cookie = "FT_U=EID=1234_PID=abc";
+		document.cookie = 'FT_U=EID=1234_PID=abc';
 		const expectation = 'pt=art;eid=1234;nlayout=custom'.split(';');
 
 

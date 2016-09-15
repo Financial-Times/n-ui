@@ -28,7 +28,7 @@ function _overlayFormHandler (ev, overlay) {
 	}
 
 	_setFollowPreferences(_myFtClient.userId, method, _overlayForm['follow-email-dismissed'].checked)
-		.catch(err => console.log(err))
+		.catch(() => null)
 		.then(() => overlay.close());
 }
 

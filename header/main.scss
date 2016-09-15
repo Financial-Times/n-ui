@@ -33,6 +33,8 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 
 @include nUiCriticalEnd('header');
 
+@include oHeader(('drawer', 'sticky'));
+
 // fix up z-indexes
 .o-header__drawer {
 	@include nUtilZIndexFor('drawer');
@@ -40,8 +42,6 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 .o-header--sticky {
 	@include nUtilZIndexFor('sticky-header');
 }
-
-@include oHeader(('drawer', 'sticky'));
 
 .o-header__drawer,
 .o-header--sticky {

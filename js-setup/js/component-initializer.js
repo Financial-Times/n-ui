@@ -49,7 +49,7 @@ export class ComponentInitializer {
 
 	configure (options = {}) {
 		// NOTE: just store configuration for now, need to wait for polyfill to load before assigning
-		console.log('n-ui.configure is deprecated - pass in your config object as a first argument to bootstrap instead')
+		// n-ui.configure is deprecated - pass in your config object as a first argument to bootstrap instead
 		this.configuration = options;
 	}
 
