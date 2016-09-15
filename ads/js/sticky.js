@@ -24,6 +24,11 @@ Sticky.prototype.onScroll = function () {
 	else if (window.pageYOffset < this.opts.stickAfter) {
 		this.el.style.position = 'static';
 	}
+<<<<<<< HEAD
+=======
+	this.stickyUntilPoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
+
+>>>>>>> master
 };
 
 Sticky.prototype.bindScroll = function () {
@@ -42,6 +47,10 @@ Sticky.prototype.init = function () {
 	if(!this.el || window.pageYOffset > 0) {
 		return;
 	};
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 	this.stickyUntilPoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
 	this.el.style.zIndex = '23';
 	this.bindScroll();

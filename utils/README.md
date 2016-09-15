@@ -26,6 +26,12 @@ Hide an element for screens.
 ##### `.n-util-hide@print`
 Hide an element for print.
 
+##### `.n-util-hide-enhanced`
+Hide an element in the enhanced experience
+
+##### `.n-util-hide-core`
+Hide an element in the core experience
+
 ##### `.n-util-visually-hidden`
 Hide an element but ensure it is still accessible by assistive devices.
 

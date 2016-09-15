@@ -1,63 +1,24 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
-const metadata = require('ft-metadata');
 const utils = require('../js/utils');
 const oAdsConfig = require('../js/oAdsConfig');
 const adsSandbox = require('../js/sandbox');
+const fakeArticleUuid = '123456';
 
 let sandbox;
+let targeting;
 
 describe('Config', () => {
 
 	beforeEach(() => {
 		sandbox = sinon.sandbox.create();
 		// global stubs
-		sandbox.stub(utils, 'getAppName', () => {
-			return 'testAppName';
-		});
-		sandbox.stub(utils, 'getLayoutName', () => {
-			return 'custom';
-		});
-		sandbox.stub(utils, 'getMetaData', (param) => {
-			switch (param) {
-				case 'dfp_site':
-						return 'testDfpSite';
-					break;
-				case 'dfp_zone':
-						return 'testDfpZone';
-					break;
-			}
-		});
-		sandbox.stub(metadata, 'user', (param) => {
-			if(param){
-				return {
-					'02': '02',
-					'05': null,
-					'06': '06',
-					'07': '07',
-					'19': '19',
-					'40': '40',
-					'41': '41',
-					'42': '42',
-					'46': '46',
-					'51': null,
-					'slv': 'lv2',
-					'98': '98'
-				};
-			} else {
-				return {
-					gender: '02',
-					job_responsibility: '06',
-					job_position: '07',
-					company_size: '19',
-					DB_company_size: '40',
-					DB_industry: '41',
-					DB_company_turnover: '42',
-					cameo_investor_code: '46',
-					'slv': 'lv2',
-					'98': '98'
-				};
-			}
-		});
+
+		sandbox.stub(utils, 'getLayoutName', () => { return 'custom'; });
+		sandbox.stub(utils, 'getReferrer', () => null );
+
+		targeting = sandbox.stub(document, 'querySelector');
+		targeting.withArgs('[data-concept-id]').returns({getAttribute: () => fakeArticleUuid});
+		targeting.withArgs('[data-content-id]').returns({getAttribute: () => fakeArticleUuid});
 	});
 
 	afterEach(() => {
@@ -66,36 +27,40 @@ describe('Config', () => {
 
 
 	it('Should set gpt configuration value according to app name', () => {
+		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
 		const flags = { get: () => true };
-		const config = oAdsConfig(flags, {});
-		expect(config.gpt.unitName).to.equal('5887/ft.com/testDfpSite/testDfpZone');
+		const config = oAdsConfig(flags);
+		const gptAttributes = {
+														network: '5887',
+														site: 'ft.com',
+														zone: 'unclassified'
+												}
+
+		expect(config.gpt).to.deep.equal(gptAttributes);
 	});
 
 	it('Should set gpt configuration value according to app name and sandbox', () => {
 		const flags = { get: () => true };
-		sandbox.stub(adsSandbox, 'isActive', () => {
-			return true;
-		});
-		const config = oAdsConfig(flags, {});
-		expect(config.gpt.unitName).to.equal('5887/sandbox.next.ft/testDfpSite/testDfpZone');
+		sandbox.stub(adsSandbox, 'isActive', () => { return true; });
+		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
+		const config = oAdsConfig(flags);
+		const gptAttributes = {
+														network: '5887',
+														site: 'sandbox.next.ft',
+														zone: 'unclassified'
+												}
+		expect(config.gpt).to.deep.equal(gptAttributes);
 	});
 
 
 	it('Should set krux configuration when flag is set to false', () => {
 		const flags = { get: () => true };
-		const config = oAdsConfig(flags, {});
+		document.cookie = "FT_U=EID=1234_PID=abc";
+		const config = oAdsConfig(flags);
 		const userExpectation = {
-			gender: '02',
-			job_responsibility: '06',
-			job_position: '07',
-			company_size: '19',
-			DB_company_size: '40',
-			DB_industry: '41',
-			DB_company_turnover: '42',
-			cameo_investor_code: '46',
-			'slv': 'lv2',
-			'98': '98'
+			eid: '1234'
 		};
+		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
 
 		expect(config.krux.id).to.be.ok;
 		expect(config.krux.attributes).to.be.ok;
@@ -105,66 +70,77 @@ describe('Config', () => {
 
 	it('Should not set krux configuration when flag is set to false', () => {
 		const flags = { get: (param) => param === 'krux' ? false : true };
-		const config = oAdsConfig(flags, {});
+		const config = oAdsConfig(flags);
+		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
+
 		expect(config.krux).to.be.false;
 	});
 
 	it('Should set dfp_targeting config', () => {
+		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
 		const flags = { get: () => true };
-		const config = oAdsConfig(flags, {});
-		const expectation = 'pt=unk;02=02;05=null;06=06;07=07;19=19;40=40;41=41;42=42;46=46;51=null;slv=lv2;98=98;nlayout=custom'.split(';');
+		const config = oAdsConfig(flags);
+		document.cookie = "FT_U=EID=1234_PID=abc";
+		const expectation = 'pt=art;eid=1234;nlayout=custom'.split(';');
+
+
 		expectation.forEach((value) => expect(config.dfp_targeting).to.contain(value));
 	});
 
-	it('Should use Site and Zone from targeting data if it exists', () => {
+	it('Should pass the correct url to o-ads fetch', () => {
+		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
 		const flags = { get: () => true };
-		const targetingData = { dfp: { adUnit: ['dfpSiteFromData', 'dfpZoneFromData'] } };
-		const config = oAdsConfig(flags, targetingData);
-		expect(config.gpt.unitName).to.equal('5887/ft.com/dfpSiteFromData/dfpZoneFromData');
-	});
+		const config = oAdsConfig(flags);
+		const userUrl = 'https://ads-api.ft.com/v1/user'
+		const pageUrl = 'https://ads-api.ft.com/v1/content/'
 
 
-	it('Should add targeting key values from API if it exists', () => {
-		const flags = { get: () => true };
-		const context = { dfp: { targeting : [ {key: 'context-a', value: 1} , { key: 'context-b', value: 2 } ] } };
-		const user = { dfp: { targeting : [ {key: 'user-a', value: 1} , { key: 'user-b', value: 2 } ] } };
-		const empty = { dfp: { targeting : [] } };
-		const withTargeting = oAdsConfig(flags, context, user);
-		const withoutTargeting = oAdsConfig(flags, empty);
-		const withoutAnything = oAdsConfig(flags, null);
-		expect(withTargeting.dfp_targeting).to.contain('context-a=1;context-b=2;user-a=1;user-b=2');
-		expect(withoutTargeting.dfp_targeting).not.to.contain('context-a=1');
-		expect(withoutTargeting.dfp_targeting).not.to.contain('user-a=1');
-		expect(withoutAnything.dfp_targeting).not.to.contain('context-a=1');
-		expect(withoutAnything.dfp_targeting).not.to.contain('user-a=1');
-	});
 
-	it('Should add krux page attributes from API if it exists', () => {
-		const flags = { get: () => true };
-		const withAttrs = oAdsConfig(flags, { krux: { attributes : [ {key: 'a', value: 1} , { key: 'b', value: 2 } ] } });
-		const withoutAttrs = oAdsConfig(flags, { krux: { attributes : [] } });
-		const withoutAnything = oAdsConfig(flags, null);
-		expect(withAttrs.krux.attributes.page.unitName).to.equal('5887/ft.com/testDfpSite/testDfpZone');
-		expect(withAttrs.krux.attributes.page.a).to.equal(1);
-		expect(withAttrs.krux.attributes.page.b).to.equal(2);
-		expect(withoutAttrs.krux.attributes.page.unitName).to.equal('5887/ft.com/testDfpSite/testDfpZone');
-		expect(withoutAttrs.krux.attributes.page.a).to.be.undefined;
-		expect(withoutAttrs.krux.attributes.page.b).to.be.undefined;
-		expect(withoutAnything.krux.attributes.page.unitName).to.equal('5887/ft.com/testDfpSite/testDfpZone');
-		expect(withoutAnything.krux.attributes.page.a).to.be.undefined;
-		expect(withoutAnything.krux.attributes.page.b).to.be.undefined;
-	});
+		expect(config.targetingApi.user).to.equal(userUrl);
+		expect(config.targetingApi.page).to.equal(pageUrl + fakeArticleUuid);
+	})
 
-	it('Should add krux user attributes from API if it exists', () => {
+	it('Should access concept url to send to o-ads fetch', () => {
+		sandbox.stub(utils, 'getAppName', () => { return 'stream-page'; });
 		const flags = { get: () => true };
-		const withAttrs = oAdsConfig(flags, null, { krux: { attributes : [ {key: 'a', value: 1} , { key: 'b', value: 2 } ] } });
-		const withoutAttrs = oAdsConfig(flags, null, { krux: { attributes : [] } });
-		const withoutAnything = oAdsConfig(flags, null);
-		expect(withAttrs.krux.attributes.user.a).to.equal(1);
-		expect(withAttrs.krux.attributes.user.b).to.equal(2);
-		expect(withoutAttrs.krux.attributes.user.a).to.be.undefined;
-		expect(withoutAttrs.krux.attributes.user.b).to.be.undefined;
-		expect(withoutAnything.krux.attributes.user.a).to.be.undefined;
-		expect(withoutAnything.krux.attributes.user.b).to.be.undefined;
-	});
+		const config = oAdsConfig(flags);
+		const pageUrl = 'https://ads-api.ft.com/v1/concept/'
+
+
+		expect(config.targetingApi.page).to.equal(pageUrl + fakeArticleUuid);
+	})
+
+	// it('Should not make a request to the ads API for user data if flag off', () => {
+	// 	const flags = { get: (name) => name !== 'adTargetingUserApi'};
+	//
+	// 	sandbox.stub(utils, 'getAppName', () => 'stream-page' );
+	// 	fetchMock
+	// 		.mock('https://ads-api.ft.com/v1/user', 200)
+	// 		.catch(Promise.reject());
+	//
+	// 	return main.init(flags).then(() => {
+	// 		expect(fetchMock.called('https://ads-api.ft.com/v1/user')).to.be.false;
+	// 		fetchMock.restore();
+	// 	});
+	// });
+
+
+	// it('Should only pass referrer to API if it exists', () => {
+	// 	const flags = { get: () => true };
+	// 	const fakeDfpSiteAndZone = 'test-unclassified';
+	//
+	// 	sandbox.stub(utils, 'getAppName', () => 'article' );
+	// 	sandbox.stub(utils, 'getReferrer', () => null );
+	// 	sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
+	// 	fetchMock
+	// 		.mock('^https://ads-api.ft.com/v1/content', Promise.reject())
+	// 		.catch(Promise.reject());
+	//
+	// 	return main.init(flags).then(() => {
+	// 		expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/content')[0]).to.equal('https://ads-api.ft.com/v1/content/' + fakeArticleUuid);
+	// 		expect(ads.config().gpt.unitName).to.equal('5887/ft.com/' + fakeDfpSiteAndZone + '/' + fakeDfpSiteAndZone);
+	// 		fetchMock.restore();
+	// 	});
+	// });
+
 });

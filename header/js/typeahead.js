@@ -1,6 +1,6 @@
 /*global fetch*/
 const Awesomplete = require('awesomplete');
-const debounce = require('../../utils').debounce;
+const utils = require('../../utils');
 
 const MIN_LENGTH = 2;
 const DISPLAY_ITEMS = 6;
@@ -16,11 +16,20 @@ class Typeahead {
 		this.searchTerm = '';
 
 		this.awesomplete = new Awesomplete(this.input, {
-			maxItems: DISPLAY_ITEMS
+			maxItems: DISPLAY_ITEMS,
+			filter: function (text, input) {
+				// eslint-disable-next-line
+				return Awesomplete.FILTER_CONTAINS(utils.ascii(text.label), utils.ascii(input));
+			},
+			item: function (text, input) {
+				// eslint-disable-next-line
+				return Awesomplete.ITEM(utils.ascii(text.label), utils.ascii(input));
+			},
+			sort: new Function()
 		});
 
 		this.target.addEventListener('submit', this.handleSubmit.bind(this));
-		this.input.addEventListener('keyup', debounce(this.handleType.bind(this), 300));
+		this.input.addEventListener('keyup', utils.debounce(this.handleType.bind(this), 300));
 		this.input.addEventListener('awesomplete-select', this.handleSelect.bind(this));
 		this.input.addEventListener('focus', this.handleFocus.bind(this));
 	}
@@ -84,7 +93,7 @@ function getParentElDataTrackableValue (el) {
 }
 
 function makeAwesompleteReadable (suggestion) {
-	return { label: suggestion.name, value: suggestion.url || `/stream/${suggestion.taxonomy}Id/${suggestion.id}` };
+	return [ suggestion.name, suggestion.url || `/stream/${suggestion.taxonomy}Id/${suggestion.id}` ];
 }
 
 function trackSearchEvent (context) {
