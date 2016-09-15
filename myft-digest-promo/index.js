@@ -10,6 +10,10 @@ const CLASSES = {
 	promoEnabled:'n-myft-digest-promo--enabled'
 };
 
+const pageBlacklist = [
+	'/us-election-2016'
+];
+
 let btn;
 let element;
 let conceptId;
@@ -26,6 +30,11 @@ function bindListeners () {
 }
 
 function shouldShowPromo (conceptId){
+
+	if(pageBlacklist.includes(window.location.pathname)) {
+		return Promise.resolve(false);
+	}
+
 	return Promise.all([
 		myFtClient.get('followed', 'concept', conceptId),
 		myFtClient.get('preferred', 'preference', 'email-digest')
