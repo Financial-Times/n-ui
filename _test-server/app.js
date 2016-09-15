@@ -43,7 +43,7 @@ app.listen(5005)
 				.then(() => app.close())
 				.then(() => {
 					return deployStatic({
-						files: ['test-page.html', 'public/main.css', 'public/main.js', 'public/main.css.map', 'public/main.js.map'],
+						files: ['test-page.html', 'public/main.css', 'public/main-without-n-ui.js', 'public/main.css.map', 'public/main.js.map'],
 						destination: `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/`,
 						bucket: 'ft-next-n-ui-prod',
 						cacheControl: 'no-cache, must-revalidate',
