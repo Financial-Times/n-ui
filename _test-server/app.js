@@ -18,6 +18,13 @@ const app = module.exports = express({
 app.get('/', (req, res) => {
 	res.render('default', {
 		layout: 'wrapper'
+	}, (err, text) => {
+		// hack - the app will try to bring in a built n-ui from the network
+		// so we get rid of it
+		res.send(text.replace(
+			/ftNextLoadScript\('undefined.*/,
+			''
+		));
 	})
 });
 
