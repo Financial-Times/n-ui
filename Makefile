@@ -2,13 +2,8 @@ include n.Makefile
 
 .PHONY: dist
 
-test-unit-client:
+test-unit:
 	karma start karma.conf.js
-
-test-unit-server:
-	mocha ./**/*.spec.server.js --recursive --compilers js:babel-core/register
-
-test-unit: test-unit-client test-unit-server
 
 test-unit-dev:
 	karma start karma.conf.js --single-run false --auto-watch true
