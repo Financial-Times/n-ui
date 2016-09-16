@@ -59,11 +59,19 @@ module.exports = function (flags) {
 		return url;
 	};
 
+	function getZone() {
+		let zone = [ utils.getMetaData('dfp_site'), utils.getMetaData('dfp_zone') ].filter( a => a );
+		if(!zone.length) {
+			zone = ['unclassified'];
+		}
+		return zone.join('/');
+	}
+
 	return {
 		gpt: {
 			network: '5887',
 			site: sandbox.isActive() ? 'sandbox.next.ft' :'ft.com',
-			zone: 'unclassified'
+			zone: getZone()
 		},
 		formats: {
 			PaidPost: {

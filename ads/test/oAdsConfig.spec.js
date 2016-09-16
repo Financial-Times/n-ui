@@ -108,7 +108,24 @@ describe('Config', () => {
 
 
 		expect(config.targetingApi.page).to.equal(pageUrl + fakeArticleUuid);
-	})
+	});
+
+	it('Should use zone from metadata if present', () => {
+		sandbox.stub(utils, 'getMetaData', (param) => {
+			switch (param) {
+				case 'dfp_site':
+						return 'testDfpSite';
+					break;
+				case 'dfp_zone':
+						return 'testDfpZone';
+					break;
+			}
+		});
+
+		const flags = { get: () => true };
+		const config = oAdsConfig(flags, {});
+		expect(config.gpt.zone).to.equal('testDfpSite/testDfpZone');
+	});
 
 	// it('Should not make a request to the ads API for user data if flag off', () => {
 	// 	const flags = { get: (name) => name !== 'adTargetingUserApi'};
