@@ -59,7 +59,7 @@ module.exports = function (flags) {
 		return url;
 	};
 
-	function getZone() {
+	function getZone () {
 		let zone = [ utils.getMetaData('dfp_site'), utils.getMetaData('dfp_zone') ].filter( a => a );
 		if(!zone.length) {
 			zone = ['unclassified'];
