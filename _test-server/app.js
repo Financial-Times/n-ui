@@ -16,6 +16,8 @@ const app = module.exports = express({
 });
 
 app.get('/', (req, res) => {
+	// pre-empt the roll out of this flag
+	res.locals.flags.polyfillSymbol = true;
 	res.render('default', {
 		layout: 'wrapper'
 	}, (err, text) => {
