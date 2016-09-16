@@ -58,6 +58,7 @@ shellpromise('find . -path "./dist/*"')
 					})
 					.then(res => {
 						if(!res.ok) {
+							console.log(res.status); //eslint-disable-line
 							throw new Error(`failed to purge ${path}`)
 						} else {
 							console.log(`successfully purged ${path}`) //eslint-disable-line
