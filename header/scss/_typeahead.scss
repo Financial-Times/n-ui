@@ -1,4 +1,4 @@
-@if nUiApply('header', 'typeahead') {
+@mixin nUiHeaderTypeahead {
 
 	// awesomplete will wrap the search term input when instantiated
 	.awesomplete {

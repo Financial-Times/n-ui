@@ -1,13 +1,11 @@
+$o-header-image-base-url: 'https://next-geebee.ft.com/image';
+@import 'o-header/main';
+@import 'scss/marketing-promo';
+@import 'scss/typeahead';
+
 @if nUiApply('header') {
 
-	@include nUiCriticalStart('header');
-
-	$o-header-image-base-url: 'https://next-geebee.ft.com/image';
-
-	@import 'scss/marketing-promo';
-	@import 'o-header/main';
-
-
+	@include nUiCritical('header') {
 
 		@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu'));
 		// force display of search row
@@ -31,9 +29,10 @@
 		.o-header--sticky {
 			display: none;
 		}
-	}
 
-	@include nUiCriticalEnd('header');
+		@include nUiHeaderMarketingPromo;
+
+	}
 
 	@include oHeader(('drawer', 'sticky'));
 
@@ -50,6 +49,8 @@
 		display: block;
 	}
 
-}
+	@if nUiApply('header', 'typeahead') {
+		@include nUiHeaderTypeahead;
+	}
 
-@import 'scss/typeahead';
+}
