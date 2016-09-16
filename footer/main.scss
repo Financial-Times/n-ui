@@ -1,7 +1,7 @@
 $o-footer-is-silent: not nUiHas('footer') !default;
 
-@include nUiCriticalStart('footer');
+@include nUiMaybeCriticalStart('footer');
 
 @import "o-footer/main";
 
-@include nUiCriticalEnd('footer');
+@include nUiMaybeCriticalEnd('footer');

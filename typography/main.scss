@@ -1,4 +1,4 @@
-@include nUiCriticalStart('typography');
+@include nUiMaybeCriticalStart('typography');
 
 $o-fonts-path: 'https://next-geebee.ft.com/build/v2/files/o-fonts-assets@1.3.0/';
 // TODO - once o-typography lets us control font loading in non-silent mode we should unsilence it
@@ -32,4 +32,4 @@ $o-typography-progressive-fonts: sans, sansBold, sansData, sansDataBold, serifDi
 
 }
 
-@include nUiCriticalEnd('typography');
+@include nUiMaybeCriticalEnd('typography');

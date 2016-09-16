@@ -2,7 +2,7 @@
 
 @if nUiApply('welcomeMessage') {
 
-	@include nUiCriticalStart('welcomeMessage');
+	@include nUiMaybeCriticalStart('welcomeMessage');
 
 	.n-banner-message,
 	.n-welcome-message {
@@ -170,5 +170,5 @@
 
 	/* END styles only for old welcome message (pre 'banner' layout) */
 
-	@include nUiCriticalEnd('welcomeMessage');
+	@include nUiMaybeCriticalEnd('welcomeMessage');
 }
