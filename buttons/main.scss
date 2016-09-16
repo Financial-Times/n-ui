@@ -1,12 +1,8 @@
 @include nUiCriticalStart('buttons');
-.o-buttons {
-	visibility: hidden;
-}
-@include nUiCriticalEnd('buttons');
 
 $o-buttons-is-silent: false !default;
-.o-buttons {
-	visibility: visible;
-}
+
 @import 'o-buttons/main';
 @import 'mixins';
+
+@include nUiCriticalEnd('buttons');
