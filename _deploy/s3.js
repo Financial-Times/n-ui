@@ -76,5 +76,5 @@ shellpromise('find . -path "./dist/*"')
 	})
 	.catch(err => {
 		console.log(err) //eslint-disable-line
-		throw err;
+		process.exit(2)
 	})
