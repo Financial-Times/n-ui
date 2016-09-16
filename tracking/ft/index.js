@@ -70,7 +70,7 @@ const oTrackingWrapper = {
 			}
 			const pageMeta = window.FT && window.FT.pageMeta;
 			if (pageMeta && (pageMeta === Object(pageMeta))) {
-				for (var key in pageMeta) {
+				for (let key in pageMeta) {
 					if (pageMeta.hasOwnProperty(key)) {
 						context[key] = pageMeta[key];
 					}

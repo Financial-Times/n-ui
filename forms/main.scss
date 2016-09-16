@@ -1,7 +1,7 @@
-@include nUiCriticalStart('forms');
+@include nUiMaybeCriticalStart('forms');
 
 $o-forms-is-silent: not nUiHas('forms') !default;
 
 @import 'o-forms/main';
 
-@include nUiCriticalEnd('forms');
+@include nUiMaybeCriticalEnd('forms');

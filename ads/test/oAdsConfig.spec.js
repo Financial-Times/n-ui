@@ -55,7 +55,7 @@ describe('Config', () => {
 
 	it('Should set krux configuration when flag is set to false', () => {
 		const flags = { get: () => true };
-		document.cookie = "FT_U=EID=1234_PID=abc";
+		document.cookie = 'FT_U=EID=1234_PID=abc';
 		const config = oAdsConfig(flags);
 		const userExpectation = {
 			eid: '1234'
@@ -80,7 +80,7 @@ describe('Config', () => {
 		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
 		const flags = { get: () => true };
 		const config = oAdsConfig(flags);
-		document.cookie = "FT_U=EID=1234_PID=abc";
+		document.cookie = 'FT_U=EID=1234_PID=abc';
 		const expectation = 'pt=art;eid=1234;nlayout=custom'.split(';');
 
 
@@ -108,39 +108,23 @@ describe('Config', () => {
 
 
 		expect(config.targetingApi.page).to.equal(pageUrl + fakeArticleUuid);
-	})
+	});
 
-	// it('Should not make a request to the ads API for user data if flag off', () => {
-	// 	const flags = { get: (name) => name !== 'adTargetingUserApi'};
-	//
-	// 	sandbox.stub(utils, 'getAppName', () => 'stream-page' );
-	// 	fetchMock
-	// 		.mock('https://ads-api.ft.com/v1/user', 200)
-	// 		.catch(Promise.reject());
-	//
-	// 	return main.init(flags).then(() => {
-	// 		expect(fetchMock.called('https://ads-api.ft.com/v1/user')).to.be.false;
-	// 		fetchMock.restore();
-	// 	});
-	// });
+	it('Should use zone from metadata if present', () => {
+		sandbox.stub(utils, 'getMetaData', (param) => {
+			switch (param) {
+				case 'dfp_site':
+						return 'testDfpSite';
+					break;
+				case 'dfp_zone':
+						return 'testDfpZone';
+					break;
+			}
+		});
 
-
-	// it('Should only pass referrer to API if it exists', () => {
-	// 	const flags = { get: () => true };
-	// 	const fakeDfpSiteAndZone = 'test-unclassified';
-	//
-	// 	sandbox.stub(utils, 'getAppName', () => 'article' );
-	// 	sandbox.stub(utils, 'getReferrer', () => null );
-	// 	sandbox.stub(utils, 'getMetaData', () => fakeDfpSiteAndZone );
-	// 	fetchMock
-	// 		.mock('^https://ads-api.ft.com/v1/content', Promise.reject())
-	// 		.catch(Promise.reject());
-	//
-	// 	return main.init(flags).then(() => {
-	// 		expect(fetchMock.lastCall('^https://ads-api.ft.com/v1/content')[0]).to.equal('https://ads-api.ft.com/v1/content/' + fakeArticleUuid);
-	// 		expect(ads.config().gpt.unitName).to.equal('5887/ft.com/' + fakeDfpSiteAndZone + '/' + fakeDfpSiteAndZone);
-	// 		fetchMock.restore();
-	// 	});
-	// });
+		const flags = { get: () => true };
+		const config = oAdsConfig(flags, {});
+		expect(config.gpt.zone).to.equal('testDfpSite/testDfpZone');
+	});
 
 });

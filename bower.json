@@ -35,7 +35,7 @@
     "o-footer": "^5.0.0",
     "o-forms": "^2.0.0",
     "o-grid": "^4.2.0",
-    "o-header": "^6.6.0",
+    "o-header": "^6.10.0",
     "o-icons": "^4.0.0",
     "o-overlay": "^1.8.2",
     "o-tracking": "^1.1.8",
@@ -44,7 +44,7 @@
     "o-visual-effects": "^0.1.0",
     "superstore": "^2.1.0",
     "superstore-sync": "^2.1.0",
-    "o-video": "^2.0.0",
+    "o-video": "^2.1.2",
     "n-image": "^4.2.3"
   }
 }

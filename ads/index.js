@@ -81,9 +81,21 @@ module.exports = {
 					}
 
 					if(flags && flags.get('stickyHeaderAd')) {
-						let stickyAd = new Sticky(document.querySelector('.above-header-advert'), document.querySelector('.header-ad-placeholder__top'), document.querySelector('#primary-nav .o-header__top'));
-						stickyAd.init();
-					}
+										let stickyAd = new Sticky(
+											document.querySelector('.above-header-advert'),
+											{ 'sibling' : '.header-ad-placeholder__top',
+											'stickUntil' : '#primary-nav .o-header__top'
+											});
+										stickyAd.init();
+									}
+									if(flags && flags.get('stickyRightAd')) {
+										let stickyRight = new Sticky(
+											document.querySelector('.sidebar-advert'),
+											{	'topOffset' : '70px',
+												'stickUntil' : 'footer'
+											});
+										stickyRight.init();
+									}
 
 					return Promise.resolve()
 						.then(() => {

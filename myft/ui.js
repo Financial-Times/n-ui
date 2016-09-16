@@ -289,7 +289,7 @@ function updateAfterIO (myftFeature, detail, action) {
 							shaded: false
 						}))
 						.then(overlay => followEmail.setUpOverlayListeners(overlay))
-						.catch(err => console.log(err));
+						.catch(() => null);
 
 				}
 			}
@@ -351,7 +351,7 @@ function onLoad (ev) {
 }
 
 // extract properties with _rel. prefix into nested object, as expected by the API for relationship props
-function extractMetaData(inputs) {
+function extractMetaData (inputs) {
 	const meta = {};
 
 	inputs.forEach((input) => {

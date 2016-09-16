@@ -1,40 +1,56 @@
-@include nUiCriticalStart('header');
-
-$o-header-is-silent: not nUiHas('header') !default;
 $o-header-image-base-url: 'https://next-geebee.ft.com/image';
-
-@import 'scss/marketing-promo';
 @import 'o-header/main';
+@import 'scss/marketing-promo';
+@import 'scss/typeahead';
 
 @if nUiApply('header') {
 
-	// force display of search row
-	// <https://github.com/Financial-Times/o-header/blob/2ebf2cbe6b7508a03e0989ff57f1029e12c0506c/src/scss/rows/_search.scss#L13-L15>
-	.core [data-o-header-search] {
-		display: block;
+	@include nUiMaybeCritical('header') {
+
+		@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu'));
+		// force display of search row
+		// <https://github.com/Financial-Times/o-header/blob/2ebf2cbe6b7508a03e0989ff57f1029e12c0506c/src/scss/rows/_search.scss#L13-L15>
+		.core [data-o-header-search] {
+			display: block;
+		}
+
+		// add next opt-out buttons
+		.o-header__drawer-menu-button {
+			@include oButtons('medium', 'standout');
+			display: block;
+			margin: $_o-header-drawer-padding-x;
+		}
+
+		.o-header__mega {
+			@include nUtilZIndexFor('meganav');
+		}
+
+		.o-header__drawer,
+		.o-header--sticky {
+			display: none;
+		}
+
+		@include nUiHeaderMarketingPromo;
+
 	}
 
-	// add next opt-out buttons
-	.o-header__drawer-menu-button {
-		@include oButtons('medium', 'standout');
-		display: block;
-		margin: $_o-header-drawer-padding-x;
-	}
+	@include oHeader(('drawer', 'sticky'));
 
 	// fix up z-indexes
 	.o-header__drawer {
 		@include nUtilZIndexFor('drawer');
 	}
-
-	.o-header__mega {
-		@include nUtilZIndexFor('meganav');
-	}
-
 	.o-header--sticky {
 		@include nUtilZIndexFor('sticky-header');
 	}
+
+	.o-header__drawer,
+	.o-header--sticky {
+		display: block;
+	}
+
+	@if nUiApply('header', 'typeahead') {
+		@include nUiHeaderTypeahead;
+	}
+
 }
-
-@include nUiCriticalEnd('header');
-
-@import 'scss/typeahead';

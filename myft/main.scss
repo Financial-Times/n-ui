@@ -7,7 +7,7 @@
 @import 'scss/follow-email';
 
 @if nUiApply('myft') {
-	@include nUiCriticalStart('myft');
+	@include nUiMaybeCriticalStart('myft');
 
 	// hacky fix for now as myft and myftCommon are not totally decoupled
 	@if not nUiApply('myftCommon') {
@@ -16,7 +16,7 @@
 
 	@include nUiMyftPrefs;
 
-	@include nUiCriticalEnd('myft');
+	@include nUiMaybeCriticalEnd('myft');
 
 	// 'unfollow' button
 	.myft-ui__button--manage,

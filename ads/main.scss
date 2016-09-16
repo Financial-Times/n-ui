@@ -1,4 +1,4 @@
-@include nUiCriticalStart('ads');
+@include nUiMaybeCriticalStart('ads');
 
 $o-ads-is-silent: not nUiHas('ads') !default;
 
@@ -97,4 +97,4 @@ $ad-max-responsive-width: 1440px;
 
 }
 
-@include nUiCriticalEnd('ads');
+@include nUiMaybeCriticalEnd('ads');
