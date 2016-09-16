@@ -6,7 +6,7 @@ module.exports = nWebpack({
 	withBabelPolyfills: true,
 	withHeadCss: true,
 	entry: {
-		'./public/main.js': './_test-server/client/main.js',
+		'./public/main-without-n-ui.js': './_test-server/client/main.js',
 		'./public/main.css': './_test-server/client/main.scss'
 	},
 	includes: [
