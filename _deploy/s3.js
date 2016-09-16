@@ -22,7 +22,10 @@ if (!tag) {
 shellpromise('find . -path "./dist/*"')
 	.then(files => {
 
-		files = files.split('\n').filter(f => !!f);
+		files = files.split('\n')
+			.filter(f => !!f)
+			.filter(f => !/n-ui-core\.css/.test(f));
+
 		const deploys = versions.reduce((arr, version, i) => {
 			return arr.concat([{
 				version,
