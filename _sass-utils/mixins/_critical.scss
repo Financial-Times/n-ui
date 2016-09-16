@@ -45,3 +45,17 @@
 		/*! end:head#{nUiGetHeadCssVariant($feature-name)}.css*/
 	}
 }
+
+@mixin nUiMaybeCriticalStart($feature-name: null) {
+	@include nUiCriticalStart($feature-name);
+}
+
+@mixin nUiMaybeCriticalEnd($feature-name: null) {
+	@include nUiCriticalEnd($feature-name);
+}
+
+@mixin nUiMaybeCritical($feature-name: null) {
+	@include nUiCriticalStart($feature-name);
+	@content;
+	@include nUiCriticalEnd($feature-name);
+}

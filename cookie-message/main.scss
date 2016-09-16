@@ -1,4 +1,4 @@
-@include nUiCriticalStart('cookieMessage');
+@include nUiMaybeCriticalStart('cookieMessage');
 
 @if nUiApply('cookieMessage') {
 
@@ -117,4 +117,4 @@
 
 }
 
-@include nUiCriticalEnd('cookieMessage');
+@include nUiMaybeCriticalEnd('cookieMessage');

@@ -1,4 +1,4 @@
-@include nUiCriticalStart('tourTip');
+@include nUiMaybeCriticalStart('tourTip');
 
 @if nUiApply('tourTip') {
 
@@ -90,4 +90,4 @@
 
 }
 
-@include nUiCriticalEnd('tourTip');
+@include nUiMaybeCriticalEnd('tourTip');

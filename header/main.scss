@@ -5,7 +5,7 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 
 @if nUiApply('header') {
 
-	@include nUiCritical('header') {
+	@include nUiMaybeCritical('header') {
 
 		@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu'));
 		// force display of search row
