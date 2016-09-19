@@ -334,7 +334,7 @@
     },
     "content": {
       "title": "Updated Portfolio tool",
-      "body": "Add, edit and track investments on all your devices. If you’re not quite ready to make the move, you can still access the old Portfolio while we put the finishing touches on the new tool.",
+      "body": "Add, edit and track investments on all your devices. If you’re not quite ready to make the move, you can still access the <a href=\"/http://portfolio.ft.com\" class=\"tour-tip__body-link\" data-trackable=\"portfolio\">old Portfolio</a> while we put the finishing touches on the new tool.",
       "imageAlt": "Illustration of the FT Portfolio page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-1.svg"
     }
@@ -382,7 +382,7 @@
     },
     "content": {
       "title": "Special Reports",
-      "body": "Get valuable insights into specific countries, industries and business topics, with over 200 in-depth reports a year.",
+      "body": "Get <a href=\"/https://www.ft.com/special-reports\" class=\"tour-tip__body-link\" data-trackable=\"special-reports\">valuable insights</a> into specific countries, industries and business topics, with over 200 in-depth reports a year.",
       "imageAlt": "Illustration of a Special Reports page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-1.svg"
     }
@@ -478,7 +478,7 @@
     },
     "content": {
       "title": "ePaper",
-      "body": "Read the FT newspaper anywhere on any device, with an exact digital replica available from 5am London time.",
+      "body": "Read the FT newspaper anywhere on any device, with an <a href=\"https://ftepaper.ft.com/\" class=\"tour-tip__body-link\" data-trackable=\"epaper\">exact digital replica</a> available from 5am London time.",
       "imageAlt": "Illustation of an edition of the FT ePaper",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/epaper-1.svg"
     }
