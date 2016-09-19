@@ -29,8 +29,22 @@
 		margin: 0;
 	}
 
+	.tour-tip__body-link {
+		@include nLinksBody();
+	}
+
 	.tour-tip__cta {
 		margin: $spacing-unit 0 0;
+	}
+
+	.tour-tip--s {
+		.tour-tip__img-container {
+			overflow: hidden;
+		}
+		.tour-tip__img {
+			margin-bottom: -4%;
+			margin-left: -10%;
+		}
 	}
 
 	@include oGridRespondTo($from: 'M') {

@@ -24,8 +24,9 @@ app.get('/', (req, res) => {
 			return bundle.indexOf('undefined') === -1
 		})
 		.map(bundle => {
-			if (bundle.indexOf('polyfill') === true) {
-				return bundle.replace('polyfill.min', 'polyfill').split('&excludes')[0];
+			if (bundle.indexOf('polyfill') > -1) {
+				return bundle.replace('polyfill.min', 'polyfill')
+					.split('&excludes')[0];
 			}
 			return bundle;
 		});
