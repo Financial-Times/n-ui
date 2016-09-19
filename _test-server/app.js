@@ -16,21 +16,22 @@ const app = module.exports = express({
 });
 
 app.get('/', (req, res) => {
-	// pre-empt the roll out of this flag
-	res.locals.flags.polyfillSymbol = true;
+	// such a load of hacks :/
+	// in an ideal world we could hack some middleware in
+	// before the assets middleware gets applied
+	res.locals.javascriptBundles = res.locals.javascriptBundles
+		.filter(bundle => {
+			return bundle.indexOf('undefined') === -1
+		})
+		.map(bundle => {
+			if (bundle.indexOf('polyfill') === true) {
+				return bundle.replace('polyfill.min', 'polyfill').split('&excludes')[0];
+			}
+			return bundle;
+		});
 	res.render('default', {
 		layout: 'wrapper'
-	}, (err, text) => {
-		// hack - the app will try to bring in a built n-ui from the network
-		// so we get rid of it
-		res.send(text.replace(
-			/ftNextLoadScript\('undefined.*/,
-			''
-		).replace(
-			/polyfill\.min\.js/g,
-			'polyfill.js'
-		));
-	})
+	});
 });
 
 app.listen(5005)
