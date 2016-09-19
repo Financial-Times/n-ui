@@ -1,4 +1,4 @@
-const throttle = require('../../utils').throttle;
+const debounce = require('./utils').debounce;
 
 function Sticky (el, opts) {
 	this.el = el;
@@ -42,7 +42,7 @@ Sticky.prototype.onScroll = function () {
 };
 
 Sticky.prototype.bindScroll = function () {
-	this.onScrollListener = throttle(this.onScroll).bind(this);
+	this.onScrollListener = debounce(this.onScroll).bind(this);
 	window.addEventListener('scroll', this.onScrollListener);
 };
 
@@ -73,7 +73,7 @@ Sticky.prototype.init = function () {
 	this.stickyUntilPoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
 	this.el.style.zIndex = '23';
 
-	window.addEventListener('resize', throttle(this.onResize).bind(this));
+	window.addEventListener('resize', debounce(this.onResize).bind(this));
 
 	this.bindScroll();
 };
