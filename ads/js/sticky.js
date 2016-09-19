@@ -60,7 +60,6 @@ Sticky.prototype.onResize = function () {
 
 Sticky.prototype.reset = function () {
 	this.el.style.position = 'static';
-	console.log(this.sibling.style.marginTop);
 	this.sibling.style.marginTop = '0px';
 };
 
