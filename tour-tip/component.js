@@ -13,12 +13,18 @@ export default class TourTip extends Component {
 			'tour-tip--reversed': attrs.settings.isReversed
 		};
 
+		const createMarkup = (prop) => ({__html: prop});
+
 		const tourLink = (attrs.settings.hasTourPageLink) ?
 			(<p className="tour-tip__link"><a href="/tour" className="tour-tip__link" data-trackable="tour-link">New hints and tips</a></p>)
 			: null;
 
 		const body = (attrs.content.body) ?
-			(<p className="tour-tip__body">{attrs.content.body}</p>) : null;
+			(<p className="tour-tip__body" dangerouslySetInnerHTML={createMarkup(attrs.content.body)}></p>) : null;
+
+		const cta = (attrs.content.ctaUrl && attrs.content.ctaLabel) ?
+			(<a href={attrs.content.ctaUrl} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{attrs.content.ctaLabel}</a>)
+			: null;
 
 		return <aside className={classNames(classes)} data-trackable={`tour-tip-${attrs.id}`}>
 			<div className="tour-tip__main">
@@ -26,12 +32,13 @@ export default class TourTip extends Component {
 					{tourLink}
 					<h2 className="tour-tip__standout">{attrs.content.title}</h2>
 					{body}
-					<a href={attrs.content.ctaUrl} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{attrs.content.ctaLabel}</a>
+					{cta}
 				</div>
 				<div className="tour-tip__img-container">
 					<Image
 						src={buildImageServiceUrl(attrs.content.imageUrl, {format: 'svg'})}
 						alt={attrs.content.imageAlt}
+						classes={['tour-tip__img']}
 					/>
 				</div>
 			</div>
