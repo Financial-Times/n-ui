@@ -24,7 +24,7 @@
 			// really annoying, but the CSSLoading might occur before polyfilling CustomEvent :(
 			} catch (e) {
 				ev = document.createEvent('CustomEvent')
-				ev.initCustomEvent(evName);
+				ev.initCustomEvent(evName, false, false, null);
 			}
 			document.dispatchEvent(ev);
 			window[evName] = 1;
