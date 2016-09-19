@@ -26,6 +26,9 @@ app.get('/', (req, res) => {
 		res.send(text.replace(
 			/ftNextLoadScript\('undefined.*/,
 			''
+		).replace(
+			/polyfill\.min\.js/g,
+			'polyfill.js'
 		));
 	})
 });
