@@ -34,6 +34,7 @@ export default class TourTip extends Component {
 					<Image
 						src={buildImageServiceUrl(attrs.content.imageUrl, {format: 'svg'})}
 						alt={attrs.content.imageAlt}
+						classes={['tour-tip__img']}
 					/>
 				</div>
 			</div>
