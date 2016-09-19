@@ -22,13 +22,17 @@ export default class TourTip extends Component {
 		const body = (attrs.content.body) ?
 			(<p className="tour-tip__body" dangerouslySetInnerHTML={createMarkup(attrs.content.body)}></p>) : null;
 
+		const cta = (attrs.content.ctaUrl && attrs.content.ctaLabel) ?
+			(<a href={attrs.content.ctaUrl} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{attrs.content.ctaLabel}</a>)
+			: null;
+
 		return <aside className={classNames(classes)} data-trackable={`tour-tip-${attrs.id}`}>
 			<div className="tour-tip__main">
 				<div className="tour-tip__text">
 					{tourLink}
 					<h2 className="tour-tip__standout">{attrs.content.title}</h2>
 					{body}
-					<a href={attrs.content.ctaUrl} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{attrs.content.ctaLabel}</a>
+					{cta}
 				</div>
 				<div className="tour-tip__img-container">
 					<Image
