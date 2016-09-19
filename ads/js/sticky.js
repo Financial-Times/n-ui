@@ -5,6 +5,7 @@ function Sticky (el, opts) {
 	this.opts = opts || {};
 	this.sibling = (opts.sibling) ? document.querySelector(opts.sibling) : null;
 	this.stickUntil = (opts.stickUntil) ? document.querySelector(opts.stickUntil) : null;
+	this.extraHeight = false;
 	if (!el) return;
 	this.opts.stickAfter = this.el.getBoundingClientRect().top;
 }
@@ -23,6 +24,12 @@ Sticky.prototype.unstick = function () {
 };
 
 Sticky.prototype.onScroll = function () {
+	// this.stickyUntilPoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
+	if(this.extraHeight == false && document.querySelector('.visible')) {
+		this.stickyUntilPoint += 50;
+		this.extraHeight = true;
+	}
+
 	if((this.stickyUntilPoint > window.pageYOffset) && (window.pageYOffset >= this.opts.stickAfter)) {
 		requestAnimationFrame(this.stick.bind(this));
 	} else if (this.stickyUntilPoint < window.pageYOffset) {
@@ -55,6 +62,7 @@ Sticky.prototype.onResize = function () {
 
 Sticky.prototype.reset = function () {
 	this.el.style.position = 'static';
+	console.log(this.sibling.style.marginTop);
 	this.sibling.style.marginTop = '0px';
 };
 
