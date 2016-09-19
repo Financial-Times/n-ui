@@ -13,12 +13,14 @@ export default class TourTip extends Component {
 			'tour-tip--reversed': attrs.settings.isReversed
 		};
 
+		const createMarkup = (prop) => ({__html: prop});
+
 		const tourLink = (attrs.settings.hasTourPageLink) ?
 			(<p className="tour-tip__link"><a href="/tour" className="tour-tip__link" data-trackable="tour-link">New hints and tips</a></p>)
 			: null;
 
 		const body = (attrs.content.body) ?
-			(<p className="tour-tip__body">{attrs.content.body}</p>) : null;
+			(<p className="tour-tip__body" dangerouslySetInnerHTML={createMarkup(attrs.content.body)}></p>) : null;
 
 		return <aside className={classNames(classes)} data-trackable={`tour-tip-${attrs.id}`}>
 			<div className="tour-tip__main">

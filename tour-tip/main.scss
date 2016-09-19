@@ -29,6 +29,10 @@
 		margin: 0;
 	}
 
+	.tour-tip__body-link {
+		@include nLinksBody();
+	}
+
 	.tour-tip__cta {
 		margin: $spacing-unit 0 0;
 	}
