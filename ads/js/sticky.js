@@ -24,12 +24,10 @@ Sticky.prototype.unstick = function () {
 };
 
 Sticky.prototype.onScroll = function () {
-	// this.stickyUntilPoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
-	if(this.extraHeight == false && document.querySelector('.visible')) {
+	if(this.extraHeight === false && document.querySelector('.visible')) {
 		this.stickyUntilPoint += 50;
 		this.extraHeight = true;
 	}
-
 	if((this.stickyUntilPoint > window.pageYOffset) && (window.pageYOffset >= this.opts.stickAfter)) {
 		requestAnimationFrame(this.stick.bind(this));
 	} else if (this.stickyUntilPoint < window.pageYOffset) {
