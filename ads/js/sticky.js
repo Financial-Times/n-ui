@@ -1,4 +1,4 @@
-const debounce = require('./utils').debounce;
+const throttle = require('../../utils').throttle;
 
 function Sticky (el, opts) {
 	this.el = el;
@@ -18,15 +18,18 @@ Sticky.prototype.stick = function () {
 
 Sticky.prototype.unstick = function () {
 	this.el.style.position = 'absolute';
-	this.el.style.top = this.stickyUntilPoint + 'px'; //HEADER
-	// this.el.style.top = (this.stickyUntilPoint - this.el.offsetHeight) + 'px'; //RHR
-	this.sibling.style.marginTop = this.el.offsetHeight + 'px';
+	if(this.sibling != null) { //Header Ad
+		this.el.style.top = this.stickyUntilPoint + 'px';
+		this.sibling.style.marginTop = this.el.offsetHeight + 'px';
+	} else { //Right Hand Rail Ad
+		this.el.style.top = (this.stickyUntilPoint - this.el.offsetHeight) + 'px';
+	}
 };
 
 Sticky.prototype.onScroll = function () {
-	if(this.extraHeight === false && document.querySelector('.visible')) {
+	if(this.extraHeight === false && document.querySelector('.visible .n-header__marketing-promo__container')) {
 		this.stickyUntilPoint += 50;
-		this.extraHeight = true;
+		this.extraHeight = true
 	}
 	if((this.stickyUntilPoint > window.pageYOffset) && (window.pageYOffset >= this.opts.stickAfter)) {
 		requestAnimationFrame(this.stick.bind(this));
@@ -39,7 +42,7 @@ Sticky.prototype.onScroll = function () {
 };
 
 Sticky.prototype.bindScroll = function () {
-	this.onScrollListener = debounce(this.onScroll).bind(this);
+	this.onScrollListener = throttle(this.onScroll).bind(this);
 	window.addEventListener('scroll', this.onScrollListener);
 };
 
@@ -60,8 +63,7 @@ Sticky.prototype.onResize = function () {
 
 Sticky.prototype.reset = function () {
 	this.el.style.position = 'static';
-	console.log(this.sibling.style.marginTop);
-	this.sibling.style.marginTop = '0px';
+	this.sibling != null ? this.sibling.style.marginTop = '0px' : this.sibling;
 };
 
 Sticky.prototype.init = function () {
@@ -71,7 +73,7 @@ Sticky.prototype.init = function () {
 	this.stickyUntilPoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
 	this.el.style.zIndex = '23';
 
-	window.addEventListener('resize', debounce(this.onResize).bind(this));
+	window.addEventListener('resize', throttle(this.onResize).bind(this));
 
 	this.bindScroll();
 };
