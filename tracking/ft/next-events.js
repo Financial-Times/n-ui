@@ -9,7 +9,7 @@ const NextEvents = function () {};
 NextEvents.prototype.init = function () {
 
 	// Click-event tracking - https://github.com/Financial-Times/o-tracking
-	oTracking.click.init('next-events');
+	oTracking.click.init('cta');
 
 	// text copy -> clipboard tracking
 	this.copy = new Copy(document.body);
