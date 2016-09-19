@@ -45,8 +45,8 @@
       "body": "Discover topics of interest more easily on thousands of concepts. Then you can track topics most important to you in myFT.",
       "imageAlt": "Illustration of the \"Companies\" page, showing an \"Added\" button next to the page heading",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "ctaUrl": "/myft/product-tour",
+      "ctaLabel": "Learn more"
     }
   },
   {
@@ -94,9 +94,7 @@
       "title": "Gift article",
       "body": "Share 10 articles a month with non-subscribers, who can read them free. Look for the email icon at the top of articles.",
       "imageAlt": "Illustration of the Gift Article button in article pages",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-2.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-2.svg"
     }
   },
   {
@@ -144,9 +142,7 @@
       "title": "Improved FastFT",
       "body": "Better filtering of trending topics in our global team’s instant market-moving news and views.",
       "imageAlt": "Illustration of the FastFT page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-1.svg"
     }
   },
   {
@@ -194,9 +190,7 @@
       "title": "Markets Data",
       "body": "Manage price alerts on the go, compare cross currencies quickly and get a macromap view of major indices across the globe.",
       "imageAlt": "Illustration of a graph in a Markets Data page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-1.svg"
     }
   },
   {
@@ -245,8 +239,8 @@
       "body": "Get Instant, Daily or Weekly email digests on  topics you’ve added to myFT.",
       "imageAlt": "Illustration of a myFT Instant Alert email",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "ctaUrl": "/myft/product-tour",
+      "ctaLabel": "Learn more"
     }
   },
   {
@@ -294,9 +288,7 @@
       "title": "Email Briefings",
       "body": "You can now manage your email briefing subscriptions in myFT. We’ll be adding to this in the coming months.",
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-1.svg"
     }
   },
   {
@@ -344,9 +336,7 @@
       "title": "Updated Portfolio tool",
       "body": "Add, edit and track investments on all your devices. If you’re not quite ready to make the move, you can still access the old Portfolio while we put the finishing touches on the new tool.",
       "imageAlt": "Illustration of the FT Portfolio page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-1.svg"
     }
   },
   {
@@ -394,9 +384,7 @@
       "title": "Special Reports",
       "body": "Get valuable insights into specific countries, industries and business topics, with over 200 in-depth reports a year.",
       "imageAlt": "Illustration of a Special Reports page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-1.svg"
     }
   },
   {
@@ -444,9 +432,7 @@
       "title": "FT News feed",
       "body": "See the live feed of new FT stories as they are published.",
       "imageAlt": "Illustration of the FT News feed page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-1.svg"
     }
   },
   {
@@ -494,9 +480,7 @@
       "title": "ePaper",
       "body": "Read the FT newspaper anywhere on any device, with an exact digital replica available from 5am London time.",
       "imageAlt": "Illustation of an edition of the FT ePaper",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/epaper-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/epaper-1.svg"
     }
   }
 ]
