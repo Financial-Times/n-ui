@@ -36,7 +36,7 @@ function setExpander () {
 
 	if (userHasMinimized()) {
 		expandableContent.setAttribute('aria-hidden', true);
-		expandableContent.setAttribute('className', expandableContent.className.replace('o-expander__content--expanded', ''));
+		expandableContent.classList.remove('o-expander__content--expanded');
 		toggleContainerDisplay(false);
 	}
 	expander.init(fixedEl, {
@@ -57,9 +57,9 @@ function setExpander () {
 // in addition to what o-expander gives us, add a class onto the container when changing expanded state
 function toggleContainerDisplay (showFull) {
 	if (showFull) {
-		fixedEl.setAttribute('class', fixedEl.className.replace(/\b\sn-welcome-banner--collapsed\b/g, ''));
+		fixedEl.classList.remove('n-welcome-banner--collapsed');
 	} else {
-		fixedEl.setAttribute('class', fixedEl.className += ' n-welcome-banner--collapsed');
+		fixedEl.classList.add('n-welcome-banner--collapsed');
 	}
 }
 
