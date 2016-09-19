@@ -18,11 +18,11 @@ Sticky.prototype.stick = function () {
 
 Sticky.prototype.unstick = function () {
 	this.el.style.position = 'absolute';
-	if(this.sibling != null) { //Header Ad
+	if(this.sibling === null) { //RHR Ad
+		this.el.style.top = (this.stickyUntilPoint - this.el.offsetHeight) + 'px';
+	} else { // Header Ad
 		this.el.style.top = this.stickyUntilPoint + 'px';
 		this.sibling.style.marginTop = this.el.offsetHeight + 'px';
-	} else { //Right Hand Rail Ad
-		this.el.style.top = (this.stickyUntilPoint - this.el.offsetHeight) + 'px';
 	}
 };
 
@@ -63,7 +63,7 @@ Sticky.prototype.onResize = function () {
 
 Sticky.prototype.reset = function () {
 	this.el.style.position = 'static';
-	this.sibling != null ? this.sibling.style.marginTop = '0px' : this.sibling;
+	this.sibling === null ? this.sibling : this.sibling.style.marginTop = '0px';
 };
 
 Sticky.prototype.init = function () {
