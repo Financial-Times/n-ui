@@ -133,7 +133,7 @@
     "id": "fastft-l",
     "queryStringId": "fastft",
     "settings": {
-      "hasTourPageLink": true,
+      "hasTourPageLink": false,
       "isDismissable": false,
       "isReversed": false,
       "size": "l"
