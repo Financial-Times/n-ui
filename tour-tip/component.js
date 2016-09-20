@@ -40,7 +40,9 @@ export default class TourTip extends Component {
 
 	render () {
 		let data = JSON.parse(JSON.stringify(this.props.data));
-		const modifiers = [`tour-tip--${data.settings.size}`, ...(data.modifiers || []) ];
+
+		const modifiersFromConfig = (data.modifiers || []).map(modifier => `tour-tip--${modifier}`);
+		const modifiers = [`tour-tip--${data.settings.size}`, ...modifiersFromConfig];
 		const classes = classNames({
 			'tour-tip': true
 		}, modifiers);
