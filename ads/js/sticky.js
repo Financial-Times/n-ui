@@ -4,10 +4,13 @@ function Sticky (el, opts) {
 	this.el = el;
 	this.opts = opts || {};
 	this.sibling = (opts.sibling) ? document.querySelector(opts.sibling) : null;
-	this.stickUntil = (opts.stickUntil) ? document.querySelector(opts.stickUntil) : null;
+	this.stickUntil = document.querySelector(opts.stickUntil);
+	// this.stickUntil = (opts.stickUntil) ? document.querySelector(opts.stickUntil) : null;
 	this.extraHeight = false;
 	if (!el) return;
-	this.opts.stickAfter = this.el.getBoundingClientRect().top;
+	this.opts.stickAfter = this.el.getBoundingClientRect().top - 74;
+	console.log('why');
+
 }
 
 Sticky.prototype.stick = function () {
@@ -33,7 +36,7 @@ Sticky.prototype.onScroll = function () {
 	}
 	if((this.stickyUntilPoint > window.pageYOffset) && (window.pageYOffset >= this.opts.stickAfter)) {
 		requestAnimationFrame(this.stick.bind(this));
-	} else if (this.stickyUntilPoint < window.pageYOffset) {
+	} else if ((this.stickyUntilPoint + 144) <= window.pageYOffset) {
 		requestAnimationFrame(this.unstick.bind(this));
 	}
 	else if (window.pageYOffset <= this.opts.stickAfter) {
