@@ -5,7 +5,7 @@ import { buildImageServiceUrl } from '@financial-times/n-image/src/helpers';
 
 export default class TourTip extends Component {
 	render () {
-		let attrs = Object.assign({}, this.props.data);
+		let attrs = JSON.parse(JSON.stringify(this.props.data));
 
 		const classes = {
 			'tour-tip': true,
