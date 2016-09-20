@@ -25,8 +25,12 @@
 	}
 
 	.tour-tip__standout {
-		@include oTypographySerif('m');
+		@include oTypographySerif('l');
 		margin: 0;
+	}
+
+	.tour-tip__body {
+		@include oTypographySans('m', $load-progressively: true);
 	}
 
 	.tour-tip__body-link {
@@ -79,7 +83,7 @@
 			}
 
 			.tour-tip__standout {
-				@include oTypographySerifSize('l');
+				@include oTypographySerifSize('xl');
 			}
 
 			.tour-tip__cta {
