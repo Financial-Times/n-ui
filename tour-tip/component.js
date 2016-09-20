@@ -7,10 +7,10 @@ export default class TourTip extends Component {
 	render () {
 		let attrs = JSON.parse(JSON.stringify(this.props.data));
 
-		const classes = {
-			'tour-tip': true,
-			[`tour-tip--${attrs.settings.size}`]: attrs.settings.size,
-		};
+		const modifiers = [`tour-tip--${attrs.settings.size}`, ...(attrs.modifiers || []) ];
+		const classes = classNames({
+			'tour-tip': true
+		}, modifiers);
 
 		const createMarkup = (prop) => ({__html: prop});
 
