@@ -26,7 +26,7 @@ export default class TourTip extends Component {
 			(<a href={attrs.content.ctaUrl} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{attrs.content.ctaLabel}</a>)
 			: null;
 
-		return <aside className={classNames(classes)} data-trackable={`tour-tip-${attrs.id}`}>
+		return <div className={classes} data-trackable={`tour-tip-${attrs.id}`}>
 			<div className="tour-tip__main">
 				<div className="tour-tip__text">
 					{tourLink}
@@ -42,6 +42,6 @@ export default class TourTip extends Component {
 					/>
 				</div>
 			</div>
-		</aside>
+		</div>
 	}
 }
