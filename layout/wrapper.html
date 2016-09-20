@@ -89,14 +89,15 @@
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{#if @root.flags.welcomePanel}}
-					{{#ifEquals nUi.welcomeMessage false}}
-					{{else}}
+					{{#unlessEquals nUi.welcomeMessage false}}
 						{{>n-ui/welcome-message/template}}
-					{{/ifEquals}}
+					{{/unlessEquals}}
 				{{/if}}
 				{{>n-ui/footer/template}}
 				{{#if @root.flags.fancyDrawer}}
-					{{>n-ui/header/partials/drawer/template}}
+					{{#unlessEquals nUi.header.variant 'logo-only'}}
+						{{>n-ui/header/partials/drawer/template}}
+					{{/unlessEquals}}
 				{{/if}}
 			</div>
 		</div>
