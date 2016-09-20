@@ -9,11 +9,11 @@ $n-ui-z-index-basis: 100;
 /// Ordered list of z-indexes use cases
 /// @type List
 $n-ui-z-index-order: (
+	'welcome',
 	'meganav',
 	'sticky-header',
 	'drawer',
 	'typeahead',
-	'welcome',
 	'overlay',
 	'notification'
 );
