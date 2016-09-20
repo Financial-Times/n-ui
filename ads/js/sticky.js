@@ -4,28 +4,28 @@ function Sticky (el, opts) {
 	this.el = el;
 	this.opts = opts || {};
 	this.sibling = (opts.sibling) ? document.querySelector(opts.sibling) : null;
+	this.sibling ? this.ad = 'H' : this.ad = 'R';
+
 	this.stickUntil = document.querySelector(opts.stickUntil);
-	// this.stickUntil = (opts.stickUntil) ? document.querySelector(opts.stickUntil) : null;
 	this.extraHeight = false;
 	if (!el) return;
 	this.opts.stickAfter = this.el.getBoundingClientRect().top - 74;
-	console.log('why');
-
+	console.log('ANTHEN?');
 }
 
 Sticky.prototype.stick = function () {
 	this.el.style.position = 'fixed';
 	this.el.style.top = this.opts.topOffset || '0';
-	if (this.sibling) {this.sibling.style.marginTop = this.el.offsetHeight + 'px';}
+	if (this.ad === 'H') {this.sibling.style.marginTop = this.el.offsetHeight + 'px';}
 };
 
 Sticky.prototype.unstick = function () {
 	this.el.style.position = 'absolute';
-	if(this.sibling === null) { //RHR Ad
-		this.el.style.top = (this.stickyUntilPoint - this.el.offsetHeight) + 'px';
-	} else { // Header Ad
+	if(this.ad === 'H') {
 		this.el.style.top = this.stickyUntilPoint + 'px';
 		this.sibling.style.marginTop = this.el.offsetHeight + 'px';
+	} else {
+		this.el.style.top = (this.stickyUntilPoint - this.el.offsetHeight) + 'px';
 	}
 };
 
@@ -34,14 +34,18 @@ Sticky.prototype.onScroll = function () {
 		this.stickyUntilPoint += 50;
 		this.extraHeight = true
 	}
-	if((this.stickyUntilPoint > window.pageYOffset) && (window.pageYOffset >= this.opts.stickAfter)) {
-		requestAnimationFrame(this.stick.bind(this));
-	} else if ((this.stickyUntilPoint + 144) <= window.pageYOffset) {
-		requestAnimationFrame(this.unstick.bind(this));
-	}
-	else if (window.pageYOffset <= this.opts.stickAfter) {
-		this.reset();
-	}
+
+	let stickPoint;
+	this.ad === 'R' ? stickPoint = this.stickyUntilPoint + 144 : stickPoint = this.stickyUntilPoint
+
+		if((stickPoint > window.pageYOffset) && (window.pageYOffset >= this.opts.stickAfter)) {
+			requestAnimationFrame(this.stick.bind(this));
+		} else if (stickPoint < window.pageYOffset) {
+			requestAnimationFrame(this.unstick.bind(this));
+		}
+		else if (window.pageYOffset <= this.opts.stickAfter) {
+			this.reset();
+		}
 };
 
 Sticky.prototype.bindScroll = function () {
