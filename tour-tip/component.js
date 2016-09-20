@@ -10,7 +10,6 @@ export default class TourTip extends Component {
 		const classes = {
 			'tour-tip': true,
 			[`tour-tip--${attrs.settings.size}`]: attrs.settings.size,
-			'tour-tip--reversed': attrs.settings.isReversed
 		};
 
 		const createMarkup = (prop) => ({__html: prop});
