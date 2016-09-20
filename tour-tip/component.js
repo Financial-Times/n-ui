@@ -26,6 +26,15 @@ export default class TourTip extends Component {
 			(<a href={attrs.content.ctaUrl} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{attrs.content.ctaLabel}</a>)
 			: null;
 
+		const image = (attrs.content.imageUrl) ?
+			(<div className="tour-tip__img-container">
+				<Image
+					src={buildImageServiceUrl(attrs.content.imageUrl, (attrs.content.imageUrl.substr(-4,4) === '.svg') ? {format: 'svg'} : {} )}
+					alt={attrs.content.imageAlt}
+					classes={['tour-tip__img']}
+				/>
+			</div>) : null;
+
 		return <div className={classes} data-trackable={`tour-tip-${attrs.id}`}>
 			<div className="tour-tip__main">
 				<div className="tour-tip__text">
@@ -34,13 +43,7 @@ export default class TourTip extends Component {
 					{body}
 					{cta}
 				</div>
-				<div className="tour-tip__img-container">
-					<Image
-						src={buildImageServiceUrl(attrs.content.imageUrl, {format: 'svg'})}
-						alt={attrs.content.imageAlt}
-						classes={['tour-tip__img']}
-					/>
-				</div>
+				{image}
 			</div>
 		</div>
 	}
