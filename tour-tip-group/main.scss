@@ -1,6 +1,19 @@
 @include nUiMaybeCriticalStart('tourTipGroup');
 
 @if nUiApply('tourTipGroup') {
+
+	.tour-tip-group {
+		background-color: getColor('warm-5');
+		color: getColor('white');
+
+		.tour-tip {
+			border-top: 1px solid mix(getColor('black'), getColor('warm-5'), 20%);
+		}
+	}
+
+	.tour-tip-group__item:first-child .tour-tip {
+		border-top: 0;
+	}
 }
 
 @include nUiMaybeCriticalEnd('tourTipGroup');
