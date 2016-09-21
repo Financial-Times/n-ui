@@ -1,0 +1,6 @@
+@include nUiMaybeCriticalStart('tourTipGroup');
+
+@if nUiApply('tourTipGroup') {
+}
+
+@include nUiMaybeCriticalEnd('tourTipGroup');
