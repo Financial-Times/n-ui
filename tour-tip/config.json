@@ -54,7 +54,7 @@
       "size": "s"
     },
     "content": {
-      "title": "Share 10 articles a month with non-subscribers, who can read them - absolutely free",
+      "title": "Share 10 articles a month with non-subscribers, who can read them – absolutely free",
       "imageAlt": "Illustration of the Gift Article button in article pages",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-2.svg",
       "ctaUrl": "/tour",
@@ -69,7 +69,7 @@
       "size": "m"
     },
     "content": {
-      "title": "Share 10 articles a month with non-subscribers, who can read them - absolutely free",
+      "title": "Share 10 articles a month with non-subscribers, who can read them – absolutely free",
       "imageAlt": "Illustration of the Gift Article button in article pages",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-2.svg",
       "ctaUrl": "/tour",
@@ -86,7 +86,7 @@
     },
     "content": {
       "title": "Gift article",
-      "body": "Start the conversation. Share up to 10 articles a month with colleagues, friends or family - absolutely free. Even if they’re not subscribed to the FT.",
+      "body": "Start the conversation. Share up to 10 articles a month with colleagues, friends or family – absolutely free. Even if they’re not subscribed to the FT.",
       "imageAlt": "Illustration of the Gift Article button in article pages",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-2.svg"
     }
@@ -221,7 +221,7 @@
     },
     "content": {
       "title": "myFT Alerts",
-      "body": "Choose to receive Instant, Daily or Weekly digests about the topics in your myFT  - delivered straight to your email inbox.",
+      "body": "Choose to receive Instant, Daily or Weekly digests about the topics in your myFT – delivered straight to your email inbox.",
       "imageAlt": "Illustration of a myFT Instant Alert email",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-1.svg",
       "ctaUrl": "/myft/product-tour",
@@ -313,7 +313,7 @@
     },
     "content": {
       "title": "Updated Portfolio tool",
-      "body": "Investments at your fingertips - add, edit and track investments on all of your devices. You can choose to keep using the existing <a href=\"/http://portfolio.ft.com\" class=\"tour-tip__body-link\" data-trackable=\"portfolio\">Portfolio</a> while we perfect the new dashboard.",
+      "body": "Investments at your fingertips – add, edit and track investments on all of your devices. You can choose to keep using the existing <a href=\"/http://portfolio.ft.com\" class=\"tour-tip__body-link\" data-trackable=\"portfolio\">Portfolio</a> while we perfect the new dashboard.",
       "imageAlt": "Illustration of the FT Portfolio page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-1.svg"
     }
