@@ -108,9 +108,11 @@ function hideIfSegmentId () {
 
 function setTourButton () {
 	const tourButton = fixedEl.querySelector('[data-component="cta-take-tour"]');
-	tourButton.addEventListener('click', () => {
-		superstore.local.set(HAS_TAKEN_TOUR, 1);
-	});
+	if (tourButton) {
+		tourButton.addEventListener('click', () => {
+			superstore.local.set(HAS_TAKEN_TOUR, 1);
+		});
+	}
 }
 
 // this is the 'old' welcome functionality, where you only saw the sticky welcome once
