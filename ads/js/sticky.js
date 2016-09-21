@@ -10,7 +10,6 @@ function Sticky (el, opts) {
 	this.extraHeight = false;
 	if (!el) return;
 	this.opts.stickAfter = this.el.getBoundingClientRect().top - 74;
-	console.log('ANTHEN?');
 }
 
 Sticky.prototype.stick = function () {
