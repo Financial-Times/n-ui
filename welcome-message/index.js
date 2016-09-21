@@ -4,6 +4,7 @@ const oViewport = require('o-viewport');
 
 const STORAGE_KEY = 'n-welcome-message-seen';
 const HAS_MINIMIZED = 'n-welcome-message-collapsed';
+const HAS_TAKEN_TOUR = 'n-taken-tour';
 const TEST_KEY = 'n-welcome-message-test';
 const TEST_VAL = 'can-store';
 
@@ -23,16 +24,13 @@ function userHasMinimized () {
 	return Boolean(superstore.local.get(HAS_MINIMIZED));
 }
 
+function userHasTakenTour () {
+	return Boolean(superstore.local.get(HAS_TAKEN_TOUR));
+}
+
 function setExpander () {
-	const buttonContainer = document.createElement('div');
-	const button = document.createElement('button');
 	const buttonClass = 'n-welcome-banner__button--toggler';
 	const expandableContent = fixedEl.querySelector('.o-expander__content');
-	buttonContainer.setAttribute('class', 'n-welcome-banner__column');
-	button.setAttribute('data-trackable', 'toggled');
-	button.setAttribute('class', buttonClass);
-	buttonContainer.appendChild(button);
-	expandableContent.parentNode.appendChild(buttonContainer);
 
 	if (userHasMinimized()) {
 		expandableContent.setAttribute('aria-hidden', true);
@@ -108,6 +106,13 @@ function hideIfSegmentId () {
 	}
 }
 
+function setTourButton () {
+	const tourButton = fixedEl.querySelector('[data-component="cta-take-tour"]');
+	tourButton.addEventListener('click', () => {
+		superstore.local.set(HAS_TAKEN_TOUR, 1);
+	});
+}
+
 // this is the 'old' welcome functionality, where you only saw the sticky welcome once
 // we might go back to this once users are confident with new site
 function initOneTimeSticky () {
@@ -128,11 +133,14 @@ function init () {
 	staticEl = document.querySelector('.n-welcome-message--static');
 
 	if (fixedEl.getAttribute('data-component') === 'welcome-banner') { // new shrinkable banner
-		fixedEl.removeAttribute('hidden');
-		fixedElHeight = fixedEl.getBoundingClientRect().height;
-		updateViewportHeight();
-		setScrollLimitSticky();
-		setExpander();
+		if (!userHasTakenTour()) {
+			setTourButton();
+			fixedEl.removeAttribute('hidden');
+			fixedElHeight = fixedEl.getBoundingClientRect().height;
+			updateViewportHeight();
+			setScrollLimitSticky();
+			setExpander();
+		}
 	} else { // old removable message
 		initOneTimeSticky();
 	}
