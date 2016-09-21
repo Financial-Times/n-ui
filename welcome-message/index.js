@@ -29,15 +29,8 @@ function userHasTakenTour () {
 }
 
 function setExpander () {
-	const buttonContainer = document.createElement('div');
-	const button = document.createElement('button');
 	const buttonClass = 'n-welcome-banner__button--toggler';
 	const expandableContent = fixedEl.querySelector('.o-expander__content');
-	buttonContainer.setAttribute('class', 'n-welcome-banner__column');
-	button.setAttribute('data-trackable', 'toggled');
-	button.setAttribute('class', buttonClass);
-	buttonContainer.appendChild(button);
-	expandableContent.parentNode.appendChild(buttonContainer);
 
 	if (userHasMinimized()) {
 		expandableContent.setAttribute('aria-hidden', true);

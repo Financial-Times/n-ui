@@ -32,9 +32,13 @@
 	.n-welcome-message--static {
 		margin: 16px 0;
 
+		.if-fixed {
+			display: none;
+		}
 		@include oGridRespondTo('M') {
 			margin: 24px 0;
 		}
+
 	}
 
 	.n-welcome-message--fixed {
