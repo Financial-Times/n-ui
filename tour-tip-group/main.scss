@@ -27,6 +27,14 @@
 	.tour-tip-group__item:first-child .tour-tip {
 		border-top: 0;
 	}
+
+	.tour-tip--outro {
+		.tour-tip__text {
+			text-align: center;
+			width: 100%;
+		}
+	}
+
 }
 
 @include nUiMaybeCriticalEnd('tourTipGroup');
