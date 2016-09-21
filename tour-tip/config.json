@@ -236,7 +236,7 @@
       "size": "s"
     },
     "content": {
-      "title": "Email briefings subscriptions can now be handled in myFT. <a href=\"https://www.ft.com/myft/alerts/442fd437-c69e-4697-8de7-db47179c0a7e\" class=\"tour-tip__body-link\" data-trackable=\"email-briefings\"></a>Take a look.",
+      "title": "Email briefings subscriptions can now be handled in myFT. <a href=\"https://www.ft.com/myft/alerts\" class=\"tour-tip__body-link\" data-trackable=\"email-briefings\"></a>Take a look.",
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-1.svg",
       "ctaUrl": "/tour",
@@ -251,7 +251,7 @@
       "size": "m"
     },
     "content": {
-      "title": "Email briefings subscriptions can now be handled in myFT. <a href=\"https://www.ft.com/myft/alerts/442fd437-c69e-4697-8de7-db47179c0a7e\" class=\"tour-tip__body-link\" data-trackable=\"email-briefings\"></a>Take a look.",
+      "title": "Email briefings subscriptions can now be handled in myFT. <a href=\"https://www.ft.com/myft/alerts\" class=\"tour-tip__body-link\" data-trackable=\"email-briefings\"></a>Take a look.",
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-1.svg",
       "ctaUrl": "/tour",
@@ -326,7 +326,7 @@
       "size": "s"
     },
     "content": {
-      "title": "Valuable reports on specific countries, industries and business topics.  <a href=\"/https://www.ft.com/special-reports\" class=\"tour-tip__body-link\" data-trackable=\"special-reports\">View Special Reports.</a>",
+      "title": "Valuable reports on specific countries, industries and business topics",
       "imageAlt": "Illustration of a Special Reports page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-1.svg",
       "ctaUrl": "/tour",
@@ -341,7 +341,7 @@
       "size": "m"
     },
     "content": {
-      "title": "Valuable reports on specific countries, industries and business topics.  <a href=\"/https://www.ft.com/special-reports\" class=\"tour-tip__body-link\" data-trackable=\"special-reports\">View Special Reports.</a>",
+      "title": "Valuable reports on specific countries, industries and business topics",
       "imageAlt": "Illustration of a Special Reports page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-1.svg",
       "ctaUrl": "/tour",
