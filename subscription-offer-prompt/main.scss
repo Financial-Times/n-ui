@@ -1,0 +1,102 @@
+@import 'n-sliding-popup/main';
+
+.subscription-prompt--flag {
+	background-color: #E76836;
+	border-radius: 3px;
+	padding: 4px 9px 5px;
+	text-align: center;
+	color: white;
+	font-size: 15px;
+	font-weight: 600;
+	text-transform: uppercase;
+	line-height: 17px;
+	margin-bottom: 10px;
+	display: inline-block;
+}
+
+.subscription-prompt--heading {
+	@include oTypographySansBold(l);
+	color: oColorsGetPaletteColor('grey-tint5');
+	margin: 0 0 4px;
+
+	@include oGridRespondTo($until: M) {
+		@include oTypographySansBold(m)
+	}
+}
+
+.subscription-prompt--subheading {
+	@include oTypographySans(m);
+	color: oColorsGetPaletteColor('grey-tint5');
+	display: inline-block;
+	margin-bottom: 20px;
+
+	@include oGridRespondTo($until: M) {
+		@include oTypographySansBold(s);
+		font-weight: 300;
+	}
+}
+
+.subscription-prompt--subscribe-btn {
+	@include oButtons(medium, standard);
+	@include oButtonsSize(small);
+	@include oButtonsTheme(standout);
+
+	font-size: 16px;
+	width: 140px;
+	text-transform: none;
+	padding: 5px 9px 7px;
+	margin-top: 24px;
+
+	@include oGridRespondTo($until: M) {
+		margin-top: 8px;
+		width: auto;
+	}
+}
+
+.subscription-prompt--header {
+	@include oGridColspan(full-width);
+}
+
+.subscription-prompt--info {
+	@include oGridColspan(7);
+}
+
+.subscription-prompt--aside {
+	@include oGridColspan(5);
+}
+
+.subscription-prompt--benefits-list {
+	@include oTypographySansBold(s);
+	list-style: none;
+	font-weight: normal;
+	padding: 0;
+	margin: 0;
+
+	li {
+		position: relative;
+		margin-left: 20px;
+		margin-bottom: 6px;
+		color: oColorsGetPaletteColor('grey-tint5');
+
+		&:before {
+			@include oIconsGetIcon('tick', #35bd14, 14);
+			content: '';
+			margin-right: 4px;
+			position: absolute;
+			top: 2px;
+			left: -20px;
+		}
+	}
+}
+
+.subscription-prompt--figure {
+	margin: 0;
+	position: absolute;
+	top: -24px;
+	right: 10px;
+}
+
+.subscription-prompt--figure-caption {
+	color: oColorsGetPaletteColor('grey-tint5');
+	font-size: 16px;
+}

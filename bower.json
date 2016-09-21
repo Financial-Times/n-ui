@@ -25,6 +25,7 @@
     "n-messages": "^2.0.0",
     "n-notification": "^4.0.0",
     "n-service-worker": "^1.4.2",
+    "n-sliding-popup": "^1.0.0",
     "next-myft-client": "^6.4.2",
     "o-ads": "6.0.0-beta.5",
     "o-buttons": "^4.0.1",
