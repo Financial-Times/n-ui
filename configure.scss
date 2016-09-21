@@ -25,6 +25,7 @@ $n-ui-features: (
 	overlay: false,
 	promoMessages: false,
 	tourTip: false,
+	tourTipGroup: false,
 	typography: 'critical',
 	utils: 'critical',
 	welcomeMessage: true
@@ -33,7 +34,8 @@ $n-ui-features: (
 /// Declare any feature dependencies
 /// @type Map
 $n-ui-feature-dependencies: (
-	myft: ('forms', 'notification', 'overlay', 'myftCommon')
+	myft: ('forms', 'notification', 'overlay', 'myftCommon'),
+	tourTipGroup: ('tourTip')
 );
 
 /// Preset groups of features
