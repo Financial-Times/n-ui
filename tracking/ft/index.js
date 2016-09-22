@@ -94,7 +94,10 @@ const oTrackingWrapper = {
 			};
 
 			// FIXME - should not fire on barriers, but needs to be around for a while data analytics fix their SQL
-			oTracking.page(pageViewConf.context);
+			// Page view must not be triggered in any form of frameset, only a genuine page view, or the error page domain, as error pages are served in iframes.
+			if(window === window.top || window.location.hostname === 'errors-next.ft.com') {
+				oTracking.page(pageViewConf.context);
+			}
 
 			if (barrierType) {
 
