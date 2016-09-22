@@ -1,16 +1,15 @@
 const debounce = require('./utils').debounce;
 
 function Sticky (el, opts) {
+	if (!el) return;
 	this.el = el;
 	this.opts = opts || {};
 	this.sibling = (opts.sibling) ? document.querySelector(opts.sibling) : null;
-	this.sibling ? this.ad = 'H' : this.ad = 'R';
-
 	this.stickUntil = document.querySelector(opts.stickUntil);
 	this.extraHeight = false;
-	if (!el) return;
 	this.opts.stickAfter = this.el.getBoundingClientRect().top - 74;
-	console.log('ANTHEN?');
+
+	this.sibling ? this.ad = 'H' : this.ad = 'R';
 }
 
 Sticky.prototype.stick = function () {
@@ -48,15 +47,28 @@ Sticky.prototype.onScroll = function () {
 		}
 };
 
+Sticky.prototype.startLoop = function () {
+	let viewportOffset = window.innerHeight / 2;
+	this.lastAnimationFrame = window.requestAnimationFrame(() => {
+		this.onScroll();
+		this.startLoop();
+	})
+};
+
+Sticky.prototype.stopLoop = function () {
+	this.lastAnimationFrame && window.cancelAnimationFrame(this.lastAnimationFrame);
+};
+
 Sticky.prototype.bindScroll = function () {
-	this.onScrollListener = debounce(this.onScroll).bind(this);
-	window.addEventListener('scroll', this.onScrollListener);
+	window.removeEventListener('scroll', this.bindScroll);
+	window.addEventListener('scroll', this.debouncedScroll)
+	this.startLoop()
 };
 
 Sticky.prototype.unbindScroll = function () {
-	window.removeEventListener('scroll', this.onScrollListener);
-	this.onScrollListener = null;
-	this.reset();
+	this.stopLoop()
+	window.removeEventListener('scroll', this.debouncedScroll)
+	window.addEventListener('scroll', this.bindScroll)
 };
 
 Sticky.prototype.onResize = function () {
@@ -74,15 +86,14 @@ Sticky.prototype.reset = function () {
 };
 
 Sticky.prototype.init = function () {
-	if(!this.el || window.pageYOffset > 0) {
+	if(!this.el || window.pageYOffset > 0 || window.scrollY > 0) {
 		return;
 	};
 	this.stickyUntilPoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
 	this.el.style.zIndex = '23';
 
 	window.addEventListener('resize', debounce(this.onResize).bind(this));
-
-	this.bindScroll();
+	window.addEventListener('scroll', this.bindScroll());
 };
 
 module.exports = Sticky;
