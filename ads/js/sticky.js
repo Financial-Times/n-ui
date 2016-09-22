@@ -8,19 +8,17 @@ function Sticky (el, opts) {
 	this.stickUntil = document.querySelector(opts.stickUntil);
 	this.extraHeight = false;
 	this.opts.stickAfter = this.el.getBoundingClientRect().top - 74;
-
-	this.sibling ? this.ad = 'H' : this.ad = 'R';
 }
 
 Sticky.prototype.stick = function () {
 	this.el.style.position = 'fixed';
 	this.el.style.top = this.opts.topOffset || '0';
-	if (this.ad === 'H') {this.sibling.style.marginTop = this.el.offsetHeight + 'px';}
+	if (this.sibling) {this.sibling.style.marginTop = this.el.offsetHeight + 'px';}
 };
 
 Sticky.prototype.unstick = function () {
 	this.el.style.position = 'absolute';
-	if(this.ad === 'H') {
+	if(this.sibling) {
 		this.el.style.top = this.stickyUntilPoint + 'px';
 		this.sibling.style.marginTop = this.el.offsetHeight + 'px';
 	} else {
@@ -35,16 +33,16 @@ Sticky.prototype.onScroll = function () {
 	}
 
 	let stickPoint;
-	this.ad === 'R' ? stickPoint = this.stickyUntilPoint + 144 : stickPoint = this.stickyUntilPoint
+	this.sibling ? stickPoint = stickPoint = this.stickyUntilPoint : this.stickyUntilPoint + 144
 
-		if((stickPoint > window.pageYOffset) && (window.pageYOffset >= this.opts.stickAfter)) {
-			requestAnimationFrame(this.stick.bind(this));
-		} else if (stickPoint < window.pageYOffset) {
-			requestAnimationFrame(this.unstick.bind(this));
-		}
-		else if (window.pageYOffset <= this.opts.stickAfter) {
-			this.reset();
-		}
+	if((stickPoint > window.pageYOffset) && (window.pageYOffset >= this.opts.stickAfter)) {
+		requestAnimationFrame(this.stick.bind(this));
+	} else if (stickPoint < window.pageYOffset) {
+		requestAnimationFrame(this.unstick.bind(this));
+	}
+	else if (window.pageYOffset <= this.opts.stickAfter) {
+		this.reset();
+	}
 };
 
 Sticky.prototype.startLoop = function () {
@@ -81,7 +79,7 @@ Sticky.prototype.onResize = function () {
 
 Sticky.prototype.reset = function () {
 	this.el.style.position = 'static';
-	this.sibling === null ? this.sibling : this.sibling.style.marginTop = '0px';
+	this.sibling ? this.sibling.style.marginTop = '0px' : this.sibling;
 };
 
 Sticky.prototype.init = function () {
