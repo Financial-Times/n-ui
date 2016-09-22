@@ -34,7 +34,8 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 
 	}
 
-	@include oHeader(('drawer', 'sticky'));
+	@include oHeaderDrawer;
+	@include oHeaderSticky;
 
 	// fix up z-indexes
 	.o-header__drawer {
