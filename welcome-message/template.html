@@ -1,14 +1,24 @@
 <div class="o-grid-container">
-	<div class="n-welcome-message n-welcome-message--static" data-trackable="welcome">
-		{{>n-ui/welcome-message/message}}
+	<div class="{{#if @root.flags.nextFtTour}}n-welcome-banner{{else}}n-welcome-message{{/if}} n-welcome-message--static" data-trackable="welcome">
+		{{#if @root.flags.nextFtTour}}
+			{{>n-ui/welcome-message/banner}}
+		{{else}}
+			{{>n-ui/welcome-message/message}}
+		{{/if}}
 	</div>
 </div>
 
-<div class="n-welcome-message n-welcome-message--fixed" data-trackable="welcome" hidden>
-	<div class="o-grid-container">
-		{{>n-ui/welcome-message/message}}
-	</div>
-	<button type="button" class="n-welcome-message__close">
-		<span class="n-util-visually-hidden">Close</span>
-	</button>
+<div {{#if @root.flags.nextFtTour}}data-o-component="o-expander" data-component="welcome-banner" data-o-expander-shrink-to="hidden" data-o-expander-toggle-selector=".n-welcome-banner__button--toggler" {{/if}}class="{{#if @root.flags.nextFtTour}}o-expander n-welcome-banner{{else}}n-welcome-message{{/if}} n-welcome-message--fixed" data-trackable="welcome" hidden>
+	{{#if @root.flags.nextFtTour}}
+		{{>n-ui/welcome-message/banner}}
+	{{else}}
+		<div class="o-grid-container">
+			{{>n-ui/welcome-message/message}}
+		</div>
+	{{/if}}
+	{{#unless @root.flags.nextFtTour}}
+		<button type="button" class="n-welcome-message__close">
+			<span class="n-util-visually-hidden">Close</span>
+		</button>
+	{{/unless}}
 </div>

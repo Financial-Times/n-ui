@@ -1,4 +1,4 @@
-@include nUiCriticalStart('utils');
+@include nUiMaybeCriticalStart('utils');
 
 @import 'mixins';
 
@@ -43,28 +43,9 @@
 		height: 1px;
 	}
 
-	.n-util-hide-no-js {
-		.no-js & {
-			display: none;
-		}
-	}
-
-	.n-util-hide-js {
-		.js & {
-			display: none;
-		}
-	}
-
-	.n-util-hide-core {
-		.core & {
-			display: none;
-		}
-	}
-
-	.n-util-hide-enhanced {
-		.enhanced & {
-			display: none;
-		}
+	.core .n-util-hide-core,
+	.enhanced .n-util-hide-enhanced {
+		display: none;
 	}
 
 	//
@@ -92,4 +73,4 @@
 
 }
 
-@include nUiCriticalEnd('utils');
+@include nUiMaybeCriticalEnd('utils');

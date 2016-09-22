@@ -10,11 +10,13 @@
 .eslintrc.js
 .scss-lint.yml
 /public/head-n-ui-core.css
+/public/head-n-ui-core.css.map
 /public/head.css
+/public/head.css.map
 /public/main.css
 /public/main.css.map
-/public/main.js
-/public/main.js.map
+/public/main-without-n-ui.js
+/public/main-without-n-ui.js.map
 key.pem
 key-cert.pem
 /test-page.html

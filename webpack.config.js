@@ -78,6 +78,7 @@ module.exports = [
 		entry: {
 			'./dist/n-ui-core.css': './_deploy/shared-head.scss'
 		},
+		withHeadCss: true,
 		wrap: undefined,
 		buildInDev: true
 	}

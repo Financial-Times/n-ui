@@ -16,9 +16,23 @@ const app = module.exports = express({
 });
 
 app.get('/', (req, res) => {
+	// such a load of hacks :/
+	// in an ideal world we could hack some middleware in
+	// before the assets middleware gets applied
+	res.locals.javascriptBundles = res.locals.javascriptBundles
+		.filter(bundle => {
+			return bundle.indexOf('undefined') === -1
+		})
+		.map(bundle => {
+			if (bundle.indexOf('polyfill') > -1) {
+				return bundle.replace('polyfill.min', 'polyfill')
+					.split('&excludes')[0];
+			}
+			return bundle;
+		});
 	res.render('default', {
 		layout: 'wrapper'
-	})
+	});
 });
 
 app.listen(5005)
@@ -36,19 +50,23 @@ app.listen(5005)
 				.then(() => app.close())
 				.then(() => {
 					return deployStatic({
-						files: ['test-page.html', 'public/main.css', 'public/main.js', 'public/main.css.map', 'public/main.js.map'],
+						files: ['test-page.html', 'public/main.css', 'public/main-without-n-ui.js', 'public/main.css.map', 'public/main-without-n-ui.js.map'],
 						destination: `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/`,
 						bucket: 'ft-next-n-ui-prod',
 						cacheControl: 'no-cache, must-revalidate',
 					})
 						.catch(err => {
-							console.error(err)
+							console.error(err) //eslint-disable-line
 							process.exit(2);
 						});
 				})
 				.then(() => {
-					console.log('deployed test static site to s3');
+					console.log('deployed test static site to s3'); //eslint-disable-line
 					process.exit(0);
+				})
+				.catch(err => {
+					console.error(err) //eslint-disable-line
+					process.exit(2)
 				})
 		}
 	});

@@ -22,7 +22,10 @@ if (!tag) {
 shellpromise('find . -path "./dist/*"')
 	.then(files => {
 
-		files = files.split('\n').filter(f => !!f);
+		files = files.split('\n')
+			.filter(f => !!f)
+			.filter(f => !/^n-ui-core\.css/.test(f));
+
 		const deploys = versions.reduce((arr, version, i) => {
 			return arr.concat([{
 				version,
@@ -58,20 +61,24 @@ shellpromise('find . -path "./dist/*"')
 					})
 					.then(res => {
 						if(!res.ok) {
+							console.log(res.status); //eslint-disable-line
 							throw new Error(`failed to purge ${path}`)
 						} else {
-							console.log(`successfully purged ${path}`)
+							console.log(`successfully purged ${path}`) //eslint-disable-line
 						}
 					})
 					.catch(err => {
-						console.error(err);
+						console.error(err); //eslint-disable-line
 					})
 				}))
 				.catch(err => {
-					console.error(err)
+					console.error(err) //eslint-disable-line
 					process.exit(2);
 				});
 
 		}));
 	})
-	.catch(console.log.bind(console))
+	.catch(err => {
+		console.log(err) //eslint-disable-line
+		process.exit(2)
+	})

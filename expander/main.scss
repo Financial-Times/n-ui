@@ -1,7 +1,7 @@
-@include nUiCriticalStart('expander');
+@include nUiMaybeCriticalStart('expander');
 
 $o-expander-is-silent: not nUiHas('expander') !default;
 
 @import 'o-expander/main';
 
-@include nUiCriticalEnd('expander');
+@include nUiMaybeCriticalEnd('expander');
