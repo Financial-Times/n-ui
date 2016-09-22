@@ -130,7 +130,16 @@
 		color: getColor('teal-1');
 	}
 
+	.n-welcome-banner__button--secondary {
+		@include oButtons($size: 'big', $theme: 'standout');
+		text-transform: uppercase;
+		color: getColor('white');
+		background-color: getColor('teal-1');
+		border-color: getColor('teal-2');
+	}
+
 	.n-welcome-banner__link-action {
+		text-transform: uppercase;
 		display: inline-block;
 		margin: 0 0 0 $spacing-unit/2;
 		color: getColor('white');
