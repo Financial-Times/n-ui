@@ -11,19 +11,6 @@
 		}
 	}
 
-	.tour-tip-group__item:nth-child(odd) {
-		.tour-tip__img-container {
-			float: right;
-			margin: 0 0 0 $spacing-unit*3;
-			order: 2;
-		}
-
-		.tour-tip__text {
-			float: left;
-			order: 1;
-		}
-	}
-
 	.tour-tip-group__item:first-child .tour-tip {
 		border-top: 0;
 	}
@@ -31,7 +18,27 @@
 	.tour-tip--outro {
 		.tour-tip__text {
 			text-align: center;
-			width: 100%;
+		}
+	}
+
+	@include oGridRespondTo($from: 'M') {
+		.tour-tip-group__item:nth-child(odd) {
+			.tour-tip__img-container {
+				float: right;
+				margin: 0 0 0 $spacing-unit*3;
+				order: 2;
+			}
+
+			.tour-tip__text {
+				float: left;
+				order: 1;
+			}
+		}
+
+		.tour-tip--outro {
+			.tour-tip__text {
+				width: 100%;
+			}
 		}
 	}
 
