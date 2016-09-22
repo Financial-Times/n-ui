@@ -4,15 +4,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "s"
     },
     "content": {
-      "title": "Track topics most important to you in myFT.",
+      "title": "Track the topics most important to you all in one place",
       "imageAlt": "Illustration of the \"Companies\" page, showing an \"Added\" button next to the page heading",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-1.svg",
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-2.svg",
       "ctaUrl": "/tour",
-      "ctaLabel": "Learn more"
+      "ctaLabel": "More tips"
     }
   },
   {
@@ -20,15 +19,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "m"
     },
     "content": {
-      "title": "Track topics most important to you in myFT.",
+      "title": "Track the topics most important to you all in one place",
       "imageAlt": "Illustration of the \"Companies\" page, showing an \"Added\" button next to the page heading",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-1.svg",
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-2.svg",
       "ctaUrl": "/tour",
-      "ctaLabel": "Learn more"
+      "ctaLabel": "Discover more tips"
     }
   },
   {
@@ -37,16 +35,15 @@
     "settings": {
       "hasTourPageLink": false,
       "isDismissable": false,
-      "isReversed": false,
       "size": "l"
     },
     "content": {
-      "title": "Thousands of topics to add to myFT",
-      "body": "Discover topics of interest more easily on thousands of concepts. Then you can track topics most important to you in myFT.",
+      "title": "Make myFT yours",
+      "body": "Discover thousands of concepts to track. Then you can stay updated on those most important to you, all in one place.",
       "imageAlt": "Illustration of the \"Companies\" page, showing an \"Added\" button next to the page heading",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-2.svg",
+      "ctaUrl": "/myft/product-tour",
+      "ctaLabel": "Explore myFT"
     }
   },
   {
@@ -54,15 +51,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "s"
     },
     "content": {
-      "title": "Gift 10 articles a month to non-subscribers for free",
+      "title": "Share 10 articles a month with non-subscribers, who can read them – absolutely free",
       "imageAlt": "Illustration of the Gift Article button in article pages",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-2.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-3.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "More tips"
     }
   },
   {
@@ -70,15 +66,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "m"
     },
     "content": {
-      "title": "Gift 10 articles a month to non-subscribers for free",
+      "title": "Share 10 articles a month with non-subscribers, who can read them – absolutely free",
       "imageAlt": "Illustration of the Gift Article button in article pages",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-2.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-3.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "Discover more tips"
     }
   },
   {
@@ -87,16 +82,13 @@
     "settings": {
       "hasTourPageLink": false,
       "isDismissable": false,
-      "isReversed": false,
       "size": "l"
     },
     "content": {
       "title": "Gift article",
-      "body": "Share 10 articles a month with non-subscribers, who can read them free. Look for the email icon at the top of articles.",
+      "body": "Start the conversation. Share up to 10 articles a month with colleagues, friends or family – absolutely free. Even if they’re not subscribed to the FT.",
       "imageAlt": "Illustration of the Gift Article button in article pages",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-2.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-3.svg"
     }
   },
   {
@@ -104,15 +96,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "s"
     },
     "content": {
       "title": "Better filtering of trending topics in FastFT’s market-moving news",
       "imageAlt": "Illustration of the FastFT page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-2.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "More tips"
     }
   },
   {
@@ -120,33 +111,31 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "m"
     },
     "content": {
       "title": "Better filtering of trending topics in FastFT’s market-moving news",
       "imageAlt": "Illustration of the FastFT page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-2.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "Discover more tips"
     }
   },
   {
     "id": "fastft-l",
     "queryStringId": "fastft",
     "settings": {
-      "hasTourPageLink": true,
+      "hasTourPageLink": false,
       "isDismissable": false,
-      "isReversed": false,
       "size": "l"
     },
     "content": {
       "title": "Improved FastFT",
-      "body": "Better filtering of trending topics in our global team’s instant market-moving news and views.",
+      "body": "Better filtering of trending topics, same instant market-moving news and views from our global team.",
       "imageAlt": "Illustration of the FastFT page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-2.svg",
+      "ctaUrl": "https://www.ft.com/fastft",
+      "ctaLabel": "Try fastFT"
     }
   },
   {
@@ -154,15 +143,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "s"
     },
     "content": {
-      "title": "New charting tools, macromaps and easier currency comparison",
+      "title": "Get intuitive markets data at a glance on any device",
       "imageAlt": "Illustration of a graph in a Markets Data page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-3.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "More tips"
     }
   },
   {
@@ -170,15 +158,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "m"
     },
     "content": {
-      "title": "New charting tools, macromaps and easier currency comparison",
+      "title": "Get intuitive markets data at a glance on any device",
       "imageAlt": "Illustration of a graph in a Markets Data page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-3.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "Discover more tips"
     }
   },
   {
@@ -187,16 +174,15 @@
     "settings": {
       "hasTourPageLink": false,
       "isDismissable": false,
-      "isReversed": false,
       "size": "l"
     },
     "content": {
-      "title": "Markets Data",
+      "title": "Improved Markets Data tools",
       "body": "Manage price alerts on the go, compare cross currencies quickly and get a macromap view of major indices across the globe.",
       "imageAlt": "Illustration of a graph in a Markets Data page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-3.svg",
+      "ctaUrl": "http://markets.ft.com/data/",
+      "ctaLabel": "Visit Markets Data"
     }
   },
   {
@@ -204,15 +190,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "s"
     },
     "content": {
-      "title": "Get Instant, Daily or Weekly email digests on your topics",
+      "title": "Instant, Daily or Weekly news digests delivered straight to your email inbox",
       "imageAlt": "Illustration of a myFT Instant Alert email",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-2.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "More tips"
     }
   },
   {
@@ -220,15 +205,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "m"
     },
     "content": {
-      "title": "Get Instant, Daily or Weekly email digests on your topics",
+      "title": "Instant, Daily or Weekly news digests delivered straight to your email inbox",
       "imageAlt": "Illustration of a myFT Instant Alert email",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-2.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "Discover more tips"
     }
   },
   {
@@ -237,16 +221,15 @@
     "settings": {
       "hasTourPageLink": false,
       "isDismissable": false,
-      "isReversed": false,
       "size": "l"
     },
     "content": {
       "title": "myFT Alerts",
-      "body": "Get Instant, Daily or Weekly email digests on  topics you’ve added to myFT.",
+      "body": "Choose to receive Instant, Daily or Weekly digests about the topics in your myFT – delivered straight to your email inbox.",
       "imageAlt": "Illustration of a myFT Instant Alert email",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-2.svg",
+      "ctaUrl": "/myft/alerts",
+      "ctaLabel": "Manage alerts"
     }
   },
   {
@@ -254,15 +237,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "s"
     },
     "content": {
-      "title": "Email briefings subscriptions can now be handled in myFT.",
+      "title": "Email briefings subscriptions can now be handled in myFT",
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-3.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "More tips"
     }
   },
   {
@@ -270,15 +252,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "m"
     },
     "content": {
-      "title": "Email briefings subscriptions can now be handled in myFT.",
+      "title": "Email briefings subscriptions can now be handled in myFT",
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-3.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "Discover more tips"
     }
   },
   {
@@ -287,16 +268,15 @@
     "settings": {
       "hasTourPageLink": false,
       "isDismissable": false,
-      "isReversed": false,
       "size": "l"
     },
     "content": {
       "title": "Email Briefings",
-      "body": "You can now manage your email briefing subscriptions in myFT. We’ll be adding to this in the coming months.",
+      "body": "You can now manage your news briefing subscriptions in myFT. Keep an eye out for further enhancements coming soon.",
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-3.svg",
+      "ctaUrl": "https://www.ft.com/myft/alerts",
+      "ctaLabel": "Review briefings"
     }
   },
   {
@@ -304,15 +284,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "s"
     },
     "content": {
-      "title": "You can now add, edit and track investments on all your devices",
+      "title": "Investments at your fingertips with Portfolio access on all of your devices",
       "imageAlt": "Illustration of the FT Portfolio page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-2.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "More tips"
     }
   },
   {
@@ -320,15 +299,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "m"
     },
     "content": {
-      "title": "You can now add, edit and track investments on all your devices",
+      "title": "Investments at your fingertips with Portfolio access on all of your devices",
       "imageAlt": "Illustration of the FT Portfolio page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-2.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "Discover more tips"
     }
   },
   {
@@ -337,16 +315,15 @@
     "settings": {
       "hasTourPageLink": false,
       "isDismissable": false,
-      "isReversed": false,
       "size": "l"
     },
     "content": {
       "title": "Updated Portfolio tool",
-      "body": "Add, edit and track investments on all your devices. If you’re not quite ready to make the move, you can still access the old Portfolio while we put the finishing touches on the new tool.",
+      "body": "Investments at your fingertips – add, edit and track investments on all of your devices. You can choose to keep using the existing Portfolio while we perfect the new dashboard.",
       "imageAlt": "Illustration of the FT Portfolio page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-2.svg",
+      "ctaUrl": "http://markets.ft.com/data/portfolio/dashboard",
+      "ctaLabel": "Check your Portfolio"
     }
   },
   {
@@ -354,15 +331,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "s"
     },
     "content": {
-      "title": "Valuable reports on specific countries, industries and business topics.",
+      "title": "Valuable reports on specific countries, industries and business topics",
       "imageAlt": "Illustration of a Special Reports page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-2.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "More tips"
     }
   },
   {
@@ -370,15 +346,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "m"
     },
     "content": {
-      "title": "Valuable reports on specific countries, industries and business topics.",
+      "title": "Valuable reports on specific countries, industries and business topics",
       "imageAlt": "Illustration of a Special Reports page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-2.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "Discover more tips"
     }
   },
   {
@@ -387,16 +362,15 @@
     "settings": {
       "hasTourPageLink": false,
       "isDismissable": false,
-      "isReversed": false,
       "size": "l"
     },
     "content": {
       "title": "Special Reports",
-      "body": "Get valuable insights into specific countries, industries and business topics, with over 200 in-depth reports a year.",
+      "body": "Get valuable insights into specific countries, industries and business topics, with hundreds of Special Reports published every year.",
       "imageAlt": "Illustration of a Special Reports page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-2.svg",
+      "ctaUrl": "https://www.ft.com/special-reports",
+      "ctaLabel": "View Special Reports"
     }
   },
   {
@@ -404,15 +378,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "s"
     },
     "content": {
-      "title": "See the live feed of new FT stories as they are published",
+      "title": "Read live updates of the latest FT news, the moment the stories are published",
       "imageAlt": "Illustration of the FT News feed page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-2.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "More tips"
     }
   },
   {
@@ -420,15 +393,14 @@
     "settings": {
       "hasTourPageLink": true,
       "isDismissable": false,
-      "isReversed": false,
       "size": "m"
     },
     "content": {
-      "title": "See the live feed of new FT stories as they are published",
+      "title": "Read live updates of the latest FT news, the moment the stories are published",
       "imageAlt": "Illustration of the FT News feed page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-2.svg",
+      "ctaUrl": "/tour",
+      "ctaLabel": "Discover more tips"
     }
   },
   {
@@ -437,66 +409,15 @@
     "settings": {
       "hasTourPageLink": false,
       "isDismissable": false,
-      "isReversed": false,
       "size": "l"
     },
     "content": {
-      "title": "FT News feed",
-      "body": "See the live feed of new FT stories as they are published.",
+      "title": "News feed",
+      "body": "The news as it’s happening. Read live updates of the latest FT news, the moment the stories are published.",
       "imageAlt": "Illustration of the FT News feed page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
-    }
-  },
-  {
-    "id": "epaper-s",
-    "settings": {
-      "hasTourPageLink": true,
-      "isDismissable": false,
-      "isReversed": false,
-      "size": "s"
-    },
-    "content": {
-      "title": "Read the FT newspaper on any device, with an exact digital replica",
-      "imageAlt": "Illustation of an edition of the FT ePaper",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/epaper-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
-    }
-  },
-  {
-    "id": "epaper-m",
-    "settings": {
-      "hasTourPageLink": true,
-      "isDismissable": false,
-      "isReversed": false,
-      "size": "m"
-    },
-    "content": {
-      "title": "Read the FT newspaper on any device, with an exact digital replica",
-      "imageAlt": "Illustation of an edition of the FT ePaper",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/epaper-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
-    }
-  },
-  {
-    "id": "epaper-l",
-    "queryStringId": "epaper",
-    "settings": {
-      "hasTourPageLink": false,
-      "isDismissable": false,
-      "isReversed": false,
-      "size": "l"
-    },
-    "content": {
-      "title": "ePaper",
-      "body": "Read the FT newspaper anywhere on any device, with an exact digital replica available from 5am London time.",
-      "imageAlt": "Illustation of an edition of the FT ePaper",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/epaper-1.svg",
-      "ctaUrl": "#",
-      "ctaLabel": "TK"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-2.svg",
+      "ctaUrl": "https://www.ft.com/news-feed",
+      "ctaLabel": "Visit News Feed"
     }
   }
 ]

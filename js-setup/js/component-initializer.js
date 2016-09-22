@@ -34,6 +34,13 @@ export const presets = {
 	}
 };
 
+function extend (o1, o2) {
+	for (let key in o2) { //eslint-disable-line
+		o1[key] = o2[key];
+	}
+	return o1;
+}
+
 export class ComponentInitializer {
 	constructor () {
 		this.initializedFeatures = {};
@@ -54,6 +61,11 @@ export class ComponentInitializer {
 	}
 
 	bootstrap (config, cb) {
+
+		// VERY IMPORTANT NOTE
+		// Everything between here and the call to this.loader.bootstrap() below
+		// may run before the polyfill service has responded... so ES3 only please!!
+
 		// backwards compatible with previous signature of bootstrap(cb);
 		if (!cb && typeof config === 'function') {
 			cb = config;
@@ -65,10 +77,10 @@ export class ComponentInitializer {
 
 		// belt and braces backwards compatibility for old api, which expected a flat config object
 		if (!config.features) {
-			config.features = Object.assign({}, config);
+			config.features = extend({}, config);
 		}
 
-		config.features = Object.assign({}, presets[config.preset], config.features);
+		config.features = extend(extend({}, presets[config.preset]), config.features);
 
 		return this.loader.bootstrap(config, ({ flags, mainCss, appInfo }) => { // eslint-disable-line
 
