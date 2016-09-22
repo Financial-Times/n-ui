@@ -35,6 +35,16 @@
 			}
 		}
 
+		.tour-tip--intro {
+			.tour-tip__main,
+			.tour-tip__img-container {
+				overflow: visible;
+			}
+			.tour-tip__img-container img {
+				max-width: none;
+			}
+		}
+
 		.tour-tip--outro {
 			.tour-tip__text {
 				width: 100%;
