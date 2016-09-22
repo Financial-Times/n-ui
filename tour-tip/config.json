@@ -45,10 +45,6 @@
       "ctas": [{
         "ctaUrl": "/myft/product-tour",
         "ctaLabel": "**Explore myFT**"
-      },
-      {
-        "ctaUrl": "/myft/product-tour",
-        "ctaLabel": "***Explore myFT***"
       }]
     }
   },
