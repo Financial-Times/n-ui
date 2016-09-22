@@ -4,7 +4,7 @@ function Sticky (el, opts) {
 	if (!el) return;
 	this.el = el;
 	this.opts = opts || {};
-	this.sibling = (opts.sibling) ? document.querySelector(opts.sibling) : null;
+	this.sibling = opts.sibling ? document.querySelector(opts.sibling) : null;
 	this.stickUntil = document.querySelector(opts.stickUntil);
 	this.extraHeight = false;
 	this.opts.stickAfter = this.el.getBoundingClientRect().top - 74;
@@ -13,12 +13,12 @@ function Sticky (el, opts) {
 Sticky.prototype.stick = function () {
 	this.el.style.position = 'fixed';
 	this.el.style.top = this.opts.topOffset || '0';
-	if (this.sibling) {this.sibling.style.marginTop = this.el.offsetHeight + 'px';}
+	if (this.sibling) { this.sibling.style.marginTop = this.el.offsetHeight + 'px'; }
 };
 
 Sticky.prototype.unstick = function () {
 	this.el.style.position = 'absolute';
-	if(this.sibling) {
+	if (this.sibling) {
 		this.el.style.top = this.stickyUntilPoint + 'px';
 		this.sibling.style.marginTop = this.el.offsetHeight + 'px';
 	} else {
@@ -27,28 +27,29 @@ Sticky.prototype.unstick = function () {
 };
 
 Sticky.prototype.onScroll = function () {
-	if(this.extraHeight === false && document.querySelector('.visible .n-header__marketing-promo__container')) {
+	if (!this.extraHeight && document.querySelector('.visible .n-header__marketing-promo__container')) {
 		this.stickyUntilPoint += 50;
 		this.extraHeight = true
 	}
 
 	let stickPoint;
-	this.sibling ? stickPoint = stickPoint = this.stickyUntilPoint : this.stickyUntilPoint + 144
+	let scrollPositionY = window.pageYOffset || window.scrollY
+	this.sibling ? stickPoint = this.stickyUntilPoint : stickPoint = this.stickyUntilPoint + 144
 
-	if((stickPoint > window.pageYOffset) && (window.pageYOffset >= this.opts.stickAfter)) {
+	if((stickPoint > scrollPositionY) && (scrollPositionY >= this.opts.stickAfter)) {
 		requestAnimationFrame(this.stick.bind(this));
-	} else if (stickPoint < window.pageYOffset) {
+	} else if (stickPoint < scrollPositionY) {
 		requestAnimationFrame(this.unstick.bind(this));
 	}
-	else if (window.pageYOffset <= this.opts.stickAfter) {
+	else if (scrollPositionY <= this.opts.stickAfter) {
 		this.reset();
 	}
 };
 
 Sticky.prototype.startLoop = function () {
 	this.lastAnimationFrame = window.requestAnimationFrame(() => {
-	this.onScroll();
-	this.startLoop();
+		this.onScroll();
+		this.startLoop();
 	})
 };
 
