@@ -48,10 +48,9 @@ Sticky.prototype.onScroll = function () {
 };
 
 Sticky.prototype.startLoop = function () {
-	let viewportOffset = window.innerHeight / 2;
 	this.lastAnimationFrame = window.requestAnimationFrame(() => {
-		this.onScroll();
-		this.startLoop();
+	this.onScroll();
+	this.startLoop();
 	})
 };
 
