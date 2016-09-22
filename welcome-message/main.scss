@@ -83,6 +83,13 @@
 		white-space: nowrap;
 	}
 
+	.n-welcome-banner__column--m {
+		display: none;
+		@include oGridRespondTo('M') {
+			display: table-cell;
+		}
+	}
+
 	.n-welcome-banner__column--xl {
 		display: none;
 		@include oGridRespondTo('XL') {
@@ -91,14 +98,14 @@
 	}
 
 	.n-welcome-banner__heading {
+		@include oTypographySans('m');
+		padding: 0 $spacing-unit 0 0;
+		white-space: nowrap;
+	}
+
+	.n-welcome-banner__heading--minimized {
 		display: none;
 		@at-root .n-welcome-banner--collapsed & {
-			display: table-cell;
-		}
-		@include oTypographySans('m');
-		padding: 2px $spacing-unit 0 0;
-		white-space: nowrap;
-		@include oGridRespondTo('M') {
 			display: table-cell;
 		}
 	}
@@ -107,6 +114,13 @@
 		@include oTypographySans('m');
 		padding: 0 $spacing-unit 0 0;
 		white-space: nowrap;
+	}
+
+	.n-welcome-banner__cta--s {
+		display: none;
+		@include oGridRespondTo('S') {
+			display: inline;
+		}
 	}
 
 	.n-welcome-banner__button {
