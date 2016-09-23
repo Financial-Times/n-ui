@@ -3,16 +3,12 @@
 	<div class="o-expander__content o-expander__content--expanded n-welcome-banner__column n-welcome-banner__column--fill" aria-hidden="false">
 		<h6 class="n-welcome-banner__heading n-welcome-banner__column n-welcome-banner__column--m">Welcome to the new FT.com.</h6>
 		<p class="n-welcome-banner__column n-welcome-banner__column--xl n-welcome-banner__strapline">The same global insight. Faster than ever before on all your devices.</p>
-		<p class="n-welcome-banner__column n-welcome-banner__column--fill">
-			<a href="/tour" class="n-welcome-banner__button" data-trackable="tour-page" data-component="cta-take-tour"><span class="n-welcome-banner__cta--s">Take a </span>tour</a>
+		<p class="n-welcome-banner__column">
+			<a href="/tour" class="n-welcome-banner__button" data-trackable="tour-page" data-component="cta-take-tour"><span class="n-welcome-banner__cta--s">Take a </span>Tour</a>
 		</p>
 		<div class="n-welcome-banner__column n-welcome-banner__column--actions">
 			{{#if anon.userIsLoggedIn}}
-				{{#if @root.flags.fthelpUrlMyftWelcome}}
-					<a href="http://fthelp.ft.com/" data-trackable="help" class="n-welcome-banner__button">Help</a>
-				{{else}}
-					<a href="http://aboutus.ft.com/contact-us/generalenquiries/" data-trackable="help" class="n-welcome-banner__button--secondary">Help</a>
-				{{/if}}
+				<a href="http://help.ft.com/" data-trackable="help" class="n-welcome-banner__button--secondary">Help</a>
 			{{/if}}
 			<a href="/nps-feedback" data-trackable="nps-feedback" class="n-welcome-banner__link-action">Feedback</a>
 		</div>
