@@ -3,7 +3,6 @@
 @if nUiApply('tourTip') {
 
 	.tour-tip {
-		background: getColor('warm-5');
 		color: getColor('cold-1');
 	}
 
@@ -43,11 +42,7 @@
 
 	.tour-tip__img-container {
 		overflow: hidden;
-	}
-
-	.tour-tip__img {
-		margin-bottom: -4%;
-		margin-left: -10%;
+		padding: $spacing-unit;
 	}
 
 	@include oGridRespondTo($from: 'M') {

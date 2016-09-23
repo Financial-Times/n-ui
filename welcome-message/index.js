@@ -134,7 +134,7 @@ function init () {
 	fixedEl = document.querySelector('.n-welcome-message--fixed');
 	staticEl = document.querySelector('.n-welcome-message--static');
 
-	if (fixedEl.getAttribute('data-component') === 'welcome-banner') { // new shrinkable banner
+	if (fixedEl && fixedEl.getAttribute('data-component') === 'welcome-banner') { // new shrinkable banner
 		if (!userHasTakenTour()) {
 			setTourButton();
 			fixedEl.removeAttribute('hidden');
