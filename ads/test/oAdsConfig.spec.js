@@ -27,9 +27,8 @@ describe('Config', () => {
 
 
 	it('Should set gpt configuration value according to app name', () => {
-		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
 		const flags = { get: () => true };
-		const config = oAdsConfig(flags);
+		const config = oAdsConfig(flags, 'article', false);
 		const gptAttributes = {
 														network: '5887',
 														site: 'ft.com',
@@ -42,8 +41,7 @@ describe('Config', () => {
 	it('Should set gpt configuration value according to app name and sandbox', () => {
 		const flags = { get: () => true };
 		sandbox.stub(adsSandbox, 'isActive', () => { return true; });
-		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
-		const config = oAdsConfig(flags);
+		const config = oAdsConfig(flags, 'article');
 		const gptAttributes = {
 														network: '5887',
 														site: 'sandbox.next.ft',
@@ -56,11 +54,10 @@ describe('Config', () => {
 	it('Should set krux configuration when flag is set to false', () => {
 		const flags = { get: () => true };
 		document.cookie = 'FT_U=EID=1234_PID=abc';
-		const config = oAdsConfig(flags);
+		const config = oAdsConfig(flags, 'article' );
 		const userExpectation = {
 			eid: '1234'
 		};
-		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
 
 		expect(config.krux.id).to.be.ok;
 		expect(config.krux.attributes).to.be.ok;
@@ -70,16 +67,20 @@ describe('Config', () => {
 
 	it('Should not set krux configuration when flag is set to false', () => {
 		const flags = { get: (param) => param === 'krux' ? false : true };
-		const config = oAdsConfig(flags);
-		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
+		const config = oAdsConfig(flags, 'article' );
 
 		expect(config.krux).to.be.false;
 	});
 
-	it('Should set dfp_targeting config', () => {
-		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
+	it('Should not set krux configuration when app requests no targeting', () => {
 		const flags = { get: () => true };
-		const config = oAdsConfig(flags);
+		const config = oAdsConfig(flags, 'article', { noTargeting: true } );
+
+		expect(config.krux).to.be.false;
+	});
+	it('Should set dfp_targeting config', () => {
+		const flags = { get: () => true };
+		const config = oAdsConfig(flags, 'article' );
 		document.cookie = 'FT_U=EID=1234_PID=abc';
 		const expectation = 'pt=art;eid=1234;nlayout=custom'.split(';');
 
@@ -88,9 +89,8 @@ describe('Config', () => {
 	});
 
 	it('Should pass the correct url to o-ads fetch', () => {
-		sandbox.stub(utils, 'getAppName', () => { return 'article'; });
 		const flags = { get: () => true };
-		const config = oAdsConfig(flags);
+		const config = oAdsConfig(flags, 'article' );
 		const userUrl = 'https://ads-api.ft.com/v1/user'
 		const pageUrl = 'https://ads-api.ft.com/v1/content/'
 
@@ -100,10 +100,14 @@ describe('Config', () => {
 		expect(config.targetingApi.page).to.equal(pageUrl + fakeArticleUuid);
 	})
 
-	it('Should access concept url to send to o-ads fetch', () => {
-		sandbox.stub(utils, 'getAppName', () => { return 'stream-page'; });
+	it('Should not request API targeting if app says not to', () => {
 		const flags = { get: () => true };
-		const config = oAdsConfig(flags);
+		const config = oAdsConfig(flags, 'article', { noTargeting: true });
+		expect(config.targetingApi).to.equal(null);
+	})
+	it('Should access concept url to send to o-ads fetch', () => {
+		const flags = { get: () => true };
+		const config = oAdsConfig(flags, 'stream-page' );
 		const pageUrl = 'https://ads-api.ft.com/v1/concept/'
 
 
@@ -123,7 +127,7 @@ describe('Config', () => {
 		});
 
 		const flags = { get: () => true };
-		const config = oAdsConfig(flags, {});
+		const config = oAdsConfig(flags, 'article');
 		expect(config.gpt.zone).to.equal('testDfpSite/testDfpZone');
 	});
 
