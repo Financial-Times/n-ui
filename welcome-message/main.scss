@@ -56,9 +56,6 @@
 		bottom: $spacing-unit/2;
 		border-radius: 6px;
 		padding: $spacing-unit/2;
-		.n-welcome-banner__heading {
-			@include oTypographySans('s');
-		}
 		@include oGridRespondTo('L') {
 			bottom: $spacing-unit;
 		}
@@ -81,6 +78,7 @@
 	.n-welcome-banner__column--actions {
 		text-align: right;
 		white-space: nowrap;
+		padding: 0 $spacing-unit;
 	}
 
 	.n-welcome-banner__column--m {
@@ -104,9 +102,13 @@
 	}
 
 	.n-welcome-banner__heading--minimized {
+		@include oTypographySans('s');
 		display: none;
 		@at-root .n-welcome-banner--collapsed & {
 			display: table-cell;
+		}
+		@include oGridRespondTo('M') {
+			@include oTypographySans('m');
 		}
 	}
 
@@ -125,21 +127,18 @@
 
 	.n-welcome-banner__button {
 		@include oButtons($size: 'big', $theme: 'standout');
-		text-transform: uppercase;
 		background: getColor('white');
 		color: getColor('teal-1');
 	}
 
 	.n-welcome-banner__button--secondary {
 		@include oButtons($size: 'big', $theme: 'standout');
-		text-transform: uppercase;
 		color: getColor('white');
 		background-color: getColor('teal-1');
 		border-color: getColor('white');
 	}
 
 	.n-welcome-banner__link-action {
-		text-transform: uppercase;
 		display: inline-block;
 		margin: 0 0 0 $spacing-unit/2;
 		color: getColor('white');
@@ -153,7 +152,7 @@
 		background: transparent;
 		border: 1px solid getColor('white');
 		border-radius: 3px;
-		margin: 1px 0 1px $spacing-unit;
+		margin: 1px 0;
 		padding: 2px 0 0;
 		width: 34px;
 		height: 34px;
