@@ -44,7 +44,7 @@
       "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-2.svg",
       "ctas": [{
         "ctaUrl": "/myft/product-tour",
-        "ctaLabel": "**Explore myFT**"
+        "ctaLabel": "Explore myFT"
       }]
     }
   },
@@ -87,7 +87,7 @@
       "size": "l"
     },
     "content": {
-      "title": "Gift article",
+      "title": "Gift an FT article",
       "body": "Start the conversation. Share up to 10 articles a month with colleagues, friends or family – absolutely free. Even if they’re not subscribed to the FT.",
       "imageAlt": "Illustration of the Gift Article button in article pages",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-3.svg"
@@ -279,7 +279,7 @@
       "size": "l"
     },
     "content": {
-      "title": "Email Briefings",
+      "title": "FT Email Briefings",
       "body": "You can now manage your news briefing subscriptions in myFT. Keep an eye out for further enhancements coming soon.",
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-3.svg",
@@ -297,7 +297,7 @@
       "size": "s"
     },
     "content": {
-      "title": "Investments at your fingertips with Portfolio access on all of your devices",
+      "title": "You can now add, edit and track investments on all your devices",
       "imageAlt": "Illustration of the FT Portfolio page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-2.svg",
       "ctaUrl": "/tour",
@@ -312,7 +312,7 @@
       "size": "m"
     },
     "content": {
-      "title": "Investments at your fingertips with Portfolio access on all of your devices",
+      "title": "You can now add, edit and track investments on all your devices",
       "imageAlt": "Illustration of the FT Portfolio page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-2.svg",
       "ctaUrl": "/tour",
@@ -328,8 +328,8 @@
       "size": "l"
     },
     "content": {
-      "title": "Updated Portfolio tool",
-      "body": "Investments at your fingertips – add, edit and track investments on all of your devices. You can choose to keep using the existing Portfolio while we perfect the new dashboard.",
+      "title": "FT Portfolio tool",
+      "body": "Add, edit and track investments on all your devices. If you’re not quite ready to make the move, you can still access the old portfolio tool.",
       "imageAlt": "Illustration of the FT Portfolio page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-2.svg",
       "ctas": [{
@@ -377,7 +377,7 @@
       "size": "l"
     },
     "content": {
-      "title": "Special Reports",
+      "title": "FT Special Reports",
       "body": "Get valuable insights into specific countries, industries and business topics, with hundreds of Special Reports published every year.",
       "imageAlt": "Illustration of a Special Reports page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-2.svg",
@@ -426,7 +426,7 @@
       "size": "l"
     },
     "content": {
-      "title": "News feed",
+      "title": "FT News Feed",
       "body": "The news as it’s happening. Read live updates of the latest FT news, the moment the stories are published.",
       "imageAlt": "Illustration of the FT News feed page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-2.svg",
