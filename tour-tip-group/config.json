@@ -8,9 +8,7 @@
       "title": "Welcome to the new FT",
       "body": "Take a moment to see what’s changed by scrolling through our new features below.",
       "imageAlt": "A laptop with the new FT.com loaded",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/laptop-2.png",
-      "ctaUrl": "#",
-      "ctaLabel": "Watch a video"
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/laptop-2.png"
     },
     "modifiers": ["intro"]
   },
