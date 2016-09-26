@@ -16,18 +16,20 @@ const customTimings = {};
 
 function initOAds (flags) {
 	const initObj = oAdsConfig(flags);
-	const containers = [].slice.call(document.querySelectorAll('.o-ads'));
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
 
 	document.addEventListener('oAds.complete', onAdsCompleteCallback);
 
-	slotCount = containers.length;
 
-	utils.log.info(slotCount + ' ad slots found on page');
 	const ads = Ads.init(initObj)
-	ads.then(res => containers.forEach(res.slots.initSlot.bind(res.slots)));
+	ads.then(res => {
+		const containers = [].slice.call(document.querySelectorAll('.o-ads'));
+		slotCount = containers.length;
+		utils.log.info(slotCount + ' ad slots found on page');
+		containers.forEach(res.slots.initSlot.bind(res.slots))
+	});
 }
 
 function onAdsComplete (flags, event) {
@@ -91,7 +93,7 @@ module.exports = {
 									if(flags && flags.get('stickyRightAd')) {
 										let stickyRight = new Sticky(
 											document.querySelector('.sidebar-advert'),
-											{	'topOffset' : '70px',
+											{	'paddingTop' : '70',
 												'stickUntil' : '.article__share--bottom'
 											});
 										stickyRight.init();
