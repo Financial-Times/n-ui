@@ -4,4 +4,11 @@ $o-footer-is-silent: not nUiHas('footer') !default;
 
 @import "o-footer/main";
 
+.n-footer__link--s {
+	display: none;
+	@include oGridRespondTo('S') {
+		display: block;
+	}
+}
+
 @include nUiMaybeCriticalEnd('footer');
