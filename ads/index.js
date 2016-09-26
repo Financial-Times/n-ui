@@ -97,7 +97,7 @@ module.exports = {
 										let stickyRight = new Sticky(
 											document.querySelector('.sidebar-advert'),
 											{	'topOffset' : '70px',
-												'stickUntil' : 'footer'
+												'stickUntil' : '.article__share--bottom'
 											});
 										stickyRight.init();
 									}

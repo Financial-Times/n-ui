@@ -50,6 +50,12 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 		display: block;
 	}
 
+	@media print {
+		.o-header--sticky {
+			display: none;
+		}
+	}
+
 	@if nUiApply('header', 'typeahead') {
 		@include nUiHeaderTypeahead;
 	}
