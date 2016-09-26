@@ -28,9 +28,6 @@ build-demo:
 	webpack --config webpack.config.test.js --dev --watch
 
 deploy: assets
-	# copy these to their old legacy names (briefly until all apps updated)
-	cp ./dist/es5.js ./dist/es5-polyfill-io.js
-	cp ./dist/es5.min.js ./dist/es5-polyfill-io.min.js
 	node ./_deploy/s3.js
 	$(MAKE) npm-publish
 
