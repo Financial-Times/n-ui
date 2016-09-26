@@ -1,5 +1,5 @@
 const debounce = require('./utils').debounce;
-const stickyNavHeight = 74;
+const stickyNavHeight = 74; // for use with Right Hand Rail
 
 function Sticky (el, opts) {
 	if (!el) return;
@@ -8,12 +8,14 @@ function Sticky (el, opts) {
 	this.sibling = opts.sibling ? document.querySelector(opts.sibling) : null;
 	this.stickUntil = document.querySelector(opts.stickUntil);
 	this.extraHeight = false;
-	this.stickWhen = this.el.getBoundingClientRect().top - stickyNavHeight;
-}
+	this.cookieMessage = !!document.querySelector('.cookie-message');
+	this.opts.stickWhen = this.el.getBoundingClientRect().top - stickyNavHeight; // for use with RHR
+;}
 
+// if (this.sibling) {...} conditions based on active sticky RHR — currently enabled for basic demo
 Sticky.prototype.stick = function () {
 	this.el.style.position = 'fixed';
-	this.el.style.top = this.opts.paddingTop + 'px' || '0';
+	this.el.style.top = this.opts.paddingTop || '0';
 	if (this.sibling) { this.sibling.style.marginTop = this.el.offsetHeight + 'px'; }
 };
 
@@ -28,6 +30,18 @@ Sticky.prototype.unstick = function () {
 };
 
 Sticky.prototype.onScroll = function () {
+	if (this.sibling) {
+		if (this.cookieMessage && document.querySelector('.cookie-message--hidden')){
+			this.opts.stickWhen = 0
+			this.releasePoint -= 35
+			this.cookieMessage = false
+		} else if (this.cookieMessage) {
+			this.opts.stickWhen = 35
+		} else {
+			this.opts.stickWhen = 0
+		}
+	}
+
 	if (!this.extraHeight && document.querySelector('.visible .n-header__marketing-promo__container')) {
 		this.releasePoint += 50;
 		this.extraHeight = true
@@ -35,14 +49,13 @@ Sticky.prototype.onScroll = function () {
 
 	let breakPoint;
 	let viewportOffset = window.pageYOffset || window.scrollY
-	this.sibling ? breakPoint = this.releasePoint : breakPoint = this.releasePoint + stickyNavHeight + this.opts.paddingTop;
+	this.sibling ? breakPoint = this.releasePoint : breakPoint = this.releasePoint + 144
 
-	if((breakPoint > viewportOffset) && (viewportOffset >= this.stickWhen)) {
+	if((breakPoint > viewportOffset) && (viewportOffset >= this.opts.stickWhen)) {
 		requestAnimationFrame(this.stick.bind(this));
 	} else if (breakPoint < viewportOffset) {
 		requestAnimationFrame(this.unstick.bind(this));
-	}
-	else if (viewportOffset <= this.stickWhen) {
+	} else if (viewportOffset <= this.opts.stickWhen) {
 		this.reset();
 	}
 };
