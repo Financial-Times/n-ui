@@ -9,7 +9,8 @@ const componentsToTest = [
 	'ads',
 	'myft',
 	'tracking',
-	'opt-out'
+	'opt-out',
+	'subscription-offer-prompt',
 ];
 
 module.exports = function (karma) {
@@ -40,7 +41,7 @@ module.exports = function (karma) {
 			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
 		].concat(componentsToTest.map(name => name + '/**/*.spec.js')),
 
-		// preprocess matching files before serving them to  the browser
+		// preprocess matching files before serving them to	the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: componentsToTest.reduce((obj, name) => {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap']
