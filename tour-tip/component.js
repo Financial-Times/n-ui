@@ -22,7 +22,7 @@ export default class TourTip extends Component {
 	renderCtas (data) {
 		if (data.content.ctas && data.content.ctas.length) {
 			return data.content.ctas.map(cta =>
-						<a href={cta.ctaUrl} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{cta.ctaLabel}</a>
+						<a href={cta.url} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{cta.label}</a>
 				);
 		}
 	}
