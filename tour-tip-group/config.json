@@ -24,8 +24,8 @@
       "ctas": [{
         "ctaUrl": "/",
         "ctaLabel": "Get started"
-        }]
-      },
+      }]
+    },
     "modifiers": ["outro"]
   }
 }

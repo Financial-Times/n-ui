@@ -10,8 +10,10 @@
       "title": "Track the topics most important to you all in one place",
       "imageAlt": "Illustration of the \"Companies\" page, showing an \"Added\" button next to the page heading",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-3.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "More tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "More tips"
+      }]
     }
   },
   {
@@ -25,8 +27,10 @@
       "title": "Track the topics most important to you all in one place",
       "imageAlt": "Illustration of the \"Companies\" page, showing an \"Added\" button next to the page heading",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-3.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "Discover more tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "Discover more tips"
+      }]
     }
   },
   {
@@ -59,8 +63,10 @@
       "title": "Share 10 articles a month with non-subscribers, who can read them – absolutely free",
       "imageAlt": "Illustration of the Gift Article button in article pages",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-4.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "More tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "More tips"
+      }]
     }
   },
   {
@@ -74,8 +80,10 @@
       "title": "Share 10 articles a month with non-subscribers, who can read them – absolutely free",
       "imageAlt": "Illustration of the Gift Article button in article pages",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-4.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "Discover more tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "Discover more tips"
+      }]
     }
   },
   {
@@ -104,8 +112,10 @@
       "title": "Better filtering of trending topics in fastFT’s market-moving news",
       "imageAlt": "Illustration of the fastFT page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-3.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "More tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "More tips"
+      }]
     }
   },
   {
@@ -119,8 +129,10 @@
       "title": "Better filtering of trending topics in fastFT’s market-moving news",
       "imageAlt": "Illustration of the fastFT page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-3.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "Discover more tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "Discover more tips"
+      }]
     }
   },
   {
@@ -134,7 +146,7 @@
     "content": {
       "title": "Improved fastFT",
       "body": "Better filtering of trending topics, same instant market-moving news and views from our global team.",
-      "imageAlt": "Illustration of the FastFT page",
+      "imageAlt": "Illustration of the fastFT page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-3.svg",
       "ctas": [{
         "ctaUrl": "https://www.ft.com/fastft",
@@ -153,8 +165,10 @@
       "title": "Get intuitive markets data at a glance on any device",
       "imageAlt": "Illustration of a graph in a Markets Data page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-4.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "More tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "More tips"
+      }]
     }
   },
   {
@@ -168,8 +182,10 @@
       "title": "Get intuitive markets data at a glance on any device",
       "imageAlt": "Illustration of a graph in a Markets Data page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-4.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "Discover more tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "Discover more tips"
+      }]
     }
   },
   {
@@ -202,8 +218,10 @@
       "title": "Instant, Daily or Weekly news digests delivered straight to your email inbox",
       "imageAlt": "Illustration of a myFT Instant Alert email",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-4.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "More tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "More tips"
+      }]
     }
   },
   {
@@ -217,8 +235,10 @@
       "title": "Instant, Daily or Weekly news digests delivered straight to your email inbox",
       "imageAlt": "Illustration of a myFT Instant Alert email",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-4.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "Discover more tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "Discover more tips"
+      }]
     }
   },
   {
@@ -251,8 +271,10 @@
       "title": "Email briefings subscriptions can now be handled in myFT",
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-5.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "More tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "More tips"
+      }]
     }
   },
   {
@@ -266,8 +288,10 @@
       "title": "Email briefings subscriptions can now be handled in myFT",
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-5.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "Discover more tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "Discover more tips"
+      }]
     }
   },
   {
@@ -300,8 +324,10 @@
       "title": "You can now add, edit and track investments on all your devices",
       "imageAlt": "Illustration of the FT Portfolio page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-3.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "More tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "More tips"
+      }]
     }
   },
   {
@@ -315,8 +341,10 @@
       "title": "You can now add, edit and track investments on all your devices",
       "imageAlt": "Illustration of the FT Portfolio page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-3.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "Discover more tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "Discover more tips"
+      }]
     }
   },
   {
@@ -349,8 +377,10 @@
       "title": "Valuable reports on specific countries, industries and business topics",
       "imageAlt": "Illustration of a Special Reports page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-3.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "More tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "More tips"
+      }]
     }
   },
   {
@@ -364,8 +394,10 @@
       "title": "Valuable reports on specific countries, industries and business topics",
       "imageAlt": "Illustration of a Special Reports page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-3.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "Discover more tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "Discover more tips"
+      }]
     }
   },
   {
@@ -398,8 +430,10 @@
       "title": "Read live updates of the latest FT news, the moment the stories are published",
       "imageAlt": "Illustration of the FT News feed page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-3.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "More tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "More tips"
+      }]
     }
   },
   {
@@ -413,8 +447,10 @@
       "title": "Read live updates of the latest FT news, the moment the stories are published",
       "imageAlt": "Illustration of the FT News feed page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-3.svg",
-      "ctaUrl": "/tour",
-      "ctaLabel": "Discover more tips"
+      "ctas": [{
+        "ctaUrl": "/tour",
+        "ctaLabel": "Discover more tips"
+      }]
     }
   },
   {
