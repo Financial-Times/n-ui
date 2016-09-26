@@ -17,15 +17,6 @@ function debounce (func, wait, immediate) {
 	};
 };
 
-function getAppName () {
-	const element = document.querySelector('[data-next-app]');
-	if (element) {
-		return element.getAttribute('data-next-app');
-	}
-	return 'unknown';
-}
-
-
 function getLayoutName () {
 	let layout = 'default';
 	const abStateEl = document.querySelector('[data-ab-state]');
@@ -127,7 +118,6 @@ log.isOn = function () {
 
 module.exports = {
 	debounce: debounce,
-	getAppName: getAppName,
 	getLayoutName: getLayoutName,
 	getMetaData: getMetaData,
 	getReferrer: getReferrer,

@@ -182,7 +182,7 @@ export class ComponentInitializer {
 				.then(() => {
 					// TODO - lazy load this
 					if (!this.initializedFeatures.ads) {
-						ads.init(flags, appInfo);
+						ads.init(flags, appInfo, config.features.ads);
 						this.initializedFeatures.ads = true
 					}
 

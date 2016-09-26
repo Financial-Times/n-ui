@@ -16,8 +16,8 @@ function getLazyLoadConfig (flags) {
 	}
 }
 
-module.exports = function (flags) {
-	const pageType = utils.getAppName();
+module.exports = function (flags, appName, adOptions) {
+	adOptions = adOptions || {};
 	const eidMatch = document.cookie.match(/EID=(\d+)/);
 
 	//Temporarily get EID from FT_U cookie until all ad systems stop using it
@@ -26,12 +26,12 @@ module.exports = function (flags) {
 	};
 
 	const targeting = extend({
-		pt: pageType.toLowerCase().substr(0, 3),
+		pt: appName.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName()
 	}, userCookieMetadata);
 
 
-	const kruxConfig = (flags.get('krux')) && {
+	const kruxConfig = (flags.get('krux')) && !adOptions.noTargeting && {
 		id: 'KHUSeE3x',
 		attributes: {
 			user: userCookieMetadata,
@@ -82,9 +82,9 @@ module.exports = function (flags) {
 		collapseEmpty: 'before',
 		dfp_targeting: utils.keyValueString(targeting),
 		lazyLoad: getLazyLoadConfig(flags),
-		targetingApi: {
+		targetingApi: adOptions.noTargeting ? null : {
 			user: `${apiUrlRoot}user`,
-			page: getContextualTargeting(pageType),
+			page: getContextualTargeting(appName),
 			usePageZone: true
 		}
 	};
