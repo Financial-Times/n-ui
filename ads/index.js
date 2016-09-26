@@ -91,7 +91,6 @@ module.exports = {
 									if(flags && flags.get('stickyRightAd')) {
 										let stickyRight = new Sticky(
 											document.querySelector('.sidebar-advert'),
-											{	'paddingTop' : 70,
 											{	'paddingTop' : '70',
 												'stickUntil' : '.article__share--bottom'
 											});
