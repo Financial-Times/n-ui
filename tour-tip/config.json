@@ -39,7 +39,7 @@
     },
     "content": {
       "title": "Make myFT yours",
-      "body": "Discover thousands of concepts to track. Then you can stay updated on those most important to you, all in one place.",
+      "body": "Discover thousands of topics to track. Then you can stay updated on those most important to you, all in one place.",
       "imageAlt": "Illustration of the \"Companies\" page, showing an \"Added\" button next to the page heading",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-2.svg",
       "ctas": [{
@@ -134,19 +134,12 @@
     "content": {
       "title": "Improved fastFT",
       "body": "Better filtering of trending topics, same instant market-moving news and views from our global team.",
-<<<<<<< HEAD
       "imageAlt": "Illustration of the FastFT page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-2.svg",
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-3.svg",
       "ctas": [{
         "ctaUrl": "https://www.ft.com/fastft",
         "ctaLabel": "Try fastFT"
       }]
-=======
-      "imageAlt": "Illustration of the fastFT page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-3.svg",
-      "ctaUrl": "https://www.ft.com/fastft",
-      "ctaLabel": "Try fastFT"
->>>>>>> origin
     }
   },
   {
@@ -191,17 +184,11 @@
       "title": "Improved Markets Data tools",
       "body": "Manage price alerts on the go, compare cross currencies quickly and get a macromap view of major indices across the globe.",
       "imageAlt": "Illustration of a graph in a Markets Data page",
-<<<<<<< HEAD
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-3.svg",
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-4.svg",
       "ctas": [{
         "ctaUrl": "http://markets.ft.com/data/",
         "ctaLabel": "Visit Markets Data"
       }]
-=======
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-4.svg",
-      "ctaUrl": "http://markets.ft.com/data/",
-      "ctaLabel": "Visit Markets Data"
->>>>>>> origin
     }
   },
   {
@@ -246,17 +233,11 @@
       "title": "myFT Alerts",
       "body": "Choose to receive Instant, Daily or Weekly digests about the topics in your myFT – delivered straight to your email inbox.",
       "imageAlt": "Illustration of a myFT Instant Alert email",
-<<<<<<< HEAD
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-2.svg",
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-4.svg",
       "ctas": [{
         "ctaUrl": "/myft/alerts",
         "ctaLabel": "Manage alerts"
       }]
-=======
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-4.svg",
-      "ctaUrl": "/myft/alerts",
-      "ctaLabel": "Manage alerts"
->>>>>>> origin
     }
   },
   {
@@ -301,17 +282,11 @@
       "title": "FT Email Briefings",
       "body": "You can now manage your news briefing subscriptions in myFT. Keep an eye out for further enhancements coming soon.",
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
-<<<<<<< HEAD
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-3.svg",
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-5.svg",
       "ctas": [{
         "ctaUrl": "https://www.ft.com/myft/alerts",
         "ctaLabel": "Review briefings"
       }]
-=======
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-5.svg",
-      "ctaUrl": "https://www.ft.com/myft/alerts",
-      "ctaLabel": "Review briefings"
->>>>>>> origin
     }
   },
   {
@@ -356,17 +331,11 @@
       "title": "FT Portfolio tool",
       "body": "Add, edit and track investments on all your devices. If you’re not quite ready to make the move, you can still access the old portfolio tool.",
       "imageAlt": "Illustration of the FT Portfolio page",
-<<<<<<< HEAD
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-2.svg",
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-3.svg",
       "ctas": [{
         "ctaUrl": "http://markets.ft.com/data/portfolio/dashboard",
         "ctaLabel": "Check your Portfolio"
       }]
-=======
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-3.svg",
-      "ctaUrl": "http://markets.ft.com/data/portfolio/dashboard",
-      "ctaLabel": "Check your Portfolio"
->>>>>>> origin
     }
   },
   {
@@ -411,17 +380,11 @@
       "title": "FT Special Reports",
       "body": "Get valuable insights into specific countries, industries and business topics, with hundreds of Special Reports published every year.",
       "imageAlt": "Illustration of a Special Reports page",
-<<<<<<< HEAD
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-2.svg",
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-3.svg",
       "ctas": [{
         "ctaUrl": "https://www.ft.com/special-reports",
         "ctaLabel": "View Special Reports"
       }]
-=======
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-3.svg",
-      "ctaUrl": "https://www.ft.com/special-reports",
-      "ctaLabel": "View Special Reports"
->>>>>>> origin
     }
   },
   {
@@ -463,23 +426,14 @@
       "size": "l"
     },
     "content": {
-<<<<<<< HEAD
       "title": "FT News Feed",
       "body": "The news as it’s happening. Read live updates of the latest FT news, the moment the stories are published.",
       "imageAlt": "Illustration of the FT News feed page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-2.svg",
+      "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-3.svg",
       "ctas": [{
         "ctaUrl": "https://www.ft.com/news-feed",
         "ctaLabel": "Visit News Feed"
       }]
-=======
-      "title": "FT News feed",
-      "body": "The news as it’s happening. Read live updates of the latest FT news, the moment the stories are published.",
-      "imageAlt": "Illustration of the FT News feed page",
-      "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-3.svg",
-      "ctaUrl": "https://www.ft.com/news-feed",
-      "ctaLabel": "Visit News Feed"
->>>>>>> origin
     }
   }
 ]
