@@ -43,33 +43,18 @@ const coreConfig = {
 // Only build some of them when bower linking in dev to save build time
 module.exports = [
 	{
-		withBabelPolyfills: true,
+		withBabelPolyfills: false,
 		env: 'dev',
 		entry: {
-			'./dist/es5-core-js.js': './_deploy/wrapper.js'
+			'./dist/es5': './_deploy/wrapper.js'
 		},
 		buildInDev: true
 	},
 	{
 		withBabelPolyfills: false,
-		env: 'dev',
-		entry: {
-			'./dist/es5-polyfill-io.js': './_deploy/wrapper.js'
-		},
-		buildInDev: true
-	},
-	{
-		withBabelPolyfills: true,
 		env: 'prod',
 		entry: {
-			'./dist/es5-core-js.min.js': './_deploy/wrapper.js'
-		}
-	},
-	{
-		withBabelPolyfills: false,
-		env: 'prod',
-		entry: {
-			'./dist/es5-polyfill-io.min.js': './_deploy/wrapper.js'
+			'./dist/es5.min.js': './_deploy/wrapper.js'
 		}
 	},
 	{
