@@ -1,5 +1,5 @@
 const debounce = require('./utils').debounce;
-// const stickyNavHeight = 74; for use with Right Hand Rail
+const stickyNavHeight = 74; // for use with Right Hand Rail
 
 function Sticky (el, opts) {
 	if (!el) return;
@@ -9,13 +9,13 @@ function Sticky (el, opts) {
 	this.stickUntil = document.querySelector(opts.stickUntil);
 	this.extraHeight = false;
 	this.cookieMessage = !!document.querySelector('.cookie-message');
-	// this.opts.stickWhen = this.el.getBoundingClientRect().top - stickyNavHeight; // for use with RHR
-	;}
+	this.opts.stickWhen = this.el.getBoundingClientRect().top - stickyNavHeight; // for use with RHR
+;}
 
+// if (this.sibling) {...} conditions based on active sticky RHR — currently enabled for basic demo
 Sticky.prototype.stick = function () {
 	this.el.style.position = 'fixed';
 	this.el.style.top = this.opts.paddingTop || '0';
-
 	if (this.sibling) { this.sibling.style.marginTop = this.el.offsetHeight + 'px'; }
 };
 
@@ -29,22 +29,18 @@ Sticky.prototype.unstick = function () {
 	}
 };
 
-//if no cookie-message don't do anything
-//if visible cookie message, change it up
-// if hidden cookie message, change it up again
 Sticky.prototype.onScroll = function () {
-
-	if (this.cookieMessage && document.querySelector('.cookie-message--hidden')){
-		this.opts.stickWhen = '0'
-		this.releasePoint -= 35
-		this.cookieMessage = false
-	} else if (this.cookieMessage) {
-		this.opts.stickWhen = 35
-	} else {
-		this.opts.stickWhen = 0
+	if (this.sibling) {
+		if (this.cookieMessage && document.querySelector('.cookie-message--hidden')){
+			this.opts.stickWhen = 0
+			this.releasePoint -= 35
+			this.cookieMessage = false
+		} else if (this.cookieMessage) {
+			this.opts.stickWhen = 35
+		} else {
+			this.opts.stickWhen = 0
+		}
 	}
-
-	console.log(this.cookieMessage);
 
 	if (!this.extraHeight && document.querySelector('.visible .n-header__marketing-promo__container')) {
 		this.releasePoint += 50;
