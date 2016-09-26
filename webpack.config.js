@@ -46,7 +46,7 @@ module.exports = [
 		withBabelPolyfills: false,
 		env: 'dev',
 		entry: {
-			'./dist/es5': './_deploy/wrapper.js'
+			'./dist/es5.js': './_deploy/wrapper.js'
 		},
 		buildInDev: true
 	},
