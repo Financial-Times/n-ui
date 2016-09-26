@@ -11,6 +11,7 @@ module.exports = function (withPreact, exclusions) {
 		'n-ui/promo-messages': 'window.ftNextUi._promoMessages',
 		'n-ui/cookie-message': 'window.ftNextUi._cookieMessage',
 		'n-ui/welcome-message': 'window.ftNextUi._welcomeMessage',
+		'n-ui/subscription-offer-prompt': 'window.ftNextUi._subscriptionOfferPrompt',
 		'n-ui/message-prompts': 'window.ftNextUi._messagePrompts',
 		'n-ui/notification': 'window.ftNextUi._notification',
 		'n-ui/myft': 'window.ftNextUi._myft',

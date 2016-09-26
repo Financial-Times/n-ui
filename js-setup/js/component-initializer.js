@@ -8,6 +8,7 @@ import promoMessages from '../../promo-messages';
 import cookieMessage from '../../cookie-message';
 import welcomeMessage from '../../welcome-message';
 import messagePrompts from '../../message-prompts';
+import subscriptionOfferPrompt from '../../subscription-offer-prompt';
 import footer from '../../footer';
 import myft from '../../myft';
 import digestPromo from '../../myft-digest-promo';
@@ -27,6 +28,7 @@ export const presets = {
 		date: true,
 		cookieMessage: true,
 		welcomeMessage: true,
+		subscriptionOfferPrompt: true,
 		myft: true,
 		messagePrompts: false,
 		promoMessages: false,
@@ -152,6 +154,11 @@ export class ComponentInitializer {
 					if (config.features.welcomeMessage && !this.initializedFeatures.welcomeMessage) {
 						flags.get('welcomePanel') && welcomeMessage.init();
 						this.initializedFeatures.welcomeMessage = true
+					}
+
+					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
+						flags.get('b2cMessagePrompt') && subscriptionOfferPrompt.init();
+						this.initializedFeatures.subscriptionOfferPrompt = true
 					}
 
 					if (config.features.messagePrompts && !this.initializedFeatures.messagePrompts) {
