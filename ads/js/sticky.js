@@ -1,4 +1,5 @@
 const debounce = require('./utils').debounce;
+const stickyNavHeight = 74; // for use with Right Hand Rail
 
 function Sticky (el, opts) {
 	if (!el) return;
@@ -7,41 +8,54 @@ function Sticky (el, opts) {
 	this.sibling = opts.sibling ? document.querySelector(opts.sibling) : null;
 	this.stickUntil = document.querySelector(opts.stickUntil);
 	this.extraHeight = false;
-	this.opts.stickAfter = this.el.getBoundingClientRect().top - 74;
-}
+	this.cookieMessage = !!document.querySelector('.cookie-message');
+	this.opts.stickWhen = this.el.getBoundingClientRect().top - stickyNavHeight; // for use with RHR
+;}
 
+// if (this.sibling) {...} conditions based on active sticky RHR — currently enabled for basic demo
 Sticky.prototype.stick = function () {
 	this.el.style.position = 'fixed';
-	this.el.style.top = this.opts.topOffset || '0';
+	this.el.style.top = this.opts.paddingTop || '0';
 	if (this.sibling) { this.sibling.style.marginTop = this.el.offsetHeight + 'px'; }
 };
 
 Sticky.prototype.unstick = function () {
 	this.el.style.position = 'absolute';
 	if (this.sibling) {
-		this.el.style.top = this.stickyUntilPoint + 'px';
+		this.el.style.top = this.releasePoint + 'px';
 		this.sibling.style.marginTop = this.el.offsetHeight + 'px';
 	} else {
-		this.el.style.top = (this.stickyUntilPoint - this.el.offsetHeight) + 'px';
+		this.el.style.top = (this.releasePoint - this.el.offsetHeight) + 'px';
 	}
 };
 
 Sticky.prototype.onScroll = function () {
+	if (this.sibling) {
+		if (this.cookieMessage && document.querySelector('.cookie-message--hidden')){
+			this.opts.stickWhen = 0
+			this.releasePoint -= 35
+			this.cookieMessage = false
+		} else if (this.cookieMessage) {
+			this.opts.stickWhen = 35
+		} else {
+			this.opts.stickWhen = 0
+		}
+	}
+
 	if (!this.extraHeight && document.querySelector('.visible .n-header__marketing-promo__container')) {
-		this.stickyUntilPoint += 50;
+		this.releasePoint += 50;
 		this.extraHeight = true
 	}
 
-	let stickPoint;
-	let scrollPositionY = window.pageYOffset || window.scrollY
-	this.sibling ? stickPoint = this.stickyUntilPoint : stickPoint = this.stickyUntilPoint + 144
+	let breakPoint;
+	let viewportOffset = window.pageYOffset || window.scrollY
+	this.sibling ? breakPoint = this.releasePoint : breakPoint = this.releasePoint + 144
 
-	if((stickPoint > scrollPositionY) && (scrollPositionY >= this.opts.stickAfter)) {
+	if((breakPoint > viewportOffset) && (viewportOffset >= this.opts.stickWhen)) {
 		requestAnimationFrame(this.stick.bind(this));
-	} else if (stickPoint < scrollPositionY) {
+	} else if (breakPoint < viewportOffset) {
 		requestAnimationFrame(this.unstick.bind(this));
-	}
-	else if (scrollPositionY <= this.opts.stickAfter) {
+	} else if (viewportOffset <= this.opts.stickWhen) {
 		this.reset();
 	}
 };
@@ -75,7 +89,7 @@ Sticky.prototype.onResize = function () {
 	} else if (!this.onScrollListener && this.el.offsetHeight >= 10) {
 		this.bindScroll();
 	}
-	this.stickyUntilPoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
+	this.releasePoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
 };
 
 Sticky.prototype.reset = function () {
@@ -87,7 +101,7 @@ Sticky.prototype.init = function () {
 	if(!this.el || window.pageYOffset > 0 || window.scrollY > 0) {
 		return;
 	};
-	this.stickyUntilPoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
+	this.releasePoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
 	this.el.style.zIndex = '23';
 
 	window.addEventListener('resize', debounce(this.onResize).bind(this));
