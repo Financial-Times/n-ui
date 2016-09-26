@@ -11,8 +11,8 @@
       "imageAlt": "Illustration of the \"Companies\" page, showing an \"Added\" button next to the page heading",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-3.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "More tips"
+        "url": "/tour",
+        "label": "More tips"
       }]
     }
   },
@@ -28,8 +28,8 @@
       "imageAlt": "Illustration of the \"Companies\" page, showing an \"Added\" button next to the page heading",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-3.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "Discover more tips"
+        "url": "/tour",
+        "label": "Discover more tips"
       }]
     }
   },
@@ -47,8 +47,8 @@
       "imageAlt": "Illustration of the \"Companies\" page, showing an \"Added\" button next to the page heading",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-2.svg",
       "ctas": [{
-        "ctaUrl": "/myft/product-tour",
-        "ctaLabel": "Explore myFT"
+        "url": "/myft/product-tour",
+        "label": "Explore myFT"
       }]
     }
   },
@@ -64,8 +64,8 @@
       "imageAlt": "Illustration of the Gift Article button in article pages",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-4.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "More tips"
+        "url": "/tour",
+        "label": "More tips"
       }]
     }
   },
@@ -81,8 +81,8 @@
       "imageAlt": "Illustration of the Gift Article button in article pages",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/gift-4.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "Discover more tips"
+        "url": "/tour",
+        "label": "Discover more tips"
       }]
     }
   },
@@ -113,8 +113,8 @@
       "imageAlt": "Illustration of the fastFT page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-3.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "More tips"
+        "url": "/tour",
+        "label": "More tips"
       }]
     }
   },
@@ -130,8 +130,8 @@
       "imageAlt": "Illustration of the fastFT page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-3.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "Discover more tips"
+        "url": "/tour",
+        "label": "Discover more tips"
       }]
     }
   },
@@ -149,8 +149,8 @@
       "imageAlt": "Illustration of the fastFT page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/fastft-3.svg",
       "ctas": [{
-        "ctaUrl": "https://www.ft.com/fastft",
-        "ctaLabel": "Try fastFT"
+        "url": "https://www.ft.com/fastft",
+        "label": "Try fastFT"
       }]
     }
   },
@@ -166,8 +166,8 @@
       "imageAlt": "Illustration of a graph in a Markets Data page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-4.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "More tips"
+        "url": "/tour",
+        "label": "More tips"
       }]
     }
   },
@@ -183,8 +183,8 @@
       "imageAlt": "Illustration of a graph in a Markets Data page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-4.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "Discover more tips"
+        "url": "/tour",
+        "label": "Discover more tips"
       }]
     }
   },
@@ -202,8 +202,8 @@
       "imageAlt": "Illustration of a graph in a Markets Data page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/markets-4.svg",
       "ctas": [{
-        "ctaUrl": "http://markets.ft.com/data/",
-        "ctaLabel": "Visit Markets Data"
+        "url": "http://markets.ft.com/data/",
+        "label": "Visit Markets Data"
       }]
     }
   },
@@ -219,8 +219,8 @@
       "imageAlt": "Illustration of a myFT Instant Alert email",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-4.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "More tips"
+        "url": "/tour",
+        "label": "More tips"
       }]
     }
   },
@@ -236,8 +236,8 @@
       "imageAlt": "Illustration of a myFT Instant Alert email",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-4.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "Discover more tips"
+        "url": "/tour",
+        "label": "Discover more tips"
       }]
     }
   },
@@ -255,8 +255,8 @@
       "imageAlt": "Illustration of a myFT Instant Alert email",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/alerts-4.svg",
       "ctas": [{
-        "ctaUrl": "/myft/alerts",
-        "ctaLabel": "Manage alerts"
+        "url": "/myft/alerts",
+        "label": "Manage alerts"
       }]
     }
   },
@@ -272,8 +272,8 @@
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-5.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "More tips"
+        "url": "/tour",
+        "label": "More tips"
       }]
     }
   },
@@ -289,8 +289,8 @@
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-5.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "Discover more tips"
+        "url": "/tour",
+        "label": "Discover more tips"
       }]
     }
   },
@@ -308,8 +308,8 @@
       "imageAlt": "Illustration of a News briefing preference in the myFT Alerts page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/briefings-5.svg",
       "ctas": [{
-        "ctaUrl": "https://www.ft.com/myft/alerts",
-        "ctaLabel": "Review briefings"
+        "url": "https://www.ft.com/myft/alerts",
+        "label": "Review briefings"
       }]
     }
   },
@@ -325,8 +325,8 @@
       "imageAlt": "Illustration of the FT Portfolio page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-3.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "More tips"
+        "url": "/tour",
+        "label": "More tips"
       }]
     }
   },
@@ -342,8 +342,8 @@
       "imageAlt": "Illustration of the FT Portfolio page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-3.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "Discover more tips"
+        "url": "/tour",
+        "label": "Discover more tips"
       }]
     }
   },
@@ -361,8 +361,8 @@
       "imageAlt": "Illustration of the FT Portfolio page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/portfolio-3.svg",
       "ctas": [{
-        "ctaUrl": "http://markets.ft.com/data/portfolio/dashboard",
-        "ctaLabel": "Check your Portfolio"
+        "url": "http://markets.ft.com/data/portfolio/dashboard",
+        "label": "Check your Portfolio"
       }]
     }
   },
@@ -378,8 +378,8 @@
       "imageAlt": "Illustration of a Special Reports page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-3.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "More tips"
+        "url": "/tour",
+        "label": "More tips"
       }]
     }
   },
@@ -395,8 +395,8 @@
       "imageAlt": "Illustration of a Special Reports page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-3.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "Discover more tips"
+        "url": "/tour",
+        "label": "Discover more tips"
       }]
     }
   },
@@ -414,8 +414,8 @@
       "imageAlt": "Illustration of a Special Reports page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/reports-3.svg",
       "ctas": [{
-        "ctaUrl": "https://www.ft.com/special-reports",
-        "ctaLabel": "View Special Reports"
+        "url": "https://www.ft.com/special-reports",
+        "label": "View Special Reports"
       }]
     }
   },
@@ -431,8 +431,8 @@
       "imageAlt": "Illustration of the FT News feed page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-3.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "More tips"
+        "url": "/tour",
+        "label": "More tips"
       }]
     }
   },
@@ -448,8 +448,8 @@
       "imageAlt": "Illustration of the FT News feed page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-3.svg",
       "ctas": [{
-        "ctaUrl": "/tour",
-        "ctaLabel": "Discover more tips"
+        "url": "/tour",
+        "label": "Discover more tips"
       }]
     }
   },
@@ -467,8 +467,8 @@
       "imageAlt": "Illustration of the FT News feed page",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/feed-3.svg",
       "ctas": [{
-        "ctaUrl": "https://www.ft.com/news-feed",
-        "ctaLabel": "Visit News Feed"
+        "url": "https://www.ft.com/news-feed",
+        "label": "Visit News Feed"
       }]
     }
   }

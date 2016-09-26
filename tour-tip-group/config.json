@@ -22,8 +22,8 @@
       "title": "Over to you",
       "body": "Now you’ve seen what you can do, make the most of the new FT.com.",
       "ctas": [{
-        "ctaUrl": "/",
-        "ctaLabel": "Get started"
+        "url": "/",
+        "label": "Get started"
       }]
     },
     "modifiers": ["outro"]
