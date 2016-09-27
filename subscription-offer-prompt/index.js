@@ -49,7 +49,7 @@ const popupTemplate = `
 
 function createPopupHTML () {
 	return createElement('div', {
-		'class': 'n-sliding-popup SubscriptionPrompt',
+		'class': 'n-sliding-popup subscription-prompt',
 		'data-n-component': 'o-sliding-popup',
 		'data-n-sliding-popup-position': 'bottom left',
 	}, popupTemplate);
