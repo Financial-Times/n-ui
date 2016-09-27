@@ -43,6 +43,7 @@
 
 	.tour-tip__img-container {
 		overflow: hidden;
+		padding: $spacing-unit;
 	}
 
 	@include oGridRespondTo($from: 'M') {
