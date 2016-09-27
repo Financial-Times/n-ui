@@ -19,7 +19,7 @@ For usage information see [the wiki](https://github.com/Financial-Times/n-ui/wik
 
 ## Bower linking
 
-To work with n-ui when it's bower linked into an app you will need to run `make -j2 build run`, which will start a https server on port `3456` and build and watch an n-ui bundle. Your app will need to be on `n-express@17.6.3` or later for this to work.
+To work with n-ui when it's bower linked into an app you will need to run `make -j2 watch run`, which will start a https server on port `3456` and build and watch an n-ui bundle. Your app will need to be on `n-express@17.6.3` or later for this to work.
 
 
 ## **An important note on releases **
