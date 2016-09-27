@@ -18,7 +18,10 @@ const barrierLastSeen = resultExists(getBarrierLastSeenDate);
 const scheduleNextBarrier = () => setPromptNextShowDate(nowPlusThirtyDays().toJSON())
 const promptShouldBeShown = () => barrierLastSeen() && noneTrue(promptDateInFuture, isLoggedIn, isBarrierPage);
 const popupTemplate = `
-	<article class="subscription-prompt--wrapper">
+	<article class="subscription-prompt--wrapper" data-trackable="subscription-offer-prompt">
+		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
+			<span class="n-sliding-popup-close-label">Close</span>
+		</button>
 		<div class="subscription-prompt--header">
 			<span class="subscription-prompt--flag">Limited Offer</span>
 			<h1 class="subscription-prompt--heading">You qualify for a 25% subscription discount</h1>
