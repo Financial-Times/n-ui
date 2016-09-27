@@ -37,12 +37,12 @@
 	}
 
 	.tour-tip__cta {
-		margin: $spacing-unit 0 0;
+		margin: $spacing-unit $spacing-unit 0 0;
+		display: inline-block;
 	}
 
 	.tour-tip__img-container {
 		overflow: hidden;
-		padding: $spacing-unit;
 	}
 
 	@include oGridRespondTo($from: 'M') {
@@ -83,7 +83,7 @@
 
 			.tour-tip__cta {
 				@include oButtonsSize('big');
-				margin-top: $spacing-unit*2;
+				margin-top: $spacing-unit*0.5;
 			}
 		}
 
