@@ -8,6 +8,7 @@ import promoMessages from '../../promo-messages';
 import cookieMessage from '../../cookie-message';
 import welcomeMessage from '../../welcome-message';
 import messagePrompts from '../../message-prompts';
+import { init as subscriptionOfferPrompt } from '../../subscription-offer-prompt';
 import footer from '../../footer';
 import myft from '../../myft';
 import digestPromo from '../../myft-digest-promo';
@@ -27,6 +28,7 @@ export const presets = {
 		date: true,
 		cookieMessage: true,
 		welcomeMessage: true,
+		subscriptionOfferPrompt: true,
 		myft: true,
 		messagePrompts: false,
 		promoMessages: false,
@@ -154,6 +156,11 @@ export class ComponentInitializer {
 						this.initializedFeatures.welcomeMessage = true
 					}
 
+					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
+						flags.get('b2cMessagePrompt') && subscriptionOfferPrompt();
+						this.initializedFeatures.subscriptionOfferPrompt = true
+					}
+
 					if (config.features.messagePrompts && !this.initializedFeatures.messagePrompts) {
 						messagePrompts.init(flags);
 						this.initializedFeatures.messagePrompts = true;
@@ -182,7 +189,7 @@ export class ComponentInitializer {
 				.then(() => {
 					// TODO - lazy load this
 					if (!this.initializedFeatures.ads) {
-						ads.init(flags, appInfo);
+						ads.init(flags, appInfo, config.features.ads);
 						this.initializedFeatures.ads = true
 					}
 

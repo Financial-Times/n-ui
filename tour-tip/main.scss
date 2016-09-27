@@ -3,7 +3,6 @@
 @if nUiApply('tourTip') {
 
 	.tour-tip {
-		background: getColor('warm-5');
 		color: getColor('cold-1');
 	}
 
@@ -38,16 +37,12 @@
 	}
 
 	.tour-tip__cta {
-		margin: $spacing-unit 0 0;
+		margin: $spacing-unit $spacing-unit 0 0;
+		display: inline-block;
 	}
 
 	.tour-tip__img-container {
 		overflow: hidden;
-	}
-
-	.tour-tip__img {
-		margin-bottom: -4%;
-		margin-left: -10%;
 	}
 
 	@include oGridRespondTo($from: 'M') {
@@ -66,6 +61,7 @@
 				float: left;
 				margin: 0 $spacing-unit*3 0 0;
 				order: 1;
+				padding: $spacing-unit 0;
 				text-align: center;
 				width: 50%;
 			}
@@ -87,7 +83,7 @@
 
 			.tour-tip__cta {
 				@include oButtonsSize('big');
-				margin-top: $spacing-unit*2;
+				margin-top: $spacing-unit*0.5;
 			}
 		}
 

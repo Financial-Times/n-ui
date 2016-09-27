@@ -19,9 +19,11 @@ export default class TourTip extends Component {
 		}
 	}
 
-	renderCta (data) {
-		if (data.content.ctaUrl && data.content.ctaLabel) {
-			return <a href={data.content.ctaUrl} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{data.content.ctaLabel}</a>;
+	renderCtas (data) {
+		if (data.content.ctas && data.content.ctas.length) {
+			return data.content.ctas.map(cta =>
+						<a href={cta.url} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{cta.label}</a>
+				);
 		}
 	}
 
@@ -55,7 +57,7 @@ export default class TourTip extends Component {
 					{this.renderTourLink(data)}
 					<h2 className="tour-tip__standout">{data.content.title}</h2>
 					{this.renderBody(data)}
-					{this.renderCta(data)}
+					{this.renderCtas(data)}
 				</div>
 				{this.renderImage(data)}
 			</div>

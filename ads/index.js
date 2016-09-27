@@ -14,20 +14,22 @@ let slotsRendered = 0;
 let onAdsCompleteCallback;
 const customTimings = {};
 
-function initOAds (flags) {
-	const initObj = oAdsConfig(flags);
-	const containers = [].slice.call(document.querySelectorAll('.o-ads'));
+function initOAds (flags, appName, adOptions) {
+	const initObj = oAdsConfig(flags, appName, adOptions);
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
 
 	document.addEventListener('oAds.complete', onAdsCompleteCallback);
 
-	slotCount = containers.length;
 
-	utils.log.info(slotCount + ' ad slots found on page');
 	const ads = Ads.init(initObj)
-	ads.then(res => containers.forEach(res.slots.initSlot.bind(res.slots)));
+	ads.then(res => {
+		const containers = [].slice.call(document.querySelectorAll('.o-ads'));
+		slotCount = containers.length;
+		utils.log.info(slotCount + ' ad slots found on page');
+		containers.forEach(res.slots.initSlot.bind(res.slots))
+	});
 }
 
 function onAdsComplete (flags, event) {
@@ -72,7 +74,10 @@ function onAdsComplete (flags, event) {
 }
 
 module.exports = {
-	init: flags => {
+	init: (flags, appInfo, opts) => {
+
+		const adOptions = typeof opts === 'object' ? opts : {};
+
 		return Promise.resolve()
 			.then(() => {
 				if (flags && flags.get('ads')) {
@@ -91,8 +96,8 @@ module.exports = {
 									if(flags && flags.get('stickyRightAd')) {
 										let stickyRight = new Sticky(
 											document.querySelector('.sidebar-advert'),
-											{	'topOffset' : '70px',
-												'stickUntil' : 'footer'
+											{	'paddingTop' : '70',
+												'stickUntil' : '.article__share--bottom'
 											});
 										stickyRight.init();
 									}
@@ -101,13 +106,13 @@ module.exports = {
 						.then(() => {
 							// slotsRendered = 0; // Note - this is a global var for this module
 							// TODO get appName from appInfo
-							const appName = utils.getAppName();
+							const appName = appInfo.name;
 							if (flags && flags.get('ads') && appName) {
-								initOAds(flags);
+								initOAds(flags, appName, adOptions);
 							}
 						})
 						.then(() => {
-							if(flags && flags.get('krux')) {
+							if(flags && flags.get('krux') && !adOptions.noTargeting) {
 								//Though krux is activated through nextAdsComponent, we also need to load all the additional user matching scripts
 								//that would have been loaded via their tag manager
 								krux.init(flags);
