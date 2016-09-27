@@ -29,15 +29,17 @@ export default class TourTip extends Component {
 
 	renderImage (data) {
 		if (data.content.imageUrl) {
-			const isSvgExt = data.content.imageUrl.substr(-4,4) === '.svg';
-			const imageServiceOpts = (isSvgExt) ? {format: 'svg'} : {};
+			const imageAttrs = {
+				alt: data.content.imageAlt,
+				classes: ['tour-tip__img'],
+				widths: data.content.imageWidths || [],
+				sizes: data.content.imageSizes
+			};
+
+				imageAttrs.src = buildImageServiceUrl(data.content.imageUrl);
 
 			return <div className="tour-tip__img-container">
-				<Image
-					src={buildImageServiceUrl(data.content.imageUrl, imageServiceOpts)}
-					alt={data.content.imageAlt}
-					classes={['tour-tip__img']}
-				/>
+				<Image {...imageAttrs} />
 			</div>;
 		}
 	}
