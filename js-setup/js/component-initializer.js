@@ -8,7 +8,7 @@ import promoMessages from '../../promo-messages';
 import cookieMessage from '../../cookie-message';
 import welcomeMessage from '../../welcome-message';
 import messagePrompts from '../../message-prompts';
-import subscriptionOfferPrompt from '../../subscription-offer-prompt';
+import { init as subscriptionOfferPrompt } from '../../subscription-offer-prompt';
 import footer from '../../footer';
 import myft from '../../myft';
 import digestPromo from '../../myft-digest-promo';
@@ -157,7 +157,7 @@ export class ComponentInitializer {
 					}
 
 					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
-						flags.get('b2cMessagePrompt') && subscriptionOfferPrompt.init();
+						flags.get('b2cMessagePrompt') && subscriptionOfferPrompt();
 						this.initializedFeatures.subscriptionOfferPrompt = true
 					}
 
