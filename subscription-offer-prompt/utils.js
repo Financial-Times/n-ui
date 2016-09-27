@@ -41,7 +41,7 @@ export function getCookie (key) {
 }
 
 export function difference (leftValue) {
-	return (rightValue) => result(leftValue) - result(rightValue);
+	return (rightValue) => new Date(result(leftValue)) - new Date(result(rightValue));
 }
 
 export function dateInFuture (date) {
@@ -50,7 +50,7 @@ export function dateInFuture (date) {
 }
 
 export function addToDate (value) {
-	return (date) => new Date(result(date) + result(value));
+	return (date) => new Date(new Date(result(date)).getTime() + result(value));
 }
 
 export function element (selector) {

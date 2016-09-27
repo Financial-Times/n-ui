@@ -38,7 +38,6 @@
 		@include oGridRespondTo('M') {
 			margin: 24px 0;
 		}
-
 	}
 
 	.n-welcome-message--fixed {
@@ -48,6 +47,7 @@
 		right: 0;
 		bottom: -1px;
 		left: 0;
+		transform: translateZ(0);
 	}
 
 	.n-welcome-banner--collapsed {
