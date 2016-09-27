@@ -12,7 +12,7 @@
 						{{#each items}}
 							<div class="o-footer__matrix-column">
 								{{#ifAll ../optOutLink @root.flags.nextFTOptOutFooter @root.anon.userIsLoggedIn}}
-									<a class="o-footer__matrix-link n-footer__link--s" href="{{../optOutLink.href}}" data-trackable="{{../optOutLink.name}}">{{{../optOutLink.name}}}</a>
+									<a class="o-footer__matrix-link n-footer__link--s" href="{{../optOutLink.href}}" data-trackable="{{../optOutLink.trackableName}}">{{{../optOutLink.name}}}</a>
 								{{/ifAll}}
 								{{#.}}
 									<a class="o-footer__matrix-link" href="{{href}}" data-trackable="{{name}}">{{{name}}}</a>
