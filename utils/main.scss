@@ -43,6 +43,8 @@
 		height: 1px;
 	}
 
+	.no-js .n-util-hide-no-js,
+	.js .n-util-hide-js,
 	.core .n-util-hide-core,
 	.enhanced .n-util-hide-enhanced {
 		display: none;
