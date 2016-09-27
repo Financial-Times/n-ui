@@ -327,6 +327,11 @@ describe('Subscription Offer Prompt - Utils', () => {
 			expect( dateInFuture(() => Date.now() - 1000)() ).to.equal(false);
 		});
 
+		it('can be given date strings', () => {
+			expect( dateInFuture(new Date(Date.now() + 1000).toJSON())() ).to.equal(true);
+			expect( dateInFuture(new Date(Date.now() - 1000).toJSON())() ).to.equal(false);
+		});
+
 	});
 
 	describe('addToDate', () => {
@@ -354,6 +359,10 @@ describe('Subscription Offer Prompt - Utils', () => {
 			addValue = 99;
 			expect( add(Date.now).getTime() ).to.be.closeTo(Date.now() + 99, 2);
 		});
+
+		it('can be given date strings', () =>
+			expect( addToDate(1000)('2016-01-01T00:00:00Z') ).to.eql(new Date('2016-01-01T00:00:01Z'))
+		);
 
 	});
 
