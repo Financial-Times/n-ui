@@ -22,22 +22,29 @@ export default class TourTip extends Component {
 	renderCtas (data) {
 		if (data.content.ctas && data.content.ctas.length) {
 			return data.content.ctas.map(cta =>
-						<a href={cta.url} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{cta.label}</a>
-				);
+				<a href={cta.url} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{cta.label}</a>
+			);
 		}
 	}
 
 	renderImage (data) {
 		if (data.content.imageUrl) {
-			const isSvgExt = data.content.imageUrl.substr(-4,4) === '.svg';
-			const imageServiceOpts = (isSvgExt) ? {format: 'svg'} : {};
+			const imageAttrs = {
+				alt: data.content.imageAlt,
+				classes: ['tour-tip__img'],
+				widths: data.content.imageWidths || [],
+				sizes: data.content.imageSizes
+			};
+
+			//TODO: Make n-image work for images that don't want to specify widths (i.e. SVGs)
+			if (data.content.imageWidths) {
+				imageAttrs.url = data.content.imageUrl;
+			} else {
+				imageAttrs.src = buildImageServiceUrl(data.content.imageUrl);
+			}
 
 			return <div className="tour-tip__img-container">
-				<Image
-					src={buildImageServiceUrl(data.content.imageUrl, imageServiceOpts)}
-					alt={data.content.imageAlt}
-					classes={['tour-tip__img']}
-				/>
+				<Image {...imageAttrs} />
 			</div>;
 		}
 	}
