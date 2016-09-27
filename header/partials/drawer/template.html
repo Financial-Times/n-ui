@@ -98,11 +98,9 @@
 						</li>
 					{{/with}}
 				{{/if}}
-				{{#unless @root.flags.nextFTOptOutFooter}}
-					<li class="o-header__drawer-menu-item">
-						{{>n-ui/opt-out/template classname='o-header__drawer-menu-button'}}
-					</li>
-				{{/unless}}
+				<li class="o-header__drawer-menu-item">
+					{{>n-ui/opt-out/template classname='o-header__drawer-menu-button'}}
+				</li>
 			</ul>
 		</nav>
 
