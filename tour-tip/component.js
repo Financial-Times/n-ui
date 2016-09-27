@@ -36,7 +36,12 @@ export default class TourTip extends Component {
 				sizes: data.content.imageSizes
 			};
 
+			//TODO: Make n-image work for images that don't want to specify widths (i.e. SVGs)
+			if (data.content.imageWidths) {
+				imageAttrs.url = data.content.imageUrl;
+			} else {
 				imageAttrs.src = buildImageServiceUrl(data.content.imageUrl);
+			}
 
 			return <div className="tour-tip__img-container">
 				<Image {...imageAttrs} />
