@@ -11,8 +11,18 @@
 					<div class="o-footer__matrix-content" id="o-footer-section-{{@index}}">
 						{{#each items}}
 							<div class="o-footer__matrix-column">
-								{{#ifAll ../optOutLink @root.flags.nextFTOptOutFooter @root.anon.userIsLoggedIn}}
-									<a class="o-footer__matrix-link n-footer__link--s" href="{{../optOutLink.href}}" data-trackable="{{../optOutLink.trackableName}}">{{{../optOutLink.name}}}</a>
+								{{!-- yes that's lot of logic: https://trello.com/c/iA2BROho/1206-link-in-footer-to-opt-out --}}
+
+								{{#ifAll ../optOutLink @root.flags.nextFTOptOutFooter @root.flags.optInOut}}
+									{{#unless @root.forceOptInDevice}}
+										{{#if @root.anon.userIsLoggedIn}}
+											<a class="o-footer__matrix-link n-footer__link--s js-optout-link" data-trackable="{{../optOutLink.trackableName}}" href="{{../optOutLink.href}}">
+												{{{../optOutLink.name}}}
+											</a>
+										{{/if}}
+									{{/unless}}
+									<a class="o-footer__matrix-link js-webapp-link" data-trackable="visit-webapp" href="https://app.ft.com" hidden>Open in app</a>
+									<a class="o-footer__matrix-link js-android-link" data-trackable="open-android-app" href="http://www.ft.com/androidapp" hidden>Open in app</a>
 								{{/ifAll}}
 								{{#.}}
 									<a class="o-footer__matrix-link" href="{{href}}" data-trackable="{{name}}">{{{name}}}</a>
