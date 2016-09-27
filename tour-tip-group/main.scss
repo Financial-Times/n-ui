@@ -4,13 +4,13 @@
 
 	.tour-tip-group {
 		background-color: getColor('warm-5');
-
-		.tour-tip {
-			border-top: 1px solid mix(getColor('black'), getColor('warm-5'), 20%);
-		}
 	}
 
-	.tour-tip-group__item:first-child .tour-tip {
+	.tour-tip-group__item {
+		border-top: 1px solid mix(getColor('black'), getColor('warm-5'), 20%);
+	}
+
+	.tour-tip-group__item:first-of-type {
 		border-top: 0;
 	}
 
@@ -21,7 +21,7 @@
 	}
 
 	@include oGridRespondTo($from: 'M') {
-		.tour-tip-group__item:nth-child(odd) {
+		.tour-tip-group__item:nth-of-type(odd) {
 			.tour-tip__img-container {
 				float: right;
 				margin: 0 0 0 $spacing-unit*3;
