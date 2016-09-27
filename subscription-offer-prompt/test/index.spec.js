@@ -20,7 +20,7 @@ describe('Subscription Offer Prompt', () => {
 		);
 
 		it('el has correct attributes', () => {
-			expect(popup.el.getAttribute('class')).to.include('n-sliding-popup SubscriptionPrompt');
+			expect(popup.el.getAttribute('class')).to.include('n-sliding-popup subscription-prompt');
 			expect(popup.el.getAttribute('data-n-component')).to.equal('o-sliding-popup');
 			expect(popup.el.getAttribute('data-n-sliding-popup-position')).to.equal('bottom left');
 		});
