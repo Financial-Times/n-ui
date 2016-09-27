@@ -71,7 +71,7 @@
 
 		<nav class="o-header__drawer-menu o-header__drawer-menu--user" role="navigation" aria-label="User navigation" data-trackable="user-nav">
 			<ul class="o-header__drawer-menu-list">
-				{{#unless nUi.header.userNav}}
+				{{#unlessEquals nUi.header.userNav false}}
 					{{#if @root.anon.userIsLoggedIn}}
 						{{#with @root.navigationLists.account.myaccount}}
 							<li class="o-header__drawer-menu-item">
@@ -99,6 +99,8 @@
 							</li>
 						{{/with}}
 					{{/if}}
+				{{/unlessEquals}}
+				{{#unless @root.flags.nextFTOptOutFooter}}
 					<li class="o-header__drawer-menu-item">
 						{{>n-ui/opt-out/template classname='o-header__drawer-menu-button'}}
 					</li>
