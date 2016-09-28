@@ -4,6 +4,13 @@ An experiment bunching some of Next's client-side code into a single repository.
 
 This project consists of many modules. They include the primitive building blocks used by the majority of Next applications, constitute the basic look and feel of a page and integrate with upstream Origami modules for consistency across FT digital products.
 
+## Releasing n-ui
+When you release an n-ui tag 2 things happen
+- The code is available immediately on bower and all apps can install it. They will use its sass to build their styles and any template changes you've added. If you have styles that need updating in all apps which are not reliant on any javascript changes you can immediately run `nht rebuild --all --serves user-page` from within an app to trigger a rebuild of all user facing apps
+- After a successful build the javascript will be bundled and pushed out to S3. The Fastly cache of this file will be purged immediately, but users may have the last version cached in their browser for up to 20 minutes. For this reason, it's best to observe the following:
+	- if there are style + template changes in your release, wait 20 minutes before triggering a rebuild of all apps
+	- be defensive and rigorous in coding your core experience - in the relatively unlikely event that an app rebuilds with the style + template changes before your js changes have deployed, the experience will not appear broken to the user _if_ you either hide the component or provide a good core experience whne the js to handle it isn't present
+
 ## Usage
 
 For CSS usage information see [the wiki](https://github.com/Financial-Times/n-ui/wiki).
