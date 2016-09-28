@@ -26,6 +26,7 @@
 
 	.tour-tip__body {
 		@include oTypographySans('m', $load-progressively: true);
+		margin: $spacing-unit 0 0;
 	}
 
 	.tour-tip__body-link {
@@ -80,8 +81,20 @@
 
 			.tour-tip__cta {
 				@include oButtonsSize('big');
-				margin-top: $spacing-unit*0.5;
+				margin-top: $spacing-unit;
 			}
+		}
+
+		.tour-tip--l {
+
+			.tour-tip__body {
+				margin: $spacing-unit * 1.5 0 0;
+			}
+
+			.tour-tip__cta {
+				margin-top: $spacing-unit * 1.5;
+			}
+
 		}
 
 		.tour-tip--reversed {
