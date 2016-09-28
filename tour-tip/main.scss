@@ -2,10 +2,6 @@
 
 @if nUiApply('tourTip') {
 
-	.tour-tip {
-		color: getColor('cold-1');
-	}
-
 	.tour-tip__main {
 		overflow: hidden;
 	}
