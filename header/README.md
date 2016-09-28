@@ -12,3 +12,14 @@ res.locals.subnav = {
     subsections: [ ...links ]
 };
 ```
+
+Optional locals can be set to change the display of the header
+
+```
+nUi: {
+    header: {
+        disableSticky: false, // turns off the sticky header
+        userNav: false, // turns off the log-in/log-out/subscribe/etc links in the nav and drawer
+        variant: 'logo-only' // currently the only variant, only displays the Financial Times logo in the header
+    }
+}

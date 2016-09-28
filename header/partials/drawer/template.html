@@ -71,38 +71,39 @@
 
 		<nav class="o-header__drawer-menu o-header__drawer-menu--user" role="navigation" aria-label="User navigation" data-trackable="user-nav">
 			<ul class="o-header__drawer-menu-list">
-				{{#if @root.anon.userIsLoggedIn}}
-					{{#with @root.navigationLists.account.myaccount}}
-						<li class="o-header__drawer-menu-item">
-							<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">
-								{{name}}
-								<span class="o-header__drawer-menu-link-detail" data-o-header-drawer-user-email></span>
-							</a>
-						</li>
-					{{/with}}
-					{{#with @root.navigationLists.account.signout}}
-						<li class="o-header__drawer-menu-item">
-							<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
-						</li>
-					{{/with}}
-				{{/if}}
-				{{#if @root.anon.userIsAnonymous}}
-					{{#with @root.navigationLists.account.subscribe}}
-						<li class="o-header__drawer-menu-item">
-							<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
-						</li>
-					{{/with}}
-					{{#with @root.navigationLists.account.signin}}
-						<li class="o-header__drawer-menu-item">
-							<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
-						</li>
-					{{/with}}
-				{{/if}}
+				{{#unlessEquals nUi.header.userNav false}}
+					{{#if @root.anon.userIsLoggedIn}}
+						{{#with @root.navigationLists.account.myaccount}}
+							<li class="o-header__drawer-menu-item">
+								<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">
+									{{name}}
+									<span class="o-header__drawer-menu-link-detail" data-o-header-drawer-user-email></span>
+								</a>
+							</li>
+						{{/with}}
+						{{#with @root.navigationLists.account.signout}}
+							<li class="o-header__drawer-menu-item">
+								<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
+							</li>
+						{{/with}}
+					{{/if}}
+					{{#if @root.anon.userIsAnonymous}}
+						{{#with @root.navigationLists.account.subscribe}}
+							<li class="o-header__drawer-menu-item">
+								<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
+							</li>
+						{{/with}}
+						{{#with @root.navigationLists.account.signin}}
+							<li class="o-header__drawer-menu-item">
+								<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">{{name}}</a>
+							</li>
+						{{/with}}
+					{{/if}}
+				{{/unlessEquals}}
 				<li class="o-header__drawer-menu-item">
 					{{>n-ui/opt-out/template classname='o-header__drawer-menu-button'}}
 				</li>
 			</ul>
 		</nav>
-
 	</div>
 </div>
