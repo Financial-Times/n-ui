@@ -2,7 +2,7 @@ const superstore = require('superstore-sync');
 const oViewport = require('o-viewport');
 
 const STORAGE_KEY = 'n-welcome-message-seen';
- // keep this naming so that users who previously minimized don't see the full version again
+// keep this naming so that users who previously minimized don't see the full version again
 const HAS_DISMISSED = 'n-welcome-message-collapsed';
 const HAS_TAKEN_TOUR = 'n-taken-tour';
 const TEST_KEY = 'n-welcome-message-test';
