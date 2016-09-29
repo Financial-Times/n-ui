@@ -45,7 +45,7 @@
     "o-visual-effects": "^0.1.0",
     "superstore": "^2.1.0",
     "superstore-sync": "^2.1.0",
-    "o-video": "^2.1.2",
+    "o-video": "^2.3.3",
     "n-image": "^4.2.3"
   }
 }
