@@ -1,9 +1,9 @@
 const superstore = require('superstore-sync');
+const expander = require('o-expander');
 const oViewport = require('o-viewport');
 
 const STORAGE_KEY = 'n-welcome-message-seen';
-// keep this naming so that users who previously minimized don't see the full version again
-const HAS_DISMISSED = 'n-welcome-message-collapsed';
+const HAS_MINIMIZED = 'n-welcome-message-collapsed';
 const HAS_TAKEN_TOUR = 'n-taken-tour';
 const TEST_KEY = 'n-welcome-message-test';
 const TEST_VAL = 'can-store';
@@ -20,20 +20,45 @@ function hasLocalStorage () {
 	return TEST_VAL === retrieved && superstore.isPersisting();
 }
 
-function userHasDismissed () {
-	return Boolean(superstore.local.get(HAS_DISMISSED));
+function userHasMinimized () {
+	return Boolean(superstore.local.get(HAS_MINIMIZED));
 }
 
 function userHasTakenTour () {
 	return Boolean(superstore.local.get(HAS_TAKEN_TOUR));
 }
 
-function setCloseable () {
-	const closeButton = fixedEl.querySelector('[data-action="welcome-banner-close"]');
-	closeButton.addEventListener('click', () => {
-		fixedEl.classList.add('n-welcome-banner--closed');
-		superstore.local.set(HAS_DISMISSED, 1);
+function setExpander () {
+	const buttonClass = 'n-welcome-banner__button--toggler';
+	const expandableContent = fixedEl.querySelector('.o-expander__content');
+
+	if (userHasMinimized()) {
+		expandableContent.setAttribute('aria-hidden', true);
+		expandableContent.classList.remove('o-expander__content--expanded');
+		toggleContainerDisplay(false);
+	}
+	expander.init(fixedEl, {
+		toggleSelector: `.${buttonClass}`
 	});
+	fixedEl.addEventListener('oExpander.expand', () => {
+		toggleContainerDisplay(true);
+		superstore.local.set(HAS_MINIMIZED, 0);
+		toggleSticky();
+	});
+	fixedEl.addEventListener('oExpander.collapse', () => {
+		toggleContainerDisplay(false);
+		superstore.local.set(HAS_MINIMIZED, 1);
+		toggleSticky();
+	});
+}
+
+// in addition to what o-expander gives us, add a class onto the container when changing expanded state
+function toggleContainerDisplay (showFull) {
+	if (showFull) {
+		fixedEl.classList.remove('n-welcome-banner--collapsed');
+	} else {
+		fixedEl.classList.add('n-welcome-banner--collapsed');
+	}
 }
 
 function updateViewportHeight () {
@@ -44,7 +69,7 @@ function updateViewportHeight () {
 // when the static banner top scrolls out of view, show the fixed one
 function toggleSticky () {
 	const staticElDistanceFromTop = staticEl.getBoundingClientRect().top;
-	const changePoint = viewportHeight - fixedElHeight;
+	const changePoint = (userHasMinimized()) ? viewportHeight : viewportHeight - fixedElHeight;
 	if (staticElDistanceFromTop <= changePoint) {
 		fixedEl.setAttribute('hidden', true);
 	} else {
@@ -106,18 +131,17 @@ function initOneTimeSticky () {
 }
 
 function init () {
-
 	fixedEl = document.querySelector('.n-welcome-message--fixed');
 	staticEl = document.querySelector('.n-welcome-message--static');
 
-	if (fixedEl && fixedEl.getAttribute('data-component') === 'welcome-banner') { // new banner
-		if (!userHasTakenTour() && !userHasDismissed()) {
+	if (fixedEl && fixedEl.getAttribute('data-component') === 'welcome-banner') { // new shrinkable banner
+		if (!userHasTakenTour()) {
 			setTourButton();
 			fixedEl.removeAttribute('hidden');
 			fixedElHeight = fixedEl.getBoundingClientRect().height;
 			updateViewportHeight();
 			setScrollLimitSticky();
-			setCloseable();
+			setExpander();
 		}
 	} else { // old removable message
 		initOneTimeSticky();
