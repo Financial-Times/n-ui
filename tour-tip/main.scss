@@ -96,19 +96,6 @@
 			}
 
 		}
-
-		.tour-tip--reversed {
-			.tour-tip__img-container {
-				float: right;
-				margin: 0 0 0 $spacing-unit*3;
-				order: 2;
-			}
-
-			.tour-tip__text {
-				float: left;
-				order: 1;
-			}
-		}
 	}
 
 }
