@@ -2,7 +2,7 @@
 var classes = document.documentElement.className; {{!note: once we ditch support we can just use classlist}}
 classes = classes.replace(/\bno-js\b/, 'js'); {{!note: needed for JS that's run out of the scope of the bootstrap (inline onclicks, etc)}}
 
-window.cutsTheMustard = (typeof Function.prototype.bind !== 'undefined'{{#if nUiRaiseCctmBar}} && typeof Window.devicePixelRatio !== 'undefined'{{/if}});
+window.cutsTheMustard = (typeof Function.prototype.bind !== 'undefined'{{#if nUiRaiseCtmBar}} && typeof Window.devicePixelRatio !== 'undefined'{{/if}});
 if (window.cutsTheMustard) {
 	classes = classes.replace(/\bcore\b/, 'enhanced');
 }
