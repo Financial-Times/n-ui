@@ -28,6 +28,14 @@ function userHasTakenTour () {
 	return Boolean(superstore.local.get(HAS_TAKEN_TOUR));
 }
 
+function setCloseable () {
+	const closeButton = fixedEl.querySelector('[data-action="welcome-banner-close"]');
+	closeButton.addEventListener('click', () => {
+		fixedEl.classList.add('n-welcome-banner--closed');
+		superstore.local.set(HAS_MINIMIZED, 1);
+	});
+}
+
 function setExpander () {
 	const buttonClass = 'n-welcome-banner__button--toggler';
 	const expandableContent = fixedEl.querySelector('.o-expander__content');
@@ -135,13 +143,22 @@ function init () {
 	staticEl = document.querySelector('.n-welcome-message--static');
 
 	if (fixedEl && fixedEl.getAttribute('data-component') === 'welcome-banner') { // new shrinkable banner
-		if (!userHasTakenTour()) {
+		const closeable = document.querySelector('[data-action="welcome-banner-close"]');
+		let showFixed = !userHasTakenTour();
+		if (closeable) {
+			showFixed = showFixed && !userHasMinimized();
+		}
+		if (showFixed) {
 			setTourButton();
 			fixedEl.removeAttribute('hidden');
 			fixedElHeight = fixedEl.getBoundingClientRect().height;
 			updateViewportHeight();
 			setScrollLimitSticky();
-			setExpander();
+			if (closeable) {
+				setCloseable();
+			} else {
+				setExpander();
+			}
 		}
 	} else { // old removable message
 		initOneTimeSticky();
