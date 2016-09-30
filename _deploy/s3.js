@@ -19,7 +19,7 @@ if (!tag) {
 	]
 }
 
-function purgeOnce(path, message) {
+function purgeOnce (path, message) {
 	return fetch(path, {
 			method: 'PURGE',
 			headers: {
@@ -31,7 +31,7 @@ function purgeOnce(path, message) {
 			if(!res.ok) {
 				throw new Error(`failed to purge ${path}: status ${res.status}`)
 			} else {
-				console.log(`${path}: ${message}`) //eslint-disable-line
+				console.log(`Purging ${path}: ${message}`) //eslint-disable-line
 			}
 		})
 }
@@ -62,7 +62,7 @@ shellpromise('find . -path "./dist/*"')
 						surrogateControl: 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400'
 					})
 						.then(() => files.map(file => {
-							const path = `https://next-geebee.ft.com/n-ui/${conf.directory}/${conf.version}/${file.split('/').pop()}`;
+							const path = `https://next-geebee.ft.com/n-ui/cached/${version}/${file.split('/').pop()}`;
 							return purge(path);
 						}))
 				})
