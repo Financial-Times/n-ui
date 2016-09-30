@@ -4,6 +4,7 @@ import {
 	getStorage, getSessionStorage, setStorage, getCookie,
 	difference, dateInFuture, addToDate,
 	element, elementExists, createElement,
+	padLeft, toCurrency,
 } from '../utils';
 
 const _localStorage = window.localStorage;
@@ -434,6 +435,64 @@ describe('Subscription Offer Prompt - Utils', () => {
 			expect(el.children[0].tagName).to.equal('STRONG');
 			expect(el.children[0].textContent).to.equal('Foo');
 		});
+
+	});
+
+	describe('padLeft', () => {
+
+		it('returns a string', () =>
+			expect(padLeft('')).to.be.a('string')
+		);
+
+		it('adds 0s to string by length', () => {
+			expect(padLeft('', 10)).to.equal('0000000000')
+			expect(padLeft('foo', 10)).to.equal('0000000foo')
+		});
+
+		it('pad character can be overriden', () => {
+			expect(padLeft('', 10, '!')).to.equal('!!!!!!!!!!')
+			expect(padLeft('foo', 10, '!')).to.equal('!!!!!!!foo')
+		});
+
+	});
+
+	describe('toCurrency', () => {
+
+		it('returns a string', () =>
+			expect(toCurrency(1000, 'GBP')).to.be.a('string')
+		);
+
+		it('returns a string representing amount as pence', () =>
+			expect(toCurrency(1000, 'GBP')).to.contain('10.00')
+		);
+
+		it('returns £ prefixed for GBP', () =>
+			expect(toCurrency(1000, 'GBP')).to.equal('£10.00')
+		);
+
+		it('returns € prefixed for EUR', () =>
+			expect(toCurrency(1000, 'EUR')).to.equal('€10.00')
+		);
+
+		it('returns $ prefixed for USD', () =>
+			expect(toCurrency(1000, 'USD')).to.equal('$10.00')
+		);
+
+		it('returns $ prefixed for AUD', () =>
+			expect(toCurrency(1000, 'AUD')).to.equal('$10.00')
+		);
+
+		it('returns $ prefixed for HKD', () =>
+			expect(toCurrency(1000, 'HKD')).to.equal('$10.00')
+		);
+
+		it('returns $ prefixed for SGD', () =>
+			expect(toCurrency(1000, 'SGD')).to.equal('$10.00')
+		);
+
+		it('returns ¥ prefixed for JPY, without decimals', () =>
+			expect(toCurrency(1000, 'JPY')).to.equal('¥10')
+		);
 
 	});
 
