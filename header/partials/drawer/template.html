@@ -77,7 +77,9 @@
 							<li class="o-header__drawer-menu-item">
 								<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">
 									{{name}}
-									<span class="o-header__drawer-menu-link-detail" data-o-header-drawer-user-email></span>
+									{{#if showemail}}
+										<span class="o-header__drawer-menu-link-detail" data-o-header-drawer-user-email></span>
+									{{/if}}
 								</a>
 							</li>
 						{{/each}}
@@ -88,7 +90,6 @@
 							<li class="o-header__drawer-menu-item">
 								<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">
 									{{name}}
-									<span class="o-header__drawer-menu-link-detail" data-o-header-drawer-user-email></span>
 								</a>
 							</li>
 						{{/each}}
