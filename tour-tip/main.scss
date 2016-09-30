@@ -7,7 +7,7 @@
 	}
 
 	.tour-tip__text {
-		margin: 10px;
+		margin: 20px;
 	}
 
 	.tour-tip__link {
@@ -40,7 +40,7 @@
 
 	.tour-tip__img-container {
 		overflow: hidden;
-		padding: $spacing-unit;
+		padding: 20px;
 	}
 
 	@include oGridRespondTo($from: 'M') {
@@ -52,7 +52,7 @@
 				align-items: center;
 				display: flex;
 				overflow: hidden;
-				padding: $spacing-unit*3;
+				padding: $spacing-unit*2;
 			}
 
 			.tour-tip__img-container {
@@ -61,14 +61,14 @@
 				order: 1;
 				padding: $spacing-unit 0;
 				text-align: center;
-				width: 50%;
+				width: 40%;
 			}
 
 			.tour-tip__text {
 				float: right;
 				margin: 0;
 				order: 2;
-				width: 50%;
+				width: 60%;
 			}
 
 			.tour-tip__link {
@@ -95,19 +95,6 @@
 				margin-top: $spacing-unit * 1.5;
 			}
 
-		}
-
-		.tour-tip--reversed {
-			.tour-tip__img-container {
-				float: right;
-				margin: 0 0 0 $spacing-unit*3;
-				order: 2;
-			}
-
-			.tour-tip__text {
-				float: left;
-				order: 1;
-			}
 		}
 	}
 
