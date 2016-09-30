@@ -14,69 +14,59 @@ if (!tag) {
 } else {
 	isOfficialRelease = true;
 	versions = [
-		tag.split('.').slice(0,2).join('.'),
+		tag,
 		tag.split('.').slice(0,1).join('.')
 	]
 }
 
+function purgeOnce(path, message) {
+	return fetch(path, {
+			method: 'PURGE',
+			headers: {
+				'Fastly-Soft-Purge': 1,
+				'Fastly-Key': process.env.FASTLY_API_KEY
+			}
+		})
+		.then(res => {
+			if(!res.ok) {
+				throw new Error(`failed to purge ${path}: status ${res.status}`)
+			} else {
+				console.log(`${path}: ${message}`) //eslint-disable-line
+			}
+		})
+}
+
+function purge (path) {
+	return purgeOnce(path, 'going once')
+		.then(() => purgeOnce(path, 'going twice'))
+		.then(() => purgeOnce(path, 'going three times'))
+		.then(() => purgeOnce(path, '...gone!'))
+}
+
 shellpromise('find . -path "./dist/*"')
 	.then(files => {
-
 		files = files.split('\n')
 			.filter(f => !!f)
 			.filter(f => !/^n-ui-core\.css/.test(f));
 
-		const deploys = versions.reduce((arr, version, i) => {
-			return arr.concat([{
-				version,
-				monitor: i === 0, // only monitor the size of the first copy deployed
-				cacheControl: 'no-cache, must-revalidate, max-age=1200',
-				directory: 'no-cache'
-			}, {
-				version,
-				monitor: false,
-				cacheControl: 'must-revalidate, max-age=1200',
-				directory: 'cached'
-			}])
-		}, []);
-
-		return Promise.all(deploys.map(conf => {
-			return deployStatic({
-				files: files,
-				destination: `n-ui/${conf.directory}/${conf.version}`,
-				bucket: 'ft-next-n-ui-prod',
-				strip: 1,
-				monitor: isOfficialRelease && conf.monitor,
-				cacheControl: conf.cacheControl,
-				surrogateControl: 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400'
-			})
-				.then(() => files.map(file => {
-					const path = `https://next-geebee.ft.com/n-ui/${conf.directory}/${conf.version}/${file.split('/').pop()}`;
-					return fetch(path, {
-						method: 'PURGE',
-						headers: {
-							'Fastly-Soft-Purge': 1,
-							'Fastly-Key': process.env.FASTLY_API_KEY
-						}
+		return Promise.all(
+			versions
+				.map((version, i) => {
+					return deployStatic({
+						files: files,
+						destination: `n-ui/cached/${version}`,
+						bucket: 'ft-next-n-ui-prod',
+						strip: 1,
+						monitor: isOfficialRelease && i === 0, // only monitor the size of the first copy deployed
+						cacheControl: 'must-revalidate, max-age=1200',
+						surrogateControl: 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400'
 					})
-					.then(res => {
-						if(!res.ok) {
-							console.log(res.status); //eslint-disable-line
-							throw new Error(`failed to purge ${path}`)
-						} else {
-							console.log(`successfully purged ${path}`) //eslint-disable-line
-						}
-					})
-					.catch(err => {
-						console.error(err); //eslint-disable-line
-					})
-				}))
-				.catch(err => {
-					console.error(err) //eslint-disable-line
-					process.exit(2);
-				});
-
-		}));
+						.then(() => files.map(file => {
+							const path = `https://next-geebee.ft.com/n-ui/${conf.directory}/${conf.version}/${file.split('/').pop()}`;
+							return purge(path);
+						}))
+				})
+		)
 	})
 	.catch(err => {
 		console.log(err) //eslint-disable-line
