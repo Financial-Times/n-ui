@@ -26,8 +26,7 @@ const popupTemplate = `
 			<span class="subscription-prompt--flag">Limited Offer</span>
 			<h1 class="subscription-prompt--heading">You qualify for a 25% subscription discount</h1>
 			<span class="subscription-prompt--subheading">
-				<span class="ShownOn-desktop">Pay just £4.84 per week and you will get:</span>
-				<span class="ShownOn-mobile">Pay just £4.84 per week and get unlimited access</span>
+				Pay just £4.84 per week and get unlimited access
 			</span>
 		</div>
 		<div class="subscription-prompt--info">
