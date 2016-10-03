@@ -142,7 +142,10 @@ function init () {
 	fixedEl = document.querySelector('.n-welcome-message--fixed');
 	staticEl = document.querySelector('.n-welcome-message--static');
 
-	if (fixedEl && fixedEl.getAttribute('data-component') === 'welcome-banner') { // new shrinkable banner
+	if (!fixedEl) {
+		return;
+	}
+	else if (fixedEl.getAttribute('data-component') === 'welcome-banner') { // new shrinkable banner
 		const closeable = document.querySelector('[data-action="welcome-banner-close"]');
 		let showFixed = !userHasTakenTour();
 		if (closeable) {
