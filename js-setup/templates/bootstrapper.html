@@ -15,22 +15,6 @@
 		return o;
 	};
 
-	window.ftNextFireCondition = function (condition) {
-		var evName = 'ftNext' + condition;
-		if (!window[evName]) {
-			var ev;
-			try {
-				ev = new CustomEvent(evName);
-			// really annoying, but the CSSLoading might occur before polyfilling CustomEvent :(
-			} catch (e) {
-				ev = document.createEvent('CustomEvent')
-				ev.initCustomEvent(evName, false, false, null);
-			}
-			document.dispatchEvent(ev);
-			window[evName] = 1;
-		}
-	};
-
 	{{>n-ui/layout/partials/css-loader}}
 
 	window.{{@root.polyfillCallbackName}} = function () {
