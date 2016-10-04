@@ -89,7 +89,7 @@ function getSubscriptionPromptValues () {
 		case 'SGP': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(619, 'SGP') };
 		// United States Minor Outlying Islands / United States of America
 		case 'UMI':
-		case 'USA': return { discount: 33, offerId: 'a9582121-87c2-09a7-0cc0-4caf594985d5', price: toCurrency(470, 'USD') };
+		case 'USA': return { discount: 33, offerId: 'a9582121-87c2-09a7-0cc0-4caf594985d5', price: toCurrency(429, 'USD') };
 		// European countries
 		case 'DEU':
 		case 'FRA':
