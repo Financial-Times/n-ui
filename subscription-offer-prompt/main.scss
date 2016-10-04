@@ -72,9 +72,6 @@
 .subscription-prompt--aside {
 	@include oGridColspan(5);
 
-	@include oGridRespondTo($until: S) {
-		display: none;
-	}
 }
 
 .subscription-prompt--benefits-list {
@@ -83,6 +80,10 @@
 	font-weight: normal;
 	padding: 0;
 	margin: 0;
+
+	@include oGridRespondTo($until: S) {
+		display: none;
+	}
 
 	li {
 		position: relative;
