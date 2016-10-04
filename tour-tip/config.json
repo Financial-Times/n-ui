@@ -47,7 +47,7 @@
       "imageAlt": "Illustration of the \"Companies\" page, showing an \"Added\" button next to the page heading",
       "imageUrl": "https://next-geebee.ft.com/assets/tour/myft-4.svg",
       "ctas": [{
-        "url": "/myft/product-tour",
+        "url": "/tour/myft",
         "label": "Explore myFT"
       }]
     }
