@@ -78,18 +78,18 @@ function getCountryCode () {
 function getSubscriptionPromptValues () {
 	switch (getCountryCode()) {
 		// Australia
-		case 'AUS': return { discount: 25, offerId: '123', price: toCurrency(479, 'AUD') };
+		case 'AUS': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(479, 'AUD') };
 		// United Kingdom
-		case 'GBR': return { discount: 25, offerId: '123', price: toCurrency(399, 'GBP') };
+		case 'GBR': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(399, 'GBP') };
 		// Hong Kong
-		case 'HKG': return { discount: 25, offerId: '123', price: toCurrency(3690, 'HKD') };
+		case 'HKG': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(3690, 'HKD') };
 		// Japan
-		case 'JPN': return { discount: 25, offerId: '123', price: toCurrency(65300, 'JPN') };
+		case 'JPN': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(65300, 'JPN') };
 		// Singapore
-		case 'SGP': return { discount: 25, offerId: '123', price: toCurrency(619, 'SGP') };
+		case 'SGP': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(619, 'SGP') };
 		// United States Minor Outlying Islands / United States of America
 		case 'UMI':
-		case 'USA': return { discount: 33, offerId: '123', price: toCurrency(470, 'USD') };
+		case 'USA': return { discount: 33, offerId: 'a9582121-87c2-09a7-0cc0-4caf594985d5', price: toCurrency(470, 'USD') };
 		// European countries
 		case 'DEU':
 		case 'FRA':
@@ -122,13 +122,13 @@ function getSubscriptionPromptValues () {
 		case 'ALA':
 		case 'SPM':
 		case 'NLD':
-		case 'MAF': return { discount: 25, offerId: '123', price: toCurrency(439, 'EUR') };
+		case 'MAF': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(439, 'EUR') };
 		default: throw new Error(`unknown country code ${countryCode}`);
 	}
 }
 
 export const initPrompt = executeWhen(createSubscriptionPrompt(createPopupHTML, getSubscriptionPromptValues));
-export const init = () => fetch('/country')
+export const init = () => fetch('/country', { credentials: 'same-origin' })
 	.then((response) => response.json())
 	.then(setCountryCode)
 	.then(() => initPrompt(promptShouldBeShown));
