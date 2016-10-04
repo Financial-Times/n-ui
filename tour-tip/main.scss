@@ -57,7 +57,7 @@
 
 			.tour-tip__img-container {
 				float: left;
-				margin: 0 $spacing-unit*3 0 0;
+				margin: 0;
 				order: 1;
 				padding: $spacing-unit 0;
 				text-align: center;
@@ -67,8 +67,10 @@
 			.tour-tip__text {
 				float: right;
 				margin: 0;
+				padding-left: $spacing-unit * 3;
+				box-sizing: border-box;
 				order: 2;
-				width: calc(60% - #{$spacing-unit * 3});
+				width: 60%;
 			}
 
 			.tour-tip__link {
