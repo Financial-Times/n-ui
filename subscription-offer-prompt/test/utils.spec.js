@@ -466,6 +466,14 @@ describe('Subscription Offer Prompt - Utils', () => {
 			expect(toCurrency(1000, 'GBP')).to.contain('10.00')
 		);
 
+		it('does not do any rounding on large currency', () =>
+			expect(toCurrency(1999, 'GBP')).to.contain('19.99')
+		);
+
+		it('rounds off any decimal points given', () =>
+			expect(toCurrency(1999.65, 'GBP')).to.contain('20.00')
+		);
+
 		it('returns £ prefixed for GBP', () =>
 			expect(toCurrency(1000, 'GBP')).to.equal('£10.00')
 		);

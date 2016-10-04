@@ -92,9 +92,10 @@ export function toCurrency (amount, countryCode) {
 		SGD: '$',
 		JPY: '¥',
 	}[countryCode] || countryCode;
-	let string = `${currencySymbol}${Math.round(amount / 100)}`;
+	amount = Math.round(amount);
+	let string = `${currencySymbol}${Math.floor(amount / 100)}`;
 	if (countryCode !== 'JPY') {
-		string += `.${padLeft(Math.round(amount % 100), 2)}`;
+		string += `.${padLeft(Math.floor(amount % 100), 2)}`;
 	}
 	return string;
 }
