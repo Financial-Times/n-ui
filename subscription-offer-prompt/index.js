@@ -128,7 +128,7 @@ function getSubscriptionPromptValues () {
 }
 
 export const initPrompt = executeWhen(createSubscriptionPrompt(createPopupHTML, getSubscriptionPromptValues));
-export const init = () => fetch('/country')
+export const init = () => fetch('/country', { credentials: 'same-origin' })
 	.then((response) => response.json())
 	.then(setCountryCode)
 	.then(() => initPrompt(promptShouldBeShown));
