@@ -1,9 +1,10 @@
 import SlidingPopup from 'n-sliding-popup';
 import {
-	noneTrue, resultExists, executeWhen,
+	noneTrue, result, resultExists, executeWhen,
 	getStorage, getSessionStorage, setStorage, getCookie,
 	dateInFuture, addToDate,
 	elementExists, createElement,
+	toCurrency
 } from './utils';
 
 const nowPlusThirtyDays = () => addToDate(2592000000)(Date.now);
@@ -17,16 +18,16 @@ const promptDateInFuture = dateInFuture(getPromptNextShowDate);
 const barrierLastSeen = resultExists(getBarrierLastSeenDate);
 const scheduleNextBarrier = () => setPromptNextShowDate(nowPlusThirtyDays().toJSON())
 const promptShouldBeShown = () => barrierLastSeen() && noneTrue(promptDateInFuture, isLoggedIn, isBarrierPage);
-const popupTemplate = `
+const popupTemplate = ({ discount, price, offerId }) => `
 	<article class="subscription-prompt--wrapper" data-trackable="subscription-offer-prompt">
 		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
 			<span class="n-sliding-popup-close-label">Close</span>
 		</button>
 		<div class="subscription-prompt--header">
 			<span class="subscription-prompt--flag">Limited Offer</span>
-			<h1 class="subscription-prompt--heading">You qualify for a 25% subscription discount</h1>
+			<h1 class="subscription-prompt--heading">You qualify for a ${discount}% subscription discount</h1>
 			<span class="subscription-prompt--subheading">
-				Pay just £4.84 per week and get unlimited access
+				Pay just ${price} per week and get unlimited access
 			</span>
 		</div>
 		<div class="subscription-prompt--info">
@@ -35,7 +36,7 @@ const popupTemplate = `
 				<li>5 year company financials archive</li>
 				<li>Unlimited FT.com article access</li>
 			</ul>
-			<a href="https://subscription.ft.com/?cpgId=0504&segID=100893&offerId=c1773439-53dc-df3d-9acc-20ce2ecde318&segmentID=bbc74ab1-1054-329e-ec4c-1c614f6af5ba" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Save 25% now</a>
+			<a href="https://www.ft.com/signup?offerId=${offerId}" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Save 25% now</a>
 		</div>
 		<div class="subscription-prompt--aside ShownOn-desktop">
 			<figure class="subscription-prompt--figure">
@@ -46,17 +47,17 @@ const popupTemplate = `
 	</article>
 `;
 
-function createPopupHTML () {
+function createPopupHTML (values) {
 	return createElement('div', {
 		'class': 'n-sliding-popup subscription-prompt',
 		'data-n-component': 'o-sliding-popup',
 		'data-n-sliding-popup-position': 'bottom left',
-	}, popupTemplate);
+	}, popupTemplate(values));
 }
 
-function createSubscriptionPrompt (html) {
+function createSubscriptionPrompt (html, values) {
 	return () => {
-		const element = html();
+		const element = html(result(values));
 		element.onClose = scheduleNextBarrier;
 		document.body.appendChild(element);
 		const slidingPopup = new SlidingPopup(element);
@@ -65,5 +66,69 @@ function createSubscriptionPrompt (html) {
 	};
 }
 
-export const initPrompt = executeWhen(createSubscriptionPrompt(createPopupHTML));
-export const init = () => initPrompt(promptShouldBeShown);
+let countryCode = 'GBR';
+function setCountryCode (code) {
+	countryCode = code;
+	return code;
+}
+function getCountryCode () {
+	return countryCode;
+}
+
+function getSubscriptionPromptValues () {
+	switch (getCountryCode()) {
+		// Australia
+		case 'AUS': return { discount: 25, offerId: '123', price: toCurrency(479, 'AUD') };
+		// United Kingdom
+		case 'GBR': return { discount: 25, offerId: '123', price: toCurrency(399, 'GBP') };
+		// Hong Kong
+		case 'HKG': return { discount: 25, offerId: '123', price: toCurrency(3690, 'HKD') };
+		// Japan
+		case 'JPN': return { discount: 25, offerId: '123', price: toCurrency(65300, 'JPN') };
+		// Singapore
+		case 'SGP': return { discount: 25, offerId: '123', price: toCurrency(619, 'SGP') };
+		// United States Minor Outlying Islands / United States of America
+		case 'UMI':
+		case 'USA': return { discount: 33, offerId: '123', price: toCurrency(470, 'USD') };
+		// European countries
+		case 'DEU':
+		case 'FRA':
+		case 'ITA':
+		case 'ESP':
+		case 'GRC':
+		case 'PRT':
+		case 'AUT':
+		case 'CYP':
+		case 'FIN':
+		case 'IRL':
+		case 'SVK':
+		case 'MLT':
+		case 'LVA':
+		case 'SVN':
+		case 'LTU':
+		case 'EST':
+		case 'BEL':
+		case 'MCO':
+		case 'UNK':
+		case 'VAT':
+		case 'ZWE':
+		case 'AND':
+		case 'SMR':
+		case 'REU':
+		case 'GLP':
+		case 'MTQ':
+		case 'BLM':
+		case 'MYT':
+		case 'ALA':
+		case 'SPM':
+		case 'NLD':
+		case 'MAF': return { discount: 25, offerId: '123', price: toCurrency(439, 'EUR') };
+		default: throw new Error(`unknown country code ${countryCode}`);
+	}
+}
+
+export const initPrompt = executeWhen(createSubscriptionPrompt(createPopupHTML, getSubscriptionPromptValues));
+export const init = () => fetch('/country')
+	.then((response) => response.json())
+	.then(setCountryCode)
+	.then(() => initPrompt(promptShouldBeShown));
