@@ -31,14 +31,14 @@ const popupTemplate = ({ discount, price, offerId }) => `
 			</span>
 		</div>
 		<div class="subscription-prompt--info">
-			<ul class="subscription-prompt--benefits-list ShownOn-desktop">
+			<ul class="subscription-prompt--benefits-list">
 				<li>Full digital access: online, mobile & tablet</li>
 				<li>5 year company financials archive</li>
 				<li>Unlimited FT.com article access</li>
 			</ul>
 			<a href="https://www.ft.com/signup?offerId=${offerId}" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Save 25% now</a>
 		</div>
-		<div class="subscription-prompt--aside ShownOn-desktop">
+		<div class="subscription-prompt--aside">
 			<figure class="subscription-prompt--figure">
 				<img src="https://image.webservices.ft.com/v1/images/raw/http://next-geebee.ft.com/assets/people/lionel.png?source=test&width=126" alt="Lionel Barber, Editor">
 				<figcaption class="subscription-prompt--figure-caption">Lionel Barber, Editor</span>
