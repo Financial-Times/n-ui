@@ -24,13 +24,14 @@
 		.tour-tip-group__item:nth-of-type(odd) {
 			.tour-tip__img-container {
 				float: right;
-				margin: 0 0 0 $spacing-unit*3;
+				margin: 0;
 				order: 2;
 			}
 
 			.tour-tip__text {
 				float: left;
 				order: 1;
+				padding: 0 48px 0 0;
 			}
 		}
 
