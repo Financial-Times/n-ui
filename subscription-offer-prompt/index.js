@@ -81,6 +81,8 @@ function getSubscriptionPromptValues () {
 		case 'AUS': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(479, 'AUD') };
 		// United Kingdom
 		case 'GBR': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(399, 'GBP') };
+		// Switzerland
+		case 'CHE': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(489, 'CHF') };
 		// Hong Kong
 		case 'HKG': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(3690, 'HKD') };
 		// Japan
