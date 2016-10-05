@@ -20,8 +20,8 @@ export default class TourTip extends Component {
 	}
 
 	renderCtas (data) {
-		if((!data.content.ctas && !data.content.ctas.length) ||
-			(data.settings.isAnon && !data.settings.showCtaToAnon)) {
+		if((!data.content.ctas || !data.content.ctas.length) ||
+			(data.settings.isAnon && data.settings.hideCtaFromAnon)) {
 			return null;
 		}
 
