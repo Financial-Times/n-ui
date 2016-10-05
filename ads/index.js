@@ -32,6 +32,19 @@ function initOAds (flags, appName, adOptions) {
 	});
 }
 
+
+function initStickyHeaderAdvert(flags) {
+	if(flags && flags.get('stickyHeaderAd')) {
+		let stickyAd = new Sticky(
+			document.querySelector('.above-header-advert'),
+			{ 'sibling' : '.header-ad-placeholder__top',
+			'stickUntil' : '#primary-nav #o-header-nav-desktop'
+			});
+		stickyAd.init();
+	}
+}
+
+
 function onAdsComplete (flags, event) {
 	const detail = event.detail;
 	/* istanbul ignore else  */
@@ -45,20 +58,23 @@ function onAdsComplete (flags, event) {
 			detail.slot.reporter = new Reporter(detail.slot);
 		}
 
+
 		if (detail.slot.gpt && detail.slot.gpt.isEmpty === false) {
 			utils.log.info('Ad loaded in slot', event);
 			if (slotsRendered === 0) {
 				perfMark('firstAdLoaded');
-				if (/spoor-id=3/.test(document.cookie)) {
+
 					customTimings.firstAdLoaded = new Date().getTime();
-					const sendTimings = () => {
-						customTimings.adIframeLoaded = new Date().getTime();
-						perfMark('adIframeLoaded');
-						sendMetrics(customTimings, detail.slot);
-						document.body.removeEventListener('oAds.adIframeLoaded', sendTimings);
+					const iframeLoadedCallback = () => {
+						initStickyHeaderAdvert(flags);
+						if (/spoor-id=3/.test(document.cookie)) {
+							customTimings.adIframeLoaded = new Date().getTime();
+							perfMark('adIframeLoaded');
+							sendMetrics(customTimings, detail.slot);
+						}
+						document.body.removeEventListener('oAds.adIframeLoaded', iframeLoadedCallback);
 					}
-					document.body.addEventListener('oAds.adIframeLoaded', sendTimings);
-				}
+					document.body.addEventListener('oAds.adIframeLoaded', iframeLoadedCallback);
 			}
 		} else if (detail.slot.gpt && detail.slot.gpt.isEmpty === true) {
 			utils.log.warn('Failed to load ad, details below');
@@ -84,23 +100,6 @@ module.exports = {
 					if (/(BlackBerry|BBOS|PlayBook|BB10)/.test(navigator.userAgent)) {
 						return;
 					}
-
-					if(flags && flags.get('stickyHeaderAd')) {
-										let stickyAd = new Sticky(
-											document.querySelector('.above-header-advert'),
-											{ 'sibling' : '.header-ad-placeholder__top',
-											'stickUntil' : '#primary-nav .o-header__top'
-											});
-										stickyAd.init();
-									}
-									if(flags && flags.get('stickyRightAd')) {
-										let stickyRight = new Sticky(
-											document.querySelector('.sidebar-advert'),
-											{	'paddingTop' : '70',
-												'stickUntil' : '.article__share--bottom'
-											});
-										stickyRight.init();
-									}
 
 					return Promise.resolve()
 						.then(() => {
