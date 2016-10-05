@@ -33,17 +33,12 @@ function initOAds (flags, appName, adOptions) {
 }
 
 
-function initStickyHeaderAdvert(flags) {
+function initStickyHeaderAdvert (flags) {
 	if(flags && flags.get('stickyHeaderAd')) {
-		let stickyAd = new Sticky(
-			document.querySelector('.above-header-advert'),
-			{ 'sibling' : '.header-ad-placeholder__top',
-			'stickUntil' : '#primary-nav #o-header-nav-desktop'
-			});
+		let stickyAd = new Sticky( document.querySelector('.above-header-advert'), { 'sibling' : '.header-ad-placeholder__top', 'stickUntil' : '#primary-nav #o-header-nav-desktop'});
 		stickyAd.init();
 	}
 }
-
 
 function onAdsComplete (flags, event) {
 	const detail = event.detail;
