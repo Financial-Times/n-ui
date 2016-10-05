@@ -20,11 +20,14 @@ export default class TourTip extends Component {
 	}
 
 	renderCtas (data) {
-		if (data.content.ctas && data.content.ctas.length) {
-			return data.content.ctas.map(cta =>
-				<a href={cta.url} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{cta.label}</a>
-			);
+		if((!data.content.ctas || !data.content.ctas.length) ||
+			(data.settings.isAnon && data.settings.hideCtaFromAnon)) {
+			return null;
 		}
+
+		return data.content.ctas.map(cta =>
+			<a href={cta.url} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{cta.label}</a>
+		);
 	}
 
 	renderImage (data) {
@@ -51,6 +54,10 @@ export default class TourTip extends Component {
 
 	render () {
 		let data = JSON.parse(JSON.stringify(this.props.data));
+
+		if(data.settings.isAnon && data.settings.hideFromAnon) {
+			return null;
+		}
 
 		const modifiersFromConfig = (data.modifiers || []).map(modifier => `tour-tip--${modifier}`);
 		const modifiers = [`tour-tip--${data.settings.size}`, ...modifiersFromConfig];

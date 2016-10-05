@@ -71,31 +71,27 @@
 
 		<nav class="o-header__drawer-menu o-header__drawer-menu--user" role="navigation" aria-label="User navigation" data-trackable="user-nav">
 			<ul class="o-header__drawer-menu-list">
-				{{#unlessEquals nUi.header.userNav false}}
-					{{#if @root.anon.userIsLoggedIn}}
-						{{#each @root.navigationLists.drawer_bottom.user}}
-							<li class="o-header__drawer-menu-item">
-								<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">
-									{{name}}
-									{{#if showemail}}
-										<span class="o-header__drawer-menu-link-detail" data-o-header-drawer-user-email></span>
-									{{/if}}
-								</a>
-							</li>
-						{{/each}}
-					{{/if}}
-
-					{{#if @root.anon.userIsAnonymous}}
-						{{#each @root.navigationLists.drawer_bottom.anon}}
-							<li class="o-header__drawer-menu-item">
-								<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">
-									{{name}}
-								</a>
-							</li>
-						{{/each}}
-					{{/if}}
-
-				{{/unlessEquals}}
+				{{#if @root.anon.userIsLoggedIn}}
+					{{#each @root.navigationLists.drawer_bottom.user}}
+						<li class="o-header__drawer-menu-item">
+							<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">
+								{{name}}
+								{{#if showemail}}
+									<span class="o-header__drawer-menu-link-detail" data-o-header-drawer-user-email></span>
+								{{/if}}
+							</a>
+						</li>
+					{{/each}}
+				{{/if}}
+				{{#if @root.anon.userIsAnonymous}}
+					{{#each @root.navigationLists.drawer_bottom.anon}}
+						<li class="o-header__drawer-menu-item">
+							<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">
+								{{name}}
+							</a>
+						</li>
+					{{/each}}
+				{{/if}}
 				<li class="o-header__drawer-menu-item">
 					{{>n-ui/opt-out/template classname='o-header__drawer-menu-button'}}
 				</li>

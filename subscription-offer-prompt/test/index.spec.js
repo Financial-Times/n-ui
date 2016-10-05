@@ -9,7 +9,12 @@ describe('Subscription Offer Prompt', () => {
 		let popup;
 
 		beforeEach(() => popup = initPrompt(true));
-		afterEach(() => document.body.removeChild(popup.el));
+		afterEach(() => {
+			let popups = document.querySelectorAll('.subscription-prompt');
+			for (let i = 0; i < popups.length; ++i) {
+				popups[i].parentElement.removeChild(popups[i]);
+			}
+		});
 
 		it('returns undefined with falsey first argument', () => {
 			expect(initPrompt(false)).to.equal(undefined);
@@ -48,52 +53,50 @@ describe('Subscription Offer Prompt', () => {
 	});
 
 	describe('init', () => {
-		let popup;
 
 		beforeEach(() => {
 			localStorage.setItem('b2c-subscription-offer-prompt', Date.now() - 10000);
 			sessionStorage.setItem('last-seen-barrier', Date.now() - 10000);
 			Object.defineProperty(document, 'cookie', { value: '', configurable: true });
+			sinon.stub(window, 'fetch').returns(Promise.resolve({
+				json: sinon.stub().returns(Promise.resolve('GBR'))
+			}));
 		});
 
 		afterEach(() => {
 			localStorage.removeItem('b2c-subscription-offer-prompt');
 			sessionStorage.removeItem('last-seen-barrier');
+			window.fetch.restore();
 			delete document.cookie;
-			if (popup) {
-				document.body.removeChild(popup.el);
-			}
 		});
 
-		it('returns initPrompt value if navigated from barrier page, not logged in and hasnt been shown in 30 days', () => {
-			popup = init();
-			expect(popup).to.be.instanceOf(SlidingPopup);
-		});
+		it('returns initPrompt value if navigated from barrier page, not logged in and hasnt been shown in 30 days', () =>
+			init().then((popup) => expect(popup).to.be.instanceOf(SlidingPopup))
+		);
 
 		it('does not show on barrier page', () => {
 			const barrier = document.createElement('div');
 			barrier.className = 'ft-subscription-panel';
 			document.body.appendChild(barrier);
-			popup = init();
-			expect(popup).to.equal(undefined);
+			return init().then(popup => {
+				document.body.removeChild(barrier);
+				expect(popup).to.equal(undefined);
+			});
 		});
 
 		it('does not show if FTSession cookie is present', () => {
 			Object.defineProperty(document, 'cookie', { value: 'FTSession=foo', configurable: true });
-			popup = init();
-			expect(popup).to.equal(undefined);
+			return init().then(popup => expect(popup).to.equal(undefined));
 		});
 
 		it('does not show if b2c-subscription-offer-prompt date is in future', () => {
-			localStorage.setItem('b2c-subscription-offer-prompt', Date.now() + 30000);
-			popup = init();
-			expect(popup).to.equal(undefined);
+			localStorage.setItem('b2c-subscription-offer-prompt', new Date(9999999999999).toGMTString());
+			return init().then(popup => expect(popup).to.equal(undefined));
 		});
 
 		it('does not show if barrier page has yet to be visited', () => {
 			sessionStorage.removeItem('last-seen-barrier');
-			popup = init();
-			expect(popup).to.equal(undefined);
+			return init().then(popup => expect(popup).to.equal(undefined));
 		});
 
 	});
