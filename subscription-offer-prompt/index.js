@@ -24,7 +24,7 @@ const shouldPromptBeShown = () => {
 	} else {
 		return Promise.all([getProductSelectorLastSeen(), getPromptLastClosed()])
 			.then(([barrierLastSeen, promptLastSeen]) =>
-				barrierLastSeen && (!promptLastSeen || utils.addToDate(60 * 60 * 24 * 30)(promptLastSeen) < Date.now())
+				barrierLastSeen && (!promptLastSeen || promptLastSeen + (1000 * 60 * 60 * 24 * 30) < Date.now())
 			);
 	}
 }
