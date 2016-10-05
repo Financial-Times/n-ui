@@ -1,23 +1,34 @@
 import SlidingPopup from 'n-sliding-popup';
-import {
-	noneTrue, result, resultExists, executeWhen,
-	getStorage, getSessionStorage, setStorage, getCookie,
-	dateInFuture, addToDate,
-	elementExists, createElement,
-	toCurrency
-} from './utils';
+import Superstore from 'superstore'
 
-const nowPlusThirtyDays = () => addToDate(2592000000)(Date.now);
-const isBarrierPage = elementExists('.ft-subscription-panel');
-const getFTSessionCookie = getCookie('FTSession');
-const isLoggedIn = resultExists(getFTSessionCookie);
-const getPromptNextShowDate = getStorage('b2c-subscription-offer-prompt');
-const setPromptNextShowDate = setStorage('b2c-subscription-offer-prompt');
-const getBarrierLastSeenDate = getSessionStorage('last-seen-barrier');
-const promptDateInFuture = dateInFuture(getPromptNextShowDate);
-const barrierLastSeen = resultExists(getBarrierLastSeenDate);
-const scheduleNextBarrier = () => setPromptNextShowDate(nowPlusThirtyDays().toJSON())
-const promptShouldBeShown = () => barrierLastSeen() && noneTrue(promptDateInFuture, isLoggedIn, isBarrierPage);
+import * as utils from './utils';
+
+const promptLastSeenStorage = new Superstore('local', 'n-ui.subscription-offer-prompt');
+const promptLastSeenStorageKey = 'last-closed';
+
+const isLoggedIn = () => utils.getCookie('FTSession')();
+
+const getProductSelectorLastSeen = () => {
+	const sessionStore = new Superstore('session', 'next.product-selector');
+	return sessionStore.get('last-seen');
+};
+
+const getPromptLastClosed = () => promptLastSeenStorage.get(promptLastSeenStorageKey);
+
+const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorageKey, Date.now());
+
+// show if the barrier has been seen in this session, not logged in, not on a barrier page, and haven't seen it in the last 30 days
+const shouldPromptBeShown = () => {
+	if (isLoggedIn() || utils.elementExists('.ft-subscription-panel')()) {
+		return Promise.resolve(false);
+	} else {
+		return Promise.all([getProductSelectorLastSeen(), getPromptLastClosed()])
+			.then(([barrierLastSeen, promptLastSeen]) =>
+				barrierLastSeen && (!promptLastSeen || utils.addToDate(60 * 60 * 24 * 30)(promptLastSeen) < Date.now())
+			);
+	}
+}
+
 const popupTemplate = ({ discount, price, offerId }) => `
 	<article class="subscription-prompt--wrapper" data-trackable="subscription-offer-prompt">
 		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
@@ -36,7 +47,7 @@ const popupTemplate = ({ discount, price, offerId }) => `
 				<li class="subscription-prompt--benefit">5 year company financials archive</li>
 				<li class="subscription-prompt--benefit">Unlimited FT.com article access</li>
 			</ul>
-			<a href="https://www.ft.com/signup?offerId=${offerId}" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Save 25% now</a>
+			<a href="https://www.ft.com/signup?offerId=${offerId}" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Save ${discount}% now</a>
 		</div>
 		<div class="subscription-prompt--aside" data-o-grid-colspan="5">
 			<figure class="subscription-prompt--figure">
@@ -47,90 +58,55 @@ const popupTemplate = ({ discount, price, offerId }) => `
 	</article>
 `;
 
-function createPopupHTML (values) {
-	return createElement('div', {
+const createPopupHTML = values =>
+	utils.createElement('div', {
 		'class': 'n-sliding-popup subscription-prompt',
 		'data-n-component': 'o-sliding-popup',
 		'data-n-sliding-popup-position': 'bottom left',
 	}, popupTemplate(values));
+
+const createSubscriptionPrompt = values => {
+	const subscriptionPrompt = createPopupHTML(values);
+	subscriptionPrompt.onClose = setPromptLastClosed;
+	document.body.appendChild(subscriptionPrompt);
+	const slidingPopup = new SlidingPopup(subscriptionPrompt);
+	setTimeout(() => slidingPopup.open(), 2000);
+	return subscriptionPrompt;
 }
 
-function createSubscriptionPrompt (html, values) {
-	return () => {
-		const element = html(result(values));
-		element.onClose = scheduleNextBarrier;
-		document.body.appendChild(element);
-		const slidingPopup = new SlidingPopup(element);
-		setTimeout(() => slidingPopup && slidingPopup.open && slidingPopup.open(), 2000);
-		return slidingPopup;
+const getPrice = countryCode => {
+	const prices = {
+		AUS: [479, 'AUD'],
+		CHE: [489, 'CHF'],
+		GBR: [399, 'GBP'],
+		HKG: [3690, 'HKD'],
+		JPN: [65300, 'JPN'],
+		SGP: [619, 'SGP'],
+		USA: [429, 'USD'],
+		default: [439, 'EUR']
 	};
+
+	return utils.toCurrency.apply(null, prices[countryCode] || prices.default);
 }
 
-let countryCode = 'GBR';
-function setCountryCode (code) {
-	countryCode = code;
-	return code;
-}
-function getCountryCode () {
-	return countryCode;
-}
-
-function getSubscriptionPromptValues () {
-	switch (getCountryCode()) {
-		// Australia
-		case 'AUS': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(479, 'AUD') };
-		// United Kingdom
-		case 'GBR': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(399, 'GBP') };
-		// Switzerland
-		case 'CHE': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(489, 'CHF') };
-		// Hong Kong
-		case 'HKG': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(3690, 'HKD') };
-		// Japan
-		case 'JPN': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(65300, 'JPN') };
-		// Singapore
-		case 'SGP': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(619, 'SGP') };
-		// United States Minor Outlying Islands / United States of America
-		case 'UMI':
-		case 'USA': return { discount: 33, offerId: 'a9582121-87c2-09a7-0cc0-4caf594985d5', price: toCurrency(429, 'USD') };
-		// European countries
-		case 'DEU':
-		case 'FRA':
-		case 'ITA':
-		case 'ESP':
-		case 'GRC':
-		case 'PRT':
-		case 'AUT':
-		case 'CYP':
-		case 'FIN':
-		case 'IRL':
-		case 'SVK':
-		case 'MLT':
-		case 'LVA':
-		case 'SVN':
-		case 'LTU':
-		case 'EST':
-		case 'BEL':
-		case 'MCO':
-		case 'UNK':
-		case 'VAT':
-		case 'ZWE':
-		case 'AND':
-		case 'SMR':
-		case 'REU':
-		case 'GLP':
-		case 'MTQ':
-		case 'BLM':
-		case 'MYT':
-		case 'ALA':
-		case 'SPM':
-		case 'NLD':
-		case 'MAF': return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price: toCurrency(439, 'EUR') };
-		default: throw new Error(`unknown country code ${countryCode}`);
+const getSubscriptionPromptValues = countryCode => {
+	const price = getPrice(countryCode);
+	if (countryCode === 'USA') {
+		return { discount: 33, offerId: 'a9582121-87c2-09a7-0cc0-4caf594985d5', price };
+	} else {
+		return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price };
 	}
-}
+};
 
-export const initPrompt = executeWhen(createSubscriptionPrompt(createPopupHTML, getSubscriptionPromptValues));
-export const init = () => fetch('/country', { credentials: 'same-origin' })
-	.then((response) => response.json())
-	.then(setCountryCode)
-	.then(() => initPrompt(promptShouldBeShown));
+export const init = () =>
+	shouldPromptBeShown()
+		.then(shouldShow => {
+			if (shouldShow) {
+				return fetch('/country', { credentials: 'same-origin' })
+					.then(response => response.json())
+					.then((countryCode = 'GBR') => {
+						const subscriptionValues = getSubscriptionPromptValues(countryCode);
+						return createSubscriptionPrompt(subscriptionValues);
+					});
+			}
+		});
