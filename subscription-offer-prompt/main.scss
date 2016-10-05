@@ -19,24 +19,53 @@
 }
 
 .subscription-prompt--heading {
-	@include oTypographySansBold(l);
+	@include oTypographySansBold(m)
 	color: oColorsGetPaletteColor('grey-tint5');
 	margin: 0 0 4px;
 
-	@include oGridRespondTo($until: M) {
-		@include oTypographySansBold(m)
+	@include oGridRespondTo(M) {
+		@include oTypographySansBold(l);
 	}
 }
 
 .subscription-prompt--subheading {
-	@include oTypographySans(m);
+	@include oTypographySansBold(s);
+	font-weight: 300;
 	color: oColorsGetPaletteColor('grey-tint5');
 	display: inline-block;
 	margin-bottom: 20px;
 
-	@include oGridRespondTo($until: M) {
-		@include oTypographySansBold(s);
-		font-weight: 300;
+	@include oGridRespondTo(M) {
+		@include oTypographySans(m);
+	}
+}
+
+.subscription-prompt--benefits {
+	@include oTypographySansBold(s);
+	display: none;
+	list-style: none;
+	font-weight: normal;
+	padding: 0;
+	margin: 0;
+
+	@include oGridRespondTo(S) {
+		display: block;
+	}
+}
+
+.subscription-prompt--benefit {
+	position: relative;
+	margin-left: 20px;
+	margin-bottom: 6px;
+	color: oColorsGetPaletteColor('grey-tint5');
+
+	&:before {
+		@include oIconsGetIcon('tick', #35bd14, 14);
+		content: '';
+		margin-right: 4px;
+		position: absolute;
+		top: 2px;
+		left: -20px;
 	}
 }
 
@@ -46,59 +75,21 @@
 	@include oButtonsTheme(standout);
 
 	font-size: 16px;
-	width: 140px;
 	text-transform: none;
 	padding: 5px 9px 7px;
-	margin-top: 24px;
+	margin-top: 8px;
 
-	@include oGridRespondTo($until: M) {
-		margin-top: 8px;
-		width: auto;
-	}
-}
-
-.subscription-prompt--header {
-	@include oGridColspan(full-width);
-}
-
-.subscription-prompt--info {
-	@include oGridColspan(7);
-
-	@include oGridRespondTo($until: S) {
-		display: none;
+	@include oGridRespondTo(M) {
+		margin-top: 24px;
+		width: 140px;
 	}
 }
 
 .subscription-prompt--aside {
-	@include oGridColspan(5);
+	display: none;
 
-}
-
-.subscription-prompt--benefits-list {
-	@include oTypographySansBold(s);
-	list-style: none;
-	font-weight: normal;
-	padding: 0;
-	margin: 0;
-
-	@include oGridRespondTo($until: S) {
-		display: none;
-	}
-
-	li {
-		position: relative;
-		margin-left: 20px;
-		margin-bottom: 6px;
-		color: oColorsGetPaletteColor('grey-tint5');
-
-		&:before {
-			@include oIconsGetIcon('tick', #35bd14, 14);
-			content: '';
-			margin-right: 4px;
-			position: absolute;
-			top: 2px;
-			left: -20px;
-		}
+	@include oGridRespondTo(S) {
+		display: block;
 	}
 }
 

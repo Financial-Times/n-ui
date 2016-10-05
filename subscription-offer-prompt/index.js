@@ -23,22 +23,22 @@ const popupTemplate = ({ discount, price, offerId }) => `
 		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
 			<span class="n-sliding-popup-close-label">Close</span>
 		</button>
-		<div class="subscription-prompt--header">
+		<div class="subscription-prompt--header" data-o-grid-colspan="12">
 			<span class="subscription-prompt--flag">Limited Offer</span>
 			<h1 class="subscription-prompt--heading">You qualify for a ${discount}% subscription discount</h1>
 			<span class="subscription-prompt--subheading">
 				Pay just ${price} per week and get unlimited access
 			</span>
 		</div>
-		<div class="subscription-prompt--info">
-			<ul class="subscription-prompt--benefits-list">
-				<li>Full digital access: online, mobile & tablet</li>
-				<li>5 year company financials archive</li>
-				<li>Unlimited FT.com article access</li>
+		<div class="subscription-prompt--info" data-o-grid-colspan="7">
+			<ul class="subscription-prompt--benefits">
+				<li class="subscription-prompt--benefit">Full digital access: online, mobile & tablet</li>
+				<li class="subscription-prompt--benefit">5 year company financials archive</li>
+				<li class="subscription-prompt--benefit">Unlimited FT.com article access</li>
 			</ul>
 			<a href="https://www.ft.com/signup?offerId=${offerId}" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Save 25% now</a>
 		</div>
-		<div class="subscription-prompt--aside">
+		<div class="subscription-prompt--aside" data-o-grid-colspan="5">
 			<figure class="subscription-prompt--figure">
 				<img src="https://image.webservices.ft.com/v1/images/raw/http://next-geebee.ft.com/assets/people/lionel.png?source=test&width=126" alt="Lionel Barber, Editor">
 				<figcaption class="subscription-prompt--figure-caption">Lionel Barber, Editor</span>
