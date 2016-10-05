@@ -17,7 +17,7 @@ const getPromptLastClosed = () => promptLastSeenStorage.get(promptLastSeenStorag
 
 const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorageKey, Date.now());
 
-// show if the barrier has been seen in this session, not logged in, not on a barrier page, and haven't seen it in the last 30 days
+// show if not logged in, not on a barrier page, the barrier has been seen in this session, and closed the prompt in the last 30 days
 const shouldPromptBeShown = () => {
 	if (isLoggedIn() || utils.elementExists('.ft-subscription-panel')()) {
 		return Promise.resolve(false);
@@ -43,7 +43,7 @@ const popupTemplate = ({ discount, price, offerId }) => `
 		</div>
 		<div class="subscription-prompt--info" data-o-grid-colspan="7">
 			<ul class="subscription-prompt--benefits">
-				<li class="subscription-prompt--benefit">Full digital access: online, mobile & tablet</li>
+				<li class="subscription-prompt--benefit">Full digital access: online, mobile &amp; tablet</li>
 				<li class="subscription-prompt--benefit">5 year company financials archive</li>
 				<li class="subscription-prompt--benefit">Unlimited FT.com article access</li>
 			</ul>
@@ -51,7 +51,7 @@ const popupTemplate = ({ discount, price, offerId }) => `
 		</div>
 		<div class="subscription-prompt--aside" data-o-grid-colspan="5">
 			<figure class="subscription-prompt--figure">
-				<img src="https://image.webservices.ft.com/v1/images/raw/http://next-geebee.ft.com/assets/people/lionel.png?source=test&width=126" alt="Lionel Barber, Editor">
+				<img src="https://image.webservices.ft.com/v1/images/raw/${encodeURIComponent('http://next-geebee.ft.com/assets/people/lionel.png')}?source=test&amp;width=126" alt="Lionel Barber, Editor">
 				<figcaption class="subscription-prompt--figure-caption">Lionel Barber, Editor</span>
 			</figure>
 		</div>
