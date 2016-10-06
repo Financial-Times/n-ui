@@ -21,7 +21,7 @@ module.exports = function (flags) {
 		if (isSignUpApp) { // every visit to the sign up form
 			enableMouseflow();
 		}
-		if (hasLightSignup && Math.random() <= 0.005) { // .5% of anon visits seeing light signup
+		if (hasLightSignup && Math.random() <= 0.001) { // .1% of anon visits seeing light signup
 			enableMouseflow();
 		}
 		else {
