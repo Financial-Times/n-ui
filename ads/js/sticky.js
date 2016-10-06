@@ -94,7 +94,6 @@ Sticky.prototype.init = function () {
 		return;
 	};
 
-	window.addEventListener('scroll', this.eventScrollStart);
 	const fixedElementTopPosition = this.fixed.getBoundingClientRect().top;
 	this.fixed.style.zIndex = '23';
 	this.fixed.style.top = `${fixedElementTopPosition}px`;
@@ -110,10 +109,13 @@ Sticky.prototype.init = function () {
 		this.sibling.style.marginTop = `${this.fixed.offsetHeight}px`;
 	}
 
+	window.addEventListener('scroll', this.eventScrollStart);
+
 	const cookieCloseButton = document.querySelector('.o-cookie-message__close-btn');
 	if (cookieCloseButton) {
 		let cookieCloseEvent = cookieCloseButton.addEventListener('click', function () {
 			this.extraHeight = 0;
+			this.boundaryTop = this.boundary.getBoundingClientRect().top;
 			this.reset();
 			cookieCloseButton.removeEventListener('click', cookieCloseEvent)
 		}.bind(this));
