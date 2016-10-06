@@ -1,104 +1,104 @@
 /* globals describe, it, beforeEach, afterEach, expect, sinon */
 import SlidingPopup from 'n-sliding-popup';
-import { initPrompt, init } from '../index';
+import Superstore from 'superstore';
+import { init } from '../index';
+
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-describe('Subscription Offer Prompt', () => {
+describe.only('Subscription Offer Prompt', () => {
 
-	describe('initPrompt', () => {
-		let popup;
+	const localStorage = new Superstore('local', 'n-ui.subscription-offer-prompt')
+	const sessionStorage = new Superstore('session', 'next.product-selector')
 
-		beforeEach(() => popup = initPrompt(true));
-		afterEach(() => {
-			let popups = document.querySelectorAll('.subscription-prompt');
-			for (let i = 0; i < popups.length; ++i) {
-				popups[i].parentElement.removeChild(popups[i]);
-			}
-		});
+	beforeEach(() => {
+		Object.defineProperty(document, 'cookie', { value: '', configurable: true });
+		sinon.stub(window, 'fetch').returns(Promise.resolve({
+			json: sinon.stub().returns(Promise.resolve('GBR'))
+		}));
 
-		it('returns undefined with falsey first argument', () => {
-			expect(initPrompt(false)).to.equal(undefined);
-		});
-
-		it('creates a SlidingPopup', () =>
-			expect(popup).to.be.instanceOf(SlidingPopup)
-		);
-
-		it('el has correct attributes', () => {
-			expect(popup.el.getAttribute('class')).to.include('n-sliding-popup subscription-prompt');
-			expect(popup.el.getAttribute('data-n-component')).to.equal('o-sliding-popup');
-			expect(popup.el.getAttribute('data-n-sliding-popup-position')).to.equal('bottom left');
-		});
-
-		it('el has correct html', () =>
-			expect(popup.el.innerHTML).to.contain('You qualify for a 25% subscription discount')
-		);
-
-		it('sets onClose to function', () =>
-			expect(popup.el.onClose).to.be.a('function')
-		);
-
-		it('sets localStorage["b2c-subscription-offer-prompt"] to 30 days in future when onClose is called', () => {
-			popup.el.onClose();
-			// need a 1-2ms buffer for slow JS engines or busy CPUs
-			expect(new Date(localStorage['b2c-subscription-offer-prompt']).getTime()).to.be.closeTo(Date.now() + 2592000000, 2);
-		});
-
-		it('is shown after 2 seconds', () => {
-			sinon.spy(popup, 'open');
-			expect(popup.open).to.not.have.been.called;
-			return delay(2050).then(() => expect(popup.open).to.have.callCount(1))
-		});
-
+		return Promise.all([
+			localStorage.set('last-closed', Date.now() - (1000 * 60 * 60 * 24 * 30)),
+			sessionStorage.set('last-seen', Date.now())
+		])
 	});
 
-	describe('init', () => {
+	afterEach(() => {
+		window.fetch.restore();
+		delete document.cookie;
 
-		beforeEach(() => {
-			localStorage.setItem('b2c-subscription-offer-prompt', Date.now() - 10000);
-			sessionStorage.setItem('last-seen-barrier', Date.now() - 10000);
-			Object.defineProperty(document, 'cookie', { value: '', configurable: true });
-			sinon.stub(window, 'fetch').returns(Promise.resolve({
-				json: sinon.stub().returns(Promise.resolve('GBR'))
-			}));
-		});
+		return Promise.all([
+			localStorage.unset('last-closed'),
+			sessionStorage.unset('last-seen')
+		]);
+	});
 
-		afterEach(() => {
-			localStorage.removeItem('b2c-subscription-offer-prompt');
-			sessionStorage.removeItem('last-seen-barrier');
-			window.fetch.restore();
-			delete document.cookie;
-		});
+	it('should show prompt if navigated from barrier page, not on a barrier page, not logged in and hasnt been shown in 30 days', () =>
+		init().then(popup => popup.should.be.an instanceof(SlidingPopup))
+	);
 
-		it('returns initPrompt value if navigated from barrier page, not logged in and hasnt been shown in 30 days', () =>
-			init().then((popup) => expect(popup).to.be.instanceOf(SlidingPopup))
-		);
+	it('should have correct attributes', () =>
+		init().then(popup => {
+			popup.el.getAttribute('class').should.include('n-sliding-popup subscription-prompt');
+			popup.el.getAttribute('data-n-component').should.equal('o-sliding-popup');
+			popup.el.getAttribute('data-n-sliding-popup-position').should.equal('bottom left');
+		})
+	);
 
-		it('does not show on barrier page', () => {
-			const barrier = document.createElement('div');
-			barrier.className = 'ft-subscription-panel';
-			document.body.appendChild(barrier);
-			return init().then(popup => {
+	it('should have correct html', () =>
+
+		init().then(popup => {
+			popup.el.innerHTML.should.contain('You qualify for a 25% subscription discount')
+		})
+	);
+
+	it('should set onClose to function', () =>
+		init().then(popup => {
+			popup.el.onClose.should.be.a('function')
+		})
+	);
+
+	it('should store date in local storage when closed', () =>
+		init()
+			.then(popup => {
+				popup.el.onClose();
+				return localStorage.get('last-closed');
+			})
+			// need a 1-2ms buffer for slow JS engines or busy CPUs
+			.then(lastClosed => lastClosed.should.be.closeTo(Date.now(), 2))
+	);
+
+	it('should ‘pop-up’ after 2 seconds', () =>
+		init().then(popup => {
+			sinon.spy(popup, 'open');
+			popup.open.should.not.have.been.called;
+			return delay(2050).then(() => popup.open.should.have.callCount(1));
+		})
+	);
+
+	it('should not not show on barrier pages', () => {
+		const barrier = document.createElement('div');
+		barrier.className = 'ft-subscription-panel';
+		document.body.appendChild(barrier);
+		return init()
+			.then(popup => {
 				document.body.removeChild(barrier);
-				expect(popup).to.equal(undefined);
+				should.not.exist(popup);
 			});
-		});
+	});
 
-		it('does not show if FTSession cookie is present', () => {
-			Object.defineProperty(document, 'cookie', { value: 'FTSession=foo', configurable: true });
-			return init().then(popup => expect(popup).to.equal(undefined));
-		});
+	it('should not show if logged in', () => {
+		Object.defineProperty(document, 'cookie', { value: 'FTSession=foo', configurable: true });
+		return init().then(popup => should.not.exist(popup));
+	});
 
-		it('does not show if b2c-subscription-offer-prompt date is in future', () => {
-			localStorage.setItem('b2c-subscription-offer-prompt', new Date(9999999999999).toGMTString());
-			return init().then(popup => expect(popup).to.equal(undefined));
-		});
+	it('should not show if last shown within 30 days', () => {
+		localStorage.set('last-closed', Date.now() + (1000 * 60 * 60 * 24 * 29));
+		return init().then(popup => should.not.exist(popup));
+	});
 
-		it('does not show if barrier page has yet to be visited', () => {
-			sessionStorage.removeItem('last-seen-barrier');
-			return init().then(popup => expect(popup).to.equal(undefined));
-		});
-
+	it('should not show barrier page has not been visited in this session', () => {
+		sessionStorage.unset('last-seen');
+		return init().then(popup => should.not.exist(popup));
 	});
 
 });

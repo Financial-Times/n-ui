@@ -19,12 +19,12 @@ const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorag
 
 // show if not logged in, not on a barrier page, the barrier has been seen in this session, and closed the prompt in the last 30 days
 const shouldPromptBeShown = () => {
-	if (isLoggedIn() || utils.elementExists('.ft-subscription-panel')()) {
+	if (isLoggedIn() || document.querySelector('.ft-subscription-panel')) {
 		return Promise.resolve(false);
 	} else {
 		return Promise.all([getProductSelectorLastSeen(), getPromptLastClosed()])
-			.then(([barrierLastSeen, promptLastSeen]) =>
-				barrierLastSeen && (!promptLastSeen || promptLastSeen + (1000 * 60 * 60 * 24 * 30) < Date.now())
+			.then(([barrierLastSeen, promptLastClosed]) =>
+				barrierLastSeen && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) < Date.now())
 			);
 	}
 }
@@ -71,7 +71,7 @@ const createSubscriptionPrompt = values => {
 	document.body.appendChild(subscriptionPrompt);
 	const slidingPopup = new SlidingPopup(subscriptionPrompt);
 	setTimeout(() => slidingPopup.open(), 2000);
-	return subscriptionPrompt;
+	return slidingPopup;
 }
 
 const getPrice = countryCode => {
