@@ -19,7 +19,7 @@
 }
 
 .subscription-prompt--heading {
-	@include oTypographySansBold(m)
+	@include oTypographySansBold(m);
 	color: oColorsGetPaletteColor('grey-tint5');
 	margin: 0 0 4px;
 
