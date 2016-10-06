@@ -6,7 +6,7 @@ import * as utils from './utils';
 const promptLastSeenStorage = new Superstore('local', 'n-ui.subscription-offer-prompt');
 const promptLastSeenStorageKey = 'last-closed';
 
-const isLoggedIn = () => utils.getCookie('FTSession')();
+const isLoggedIn = utils.getCookie('FTSession');
 
 const getProductSelectorLastSeen = () => {
 	const sessionStore = new Superstore('session', 'next.product-selector');
