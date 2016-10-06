@@ -116,7 +116,6 @@ export class ComponentInitializer {
 				}
 				myft.client.init(clientOpts);
 
-
 				this.initializedFeatures.myftClient = true
 			}
 
