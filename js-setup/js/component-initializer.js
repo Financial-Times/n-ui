@@ -116,10 +116,6 @@ export class ComponentInitializer {
 				}
 				myft.client.init(clientOpts);
 
-				if (flags.get('myFtDigestPromo')) {
-					digestPromo.init();
-				}
-
 				this.initializedFeatures.myftClient = true
 			}
 
@@ -143,7 +139,12 @@ export class ComponentInitializer {
 
 					if (config.features.footer && !this.initializedFeatures.footer) {
 						footer.init(flags);
-						this.initializedFeatures.footer = true
+						this.initializedFeatures.footer = true;
+					}
+
+					if (flags.get('myFtDigestPromo') && !this.initializedFeatures.myFtDigestPromo) {
+						digestPromo.init();
+						this.initializedFeatures.myFtDigestPromo = true;
 					}
 
 					if (config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
@@ -153,12 +154,12 @@ export class ComponentInitializer {
 
 					if (config.features.welcomeMessage && !this.initializedFeatures.welcomeMessage) {
 						flags.get('welcomePanel') && welcomeMessage.init();
-						this.initializedFeatures.welcomeMessage = true
+						this.initializedFeatures.welcomeMessage = true;
 					}
 
 					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
 						flags.get('b2cMessagePrompt') && subscriptionOfferPrompt();
-						this.initializedFeatures.subscriptionOfferPrompt = true
+						this.initializedFeatures.subscriptionOfferPrompt = true;
 					}
 
 					if (config.features.messagePrompts && !this.initializedFeatures.messagePrompts) {

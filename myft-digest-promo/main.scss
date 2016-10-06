@@ -1,17 +1,25 @@
-$icon-width-s: 90px;
-$icon-width-m: 90px;
+@if nUiApply('myftDigestPromo') {
 
-.n-myft-digest-promo {
-	@include clearfix();
+	@include nUiCritical('myftDigestPromo') {
+			.n-myft-digest-promo {
+				display: none;
+			}
+	};
 
-	display: none;
-	float: none;
-	position: relative;
-	background-color: getColor('warm-5');
-	border-bottom: 1px solid getColor('warm-3');
-	border-top: 1px solid getColor('warm-3');
+	$icon-width-s: 90px;
+	$icon-width-m: 90px;
 
-	&.n-myft-digest-promo--enabled {
+	.n-myft-digest-promo {
+		@include clearfix();
+
+		float: none;
+		position: relative;
+		background-color: getColor('warm-5');
+		border-bottom: 1px solid getColor('warm-3');
+		border-top: 1px solid getColor('warm-3');
+	}
+
+	.n-myft-digest-promo--enabled {
 		display: block;
 	}
 
@@ -104,5 +112,4 @@ $icon-width-m: 90px;
 			float: right;
 		}
 	}
-
 }

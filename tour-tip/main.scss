@@ -43,6 +43,29 @@
 		padding: 20px;
 	}
 
+	.tour-tip__dismiss-btn {
+		background: transparent;
+		border: 0;
+		height: 44px;
+		padding: 0;
+		position: absolute;
+		right: $spacing-unit/4;
+		top: $spacing-unit/4;
+		width: 44px;
+
+		&:before {
+			@include oIconsGetIcon('cross-disk', getColor('cold-2'), 20);
+			content: '';
+			position: absolute;
+			right: 8px;
+			top: 8px;
+		}
+
+		&:hover:before {
+			@include oIconsGetIcon('cross-disk', getColor('cold-1'), 20, $apply-base-styles: false);
+		}
+	}
+
 	@include oGridRespondTo($from: 'M') {
 		// Styling wise, ‘m’ is the same as ‘l’
 		// (there are only differences at the data layer)
