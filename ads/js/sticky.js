@@ -97,7 +97,7 @@ Sticky.prototype.init = function () {
 	window.addEventListener('scroll', this.eventScrollStart);
 	const fixedElementTopPosition = this.fixed.getBoundingClientRect().top;
 	this.fixed.style.zIndex = '23';
-	this.fixed.style.top = fixedElementTopPosition + 'px';
+	this.fixed.style.top = `${fixedElementTopPosition}px`;
 
 	if (fixedElementTopPosition > 0) {
 		this.extraHeight = fixedElementTopPosition;
@@ -107,7 +107,7 @@ Sticky.prototype.init = function () {
 	}
 
 	if (this.sibling) {
-		this.sibling.style.marginTop = this.fixed.offsetHeight + 'px';
+		this.sibling.style.marginTop = `${this.fixed.offsetHeight}px`;
 	}
 
 	const cookieCloseButton = document.querySelector('.o-cookie-message__close-btn');
