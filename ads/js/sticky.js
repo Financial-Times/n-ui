@@ -27,17 +27,17 @@ Sticky.prototype.calculate = function () {
 	const scrollY = window.pageYOffset || window.scrollY;
 	const atBoundary = (scrollY - this.startScroll + this.fixedHeight) >= this.boundaryTop;
 	const isAbsolute = this.fixed.style.position === 'absolute';
-	const extraOffsetForAbsolutePosition = ((scrollY - this.extraHeight) >= 0);
+	const canBeFixed = ((scrollY - this.extraHeight) >= 0);
 
 	if ((atBoundary && !isAbsolute)) {
 		this.unstick();
 	}
 
-	if (!atBoundary && isAbsolute && extraOffsetForAbsolutePosition) {
+	if (!atBoundary && isAbsolute && canBeFixed) {
 		this.stick();
 	}
 
-	if ((!extraOffsetForAbsolutePosition && !isAbsolute) || (!atBoundary && isAbsolute && !extraOffsetForAbsolutePosition)) {
+	if ((!canBeFixed && !isAbsolute) || (!atBoundary && isAbsolute && !canBeFixed)) {
 		this.reset();
 	}
 }
