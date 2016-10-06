@@ -81,7 +81,7 @@ const getPrice = countryCode => {
 		GBR: [399, 'GBP'],
 		HKG: [3690, 'HKD'],
 		JPN: [65300, 'JPN'],
-		SGP: [619, 'SGP'],
+		SGP: [619, 'SGD'],
 		USA: [429, 'USD'],
 		default: [439, 'EUR']
 	};
