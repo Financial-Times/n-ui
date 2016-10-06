@@ -67,3 +67,35 @@ export function createElement (tag, attributes, html) {
 	element.innerHTML = html;
 	return element;
 }
+
+export function padLeft (string, length, character = '0') {
+	string = String(string);
+	if (string.length === length) {
+		return string;
+	}
+	let newString = '';
+	length -= string.length;
+	while (length--) {
+		newString += character;
+	}
+	return newString + string;
+}
+
+// use Number#toLocaleString when we drop Safari 9 support
+export function toCurrency (amount, countryCode) {
+	const currencySymbol = {
+		GBP: '£',
+		EUR: '€',
+		USD: '$',
+		AUD: '$',
+		HKD: '$',
+		SGD: '$',
+		JPY: '¥',
+	}[countryCode] || countryCode;
+	amount = Math.round(amount);
+	let string = `${currencySymbol}${Math.floor(amount / 100)}`;
+	if (countryCode !== 'JPY') {
+		string += `.${padLeft(Math.floor(amount % 100), 2)}`;
+	}
+	return string;
+}

@@ -28,7 +28,7 @@
 		{{#each preconnect}}
 		<link rel="preconnect" href="{{host}}"{{#if crossorigin}} crossorigin="{{crossorigin}}"{{/if}}>
 		{{/each}}
-
+		{{>n-ui/js-setup/templates/fire-condition}}
 		{{>n-ui/layout/partials/stylesheets}}
 
 		<link rel="icon" type="image/png" href="https://next-geebee.ft.com/assets/brand-ft/icons/v2/favicon-32x32.png" sizes="32x32">
@@ -78,6 +78,7 @@
 				})();
 			</script>
 		{{/if}}
+		<div class="o-cookie-message o-cookie-message--banner-centric" data-o-component="o-cookie-message"></div>
 		<div class="n-layout">
 			<div class="n-layout__row n-layout__row--header">
 				{{#outputBlock 'above-header'}}{{/outputBlock}}

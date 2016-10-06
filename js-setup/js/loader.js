@@ -75,7 +75,6 @@ class JsSetup {
 					});
 			};
 		}
-
 		return Promise.resolve({
 			flags: flags,
 			appInfo: this.appInfo,

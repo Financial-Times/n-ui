@@ -78,6 +78,12 @@ module.exports = function (flags, appName, adOptions) {
 				sizes: 'fluid'
 			}
 		},
+		responsive: {
+			extra: [1025, 0], //Reasonable width to show a Billboard (desktop)
+			large: [980, 0], //reasonable width to show SuperLeaderboard (tablet landscape)
+			medium: [760, 0], //reasonable width to show a leaderboard (tablet portrait)
+			small: [0, 0] //Mobile
+		},
 		krux: kruxConfig,
 		collapseEmpty: 'before',
 		dfp_targeting: utils.keyValueString(targeting),

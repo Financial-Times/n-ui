@@ -8,17 +8,29 @@
 	</div>
 </div>
 
-<div {{#if @root.flags.nextFtTour}}data-o-component="o-expander" data-component="welcome-banner" data-o-expander-shrink-to="hidden" data-o-expander-toggle-selector=".n-welcome-banner__button--toggler" {{/if}}class="{{#if @root.flags.nextFtTour}}o-expander n-welcome-banner{{else}}n-welcome-message{{/if}} n-welcome-message--fixed" data-trackable="welcome" hidden>
-	{{#if @root.flags.nextFtTour}}
-		{{>n-ui/welcome-message/banner}}
-	{{else}}
+{{!-- supporting 3 different banner versions --}}
+
+
+{{#unless @root.flags.nextFtTour}}
+	<div class="n-welcome-message n-welcome-message--fixed" data-trackable="welcome" hidden>
 		<div class="o-grid-container">
 			{{>n-ui/welcome-message/message}}
 		</div>
-	{{/if}}
-	{{#unless @root.flags.nextFtTour}}
 		<button type="button" class="n-welcome-message__close">
 			<span class="n-util-visually-hidden">Close</span>
 		</button>
-	{{/unless}}
-</div>
+	</div>
+{{else}}
+	{{#if @root.flags.nextWelcomeCloses}}
+		{{#if anon.userIsLoggedIn}}
+		{{!-- no sticky footer for anon users --}}
+			<div data-component="welcome-banner" class="n-welcome-banner n-welcome-message--fixed" data-trackable="welcome" hidden>
+				{{>n-ui/welcome-message/banner}}
+			</div>
+		{{/if}}
+	{{else}}
+		<div data-o-component="o-expander" data-component="welcome-banner" data-o-expander-shrink-to="hidden" data-o-expander-toggle-selector=".n-welcome-banner__button--toggler" class="o-expander n-welcome-banner n-welcome-message--fixed" data-trackable="welcome" hidden>
+			{{>n-ui/welcome-message/banner}}
+		</div>
+	{{/if}}
+{{/unless}}

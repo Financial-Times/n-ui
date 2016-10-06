@@ -13,7 +13,10 @@
       "imageSizes": {
           "M": "930px"
       },
-      "ctas": []
+      "ctas": [{
+        "url": "https://www.youtube.com/watch?v=xJL9gEePHcs",
+        "label": "Watch the video"
+      }]
     },
     "modifiers": ["intro"]
   },

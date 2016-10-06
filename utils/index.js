@@ -42,9 +42,7 @@ module.exports = {
 		});
 	},
 	waitForCondition: (conditionName, action) => {
-		return window[`ftNext${conditionName}Loaded`] ?
-			action() :
-			document.addEventListener(`ftNext${conditionName}Loaded`, action);
+		window[`ftNext${conditionName}Loaded`] ? action() : document.addEventListener(`ftNext${conditionName}Loaded`, action)
 	},
 	broadcast: (name, data, bubbles = true) => {
 		const rootEl = document.body;
