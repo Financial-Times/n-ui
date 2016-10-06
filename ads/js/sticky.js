@@ -1,7 +1,6 @@
 const debounce = require('./utils').debounce;
 
 function Sticky (el, sibling, boundary) {
-	this.opts = opts || {};
 	this.fixed = el;
 	this.boundary = boundary;
 	this.sibling = sibling;
@@ -108,7 +107,7 @@ Sticky.prototype.init = function () {
 
 	const cookieCloseButton = document.querySelector('.o-cookie-message__close-btn');
 	if (cookieCloseButton) {
-		let cookieCloseEvent = cookieCloseButton.addEventListener('click', function () {
+		const cookieCloseEvent = cookieCloseButton.addEventListener('click', function () {
 			this.extraHeight = 0;
 			this.boundaryTop = this.boundary.getBoundingClientRect().top;
 			this.reset();
