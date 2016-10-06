@@ -1,4 +1,4 @@
-/* globals describe, it, beforeEach, afterEach, expect, sinon */
+/* globals should, sinon */
 import SlidingPopup from 'n-sliding-popup';
 import Superstore from 'superstore';
 import { init } from '../index';
