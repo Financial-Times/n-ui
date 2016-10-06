@@ -62,8 +62,8 @@ describe.only('Subscription Offer Prompt', () => {
 				popup.el.onClose();
 				return localStorage.get('last-closed');
 			})
-			// need a 1-2ms buffer for slow JS engines or busy CPUs
-			.then(lastClosed => lastClosed.should.be.closeTo(Date.now(), 2))
+			// give a 1s buffer
+			.then(lastClosed => lastClosed.should.be.closeTo(Date.now(), 1000))
 	);
 
 	it('should ‘pop-up’ after 2 seconds', () =>
