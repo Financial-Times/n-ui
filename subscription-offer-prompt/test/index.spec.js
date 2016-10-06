@@ -3,7 +3,7 @@ import SlidingPopup from 'n-sliding-popup';
 import Superstore from 'superstore';
 import { init } from '../index';
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms, value) => new Promise(resolve => setTimeout(resolve.bind(null, value), ms));
 
 describe.only('Subscription Offer Prompt', () => {
 
@@ -45,7 +45,6 @@ describe.only('Subscription Offer Prompt', () => {
 	);
 
 	it('should have correct html', () =>
-
 		init().then(popup => {
 			popup.el.innerHTML.should.contain('You qualify for a 25% subscription discount')
 		})
@@ -68,11 +67,13 @@ describe.only('Subscription Offer Prompt', () => {
 	);
 
 	it('should ‘pop-up’ after 2 seconds', () =>
-		init().then(popup => {
-			sinon.spy(popup, 'open');
-			popup.open.should.not.have.been.called;
-			return delay(2050).then(() => popup.open.should.have.callCount(1));
-		})
+		init()
+			.then(popup => {
+				sinon.spy(popup, 'open');
+				popup.open.should.not.have.been.called;
+				return delay(2050, popup);
+			})
+			.then(popup => popup.open.should.have.callCount(1))
 	);
 
 	it('should not not show on barrier pages', () => {
