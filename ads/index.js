@@ -35,7 +35,11 @@ function initOAds (flags, appName, adOptions) {
 
 function initStickyHeaderAdvert (flags) {
 	if(flags && flags.get('stickyHeaderAd')) {
-		let stickyAd = new Sticky( document.querySelector('.above-header-advert'), { 'sibling' : '.header-ad-placeholder__top', 'stickUntil' : '#primary-nav #o-header-nav-desktop'});
+		let stickyAd = new Sticky(
+			document.querySelector('.above-header-advert'),
+			document.querySelector('.header-ad-placeholder__top'),
+			document.querySelector('#primary-nav #o-header-nav-desktop')
+		);
 		stickyAd.init();
 	}
 }

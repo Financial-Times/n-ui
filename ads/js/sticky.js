@@ -1,14 +1,13 @@
 const debounce = require('./utils').debounce;
 
-function Sticky (el, opts) {
+function Sticky (el, sibling, boundary) {
 	this.opts = opts || {};
 	this.fixed = el;
-	this.boundary = document.querySelector(this.opts.stickUntil);
+	this.boundary = boundary;
+	this.sibling = sibling;
 	this.eventdbScrollEnd = debounce(this.scrollEnd.bind(this), 300);
 	this.eventScrollStart = this.scrollStart.bind(this);
-	this.sibling = opts.sibling ? document.querySelector(opts.sibling) : null;
 	this.extraHeight = 0;
-	this.cookieMessage = document.querySelector('.cookie-message');
 
 	this.animationFrame;
 	this.startScroll;
@@ -47,9 +46,7 @@ Sticky.prototype.calculate = function () {
 Sticky.prototype.stick = function () {
 	this.fixed.style.position = 'fixed';
 	this.fixed.style.top = '0px';
-	if (this.sibling) {
-		this.sibling.style.marginTop = `${this.fixedHeight}px`;
-	}
+	this.sibling.style.marginTop = `${this.fixedHeight}px`;
 }
 
 Sticky.prototype.unstick = function () {
@@ -76,7 +73,7 @@ Sticky.prototype.scrollStart = function () {
 	this.startScroll = window.pageYOffset;
 	this.boundaryTop = this.boundary.getBoundingClientRect().top;
 
-	if (this.sibling && this.sibling.style.marginTop !== `${this.fixedHeight}px`) {
+	if (this.sibling.style.marginTop !== `${this.fixedHeight}px`) {
 		this.sibling.style.marginTop = `${this.fixedHeight}px`;
 	}
 
@@ -90,13 +87,14 @@ Sticky.prototype.scrollEnd = function () {
 }
 
 Sticky.prototype.init = function () {
-	if (!this.fixed || window.pageYOffset > 0 || window.scrollY > 0) {
+	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0) {
 		return;
 	};
 
 	const fixedElementTopPosition = this.fixed.getBoundingClientRect().top;
 	this.fixed.style.zIndex = '23';
 	this.fixed.style.top = `${fixedElementTopPosition}px`;
+	this.sibling.style.marginTop = `${this.fixed.offsetHeight}px`;
 
 	if (fixedElementTopPosition > 0) {
 		this.extraHeight = fixedElementTopPosition;
@@ -105,9 +103,6 @@ Sticky.prototype.init = function () {
 		this.fixed.style.position = 'fixed';
 	}
 
-	if (this.sibling) {
-		this.sibling.style.marginTop = `${this.fixed.offsetHeight}px`;
-	}
 
 	window.addEventListener('scroll', this.eventScrollStart);
 
