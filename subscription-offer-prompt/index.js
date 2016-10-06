@@ -105,6 +105,10 @@ export const init = () =>
 				return fetch('/country', { credentials: 'same-origin' })
 					.then(response => response.json())
 					.then((countryCode = 'GBR') => {
+						// NOTE: for now, while pricing is inconsistent across slider, barrier and form, don't show it for these countries
+						if (['SPM', 'ALA', 'BLM', 'MAF', 'AND', 'REU', 'GLP', 'MYT', 'MTQ', 'ZWE'].includes(countryCode)) {
+							return;
+						}
 						const subscriptionValues = getSubscriptionPromptValues(countryCode);
 						return createSubscriptionPrompt(subscriptionValues);
 					});
