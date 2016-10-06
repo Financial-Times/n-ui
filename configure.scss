@@ -20,6 +20,7 @@ $n-ui-features: (
 	messagePrompts: false,
 	myft: false,
 	myftCommon: false,
+	myftDigestPromo: false,
 	normalize: 'critical',
 	notification: false,
 	overlay: false,
@@ -48,6 +49,7 @@ $n-ui-presets: (
 		messagePrompts: true,
 		myftCommon: 'critical',
 		myft: true,
+		myftDigestPromo: 'critical',
 		notification: true,
 		promoMessages: false,
 		welcomeMessage: true
