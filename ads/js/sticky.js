@@ -16,38 +16,51 @@ function Sticky (el, opts) {
 	this.fixedHeight;
 }
 
+
+
 Sticky.prototype.startLoop = function () {
 	this.animationFrame = window.requestAnimationFrame(() => {
-		const atBoundary = (window.scrollY - this.startScroll + this.fixedHeight) >= this.boundaryTop;
-		const isAbsolute = this.fixed.style.position === 'absolute';
-		const extraAbsolute = ((window.scrollY - this.extraHeight) >= 0);
-
-		if ((atBoundary && !isAbsolute)) {
-			this.fixed.style.position = 'absolute';
-			this.fixed.style.top = this.startScroll + this.boundaryTop - this.fixedHeight + 'px';
-		}
-
-		if (!atBoundary && isAbsolute && extraAbsolute) {
-			if (extraAbsolute) {
-				this.fixed.style.position = 'fixed';
-				this.fixed.style.top = '0px';
-				if (this.sibling) {
-					this.sibling.style.marginTop = this.fixedHeight + 'px';
-				}
-			}
-		}
-
-		if (!extraAbsolute && !isAbsolute) {
-			this.reset();
-		}
-
+		this.calculate();
 		this.startLoop();
 	});
 }
 
+Sticky.prototype.calculate = function() {
+	const scrollY = window.pageYOffset || window.scrollY;
+	const atBoundary = (scrollY - this.startScroll + this.fixedHeight) >= this.boundaryTop;
+	const isAbsolute = this.fixed.style.position === 'absolute';
+	const extraAbsolute = ((scrollY - this.extraHeight) >= 0);
+
+	if ((atBoundary && !isAbsolute)) {
+		this.unstick();
+	}
+
+	if (!atBoundary && isAbsolute && extraAbsolute) {
+		this.stick();
+	}
+
+	if ((!extraAbsolute && !isAbsolute) || (!atBoundary && isAbsolute && !extraAbsolute)) {
+		this.reset();
+	}
+}
+
+Sticky.prototype.stick = function () {
+	this.fixed.style.position = 'fixed';
+	this.fixed.style.top = '0px';
+	if (this.sibling) {
+		this.sibling.style.marginTop = `${this.fixedHeight}px`;
+	}
+}
+
+Sticky.prototype.unstick = function () {
+	this.fixed.style.position = 'absolute';
+	this.fixed.style.top = `${this.startScroll + this.boundaryTop - this.fixedHeight}px`;
+}
+
+
 Sticky.prototype.reset = function () {
 	this.fixed.style.position = 'absolute';
-	this.fixed.style.top = this.extraHeight + 'px';
+	this.fixed.style.top = `${this.extraHeight}px`;
 }
 
 Sticky.prototype.endLoop = function () {
@@ -63,8 +76,8 @@ Sticky.prototype.scrollStart = function () {
 	this.startScroll = window.pageYOffset;
 	this.boundaryTop = this.boundary.getBoundingClientRect().top;
 
-	if (this.sibling && this.sibling.style.marginTop !== this.fixedHeight + 'px') {
-		this.sibling.style.marginTop = this.fixedHeight + 'px';
+	if (this.sibling && this.sibling.style.marginTop !== `${this.fixedHeight}px`) {
+		this.sibling.style.marginTop = `${this.fixedHeight}px`;
 	}
 
 	this.startLoop();
