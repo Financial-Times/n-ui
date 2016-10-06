@@ -149,7 +149,7 @@ export class ComponentInitializer {
 					}
 
 					if (config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
-						cookieMessage.init(flags);
+						cookieMessage(flags);
 						this.initializedFeatures.cookieMessage = true;
 					}
 

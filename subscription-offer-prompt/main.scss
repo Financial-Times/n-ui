@@ -1,7 +1,7 @@
 @import 'n-sliding-popup/main';
 
-.subscription-prompt--wrapper {
-	width: 470px;
+.subscription-prompt {
+	max-width: 500px;
 }
 
 .subscription-prompt--flag {
@@ -63,10 +63,15 @@
 
 .subscription-prompt--info {
 	@include oGridColspan(7);
+
+	@include oGridRespondTo($until: S) {
+		display: none;
+	}
 }
 
 .subscription-prompt--aside {
 	@include oGridColspan(5);
+
 }
 
 .subscription-prompt--benefits-list {
@@ -75,6 +80,10 @@
 	font-weight: normal;
 	padding: 0;
 	margin: 0;
+
+	@include oGridRespondTo($until: S) {
+		display: none;
+	}
 
 	li {
 		position: relative;

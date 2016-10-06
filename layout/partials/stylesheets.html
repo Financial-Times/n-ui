@@ -7,7 +7,7 @@
 		</style>
 		{{#each @root.cssBundles}}
 			{{#ifAll @root.criticalCss isLazy}}
-				<link rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';{{#if isMain}}window.ftNextMainCssLoaded=true{{/if}}">
+				<link rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';{{#if isMain}}window.ftNextFireCondition('MainCssLoaded'){{/if}}">
 				<noscript>
 					<link rel="stylesheet" href="{{path}}">
 				</noscript>
