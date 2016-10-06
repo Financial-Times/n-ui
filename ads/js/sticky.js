@@ -25,7 +25,7 @@ Sticky.prototype.startLoop = function () {
 	});
 }
 
-Sticky.prototype.calculate = function() {
+Sticky.prototype.calculate = function () {
 	const scrollY = window.pageYOffset || window.scrollY;
 	const atBoundary = (scrollY - this.startScroll + this.fixedHeight) >= this.boundaryTop;
 	const isAbsolute = this.fixed.style.position === 'absolute';
