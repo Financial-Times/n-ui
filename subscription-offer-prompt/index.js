@@ -2,6 +2,7 @@ import SlidingPopup from 'n-sliding-popup';
 import Superstore from 'superstore'
 
 import * as utils from './utils';
+import { broadcast } from '../utils';
 
 const promptLastSeenStorage = new Superstore('local', 'n-ui.subscription-offer-prompt');
 const promptLastSeenStorageKey = 'last-closed';
@@ -70,7 +71,13 @@ const createSubscriptionPrompt = values => {
 	subscriptionPrompt.onClose = setPromptLastClosed;
 	document.body.appendChild(subscriptionPrompt);
 	const slidingPopup = new SlidingPopup(subscriptionPrompt);
-	setTimeout(() => slidingPopup.open(), 2000);
+	setTimeout(() => {
+		slidingPopup.open();
+		broadcast('oTracking.event', {
+			category: 'subscription-offer-prompt',
+			action: 'viewed'
+		});
+	}, 2000);
 	return slidingPopup;
 }
 
