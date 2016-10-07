@@ -1,111 +1,119 @@
 const debounce = require('./utils').debounce;
-const stickyNavHeight = 74; // for use with Right Hand Rail
 
-function Sticky (el, opts) {
-	if (!el) return;
-	this.el = el;
-	this.opts = opts || {};
-	this.sibling = opts.sibling ? document.querySelector(opts.sibling) : null;
-	this.stickUntil = document.querySelector(opts.stickUntil);
-	this.extraHeight = false;
-	this.cookieMessage = !!document.querySelector('.cookie-message');
-	this.opts.stickWhen = this.el.getBoundingClientRect().top - stickyNavHeight; // for use with RHR
-;}
+function Sticky (el, sibling, boundary) {
+	this.fixed = el;
+	this.boundary = boundary;
+	this.sibling = sibling;
+	this.eventdbScrollEnd = debounce(this.scrollEnd.bind(this), 300);
+	this.eventScrollStart = this.scrollStart.bind(this);
+	this.extraHeight = 0;
 
-// if (this.sibling) {...} conditions based on active sticky RHR — currently enabled for basic demo
-Sticky.prototype.stick = function () {
-	this.el.style.position = 'fixed';
-	this.el.style.top = this.opts.paddingTop || '0';
-	if (this.sibling) { this.sibling.style.marginTop = this.el.offsetHeight + 'px'; }
-};
+	this.animationFrame;
+	this.startScroll;
+	this.boundaryTop;
+	this.fixedHeight;
+}
 
-Sticky.prototype.unstick = function () {
-	this.el.style.position = 'absolute';
-	if (this.sibling) {
-		this.el.style.top = this.releasePoint + 'px';
-		this.sibling.style.marginTop = this.el.offsetHeight + 'px';
-	} else {
-		this.el.style.top = (this.releasePoint - this.el.offsetHeight) + 'px';
-	}
-};
 
-Sticky.prototype.onScroll = function () {
-	if (this.sibling) {
-		if (this.cookieMessage && document.querySelector('.cookie-message--hidden')){
-			this.opts.stickWhen = 0
-			this.releasePoint -= 35
-			this.cookieMessage = false
-		} else if (this.cookieMessage) {
-			this.opts.stickWhen = 35
-		} else {
-			this.opts.stickWhen = 0
-		}
-	}
-
-	if (!this.extraHeight && document.querySelector('.visible .n-header__marketing-promo__container')) {
-		this.releasePoint += 50;
-		this.extraHeight = true
-	}
-
-	let breakPoint;
-	let viewportOffset = window.pageYOffset || window.scrollY
-	this.sibling ? breakPoint = this.releasePoint : breakPoint = this.releasePoint + 144
-
-	if((breakPoint > viewportOffset) && (viewportOffset >= this.opts.stickWhen)) {
-		requestAnimationFrame(this.stick.bind(this));
-	} else if (breakPoint < viewportOffset) {
-		requestAnimationFrame(this.unstick.bind(this));
-	} else if (viewportOffset <= this.opts.stickWhen) {
-		this.reset();
-	}
-};
 
 Sticky.prototype.startLoop = function () {
-	this.lastAnimationFrame = window.requestAnimationFrame(() => {
-		this.onScroll();
+	this.animationFrame = window.requestAnimationFrame(() => {
+		this.calculate();
 		this.startLoop();
-	})
-};
+	});
+}
 
-Sticky.prototype.stopLoop = function () {
-	this.lastAnimationFrame && window.cancelAnimationFrame(this.lastAnimationFrame);
-};
+Sticky.prototype.calculate = function () {
+	const scrollY = window.pageYOffset || window.scrollY;
+	const atBoundary = (scrollY - this.startScroll + this.fixedHeight) >= this.boundaryTop;
+	const isAbsolute = this.fixed.style.position === 'absolute';
+	const canBeFixed = ((scrollY - this.extraHeight) >= 0);
 
-Sticky.prototype.bindScroll = function () {
-	window.removeEventListener('scroll', this.bindScroll);
-	window.addEventListener('scroll', this.debouncedScroll)
-	this.startLoop()
-};
-
-Sticky.prototype.unbindScroll = function () {
-	this.stopLoop()
-	window.removeEventListener('scroll', this.debouncedScroll)
-	window.addEventListener('scroll', this.bindScroll)
-};
-
-Sticky.prototype.onResize = function () {
-	if(this.onScrollListener && this.el.offsetHeight < 10) {
-		this.unbindScroll();
-	} else if (!this.onScrollListener && this.el.offsetHeight >= 10) {
-		this.bindScroll();
+	if ((atBoundary && !isAbsolute)) {
+		this.unstick();
 	}
-	this.releasePoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
-};
+
+	if (!atBoundary && isAbsolute && canBeFixed) {
+		this.stick();
+	}
+
+	if ((!canBeFixed && !isAbsolute) || (!atBoundary && isAbsolute && !canBeFixed)) {
+		this.reset();
+	}
+}
+
+Sticky.prototype.stick = function () {
+	this.fixed.style.position = 'fixed';
+	this.fixed.style.top = '0px';
+	this.sibling.style.marginTop = `${this.fixedHeight}px`;
+}
+
+Sticky.prototype.unstick = function () {
+	this.fixed.style.position = 'absolute';
+	this.fixed.style.top = `${this.startScroll + this.boundaryTop - this.fixedHeight}px`;
+}
+
 
 Sticky.prototype.reset = function () {
-	this.el.style.position = 'static';
-	this.sibling ? this.sibling.style.marginTop = '0px' : this.sibling;
-};
+	this.fixed.style.position = 'absolute';
+	this.fixed.style.top = `${this.extraHeight}px`;
+}
+
+Sticky.prototype.endLoop = function () {
+	window.cancelAnimationFrame(this.animationFrame);
+}
+
+Sticky.prototype.scrollStart = function () {
+	window.removeEventListener('scroll', this.eventScrollStart);
+	window.addEventListener('scroll', this.eventdbScrollEnd)
+
+	// only do this work once
+	this.fixedHeight = this.fixed.offsetHeight;
+	this.startScroll = window.pageYOffset;
+	this.boundaryTop = this.boundary.getBoundingClientRect().top;
+
+	if (this.sibling.style.marginTop !== `${this.fixedHeight}px`) {
+		this.sibling.style.marginTop = `${this.fixedHeight}px`;
+	}
+
+	this.startLoop();
+}
+
+Sticky.prototype.scrollEnd = function () {
+	this.endLoop();
+	window.removeEventListener('scroll', this.eventdbScrollEnd);
+	window.addEventListener('scroll', this.eventScrollStart);
+}
 
 Sticky.prototype.init = function () {
-	if(!this.el || window.pageYOffset > 0 || window.scrollY > 0) {
+	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0) {
 		return;
 	};
-	this.releasePoint = (this.stickUntil.offsetTop + this.stickUntil.offsetHeight - this.el.offsetHeight);
-	this.el.style.zIndex = '23';
 
-	window.addEventListener('resize', debounce(this.onResize).bind(this));
-	window.addEventListener('scroll', this.bindScroll());
-};
+	const fixedElementTopPosition = this.fixed.getBoundingClientRect().top;
+	this.fixed.style.zIndex = '23';
+	this.fixed.style.top = `${fixedElementTopPosition}px`;
+	this.sibling.style.marginTop = `${this.fixed.offsetHeight}px`;
+
+	if (fixedElementTopPosition > 0) {
+		this.extraHeight = fixedElementTopPosition;
+		this.fixed.style.position = 'absolute';
+	} else {
+		this.fixed.style.position = 'fixed';
+	}
+
+
+	window.addEventListener('scroll', this.eventScrollStart);
+
+	const cookieCloseButton = document.querySelector('.o-cookie-message__close-btn');
+	if (cookieCloseButton) {
+		const cookieCloseEvent = cookieCloseButton.addEventListener('click', function () {
+			this.extraHeight = 0;
+			this.boundaryTop = this.boundary.getBoundingClientRect().top;
+			this.reset();
+			cookieCloseButton.removeEventListener('click', cookieCloseEvent)
+		}.bind(this));
+	}
+}
 
 module.exports = Sticky;
