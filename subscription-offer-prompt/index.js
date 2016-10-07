@@ -28,7 +28,7 @@ const shouldPromptBeShown = () => {
 				barrierLastSeen && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now())
 			);
 	}
-}
+};
 
 const popupTemplate = ({ discount, price, offerId }) => `
 	<article class="subscription-prompt--wrapper" data-trackable="subscription-offer-prompt">
@@ -79,7 +79,7 @@ const createSubscriptionPrompt = values => {
 		});
 	}, 2000);
 	return slidingPopup;
-}
+};
 
 const getPrice = countryCode => {
 	const prices = {
@@ -94,7 +94,7 @@ const getPrice = countryCode => {
 	};
 
 	return utils.toCurrency.apply(null, prices[countryCode] || prices.default);
-}
+};
 
 const getSubscriptionPromptValues = countryCode => {
 	const price = getPrice(countryCode);
