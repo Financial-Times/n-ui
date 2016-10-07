@@ -142,6 +142,10 @@
 		@include oButtons($size: 'big', $theme: 'standout');
 		background: getColor('white');
 		color: getColor('teal-1');
+		text-transform: capitalize;
+		@include oGridRespondTo('S') {
+			text-transform: none;
+		}
 	}
 
 	.n-welcome-banner__button--secondary {
