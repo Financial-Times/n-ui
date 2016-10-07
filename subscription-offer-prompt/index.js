@@ -75,7 +75,7 @@ const createSubscriptionPrompt = values => {
 		slidingPopup.open();
 		broadcast('oTracking.event', {
 			category: 'subscription-offer-prompt',
-			action: 'viewed'
+			action: 'view'
 		});
 	}, 2000);
 	return slidingPopup;
