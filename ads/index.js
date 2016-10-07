@@ -38,7 +38,7 @@ function initStickyHeaderAdvert (flags) {
 		let stickyAd = new Sticky(
 			document.querySelector('.above-header-advert'),
 			document.querySelector('.header-ad-placeholder__top'),
-			document.querySelector('#primary-nav #o-header-nav-desktop')
+			document.querySelector('.o-header__row.o-header__top')
 		);
 		stickyAd.init();
 	}

@@ -70,7 +70,7 @@ Sticky.prototype.scrollStart = function () {
 	// only do this work once
 	this.fixedHeight = this.fixed.offsetHeight;
 	this.startScroll = window.pageYOffset;
-	this.boundaryTop = this.boundary.getBoundingClientRect().top;
+	this.boundaryTop = this.boundary.getBoundingClientRect().bottom;
 
 	if (this.sibling.style.marginTop !== `${this.fixedHeight}px`) {
 		this.sibling.style.marginTop = `${this.fixedHeight}px`;
@@ -85,15 +85,12 @@ Sticky.prototype.scrollEnd = function () {
 	window.addEventListener('scroll', this.eventScrollStart);
 }
 
-Sticky.prototype.init = function () {
-	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0) {
-		return;
-	};
-
+Sticky.prototype.setInitialValues = function () {
 	const fixedElementTopPosition = this.fixed.getBoundingClientRect().top;
 	this.fixed.style.zIndex = '23';
 	this.fixed.style.top = `${fixedElementTopPosition}px`;
 	this.sibling.style.marginTop = `${this.fixed.offsetHeight}px`;
+	this.boundaryTop = this.boundary.getBoundingClientRect().bottom;
 
 	if (fixedElementTopPosition > 0) {
 		this.extraHeight = fixedElementTopPosition;
@@ -102,18 +99,27 @@ Sticky.prototype.init = function () {
 		this.fixed.style.position = 'fixed';
 	}
 
+}
 
-	window.addEventListener('scroll', this.eventScrollStart);
+
+Sticky.prototype.init = function () {
+	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0) {
+		return;
+	};
+
+	this.setInitialValues();
 
 	const cookieCloseButton = document.querySelector('.o-cookie-message__close-btn');
 	if (cookieCloseButton) {
 		const cookieCloseEvent = cookieCloseButton.addEventListener('click', function () {
 			this.extraHeight = 0;
-			this.boundaryTop = this.boundary.getBoundingClientRect().top;
 			this.reset();
 			cookieCloseButton.removeEventListener('click', cookieCloseEvent)
 		}.bind(this));
 	}
+
+	window.addEventListener('scroll', this.eventScrollStart);
+	window.addEventListener('resize', debounce(this.setInitialValues).bind(this), 300);
 }
 
 module.exports = Sticky;
