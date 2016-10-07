@@ -2,6 +2,7 @@ import SlidingPopup from 'n-sliding-popup';
 import Superstore from 'superstore'
 
 import * as utils from './utils';
+import { broadcast } from '../utils';
 
 const promptLastSeenStorage = new Superstore('local', 'n-ui.subscription-offer-prompt');
 const promptLastSeenStorageKey = 'last-closed';
@@ -27,7 +28,7 @@ const shouldPromptBeShown = () => {
 				barrierLastSeen && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now())
 			);
 	}
-}
+};
 
 const popupTemplate = ({ discount, price, offerId }) => `
 	<article class="subscription-prompt--wrapper" data-trackable="subscription-offer-prompt">
@@ -70,9 +71,20 @@ const createSubscriptionPrompt = values => {
 	subscriptionPrompt.onClose = setPromptLastClosed;
 	document.body.appendChild(subscriptionPrompt);
 	const slidingPopup = new SlidingPopup(subscriptionPrompt);
-	setTimeout(() => slidingPopup.open(), 2000);
+	setTimeout(() => {
+		slidingPopup.open();
+		broadcast('oTracking.event', {
+			category: 'message',
+			action: 'show',
+			opportunity: {
+				type: 'discount',
+				subtype: ''
+			},
+			offers: [values.offerId]
+		});
+	}, 2000);
 	return slidingPopup;
-}
+};
 
 const getPrice = countryCode => {
 	const prices = {
@@ -87,7 +99,7 @@ const getPrice = countryCode => {
 	};
 
 	return utils.toCurrency.apply(null, prices[countryCode] || prices.default);
-}
+};
 
 const getSubscriptionPromptValues = countryCode => {
 	const price = getPrice(countryCode);
