@@ -59,7 +59,7 @@ Sticky.prototype.reset = function () {
 	this.fixed.style.top = `${this.extraHeight}px`;
 }
 
-Sticky.prototype.destroy = function() {
+Sticky.prototype.destroy = function () {
 	window.removeEventListener('scroll', this.eventdbScrollEnd);
 	window.removeEventListener('scroll', this.eventScrollStart);
 	window.removeEventListener('oAds.collapsed', this.collapsedCallback);
@@ -129,7 +129,7 @@ Sticky.prototype.init = function () {
 
 	window.addEventListener('scroll', this.eventScrollStart);
 
-	this.resizeCallback = debounce(function() {
+	this.resizeCallback = debounce(function () {
 		this.destroy();
 		debounce(this.init.bind(this), 300).call();
 	}.bind(this), 300);
@@ -138,7 +138,7 @@ Sticky.prototype.init = function () {
 	window.addEventListener('resize', this.resizeCallback);
 
 	// @todo: verify the collapsed advert is also the sticky one?
-	this.collapsedCallback = debounce(function() {
+	this.collapsedCallback = debounce(function () {
 		this.destroy();
 	}.bind(this), 300);
 	window.addEventListener('oAds.collapsed', this.collapsedCallback);
