@@ -6,8 +6,8 @@ function Sticky (el, sibling, boundary) {
 	this.sibling = sibling;
 	this.eventdbScrollEnd = debounce(this.scrollEnd.bind(this), 300);
 	this.eventScrollStart = this.scrollStart.bind(this);
+	this.cookieCloseButton = document.querySelector('.o-cookie-message__close-btn');
 	this.extraHeight = 0;
-
 	this.animationFrame;
 	this.startScroll;
 	this.boundaryBottom;
@@ -59,6 +59,16 @@ Sticky.prototype.reset = function () {
 	this.fixed.style.top = `${this.extraHeight}px`;
 }
 
+Sticky.prototype.destroy = function() {
+	window.removeEventListener('scroll', this.eventdbScrollEnd);
+	window.removeEventListener('scroll', this.eventScrollStart);
+	window.removeEventListener('oAds.collapsed', this.collapsedCallback);
+	this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent)
+	this.fixed.style.top = '';
+	this.fixed.style.position = '';
+	this.sibling.style.marginTop = '';
+	this.fixed.style.zIndex = '';
+}
 Sticky.prototype.endLoop = function () {
 	window.cancelAnimationFrame(this.animationFrame);
 }
@@ -109,17 +119,28 @@ Sticky.prototype.init = function () {
 
 	this.setInitialValues();
 
-	const cookieCloseButton = document.querySelector('.o-cookie-message__close-btn');
-	if (cookieCloseButton) {
-		const cookieCloseEvent = cookieCloseButton.addEventListener('click', function () {
+	if (this.cookieCloseButton) {
+		this.cookieCloseEvent = this.cookieCloseButton.addEventListener('click', function () {
 			this.extraHeight = 0;
 			this.reset();
-			cookieCloseButton.removeEventListener('click', cookieCloseEvent)
+			this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent)
 		}.bind(this));
 	}
 
 	window.addEventListener('scroll', this.eventScrollStart);
-	window.addEventListener('resize', debounce(this.setInitialValues).bind(this), 300);
+
+	this.resizeCallback = debounce(function() {
+		this.destroy();
+		debounce(this.init.bind(this), 300).call();
+	}.bind(this), 300);
+
+	window.removeEventListener('resize', this.resizeCallback);
+	window.addEventListener('resize', this.resizeCallback);
+
+	this.collapsedCallback = debounce(function() {
+		this.destroy();
+	}.bind(this), 300);
+	window.addEventListener('oAds.collapsed', this.collapsedCallback);
 }
 
 module.exports = Sticky;
