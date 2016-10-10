@@ -10,7 +10,7 @@ function Sticky (el, sibling, boundary) {
 
 	this.animationFrame;
 	this.startScroll;
-	this.boundaryTop;
+	this.boundaryBottom;
 	this.fixedHeight;
 }
 
@@ -25,7 +25,7 @@ Sticky.prototype.startLoop = function () {
 
 Sticky.prototype.calculate = function () {
 	const scrollY = window.pageYOffset || window.scrollY;
-	const atBoundary = (scrollY - this.startScroll + this.fixedHeight) >= this.boundaryTop;
+	const atBoundary = (scrollY - this.startScroll + this.fixedHeight) >= this.boundaryBottom;
 	const isAbsolute = this.fixed.style.position === 'absolute';
 	const canBeFixed = ((scrollY - this.extraHeight) >= 0);
 
@@ -50,7 +50,7 @@ Sticky.prototype.stick = function () {
 
 Sticky.prototype.unstick = function () {
 	this.fixed.style.position = 'absolute';
-	this.fixed.style.top = `${this.startScroll + this.boundaryTop - this.fixedHeight}px`;
+	this.fixed.style.top = `${this.startScroll + this.boundaryBottom - this.fixedHeight}px`;
 }
 
 
@@ -70,7 +70,7 @@ Sticky.prototype.scrollStart = function () {
 	// only do this work once
 	this.fixedHeight = this.fixed.offsetHeight;
 	this.startScroll = window.pageYOffset;
-	this.boundaryTop = this.boundary.getBoundingClientRect().bottom;
+	this.boundaryBottom = this.boundary.getBoundingClientRect().bottom;
 
 	if (this.sibling.style.marginTop !== `${this.fixedHeight}px`) {
 		this.sibling.style.marginTop = `${this.fixedHeight}px`;
@@ -90,7 +90,7 @@ Sticky.prototype.setInitialValues = function () {
 	this.fixed.style.zIndex = '23';
 	this.fixed.style.top = `${fixedElementTopPosition}px`;
 	this.sibling.style.marginTop = `${this.fixed.offsetHeight}px`;
-	this.boundaryTop = this.boundary.getBoundingClientRect().bottom;
+	this.boundaryBottom = this.boundary.getBoundingClientRect().bottom;
 
 	if (fixedElementTopPosition > 0) {
 		this.extraHeight = fixedElementTopPosition;
