@@ -20,7 +20,10 @@ serve:
 nightwatch:
 	nht nightwatch test/js-success.nightwatch.js
 
-test: verify test-unit test-build serve pa11y-ci nightwatch
+test: verify test-unit test-build serve a11y nightwatch
+
+a11y:
+	pa11y-ci
 
 test-dev: verify test-unit-dev
 
@@ -42,8 +45,3 @@ run:
 	@if [ ! -f key.pem ]; then (echo $(MSG_N_UI_CERT) && exit 1); fi
 	@if [ ! -f key-cert.pem ]; then (echo $(MSG_N_UI_CERT) && exit 1); fi
 	http-server dist -p 3456 -c-1 --ssl --cert ./key-cert.pem --key ./key.pem
-
-
-# Test a11y locally
-a11y:
-	pa11y-ci
