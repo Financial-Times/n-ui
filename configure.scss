@@ -17,7 +17,6 @@ $n-ui-features: (
 	header: 'critical',
 	icons: true,
 	layout: 'critical',
-	messagePrompts: false,
 	myft: false,
 	myftCommon: false,
 	myftDigestPromo: false,
@@ -25,7 +24,6 @@ $n-ui-features: (
 	notification: false,
 	overlay: false,
 	pageHeading: false,
-	promoMessages: false,
 	tourTip: false,
 	tourTipGroup: false,
 	typography: 'critical',
@@ -46,12 +44,10 @@ $n-ui-presets: (
 	discrete: (),
 	complete: (
 		cookieMessage: true,
-		messagePrompts: true,
 		myftCommon: 'critical',
 		myft: true,
 		myftDigestPromo: 'critical',
 		notification: true,
-		promoMessages: false,
 		welcomeMessage: true
 	)
 );
