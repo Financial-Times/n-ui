@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { Image } from '@financial-times/n-image';
-import { buildImageServiceUrl } from '@financial-times/n-image/src/helpers';
+import { Image, helpers } from '@financial-times/n-image';
 
 export default class TourTip extends Component {
 
@@ -43,7 +42,7 @@ export default class TourTip extends Component {
 			if (data.content.imageWidths) {
 				imageAttrs.url = data.content.imageUrl;
 			} else {
-				imageAttrs.src = buildImageServiceUrl(data.content.imageUrl);
+				imageAttrs.src = helpers.buildImageServiceUrl(data.content.imageUrl);
 			}
 
 			return <div className="tour-tip__img-container">
