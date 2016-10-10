@@ -20,7 +20,10 @@ serve:
 nightwatch:
 	nht nightwatch test/js-success.nightwatch.js
 
-test: verify test-unit test-build serve nightwatch
+test: verify test-unit test-build serve a11y nightwatch
+
+a11y:
+	pa11y-ci
 
 test-dev: verify test-unit-dev
 

@@ -31,6 +31,7 @@ app.get('/', (req, res) => {
 			return bundle;
 		});
 	res.render('default', {
+		title: 'Test App',
 		layout: 'wrapper'
 	});
 });

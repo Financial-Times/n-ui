@@ -4,10 +4,8 @@ import tracking from '../../tracking';
 import date from '../../date';
 import header from '../../header';
 import optOut from '../../opt-out';
-import promoMessages from '../../promo-messages';
 import cookieMessage from '../../cookie-message';
 import welcomeMessage from '../../welcome-message';
-import messagePrompts from '../../message-prompts';
 import { init as subscriptionOfferPrompt } from '../../subscription-offer-prompt';
 import footer from '../../footer';
 import myft from '../../myft';
@@ -30,8 +28,6 @@ export const presets = {
 		welcomeMessage: true,
 		subscriptionOfferPrompt: true,
 		myft: true,
-		messagePrompts: false,
-		promoMessages: false,
 		ads: true
 	}
 };
@@ -162,11 +158,6 @@ export class ComponentInitializer {
 						this.initializedFeatures.subscriptionOfferPrompt = true;
 					}
 
-					if (config.features.messagePrompts && !this.initializedFeatures.messagePrompts) {
-						messagePrompts.init(flags);
-						this.initializedFeatures.messagePrompts = true;
-					}
-
 					if (config.features.myft && !this.initializedFeatures.myftUi) {
 						myft.ui.init({
 							anonymous: !(/FTSession=/.test(document.cookie)),
@@ -177,11 +168,6 @@ export class ComponentInitializer {
 							flags
 						});
 						this.initializedFeatures.myftUi = true;
-					}
-
-					if (config.features.promoMessages && !this.initializedFeatures.promoMessages) {
-						promoMessages.init(flags);
-						this.initializedFeatures.promoMessages = true;
 					}
 				});
 
