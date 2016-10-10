@@ -17,7 +17,7 @@
 		</div>
 		{{!-- button must be present in the HTML as a requirement/limitation of o-expander --}}
 		<div class="n-welcome-banner__column">
-			<button data-trackable="toggled" data-action="welcome-banner-close" class="n-welcome-banner__button--close o-if-js if-fixed"></button>
+			<button data-trackable="toggled" data-action="welcome-banner-close" title="Close welcome banner" class="n-welcome-banner__button--close o-if-js if-fixed"></button>
 		</div>
 	{{else}}
 		<h6 class="n-welcome-banner__heading n-welcome-banner__heading--minimized n-welcome-banner__column">Need some help?</h6>
@@ -38,7 +38,7 @@
 		</div>
 		{{!-- button must be present in the HTML as a requirement/limitation of o-expander --}}
 		<div class="n-welcome-banner__column">
-			<button data-trackable="toggled" class="n-welcome-banner__button--toggler o-if-js if-fixed"></button>
+			<button data-trackable="toggled"  title="Close welcome banner" class="n-welcome-banner__button--toggler o-if-js if-fixed"></button>
 		</div>
 	{{/if}}
 </div>
