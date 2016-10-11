@@ -1,4 +1,4 @@
-{
+module.exports = {
   "title": "Take a tour &mdash; Hints and tips on getting more from your subscription",
   "sections": [
     {
@@ -475,4 +475,4 @@
       }
     }
   ]
-}
+};
