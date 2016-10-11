@@ -1,4 +1,4 @@
-{
+module.exports = {
   "intro": {
     "id": "intro",
     "settings": {
@@ -35,4 +35,4 @@
     },
     "modifiers": ["outro"]
   }
-}
+};
