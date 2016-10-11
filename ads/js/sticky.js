@@ -140,7 +140,7 @@ Sticky.prototype.init = function () {
 	// @todo: verify the collapsed advert is also the sticky one?
 	this.collapsedCallback = debounce(function () {
 		this.destroy();
-	}.bind(this), 300);
+	}.bind(this));
 	window.addEventListener('oAds.collapsed', this.collapsedCallback);
 }
 
