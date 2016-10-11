@@ -1,5 +1,4 @@
-import config from './config.json';
-const tipsConfig = config.sections;
+const tipsConfig = require('./config').sections;
 
 function deepCopy (obj) {
 	return JSON.parse(JSON.stringify(obj));
