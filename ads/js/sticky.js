@@ -137,9 +137,11 @@ Sticky.prototype.init = function () {
 	window.removeEventListener('resize', this.resizeCallback);
 	window.addEventListener('resize', this.resizeCallback);
 
-	// @todo: verify the collapsed advert is also the sticky one?
-	this.collapsedCallback = debounce(function () {
-		this.destroy();
+	this.collapsedCallback = debounce(function (eventDetail) {
+		const container = eventDetail.detail;
+		if(container && container.hasAttribute && container.hasAttribute('data-sticky-ad')) {
+				this.destroy();
+		}
 	}.bind(this));
 	window.addEventListener('oAds.collapsed', this.collapsedCallback);
 }
