@@ -111,7 +111,6 @@ export class ComponentInitializer {
 					clientOpts.push({relationship: 'saved', type: 'content'});
 				}
 				myft.client.init(clientOpts);
-
 				this.initializedFeatures.myftClient = true
 			}
 
