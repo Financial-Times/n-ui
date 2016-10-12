@@ -64,11 +64,13 @@ export default (flags, settings = {}) => {
 	tipContainerEls = Array.from(document.querySelectorAll(settings.tipContainer));
 	localStorageKey = settings.localStorageKey;
 
-	if (tipContainerEls.length) {
-		if (hasDismissed()) {
-			removeTips();
-		} else {
-			setUpTipDismisser(settings.appendDismisserTo);
-		}
+	if (!tipContainerEls.length) {
+		return;
+	}
+
+	if (hasDismissed()) {
+		removeTips();
+	} else {
+		setUpTipDismisser(settings.appendDismisserTo);
 	}
 };
