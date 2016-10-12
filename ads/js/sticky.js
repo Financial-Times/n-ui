@@ -68,6 +68,7 @@ Sticky.prototype.destroy = function () {
 	this.fixed.style.position = '';
 	this.sibling.style.marginTop = '';
 	this.fixed.style.zIndex = '';
+	this.windowWidth = false;
 }
 Sticky.prototype.endLoop = function () {
 	window.cancelAnimationFrame(this.animationFrame);
@@ -79,7 +80,7 @@ Sticky.prototype.scrollStart = function () {
 
 	// only do this work once
 	this.fixedHeight = this.fixed.offsetHeight;
-	this.startScroll = window.pageYOffset;
+	this.startScroll = window.pageYOffset || window.scrollY;;
 	this.boundaryBottom = this.boundary.getBoundingClientRect().bottom;
 
 	if (this.sibling.style.marginTop !== `${this.fixedHeight}px`) {
@@ -116,7 +117,7 @@ Sticky.prototype.init = function () {
 	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0) {
 		return;
 	};
-
+	this.windowWidth = window.innerWidth;
 	this.setInitialValues();
 
 	if (this.cookieCloseButton) {
@@ -130,8 +131,11 @@ Sticky.prototype.init = function () {
 	window.addEventListener('scroll', this.eventScrollStart);
 
 	this.resizeCallback = debounce(function () {
-		this.destroy();
-		debounce(this.init.bind(this), 300).call();
+		// makesure width actually changed. Resize gets fired on mobile for some reason
+		if(window.innerWidth !== this.windowWidth) {
+			this.destroy();
+			debounce(this.init.bind(this), 300).call();
+		}
 	}.bind(this), 300);
 
 	window.removeEventListener('resize', this.resizeCallback);
