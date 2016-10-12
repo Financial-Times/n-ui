@@ -8,9 +8,6 @@
 	</div>
 </div>
 
-{{!-- supporting 3 different banner versions --}}
-
-
 {{#unless @root.flags.nextFtTour}}
 	<div class="n-welcome-message n-welcome-message--fixed" data-trackable="welcome" hidden>
 		<div class="o-grid-container">
@@ -20,17 +17,4 @@
 			<span class="n-util-visually-hidden">Close</span>
 		</button>
 	</div>
-{{else}}
-	{{#if @root.flags.nextWelcomeCloses}}
-		{{#if anon.userIsLoggedIn}}
-		{{!-- no sticky footer for anon users --}}
-			<div data-component="welcome-banner" class="n-welcome-banner n-welcome-message--fixed" data-trackable="welcome" hidden>
-				{{>n-ui/welcome-message/banner}}
-			</div>
-		{{/if}}
-	{{else}}
-		<div data-o-component="o-expander" data-component="welcome-banner" data-o-expander-shrink-to="hidden" data-o-expander-toggle-selector=".n-welcome-banner__button--toggler" class="o-expander n-welcome-banner n-welcome-message--fixed" data-trackable="welcome" hidden>
-			{{>n-ui/welcome-message/banner}}
-		</div>
-	{{/if}}
 {{/unless}}
