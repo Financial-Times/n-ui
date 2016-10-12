@@ -86,11 +86,6 @@ Sticky.prototype.scrollStart = function () {
 	if (this.sibling.style.marginTop !== `${this.fixedHeight}px`) {
 		this.sibling.style.marginTop = `${this.fixedHeight}px`;
 	}
-	console.log('------start------');
-	console.log(this.fixedHeight);
-	console.log(this.startScroll);
-	console.log(this.boundaryBottom);
-	console.log('--------------');
 
 	this.startLoop();
 }
@@ -114,8 +109,6 @@ Sticky.prototype.setInitialValues = function () {
 	} else {
 		this.fixed.style.position = 'fixed';
 	}
-
-	console.log(this);
 
 }
 
