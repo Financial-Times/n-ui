@@ -89,6 +89,7 @@ const createSubscriptionPrompt = values => {
 const getPrice = countryCode => {
 	const prices = {
 		AUS: [479, 'AUD'],
+		CAN: [470, 'USD'],
 		CHE: [489, 'CHF'],
 		GBR: [399, 'GBP'],
 		HKG: [3690, 'HKD'],
