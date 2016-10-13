@@ -1,4 +1,5 @@
 const superstore = require('superstore-sync');
+const broadcast = require('n-ui/utils').broadcast;
 
 let dismisserButtons = [];
 let tipContainerEls;
@@ -53,6 +54,19 @@ function setUpTipDismisser (appendDismisserTo) {
 	});
 }
 
+function trackDismisserDisplayed (tipEl) {
+	if (tipEl) {
+		broadcast('oTracking.event', {
+			category: 'page',
+			action: 'tour-tip-dismisser',
+			meta: {
+				displayed: true,
+				trackableString: tipEl.getAttribute('data-trackable')
+			}
+		});
+	}
+}
+
 export default (flags, settings = {}) => {
 	const flagsOff = !flags.nextFtTour || !flags.nextFtTourTipDismissers;
 	const noLocalStorage = !hasLocalStorage();
@@ -61,14 +75,24 @@ export default (flags, settings = {}) => {
 		return;
 	}
 
+	// The stream pages render the tour tip multiple times, for different positioning in
+	// streams across the o-grid breakpoints. There’ll only be one tip shown to the user.
 	tipContainerEls = Array.from(document.querySelectorAll(settings.tipContainer));
 	localStorageKey = settings.localStorageKey;
 
-	if (tipContainerEls.length) {
-		if (hasDismissed()) {
-			removeTips();
-		} else {
-			setUpTipDismisser(settings.appendDismisserTo);
-		}
+	if (!tipContainerEls.length) {
+		return;
+	}
+
+	if (hasDismissed()) {
+		removeTips();
+	} else {
+		// They’re all copies of the same tip (read comment above), so just grab first
+		const tipContainerEl = tipContainerEls[0];
+		const containerIsTheTip = tipContainerEl.classList.contains('tour-tip');
+		const tipEl = (containerIsTheTip) ? tipContainerEl : tipContainerEl.querySelector('.tour-tip');
+
+		setUpTipDismisser(settings.appendDismisserTo);
+		trackDismisserDisplayed(tipEl);
 	}
 };
