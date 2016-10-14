@@ -39,14 +39,14 @@ const popupTemplate = ({ discount, price, offerId }) => `
 			<span class="subscription-prompt--flag">Limited Offer</span>
 			<h1 class="subscription-prompt--heading">You qualify for a ${discount}% subscription discount</h1>
 			<span class="subscription-prompt--subheading">
-				Pay just ${price} per week and get unlimited access
+				Pay just ${price} per week for annual Standard Digital access
 			</span>
 		</div>
 		<div class="subscription-prompt--info" data-o-grid-colspan="7">
 			<ul class="subscription-prompt--benefits">
-				<li class="subscription-prompt--benefit">Full digital access: online, mobile &amp; tablet</li>
+				<li class="subscription-prompt--benefit">Access FT.com on your desktop, mobile &amp; tablet</li>
 				<li class="subscription-prompt--benefit">5 year company financials archive</li>
-				<li class="subscription-prompt--benefit">Unlimited FT.com article access</li>
+				<li class="subscription-prompt--benefit">Personalised email briefings and market moving news</li>
 			</ul>
 			<a href="https://www.ft.com/signup?offerId=${offerId}" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Save ${discount}% now</a>
 		</div>
@@ -89,6 +89,7 @@ const createSubscriptionPrompt = values => {
 const getPrice = countryCode => {
 	const prices = {
 		AUS: [479, 'AUD'],
+		CAN: [470, 'USD'],
 		CHE: [489, 'CHF'],
 		GBR: [399, 'GBP'],
 		HKG: [3690, 'HKD'],
