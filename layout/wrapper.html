@@ -62,6 +62,10 @@
 		</script>
 	</head>
 	<body data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
+		{{#if @root.flags.stickyHeaderAd}}
+			{{#outputBlock 'sticky-advert'}}{{/outputBlock}}
+		{{/if}}
+
 		{{#if withGcs}}
 			<script type="text/javascript">
 				(function() {
