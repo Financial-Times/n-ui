@@ -37,7 +37,7 @@ function initStickyHeaderAdvert (flags) {
 	if(flags && flags.get('stickyHeaderAd')) {
 		const stickyAd = new Sticky(
 			document.querySelector('[data-sticky-ad]'),
-			document.querySelector('body'),
+			document.body,
 			document.querySelector('.o-header__row.o-header__top')
 		);
 		stickyAd.init();
