@@ -86,7 +86,7 @@
 }
 
 .subscription-prompt--aside {
-	display: none !important;
+	display: none;
 
 	@include oGridRespondTo(S) {
 		display: block;
