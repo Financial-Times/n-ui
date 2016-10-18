@@ -2,10 +2,11 @@
 
 function shouldShowHint (){
 	return Promise.all([
-		//flag on
+		//flag on - check in /header/top.html
+		//not anonymous - check in /header/top.html
 		//signed-in user - myFtClient
 		//show 3 times
-		//stream and article pages
+		//stream and article pages - flag, regex, 
 ])};
 
 function showHint () {

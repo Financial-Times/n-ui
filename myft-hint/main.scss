@@ -5,30 +5,35 @@
 		}
 };
 
-@keyframes bounce {
-	from {
-		margin-left: 25%;
-		width: 100%;
+	@keyframes bounce {
+		from {
+			margin-left: 25%;
+			width: 100%;
+		}
+
+		to {
+			margin-left: 15%;
+			width: 100%;
+		}
 	}
 
-	to {
-		margin-left: 15%;
-		width: 100%;
+	.myft-hint {
+		animation-duration: 1s;
+		animation-name: bounce;
+		animation-iteration-count: infinite;
+		animation-direction: alternate;
 	}
-}
 
-.myft-hint {
-	animation-duration: 1s;
-	animation-name: bounce;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-}
+	.myft-hint__container {
+		background-color: getColor('white');
+		border: 1px solid getColor('pink-tint4');
+		white-space: nowrap;
+		margin-top: 24px;
+		margin-bottom: 24px;
+	}
 
-
-.myft-hint__container {
-	background-color: getColor('white');
-	border: 1px solid getColor('pink-tint4');
-	white-space: nowrap;
-	margin-top: 24px;
-	margin-bottom: 24px;
-}
+	.myft-hint__show {
+		@include oGridRespondTo('L') {
+			display: block;
+		}
+	}

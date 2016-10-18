@@ -19,8 +19,10 @@
 				</a>
 			</div>
 
-			{{#if true}}
-				{{>n-ui/myft-hint/hint}}
+			{{#if @root.flags.myftHint}}
+				{{#unless @root.locals.anon.userIsAnonymous}}
+					{{>n-ui/myft-hint/hint}}
+				{{/unless}}
 			{{/if}}
 
 			{{#unlessEquals nUi.header.variant 'logo-only'}}
