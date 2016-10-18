@@ -6,7 +6,7 @@ function shouldShowHint (){
 		//not anonymous - check in /header/top.html
 		//signed-in user - myFtClient
 		//show 3 times
-		//stream and article pages - flag, regex, 
+		//stream and article pages - flag, regex,- check url path for [/^\/(stream.*)|(article.*)/i]
 ])};
 
 function showHint () {
