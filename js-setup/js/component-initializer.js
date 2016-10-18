@@ -10,6 +10,7 @@ import { init as subscriptionOfferPrompt } from '../../subscription-offer-prompt
 import footer from '../../footer';
 import myft from '../../myft';
 import digestPromo from '../../myft-digest-promo';
+import myftHint from '../../myft-hint';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 
@@ -141,6 +142,11 @@ export class ComponentInitializer {
 					if (flags.get('myFtDigestPromo') && !this.initializedFeatures.myFtDigestPromo) {
 						digestPromo.init();
 						this.initializedFeatures.myFtDigestPromo = true;
+					}
+
+					if (flags.get('myftHint') && !this.initializedFeatures.myftHint) {
+						myftHint.init();
+						this.initializedFeatures.myftHint = true;
 					}
 
 					if (config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
