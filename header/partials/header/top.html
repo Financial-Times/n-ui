@@ -21,7 +21,9 @@
 
 			{{#if @root.flags.myftHint}}
 				{{#unless @root.locals.anon.userIsAnonymous}}
-					{{>n-ui/myft-hint/hint}}
+					{{#if shouldRenderMyftHint}}
+						{{>n-ui/myft-hint/hint}}
+					{{/if}}
 				{{/unless}}
 			{{/if}}
 
