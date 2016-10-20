@@ -4,7 +4,6 @@
 @import '../overlay/main';
 @import '../myft-common/main';
 @import 'scss/preference';
-@import 'scss/follow-email';
 
 @if nUiApply('myft') {
 	@include nUiMaybeCriticalStart('myft');
