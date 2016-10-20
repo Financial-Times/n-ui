@@ -12,11 +12,13 @@ function Sticky (el, sibling, boundary) {
 	this.startScroll;
 	this.boundaryBottom;
 	this.fixedHeight;
+	this.timeoutHandler;
 }
 
 
 
 Sticky.prototype.startLoop = function () {
+	console.log('startLoop');
 	this.animationFrame = window.requestAnimationFrame(() => {
 		this.calculate();
 		this.startLoop();
@@ -24,6 +26,7 @@ Sticky.prototype.startLoop = function () {
 }
 
 Sticky.prototype.calculate = function () {
+	console.log('CALCULATE');
 	const scrollY = window.pageYOffset || window.scrollY;
 	const atBoundary = (scrollY - this.startScroll + this.fixedHeight) >= this.boundaryBottom;
 	const isAbsolute = this.fixed.style.position === 'absolute';
@@ -43,38 +46,47 @@ Sticky.prototype.calculate = function () {
 }
 
 Sticky.prototype.stick = function () {
+	console.log('stick');
 	this.fixed.style.position = 'fixed';
 	this.fixed.style.top = '0px';
 	this.sibling.style.marginTop = `${this.fixedHeight}px`;
 }
 
 Sticky.prototype.unstick = function () {
+	console.log('unstick');
 	this.fixed.style.position = 'absolute';
 	this.fixed.style.top = `${this.startScroll + this.boundaryBottom - this.fixedHeight}px`;
 }
 
 
 Sticky.prototype.reset = function () {
+	console.log('reset');
 	this.fixed.style.position = 'absolute';
 	this.fixed.style.top = `${this.extraHeight}px`;
 }
 
-Sticky.prototype.destroy = function () {
+Sticky.prototype.destroy = function (unsetCallbackFunctions) {
 	window.removeEventListener('scroll', this.eventdbScrollEnd);
 	window.removeEventListener('scroll', this.eventScrollStart);
 	window.removeEventListener('oAds.collapsed', this.collapsedCallback);
 	this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent)
+	this.endLoop();
 	this.fixed.style.top = '';
-	this.fixed.style.position = '';
+	this.fixed.style.position = 'relative';
 	this.sibling.style.marginTop = '';
 	this.fixed.style.zIndex = '';
 	this.windowWidth = false;
+	if(unsetCallbackFunctions) {
+		this.eventScrollStart = undefined;
+		this.eventdbScrollEnd = undefined;
+	}
 }
 Sticky.prototype.endLoop = function () {
 	window.cancelAnimationFrame(this.animationFrame);
 }
 
 Sticky.prototype.scrollStart = function () {
+	console.log('scrollStart');
 	window.removeEventListener('scroll', this.eventScrollStart);
 	window.addEventListener('scroll', this.eventdbScrollEnd)
 
@@ -91,6 +103,7 @@ Sticky.prototype.scrollStart = function () {
 }
 
 Sticky.prototype.scrollEnd = function () {
+	console.log('scrollEnd');
 	this.endLoop();
 	window.removeEventListener('scroll', this.eventdbScrollEnd);
 	window.addEventListener('scroll', this.eventScrollStart);
@@ -109,14 +122,26 @@ Sticky.prototype.setInitialValues = function () {
 	} else {
 		this.fixed.style.position = 'fixed';
 	}
-
 }
 
+Sticky.prototype.timeoutHandler = function () {
+	console.log('timeoutHandler');
+	clearTimeout(this.timeout);
+	const scrollY = window.pageYOffset || window.scrollY;
+	if(scrollY === 0 || this.boundary.getBoundingClientRect().top <= 0) {
+		console.log('DESTROY!!!');
+			this.destroy(true);
+	} else {
+		console.log('WAIT MOAR!!!');
+		setTimeout(this.timeoutHandler.bind(this), 1000);
+	}
+}
 
 Sticky.prototype.init = function () {
 	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0) {
 		return;
 	};
+	console.log('INIT');
 	this.windowWidth = window.innerWidth;
 	this.setInitialValues();
 
@@ -148,6 +173,8 @@ Sticky.prototype.init = function () {
 		}
 	}.bind(this));
 	window.addEventListener('oAds.collapsed', this.collapsedCallback);
+
+	this.timeout = setTimeout(this.timeoutHandler.bind(this), 5000);
 }
 
 module.exports = Sticky;
