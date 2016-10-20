@@ -28,7 +28,7 @@ module.exports = class TourTip extends React.Component {
 		}
 
 		return data.content.ctas.map(cta =>
-			React.createElement('a', { href:cta.url, className: 'tour-tip__cta o-buttons o-buttons--standout', 'data-trackable': 'cta', innerText:cta.label})
+			React.createElement('a', { href:cta.url, className: 'tour-tip__cta o-buttons o-buttons--standout', 'data-trackable': 'cta'}, cta.label)
 		);
 	}
 

@@ -1,4 +1,4 @@
-const React = require('preact');
+const React = require('react');
 const classNames = require('classnames');
 const UpdateMyFtForm = require('./update-myft-form');
 
