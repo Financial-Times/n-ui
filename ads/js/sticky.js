@@ -12,6 +12,7 @@ function Sticky (el, sibling, boundary) {
 	this.startScroll;
 	this.boundaryBottom;
 	this.fixedHeight;
+	this.timeoutHandler;
 }
 
 
@@ -59,16 +60,21 @@ Sticky.prototype.reset = function () {
 	this.fixed.style.top = `${this.extraHeight}px`;
 }
 
-Sticky.prototype.destroy = function () {
+Sticky.prototype.destroy = function (unsetCallbackFunctions) {
 	window.removeEventListener('scroll', this.eventdbScrollEnd);
 	window.removeEventListener('scroll', this.eventScrollStart);
 	window.removeEventListener('oAds.collapsed', this.collapsedCallback);
 	this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent)
+	this.endLoop();
 	this.fixed.style.top = '';
-	this.fixed.style.position = '';
+	this.fixed.style.position = 'relative';
 	this.sibling.style.marginTop = '';
 	this.fixed.style.zIndex = '';
 	this.windowWidth = false;
+	if(unsetCallbackFunctions) {
+		this.eventScrollStart = undefined;
+		this.eventdbScrollEnd = undefined;
+	}
 }
 Sticky.prototype.endLoop = function () {
 	window.cancelAnimationFrame(this.animationFrame);
@@ -109,9 +115,17 @@ Sticky.prototype.setInitialValues = function () {
 	} else {
 		this.fixed.style.position = 'fixed';
 	}
-
 }
 
+Sticky.prototype.timeoutHandler = function () {
+	clearTimeout(this.timeout);
+	const scrollY = window.pageYOffset || window.scrollY;
+	if(scrollY === 0 || this.boundary.getBoundingClientRect().top <= 0) {
+			this.destroy(true);
+	} else {
+		setTimeout(this.timeoutHandler.bind(this), 1000);
+	}
+}
 
 Sticky.prototype.init = function () {
 	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0) {
@@ -148,6 +162,8 @@ Sticky.prototype.init = function () {
 		}
 	}.bind(this));
 	window.addEventListener('oAds.collapsed', this.collapsedCallback);
+
+	this.timeout = setTimeout(this.timeoutHandler.bind(this), 5000);
 }
 
 module.exports = Sticky;
