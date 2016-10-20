@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
-import UpdateMyFtForm from './update-myft-form';
+const React = require('react');
+const classNames = require('classnames');
+const UpdateMyFtForm = require('./update-myft-form');
 
-export default class InstantAlert extends Component {
+module.exports = class InstantAlert extends React.Component {
 	render () {
 		let attrs = Object.assign({}, this.props);
 		const isOnText = this.props.buttonText || 'Instant alerts on';
@@ -21,6 +21,6 @@ export default class InstantAlert extends Component {
 
 		};
 		Object.assign(attrs, instantAttrs);
-		return <UpdateMyFtForm {...attrs} />
+		return React.createElement(UpdateMyFtForm, attrs);
 	}
 }

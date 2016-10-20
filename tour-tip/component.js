@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
-import { Image, helpers } from '@financial-times/n-image';
+const React = require('react');
+const classNames = require('classnames');
+const { Image, helpers } = require('@financial-times/n-image');
 
-export default class TourTip extends Component {
+module.exports = class TourTip extends React.Component {
 
 	renderTourLink (data) {
 		if (data.settings.hasTourPageLink) {
-			return <p className="tour-tip__link"><a href="/tour" className="tour-tip__link" data-trackable="tour-link">New hints and tips</a></p>;
+			return React.createElement(
+				'p', {className:'tour-tip__link'},
+					React.createElement('a', {href:'/tour', className:'tour-tip__link', 'data-trackable':'tour-link', innerText:'New hints and tips'})
+			);
 		}
 	}
 
@@ -14,7 +17,7 @@ export default class TourTip extends Component {
 		const createMarkup = (prop) => ({ __html: prop });
 
 		if (data.content.body) {
-			return <p className="tour-tip__body" dangerouslySetInnerHTML={createMarkup(data.content.body)}></p>;
+			return React.createElement('p', {className:'tour-tip__body', dangerouslySetInnerHTML:createMarkup(data.content.body)});
 		}
 	}
 
@@ -25,7 +28,7 @@ export default class TourTip extends Component {
 		}
 
 		return data.content.ctas.map(cta =>
-			<a href={cta.url} className="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{cta.label}</a>
+			React.createElement('a', { href:cta.url, className: 'tour-tip__cta o-buttons o-buttons--standout', 'data-trackable': 'cta', innerText:cta.label})
 		);
 	}
 
@@ -45,9 +48,10 @@ export default class TourTip extends Component {
 				imageAttrs.src = helpers.buildImageServiceUrl(data.content.imageUrl);
 			}
 
-			return <div className="tour-tip__img-container">
-				<Image {...imageAttrs} />
-			</div>;
+			return React.createElement(
+				'div', {className:'tour-tip__img-container'},
+					React.createElement(Image, imageAttrs)
+			);
 		}
 	}
 
@@ -64,16 +68,26 @@ export default class TourTip extends Component {
 			'tour-tip': true
 		}, modifiers);
 
-		return <div className={classes} data-trackable={`tour-tip-${data.id}`}>
-			<div className="tour-tip__main">
-				<div className="tour-tip__text">
-					{this.renderTourLink(data)}
-					<h2 className="tour-tip__standout">{data.content.title}</h2>
-					{this.renderBody(data)}
-					{this.renderCtas(data)}
-				</div>
-				{this.renderImage(data)}
-			</div>
-		</div>
+		return React.createElement(
+			'div',
+			{ className: classes, 'data-trackable': 'tour-tip-' + data.id },
+			React.createElement(
+				'div',
+				{ className: 'tour-tip__main' },
+				React.createElement(
+					'div',
+					{ className: 'tour-tip__text' },
+					this.renderTourLink(data),
+					React.createElement(
+						'h2',
+						{ className: 'tour-tip__standout' },
+						data.content.title
+					),
+					this.renderBody(data),
+					this.renderCtas(data)
+				),
+				this.renderImage(data)
+			)
+		);
 	}
-}
+};
