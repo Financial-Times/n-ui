@@ -62,11 +62,6 @@ module.exports = function (karma) {
 							plugins: [['add-module-exports', {loose: true}], ['transform-es2015-classes', { loose: true }]]
 						}
 					},
-					// don't use requireText plugin (use the 'raw' plugin)
-					{
-						test: /follow-email\.js$/,
-						loader: 'imports?requireText=>require'
-					},
 					// set 'this' scope to window
 					{
 						test: /cssrelpreload\.js$/,
