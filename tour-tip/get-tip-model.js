@@ -4,14 +4,14 @@ function deepCopy (obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
-export function getById (id) {
+function getById (id) {
 	const tipFound = tipsConfig.find(tip => tip.id === id);
 	if (tipFound) {
 		return deepCopy(tipFound);
 	}
 }
 
-export function getRandomOfSize (size) {
+function getRandomOfSize (size) {
 	const tipsOfSize = tipsConfig.filter(tip => tip.settings.size === size);
 	if (tipsOfSize.length) {
 		const randomIndex = Math.floor(Math.random() * tipsOfSize.length);
@@ -19,4 +19,6 @@ export function getRandomOfSize (size) {
 	}
 }
 
-export default getById;
+getById.getRandomOfSize = getRandomOfSize;
+
+module.exports = getById;
