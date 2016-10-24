@@ -13,6 +13,7 @@ function Sticky (el, sibling, boundary) {
 	this.boundaryBottom;
 	this.fixedHeight;
 	this.timeoutHandler;
+	this.finished;
 }
 
 
@@ -72,6 +73,7 @@ Sticky.prototype.destroy = function (unsetCallbackFunctions) {
 	this.fixed.style.zIndex = '';
 	this.windowWidth = false;
 	if(unsetCallbackFunctions) {
+		this.finished = true;
 		this.eventScrollStart = undefined;
 		this.eventdbScrollEnd = undefined;
 	}
@@ -136,8 +138,10 @@ Sticky.prototype.init = function () {
 
 	if (this.cookieCloseButton) {
 		this.cookieCloseEvent = this.cookieCloseButton.addEventListener('click', function () {
-			this.extraHeight = 0;
-			this.reset();
+			if(!this.finished){
+				this.extraHeight = 0;
+				this.reset();
+			}
 			this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent)
 		}.bind(this));
 	}
@@ -161,6 +165,7 @@ Sticky.prototype.init = function () {
 				this.destroy();
 		}
 	}.bind(this));
+
 	window.addEventListener('oAds.collapsed', this.collapsedCallback);
 
 	this.timeout = setTimeout(this.timeoutHandler.bind(this), 5000);
