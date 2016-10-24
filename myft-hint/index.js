@@ -5,7 +5,6 @@ const MAX_SHOWS = 3
 
 function shouldShowHint (){
 	return getHintShownCount() <= MAX_SHOWS;
-		//stream and article pages - flag, regex,- check url path for [/^\/(stream.*)|(article.*)/i]
 };
 
 function showHint () {
@@ -21,7 +20,6 @@ function setHintShownCount (count) {
 }
 
 function incrementHintShownCount () {
-	//if no STORAGE_KEY, setHintSHownCount
 	let count = getHintShownCount();
 	setHintShownCount(count++);
 	// superstore.session.set(STORAGE_KEY++);

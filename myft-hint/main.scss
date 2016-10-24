@@ -7,13 +7,11 @@
 
 	@keyframes bounce {
 		from {
-			margin-left: 15%;
-			width: 100%;
+			right: 90px;
 		}
 
 		to {
-			margin-left: 5%;
-			width: 100%;
+			right: 100px;
 		}
 	}
 
@@ -28,44 +26,48 @@
 		background-color: getColor('white');
 		border: 1px solid getColor('pink-tint4');
 		white-space: nowrap;
-		margin-top: 24px;
-		margin-bottom: 24px;
 		position: relative;
 		border-radius: 5px;
 		box-shadow: -1px 1px getColor('pink-tint4');
 		&::before {
 			width: 0;
 			height: 0;
-			border-top: 10px solid transparent;
-			border-bottom: 10px solid transparent;
-			border-left: 10px solid getColor('pink-tint4');
+			border-top: 12px solid transparent;
+			border-bottom: 12px solid transparent;
+			border-left: 12px solid getColor('pink-tint4');
 			content: '';
 			position: absolute;
-			top: 18%;
+			top: 33%;
 			left: 100%;
 		}
 		&::after {
 			width: 0;
 			height: 0;
-			border-top: 8px solid transparent;
-			border-bottom: 8px solid transparent;
-			border-left: 8px solid getColor('white');
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+			border-left: 10px solid getColor('white');
 			content: '';
 			position: absolute;
-			top: 25%;
+			top: 35%;
 			left: 100%;
 		}
 	}
 
 	.myft-hint__content {
 		padding: 0;
-		margin: 4px;
+		margin: 8px 12px 8px 8px;
 		width: 100%;
 		font-size: 0.8em;
+		font-family: Georgia, serif;
+		text-align:	start;
+		text-transform: none;
 	}
 
 	.myft-hint__show {
 		@include oGridRespondTo('L') {
 			display: block;
+			position: absolute;
+			bottom: 20px;
+			right: 90px;
 		}
 	}

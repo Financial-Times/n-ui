@@ -18,22 +18,21 @@
 					<span class="o-header__visually-hidden">Financial Times</span>
 				</a>
 			</div>
-
-			{{#if @root.flags.myftHint}}
-				{{#unless @root.locals.anon.userIsAnonymous}}
-					{{#if shouldRenderMyftHint}}
-						{{>n-ui/myft-hint/hint}}
-					{{/if}}
-				{{/unless}}
-			{{/if}}
-
 			{{#unlessEquals nUi.header.variant 'logo-only'}}
-
 				<div class="o-header__top-column o-header__top-column--right" role="navigation" aria-label="Account and personalisation links">
 					{{#with @root.navigationLists.account.myft}}
-					<a class="o-header__top-link o-header__top-link--myft" href="{{href}}" data-trackable="my-ft" data-tour-stage="myFt" aria-label="My F T">
-						<span class="o-header__visually-hidden">myFT</span>
-					</a>
+					<span class="o-header__top-link--myft__container">
+						<a class="o-header__top-link o-header__top-link--myft" href="{{href}}" data-trackable="my-ft" data-tour-stage="myFt" aria-label="My F T">
+							<span class="o-header__visually-hidden">myFT</span>
+						</a>
+						{{#if @root.flags.myftHint}}
+							{{#unless @root.locals.anon.userIsAnonymous}}
+								{{#if @root.shouldRenderMyftHint}}
+									{{>n-ui/myft-hint/hint}}
+								{{/if}}
+							{{/unless}}
+						{{/if}}
+					</span>
 					{{/with}}
 				</div>
 			{{/unlessEquals}}
