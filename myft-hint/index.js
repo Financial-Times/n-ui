@@ -4,7 +4,7 @@ const STORAGE_KEY = 'myft-hint-shown-count';
 const MAX_SHOWS = 3
 
 function shouldShowHint (){
-	return getHintShownCount() <= MAX_SHOWS;
+	return getHintShownCount() < MAX_SHOWS;
 };
 
 function showHint () {
@@ -12,7 +12,7 @@ function showHint () {
 };
 
 function getHintShownCount () {
-	return superstore.local.get(STORAGE_KEY);
+	return superstore.local.get(STORAGE_KEY) || 0;
 }
 
 function setHintShownCount (count) {
@@ -21,13 +21,12 @@ function setHintShownCount (count) {
 
 function incrementHintShownCount () {
 	let count = getHintShownCount();
-	setHintShownCount(count++);
-	// superstore.session.set(STORAGE_KEY++);
+	setHintShownCount(++count);
 }
 
 function init () {
 	if(!superstore.isPersisting() || !hint) { return; }
-	if(shouldShowHint) {
+	if(shouldShowHint()) {
 		showHint();
 		incrementHintShownCount();
 	}
