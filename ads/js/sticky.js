@@ -130,7 +130,9 @@ Sticky.prototype.timeoutHandler = function () {
 }
 
 Sticky.prototype.init = function () {
-	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0) {
+	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0 || window.navigator.userAgent.match(/i.*OS\s(\d+)_(\d+)/))
+
+) {
 		return;
 	};
 	this.windowWidth = window.innerWidth;
