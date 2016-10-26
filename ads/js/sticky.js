@@ -130,6 +130,7 @@ Sticky.prototype.timeoutHandler = function () {
 }
 
 Sticky.prototype.init = function () {
+	// do not init if user already started scrolling or on iOS devices as the stickiness behaves flaky on iOS. Issue: ADS-1112
 	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0 || window.navigator.userAgent.match(/i.*OS\s(\d+)_(\d+)/)){
 		return;
 	};
