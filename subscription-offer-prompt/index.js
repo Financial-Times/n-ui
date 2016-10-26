@@ -28,7 +28,7 @@ const getTlsVersion = () => fetch('https://www.howsmyssl.com/a/check')
  *	* not on a barrier page
  *	* the barrier has been seen in this session
  *	* the prompt has not been closed, or was last closed more than 30 days ago
- *	* browser's' TLS version is > 1.1
+ *	* browser's' TLS version is > 1.0
  */
 const shouldPromptBeShown = () => {
 	if (isLoggedIn() || document.querySelector('.ft-subscription-panel')) {
@@ -36,7 +36,7 @@ const shouldPromptBeShown = () => {
 	} else {
 		return Promise.all([getProductSelectorLastSeen(), getPromptLastClosed(), getTlsVersion()])
 			.then(([barrierLastSeen, promptLastClosed, tlsVersion]) =>
-				barrierLastSeen && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && tlsVersion > 1.1
+				barrierLastSeen && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && tlsVersion > 1.0
 			);
 	}
 };
