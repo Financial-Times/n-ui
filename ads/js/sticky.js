@@ -76,6 +76,7 @@ Sticky.prototype.destroy = function (unsetCallbackFunctions) {
 		this.finished = true;
 		this.eventScrollStart = undefined;
 		this.eventdbScrollEnd = undefined;
+		window.removeEventListener('resize', this.resizeCallback);
 	}
 }
 Sticky.prototype.endLoop = function () {
@@ -151,7 +152,7 @@ Sticky.prototype.init = function () {
 
 	this.resizeCallback = debounce(function () {
 		// makesure width actually changed. Resize gets fired on mobile for some reason
-		if(window.innerWidth !== this.windowWidth) {
+		if(window.innerWidth !== this.windowWidth && !this.finished) {
 			this.destroy();
 			debounce(this.init.bind(this), 300).call();
 		}
