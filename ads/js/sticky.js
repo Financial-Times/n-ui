@@ -76,6 +76,7 @@ Sticky.prototype.destroy = function (unsetCallbackFunctions) {
 		this.finished = true;
 		this.eventScrollStart = undefined;
 		this.eventdbScrollEnd = undefined;
+		window.removeEventListener('resize', this.resizeCallback);
 	}
 }
 Sticky.prototype.endLoop = function () {
