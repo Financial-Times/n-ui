@@ -1,5 +1,5 @@
 {{#if @root.flags.myFtApiWrite}}
-	<form class="n-myft-ui n-myft-ui--follow" method="POST"
+	<form class="n-myft-ui n-myft-ui--follow {{extraClasses}}" method="POST"
 		data-myft-ui="follow"
 		data-concept-id="{{conceptId}}"
 		action="/__myft/api/core/followed/concept/{{conceptId}}?method=put">
