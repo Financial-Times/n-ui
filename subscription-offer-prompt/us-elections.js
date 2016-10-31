@@ -25,23 +25,26 @@ const shouldPromptBeShown = (flags) => {
 
 const popupTemplate = ({ amount }) => `
 	<article class="subscription-prompt--wrapper" data-trackable="subscription-offer-prompt-us-elections">
+		<div class="subscription-offer-prompt--badge">
+			<img src="https://image.webservices.ft.com/v1/images/raw/${encodeURIComponent('http://next-geebee.ft.com/assets/offer-prompt/us-election-icon-desktop-x2.png')}?source=offer-prompt-us&amp;width=170"" alt="US Election Flags">
+		</div>
 		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
 			<span class="n-sliding-popup-close-label">Close</span>
 		</button>
 		<div class="subscription-prompt--header" data-o-grid-colspan="12">
-			<span class="subscription-prompt--flag">Limited Offer</span>
 			<h1 class="subscription-prompt--heading">Your global perspective this US election</h1>
 			<span class="subscription-prompt--subheading">
 				Get the latest news and analysis in the race for the White House.
 			</span>
 		</div>
-		<a href="https://sub.ft.com/spa_uselection/?segmentId=b0cc72ef-a788-b64a-8860-bbd7e9713d62&utm_source=election&utm_medium=onsite_link&utm_campaign=2016_Q4_US_Election_poll_page" data-trackable="subscribe">Try the FT for 3 months for <small>${amount.currency}</small>${amount.symbol}${amount.value}</a>
+		<a href="https://sub.ft.com/spa_uselection/?segmentId=b0cc72ef-a788-b64a-8860-bbd7e9713d62&utm_source=election&utm_medium=onsite_link&utm_campaign=2016_Q4_US_Election_poll_page" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Try the FT for 3 months for <small>${amount.currency}</small>${amount.symbol}${amount.value}*</a>
+		<small class="subscription-prompt--disclaimer">*Terms and conditions apply</small>
 	</article>
 `;
 
 const createPopupHTML = values =>
 	utils.createElement('div', {
-		'class': 'n-sliding-popup subscription-prompt',
+		'class': 'n-sliding-popup subscription-prompt--us',
 		'data-n-component': 'o-sliding-popup',
 		'data-n-sliding-popup-position': 'bottom left',
 	}, popupTemplate(values));
