@@ -1,6 +1,7 @@
 @import 'n-sliding-popup/main';
 
-.subscription-prompt {
+.subscription-prompt,
+.subscription-prompt--us {
 	max-width: 500px;
 }
 
@@ -18,7 +19,7 @@
 	display: inline-block;
 }
 
-.subscription-prompt--heading {
+.subscription-prompt .subscription-prompt--heading {
 	@include oTypographySansBold(m);
 	color: oColorsGetPaletteColor('grey-tint5');
 	margin: 0 0 4px;
@@ -28,7 +29,7 @@
 	}
 }
 
-.subscription-prompt--subheading {
+.subscription-prompt .subscription-prompt--subheading {
 	@include oTypographySansBold(s);
 	font-weight: 300;
 	color: oColorsGetPaletteColor('grey-tint5');
@@ -69,7 +70,7 @@
 	}
 }
 
-.subscription-prompt--subscribe-btn {
+.subscription-prompt .subscription-prompt--subscribe-btn {
 	@include oButtons(medium, standard);
 	@include oButtonsSize(small);
 	@include oButtonsTheme(standout);
@@ -103,4 +104,66 @@
 .subscription-prompt--figure-caption {
 	color: oColorsGetPaletteColor('grey-tint5');
 	font-size: 16px;
+}
+
+// US Election Prompt
+
+// override `.n-sliding-prompt` prompt defaults
+.subscription-prompt--us {
+	background-color: #0187C4;
+	border: 0;
+	border-radius: 0;
+}
+
+.subscription-prompt--us .subscription-prompt--wrapper {
+	text-align: center;
+}
+
+.subscription-prompt--us .subscription-prompt--heading {
+	border-bottom: 2px solid #eed485;
+	text-transform: uppercase;
+	margin: 0;
+	line-height: 1.5;
+}
+
+.subscription-prompt--us .subscription-prompt--subheading {
+	@include oTypographySans(m);
+	@include font-size(19);
+	padding-top: 5px;
+}
+
+.subscription-prompt--us .subscription-prompt--heading,
+.subscription-prompt--us .subscription-prompt--subheading {
+	color: oColorsGetPaletteColor('white');
+	display: block;
+}
+
+.subscription-prompt--us .subscription-offer-prompt--badge {
+	display: block;
+	height: 50px;
+}
+
+.subscription-prompt--us .subscription-offer-prompt--badge img {
+	max-width: 170px;
+	margin-top: -65px;
+}
+
+.subscription-prompt--us .subscription-prompt--subscribe-btn {
+	color: oColorsGetPaletteColor('white');
+	background-color: oColorsGetPaletteColor('claret');
+	padding: 7px 12px;
+	display: inline-block;
+	margin-top: 15px;
+}
+
+.subscription-prompt--us .subscription-prompt--subscribe-btn:hover {
+	cursor: pointer;
+}
+
+.subscription-prompt--disclaimer {
+	text-align: right;
+	display: block;
+	padding-top: 15px;
+	color: oColorsGetPaletteColor('white');
+	@include oTypographySans(xs);
 }
