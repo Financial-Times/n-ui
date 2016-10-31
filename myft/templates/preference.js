@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+const React = require('react');
 
 /**
 * React component of the myFT on/off preference toggler
@@ -13,12 +13,13 @@ import React, { Component } from 'react';
 * @param {string} [info] — An optional message area for dynamic info, or core/enhanced differences
 * @param {boolean} [isOn] — Used to reflect the preference’s state in the database
 */
-class Preference extends Component {
+class Preference extends React.Component {
 	render () {
 
-		const relProperties = (this.props.relProperties||[]).map(relProperty => (
-			<input type='hidden' name={`_rel.${relProperty.name}`} value={relProperty.value}/>
-		));
+		const relProperties = (this.props.relProperties||[]).map(relProperty =>
+			React.createElement('input', {type:'hidden', name:`_rel.${relProperty.name}`, value:relProperty.value})
+		);
+
 		const gatewayHttpMethod = (this.props.isOn) ? 'delete' : 'put';
 		const variants = (this.props.variants||[]).map(variant => ` myft-ui__button--${variant}`);
 		const buttonClasses = ['myft-ui__button', 'js-myft-ui__button', ...variants];
@@ -31,21 +32,31 @@ class Preference extends Component {
 		//typing-dog.gif
 		const createMarkup = (prop) => ({__html: prop});
 
-		return <form className={`myft-ui myft-ui--prefer${this.props.isOn ? ' myft-ui--preferred-on' : ''}`} method='POST'
-			data-myft-ui='prefer'
-			data-preference-name={this.props.preferenceName}
-			action={`/__myft/api/core/preferred/preference/${this.props.preferenceName}?method=${gatewayHttpMethod}`}>
-			{relProperties}
-			<p className='myft-ui__info js-myft-ui__info' dangerouslySetInnerHTML={createMarkup(this.props.info)}></p>
-			<button
-				type='submit'
-				className={buttonClasses.join(' ')}
-				aria-pressed={!!this.props.isOn}
-				disabled={this.props.enhancedOnly}
-				data-trackable={`set-${this.props.preferenceName}`}
-			><span className='n-util-hide-enhanced'>{this.props.buttonText}</span></button>
-		</form>
+		return React.createElement(
+			'form',
+			{ className: 'myft-ui myft-ui--prefer' + (this.props.isOn ? ' myft-ui--preferred-on' : ''), method: 'POST',
+				'data-myft-ui': 'prefer',
+				'data-preference-name': this.props.preferenceName,
+				action: '/__myft/api/core/preferred/preference/' + this.props.preferenceName + '?method=' + gatewayHttpMethod },
+			relProperties,
+			React.createElement('p', { className: 'myft-ui__info js-myft-ui__info', dangerouslySetInnerHTML: createMarkup(this.props.info) }),
+			React.createElement(
+				'button',
+				{
+					type: 'submit',
+					className: buttonClasses.join(' '),
+					'aria-pressed': !!this.props.isOn,
+					disabled: this.props.enhancedOnly,
+					'data-trackable': 'set-' + this.props.preferenceName
+				},
+				React.createElement(
+					'span',
+					{ className: 'n-util-hide-enhanced' },
+					this.props.buttonText
+				)
+			)
+		);
 	}
 }
 
-export default Preference;
+module.exports = Preference;

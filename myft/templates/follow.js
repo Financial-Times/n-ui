@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
-import UpdateMyFtForm from './update-myft-form';
+const React = require('react');
+const classNames = require('classnames');
+const UpdateMyFtForm = require('./update-myft-form');
 
-export default class Follow extends Component {
+module.exports = class Follow extends React.Component {
 	render () {
 		let attrs = Object.assign({}, this.props);
 		const followAttrs = {
@@ -15,7 +15,6 @@ export default class Follow extends Component {
 			alternateText: this.props.alternateText || this.props.buttonText || 'Added'
 		};
 		Object.assign(attrs, followAttrs);
-
-		return <UpdateMyFtForm {...attrs} />
+		return React.createElement(UpdateMyFtForm, attrs);
 	}
-}
+};

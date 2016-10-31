@@ -6,7 +6,7 @@ import header from '../../header';
 import optOut from '../../opt-out';
 import cookieMessage from '../../cookie-message';
 import welcomeMessage from '../../welcome-message';
-import { init as subscriptionOfferPrompt } from '../../subscription-offer-prompt';
+import subscriptionOfferPrompt from '../../subscription-offer-prompt';
 import footer from '../../footer';
 import myft from '../../myft';
 import digestPromo from '../../myft-digest-promo';
@@ -160,7 +160,7 @@ export class ComponentInitializer {
 					}
 
 					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
-						flags.get('b2cMessagePrompt') && subscriptionOfferPrompt();
+						subscriptionOfferPrompt(flags);
 						this.initializedFeatures.subscriptionOfferPrompt = true;
 					}
 
