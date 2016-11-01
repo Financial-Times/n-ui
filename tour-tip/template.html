@@ -1,0 +1,25 @@
+{{#unlessAll data.settings.isAnon data.settings.hideFromAnon}}
+	<div class="tour-tip tour-tip--{{data.settings.size}}{{#each data.modifiers}} tour-tip--{{this}}{{/each}}" data-trackable="tour-tip-{{data.id}}">
+		<div class="tour-tip__main">
+			<div class="tour-tip__text">
+				{{#if data.settings.hasTourPageLink}}
+					<p class="tour-tip__link">
+						<a href="/tour" class="tour-tip__link" data-trackable="tour-link">New hints and tips</a>
+					</p>
+				{{/if}}
+				<h2 class="tour-tip__standout">{{data.content.title}}</h2>
+				{{#if data.content.body}}
+					<p class="tour-tip__body">{{{data.content.body}}}</p>
+				{{/if}}
+				{{#ifAll data.content.ctas data.content.ctas.length}}
+					{{#unlessAll data.settings.isAnon data.settings.hideCtaFromAnon}}
+						{{#each data.content.ctas}}
+							<a href="{{{url}}}" class="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{{label}}</a>
+						{{/each}}
+					{{/unless}}
+				{{/ifAll}}
+			</div>
+			<div class="tour-tip__img-container"><!-- nImage here --></div>
+		</div>
+	</div>
+{{/unlessAll}}
