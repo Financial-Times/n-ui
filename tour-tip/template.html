@@ -19,9 +19,19 @@
 					{{/unlessAll}}
 				{{/ifAll}}
 			</div>
-			<div class="tour-tip__img-container">
-				<!-- n-image here -->
-			</div>
+			{{#if data.content.imageUrl}}
+				<div class="tour-tip__img-container">
+					{{#if data.content.imageWidths}}
+						{{#nImagePresenter alt=data.content.imageAlt classes="['tour-tip__img']" widths=data.content.imageWidths sizes=data.content.imageSizes url=data.content.imageUrl}}
+							{{> n-image/templates/image}}
+						{{/nImagePresenter}}
+					{{else}}
+						{{#nImagePresenter alt=data.content.imageAlt classes="['tour-tip__img']" sizes=data.content.imageSizes src=data.content.imageUrl}}
+							{{> n-image/templates/image}}
+						{{/nImagePresenter}}
+					{{/if}}
+				</div>
+			{{/if}}
 		</div>
 	</div>
 {{/unlessAll}}
