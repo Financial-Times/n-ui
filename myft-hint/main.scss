@@ -54,13 +54,14 @@
 	}
 
 	.myft-hint__content {
+		@include oTypographyBody;
 		padding: 0;
 		margin: 8px 12px 8px 8px;
 		width: 100%;
 		font-size: 0.8em;
-		font-family: Georgia, serif;
 		text-align: start;
 		text-transform: none;
+		line-height: 120%;
 	}
 
 	.myft-hint__show {

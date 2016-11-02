@@ -21,7 +21,7 @@ function setHintShownCount (count) {
 
 function incrementHintShownCount () {
 	let count = getHintShownCount();
-	setHintShownCount(++count);
+	setHintShownCount(count+1);
 }
 
 function init () {
