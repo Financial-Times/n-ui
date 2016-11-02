@@ -23,10 +23,10 @@ const shouldPromptBeShown = (flags) => {
 			})
 };
 
-const popupTemplate = ({ amount }) => `
+const popupTemplate = ({ amount, countryCode }) => `
 	<article class="subscription-prompt--wrapper" data-trackable="subscription-offer-prompt-us-elections">
 		<div class="subscription-offer-prompt--badge">
-			<img src="https://image.webservices.ft.com/v1/images/raw/${encodeURIComponent('http://next-geebee.ft.com/assets/offer-prompt/us-election-icon-desktop-x2.png')}?source=offer-prompt-us&amp;width=170"" alt="US Election Flags">
+			<img src="https://image.webservices.ft.com/v1/images/raw/${encodeURIComponent('https://d1u6uv4wzxfsok.cloudfront.net/sparrow_v1/ft1_XX_sparrow_v1/images/us_election_icon_desktop_235x151px_x2.png')}?source=offer-prompt-us&amp;width=170"" alt="US Election Flags">
 		</div>
 		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
 			<span class="n-sliding-popup-close-label">Close</span>
@@ -37,7 +37,7 @@ const popupTemplate = ({ amount }) => `
 				Get the latest news and analysis in the race for the White House.
 			</span>
 		</div>
-		<a href="https://sub.ft.com/spa_uselection/?segmentId=b0cc72ef-a788-b64a-8860-bbd7e9713d62&utm_source=election&utm_medium=onsite_link&utm_campaign=2016_Q4_US_Election_poll_page" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Try the FT for 3 months for <small>${amount.currency}</small>${amount.symbol}${amount.value}*</a>
+		<a href="https://sub.ft.com/spa_uselection/?segmentId=b0cc72ef-a788-b64a-8860-bbd7e9713d62&utm_source=election&utm_medium=onsite_link&utm_campaign=2016_Q4_US_Election_poll_page&countryCode=${countryCode}" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Try the FT for 3 months for <small>${amount.currency}</small>${amount.symbol}${amount.value}*</a>
 		<small class="subscription-prompt--disclaimer">*Terms and conditions apply</small>
 	</article>
 `;
@@ -80,7 +80,7 @@ const fetchOffer = (countryCode) => {
 		.then(response => response.json())
 		.then(({ data }={}) => {
 			const pricing = data.offer.charges.find(p => p.billing_period === 'trial');
-			return {offerId: data.offer.id, amount: pricing.amount}
+			return {offerId: data.offer.id, amount: pricing.amount, countryCode: countryCode}
 		})
 }
 
