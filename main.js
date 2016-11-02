@@ -21,6 +21,8 @@ import myft from './myft';
 export const _myft = myft;
 import myftDigestPromo from './myft-digest-promo';
 export const _myftDigestPromo = myftDigestPromo;
+import myftHint from './myft-hint';
+export const _myftHint = myftHint;
 import utils from './utils';
 export const _utils = utils;
 import notification from './notification';

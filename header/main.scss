@@ -60,4 +60,8 @@ $o-header-image-base-url: 'https://next-geebee.ft.com/image';
 		@include nUiHeaderTypeahead;
 	}
 
+	.o-header__top-link--myft {
+		position: relative;
+	}
+
 }
