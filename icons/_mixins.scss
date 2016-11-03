@@ -6,7 +6,7 @@
 		height: $size + 0px;
 	}
 
-	$service-url: 'https://next-geebee.ft.com/image/v1/images/raw/';
+	$service-url: 'https://www.ft.com/__origami/service/image/v2/images/raw/';
 	$icon-url: 'http%3A%2F%2Fnext-geebee.ft.com%2Fassets%2Ficons%2F#{$icon-name}.svg';
 	$query: '?source=next';
 
@@ -28,7 +28,7 @@
 }
 
 @mixin nGetImage($image-type, $image-name, $color: null, $container-width: 128, $container-height: null, $apply-base-styles: true, $apply-width-height: true) {
-	$url: 'https://next-geebee.ft.com/image/v1/images/raw/ft#{$image-type}:#{$image-name}';
+	$url: 'https://www.ft.com/__origami/service/image/v2/images/raw/ft#{$image-type}:#{$image-name}';
 	$query: '?source=next';
 
 	@if $color != null {
