@@ -1,6 +1,7 @@
 import * as utils from './utils';
 import * as lionel from './lionel';
 import * as election from './us-elections';
+import * as president from './hillary-trump';
 
 /*
 Show the subscription offer prompt.
@@ -50,7 +51,10 @@ export default function init (flags) {
 		return;
 	}
 	else {
-		if (isElectionPage()) {
+		if (flags.get('hillaryWinsOffer') || flags.get('trumpWinsOffer')) {
+			return president.init(flags);
+		}
+		else if (isElectionPage()) {
 			return election.init(flags);
 		}
 		else {
