@@ -3,19 +3,6 @@ const sandbox = require('./sandbox');
 const extend = require('o-ads').utils.extend;
 const apiUrlRoot = 'https://ads-api.ft.com/v1/'
 
-function getLazyLoadConfig (flags) {
-	switch(flags.adsLazyLoadPosition) {
-		case 'onload':
-			return false;
-		case '50pc':
-			return { viewportMargin: '50% 0%' };
-		case '100pc':
-			return { viewportMargin: '100% 0%' };
-		default:
-			return { viewportMargin: '0%' };
-	}
-}
-
 module.exports = function (flags, appName, adOptions) {
 	adOptions = adOptions || {};
 	const eidMatch = document.cookie.match(/EID=(\d+)/);
@@ -87,7 +74,7 @@ module.exports = function (flags, appName, adOptions) {
 		krux: kruxConfig,
 		collapseEmpty: 'before',
 		dfp_targeting: utils.keyValueString(targeting),
-		lazyLoad: getLazyLoadConfig(flags),
+		lazyLoad: { viewportMargin: '0%' },
 		targetingApi: adOptions.noTargeting ? null : {
 			user: `${apiUrlRoot}user`,
 			page: getContextualTargeting(appName),
