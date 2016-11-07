@@ -25,7 +25,11 @@ describe('"US Election 2016" Subscription Offer Prompt', () => {
 			}));
 
 		// stub out the flag.get()
-		flags = { get: () => true }
+		flags = {
+			get: (val) => {
+				if (val === 'krux') return false; // causing issues on ci
+				if (val === 'usElection2016DiscountSlider') return true;
+		}}
 
 		return localStorage.set('last-closed', Date.now() - (1000 * 60 * 60 * 24 * 30));
 	});
@@ -94,7 +98,7 @@ describe('"US Election 2016" Subscription Offer Prompt', () => {
 	});
 
 	it('should not show if flag usElection2016DiscountSlider is false', () => {
-		flags.get = () => false;
+		flags = { get: (val) => { if (val === 'usElection2016DiscountSlider') return false} }
 		return init(flags).then(popup => should.not.exist(popup));
 	});
 
