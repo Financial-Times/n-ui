@@ -1,11 +1,11 @@
 {{#if @root.flags.headerMarketingPromo}}
-	<div class="n-header__marketing-promo" data-trackable="marketing-promo:header">
+	<div class="n-header__marketing-promo" data-trackable="marketing-promo:header"{{#ifSome @root.flags.hillaryWinsOffer @root.flags.trumpWinsOffer}} style="background:#0088C1"{{/ifSome}}>
 		<div class="n-header__marketing-promo__container o-header__container">
 
 			<!-- temporary us election offer -->
 			{{#ifSome @root.flags.hillaryWinsOffer @root.flags.trumpWinsOffer}}
 			<a href="https://www.ft.com/signup?offerId=1dbc248e-b98d-b703-bc25-a05cc5670804" class="n-header__marketing-promo__box" data-trackable="marketing-promo:box">
-				<div class="n-header__marketing-promo__link" data-trackable="marketing-promo-elections:link">LIMITED TIME ONLY: Subscribe &amp; save 25%</div>
+				<div class="n-header__marketing-promo__link" data-trackable="marketing-promo-elections:link">LIMITED TIME OFFER: Subscribe &amp; save 25%</div>
 			</a>
 			{{/ifSome}}
 
