@@ -119,6 +119,11 @@
 	text-align: center;
 }
 
+.subscription-prompt--us-elect .subscription-prompt--wrapper {
+	text-align: left;
+	padding: 0 20px;
+}
+
 .subscription-prompt--us .subscription-prompt--heading {
 	border-bottom: 2px solid #eed485;
 	text-transform: uppercase;
@@ -141,6 +146,11 @@
 .subscription-prompt--us .subscription-offer-prompt--badge {
 	display: block;
 	height: 50px;
+	z-index: 1;
+}
+
+.subscription-prompt--us-elect .subscription-offer-prompt--badge {
+	position: relative; // for z-index layering of marquee and badge img
 }
 
 .subscription-prompt--us .subscription-offer-prompt--badge img {
@@ -166,4 +176,22 @@
 	padding-top: 15px;
 	color: oColorsGetPaletteColor('white');
 	@include oTypographySans(xs);
+}
+
+.subscription-prompt--us .subscription-offer-prompt--marquee {
+	background-color: oColorsGetPaletteColor('claret');
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 0;
+}
+
+.subscription-prompt--marquee-badge {
+	padding: 5px 5px 5px 230px;
+	margin: 0;
+	color: oColorsGetPaletteColor('white');
+	@include oTypographySansBold(s);
+	text-transform: uppercase;
 }
