@@ -27,7 +27,7 @@ describe('"US Election 2016" Subscription Offer Prompt', () => {
 		// stub out the flag.get()
 		flags = {
 			get: (val) => {
-				if (val === 'krux') return false; // causing issues on ci
+				if (val === 'ads') return false; // causing issues on ci
 				if (val === 'usElection2016DiscountSlider') return true;
 		}}
 
