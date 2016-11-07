@@ -7,8 +7,7 @@ const delay = (ms, value) => new Promise(resolve => setTimeout(resolve.bind(null
 
 describe('"President Elect" Subscription Offer Prompt', () => {
 
-	const localStorage = new Superstore('local', 'n-ui.subscription-offer-prompt-us-election-result')
-	const sessionStorage = new Superstore('session', 'next.product-selector')
+	const sessionStorage = new Superstore('session', 'n-ui.subscription-offer-prompt-us-election-result');
 	let flags;
 
 	beforeEach(() => {
@@ -28,8 +27,7 @@ describe('"President Elect" Subscription Offer Prompt', () => {
 		flags = { get: () => true }
 
 		return Promise.all([
-			localStorage.set('last-closed', Date.now() - (1000 * 60 * 60 * 24 * 30)),
-			sessionStorage.set('last-seen', Date.now())
+			sessionStorage.set('last-seen', false)
 		])
 	});
 
@@ -38,7 +36,6 @@ describe('"President Elect" Subscription Offer Prompt', () => {
 		flags = null;
 
 		return Promise.all([
-			localStorage.unset('last-closed'),
 			sessionStorage.unset('last-seen')
 		]);
 	});
@@ -77,22 +74,6 @@ describe('"President Elect" Subscription Offer Prompt', () => {
 		})
 	});
 
-	it('should set onClose to function', () =>
-		init(flags).then(popup => {
-			popup.el.onClose.should.be.a('function')
-		})
-	);
-
-	it('should store date in local storage when closed', () =>
-		init(flags)
-			.then(popup => {
-				popup.el.onClose();
-				return localStorage.get('last-closed');
-			})
-			// give a 1s buffer
-			.then(lastClosed => lastClosed.should.be.closeTo(Date.now(), 1000))
-	);
-
 	// TODO: naughty, but errors for unknown reason - https://circleci.com/gh/Financial-Times/n-ui/2829
 	xit('should ‘pop-up’ after 2 seconds', () =>
 		init(flags)
@@ -105,13 +86,8 @@ describe('"President Elect" Subscription Offer Prompt', () => {
 	);
 
 
-	it('should not show if last shown within 30 days', () => {
-		localStorage.set('last-closed', Date.now() + (1000 * 60 * 60 * 24 * 29));
-		return init(flags).then(popup => should.not.exist(popup));
-	});
-
-	it('should not show barrier page has not been visited in this session', () => {
-		sessionStorage.unset('last-seen');
+	it('should not show if shown in this session', () => {
+		sessionStorage.set('last-seen', true)
 		return init(flags).then(popup => should.not.exist(popup));
 	});
 

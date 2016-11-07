@@ -1,20 +1,15 @@
 import SlidingPopup from 'n-sliding-popup';
-import Superstore from 'superstore'
+import Superstore from 'superstore';
 
 import * as utils from './utils';
 import { broadcast } from '../utils';
 
-const promptLastSeenStorage = new Superstore('local', 'n-ui.subscription-offer-prompt-us-election-result');
-const promptLastSeenStorageKey = 'last-closed';
+const promptLastSeenSessionStore = new Superstore('session', 'n-ui.subscription-offer-prompt-us-election-result');
+const promptLastSeenStorageKey = 'last-seen';
 
-const getProductSelectorLastSeen = () => {
-	const sessionStore = new Superstore('session', 'next.product-selector');
-	return sessionStore.get('last-seen');
-};
+const getPromptLastSeen = () => promptLastSeenSessionStore.get(promptLastSeenStorageKey);
 
-const getPromptLastClosed = () => promptLastSeenStorage.get(promptLastSeenStorageKey);
-
-const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorageKey, Date.now());
+const setPromptLastSeen = () => promptLastSeenSessionStore.set(promptLastSeenStorageKey, true);
 
 const getTlsVersion = () => fetch('https://www.howsmyssl.com/a/check')
 	.then(response => response.json())
@@ -27,15 +22,13 @@ const getFlagIsPresent = flags => {
 /**
  * Show the prompt if
  *	* not logged in
- *	* not on a barrier page
- *	* the barrier has been seen in this session
- *	* the prompt has not been closed, or was last closed more than 30 days ago
+ *	* the prompt has NOT been seen in this session
  *	* browser's' TLS version is > 1.0
  */
 const shouldPromptBeShown = (flags) => {
-	return Promise.all([getProductSelectorLastSeen(), getPromptLastClosed(), getTlsVersion(), getFlagIsPresent(flags)])
-			.then(([barrierLastSeen, promptLastClosed, tlsVersion, flagIsPresent]) =>
-				barrierLastSeen && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && tlsVersion > 1.0 && flagIsPresent
+	return Promise.all([getPromptLastSeen(), getTlsVersion(), getFlagIsPresent(flags)])
+			.then(([promptSeen, tlsVersion, flagIsPresent]) =>
+				!promptSeen && tlsVersion > 1.0 && flagIsPresent
 			);
 };
 
@@ -70,11 +63,11 @@ const createPopupHTML = values =>
 
 const createSubscriptionPrompt = values => {
 	const subscriptionPrompt = createPopupHTML(values);
-	subscriptionPrompt.onClose = setPromptLastClosed;
 	document.body.appendChild(subscriptionPrompt);
 	const slidingPopup = new SlidingPopup(subscriptionPrompt);
 	setTimeout(() => {
 		slidingPopup.open();
+		setPromptLastSeen();
 		broadcast('oTracking.event', {
 			category: 'message',
 			action: 'show',
@@ -104,7 +97,7 @@ export const init = (flags) => {
 			if (shouldShow) {
 				const promptValues = {
 					discount: 25,
-					offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318',
+					offerId: '1dbc248e-b98d-b703-bc25-a05cc5670804',
 					candidate: getSubscriptionCandidateValue(flags)
 				};
 				return createSubscriptionPrompt(promptValues);
