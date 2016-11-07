@@ -98,7 +98,11 @@ describe('"US Election 2016" Subscription Offer Prompt', () => {
 	});
 
 	it('should not show if flag usElection2016DiscountSlider is false', () => {
-		flags = { get: (val) => { if (val === 'usElection2016DiscountSlider') return false} }
+		flags = {
+			get: (val) => {
+				if (val === 'ads') return false; // causing issues on ci
+				if (val === 'usElection2016DiscountSlider') return false;
+		}}
 		return init(flags).then(popup => should.not.exist(popup));
 	});
 
