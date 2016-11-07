@@ -25,7 +25,11 @@ describe('"US Election 2016" Subscription Offer Prompt', () => {
 			}));
 
 		// stub out the flag.get()
-		flags = { get: (val) => val === 'usElection2016DiscountSlider' }
+		flags = {
+			get: (val) => {
+				if (val === 'ads') return false; // causing issues on ci
+				if (val === 'usElection2016DiscountSlider') return true;
+		}}
 
 		return localStorage.set('last-closed', Date.now() - (1000 * 60 * 60 * 24 * 30));
 	});
