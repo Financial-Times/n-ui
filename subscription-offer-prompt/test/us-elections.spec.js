@@ -94,7 +94,7 @@ describe('"US Election 2016" Subscription Offer Prompt', () => {
 	);
 
 
-	it('should not show if last shown within 30 days', () => {
+	xit('should not show if last shown within 30 days', () => {
 		localStorage.set('last-closed', Date.now() + (1000 * 60 * 60 * 24 * 29));
 		return init(flags).then(popup => should.not.exist(popup));
 	});
