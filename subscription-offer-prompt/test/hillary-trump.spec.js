@@ -24,7 +24,7 @@ describe('"President Elect" Subscription Offer Prompt', () => {
 			}));
 
 		// stub out the flag.get()
-		flags = { get: () => true }
+		flags = { get: (val) => val === 'hillaryWinsOffer' || val === 'trumpWinsOffer' }
 
 		return Promise.all([
 			sessionStorage.set('last-seen', false)
