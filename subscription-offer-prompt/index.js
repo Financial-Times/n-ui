@@ -51,7 +51,7 @@ export default function init (flags) {
 		return;
 	}
 	else {
-		if (flags.get('hillaryWinsOffer') || flags.get('trumpWinsOffer')) {
+		if (flags.get('hillaryWinsOffer') || flags.get('trumpWinsOffer') || flags.get('trumpWinsTest')) {
 			return president.init(flags);
 		}
 		else if (isElectionPage()) {

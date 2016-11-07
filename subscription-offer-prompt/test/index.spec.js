@@ -108,4 +108,20 @@ describe('Subscription Offer Prompt Init', () => {
 		electionStub.should.not.have.been.called;
 	});
 
+	it('should init "President Elect slider" if NOT logged & NOT on barrier page & "trumpWinsTest" flag is truthy', () => {
+		// stub out the flag.get(b2cMessagePrompt) = true
+		flags = { get: (val) => {
+			if (val === 'b2cMessagePrompt') return true;
+			if (val === 'trumpWinsTest') return true;
+			if (val === 'trumpWinsOffer') return false;
+			if (val === 'hillaryWinsOffer') return false;
+		}}
+
+		subscriptionOfferPrompt(flags);
+		presidentStub.should.have.callCount(1);
+
+		lionelStub.should.not.have.been.called;
+		electionStub.should.not.have.been.called;
+	});
+
 });

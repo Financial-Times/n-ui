@@ -16,7 +16,7 @@ const getTlsVersion = () => fetch('https://www.howsmyssl.com/a/check')
 	.then(({ tls_version = '' } = { }) => Number.parseFloat(tls_version.replace('TLS ', '')));
 
 const getFlagIsPresent = flags => {
-	return (flags.get('hillaryWinsOffer') || flags.get('trumpWinsOffer'));
+	return (flags.get('hillaryWinsOffer') || flags.get('trumpWinsOffer') || (flags.get('trumpWinsTest')));
 };
 
 /**
@@ -82,7 +82,7 @@ const createSubscriptionPrompt = values => {
 };
 
 const getSubscriptionCandidateValue = flags => {
-	if (flags.get('trumpWinsOffer')) {
+	if (flags.get('trumpWinsOffer') || flags.get('trumpWinsTest')) {
 		return 'Donald Trump';
 	} else if (flags.get('hillaryWinsOffer')) {
 		return 'Hillary Clinton';

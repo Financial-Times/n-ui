@@ -74,6 +74,14 @@ describe('"President Elect" Subscription Offer Prompt', () => {
 		})
 	});
 
+	it('should have correct candidate name if "trumpWinsTest" flag is truthy', () => {
+		flags = { get: (val) => val === 'trumpWinsTest' }
+		return init(flags).then(popup => {
+			popup.el.innerHTML.should.contain('Donald Trump')
+			popup.el.innerHTML.should.not.contain('Hillary Clinton')
+		})
+	});
+
 	// TODO: naughty, but errors for unknown reason - https://circleci.com/gh/Financial-Times/n-ui/2829
 	xit('should ‘pop-up’ after 2 seconds', () =>
 		init(flags)
