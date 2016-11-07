@@ -1,19 +1,36 @@
 {{#if @root.flags.headerMarketingPromo}}
 	<div class="n-header__marketing-promo" data-trackable="marketing-promo:header">
 		<div class="n-header__marketing-promo__container o-header__container">
-			<a href="{{#if @root.flags.headerMarketingPromoDiscountByCohort}}https://next.ft.com/products{{else}}https://sub.ft.com/spa_5/?ftcamp=subs/ft_display/full_price/upper_right_2015/upper_right_2015/acquisition&utm_source=upper_right_2015&utm_medium=ft_display&utm_term=full_price&utm_campaign=upper_right_2015&segid=0300494{{/if}}" class="n-header__marketing-promo__box" data-trackable="marketing-promo:box">
-				<div class="n-header__marketing-promo__link" data-trackable="marketing-promo:link">
 
-				{{#ifAll @root.flags.headerMarketingPromoDiscountByCohort @root.flags.barrierDiscountByCohort}}
-					{{#ifEquals @root.flags.barrierDiscountByCohort 'trial_5'}}
-						Subscribe to the FT
-					{{else}}
-						LIMITED TIME ONLY: Subscribe &amp; save <span id="discountPercent"></span>
-					{{/ifEquals}}
-				{{else}}
-					Subscribe to the FT
-				{{/ifAll}}</div>
+			<!-- temporary us election offer -->
+			{{#ifSome @root.flags.hillaryWinsOffer @root.flags.trumpWinsOffer}}
+			<a href="https://www.ft.com/signup?offerId=1dbc248e-b98d-b703-bc25-a05cc5670804" class="n-header__marketing-promo__box" data-trackable="marketing-promo:box">
+				<div class="n-header__marketing-promo__link" data-trackable="marketing-promo-elections:link">LIMITED TIME ONLY: Subscribe &amp; save 25%</div>
 			</a>
+			{{/ifSome}}
+
+			{{#unless @root.flags.hillaryWinsOffer}}
+			{{#unless @root.flags.trumpWinsOffer}}
+			<!-- end temporary election -->
+
+				<a href="{{#if @root.flags.headerMarketingPromoDiscountByCohort}}https://next.ft.com/products{{else}}https://sub.ft.com/spa_5/?ftcamp=subs/ft_display/full_price/upper_right_2015/upper_right_2015/acquisition&utm_source=upper_right_2015&utm_medium=ft_display&utm_term=full_price&utm_campaign=upper_right_2015&segid=0300494{{/if}}" class="n-header__marketing-promo__box" data-trackable="marketing-promo:box">
+					<div class="n-header__marketing-promo__link" data-trackable="marketing-promo:link">
+
+					{{#ifAll @root.flags.headerMarketingPromoDiscountByCohort @root.flags.barrierDiscountByCohort}}
+						{{#ifEquals @root.flags.barrierDiscountByCohort 'trial_5'}}
+							Subscribe to the FT
+						{{else}}
+							LIMITED TIME ONLY: Subscribe &amp; save <span id="discountPercent"></span>
+						{{/ifEquals}}
+					{{else}}
+						Subscribe to the FT
+					{{/ifAll}}</div>
+				</a>
+
+			<!-- temporary us election offer -->
+			{{/unless}}
+			{{/unless}}
+			<!-- end temporary election -->
 		</div>
 	</div>
 {{/if}}
