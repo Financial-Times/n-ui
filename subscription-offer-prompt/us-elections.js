@@ -26,7 +26,7 @@ const shouldPromptBeShown = (flags) => {
 const popupTemplate = ({ amount, countryCode }) => `
 	<article class="subscription-prompt--wrapper" data-trackable="subscription-offer-prompt-us-elections">
 		<div class="subscription-offer-prompt--badge">
-			<img src="https://image.webservices.ft.com/v1/images/raw/${encodeURIComponent('https://d1u6uv4wzxfsok.cloudfront.net/sparrow_v1/ft1_XX_sparrow_v1/images/us_election_icon_desktop_235x151px_x2.png')}?source=offer-prompt-us&amp;width=170"" alt="US Election Flags">
+			<img src="https://www.ft.com/__origami/service/image/v2/images/raw/${encodeURIComponent('https://d1u6uv4wzxfsok.cloudfront.net/sparrow_v1/ft1_XX_sparrow_v1/images/us_election_icon_desktop_235x151px_x2.png')}?source=offer-prompt-us&amp;width=170"" alt="US Election Flags">
 		</div>
 		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
 			<span class="n-sliding-popup-close-label">Close</span>

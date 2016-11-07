@@ -19,20 +19,13 @@ function debounce (func, wait, immediate) {
 
 function getLayoutName () {
 	let layout = 'default';
-	const abStateEl = document.querySelector('[data-ab-state]');
+
 	if (window.location.search.indexOf('adsLayout') === 1) {
 		const regex = new RegExp('(adsLayout=([^&#]*)|&|#|$)');
 		layout = regex.exec(window.location.search.substring(1))[2];
 	}
 	else if (document.querySelector('[data-ads-layout]')) {
 		layout = document.querySelector('[data-ads-layout]').getAttribute('data-ads-layout');
-	}
-	if(abStateEl) {
-		const abState = abStateEl.getAttribute('data-ab-state');
-		const adsLayoutAB = abState && abState.match(/adsLazyLoadPosition:(control|50pc|100pc|onload)/);
-		if(adsLayoutAB && adsLayoutAB.length > 1) {
-			layout = `lazyload-${adsLayoutAB[1]}`;
-		}
 	}
 
 	return layout;
