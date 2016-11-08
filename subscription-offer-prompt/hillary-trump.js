@@ -49,7 +49,7 @@ const popupTemplate = ({ offerId, discount, candidate }) => `
 				Get the latest news and analysis on the President-elect.
 			</span>
 		</div>
-		<a href="https://www.ft.com/signup?offerId=${offerId}" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Subscribe and save ${discount}%</a>
+		<a href="https://subscription.ft.com/?offerId=${offerId}&segID=9842efac-fde8-3ff9-40f0-4a5e68b2f890" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Subscribe and save ${discount}%</a>
 		<small class="subscription-prompt--disclaimer">*Terms and conditions apply</small>
 	</article>
 `;
