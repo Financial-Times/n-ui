@@ -64,7 +64,7 @@ function showElectionPromo () {
 		promo.style.background = '#0088C1';
 		promo.innerHTML = `
 		<div class="n-header__marketing-promo__container o-header__container">
-			<a href="https://subscription.ft.com/?offerId=1dbc248e-b98d-b703-bc25-a05cc5670804&segID=05a3d326-9abe-5885-4ee2-8d58d9a9a4ea" class="n-header__marketing-promo__box n-header__marketing-promo__box--us" data-trackable="marketing-promo:box">
+			<a href="https://subscription.ft.com/?offerId=1dbc248e-b98d-b703-bc25-a05cc5670804&segmentId=05a3d326-9abe-5885-4ee2-8d58d9a9a4ea" class="n-header__marketing-promo__box n-header__marketing-promo__box--us" data-trackable="marketing-promo:box">
 				<div class="n-header__marketing-promo__link" data-trackable="marketing-promo-elections:link">LIMITED TIME OFFER: Subscribe &amp; save 25%</div>
 			</a>
 		</div>`;
