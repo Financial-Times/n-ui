@@ -38,7 +38,7 @@ const popupTemplate = ({ offerId, discount, candidate }) => `
 	</div>
 	<article class="subscription-prompt--wrapper" data-trackable="subscription-offer-prompt-us-elections">
 		<div class="subscription-offer-prompt--badge">
-			<img src="https://www.ft.com/__origami/service/image/v2/images/raw/${encodeURIComponent('https://d1u6uv4wzxfsok.cloudfront.net/sparrow_v1/ft1_XX_sparrow_v1/images/us_election_icon_desktop_235x151px_x2.png')}?source=offer-prompt-us&amp;width=170"" alt="US Election Flags">
+			<img src="https://www.ft.com/__origami/service/image/v2/images/raw/${encodeURIComponent('https://next-geebee.ft.com/assets/offer-prompt/us-election.png')}?source=offer-prompt-us&amp;width=170"" alt="US Election Flags">
 		</div>
 		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
 			<span class="n-sliding-popup-close-label">Close</span>
@@ -46,10 +46,13 @@ const popupTemplate = ({ offerId, discount, candidate }) => `
 		<div class="subscription-prompt--header">
 			<h1 class="subscription-prompt--heading">America Appoints ${candidate}</h1>
 			<span class="subscription-prompt--subheading">
-				Get the latest news and analysis on the President-elect.
+				Get the latest news and analysis on the President-elect
 			</span>
 		</div>
-		<a href="https://subscription.ft.com/?offerId=${offerId}&segmentId=9842efac-fde8-3ff9-40f0-4a5e68b2f890" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Subscribe and save ${discount}%</a>
+		<a href="https://www.ft.com/products?segmentId=9842efac-fde8-3ff9-40f0-4a5e68b2f890" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">
+			<span style="float:left;">Subscribe and save ${discount}%</span>
+			<i class="icon-go"></i>
+		</a>
 		<small class="subscription-prompt--disclaimer">*Terms and conditions apply</small>
 	</article>
 `;

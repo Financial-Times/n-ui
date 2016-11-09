@@ -107,10 +107,11 @@
 }
 
 // US Election Prompt
+// Please forgive the hardcoding here. its a temporary offer
 
 // override `.n-sliding-prompt` prompt defaults
 .subscription-prompt--us {
-	background-color: #0187C4;
+	background-color: #0088c1;
 	border: 0;
 	border-radius: 0;
 }
@@ -128,7 +129,13 @@
 	border-bottom: 2px solid #eed485;
 	text-transform: uppercase;
 	margin: 0;
-	line-height: 1.5;
+	line-height: 1.2;
+	padding-bottom: 5px;
+
+	@include oGridRespondTo($from: 'M') {
+		line-height: 1.5;
+		padding-bottom: 0;
+	}
 }
 
 .subscription-prompt--us .subscription-prompt--subheading {
@@ -139,14 +146,18 @@
 
 .subscription-prompt--us .subscription-prompt--heading,
 .subscription-prompt--us .subscription-prompt--subheading {
-	color: oColorsGetPaletteColor('white');
+	color: #fff;
 	display: block;
 }
 
 .subscription-prompt--us .subscription-offer-prompt--badge {
 	display: block;
-	height: 50px;
+	height: 35px;
 	z-index: 1;
+
+	@include oGridRespondTo($from: 'M') {
+		height: 50px;
+	}
 }
 
 .subscription-prompt--us-elect .subscription-offer-prompt--badge {
@@ -156,18 +167,17 @@
 .subscription-prompt--us .subscription-offer-prompt--badge img {
 	max-width: 100px;
 	margin-top: -35px;
-}
-@include oGridRespondTo($from: 'M') {
-	.subscription-prompt--us .subscription-offer-prompt--badge img {
-		max-width: 170px;
+
+	@include oGridRespondTo($from: 'M') {
+		max-width: 190px;
 		margin-top: -65px;
 	}
 }
 
 .subscription-prompt--us .subscription-prompt--subscribe-btn {
-	color: oColorsGetPaletteColor('white');
-	background-color: oColorsGetPaletteColor('claret');
-	padding: 7px 12px;
+	color: #fff;
+	background-color: #9e2f50;
+	padding: 7px 5px 5px 12px;
 	display: inline-block;
 	margin-top: 15px;
 }
@@ -180,12 +190,13 @@
 	text-align: right;
 	display: block;
 	padding-top: 15px;
-	color: oColorsGetPaletteColor('white');
+	color: #97cee3;
+	font-size: 8px;
 	@include oTypographySans(xs);
 }
 
 .subscription-prompt--us .subscription-offer-prompt--marquee {
-	background-color: oColorsGetPaletteColor('claret');
+	background-color: #9e2f50;
 	display: block;
 	position: absolute;
 	top: 0;
@@ -197,13 +208,26 @@
 .subscription-prompt--marquee-badge {
 	padding: 5px 5px 5px 150px;
 	margin: 0;
-	color: oColorsGetPaletteColor('white');
-	@include oTypographySansBold(s);
+	color: #fff;
+	font-size: 18px;
 	text-transform: uppercase;
+	font-weight: 400;
+
+	@include oGridRespondTo($from: 'M') {
+		padding: 5px 5px 5px 250px;
+	}
 }
 
-@include oGridRespondTo($from: 'M') {
-	.subscription-prompt--marquee-badge {
-		padding: 5px 5px 5px 230px;
-	}
+.subscription-prompt--us .icon-go {
+	background-image: url(https://www.ft.com/__origami/service/image/v2/images/raw/fticon-v1:play?source=o-icons&tint=%23FFFFFF,%23FFFFFF&format=svg);
+	background-image: url(https://www.ft.com/__origami/service/image/v2/images/raw/fticon-v1:play?source=o-icons&tint=%23FFFFFF,%23FFFFFF&format=png&width=20) \9;
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: 50% -2px;
+	background-color: transparent;
+	vertical-align: baseline;
+	float: left;
 }
