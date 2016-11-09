@@ -154,8 +154,14 @@
 }
 
 .subscription-prompt--us .subscription-offer-prompt--badge img {
-	max-width: 170px;
-	margin-top: -65px;
+	max-width: 100px;
+	margin-top: -35px;
+}
+@include oGridRespondTo($from: 'M') {
+	.subscription-prompt--us .subscription-offer-prompt--badge img {
+		max-width: 170px;
+		margin-top: -65px;
+	}
 }
 
 .subscription-prompt--us .subscription-prompt--subscribe-btn {
@@ -189,9 +195,15 @@
 }
 
 .subscription-prompt--marquee-badge {
-	padding: 5px 5px 5px 230px;
+	padding: 5px 5px 5px 150px;
 	margin: 0;
 	color: oColorsGetPaletteColor('white');
 	@include oTypographySansBold(s);
 	text-transform: uppercase;
+}
+
+@include oGridRespondTo($from: 'M') {
+	.subscription-prompt--marquee-badge {
+		padding: 5px 5px 5px 230px;
+	}
 }
