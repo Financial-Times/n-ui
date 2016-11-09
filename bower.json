@@ -46,5 +46,8 @@
     "o-visual-effects": "^0.1.0",
     "superstore": "^2.1.0",
     "superstore-sync": "^2.1.0"
+  },
+  "resolutions": {
+    "fetchres": "1.6.0"
   }
 }
