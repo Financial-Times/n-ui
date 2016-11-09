@@ -25,7 +25,7 @@
     "n-notification": "^4.0.0",
     "n-service-worker": "^1.4.2",
     "n-sliding-popup": "^1.0.0",
-    "next-myft-client": "Financial-Times/next-myft-client#lock-fetchres",
+    "next-myft-client": "^6.4.2",
     "o-ads": "^6.0.0",
     "o-buttons": "^4.0.1",
     "o-colors": "^3.3.2",
@@ -46,8 +46,5 @@
     "o-visual-effects": "^0.1.0",
     "superstore": "^2.1.0",
     "superstore-sync": "^2.1.0"
-  },
-  "resolutions": {
-    "fetchres": "1.6.0"
   }
 }
