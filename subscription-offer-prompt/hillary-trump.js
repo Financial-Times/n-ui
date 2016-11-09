@@ -32,7 +32,7 @@ const shouldPromptBeShown = (flags) => {
 			);
 };
 
-const popupTemplate = ({ offerId, discount, candidate }) => `
+const popupTemplate = ({ discount, candidate }) => `
 	<div class="subscription-offer-prompt--marquee">
 		<h2 class="subscription-prompt--marquee-badge">Limited Time Offer</h2>
 	</div>
