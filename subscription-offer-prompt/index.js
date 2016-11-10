@@ -1,6 +1,7 @@
 import * as utils from './utils';
 import * as lionel from './lionel';
 import * as election from './us-elections';
+import * as president from './hillary-trump';
 
 /*
 Show the subscription offer prompt.
@@ -40,6 +41,20 @@ const isElectionPage = () => {
 	let conceptId = document.documentElement.getAttribute('data-concept-id') || null;
 	return (conceptId && conceptId === usElection2016SectionID);
 };
+
+const showTrumpSlider = (flags) => {
+	const trumpTest = flags.get('trumpWinsTest');
+	const trumpOffer = flags.get('trumpWinsOffer');
+
+	if (trumpTest === 'trial_only') {
+		return false;
+	} else if (trumpOffer || trumpTest) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 /*
 @param {Object} flags -
 */
@@ -50,7 +65,10 @@ export default function init (flags) {
 		return;
 	}
 	else {
-		if (isElectionPage()) {
+		if (flags.get('hillaryWinsOffer') || showTrumpSlider(flags)) {
+			return president.init(flags);
+		}
+		else if (isElectionPage()) {
 			return election.init(flags);
 		}
 		else {
