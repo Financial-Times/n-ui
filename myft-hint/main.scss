@@ -53,11 +53,10 @@
 	}
 
 	.myft-hint__content {
-		@include oFontsInclude(MetricWeb, $weight: semibold);
+		@include oTypographySans(xs);
 		padding: 0;
 		margin: 8px 12px 8px 8px;
 		width: 100%;
-		font-size: 0.8em;
 		text-align: start;
 		text-transform: none;
 		line-height: 120%;

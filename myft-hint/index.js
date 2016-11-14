@@ -7,11 +7,13 @@ const MAX_SHOWS = 3;
 function shouldShowHint () {
 	// The hint should be shown if the user is not subscribed to any myFT topics
 	// and the MAX shows value hasn't been reached.
+	const showCountBelowMax = getHintShownCount() < MAX_SHOWS;
+	if(!showCountBelowMax) { return; }
+
 	return myftClient.getAll('followed', 'concept')
 		.then(function (userConcepts) {
 			const noConceptsAdded = !(userConcepts.length > 0);
-			const showCountBelowMax = getHintShownCount() < MAX_SHOWS;
-			return showCountBelowMax && noConceptsAdded;
+			return noConceptsAdded;
 		});
 };
 
