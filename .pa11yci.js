@@ -39,5 +39,3 @@ for (viewport of viewports) {
 }
 
 module.exports = config;
-
-
