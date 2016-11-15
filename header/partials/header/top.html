@@ -26,7 +26,7 @@
 							<span class="o-header__visually-hidden">myFT</span>
 						</a>
 						{{#if @root.flags.myftHint}}
-							{{#unless @root.locals.anon.userIsAnonymous}}
+							{{#unless @root.anon.userIsAnonymous}}
 								{{#if @root.shouldRenderMyftHint}}
 									{{>n-ui/myft-hint/hint}}
 								{{/if}}
