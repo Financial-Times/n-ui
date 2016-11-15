@@ -31,6 +31,7 @@ class Typeahead {
 		this.target.addEventListener('submit', this.handleSubmit.bind(this));
 		this.input.addEventListener('keyup', utils.debounce(this.handleType.bind(this), 300));
 		this.input.addEventListener('awesomplete-select', this.handleSelect.bind(this));
+		this.input.addEventListener('awesomplete-close', this.handleClose.bind(this));
 		this.input.addEventListener('focus', this.handleFocus.bind(this));
 	}
 
@@ -47,13 +48,17 @@ class Typeahead {
 	}
 
 	handleSelect (ev) {
-		trackSearchEvent(this.context);
+		this.trackSearchEvent();
 		ev.preventDefault();
 		window.location.href = ev.text.value;
 	}
 
+	handleClose () {
+		this.trackSearchEvent();
+	}
+
 	handleSubmit () {
-		trackSearchEvent(this.context);
+		this.trackSearchEvent();
 	}
 
 	handleFocus () {
@@ -80,6 +85,17 @@ class Typeahead {
 		this.awesomplete.list = suggestions.map(makeAwesompleteReadable);
 	}
 
+	trackSearchEvent () {
+		const tracking = new CustomEvent('oTracking.event', {
+			detail: {
+				category: 'page',
+				action: `search-submit${this.context}`
+			},
+			bubbles: true
+		});
+
+		document.body.dispatchEvent(tracking);
+	}
 }
 
 function getParentElDataTrackableValue (el) {
@@ -94,18 +110,6 @@ function getParentElDataTrackableValue (el) {
 
 function makeAwesompleteReadable (suggestion) {
 	return [ suggestion.name, suggestion.url || `/stream/${suggestion.taxonomy}Id/${suggestion.id}` ];
-}
-
-function trackSearchEvent (context) {
-	const tracking = new CustomEvent('oTracking.event', {
-		detail: {
-			category: 'page',
-			action: `search-submit${context}`
-		},
-		bubbles: true
-	});
-
-	document.body.dispatchEvent(tracking);
 }
 
 export default Typeahead;
