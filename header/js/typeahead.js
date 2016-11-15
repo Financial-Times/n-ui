@@ -48,17 +48,17 @@ class Typeahead {
 	}
 
 	handleSelect (ev) {
-		this.trackSearchEvent();
+		this.trackSearchEvent({type: 'select', item: ev.text});
 		ev.preventDefault();
 		window.location.href = ev.text.value;
 	}
 
-	handleClose () {
-		this.trackSearchEvent();
+	handleClose (ev) {
+		this.trackSearchEvent({type: 'close', close_reason: ev.reason});
 	}
 
 	handleSubmit () {
-		this.trackSearchEvent();
+		this.trackSearchEvent({type: 'submit'});
 	}
 
 	handleFocus () {
@@ -85,11 +85,18 @@ class Typeahead {
 		this.awesomplete.list = suggestions.map(makeAwesompleteReadable);
 	}
 
-	trackSearchEvent () {
+	trackSearchEvent ({type, close_reason = null, item = null}) {
 		const tracking = new CustomEvent('oTracking.event', {
 			detail: {
 				category: 'page',
-				action: `search-submit${this.context}`
+				action: `search-submit${this.context}`,
+				search_type: type,
+				search_close_reason: close_reason,
+				search_item_label: item && item.label,
+				search_item_value: item && item.value,
+				search_term: this.searchTerm,
+				search_result_index: this.awesomplete.index,
+				search_results_length: this.awesomplete.suggestions && this.awesomplete.suggestions.length,
 			},
 			bubbles: true
 		});
