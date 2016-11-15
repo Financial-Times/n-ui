@@ -54,7 +54,7 @@ describe('"President Elect" Subscription Offer Prompt', () => {
 
 	it('should have correct html', () =>
 		init(flags).then(popup => {
-			popup.el.innerHTML.should.contain('America Appoints')
+			popup.el.innerHTML.should.contain('America Elects')
 		})
 	);
 
