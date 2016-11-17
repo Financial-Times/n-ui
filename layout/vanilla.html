@@ -24,5 +24,6 @@
 	<body class="o-hoverable-on" data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
 		{{{body}}}
 		{{>n-ui/js-setup/templates/bootstrapper}}
+		{{>n-ui/offline/templates/appcache-iframe}}
 	</body>
 </html>
