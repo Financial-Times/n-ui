@@ -31,6 +31,7 @@ class Typeahead {
 		this.target.addEventListener('submit', this.handleSubmit.bind(this));
 		this.input.addEventListener('keyup', utils.debounce(this.handleType.bind(this), 300));
 		this.input.addEventListener('awesomplete-select', this.handleSelect.bind(this));
+		this.input.addEventListener('awesomplete-close', this.handleClose.bind(this));
 		this.input.addEventListener('focus', this.handleFocus.bind(this));
 	}
 
@@ -47,13 +48,17 @@ class Typeahead {
 	}
 
 	handleSelect (ev) {
-		trackSearchEvent(this.context);
+		this.trackSearchEvent({type: 'select', item: ev.text});
 		ev.preventDefault();
 		window.location.href = ev.text.value;
 	}
 
+	handleClose (ev) {
+		this.trackSearchEvent({type: 'close', close_reason: ev.reason});
+	}
+
 	handleSubmit () {
-		trackSearchEvent(this.context);
+		this.trackSearchEvent({type: 'submit'});
 	}
 
 	handleFocus () {
@@ -80,6 +85,24 @@ class Typeahead {
 		this.awesomplete.list = suggestions.map(makeAwesompleteReadable);
 	}
 
+	trackSearchEvent ({type, close_reason = null, item = null}) {
+		const tracking = new CustomEvent('oTracking.event', {
+			detail: {
+				category: 'page',
+				action: `search-submit${this.context}`,
+				search_type: type,
+				search_close_reason: close_reason,
+				search_item_label: item && item.label,
+				search_item_value: item && item.value,
+				search_term: this.searchTerm,
+				search_result_index: this.awesomplete.index,
+				search_results_length: this.awesomplete.suggestions && this.awesomplete.suggestions.length,
+			},
+			bubbles: true
+		});
+
+		document.body.dispatchEvent(tracking);
+	}
 }
 
 function getParentElDataTrackableValue (el) {
@@ -94,18 +117,6 @@ function getParentElDataTrackableValue (el) {
 
 function makeAwesompleteReadable (suggestion) {
 	return [ suggestion.name, suggestion.url || `/stream/${suggestion.taxonomy}Id/${suggestion.id}` ];
-}
-
-function trackSearchEvent (context) {
-	const tracking = new CustomEvent('oTracking.event', {
-		detail: {
-			category: 'page',
-			action: `search-submit${context}`
-		},
-		bubbles: true
-	});
-
-	document.body.dispatchEvent(tracking);
 }
 
 export default Typeahead;

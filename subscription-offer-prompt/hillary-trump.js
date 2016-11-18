@@ -44,7 +44,7 @@ const popupTemplate = ({ discount, candidate }) => `
 			<span class="n-sliding-popup-close-label">Close</span>
 		</button>
 		<div class="subscription-prompt--header">
-			<h1 class="subscription-prompt--heading">America Appoints ${candidate}</h1>
+			<h1 class="subscription-prompt--heading">America Elects ${candidate}</h1>
 			<span class="subscription-prompt--subheading">
 				Get the latest news and analysis on the President-elect
 			</span>
