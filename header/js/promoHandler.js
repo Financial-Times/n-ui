@@ -7,7 +7,7 @@ const discount = {
 }
 
 function fetchSession () {
-	return fetch('https://session-next.ft.com/', {
+	return fetch('https://session-next.ft.com/products', {
 		timeout: 2000,
 		credentials: 'include'
 	});
