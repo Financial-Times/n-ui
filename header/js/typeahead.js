@@ -26,7 +26,7 @@ class Typeahead {
 				return Awesomplete.ITEM(utils.ascii(text.label), utils.ascii(input));
 			},
 			sort: (a, b) => {
-				return this.awesomplete.suggestionsWeighting.get(b.value) - this.awesomplete.suggestionsWeighting.get(a.value);
+				return this.awesomplete.suggestionsWeighting[b.value] - this.awesomplete.suggestionsWeighting[a.value];
 			}
 		});
 
@@ -87,10 +87,10 @@ class Typeahead {
 		// HACK: Assigning to this.awesomplete.list will instantly sort, and it's not
 		// possible to pass the weighting into a list value! So keep track of the
 		// weighting separately.
-		this.awesomplete.suggestionsWeighting = new Map();
+		this.awesomplete.suggestionsWeighting = {};
 		this.awesomplete.list = suggestions.map(suggestion => {
 			const url = suggestion.url || `/stream/${suggestion.taxonomy}Id/${suggestion.id}`;
-			this.awesomplete.suggestionsWeighting.set(url, suggestion.count);
+			this.awesomplete.suggestionsWeighting[url] = suggestion.count;
 			return [ suggestion.name, url];
 		});
 	}
