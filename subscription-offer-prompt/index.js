@@ -1,8 +1,5 @@
 import * as utils from './utils';
 import * as lionel from './lionel';
-import * as election from './us-elections';
-import * as president from './hillary-trump';
-
 /*
 Show the subscription offer prompt.
 There are currently two offers:
@@ -16,14 +13,6 @@ There are currently two offers:
     * browser's' TLS version is > 1.0
     * this prompt has not been closed, or was last closed more than 30 days ago
 
- - U.S Elections:
-   - OfferID:
-     * All: 62c5c138-aad3-10d7-5aa1-b5a4416f60bd
-   - Show if:
-     * usElection2016DiscountSlider flag is true
-     * on '/us-election-2016' stream page
-     * this prompt has not been closed, or was last closed more than 30 days ago
-
 General rules:
   - Show if:
     * not logged in
@@ -36,25 +25,6 @@ show and which one. And then allow the prompt logic to further decide.
 
 const isLoggedIn = utils.getCookie('FTSession');
 
-const isElectionPage = () => {
-	const usElection2016SectionID = 'N2UxNTM3MzItNWNlZC00MDc5LWI3ODUtYWNmZDA2YjE0MWE2-U2VjdGlvbnM=';
-	let conceptId = document.documentElement.getAttribute('data-concept-id') || null;
-	return (conceptId && conceptId === usElection2016SectionID);
-};
-
-const showTrumpSlider = (flags) => {
-	const trumpTest = flags.get('trumpWinsTest');
-	const trumpOffer = flags.get('trumpWinsOffer');
-
-	if (trumpTest === 'trial_only') {
-		return false;
-	} else if (trumpOffer || trumpTest) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
 /*
 @param {Object} flags -
 */
@@ -65,14 +35,6 @@ export default function init (flags) {
 		return;
 	}
 	else {
-		if (flags.get('hillaryWinsOffer') || showTrumpSlider(flags)) {
-			return president.init(flags);
-		}
-		else if (isElectionPage()) {
-			return election.init(flags);
-		}
-		else {
-			return lionel.init();
-		}
+		return lionel.init();
 	}
 }
