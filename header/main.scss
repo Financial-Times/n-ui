@@ -6,7 +6,7 @@
 
 	@include nUiMaybeCritical('header') {
 
-		@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu'));
+		@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu', 'simple'));
 		// force display of search row
 		// <https://github.com/Financial-Times/o-header/blob/2ebf2cbe6b7508a03e0989ff57f1029e12c0506c/src/scss/rows/_search.scss#L13-L15>
 		.core [data-o-header-search] {
