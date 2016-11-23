@@ -16,7 +16,6 @@
   ],
   "main": "main.js",
   "dependencies": {
-    "awesomplete": "^1.1.1",
     "babel-polyfill-silencer": "^1.1.0",
     "fontfaceobserver": "^1.7.1",
     "ftdomdelegate": "^2.0.3",

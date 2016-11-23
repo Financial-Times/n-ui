@@ -1,5 +1,5 @@
-<div id="o-header-search-{{context}}" class="o-header__row o-header__search o-header__search--{{context}}" data-trackable="header-search" data-o-header-search>
-	<div class="o-header__container">
+<div id="o-header-search-{{context}}" class="o-header__row o-header__search o-header__search--{{context}}" style="display: block;" data-trackable="header-search" data-o-header-search>
+	<!-- <div class="o-header__container" style="width:48%; float: left;">
 		<form class="o-header__search-form" action="/search" role="search" aria-label="Site search" data-typeahead>
 			<label class="o-header__visually-hidden" for="o-header-search-term-{{context}}">Search the <abbr title="Financial Times">FT</abbr></label>
 			<input class="o-header__search-term" id="o-header-search-term-{{context}}" name="q" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-trackable="search-term" placeholder="Search the FT">
@@ -10,5 +10,14 @@
 				<span class="o-header__visually-hidden">Close</span>
 			</button>
 		</form>
+	</div> -->
+	<div data-old-header-suggestions style="position: relative;">
+		<form action="/search" id="old-header__search-form" class="o-header__search-form" data-old-header-search role="search" data-trackable="search-form">
+			<input id="old-header__search-term" type="search" name="q" class="o-header__search-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Type to search the Financial Times"{{#if searchQuery}} value="{{searchQuery}}"{{/if}} data-trackable="search-input" />
+			<button class="o-header__search-button" for="old-header__search-form" data-trackable="search-button"><span>Search</span></button>
+		</form>
 	</div>
 </div>
+
+
+

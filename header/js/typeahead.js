@@ -1,5 +1,5 @@
 /*global fetch*/
-const Awesomplete = require('awesomplete');
+const Awesomplete = require('./awesomplete');
 const utils = require('../../utils');
 
 const MIN_LENGTH = 2;
@@ -9,7 +9,7 @@ class Typeahead {
 
 	constructor (target, dataUrl) {
 		this.target = target;
-		this.input = target.querySelector('input');
+		this.input = target.querySelector('input.o-header__search-term');
 		this.context = getParentElDataTrackableValue(target);
 		this.dataUrl = dataUrl;
 
