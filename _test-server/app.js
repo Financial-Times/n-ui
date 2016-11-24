@@ -36,6 +36,28 @@ app.get('/', (req, res) => {
 	});
 });
 
+app.get('/components/:component?', (req, res) => {
+	// such a load of hacks :/
+	// in an ideal world we could hack some middleware in
+	// before the assets middleware gets applied
+	res.locals.javascriptBundles = res.locals.javascriptBundles
+		.filter(bundle => {
+			return bundle.indexOf('undefined') === -1
+		})
+		.map(bundle => {
+			if (bundle.indexOf('polyfill') > -1) {
+				return bundle.replace('polyfill.min', 'polyfill')
+					.split('&excludes')[0];
+			}
+			return bundle;
+		});
+	res.render('default', {
+		pa11y: true,
+		title: 'Test App',
+		layout: `../${req.params.component}/template`
+	});
+});
+
 app.get('*', (req, res) => {
 	fetch('https://www.ft.com' + req.originalUrl, {
 		headers: req._headers,
