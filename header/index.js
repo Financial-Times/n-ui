@@ -23,7 +23,7 @@ function init (flags) {
 				const typeahead = new TypeaheadOld(
 					form,
 					input,
-					'//' + window.location.host + '/search-suggestions?flatten=true&limit=5&q=',
+					'//' + window.location.host + '/search-suggestions?limit=6&q=',
 					function() {
 						form.submit();
 					}

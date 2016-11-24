@@ -3,6 +3,10 @@
 	position: relative;
 }
 
+.o-header__search-close {
+	margin-bottom: -3px;
+}
+
 .o-header__typeahead {
 
 	@include nUtilZIndexFor('typeahead');

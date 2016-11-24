@@ -1,5 +1,6 @@
 /*global fetch*/
 const Delegate = require('ftdomdelegate');
+const debounce = require('../../utils').debounce;
 
 function getNonMatcher(container) {
 	if (typeof container === 'string') {
@@ -23,18 +24,24 @@ function isOutside(el, container) {
 	return !el || el === document;
 }
 
+function regExpEscape (s) {
+	return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
+};
 
-const debounce = function(fn, delay) {
-		let timeoutId;
-		return function debounced() {
-			if (timeoutId) {
-					clearTimeout(timeoutId);
-			}
 
-			timeoutId = setTimeout(() => {
-					fn.apply(this, arguments);
-			}, delay);
-		};
+function Suggestion(data) {
+	var o = Array.isArray(data)
+	  ? { label: data[0], value: data[1] }
+	  : typeof data === "object" && "label" in data && "value" in data ? data : { label: data, value: data };
+
+	this.label = o.label || o.value;
+	this.value = o.value;
+}
+Object.defineProperty(Suggestion.prototype = Object.create(String.prototype), "length", {
+	get: function() { return this.label.length; }
+});
+Suggestion.prototype.toString = Suggestion.prototype.valueOf = function () {
+	return "" + this.label;
 };
 
 class Typeahead {
@@ -45,7 +52,7 @@ class Typeahead {
 		this.showAllHandler = showAllHandler;
 		this.dataSrc = dataSrc;
 		this.minLength = 2;
-		this.showAllItem = true;
+		this.showAllItem = false;
 		this.init();
 	}
 
@@ -73,6 +80,9 @@ class Typeahead {
 			switch(ev.which) {
 				case 13 : return; // enter
 				case 9 : return; // tab
+				case 27: //esc
+					this.hide();
+				break;
 				case 40 :
 					this.onDownArrow(ev);
 				break;
@@ -81,6 +91,7 @@ class Typeahead {
 				break;
 			}
 		});
+
 
 		this.delegate.on('focus', 'input[type="text"]', (ev) => {
 			ev.target.setSelectionRange ? ev.target.setSelectionRange(0, ev.target.value.length) : ev.target.select();
@@ -93,25 +104,14 @@ class Typeahead {
 			this.reshow();
 		});
 
-		this.bodyDelegate.on('click', (ev) => {
-			if (isOutside(ev.target, this.container)) {
-				this.hide();
-			}
-		});
-
-		['focus', 'touchstart', 'mousedown']
-			.forEach(type => {
-				this.bodyDelegate.on(type, (ev) => {
-					console.log('type', type)
-					if (isOutside(ev.target, this.container)) {
-						this.hide();
-					}
-				});
-			})
-
-
 		this.delegate.on('keyup', '.o-header__typeahead a, .o-header__typeahead button[type="submit"]', this.onSuggestionKey);
 		this.delegate.on('click', '.o-header__typeahead a', this.onSuggestionClick);
+		// prevent scroll to item
+		this.delegate.on('keydown', 'input, .o-header__typeahead a', ev => {
+			if (ev.which === 40 || ev.which === 38) {
+				ev.preventDefault();
+			}
+		})
 	}
 
 	// EVENT HANDLERS
@@ -120,14 +120,14 @@ class Typeahead {
 	}
 
 	onType() {
-		this.searchTerm = this.searchEl.value;
+		this.searchTerm = this.searchEl.value.trim();
 		this.getSuggestions(this.searchTerm);
 		[].forEach.call(this.suggestionList.querySelectorAll('li'), function (el) {
 			el.setAttribute('data-trackable-meta', '{"search-term":"' + this.searchTerm + '"}');
 		}.bind(this));
 	}
 
-	onDownArrow() {
+	onDownArrow(ev) {
 		if (this.suggestions.length) {
 			this.suggestionList.querySelector('a').focus();
 		}
@@ -186,17 +186,21 @@ class Typeahead {
 			this.unsuggest();
 		}
 	}
+	highlight (text) {
+		return text.replace(RegExp(regExpEscape(this.searchTerm), "gi"), "<mark>$&</mark>");
+	}
 
 	suggest(suggestions) {
 		this.suggestionList.innerHTML = '';
 		this.suggestions = suggestions;
 		if (this.suggestions.length) {
-			this.suggestions.slice(0, 5).forEach((suggestion) => {
-				if (suggestion){
+			this.suggestions.slice(0, 6).forEach((suggestion) => {
+				if (suggestion) {
+					const text = this.highlight(suggestion.name)
 					const url = suggestion.url || ('/stream/' + suggestion.taxonomy + 'Id/' + suggestion.id);
 					this.suggestionList.insertAdjacentHTML('beforeend', `<li class="o-header__typeahead-item">
 						<a class="o-header__typeahead-link" href="${url}" data-trackable="typeahead" data-concept-id="${suggestion.id}"
-						data-trackable-meta="{&quot;search-term&quot;:&quot;${this.searchTerm}&quot;}">${suggestion.name}</a>
+						data-trackable-meta="{&quot;search-term&quot;:&quot;${this.searchTerm}&quot;}">${text}</a>
 					</li>`);
 				}
 			});
@@ -219,10 +223,19 @@ class Typeahead {
 
 	hide() {
 		this.suggestionList.setAttribute('hidden', '');
+		this.bodyDelegate.off();
 	}
 
 	show() {
 		this.suggestionList.removeAttribute('hidden');
+		['focus', 'touchstart', 'mousedown']
+			.forEach(type => {
+				this.bodyDelegate.on(type, (ev) => {
+					if (isOutside(ev.target, this.container)) {
+						this.hide();
+					}
+				});
+			})
 	}
 
 	chooseSuggestion(suggestionEl) {
