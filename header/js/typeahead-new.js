@@ -2,12 +2,12 @@
 const Delegate = require('ftdomdelegate');
 const debounce = require('../../utils').debounce;
 import { SuggestionList } from './suggestion-list';
-// import { render } from 'react';
 
 const React = require('react');
-// const ReactDom = require('react-dom');
+const ReactDom = require('react-dom');
 
-function getNonMatcher(container) {
+
+function getNonMatcher (container) {
 	if (typeof container === 'string') {
 		return function (el) {
 			return el && el !== document && !el.matches(container);
@@ -19,7 +19,7 @@ function getNonMatcher(container) {
 	};
 }
 
-function isOutside(el, container) {
+function isOutside (el, container) {
 	const doesntMatch = getNonMatcher(container);
 
 	while (doesntMatch(el)) {
@@ -30,13 +30,13 @@ function isOutside(el, container) {
 }
 
 function regExpEscape (s) {
-	return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
+	return s.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 };
 
 class Typeahead {
-	constructor(containerEl, input, dataSrc, showAllHandler) {
+	constructor (containerEl, dataSrc, showAllHandler) {
 		this.container = containerEl;
-		this.searchEl = input;
+		this.searchEl = this.container.querySelector('input[type="text"]');
 		this.submitButton = this.container.querySelector('button[type="submit"]')
 		this.showAllHandler = showAllHandler;
 		this.dataSrc = dataSrc;
@@ -45,11 +45,11 @@ class Typeahead {
 		this.init();
 	}
 
-	init() {
+	init () {
 		this.suggestions = [];
 		this.suggestionListContainer = document.createElement('div');
 		this.container.insertBefore(this.suggestionListContainer, this.submitButton);
-		this.suggestionsView = React.render(<SuggestionList/>, this.suggestionListContainer);
+		this.suggestionsView = ReactDom.render(<SuggestionList/>, this.suggestionListContainer);
 
 		if (this.showAllItem) {
 			this.viewAllItem = document.createElement('li');
@@ -104,7 +104,7 @@ class Typeahead {
 	}
 
 	// EVENT HANDLERS
-	onType() {
+	onType () {
 		this.searchTerm = this.searchEl.value.trim();
 		this.getSuggestions(this.searchTerm);
 		[].forEach.call(this.suggestionListContainer.querySelectorAll('li'), function (el) {
@@ -112,18 +112,18 @@ class Typeahead {
 		}.bind(this));
 	}
 
-	onDownArrow(ev) {
+	onDownArrow () {
 		if (this.suggestions.length) {
 			this.suggestionListContainer.querySelector('a').focus();
 		}
 	}
 
-	onSuggestionClick(ev) {
+	onSuggestionClick (ev) {
 		this.chooseSuggestion(ev.target);
 		// we don't prevent default as the link's url is a link to the search page
 	}
 
-	onSuggestionKey(ev) {
+	onSuggestionKey (ev) {
 		if (ev.which === 13) { // Enter pressed
 			this.chooseSuggestion(ev.target);
 			ev.stopPropagation();
@@ -151,7 +151,7 @@ class Typeahead {
 	}
 
 	// INTERNALS
-	getSuggestions(value) {
+	getSuggestions (value) {
 		value = value.trim();
 		if (value.length >= this.minLength) {
 			fetch(this.dataSrc + encodeURIComponent(value))
@@ -172,10 +172,10 @@ class Typeahead {
 		}
 	}
 	highlight (text) {
-		return text.replace(RegExp(regExpEscape(this.searchTerm), "gi"), "<mark>$&</mark>");
+		return text.replace(RegExp(regExpEscape(this.searchTerm), 'gi'), '<mark>$&</mark>');
 	}
 
-	suggest(suggestions) {
+	suggest (suggestions) {
 		this.suggestions = suggestions;
 		this.suggestionsView.setState({
 			suggestions: this.suggestions.slice(0,6)
@@ -190,16 +190,16 @@ class Typeahead {
 		this.show();
 	}
 
-	unsuggest() {
+	unsuggest () {
 		this.hide();
 	}
 
-	hide() {
+	hide () {
 		this.suggestionListContainer.setAttribute('hidden', '');
 		this.bodyDelegate.off();
 	}
 
-	show() {
+	show () {
 		this.suggestionListContainer.removeAttribute('hidden');
 		['focus', 'touchstart', 'mousedown']
 			.forEach(type => {
@@ -211,7 +211,7 @@ class Typeahead {
 			})
 	}
 
-	chooseSuggestion(suggestionEl) {
+	chooseSuggestion (suggestionEl) {
 		this.searchEl.value = suggestionEl.textContent;
 		this.hide();
 		this.searchEl.focus();

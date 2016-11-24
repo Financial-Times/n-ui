@@ -17,11 +17,9 @@ function init (flags) {
 		if (flags.get('searchMultiTypeahead')) {
 			for (let i = 0; i < typeaheadElements.length; i++) {
 				const form = typeaheadElements[i];
-				const input = form.querySelector('input');
 
 				new TypeaheadNew(
 					form,
-					input,
 					'//' + window.location.host + '/search-suggestions?limit=6&q=',
 					function () {
 						form.submit();
