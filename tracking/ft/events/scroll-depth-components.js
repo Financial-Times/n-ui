@@ -6,11 +6,11 @@ const track = (componentId, componentPos) =>
 const intersectionCallback = (observer, changes) =>
 	changes.forEach(change => {
 		const component = change.target;
-		const componentId = component.id;
+		const componentTrackable = component.getAttribute('data-trackable');
 		// get the component's position
 		const componentPos = [...document.querySelectorAll('.js-track-scroll-event')]
-			.findIndex(component => component.id === componentId);
-		track(componentId, componentPos + 1);
+			.findIndex(component => component.getAttribute('data-trackable') === componentTrackable);
+		track(componentTrackable, componentPos + 1);
 		observer.unobserve(component);
 	});
 
