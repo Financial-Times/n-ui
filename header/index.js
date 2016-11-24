@@ -1,8 +1,7 @@
 const OHeader = require('o-header');
 const Typeahead = require('./js/typeahead');
 const promoHandler = require('./js/promoHandler');
-const TypeaheadOld = require('./js/typeahead-old');
-
+const TypeaheadNew = require('./js/typeahead-new');
 
 function init (flags) {
 	promoHandler.init(flags);
@@ -20,11 +19,11 @@ function init (flags) {
 				const form = typeaheadElements[i];
 				const input = form.querySelector('input');
 
-				const typeahead = new TypeaheadOld(
+				new TypeaheadNew(
 					form,
 					input,
 					'//' + window.location.host + '/search-suggestions?limit=6&q=',
-					function() {
+					function () {
 						form.submit();
 					}
 				);

@@ -1,6 +1,11 @@
 /*global fetch*/
 const Delegate = require('ftdomdelegate');
 const debounce = require('../../utils').debounce;
+import { SuggestionList } from './suggestion-list';
+// import { render } from 'react';
+
+const React = require('react');
+// const ReactDom = require('react-dom');
 
 function getNonMatcher(container) {
 	if (typeof container === 'string') {
@@ -28,22 +33,6 @@ function regExpEscape (s) {
 	return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
 };
 
-
-function Suggestion(data) {
-	var o = Array.isArray(data)
-	  ? { label: data[0], value: data[1] }
-	  : typeof data === "object" && "label" in data && "value" in data ? data : { label: data, value: data };
-
-	this.label = o.label || o.value;
-	this.value = o.value;
-}
-Object.defineProperty(Suggestion.prototype = Object.create(String.prototype), "length", {
-	get: function() { return this.label.length; }
-});
-Suggestion.prototype.toString = Suggestion.prototype.valueOf = function () {
-	return "" + this.label;
-};
-
 class Typeahead {
 	constructor(containerEl, input, dataSrc, showAllHandler) {
 		this.container = containerEl;
@@ -58,9 +47,9 @@ class Typeahead {
 
 	init() {
 		this.suggestions = [];
-		this.suggestionList = document.createElement('ul');
-		this.suggestionList.classList.add('o-header__typeahead');
-		this.container.insertBefore(this.suggestionList, this.submitButton);
+		this.suggestionListContainer = document.createElement('div');
+		this.container.insertBefore(this.suggestionListContainer, this.submitButton);
+		this.suggestionsView = React.render(<SuggestionList/>, this.suggestionListContainer);
 
 		if (this.showAllItem) {
 			this.viewAllItem = document.createElement('li');
@@ -95,13 +84,13 @@ class Typeahead {
 
 		this.delegate.on('focus', 'input[type="text"]', (ev) => {
 			ev.target.setSelectionRange ? ev.target.setSelectionRange(0, ev.target.value.length) : ev.target.select();
-			this.reshow();
+			this.show();
 		});
 
 
 		this.delegate.on('click', 'input[type="text"]', (ev) => {
 			ev.target.setSelectionRange ? ev.target.setSelectionRange(0, ev.target.value.length) : ev.target.select();
-			this.reshow();
+			this.show();
 		});
 
 		this.delegate.on('keyup', '.o-header__typeahead a, .o-header__typeahead button[type="submit"]', this.onSuggestionKey);
@@ -115,21 +104,17 @@ class Typeahead {
 	}
 
 	// EVENT HANDLERS
-	reshow() {
-		this.suggest(this.suggestions);
-	}
-
 	onType() {
 		this.searchTerm = this.searchEl.value.trim();
 		this.getSuggestions(this.searchTerm);
-		[].forEach.call(this.suggestionList.querySelectorAll('li'), function (el) {
+		[].forEach.call(this.suggestionListContainer.querySelectorAll('li'), function (el) {
 			el.setAttribute('data-trackable-meta', '{"search-term":"' + this.searchTerm + '"}');
 		}.bind(this));
 	}
 
 	onDownArrow(ev) {
 		if (this.suggestions.length) {
-			this.suggestionList.querySelector('a').focus();
+			this.suggestionListContainer.querySelector('a').focus();
 		}
 	}
 
@@ -191,30 +176,18 @@ class Typeahead {
 	}
 
 	suggest(suggestions) {
-		this.suggestionList.innerHTML = '';
 		this.suggestions = suggestions;
-		if (this.suggestions.length) {
-			this.suggestions.slice(0, 6).forEach((suggestion) => {
-				if (suggestion) {
-					const text = this.highlight(suggestion.name)
-					const url = suggestion.url || ('/stream/' + suggestion.taxonomy + 'Id/' + suggestion.id);
-					this.suggestionList.insertAdjacentHTML('beforeend', `<li class="o-header__typeahead-item">
-						<a class="o-header__typeahead-link" href="${url}" data-trackable="typeahead" data-concept-id="${suggestion.id}"
-						data-trackable-meta="{&quot;search-term&quot;:&quot;${this.searchTerm}&quot;}">${text}</a>
-					</li>`);
-				}
-			});
-
-			if (this.viewAllItem) {
-				this.suggestionList.appendChild(this.viewAllItem);
-				this.viewAllItem.innerHTML = this.viewAllItemInnerHTML; // IE hack
-				this.viewAllItem.children[0].addEventListener('click', this.showAllHandler);
-			}
-
-			this.show();
-		} else {
-			this.hide();
-		}
+		this.suggestionsView.setState({
+			suggestions: this.suggestions.slice(0,6)
+				.map(suggestion => {
+					return {
+						name: this.highlight(suggestion.name),
+						url: suggestion.url || ('/stream/' + suggestion.taxonomy + 'Id/' + suggestion.id),
+						id: suggestion.id
+					}
+				})
+		});
+		this.show();
 	}
 
 	unsuggest() {
@@ -222,12 +195,12 @@ class Typeahead {
 	}
 
 	hide() {
-		this.suggestionList.setAttribute('hidden', '');
+		this.suggestionListContainer.setAttribute('hidden', '');
 		this.bodyDelegate.off();
 	}
 
 	show() {
-		this.suggestionList.removeAttribute('hidden');
+		this.suggestionListContainer.removeAttribute('hidden');
 		['focus', 'touchstart', 'mousedown']
 			.forEach(type => {
 				this.bodyDelegate.on(type, (ev) => {

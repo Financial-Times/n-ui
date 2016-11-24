@@ -49,20 +49,6 @@
 	}
 }
 
-
-.o-header__typeahead-item {
-
-
-	mark {
-		background: none;
-		font-weight: bold;
-	}
-}
-
-.o-header__typeahead-item:hover {
-
-}
-
 .o-header__typeahead-link {
 	padding: 8px 16px;
 	cursor: pointer;
@@ -111,55 +97,3 @@
 		outline: none;
 	}
 }
-
-
-
-
-
-
-@mixin nUiHeaderTypeahead {
-
-	// awesomplete will wrap the search term input when instantiated
-	.awesomplete {
-		position: relative;
-		// if a child of a flex container, always grow
-		flex-grow: 1;
-		// but for browsers that don't support flexing...
-		display: inline-block;
-		min-width: 50%;
-
-		input {
-			width: 100%;
-		}
-
-		[aria-live] {
-			position: absolute;
-			clip: rect(0, 0, 0, 0);
-		}
-
-
-
-		li {
-			padding: 8px 16px;
-			cursor: pointer;
-
-			&:hover,
-			&[aria-selected="true"] {
-				background: getColor('teal-1');
-				color: getColor('white');
-			}
-
-			&:hover mark,
-			&[aria-selected="true"] mark {
-				color: inherit;
-			}
-		}
-
-		mark {
-			background: none;
-			font-weight: 600;
-		}
-	}
-
-}
-
