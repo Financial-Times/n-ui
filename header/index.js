@@ -12,27 +12,32 @@ function init (flags) {
 	// initialise separate sticky header
 	new OHeader(document.querySelector('[data-o-header--sticky]'));
 
+	const typeaheadElements = document.querySelectorAll('[data-typeahead]');
 
-	// const typeaheadElements = document.querySelectorAll('[data-typeahead]');
-	// if (flags.get('typeahead') && typeaheadElements.length) {
-	// 	for (let i = 0; i < typeaheadElements.length; i++) {
-	// 		let element = typeaheadElements[i]
-	// 		new Typeahead( element, `//${window.location.host}/search-suggestions?q=` );
-	// 	}
-	// }
+	if (flags.get('typeahead') && typeaheadElements.length) {
+		if (flags.get('searchMultiTypeahead')) {
+			for (let i = 0; i < typeaheadElements.length; i++) {
+				const form = typeaheadElements[i];
+				const input = form.querySelector('input');
 
-	const suggestionsContainer = document.querySelector('[data-old-header-suggestions]');
-	const form = document.querySelector('[data-old-header-search]');
-	const input = form.querySelector('input');
+				const typeahead = new TypeaheadOld(
+					form,
+					input,
+					'//' + window.location.host + '/search-suggestions?flatten=true&limit=5&q=',
+					function() {
+						form.submit();
+					}
+				);
+			}
 
-	const typeahead = new TypeaheadOld(
-		suggestionsContainer,
-		input,
-		'//' + window.location.host + '/search-suggestions?flatten=true&limit=5&q=',
-		function() {
-			form.submit();
+		} else {
+
+			for (let i = 0; i < typeaheadElements.length; i++) {
+				let element = typeaheadElements[i]
+				new Typeahead( element, `//${window.location.host}/search-suggestions?q=` );
+			}
 		}
-	);
+	}
 }
 
 module.exports = { init };

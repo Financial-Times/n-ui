@@ -41,6 +41,7 @@ class Typeahead {
 	constructor(containerEl, input, dataSrc, showAllHandler) {
 		this.container = containerEl;
 		this.searchEl = input;
+		this.submitButton = this.container.querySelector('button[type="submit"]')
 		this.showAllHandler = showAllHandler;
 		this.dataSrc = dataSrc;
 		this.minLength = 2;
@@ -51,12 +52,12 @@ class Typeahead {
 	init() {
 		this.suggestions = [];
 		this.suggestionList = document.createElement('ul');
-		this.suggestionList.classList.add('old-header__typeahead');
-		this.container.appendChild(this.suggestionList);
+		this.suggestionList.classList.add('o-header__typeahead');
+		this.container.insertBefore(this.suggestionList, this.submitButton);
 
-		if(this.showAllItem) {
+		if (this.showAllItem) {
 			this.viewAllItem = document.createElement('li');
-			this.viewAllItem.classList.add('old-header__typeahead-view-all');
+			this.viewAllItem.classList.add('o-header__typeahead-view-all');
 			this.viewAllItemInnerHTML = '<button type="submit" data-trackable="view-all">View All Results</button>';
 		}
 
@@ -68,7 +69,7 @@ class Typeahead {
 		this.onSuggestionKey = this.onSuggestionKey.bind(this);
 		this.onSuggestionClick = this.onSuggestionClick.bind(this);
 
-		this.delegate.on('keyup', 'input[type="search"]', (ev) => {
+		this.delegate.on('keyup', 'input[type="text"]', (ev) => {
 			switch(ev.which) {
 				case 13 : return; // enter
 				case 9 : return; // tab
@@ -81,13 +82,13 @@ class Typeahead {
 			}
 		});
 
-		this.delegate.on('focus', 'input[type="search"]', (ev) => {
+		this.delegate.on('focus', 'input[type="text"]', (ev) => {
 			ev.target.setSelectionRange ? ev.target.setSelectionRange(0, ev.target.value.length) : ev.target.select();
 			this.reshow();
 		});
 
 
-		this.delegate.on('click', 'input[type="search"]', (ev) => {
+		this.delegate.on('click', 'input[type="text"]', (ev) => {
 			ev.target.setSelectionRange ? ev.target.setSelectionRange(0, ev.target.value.length) : ev.target.select();
 			this.reshow();
 		});
@@ -98,14 +99,19 @@ class Typeahead {
 			}
 		});
 
-		this.bodyDelegate.on('focus', (ev) => {
-			if (isOutside(ev.target, this.container)) {
-				this.hide();
-			}
-		});
+		['focus', 'touchstart', 'mousedown']
+			.forEach(type => {
+				this.bodyDelegate.on(type, (ev) => {
+					console.log('type', type)
+					if (isOutside(ev.target, this.container)) {
+						this.hide();
+					}
+				});
+			})
 
-		this.delegate.on('keyup', '.old-header__typeahead a, .old-header__typeahead button[type="submit"]', this.onSuggestionKey);
-		this.delegate.on('click', '.old-header__typeahead a', this.onSuggestionClick);
+
+		this.delegate.on('keyup', '.o-header__typeahead a, .o-header__typeahead button[type="submit"]', this.onSuggestionKey);
+		this.delegate.on('click', '.o-header__typeahead a', this.onSuggestionClick);
 	}
 
 	// EVENT HANDLERS
@@ -188,8 +194,8 @@ class Typeahead {
 			this.suggestions.slice(0, 5).forEach((suggestion) => {
 				if (suggestion){
 					const url = suggestion.url || ('/stream/' + suggestion.taxonomy + 'Id/' + suggestion.id);
-					this.suggestionList.insertAdjacentHTML('beforeend', `<li class="old-header__typeahead-item">
-						<a class="old-header__typeahead-link" href="${url}" data-trackable="typeahead" data-concept-id="${suggestion.id}"
+					this.suggestionList.insertAdjacentHTML('beforeend', `<li class="o-header__typeahead-item">
+						<a class="o-header__typeahead-link" href="${url}" data-trackable="typeahead" data-concept-id="${suggestion.id}"
 						data-trackable-meta="{&quot;search-term&quot;:&quot;${this.searchTerm}&quot;}">${suggestion.name}</a>
 					</li>`);
 				}
@@ -212,11 +218,11 @@ class Typeahead {
 	}
 
 	hide() {
-		this.suggestionList.classList.remove('old-header__typeahead--active');
+		this.suggestionList.setAttribute('hidden', '');
 	}
 
 	show() {
-		this.suggestionList.classList.add('old-header__typeahead--active');
+		this.suggestionList.removeAttribute('hidden');
 	}
 
 	chooseSuggestion(suggestionEl) {

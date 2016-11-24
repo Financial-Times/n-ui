@@ -1,5 +1,5 @@
 /*global fetch*/
-const Awesomplete = require('./awesomplete');
+const Awesomplete = require('awesomplete');
 const utils = require('../../utils');
 
 const MIN_LENGTH = 2;
