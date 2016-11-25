@@ -45,6 +45,6 @@
     "o-visual-effects": "^0.1.0",
     "superstore": "^2.1.0",
     "superstore-sync": "^2.1.0",
-    "awesomplete": "~1.1.1"
+    "awesomplete": "^1.1.1"
   }
 }

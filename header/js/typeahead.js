@@ -9,7 +9,7 @@ class Typeahead {
 
 	constructor (target, dataUrl) {
 		this.target = target;
-		this.input = target.querySelector('input.o-header__search-term');
+		this.input = target.querySelector('input[type="text"]');
 		this.context = getParentElDataTrackableValue(target);
 		this.dataUrl = dataUrl;
 
