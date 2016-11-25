@@ -20,7 +20,7 @@ function init (flags) {
 
 				new TypeaheadNew(
 					form,
-					'//' + window.location.host + '/search-suggestions?limit=6&q=',
+					`//${window.location.host}/search-api?q=`,
 					function () {
 						form.submit();
 					}
@@ -38,3 +38,5 @@ function init (flags) {
 }
 
 module.exports = { init };
+
+// https://www.ft.com/search-api?q=apple
