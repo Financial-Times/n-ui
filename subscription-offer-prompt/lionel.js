@@ -57,7 +57,7 @@ const popupTemplate = ({ discount, price, offerId }) => `
 		</div>
 		<div class="subscription-prompt--aside" data-o-grid-colspan="5">
 			<figure class="subscription-prompt--figure">
-				<img src="https://www.ft.com/__origami/service/image/v2/images/raw/${encodeURIComponent('http://next-geebee.ft.com/assets/people/lionel.png')}?source=test&amp;width=126" alt="Lionel Barber, Editor">
+				<img src="https://www.ft.com/__origami/service/image/v2/images/raw/${encodeURIComponent('http://www.ft.com/__assets/creatives/people/lionel.png')}?source=test&amp;width=126" alt="Lionel Barber, Editor">
 				<figcaption class="subscription-prompt--figure-caption">Lionel Barber, Editor</span>
 			</figure>
 		</div>
