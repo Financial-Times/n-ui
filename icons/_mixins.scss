@@ -7,7 +7,7 @@
 	}
 
 	$service-url: 'https://www.ft.com/__origami/service/image/v2/images/raw/';
-	$icon-url: 'http%3A%2F%2Fnext-geebee.ft.com%2Fassets%2Ficons%2F#{$icon-name}.svg';
+	$icon-url: 'http%3A%2F%2Fwww.ft.com%2F__assets%2Fcreatives%2Ficons%2F#{$icon-name}.svg';
 	$query: '?source=next';
 
 	@if $color != null {
