@@ -38,5 +38,3 @@ function init (flags) {
 }
 
 module.exports = { init };
-
-// https://www.ft.com/search-api?q=apple

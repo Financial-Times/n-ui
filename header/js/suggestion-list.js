@@ -11,8 +11,7 @@ export class SuggestionList extends React.Component {
 			suggestions: {
 				topics: [],
 				equities: []
-			},
-
+			}
 		}
 	}
 
