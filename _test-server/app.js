@@ -37,7 +37,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-	fetch('https://www.ft.com' + req.originalUrl)
+	fetch('https://www.ft.com' + req.originalUrl, {
+		headers: req._headers,
+		method: req.method
+	})
 		.then(response => {
 			response.body.pipe(res);
 		})
