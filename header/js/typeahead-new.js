@@ -29,10 +29,6 @@ function isOutside (el, container) {
 	return !el || el === document;
 }
 
-function regExpEscape (s) {
-	return s.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
-};
-
 class Typeahead {
 	constructor (containerEl, dataSrc, showAllHandler) {
 		this.container = containerEl;
@@ -50,7 +46,7 @@ class Typeahead {
 		this.suggestionListContainer = document.createElement('div');
 		this.container.insertBefore(this.suggestionListContainer, this.submitButton);
 		this.suggestionsView = ReactDom.render(<SuggestionList/>, this.suggestionListContainer);
-
+		this.searchTermHistory = [];
 		if (this.showAllItem) {
 			this.viewAllItem = document.createElement('li');
 			this.viewAllItem.classList.add('o-header__typeahead-view-all');
@@ -106,6 +102,7 @@ class Typeahead {
 	// EVENT HANDLERS
 	onType () {
 		this.searchTerm = this.searchEl.value.trim();
+		this.searchTermHistory.push(this.searchTerm);
 		this.getSuggestions(this.searchTerm);
 		[].forEach.call(this.suggestionListContainer.querySelectorAll('li'), function (el) {
 			el.setAttribute('data-trackable-meta', '{"search-term":"' + this.searchTerm + '"}');
@@ -113,8 +110,9 @@ class Typeahead {
 	}
 
 	onDownArrow () {
-		if (this.suggestions.length) {
-			this.suggestionListContainer.querySelector('a').focus();
+		this.suggestionLinks = Array.from(this.suggestionListContainer.querySelectorAll('a'));
+		if (this.suggestionLinks.length) {
+			this.suggestionLinks[0].focus();
 		}
 	}
 
@@ -132,19 +130,23 @@ class Typeahead {
 		}
 
 		if (ev.which === 40) { // down arrow pressed
-			const oLi = ev.target.parentNode.nextElementSibling;
-			if (oLi) {
-				oLi.firstElementChild.focus();
+			const index = this.suggestionLinks.indexOf(ev.target);
+			const newIndex = index + 1;
+			if (newIndex < this.suggestionLinks.length) {
+				this.suggestionLinks[newIndex].focus();
+			} else {
+				this.suggestionLinks[0].focus();
 			}
 			return;
 		}
 
 		if (ev.which === 38) { // up arrow pressed
-			const previousLi = ev.target.parentNode.previousElementSibling;
-			if (previousLi) {
-				previousLi.firstElementChild.focus();
-			} else {
+			const index = this.suggestionLinks.indexOf(ev.target);
+			const newIndex = index - 1;
+			if (newIndex < 0) {
 				this.searchEl.focus();
+			} else {
+				this.suggestionLinks[newIndex].focus();
 			}
 			return;
 		}
@@ -152,7 +154,6 @@ class Typeahead {
 
 	// INTERNALS
 	getSuggestions (value) {
-		value = value.trim();
 		if (value.length >= this.minLength) {
 			fetch(this.dataSrc + encodeURIComponent(value))
 				.then((response) => {
@@ -171,21 +172,26 @@ class Typeahead {
 			this.unsuggest();
 		}
 	}
-	highlight (text) {
-		return text.replace(RegExp(regExpEscape(this.searchTerm), 'gi'), '<mark>$&</mark>');
+
+	isTimelyResponse (term) {
+		// handle race conditions between e.g. TRU returning slower than TRUMP
+		const index = this.searchTermHistory.indexOf(term)
+		if (index > -1) {
+			this.searchTermHistory = this.searchTermHistory.slice(index);
+			return true;
+		}
+		return false;
 	}
 
 	suggest (suggestions) {
+
+		if (!this.isTimelyResponse(suggestions.term)) {
+			return
+		}
 		this.suggestions = suggestions;
 		this.suggestionsView.setState({
-			suggestions: this.suggestions.slice(0,6)
-				.map(suggestion => {
-					return {
-						name: this.highlight(suggestion.name),
-						url: suggestion.url || ('/stream/' + suggestion.taxonomy + 'Id/' + suggestion.id),
-						id: suggestion.id
-					}
-				})
+			searchTerm: this.searchTerm,
+			suggestions: this.suggestions
 		});
 		this.show();
 	}

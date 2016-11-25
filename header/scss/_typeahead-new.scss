@@ -15,23 +15,35 @@
 	left: 0;
 	box-sizing: border-box;
 	width: 100%;
-	padding: 0;
 	margin: -2px 0 0;
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	border-radius: 0.3em;
 	overflow: hidden;
 	background: getColor('white');
-	list-style: none;
 	text-align: left;
 
 	@include oGridRespondTo('S') {
-		width: 240px;
+		width: 350px;
 	}
 }
 
 .o-header__typeahead[hidden],
 .o-header__typeahead:empty {
 	display: none;
+}
+
+.o-header__typeahead h3 {
+	padding: 5px;
+	margin: 0;
+	background: getColor('grey-tint4');
+	color: getColor('white');
+}
+
+.o-header__typeahead ul,
+.o-header__typeahead li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 @supports (transform: scale(0)) {
@@ -63,6 +75,11 @@
 		font-weight: 600;
 	}
 
+	abbr {
+		float: right;
+		padding-left: 10px;
+	}
+
 	&:hover,
 	&:focus {
 		background: getColor('teal-1');
@@ -72,6 +89,12 @@
 	&:hover mark,
 	&:focus mark {
 		color: inherit;
+	}
+
+	&:after {
+		content: '';
+		clear: right;
+		display: block;
 	}
 }
 
