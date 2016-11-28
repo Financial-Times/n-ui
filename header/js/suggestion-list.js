@@ -9,7 +9,7 @@ export class SuggestionList extends React.Component {
 		super();
 		this.state = {
 			suggestions: {
-				topics: [],
+				tags: [],
 				equities: []
 			}
 		}
@@ -20,14 +20,14 @@ export class SuggestionList extends React.Component {
 	}
 
 	render () {
-		const hasTopics = this.state.suggestions.topics.length;
+		const hasTags = this.state.suggestions.tags.length;
 		const hasEquities = this.state.suggestions.equities.length;
-		const hasSuggestions = hasTopics || hasEquities;
+		const hasSuggestions = hasTags || hasEquities;
 		const suggestions = []
-		if (hasTopics) {
+		if (hasTags) {
 			suggestions.push({
 				heading: 'News',
-				suggestions: this.state.suggestions.topics.slice(0,6)
+				suggestions: this.state.suggestions.tags.slice(0,6)
 					.map(suggestion => ({
 							html: this.highlight(suggestion.name),
 							url: suggestion.url,
