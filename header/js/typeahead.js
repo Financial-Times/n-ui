@@ -25,7 +25,9 @@ class Typeahead {
 				// eslint-disable-next-line
 				return Awesomplete.ITEM(utils.ascii(text.label), utils.ascii(input));
 			},
-			sort: new Function()
+			sort: (a, b) => {
+				return this.awesomplete.suggestionsWeighting[b.value] - this.awesomplete.suggestionsWeighting[a.value];
+			}
 		});
 
 		this.target.addEventListener('submit', this.handleSubmit.bind(this));
@@ -82,7 +84,15 @@ class Typeahead {
 	}
 
 	setSuggestions (suggestions) {
-		this.awesomplete.list = suggestions.map(makeAwesompleteReadable);
+		// HACK: Assigning to this.awesomplete.list will instantly sort, and it's not
+		// possible to pass the weighting into a list value! So keep track of the
+		// weighting separately.
+		this.awesomplete.suggestionsWeighting = {};
+		this.awesomplete.list = suggestions.map(suggestion => {
+			const url = suggestion.url || `/stream/${suggestion.taxonomy}Id/${suggestion.id}`;
+			this.awesomplete.suggestionsWeighting[url] = suggestion.count;
+			return [ suggestion.name, url];
+		});
 	}
 
 	trackSearchEvent ({type, close_reason = null, item = null}) {
@@ -113,10 +123,6 @@ function getParentElDataTrackableValue (el) {
 	} else {
 		return getParentElDataTrackableValue(el.parentNode);
 	};
-}
-
-function makeAwesompleteReadable (suggestion) {
-	return [ suggestion.name, suggestion.url || `/stream/${suggestion.taxonomy}Id/${suggestion.id}` ];
 }
 
 export default Typeahead;
