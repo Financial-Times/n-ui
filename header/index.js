@@ -20,7 +20,7 @@ function init (flags) {
 
 				new TypeaheadNew(
 					form,
-					`//${window.location.host}/search-api?q=`,
+					`//${window.location.host}/search-api/suggestions?partial=`,
 					function () {
 						form.submit();
 					}
