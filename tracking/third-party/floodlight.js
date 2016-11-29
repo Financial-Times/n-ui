@@ -32,7 +32,7 @@ module.exports = function (flags) {
 		} else if (isTrialConfirmation) {
 			i.src = `${host};type=trans658;cat=ft-ne00;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;`;
 		} else {
-			i.src = `${host};type=homeo886;cat=ft-ne000;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=1;num=1`;
+			i.src = `${host};type=homeo886;cat=ft-ne0;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=1;num=1`;
 		}
 	}
 }
