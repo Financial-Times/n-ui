@@ -30,6 +30,23 @@
 			display: none;
 		}
 
+		// skip links for keyboard users
+		.n-skip-link {
+			@include zIndexFor('notification');
+			position: absolute;
+			top: -2.5em;
+			left: 0;
+			padding: 0.5em 1em;
+			background: getColor('purple-1');
+			color: getColor('white');
+
+			&:focus {
+				@include oEffectsShadowsElevation('high');
+				top: 1em;
+				color: getColor('white');
+			}
+		}
+
 		@include nUiHeaderMarketingPromo;
 
 	}
