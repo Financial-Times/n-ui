@@ -1,5 +1,7 @@
+const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
+const error = chalk.bold.red;
 
 const config = {
 	"defaults": {
@@ -77,7 +79,7 @@ components.forEach((component) => {
 });
 
 if(missingPa11yConfig.length) {
-	throw new Error(`Error: Components appears to be missing a pa11y-config (${missingPa11yConfig.join()})`)
+	throw new Error(error(`Error: Components need to have a pa11y-config, components missing a pa11y-config: ${missingPa11yConfig.join()}`));
 }
 
 module.exports = config;
