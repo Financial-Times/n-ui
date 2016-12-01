@@ -12,6 +12,7 @@ const app = module.exports = express({
 	hasHeadCss: true,
 	layoutsDir: path.join(process.cwd(), '/layout'),
 	viewsDirectory: '/_test-server/views',
+	partialsDirectory: process.cwd(),
 	directory: process.cwd()
 });
 
@@ -37,6 +38,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/components/:component?', (req, res) => {
+	const component = req.params.component;
+	const template = fs.readdirSync(`./${component}`).filter((file) => {
+		return file.match(/.html$/);
+	})[0].slice(0, -5);
+
 	// such a load of hacks :/
 	// in an ideal world we could hack some middleware in
 	// before the assets middleware gets applied
@@ -54,7 +60,8 @@ app.get('/components/:component?', (req, res) => {
 	res.render('default', {
 		pa11y: true,
 		title: 'Test App',
-		layout: `../${req.params.component}/template`
+		layout: '../_test-server/views/component-wrapper',
+		template: `${component}/${template}`
 	});
 });
 

@@ -23,6 +23,7 @@ nightwatch:
 test: verify test-unit test-build serve a11y nightwatch
 
 a11y:
+	node .pa11yci.js
 	pa11y-ci
 
 test-dev: verify test-unit-dev
