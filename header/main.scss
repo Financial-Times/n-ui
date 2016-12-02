@@ -2,6 +2,7 @@
 @import 'scss/marketing-promo';
 @import 'scss/typeahead';
 @import 'scss/typeahead-new';
+@import 'scss/viewtoggle';
 
 @if nUiApply('header') {
 
@@ -80,5 +81,7 @@
 	.o-header__top-link--myft {
 		position: relative;
 	}
+
+	@include viewToggle;
 
 }
