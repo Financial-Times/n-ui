@@ -20,6 +20,9 @@
 			</li>
 			{{/each}}
 		</ul>
+
+
+
 		{{#unlessEquals nUi.header.userNav false}}
 			<ul class="o-header__nav-list o-header__nav-list--right" data-trackable="user-nav">
 				{{#if @root.anon.userIsAnonymous}}
@@ -43,5 +46,17 @@
 				{{/if}}
 			</ul>
 		{{/unlessEquals}}
+
+		{{#if @root.viewStyle}}
+			<div class="o-header__viewtoggle">
+				<span class="o-header__viewtoggle__item o-header__viewtoggle__label">View page as</span>
+				<a class="o-header__viewtoggle__item o-header__viewtoggle__link o-header__viewtoggle__link--compact {{#ifEquals @root.viewStyle 'compact'}}o-header__viewtoggle__link--selected{{/ifEquals}}" href="/viewtoggle/compact" title="Compact View">
+					<span class="n-util-visually-hidden">compact</span>
+				</a>
+				<a class="o-header__viewtoggle__item o-header__viewtoggle__link o-header__viewtoggle__link--standard {{#ifEquals @root.viewStyle 'standard'}}o-header__viewtoggle__link--selected{{/ifEquals}}" href="/viewtoggle/standard" title="Standard View">
+					<span class="n-util-visually-hidden">standard</span>
+				</a>
+			</div>
+		{{/if}}
 	</div>
 </nav>
