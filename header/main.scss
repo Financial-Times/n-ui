@@ -34,15 +34,15 @@
 		.n-skip-link {
 			@include zIndexFor('notification');
 			position: absolute;
-			top: -2.5em;
-			left: 0;
+			top: 1em;
+			left: -9999px;
 			padding: 0.5em 1em;
 			background: getColor('purple-1');
 			color: getColor('white');
 
 			&:focus {
 				@include oEffectsShadowsElevation('high');
-				top: 1em;
+				left: 0;
 				color: getColor('white');
 			}
 		}
