@@ -3,7 +3,7 @@
 	<ul class="o-header__nav-list">
 		{{#each @root.navigationLists.navbar_mobile}}
 		<li class="o-header__nav-item">
-			<a class="o-header__nav-link o-header__nav-link--primary" href="{{href}}" aria-selected="{{selected}}" data-trackable="{{name}}">{{name}}</a>
+			<a class="o-header__nav-link o-header__nav-link--primary" href="{{href}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{name}}">{{name}}</a>
 		</li>
 		{{/each}}
 	</ul>
@@ -15,7 +15,7 @@
 		<ul class="o-header__nav-list o-header__nav-list--left" data-trackable="primary-nav">
 			{{#each @root.navigationLists.navbar_desktop}}
 			<li class="o-header__nav-item">
-				<a class="o-header__nav-link o-header__nav-link--primary {{#ifEquals @root.currentNav.topLevelRelative.href href}}o-header-nav__list-link--highlight{{/ifEquals}}" href="{{href}}" id="o-header-link-{{@index}}" aria-selected="{{selected}}" data-trackable="{{name}}">{{name}}</a>
+				<a class="o-header__nav-link o-header__nav-link--primary {{#ifEquals @root.currentNav.topLevelRelative.href href}}o-header-nav__list-link--highlight{{/ifEquals}}" href="{{href}}" id="o-header-link-{{@index}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{name}}">{{name}}</a>
 				{{> n-ui/header/partials/meganav/template}}
 			</li>
 			{{/each}}
