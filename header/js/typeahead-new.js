@@ -185,7 +185,7 @@ class Typeahead {
 
 	suggest (suggestions) {
 
-		if (!this.isTimelyResponse(suggestions.partial)) {
+		if (!suggestions.query || !this.isTimelyResponse(suggestions.query.partial)) {
 			return
 		}
 		this.suggestions = suggestions;
