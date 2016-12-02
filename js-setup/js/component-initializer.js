@@ -6,10 +6,11 @@ import header from '../../header';
 import optOut from '../../opt-out';
 import cookieMessage from '../../cookie-message';
 import welcomeMessage from '../../welcome-message';
-import { init as subscriptionOfferPrompt } from '../../subscription-offer-prompt';
+import subscriptionOfferPrompt from '../../subscription-offer-prompt';
 import footer from '../../footer';
 import myft from '../../myft';
 import digestPromo from '../../myft-digest-promo';
+import myftHint from '../../myft-hint';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 
@@ -143,6 +144,11 @@ export class ComponentInitializer {
 						this.initializedFeatures.myFtDigestPromo = true;
 					}
 
+					if (flags.get('myftHint') && !this.initializedFeatures.myftHint) {
+						myftHint.init();
+						this.initializedFeatures.myftHint = true;
+					}
+
 					if (config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
 						cookieMessage(flags);
 						this.initializedFeatures.cookieMessage = true;
@@ -154,7 +160,7 @@ export class ComponentInitializer {
 					}
 
 					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
-						flags.get('b2cMessagePrompt') && subscriptionOfferPrompt();
+						subscriptionOfferPrompt(flags);
 						this.initializedFeatures.subscriptionOfferPrompt = true;
 					}
 

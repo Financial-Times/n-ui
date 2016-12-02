@@ -62,8 +62,11 @@ shellpromise('find . -path "./dist/*"')
 						surrogateControl: 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400'
 					})
 						.then(() => files.map(file => {
-							const path = `https://next-geebee.ft.com/n-ui/cached/${version}/${file.split('/').pop()}`;
-							return purge(path);
+							const paths = [
+								`https://next-geebee.ft.com/n-ui/cached/${version}/${file.split('/').pop()}`,
+								`https://www.ft.com/__assets/n-ui/cached/${version}/${file.split('/').pop()}`
+							];
+							return Promise.all(paths.map(purge));
 						}))
 				})
 		)

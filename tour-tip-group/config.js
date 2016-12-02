@@ -8,7 +8,7 @@ module.exports = {
 			title: 'Welcome to the new FT',
 			body: 'Take a moment to see what’s changed by scrolling through our new features below.',
 			imageAlt: 'A laptop with the new FT.com loaded',
-			imageUrl: 'https://next-geebee.ft.com/assets/tour/pack-shot-2.png',
+			imageUrl: 'https://www.ft.com/__assets/creatives/tour/pack-shot-2.png',
 			imageWidths: [300,469,719,930],
 			imageSizes: {
 					M: '930px'

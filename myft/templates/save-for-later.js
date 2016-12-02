@@ -1,4 +1,4 @@
-const React = require('preact');
+const React = require('react');
 
 /**
  * @param {string} contentId

@@ -13,6 +13,7 @@ function Sticky (el, sibling, boundary) {
 	this.boundaryBottom;
 	this.fixedHeight;
 	this.timeoutHandler;
+	this.finished;
 }
 
 
@@ -72,8 +73,10 @@ Sticky.prototype.destroy = function (unsetCallbackFunctions) {
 	this.fixed.style.zIndex = '';
 	this.windowWidth = false;
 	if(unsetCallbackFunctions) {
+		this.finished = true;
 		this.eventScrollStart = undefined;
 		this.eventdbScrollEnd = undefined;
+		window.removeEventListener('resize', this.resizeCallback);
 	}
 }
 Sticky.prototype.endLoop = function () {
@@ -128,7 +131,8 @@ Sticky.prototype.timeoutHandler = function () {
 }
 
 Sticky.prototype.init = function () {
-	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0) {
+	// do not init if user already started scrolling or on iOS/Android devices as the stickiness behaves flaky on iOS/Android. Issue: ADS-1112
+	if (!this.fixed || !this.sibling || !this.boundary || window.pageYOffset > 0 || window.scrollY > 0 || window.navigator.userAgent.match(/i.*OS\s(\d+)_(\d+)/) || window.navigator.userAgent.match(/android/i)){
 		return;
 	};
 	this.windowWidth = window.innerWidth;
@@ -136,8 +140,10 @@ Sticky.prototype.init = function () {
 
 	if (this.cookieCloseButton) {
 		this.cookieCloseEvent = this.cookieCloseButton.addEventListener('click', function () {
-			this.extraHeight = 0;
-			this.reset();
+			if(!this.finished){
+				this.extraHeight = 0;
+				this.reset();
+			}
 			this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent)
 		}.bind(this));
 	}
@@ -146,7 +152,7 @@ Sticky.prototype.init = function () {
 
 	this.resizeCallback = debounce(function () {
 		// makesure width actually changed. Resize gets fired on mobile for some reason
-		if(window.innerWidth !== this.windowWidth) {
+		if(window.innerWidth !== this.windowWidth && !this.finished) {
 			this.destroy();
 			debounce(this.init.bind(this), 300).call();
 		}
@@ -161,6 +167,7 @@ Sticky.prototype.init = function () {
 				this.destroy();
 		}
 	}.bind(this));
+
 	window.addEventListener('oAds.collapsed', this.collapsedCallback);
 
 	this.timeout = setTimeout(this.timeoutHandler.bind(this), 5000);
