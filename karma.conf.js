@@ -11,6 +11,7 @@ const componentsToTest = [
 	'tracking',
 	'opt-out',
 	'subscription-offer-prompt',
+	'utils'
 ];
 
 module.exports = function (karma) {
