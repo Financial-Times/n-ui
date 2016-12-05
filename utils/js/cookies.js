@@ -1,25 +1,20 @@
-const DEFAULT_OPTIONS = {
-	domain: location.hostname,
-	path: '/',
-};
-
 // Regex taken from https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie don't ask me how it works
 function getRegexForName (name){
 	return new RegExp(`(?:(?:^|.*;\\s*)${name}\\s*\=\\s*([^;]*).*$)|^.*$`);
 }
 
-function getOptions (opts){
-	const options = Object.assign({}, DEFAULT_OPTIONS, opts);
+function getOptions (options){
 	return Object.keys(options).map(key => {
+		let newKey = key;
 		if(key === 'maxAge'){
-			key = 'max-age';
+			newKey = 'max-age';
 		}
 
 		if(options[key] instanceof Date){
 			options[key] = options[key] = options[key].toUTCString();
 		}
 
-		return `${key}=${options[key]}`;
+		return `${newKey}=${options[key]}`;
 	});
 }
 
