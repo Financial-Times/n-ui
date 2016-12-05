@@ -112,6 +112,10 @@
 			display: table-cell;
 			margin: 0;
 		}
+		@include oGridRespondTo($until: S) {
+			text-align: center;
+			margin: 25px 0;
+		}
 	}
 
 	.n-welcome-banner__heading--minimized {

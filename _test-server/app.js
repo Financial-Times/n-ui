@@ -36,6 +36,16 @@ app.get('/', (req, res) => {
 	});
 });
 
+app.get('*', (req, res) => {
+	fetch('https://www.ft.com' + req.originalUrl, {
+		headers: req._headers,
+		method: req.method
+	})
+		.then(response => {
+			response.body.pipe(res);
+		})
+});
+
 app.listen(5005)
 	.then(app => {
 		// in CI generate a test page and send it to S3

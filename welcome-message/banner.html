@@ -7,12 +7,7 @@
 				<a href="/tour" class="n-welcome-banner__button" data-trackable="tour-page" data-component="cta-take-tour"><span class="n-welcome-banner__cta--s">View </span>tips</a>
 			</p>
 			<div class="n-welcome-banner__column n-welcome-banner__column--actions">
-				{{#if anon.userIsLoggedIn}}
-					{{#if @root.flags.NextWelcomeHelp}}
-						<a href="http://help.ft.com/" data-trackable="help" class="n-welcome-banner__button--secondary">Help</a>
-					{{/if}}
-				{{/if}}
-				<a href="/feedback" data-trackable="nps-feedback" class="n-welcome-banner__link-action">Feedback</a>
+				<a class="n-welcome-banner__link-action" data-trackable="a11y-survey-banner" target="_blank" data-trackable="" href="https://www.surveymonkey.co.uk/r/8HGPJHD">Take the accessibility survey</a>
 			</div>
 		</div>
 		{{!-- button must be present in the HTML as a requirement/limitation of o-expander --}}
@@ -28,17 +23,12 @@
 				<a href="/tour" class="n-welcome-banner__button" data-trackable="tour-page" data-component="cta-take-tour"><span class="n-welcome-banner__cta--s">View </span>Tips</a>
 			</p>
 			<div class="n-welcome-banner__column n-welcome-banner__column--actions">
-				{{#if anon.userIsLoggedIn}}
-					{{#if @root.flags.NextWelcomeHelp}}
-						<a href="http://help.ft.com/" data-trackable="help" class="n-welcome-banner__button--secondary">Help</a>
-					{{/if}}
-				{{/if}}
-				<a href="/nps-feedback" data-trackable="nps-feedback" class="n-welcome-banner__link-action">Feedback</a>
+				<a class="n-welcome-banner__link-action" data-trackable="a11y-survey-banner" target="_blank" data-trackable="" href="https://www.surveymonkey.co.uk/r/8HGPJHD">Take the accessibility survey</a>
 			</div>
 		</div>
 		{{!-- button must be present in the HTML as a requirement/limitation of o-expander --}}
 		<div class="n-welcome-banner__column">
-			<button data-trackable="toggled"  title="Close welcome banner" class="n-welcome-banner__button--toggler o-if-js if-fixed"></button>
+			<button data-trackable="toggled" title="Close welcome banner" class="n-welcome-banner__button--toggler o-if-js if-fixed"></button>
 		</div>
 	{{/if}}
 </div>

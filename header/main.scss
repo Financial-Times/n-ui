@@ -1,12 +1,14 @@
 @import 'o-header/main';
 @import 'scss/marketing-promo';
 @import 'scss/typeahead';
+@import 'scss/typeahead-new';
+@import 'scss/viewtoggle';
 
 @if nUiApply('header') {
 
 	@include nUiMaybeCritical('header') {
 
-		@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu'));
+		@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu', 'simple'));
 		// force display of search row
 		// <https://github.com/Financial-Times/o-header/blob/2ebf2cbe6b7508a03e0989ff57f1029e12c0506c/src/scss/rows/_search.scss#L13-L15>
 		.core [data-o-header-search] {
@@ -27,6 +29,23 @@
 		.o-header__drawer,
 		.o-header--sticky {
 			display: none;
+		}
+
+		// skip links for keyboard users
+		.n-skip-link {
+			@include zIndexFor('notification');
+			position: absolute;
+			top: 1em;
+			left: -9999px;
+			padding: 0.5em 1em;
+			background: getColor('purple-1');
+			color: getColor('white');
+
+			&:focus {
+				@include oEffectsShadowsElevation('high');
+				left: 0;
+				color: getColor('white');
+			}
 		}
 
 		@include nUiHeaderMarketingPromo;
@@ -62,5 +81,7 @@
 	.o-header__top-link--myft {
 		position: relative;
 	}
+
+	@include viewToggle;
 
 }

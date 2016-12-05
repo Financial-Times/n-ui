@@ -7,7 +7,7 @@ const discount = {
 }
 
 function fetchSession () {
-	return fetch('https://session-next.ft.com/', {
+	return fetch('https://session-next.ft.com/products', {
 		timeout: 2000,
 		credentials: 'include'
 	});
@@ -90,21 +90,8 @@ function sessionIsForWeekendUser (session) {
 		&& session.products.indexOf('P2') === -1;
 }
 
-const showTrumpSlider = (flags) => {
-	const trumpTest = flags.get('trumpWinsTest');
-	const trumpOffer = flags.get('trumpWinsOffer');
-
-	if (trumpTest === 'trial_only') {
-		return false;
-	} else if (trumpOffer || trumpTest) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
 function showElectionsOffer (flags) {
-	return (flags.get('hillaryWinsOffer') || showTrumpSlider(flags));
+	return flags.get('discountOn');
 }
 
 /**
