@@ -133,7 +133,6 @@ export const init = () => {
 			}
 		})
 		.catch(error => {
-			console.error(error);
 			broadcast('oErrors.log', {
 				error,
 				info: {
