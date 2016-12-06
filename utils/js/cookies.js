@@ -11,7 +11,7 @@ function getOptions (options){
 		}
 
 		if(options[key] instanceof Date){
-			options[key] = options[key] = options[key].toUTCString();
+			options[key] = options[key].toUTCString();
 		}
 
 		return `${newKey}=${options[key]}`;
