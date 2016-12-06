@@ -60,21 +60,6 @@
 	margin: 0;
 }
 
-@supports (transform: scale(0)) {
-	.o-header__typeahead {
-		transition: 0.3s cubic-bezier(0.4, 0.2, 0.5, 1.4);
-		transform-origin: 1.43em -0.43em;
-	}
-
-	.o-header__typeahead[hidden],
-	.o-header__typeahead:empty {
-		opacity: 0;
-		transform: scale(0);
-		display: block;
-		transition-timing-function: ease;
-	}
-}
-
 .o-header__typeahead-link {
 	padding: 8px 16px;
 	cursor: pointer;
