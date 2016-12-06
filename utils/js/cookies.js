@@ -1,3 +1,5 @@
+//TODO we may want to replace this with https://github.com/WICG/async-cookies-api at some point in the future
+
 // Regex taken from https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie don't ask me how it works
 function getRegexForName (name){
 	return new RegExp(`(?:(?:^|.*;\\s*)${name}\\s*\=\\s*([^;]*).*$)|^.*$`);
