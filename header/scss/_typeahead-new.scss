@@ -17,7 +17,6 @@
 	width: 100%;
 	margin: -2px 0 0;
 	border: 1px solid rgba(0, 0, 0, 0.3);
-	border-radius: 0.3em;
 	overflow: hidden;
 	background: getColor('white');
 	text-align: left;
@@ -32,11 +31,26 @@
 	display: none;
 }
 
-.o-header__typeahead h3 {
-	padding: 5px;
+.o-header__typeahead-heading {
+
+	@include oTypographySans(m);
+
+	position: relative;
 	margin: 0;
-	background: getColor('grey-tint4');
-	color: getColor('white');
+	padding: $spacing-unit 0;
+
+	&:before {
+		border-top: 8px solid getColor('black');
+		content: '';
+		left: 0;
+		top: 0;
+		position: absolute;
+		width: 100%;
+	}
+}
+
+.o-header__typeahead__group {
+	padding: $spacing-unit*2 $spacing-unit;
 }
 
 .o-header__typeahead ul,

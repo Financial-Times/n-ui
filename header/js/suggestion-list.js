@@ -50,8 +50,8 @@ export class SuggestionList extends React.Component {
 
 		return <div className="o-header__typeahead" hidden={ !hasSuggestions}>
 		{ suggestions.map(group => (
-				<div>
-					<h3>{group.heading}</h3>
+				<div class="o-header__typeahead__group">
+					<h3 class="o-header__typeahead-heading">{group.heading}</h3>
 					<ul>
 					{ group.suggestions.map(suggestion => (
 						<li className="o-header__typeahead-item">
