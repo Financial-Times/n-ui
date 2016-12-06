@@ -18,18 +18,18 @@ function getOptions (options){
 	});
 }
 
-function set (name, value, opts){
+function set (name, value, opts = {}){
 	const options = getOptions(opts).join('; ');
 	const cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; ${options}`;
 	document.cookie = cookie;
 }
 
 function get (name){
-	return document.cookie.replace(getRegexForName(name), '$1');
+	return decodeURIComponent(document.cookie.replace(getRegexForName(encodeURIComponent(name)), '$1'));
 }
 
 function has (name){
-	return new RegExp(name + '=').test(document.cookie);
+	return new RegExp(encodeURIComponent(name) + '=').test(document.cookie);
 }
 
 function remove (name){

@@ -34,4 +34,12 @@ describe('Cookie Utils', () => {
 		cookieStore.remove(testCookieName);
 		expect(cookieStore.has(testCookieName)).to.be.false;
 	});
+
+	it('Should url encode (and unencode) names and values', () => {
+		const name = '&name';
+		const value = 'val:ue';
+		cookieStore.set(name, value);
+		expect(cookieStore.has(name)).to.be.true;
+		expect(cookieStore.get(name)).to.equal(value);
+	});
 });
