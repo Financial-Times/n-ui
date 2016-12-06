@@ -1,6 +1,7 @@
-<a data-trackable="a11y-survey-screen-reader" class="n-util-visually-hidden" href="https://www.surveymonkey.co.uk/r/8HGPJHD">Accessibility survey: Please help us improve accessibility on FT.com</a>
-<a data-trackable="a11y-skip-to-navigation" class="n-util-visually-hidden" href="#primary-nav">Skip to navigation</a>
-<a data-trackable="a11y-skip-to-content" class="n-util-visually-hidden" href="#site-content">Skip to content</a>
+<a data-trackable="a11y-survey-screen-reader" class="n-skip-link" target="_blank" href="https://www.surveymonkey.co.uk/r/8HGPJHD">Accessibility survey: Please help us improve accessibility on FT.com</a>
+<a data-trackable="a11y-skip-to-navigation" class="n-skip-link" href="#site-navigation">Skip to navigation</a>
+<a data-trackable="a11y-skip-to-content" class="n-skip-link" href="#site-content">Skip to content</a>
+<a data-trackable="a11y-skip-to-footer" class="n-skip-link" href="#site-footer">Skip to footer</a>
 
 {{#if content.before}}
 	<div class="o-header-before">{{{content.before}}}</div>
@@ -9,7 +10,14 @@
 	{{> n-ui/header/partials/marketing-promo/template}}
 {{/unlessEquals}}
 
-<header class="o-header" data-o-component="o-header" id="primary-nav" data-o-header--no-js>
+{{#ifEquals @root.viewStyle 'compact'}}
+	<header id="site-navigation" class="o-header o-header--simple" data-o-component="o-header" data-o-header--no-js>
+{{else}}
+	<header id="site-navigation" class="o-header" data-o-component="o-header" data-o-header--no-js>
+{{/ifEquals}}
+
+
+
 	{{#ifEquals nUi.header.variant 'logo-only'}}
 		{{> n-ui/header/partials/header/top}}
 	{{else}}
