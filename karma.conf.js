@@ -132,6 +132,9 @@ module.exports = function (karma) {
 				}
 		},
 
+		// wait 10 minutes for a browser if we have to...
+		captureTimeout: (1000 * 60) * 10,
+
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
 		singleRun: true

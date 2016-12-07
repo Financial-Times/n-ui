@@ -18,7 +18,7 @@ const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorag
 
 const getTlsVersion = () => fetch('https://www.howsmyssl.com/a/check')
 	.then(response => response.json())
-	.then(({ tls_version = '' } = { }) => Number.parseFloat(tls_version.replace('TLS ', '')));
+	.then(({ tls_version = '' } = { }) => parseFloat(tls_version.replace('TLS ', '')));
 
 /**
  * Show the prompt if

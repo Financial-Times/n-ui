@@ -92,6 +92,21 @@
 						</li>
 					{{/each}}
 				{{/if}}
+
+				{{#if @root.flags.compactView}}
+					{{#if @root.viewStyle}}
+						<li class="o-header__drawer__viewtoggle" data-trackable="viewtoggle">
+							<span class="o-header__viewtoggle__item o-header__viewtoggle__label">View homepage as</span>
+							<a class="o-header__viewtoggle__item o-header__viewtoggle__link o-header__viewtoggle__link--compact {{#ifEquals @root.viewStyle 'compact'}}o-header__viewtoggle__link--selected{{/ifEquals}}" href="/viewtoggle/compact" data-trackable="compact">
+								<span class="n-util-visually-hidden">Compact view</span>
+							</a>
+							<a class="o-header__viewtoggle__item o-header__viewtoggle__link o-header__viewtoggle__link--standard {{#ifEquals @root.viewStyle 'standard'}}o-header__viewtoggle__link--selected{{/ifEquals}}" href="/viewtoggle/standard" data-trackable="standard">
+								<span class="n-util-visually-hidden">Classic view</span>
+							</a>
+						</li>
+					{{/if}}
+				{{/if}}
+
 				<li class="o-header__drawer-menu-item">
 					{{>n-ui/opt-out/template classname='o-header__drawer-menu-button'}}
 				</li>
