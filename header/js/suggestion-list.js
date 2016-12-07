@@ -32,19 +32,19 @@ export class SuggestionList extends React.Component {
 	}
 
 
-	renderItems(group) {
+	renderItems (group) {
 
-		if(!group.suggestions.length && group.emptyHtml) {
+		if (!group.suggestions.length && group.emptyHtml) {
 			return group.emptyHtml;
 		} else {
 			return <ul className="o-header__typeahead-item-list">
 				{ group.suggestions.map(suggestion => (
 					<li className="o-header__typeahead-item">
 						<a className={'o-header__typeahead-link ' + group.linkClassName}
-						   href={suggestion.url}
-						   data-trackable="link"
-						   data-concept-id={suggestion.id}
-						   dangerouslySetInnerHTML={{__html:suggestion.html}} ></a>
+							href={suggestion.url}
+							data-trackable="link"
+							data-concept-id={suggestion.id}
+							dangerouslySetInnerHTML={{__html:suggestion.html}}></a>
 					</li>
 				)) }
 				<li className="o-header__typeahead-item">
@@ -63,7 +63,7 @@ export class SuggestionList extends React.Component {
 				heading: 'News',
 				linkClassName: 'o-header__typeahead-link--news',
 				trackable: 'news',
-				suggestions: this.state.suggestions.tags.slice(0,6)
+				suggestions: this.state.suggestions.tags.slice(0, 6)
 					.map(suggestion => ({
 						html: this.highlight(suggestion.name),
 						url: suggestion.url,
@@ -80,7 +80,7 @@ export class SuggestionList extends React.Component {
 				trackable: 'equities',
 				linkClassName: 'o-header__typeahead-link--equities',
 				emptyHtml: (<span>lol no</span>),
-				suggestions: this.state.suggestions.equities.slice(0,6)
+				suggestions: this.state.suggestions.equities.slice(0, 6)
 					.map(suggestion => ({
 						html: `<span class="o-header__typeahead-link__equity-name">${this.highlight(suggestion.name)}</span><abbr>${this.highlight(suggestion.symbol)}</abbr>`,
 						url: suggestion.url,
@@ -95,7 +95,7 @@ export class SuggestionList extends React.Component {
 		];
 
 		return <div className="o-header__typeahead" hidden={ !hasSuggestions} data-trackable="typeahead">
-		{ suggestions.map(group => (
+			{ suggestions.map(group => (
 				<div className={'o-header__typeahead__group ' + group.className} data-trackable={group.trackable}>
 					<h3 className="o-header__typeahead-heading">{group.heading}</h3>
 					{this.renderItems(group)}
