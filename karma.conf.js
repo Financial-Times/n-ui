@@ -10,7 +10,8 @@ const componentsToTest = [
 	'myft',
 	'tracking',
 	'opt-out',
-	'subscription-offer-prompt'
+	'subscription-offer-prompt',
+	'utils'
 ];
 
 module.exports = function (karma) {

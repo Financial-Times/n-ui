@@ -68,3 +68,22 @@ Creates a throttled copy of a function
 
 #### `debounce(func, wait)`
 Creates a debounced copy of a function
+
+### CookieStore
+
+Contain useful methods for working with cookies.
+
+    const cookieStore = require('n-ui/utils/').cookieStore;
+    
+#### `get(name)`
+Get the value of the given cookie
+
+#### `set(name, value, [options])`
+Set a cookie.  Available options are `domain`, `path`, `expires`, `secure` and `maxAge`
+Note it is "maxAge" not "max-age".  If you don't specify either expires or maxAge the cookie will expire at the end of the session
+
+#### `has(name)`
+Returns true if the given cookie exists
+
+#### `remove(name)`
+Delete the given cookie by seting the expiry to the past
