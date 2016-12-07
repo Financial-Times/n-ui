@@ -20,9 +20,11 @@
 	overflow: hidden;
 	background: getColor('white');
 	text-align: left;
+	display: flex;
+	flex-direction: column;
 
-	@include oGridRespondTo('S') {
-		width: 350px;
+	@include oGridRespondTo('L') {
+		flex-direction: row;
 	}
 }
 
@@ -51,6 +53,7 @@
 
 .o-header__typeahead__group {
 	padding: $spacing-unit*2 $spacing-unit;
+	flex: 1;
 }
 
 .o-header__typeahead-item-list,
