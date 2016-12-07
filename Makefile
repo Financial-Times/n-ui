@@ -20,10 +20,15 @@ serve:
 nightwatch:
 	nht nightwatch test/js-success.nightwatch.js
 
-test: verify test-unit test-build serve a11y nightwatch
+test: verify test-unit test-build serve nightwatch a11y
 
-a11y:
-	pa11y-ci
+a11y: test-build
+	node .pa11yci.js
+	rm -rf bower_components/n-ui
+	mkdir bower_components/n-ui
+	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
+	PA11Y=true node _test-server/app
+
 
 test-dev: verify test-unit-dev
 
