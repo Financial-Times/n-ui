@@ -78,6 +78,7 @@
 .o-header__typeahead-link {
 	cursor: pointer;
 	color: getColor('grey-tint5');
+	font-weight: oFontsWeight(semibold);
 	border-bottom: 0;
 	box-sizing: border-box;
 	display: flex;
@@ -85,6 +86,7 @@
 	padding: $spacing-unit/2 0;
 
 	mark {
+		color:inherit;
 		background: none;
 		font-weight: 600;
 	}
@@ -118,6 +120,10 @@
 		@include oIconsGetIcon(arrow-right, getColor('grey-tint5'), 14);
 		content: '';
 	}
+}
+
+.o-header__typeahead-link--news {
+	color: getColor('claret-1');
 }
 
 .o-header__typeahead-link__equity-name {
