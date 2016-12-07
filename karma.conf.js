@@ -10,7 +10,7 @@ const componentsToTest = [
 	'myft',
 	'tracking',
 	'opt-out',
-	'subscription-offer-prompt',
+	'subscription-offer-prompt'
 ];
 
 module.exports = function (karma) {
@@ -130,6 +130,9 @@ module.exports = function (karma) {
 						timeout: 0
 				}
 		},
+
+		// wait 10 minutes for a browser if we have to...
+		captureTimeout: (1000 * 60) * 10,
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
