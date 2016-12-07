@@ -20,7 +20,7 @@
 @mixin viewToggle {
 	$icon-colour-default: getColor('grey-tint5');
 	$icon-color-hover: getColorFor(link, text);
-	$icon-size: 25;
+	$icon-size: 40;
 
 	.o-header__viewtoggle {
 		float: right;

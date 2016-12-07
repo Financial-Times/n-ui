@@ -1,5 +1,6 @@
 // tricky recursive function, but it works
 function uuid (a){return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,uuid)}
+const cookieStore = require('./js/cookies');
 
 module.exports = {
 	$: function (sel, ctx) { return (ctx || document).querySelector(sel) },
@@ -62,10 +63,9 @@ module.exports = {
 			performance.mark(name);
 		}
 	},
-	getCookieValue: key => {
-		const regex = new RegExp(`${key}=([^;]+)`, 'i');
-		const a = regex.exec(document.cookie);
-		return (a) ? a[1] : undefined;
-	}
+	cookieStore,
+
+	// legacy method - keeping for backwards compatibility
+	getCookieValue: cookieStore.get
 
 };

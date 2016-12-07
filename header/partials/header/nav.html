@@ -49,12 +49,12 @@
 
 		{{#if @root.flags.compactView}}
 			{{#if @root.viewStyle}}
-				<div class="o-header__viewtoggle">
+				<div class="o-header__viewtoggle" data-trackable="viewtoggle">
 					<span class="o-header__viewtoggle__item o-header__viewtoggle__label">View page as</span>
-					<a class="o-header__viewtoggle__item o-header__viewtoggle__link o-header__viewtoggle__link--compact {{#ifEquals @root.viewStyle 'compact'}}o-header__viewtoggle__link--selected{{/ifEquals}}" href="/viewtoggle/compact" title="Compact View">
+					<a class="o-header__viewtoggle__item o-header__viewtoggle__link o-header__viewtoggle__link--compact {{#ifEquals @root.viewStyle 'compact'}}o-header__viewtoggle__link--selected{{/ifEquals}}" href="/viewtoggle/compact" title="Compact View" data-trackable="compact">
 						<span class="n-util-visually-hidden">compact</span>
 					</a>
-					<a class="o-header__viewtoggle__item o-header__viewtoggle__link o-header__viewtoggle__link--standard {{#ifEquals @root.viewStyle 'standard'}}o-header__viewtoggle__link--selected{{/ifEquals}}" href="/viewtoggle/standard" title="Standard View">
+					<a class="o-header__viewtoggle__item o-header__viewtoggle__link o-header__viewtoggle__link--standard {{#ifEquals @root.viewStyle 'standard'}}o-header__viewtoggle__link--selected{{/ifEquals}}" href="/viewtoggle/standard" title="Standard View" data-trackable="standard">
 						<span class="n-util-visually-hidden">standard</span>
 					</a>
 				</div>
