@@ -112,6 +112,14 @@
 	}
 }
 
+.o-header__typeahead-link--tail {
+
+	&:after {
+		@include oIconsGetIcon(arrow-right, getColor('grey-tint5'), 14);
+		content: '';
+	}
+}
+
 .o-header__typeahead-link__equity-name {
 	flex-grow: 1;
 }
