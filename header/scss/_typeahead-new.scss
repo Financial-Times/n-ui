@@ -80,7 +80,7 @@
 	color: getColor('grey-tint5');
 	border-bottom: 0;
 	box-sizing: border-box;
-	display: flex;
+	display: block;
 	text-decoration: none;
 	padding: $spacing-unit/2 0;
 
@@ -123,6 +123,11 @@
 
 .o-header__typeahead-link--news {
 	color: getColor('claret-1');
+}
+
+// for nice alignment of equity name and index
+.o-header__typeahead-link--equities {
+	display: flex;
 }
 
 .o-header__typeahead-link__equity-name {
