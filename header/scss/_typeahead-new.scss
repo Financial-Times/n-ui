@@ -80,7 +80,7 @@
 	color: getColor('grey-tint5');
 	border-bottom: 0;
 	box-sizing: border-box;
-	display: block;
+	display: flex;
 	text-decoration: none;
 	padding: $spacing-unit/2 0;
 
@@ -110,4 +110,8 @@
 		clear: right;
 		display: block;
 	}
+}
+
+.o-header__typeahead-link__equity-name {
+	flex-grow: 1;
 }

@@ -41,7 +41,7 @@ export class SuggestionList extends React.Component {
 				heading: 'Equities',
 				suggestions: this.state.suggestions.equities.slice(0,6)
 					.map(suggestion => ({
-							html: this.highlight(suggestion.name) + `<abbr>${this.highlight(suggestion.symbol)}</abbr>`,
+							html: `<span class="o-header__typeahead-link__equity-name">${this.highlight(suggestion.name)}</span><abbr>${this.highlight(suggestion.symbol)}</abbr>`,
 							url: suggestion.url,
 							id: suggestion.symbol
 					}))
