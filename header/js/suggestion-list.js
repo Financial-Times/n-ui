@@ -70,8 +70,8 @@ export class SuggestionList extends React.Component {
 						id: suggestion.id
 					})),
 				tailLink: {
-					url: `/search?q=${this.state.searchTerm}`, // todo whoops xss
-					text: `Search for all content matching ${this.state.searchTerm}`, // todo whoops xss
+					url: `/search?q=${this.state.searchTerm}`,
+					text: `Search for all content matching ${this.state.searchTerm}`,
 					trackable: 'see-all'
 				}
 			},
@@ -87,8 +87,8 @@ export class SuggestionList extends React.Component {
 						id: suggestion.symbol
 					})),
 				tailLink: {
-					url: `https://markets.ft.com/data/search?query=${this.state.searchTerm}`, // todo whoops xss
-					text: `See all quotes matching ${this.state.searchTerm}`, // todo whoops xss
+					url: `https://markets.ft.com/data/search?query=${this.state.searchTerm}`,
+					text: `See all quotes matching ${this.state.searchTerm}`,
 					trackable: 'see-all'
 				}
 			}
