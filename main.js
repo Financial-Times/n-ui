@@ -42,7 +42,7 @@ export const _image = image;
 import * as subscriptionOfferPrompt from './subscription-offer-prompt';
 export const _subscriptionOfferPrompt = subscriptionOfferPrompt;
 import * as tooltip from './tooltip';
-export const _tooltip  = tooltip;
+export const _tooltip = tooltip;
 
 // Export some third party components we're unlikely to remove in a hurry
 import ftdomdelegate from 'ftdomdelegate';

@@ -11,12 +11,12 @@ const ANIM_LENGTH = 250;
 
 let tooltipCount = 0;
 
-function generateId(){
+function generateId (){
 	tooltipCount++;
 	return `ft-n-tooltip_+${tooltipCount}`;
 }
 
-function generateHTML(content){
+function generateHTML (content){
 	const closeLink = document.createElement('a');
 	closeLink.classList.add(TOOLTIP_CLOSE_CLASS);
 	const div = document.createElement('div');
@@ -28,7 +28,7 @@ function generateHTML(content){
 	return div;
 }
 
-function getToolTipContent(el){
+function getToolTipContent (el){
 	const contentAttr = el.getAttribute(CONTENT_ATTRIBUTE);
 	if(!contentAttr.startsWith('#')){
 		return contentAttr;
@@ -44,7 +44,7 @@ function getToolTipContent(el){
 
 export class NToolTip{
 
-	constructor(el){
+	constructor (el){
 		this.el = el;
 		this.tooltip = generateHTML(getToolTipContent(this.el));
 		this.el.setAttribute(ID_ATTRIBUTE, this.tooltip.id);
@@ -63,23 +63,23 @@ export class NToolTip{
 		return this._showMode;
 	}
 
-	show(){
+	show (){
 		this.tooltip.classList.remove(TOOLTIP_HIDDEN_CLASS);
 		this.position();
 		this.tooltip.classList.add(TOOLTIP_VISIBLE_CLASS);
 	}
 
-	hide() {
+	hide () {
 		this.tooltip.classList.remove(TOOLTIP_VISIBLE_CLASS);
 		setTimeout(() => {
-			tooltip.classList.add(TOOLTIP_HIDDEN_CLASS);
+			this.tooltip.classList.add(TOOLTIP_HIDDEN_CLASS);
 		}, ANIM_LENGTH);
 	}
 
-	position(){
+	position (){
 		this.tooltip.style.left = (this.el.offsetLeft - (this.tooltip.offsetWidth / 2)) + 'px';
 
 		// the magic 15 is to account for the triangle
-		this.tooltip.style.top = (this.el.offsetTop + this.el.clientHeight +  15) + 'px';
+		this.tooltip.style.top = (this.el.offsetTop + this.el.clientHeight + 15) + 'px';
 	}
 }
