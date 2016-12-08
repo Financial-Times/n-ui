@@ -1,7 +1,12 @@
+'use strict';
 const fs = require('fs');
 const express = require('@financial-times/n-express');
 const path = require('path');
 const deployStatic = require('@financial-times/n-heroku-tools').deployStatic.task;
+const chalk = require('chalk');
+const errorHighlight = chalk.bold.red;
+const highlight = chalk.bold.green;
+
 
 const app = module.exports = express({
 	name: process.env.CIRCLE_BUILD_NUM ? `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/public` : 'public',
@@ -12,27 +17,26 @@ const app = module.exports = express({
 	hasHeadCss: true,
 	layoutsDir: path.join(process.cwd(), '/layout'),
 	viewsDirectory: '/_test-server/views',
+	partialsDirectory: process.cwd(),
 	directory: process.cwd()
 });
-
 app.get('/', (req, res) => {
-	// such a load of hacks :/
-	// in an ideal world we could hack some middleware in
-	// before the assets middleware gets applied
-	res.locals.javascriptBundles = res.locals.javascriptBundles
-		.filter(bundle => {
-			return bundle.indexOf('undefined') === -1
-		})
-		.map(bundle => {
-			if (bundle.indexOf('polyfill') > -1) {
-				return bundle.replace('polyfill.min', 'polyfill')
-					.split('&excludes')[0];
-			}
-			return bundle;
-		});
 	res.render('default', {
 		title: 'Test App',
 		layout: 'wrapper'
+	});
+});
+
+app.use(require('./middleware/assets'));
+app.get('/components/:component?', (req, res) => {
+	const component = req.params.component;
+	let template = require(`../${component}/pa11y-config`);
+	template = template.entry;
+
+	res.render(`../../${component}/${template}`, {
+		pa11y: true,
+		title: 'Test App',
+		layout: '../layout/vanilla'
 	});
 });
 
@@ -48,8 +52,23 @@ app.get('*', (req, res) => {
 
 app.listen(5005)
 	.then(app => {
-		// in CI generate a test page and send it to S3
-		if (process.env.CIRCLE_BUILD_NUM) {
+		if (process.env.PA11Y) {
+			const spawn = require('child_process').spawn;
+			const pa11y = spawn('pa11y-ci');
+
+			pa11y.stdout.on('data', (data) => {
+				console.log(highlight(`${data}`)); //eslint-disable-line
+			});
+
+			pa11y.stderr.on('data', (error) => {
+				console.log(errorHighlight(`${error}`)); //eslint-disable-line
+			});
+
+			pa11y.on('close', (code) => {
+				process.exit(code)
+			});
+		} else if (process.env.CIRCLE_BUILD_NUM) {
+			// in CI generate a test page and send it to S3
 
 			fetch('http://localhost:5005/', {
 				headers: {
@@ -77,7 +96,7 @@ app.listen(5005)
 				})
 				.catch(err => {
 					console.error(err) //eslint-disable-line
-					process.exit(2)
+					process.exit(2);
 				})
 		}
 	});

@@ -29,7 +29,8 @@ $n-ui-features: (
 	tourTipGroup: false,
 	typography: 'critical',
 	utils: 'critical',
-	welcomeMessage: true
+	welcomeMessage: true,
+	tooltip: true
 ) !default;
 
 /// Declare any feature dependencies
@@ -49,7 +50,8 @@ $n-ui-presets: (
 		myft: true,
 		myftDigestPromo: 'critical',
 		notification: true,
-		welcomeMessage: true
+		welcomeMessage: true,
+		tooltip: true
 	)
 );
 

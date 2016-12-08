@@ -29,7 +29,8 @@ export const presets = {
 		welcomeMessage: true,
 		subscriptionOfferPrompt: true,
 		myft: true,
-		ads: true
+		ads: true,
+		tooltip: true
 	}
 };
 

@@ -20,10 +20,12 @@
 @import 'tour-tip/main';
 @import 'tour-tip-group/main';
 @import 'page-heading/main';
+@import 'tooltip/main';
 
 // TODO: move these components into n-ui
 @import 'cookie-message/main';
 @import 'welcome-message/main';
 @import 'subscription-offer-prompt/main';
+
 
 $n-ui-bootstrapped: true;
