@@ -63,18 +63,6 @@
 	margin: 0;
 }
 
-.o-header__typeahead-item-list {
-	padding: 0 $spacing-unit;
-}
-
-.o-header__typeahead-item {
-	border-bottom: 1px solid getColor('grey-tint2');
-
-	&:last-child {
-		border-bottom: 0;
-	}
-}
-
 .o-header__typeahead-link {
 	cursor: pointer;
 	color: getColor('grey-tint5');
@@ -82,7 +70,11 @@
 	box-sizing: border-box;
 	display: block;
 	text-decoration: none;
-	padding: $spacing-unit/2 0;
+	padding: $spacing-unit/2 $spacing-unit;
+
+	// for positioning the dividing line
+	position: relative;
+	margin-top: -1px;
 
 	mark {
 		color:inherit;
@@ -95,22 +87,37 @@
 		padding-left: 10px;
 	}
 
+	&:before {
+		content: '';
+		display: block;
+		border-bottom: 1px solid getColor('grey-tint2');
+		position: absolute;
+		bottom: 0;
+		left: $spacing-unit;
+		right: $spacing-unit;
+		height: 1px;
+	}
+
 	&:hover,
 	&:focus {
 		background: getColor('teal-1');
 		color: getColor('white');
 	}
 
+	&:hover:before,
+	&:focus:before {
+		opacity: 0;
+	}
+
 	&:hover mark,
 	&:focus mark {
 		color: inherit;
 	}
+}
 
-	&:after {
-		content: '';
-		clear: right;
-		display: block;
-	}
+// hide item divider at bottom of last item
+.o-header__typeahead-item:last-child .o-header__typeahead-link:before {
+	opacity: 0;
 }
 
 .o-header__typeahead-link--tail {
