@@ -17,10 +17,12 @@ function init (flags) {
 		if (flags.get('searchMultiTypeahead')) {
 			for (let i = 0; i < typeaheadElements.length; i++) {
 				const form = typeaheadElements[i];
+				const type = form.getAttribute('data-typeahead-type') || 'suggestions';
 
 				new TypeaheadNew(
 					form,
-					`//${window.location.host}/search-api/suggestions?partial=`,
+					type,
+					`//${window.location.host}/search-api/${type}?partial=`,
 					function () {
 						form.submit();
 					}
