@@ -32,7 +32,9 @@ function supportsCors () {
 function decorateTheSession (session) {
 	session.isForRegisteredUser = sessionIsForRegisteredUser(session);
 	session.isForWeekendUser = sessionIsForWeekendUser(session);
-	session.isForAnonymousUser = !session.products;
+	// TODO: Fix required. Some user sessions are falsely returning
+	// no products. see https://jira.ft.com/browse/NFT-700
+	// session.isForAnonymousUser = !session.products;
 	return session;
 }
 
@@ -115,7 +117,9 @@ export function init (flags) {
 				.then(extractResult)
 				.then(decorateTheSession)
 				.then(function (session) {
-					if (session.isForAnonymousUser || session.isForRegisteredUser || session.isForWeekendUser) {
+					if (//session.isForAnonymousUser || // TODO: see decorateTheSession()
+						session.isForRegisteredUser ||
+						session.isForWeekendUser) {
 
 						if (showElectionsOffer(flags)) {
 							showElectionPromo()
