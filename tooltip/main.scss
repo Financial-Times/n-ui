@@ -1,0 +1,60 @@
+@if nUiApply('tooltip') {
+	$triangle-size:15px;
+
+	.n-tooltip {
+		background-color: white;
+		max-width: 250px;
+		padding: 0.8em 1em 0.8em 0.8em;
+		border-radius: 5px;
+		filter: drop-shadow(-4px 4px 12px rgba(0,0,0,0.5));
+		border: 1px solid getColor('pink-tint3');
+		position: absolute;
+		opacity: 0;
+		transition: opacity 250ms linear;
+		z-index: 2;
+
+		* {
+			margin: 0;
+		}
+
+		* + * {
+			margin-top: 1em;
+		}
+
+		&--visible {
+			opacity: 1;
+		}
+
+		&--hidden {
+			display: none;
+		}
+
+		&:after {
+			content: "";
+			position: absolute;
+			top: -30px;
+			left: 50%;
+			transform: translateX(-100%);
+			border: $triangle-size solid transparent;
+			border-bottom-color: white;
+			display: block;
+			width: 0;
+		}
+
+	}
+
+	.n-tooltip__close {
+		position: absolute;
+		right: 5px;
+		top: 5px;
+		@include oIconsGetIcon('cross', getColor('grey-tint5'), 12);
+		opacity: 0.4;
+		border: 0;
+		margin: 0;
+		cursor: pointer;
+	}
+
+
+}
+
+

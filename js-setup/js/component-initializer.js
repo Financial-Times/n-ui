@@ -13,6 +13,7 @@ import digestPromo from '../../myft-digest-promo';
 import myftHint from '../../myft-hint';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
+import {init as initToolTip} from '../../tooltip';
 
 export const presets = {
 	discrete: {
@@ -29,7 +30,8 @@ export const presets = {
 		welcomeMessage: true,
 		subscriptionOfferPrompt: true,
 		myft: true,
-		ads: true
+		ads: true,
+		tooltip: true
 	}
 };
 

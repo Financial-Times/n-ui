@@ -18,7 +18,7 @@ For CSS usage information see [the wiki](https://github.com/Financial-Times/n-ui
 ## Adding subcomponents
 
 1.	Create a subdirectory for your component, add code, docs and tests
-2.	For the js, make sure it’s referred to appropriately in `main.js`, `entry.js` and (if it’s part of the ‘app shell’) `js-setup/js/component-initializer.js`. If it has tests (which it should have) add the component’s name to the list at the top of `karma.conf.js`
+2.	For the js, make sure it’s referred to appropriately in `index.js`, `entry.js` and (if it’s part of the ‘app shell’) `js-setup/js/component-initializer.js`. If it has tests (which it should have) add the component’s name to the list at the top of `karma.conf.js`
 3.	For css add to `configure.css` and `env.css` as appropriate
 4.	Add use cases of the component to `_test/server/views/default.html` and `_test-server/template-copy-list.txt` as appropriate
 
