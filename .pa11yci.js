@@ -53,6 +53,7 @@ const pa11yIgnore = [
 	'test',
 	'tour-tip',
 	'tour-tip-group',
+	'tooltip',
 	'tracking',
 	'typography',
 	'utils',
