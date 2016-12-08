@@ -27,7 +27,7 @@ export class SuggestionList extends React.Component {
 				'data-trackable': group.tailLink.trackable
 			};
 
-			return <a {...linkAttrs} >{group.tailLink.text}</a>
+			return <a {...linkAttrs} >{group.tailLink.innerHtml}</a>
 		}
 	}
 
@@ -71,7 +71,7 @@ export class SuggestionList extends React.Component {
 					})),
 				tailLink: {
 					url: `/search?q=${this.state.searchTerm}`,
-					text: `Search for all content matching ${this.state.searchTerm}`,
+					innerHtml: <span>See all news matching <mark>{this.state.searchTerm}</mark></span>,
 					trackable: 'see-all'
 				}
 			},
@@ -88,7 +88,7 @@ export class SuggestionList extends React.Component {
 					})),
 				tailLink: {
 					url: `https://markets.ft.com/data/search?query=${this.state.searchTerm}`,
-					text: `See all quotes matching ${this.state.searchTerm}`,
+					innerHtml: <span>See all quotes matching <mark>{this.state.searchTerm}</mark></span>,
 					trackable: 'see-all'
 				}
 			}
