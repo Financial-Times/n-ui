@@ -93,7 +93,7 @@ function sessionIsForWeekendUser (session) {
 }
 
 function showElectionsOffer (flags) {
-	return flags.get('discountOn');
+	return flags.get('discountOn') && flags.get('headerMarketingPromo');
 }
 
 /**
