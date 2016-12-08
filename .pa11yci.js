@@ -6,9 +6,16 @@ const error = chalk.bold.red;
 const config = {
 	"defaults": {
 		"timeout": 10000,
+		"page": {
+			"headers": {
+				"Cookie": "next-flags=ads:off,cookieMessage:off,nTeaserStreamPage:on; secure=true"
+			}
+		},
 		"rootElement": "#a11y"
 	},
-	"urls": []
+	"urls": [
+		"http://localhost:5005"
+	]
 };
 
 const pa11yIgnore = [
