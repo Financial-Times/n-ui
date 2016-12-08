@@ -32,9 +32,8 @@ function supportsCors () {
 function decorateTheSession (session) {
 	session.isForRegisteredUser = sessionIsForRegisteredUser(session);
 	session.isForWeekendUser = sessionIsForWeekendUser(session);
-	// TODO: Fix required. Some user sessions are falsely returning
 	// no products. see https://jira.ft.com/browse/NFT-700
-	// session.isForAnonymousUser = !session.products;
+	session.isForAnonymousUser = !session.products && !session.uuid;
 	return session;
 }
 
