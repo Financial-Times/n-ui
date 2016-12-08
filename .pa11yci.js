@@ -8,7 +8,7 @@ const config = {
 		"timeout": 10000,
 		"page": {
 			"headers": {
-				"Cookie": "next-flags=ads:off,cookieMessage:off,nTeaserStreamPage:on; secure=true"
+				"Cookie": "next-flags=ads:off,cookieMessage:off; secure=true"
 			}
 		},
 		"rootElement": "#a11y"
