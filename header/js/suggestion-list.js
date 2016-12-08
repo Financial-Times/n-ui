@@ -79,7 +79,7 @@ export class SuggestionList extends React.Component {
 				heading: 'Equities',
 				trackable: 'equities',
 				linkClassName: 'o-header__typeahead-link--equities',
-				emptyHtml: (<span>lol no</span>),
+				emptyHtml: <div className="o-header__typeahead__no-results-message">No equities found</div>,
 				suggestions: this.state.suggestions.equities.slice(0, 6)
 					.map(suggestion => ({
 						html: `<span class="o-header__typeahead-link__equity-name">${this.highlight(suggestion.name)}</span><abbr>${this.highlight(suggestion.symbol)}</abbr>`,
