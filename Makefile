@@ -11,7 +11,7 @@ test-unit-dev:
 test-build:
 	webpack --config webpack.config.test.js
 
-serve:
+run:
 	rm -rf bower_components/n-ui
 	mkdir bower_components/n-ui
 	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
@@ -32,21 +32,18 @@ a11y: test-build
 
 test-dev: verify test-unit-dev
 
-build-demo:
-	webpack --config webpack.config.test.js --dev --watch
-
 deploy: assets
 	node ./_deploy/s3.js
 	$(MAKE) npm-publish
 
 build:
-	export DEV_BUILD=1; webpack
+	webpack --config webpack.config.test.js --dev
 
 watch:
-	export DEV_BUILD=1; webpack --watch
+	webpack --config webpack.config.test.js --dev --watch
 
-MSG_N_UI_CERT = "Please copy key.pem and key-cert.pem from next-router into this directory to start the server on https"
-run:
-	@if [ ! -f key.pem ]; then (echo $(MSG_N_UI_CERT) && exit 1); fi
-	@if [ ! -f key-cert.pem ]; then (echo $(MSG_N_UI_CERT) && exit 1); fi
-	http-server dist -p 3456 -c-1 --ssl --cert ./key-cert.pem --key ./key.pem
+serve:
+	@echo '`make serve` is no longer needed to bower link.'
+	@echo 'Instead set the environment variable `NEXT_APP_SHELL=local` in your app'
+	@echo 'and run `make build run` etc in the app'
+	exit 2
