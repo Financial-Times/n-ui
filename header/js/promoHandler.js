@@ -32,7 +32,8 @@ function supportsCors () {
 function decorateTheSession (session) {
 	session.isForRegisteredUser = sessionIsForRegisteredUser(session);
 	session.isForWeekendUser = sessionIsForWeekendUser(session);
-	session.isForAnonymousUser = !session.products;
+	// no products. see https://jira.ft.com/browse/NFT-700
+	session.isForAnonymousUser = !session.products && !session.uuid;
 	return session;
 }
 
@@ -91,7 +92,7 @@ function sessionIsForWeekendUser (session) {
 }
 
 function showElectionsOffer (flags) {
-	return flags.get('discountOn');
+	return flags.get('discountOn') && flags.get('headerMarketingPromo');
 }
 
 /**

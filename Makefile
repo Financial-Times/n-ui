@@ -11,6 +11,8 @@ test-unit-dev:
 test-build:
 	webpack --config webpack.config.test.js
 
+demo: run
+
 run:
 	rm -rf bower_components/n-ui
 	mkdir bower_components/n-ui
