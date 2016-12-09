@@ -124,7 +124,12 @@
 
 	&:after {
 		@include oIconsGetIcon(arrow-right, getColor('grey-tint5'), 14);
+		margin: 0 0 -2px 2px;
 		content: '';
+	}
+
+	&:hover:after {
+		@include oIconsGetIcon(arrow-right, getColor('white'), 14)
 	}
 }
 
