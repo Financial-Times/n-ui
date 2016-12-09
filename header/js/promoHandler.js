@@ -116,9 +116,7 @@ export function init (flags) {
 				.then(extractResult)
 				.then(decorateTheSession)
 				.then(function (session) {
-					if (//session.isForAnonymousUser || // TODO: see decorateTheSession()
-						session.isForRegisteredUser ||
-						session.isForWeekendUser) {
+					if (session.isForAnonymousUser || session.isForRegisteredUser || session.isForWeekendUser) {
 
 						if (showElectionsOffer(flags)) {
 							showElectionPromo()
