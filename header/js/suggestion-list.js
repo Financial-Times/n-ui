@@ -87,6 +87,7 @@ export class SuggestionList extends React.Component {
 						id: suggestion.symbol
 					})),
 				tailLink: {
+					// React takes care of protecting us from XSS here
 					url: `https://markets.ft.com/data/search?query=${this.state.searchTerm}`,
 					innerHtml: <span>See all quotes matching <mark>{this.state.searchTerm}</mark></span>,
 					trackable: 'see-all'
