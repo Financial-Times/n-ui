@@ -12,6 +12,7 @@
 		opacity: 0;
 		transition: opacity 250ms linear;
 		z-index: 2;
+		white-space: normal !important;
 
 		* {
 			margin: 0;
@@ -39,6 +40,11 @@
 			border-bottom-color: white;
 			display: block;
 			width: 0;
+		}
+
+		&.n-tooltip--left-tail:after {
+			transform: none;
+			left: 20px;
 		}
 
 	}
