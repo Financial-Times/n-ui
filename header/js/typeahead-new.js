@@ -30,14 +30,12 @@ function isOutside (el, container) {
 }
 
 class Typeahead {
-	constructor (containerEl, dataSrc, showAllHandler) {
+	constructor (containerEl, dataSrc) {
 		this.container = containerEl;
 		this.searchEl = this.container.querySelector('input[type="text"]');
 		this.submitButton = this.container.querySelector('button[type="submit"]')
-		this.showAllHandler = showAllHandler;
 		this.dataSrc = dataSrc;
 		this.minLength = 2;
-		this.showAllItem = false;
 		this.init();
 	}
 
@@ -47,11 +45,6 @@ class Typeahead {
 		this.container.insertBefore(this.suggestionListContainer, this.submitButton);
 		this.suggestionsView = ReactDom.render(<SuggestionList/>, this.suggestionListContainer);
 		this.searchTermHistory = [];
-		if (this.showAllItem) {
-			this.viewAllItem = document.createElement('li');
-			this.viewAllItem.classList.add('o-header__typeahead-view-all');
-			this.viewAllItemInnerHTML = '<button type="submit" data-trackable="view-all">View All Results</button>';
-		}
 
 		this.delegate = new Delegate(this.container);
 		this.bodyDelegate = new Delegate(document.body);
@@ -59,7 +52,6 @@ class Typeahead {
 		this.onType = debounce(this.onType, 150).bind(this);
 		this.onDownArrow = this.onDownArrow.bind(this);
 		this.onSuggestionKey = this.onSuggestionKey.bind(this);
-		this.onSuggestionClick = this.onSuggestionClick.bind(this);
 
 		this.delegate.on('keyup', 'input[type="text"]', (ev) => {
 			switch(ev.which) {
@@ -90,7 +82,6 @@ class Typeahead {
 		});
 
 		this.delegate.on('keyup', '.o-header__typeahead a, .o-header__typeahead button[type="submit"]', this.onSuggestionKey);
-		this.delegate.on('click', '.o-header__typeahead a', this.onSuggestionClick);
 		// prevent scroll to item
 		this.delegate.on('keydown', 'input, .o-header__typeahead a', ev => {
 			if (ev.which === 40 || ev.which === 38) {
@@ -116,14 +107,8 @@ class Typeahead {
 		}
 	}
 
-	onSuggestionClick (ev) {
-		this.chooseSuggestion(ev.target);
-		// we don't prevent default as the link's url is a link to the search page
-	}
-
 	onSuggestionKey (ev) {
 		if (ev.which === 13) { // Enter pressed
-			this.chooseSuggestion(ev.target);
 			ev.stopPropagation();
 			// we don't prevent default as the link's url is a link to the search page
 			return;
@@ -148,7 +133,6 @@ class Typeahead {
 			} else {
 				this.suggestionLinks[newIndex].focus();
 			}
-			return;
 		}
 	}
 
@@ -175,7 +159,7 @@ class Typeahead {
 
 	isTimelyResponse (term) {
 		// handle race conditions between e.g. TRU returning slower than TRUMP
-		const index = this.searchTermHistory.indexOf(term)
+		const index = this.searchTermHistory.indexOf(term);
 		if (index > -1) {
 			this.searchTermHistory = this.searchTermHistory.slice(index);
 			return true;
@@ -186,7 +170,7 @@ class Typeahead {
 	suggest (suggestions) {
 
 		if (!suggestions.query || !this.isTimelyResponse(suggestions.query.partial)) {
-			return
+			return;
 		}
 		this.suggestions = suggestions;
 		this.suggestionsView.setState({
@@ -215,12 +199,6 @@ class Typeahead {
 					}
 				});
 			})
-	}
-
-	chooseSuggestion (suggestionEl) {
-		this.searchEl.value = suggestionEl.textContent;
-		this.hide();
-		this.searchEl.focus();
 	}
 }
 
