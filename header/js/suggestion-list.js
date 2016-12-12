@@ -62,8 +62,10 @@ export class SuggestionList extends React.Component {
 		const hasTags = this.state.suggestions.tags.length && this.state.suggestions.tags.length;
 		const hasEquities = this.state.suggestions.equities && this.state.suggestions.equities.length;
 		const hasSuggestions = hasTags || hasEquities;
-		const suggestions = [
-			{
+		const suggestions = [];
+
+		if(hasTags) {
+			suggestions.push({
 				heading: 'News',
 				linkClassName: 'o-header__typeahead-link--news',
 				trackable: 'news',
@@ -78,8 +80,12 @@ export class SuggestionList extends React.Component {
 					innerHtml: <span>See all news matching <mark>{this.state.searchTerm}</mark></span>,
 					trackable: 'see-all'
 				}
-			},
-			{
+			});
+
+		}
+
+		if(hasEquities) {
+			suggestions.push({
 				heading: 'Equities',
 				trackable: 'equities',
 				linkClassName: 'o-header__typeahead-link--equities',
@@ -96,8 +102,8 @@ export class SuggestionList extends React.Component {
 					innerHtml: <span>See all quotes matching <mark>{this.state.searchTerm}</mark></span>,
 					trackable: 'see-all'
 				}
-			}
-		];
+			});
+		}
 
 		return <div className="o-header__typeahead" hidden={ !hasSuggestions} data-trackable="typeahead">
 			{ suggestions.map(group => (
