@@ -37,20 +37,20 @@
 	.n-myft-ui--follow {
 		position: relative;
 		.n-myft-ui__button {
-			@include buttonWithIcon(26, 12, getColor('link-1'), 'plus', 'tick-thin');
+			@include buttonWithIcon(26, 24, getColor('link-1'), 'plus', 'tick');
 		}
 		.n-myft-ui__button--inverse {
-			@include buttonWithIcon(26, 12, getColor('link-2'), 'plus', 'tick-thin');
+			@include buttonWithIcon(26, 24, getColor('link-2'), 'plus', 'tick');
 		}
 	}
 
 	.n-myft-ui--instant {
 		position: relative;
 		.n-myft-ui__button {
-			@include buttonWithIcon(26, 20, getColor('link-1'), 'email');
+			@include buttonWithIcon(26, 24, getColor('link-1'), 'mail');
 		}
 		.n-myft-ui__button--inverse {
-			@include buttonWithIcon(26, 20, getColor('link-2'), 'email');
+			@include buttonWithIcon(26, 24, getColor('link-2'), 'mail');
 		}
 	}
 
