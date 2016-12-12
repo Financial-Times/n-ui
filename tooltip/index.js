@@ -1,5 +1,3 @@
-const CONTENT_ATTRIBUTE = 'data-n-tooltip-content';
-const SHOW_ATTRIBUTE = 'data-n-tooltip-show-on';
 const ID_ATTRIBUTE = 'data-n-tooltip-id';
 
 const TOOLTIP_CLASS = 'n-tooltip';
@@ -10,6 +8,11 @@ const TOOLTIP_HIDDEN_CLASS = TOOLTIP_CLASS+'--hidden';
 const ANIM_LENGTH = 250;
 
 let tooltipCount = 0;
+
+const DEFAULT_OPTIONS = {
+	content: '',
+	showMode : 'hover'
+};
 
 function generateId (){
 	tooltipCount++;
@@ -28,39 +31,18 @@ function generateHTML (content){
 	return div;
 }
 
-function getToolTipContent (el){
-	const contentAttr = el.getAttribute(CONTENT_ATTRIBUTE);
-	if(!contentAttr.startsWith('#')){
-		return contentAttr;
-	}
-
-	const contentContainerEl = document.querySelector(contentAttr);
-	if(!contentContainerEl){
-		throw new Error(`Tooltip error: No element matching ${contentAttr}`);
-	}else{
-		return contentContainerEl.innerHTML;
-	}
-}
-
 export class NToolTip{
 
-	constructor (el){
+	constructor (el, opts = {}){
 		this.el = el;
-		this.tooltip = generateHTML(getToolTipContent(this.el));
+		this.options = Object.assign({}, DEFAULT_OPTIONS, opts);
+		this.tooltip = generateHTML(this.options.content);
 		this.el.setAttribute(ID_ATTRIBUTE, this.tooltip.id);
 		this.el.parentNode.insertBefore(this.tooltip, this.el.nextElementSibling);
 		this.tooltip.querySelector('.'+TOOLTIP_CLOSE_CLASS).addEventListener('click', this.hide.bind(this));
-		if(this.showMode === 'load'){
+		if(this.options.showMode === 'load'){
 			this.show();
 		}
-	}
-
-	get showMode (){
-		if(!this._showMode){
-			this._showMode = this.el.getAttribute(SHOW_ATTRIBUTE) || 'hover';
-		}
-
-		return this._showMode;
 	}
 
 	show (){
