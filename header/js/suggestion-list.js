@@ -19,6 +19,10 @@ export class SuggestionList extends React.Component {
 		return text.replace(RegExp(regExpEscape(this.state.searchTerm), 'gi'), '<mark>$&</mark>');
 	}
 
+	renderHeading (group) {
+		return this.state.single ? '' : <h3 className="o-header__typeahead-heading">{group.heading}</h3>;
+	}
+
 	renderTailLink (group) {
 		if (group.tailLink) {
 			const linkAttrs = {
@@ -55,8 +59,8 @@ export class SuggestionList extends React.Component {
 	}
 
 	render () {
-		const hasTags = this.state.suggestions.tags.length;
-		const hasEquities = this.state.suggestions.equities.length;
+		const hasTags = this.state.suggestions.tags.length && this.state.suggestions.tags.length;
+		const hasEquities = this.state.suggestions.equities && this.state.suggestions.equities.length;
 		const hasSuggestions = hasTags || hasEquities;
 		const suggestions = [
 			{
@@ -98,7 +102,7 @@ export class SuggestionList extends React.Component {
 		return <div className="o-header__typeahead" hidden={ !hasSuggestions} data-trackable="typeahead">
 			{ suggestions.map(group => (
 				<div className={'o-header__typeahead__group ' + group.className} data-trackable={group.trackable}>
-					<h3 className="o-header__typeahead-heading">{group.heading}</h3>
+					{this.renderHeading(group)}
 					{this.renderItems(group)}
 				</div>
 			)) }
