@@ -5,21 +5,12 @@
 			<a class="o-header__drawer-tools-logo" href="/" data-trackable="logo">
 				<span class="o-header__visually-hidden">Financial Times</span>
 			</a>
+
 			<button type="button" class="o-header__drawer-tools-close" aria-controls="o-header-drawer" title="Close drawer menu" data-trackable="close">
 				<span class="o-header__visually-hidden">Close</span>
 			</button>
+			<p class="o-header__drawer-current-edition">{{@root.editions.current.name}} Edition</p>
 		</div>
-
-		{{#if editions}}
-		<nav class="o-header__drawer-editions" aria-label="Edition switcher" data-trackable="edition-switcher">
-			{{#with editions.current}}
-			<a class="o-header__drawer-editions-link" href="/?edition={{id}}" data-trackable="{{id}}" aria-label="Current edition" aria-selected="true">{{name}} Edition</a>
-			{{/with}}
-			{{#each editions.others}}
-			<a class="o-header__drawer-editions-link" href="/?edition={{id}}" data-trackable="{{id}}">{{name}} Edition</a>
-			{{/each}}
-		</nav>
-		{{/if}}
 
 		<div class="o-header__drawer-search">
 			<form class="o-header__drawer-search-form" action="/search" role="search" aria-label="Site search" data-typeahead>
@@ -31,7 +22,35 @@
 			</form>
 		</div>
 
-		<nav class="o-header__drawer-menu o-header__drawer-menu--primary" data-trackable="primary-nav">
+
+
+		<nav class="o-header__drawer-menu o-header__drawer-menu--primary o-header__drawer-homepage">
+
+			{{#ifEquals @root.__name "front-page"}}
+				<ul class="o-header__drawer-menu-list">
+
+					{{#if @root.editions}}
+						{{#each @root.editions.others}}
+							<li class="o-header__drawer-menu-item" data-trackable="edition-switcher">
+								<a class="o-header__drawer-menu-link" href="/?edition={{id}}" data-trackable="{{id}}">Switch to {{name}} Edition</a>
+							</li>
+						{{/each}}
+					{{/if}}
+
+					{{#if @root.flags.compactView}}
+						{{#ifEquals @root.viewStyle "compact"}}
+							<li class="o-header__drawer-menu-item" data-trackable="viewtoggle">
+								<a class="o-header__drawer-menu-link" href="viewtoggle/standard" data-trackable="standard">Turn off compact hompage</a>
+							</li>
+						{{else}}
+							<li class="o-header__drawer-menu-item">
+								<a class="o-header__drawer-menu-link" href="/viewtoggle/compact" data-trackable="compact">Turn on compact homepage</a>
+							</li>
+						{{/ifEquals}}
+					{{/if}}
+				</ul>
+			{{/ifEquals}}
+
 			<ul class="o-header__drawer-menu-list">
 				{{#each @root.navigationLists.drawer}}
 					{{#each this}}
@@ -91,20 +110,6 @@
 							</a>
 						</li>
 					{{/each}}
-				{{/if}}
-
-				{{#if @root.flags.compactView}}
-					{{#if @root.viewStyle}}
-						<li class="o-header__drawer__viewtoggle" data-trackable="viewtoggle">
-							<span class="o-header__viewtoggle__item o-header__viewtoggle__label">View homepage as</span>
-							<a class="o-header__viewtoggle__item o-header__viewtoggle__link o-header__viewtoggle__link--compact {{#ifEquals @root.viewStyle 'compact'}}o-header__viewtoggle__link--selected{{/ifEquals}}" href="/viewtoggle/compact" data-trackable="compact">
-								<span class="n-util-visually-hidden">Compact view</span>
-							</a>
-							<a class="o-header__viewtoggle__item o-header__viewtoggle__link o-header__viewtoggle__link--standard {{#ifEquals @root.viewStyle 'standard'}}o-header__viewtoggle__link--selected{{/ifEquals}}" href="/viewtoggle/standard" data-trackable="standard">
-								<span class="n-util-visually-hidden">Classic view</span>
-							</a>
-						</li>
-					{{/if}}
 				{{/if}}
 
 				<li class="o-header__drawer-menu-item">

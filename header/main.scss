@@ -2,7 +2,6 @@
 @import 'scss/marketing-promo';
 @import 'scss/typeahead';
 @import 'scss/typeahead-new';
-@import 'scss/viewtoggle';
 
 @if nUiApply('header') {
 
@@ -104,6 +103,16 @@
 		position: relative;
 	}
 
-	@include viewToggle;
+	.o-header__drawer-current-edition {
+		color: getColor('grey-tint5');
+		margin: 0.5em 0;
+	}
 
+	.o-header__drawer-homepage {
+		border-top: 2px solid getColor('pink-tint2');
+	}
+
+	.o-header__drawer-search {
+		border-top: 2px solid getColor('pink-tint2');
+	}
 }
