@@ -2,8 +2,8 @@ const superstore = require('superstore-sync');
 const expander = require('o-expander');
 const oViewport = require('o-viewport');
 
-const STORAGE_KEY = 'n-welcome-message-seen';
-const HAS_MINIMIZED = 'n-welcome-message-collapsed';
+const HAS_MINIMIZED_DEFAULT = 'n-welcome-message-collapsed';
+const HAS_MINIMIZED_COMPACT = 'n-welcome-message-compact-ad-collapsed';
 const HAS_TAKEN_TOUR = 'n-taken-tour';
 const TEST_KEY = 'n-welcome-message-test';
 const TEST_VAL = 'can-store';
@@ -12,6 +12,17 @@ let fixedEl;
 let fixedElHeight;
 let staticEl;
 let viewportHeight;
+let bannerType;
+
+function getBannerType (){
+	if(!bannerType){
+		let bannerEl = document.querySelector('.n-welcome-banner__column');
+		let typeAttr = bannerEl ? bannerEl.getAttribute('data-welcome-banner-type') : 'default';
+		bannerType = typeAttr ? typeAttr : 'default';
+	}
+
+	return bannerType;
+}
 
 function hasLocalStorage () {
 	superstore.local.set(TEST_KEY, TEST_VAL);
@@ -20,19 +31,24 @@ function hasLocalStorage () {
 	return TEST_VAL === retrieved && superstore.isPersisting();
 }
 
+function localStorageProp (){
+	return getBannerType() === 'compact-ad' ? HAS_MINIMIZED_COMPACT : HAS_MINIMIZED_DEFAULT;
+}
+
 function userHasMinimized () {
-	return Boolean(superstore.local.get(HAS_MINIMIZED));
+	return superstore.local.get(localStorageProp());
 }
 
 function userHasTakenTour () {
-	return Boolean(superstore.local.get(HAS_TAKEN_TOUR));
+	// if we're showing the compact-ad banner we don't care if they have taken the tour
+	return getBannerType() === 'compact-ad' ? false : Boolean(superstore.local.get(HAS_TAKEN_TOUR));
 }
 
 function setCloseable () {
 	const closeButton = fixedEl.querySelector('[data-action="welcome-banner-close"]');
 	closeButton.addEventListener('click', () => {
 		fixedEl.classList.add('n-welcome-banner--closed');
-		superstore.local.set(HAS_MINIMIZED, 1);
+		superstore.local.set(localStorageProp(), 1);
 	});
 }
 
@@ -50,12 +66,12 @@ function setExpander () {
 	});
 	fixedEl.addEventListener('oExpander.expand', () => {
 		toggleContainerDisplay(true);
-		superstore.local.set(HAS_MINIMIZED, 0);
+		superstore.local.set(localStorageProp(), 0);
 		toggleSticky();
 	});
 	fixedEl.addEventListener('oExpander.collapse', () => {
 		toggleContainerDisplay(false);
-		superstore.local.set(HAS_MINIMIZED, 1);
+		superstore.local.set(localStorageProp(), 1);
 		toggleSticky();
 	});
 }
@@ -102,17 +118,6 @@ function setScrollLimitSticky () {
 	toggleSticky();
 }
 
-// this is only required if a welcome message has a 'return to old FT' button in it
-function hideIfSegmentId () {
-	const segmentId = String(window.location.search).match(/[?&]segmentId=([^?&])/);
-	if (segmentId) {
-		if (hasLocalStorage()) {
-			superstore.local.set(STORAGE_KEY, 1);
-		}
-		fixedEl.hidden = true;
-		staticEl.hidden = true;
-	}
-}
 
 function setTourButton () {
 	const tourButton = fixedEl.querySelector('[data-component="cta-take-tour"]');
@@ -126,16 +131,18 @@ function setTourButton () {
 // this is the 'old' welcome functionality, where you only saw the sticky welcome once
 // we might go back to this once users are confident with new site
 function initOneTimeSticky () {
-	hideIfSegmentId();
-	if (Boolean(superstore.local.get(STORAGE_KEY)) === false && hasLocalStorage()) {
+	if (Boolean(superstore.local.get(localStorageProp())) === false && hasLocalStorage()) {
 		const closeButton = fixedEl.querySelector('button');
 		closeButton.onclick = function () {
 			fixedEl.hidden = true;
-		}
+			staticEl.hidden = false;
+			superstore.local.set(localStorageProp(), 1);
+		};
+
 		fixedEl.hidden = false;
 		staticEl.hidden = true;
 	}
-	superstore.local.set(STORAGE_KEY, 1);
+
 }
 
 function init () {

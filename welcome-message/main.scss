@@ -9,9 +9,8 @@
 	.n-welcome-message {
 		position: relative;
 		padding: 16px 12px;
-		// not in o-colors ಠ_ಠ
-		background: #fadbcb;
-		color: getColor('grey-tint4');
+		background: getColor('teal-1');
+		color: getColor('white');
 
 		@include oGridRespondTo('L') {
 			padding: 24px 16px;
@@ -23,8 +22,6 @@
 	}
 
 	.n-welcome-banner {
-		background: getColor('teal-1');
-		color: getColor('white');
 		padding-left: 16px;
 		padding-right: 16px;
 	}
@@ -133,6 +130,8 @@
 		@include oTypographySans('m');
 		padding: 0 $spacing-unit 0 0;
 		white-space: nowrap;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
 	}
 
 	.n-welcome-banner__cta--s {
@@ -194,7 +193,7 @@
 	.n-welcome-banner__button--close {
 		background: transparent;
 		border: 1px solid getColor('white');
-		border-radius: 3px;
+		border-radius: 50%;
 		margin: 1px 0;
 		padding: 2px 0 0;
 		width: 34px;
@@ -203,8 +202,7 @@
 		overflow: hidden;
 		&:before {
 			content: '';
-			margin: $spacing-unit/2 0;
-			@include oIconsGetIcon('cross', getColor('white'), 14);
+			@include oIconsGetIcon('cross', getColor('white'), 28);
 		}
 	}
 
@@ -257,7 +255,7 @@
 	}
 
 	.n-welcome-message__close {
-		@include oIconsGetIcon('cross-disk', getColor('grey-tint4'), 20);
+		@include oIconsGetIcon('cross-disk', getColor('grey-tint4'), 40);
 		position: absolute;
 		top: 10px;
 		right: 10px;
