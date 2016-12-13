@@ -1,19 +1,23 @@
-const CONTENT_ATTRIBUTE = 'data-n-tooltip-content';
-const SHOW_ATTRIBUTE = 'data-n-tooltip-show-on';
 const ID_ATTRIBUTE = 'data-n-tooltip-id';
 
 const TOOLTIP_CLASS = 'n-tooltip';
 const TOOLTIP_VISIBLE_CLASS = TOOLTIP_CLASS+'--visible';
 const TOOLTIP_CLOSE_CLASS = TOOLTIP_CLASS+'__close';
 const TOOLTIP_HIDDEN_CLASS = TOOLTIP_CLASS+'--hidden';
+const LEFT_TAIL_CLASS = TOOLTIP_CLASS+'--left-tail';
 
 const ANIM_LENGTH = 250;
 
 let tooltipCount = 0;
 
+const DEFAULT_OPTIONS = {
+	content: '',
+	showMode : 'hover'
+};
+
 function generateId (){
 	tooltipCount++;
-	return `ft-n-tooltip_+${tooltipCount}`;
+	return `ft-n-tooltip_${tooltipCount}`;
 }
 
 function generateHTML (content){
@@ -28,58 +32,48 @@ function generateHTML (content){
 	return div;
 }
 
-function getToolTipContent (el){
-	const contentAttr = el.getAttribute(CONTENT_ATTRIBUTE);
-	if(!contentAttr.startsWith('#')){
-		return contentAttr;
-	}
-
-	const contentContainerEl = document.querySelector(contentAttr);
-	if(!contentContainerEl){
-		throw new Error(`Tooltip error: No element matching ${contentAttr}`);
-	}else{
-		return contentContainerEl.innerHTML;
-	}
-}
-
 export class NToolTip{
 
-	constructor (el){
+	constructor (el, opts = {}){
 		this.el = el;
-		this.tooltip = generateHTML(getToolTipContent(this.el));
+		this.options = Object.assign({}, DEFAULT_OPTIONS, opts);
+		this.tooltip = generateHTML(this.options.content);
 		this.el.setAttribute(ID_ATTRIBUTE, this.tooltip.id);
 		this.el.parentNode.insertBefore(this.tooltip, this.el.nextElementSibling);
 		this.tooltip.querySelector('.'+TOOLTIP_CLOSE_CLASS).addEventListener('click', this.hide.bind(this));
-		if(this.showMode === 'load'){
+		this._position = this.position.bind(this);
+		if(this.options.showMode === 'load'){
 			this.show();
 		}
-	}
-
-	get showMode (){
-		if(!this._showMode){
-			this._showMode = this.el.getAttribute(SHOW_ATTRIBUTE) || 'hover';
-		}
-
-		return this._showMode;
 	}
 
 	show (){
 		this.tooltip.classList.remove(TOOLTIP_HIDDEN_CLASS);
 		this.position();
+		window.addEventListener('resize', this._position);
 		this.tooltip.classList.add(TOOLTIP_VISIBLE_CLASS);
 	}
 
 	hide () {
 		this.tooltip.classList.remove(TOOLTIP_VISIBLE_CLASS);
+		window.removeEventListener('resize', this._position);
 		setTimeout(() => {
 			this.tooltip.classList.add(TOOLTIP_HIDDEN_CLASS);
 		}, ANIM_LENGTH);
 	}
 
 	position (){
-		this.tooltip.style.left = (this.el.offsetLeft - (this.tooltip.offsetWidth / 2)) + 'px';
-
+		let left = (this.el.offsetLeft - (this.tooltip.offsetWidth / 2));
 		// the magic 15 is to account for the triangle
-		this.tooltip.style.top = (this.el.offsetTop + this.el.clientHeight + 15) + 'px';
+		let top = (this.el.offsetTop + this.el.clientHeight + 15);
+		if(left < 20){
+			left = 0;
+			this.tooltip.classList.add(LEFT_TAIL_CLASS);
+		}else{
+			this.el.classList.remove(LEFT_TAIL_CLASS);
+		}
+
+		this.tooltip.style.top = top + 'px';
+		this.tooltip.style.left = left + 'px';
 	}
 }

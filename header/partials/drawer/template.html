@@ -9,7 +9,9 @@
 			<button type="button" class="o-header__drawer-tools-close" aria-controls="o-header-drawer" title="Close drawer menu" data-trackable="close">
 				<span class="o-header__visually-hidden">Close</span>
 			</button>
-			<p class="o-header__drawer-current-edition">{{@root.editions.current.name}} Edition</p>
+			{{#if @root.editions}}
+				<p class="o-header__drawer-current-edition">{{@root.editions.current.name}} Edition</p>
+			{{/if}}
 		</div>
 
 		<div class="o-header__drawer-search">
@@ -26,30 +28,31 @@
 
 		<nav class="o-header__drawer-menu o-header__drawer-menu--primary o-header__drawer-homepage">
 
-			{{#ifEquals @root.__name "front-page"}}
-				<ul class="o-header__drawer-menu-list">
 
-					{{#if @root.editions}}
-						{{#each @root.editions.others}}
-							<li class="o-header__drawer-menu-item" data-trackable="edition-switcher">
-								<a class="o-header__drawer-menu-link" href="/?edition={{id}}" data-trackable="{{id}}">Switch to {{name}} Edition</a>
-							</li>
-						{{/each}}
-					{{/if}}
+			<ul class="o-header__drawer-menu-list">
 
-					{{#if @root.flags.compactView}}
+				{{#if @root.editions}}
+					{{#each @root.editions.others}}
+						<li class="o-header__drawer-menu-item" data-trackable="edition-switcher">
+							<a class="o-header__drawer-menu-link" href="/?edition={{id}}" data-trackable="{{id}}">Switch to {{name}} Edition</a>
+						</li>
+					{{/each}}
+				{{/if}}
+
+				{{#if @root.flags.compactView}}
+					{{#ifEquals @root.__name "front-page"}}
 						{{#ifEquals @root.viewStyle "compact"}}
 							<li class="o-header__drawer-menu-item" data-trackable="viewtoggle">
-								<a class="o-header__drawer-menu-link" href="viewtoggle/standard" data-trackable="standard">Turn off compact hompage</a>
+								<a class="o-header__drawer-menu-link" href="viewtoggle/standard" data-trackable="standard">Turn off compact homepage</a>
 							</li>
 						{{else}}
 							<li class="o-header__drawer-menu-item">
 								<a class="o-header__drawer-menu-link" href="/viewtoggle/compact" data-trackable="compact">Turn on compact homepage</a>
 							</li>
 						{{/ifEquals}}
-					{{/if}}
-				</ul>
-			{{/ifEquals}}
+					{{/ifEquals}}
+				{{/if}}
+			</ul>
 
 			<ul class="o-header__drawer-menu-list">
 				{{#each @root.navigationLists.drawer}}
