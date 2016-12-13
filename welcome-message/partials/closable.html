@@ -1,0 +1,23 @@
+{{#with @root.welcomeBanner}}
+	<div class="n-welcome-banner__column n-welcome-banner__column--fill" data-welcome-banner-type="{{name}}">
+		<h6 class="n-welcome-banner__heading n-welcome-banner__heading--row n-welcome-banner__column">{{title}}</h6>
+		<p class="n-welcome-banner__column n-welcome-banner__column--xl n-welcome-banner__strapline">{{strapline}}</p>
+		<p class="n-welcome-banner__column">
+			{{#with @root.welcomeBanner.ctas.primary}}
+				<a href="{{href}}" class="n-welcome-banner__button" data-trackable="{{trackable}}" {{#if component-attr}}data-component="{{component-attr}}"{{/if}}>{{text}}</a>
+			{{/with}}
+		</p>
+		<div class="n-welcome-banner__column n-welcome-banner__column--actions">
+			{{#if anon.userIsLoggedIn}}
+				{{#if @root.flags.NextWelcomeHelp}}
+					<a href="http://help.ft.com/" data-trackable="help" class="n-welcome-banner__button--secondary">Help</a>
+				{{/if}}
+			{{/if}}
+			<a href="/feedback" data-trackable="nps-feedback" class="n-welcome-banner__link-action">Give feedback</a>
+		</div>
+	</div>
+	{{!-- button must be present in the HTML as a requirement/limitation of o-expander --}}
+	<div class="n-welcome-banner__column">
+		<button data-trackable="toggled" data-action="welcome-banner-close" title="Close welcome banner" class="n-welcome-banner__button--close o-if-js if-fixed"></button>
+	</div>
+{{/with}}
