@@ -1,7 +1,7 @@
 const OHeader = require('o-header');
 const Typeahead = require('./js/typeahead');
 const promoHandler = require('./js/promoHandler');
-const TypeaheadNew = require('./js/typeahead-new');
+const TypeaheadNew = require('../typeahead');
 
 function init (flags) {
 	promoHandler.init(flags);
@@ -18,13 +18,7 @@ function init (flags) {
 			for (let i = 0; i < typeaheadElements.length; i++) {
 				const form = typeaheadElements[i];
 
-				new TypeaheadNew(
-					form,
-					`//${window.location.host}/search-api/suggestions?partial=`,
-					function () {
-						form.submit();
-					}
-				);
+				new TypeaheadNew(form);
 			}
 
 		} else {

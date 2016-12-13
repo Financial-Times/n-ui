@@ -23,6 +23,8 @@ import myftDigestPromo from './myft-digest-promo';
 export const _myftDigestPromo = myftDigestPromo;
 import myftHint from './myft-hint';
 export const _myftHint = myftHint;
+import typeahead from './typeahead';
+export const _typeahead = typeahead;
 import utils from './utils';
 export const _utils = utils;
 import notification from './notification';

@@ -13,6 +13,7 @@ module.exports = function (withPreact, exclusions) {
 		'n-ui/subscription-offer-prompt': 'window.ftNextUi._subscriptionOfferPrompt',
 		'n-ui/notification': 'window.ftNextUi._notification',
 		'n-ui/myft': 'window.ftNextUi._myft',
+		'n-ui/typeahead': 'window.ftNextUi._typeahead',
 		'n-ui/utils': 'window.ftNextUi._utils',
 		'n-ui/myft-digest-promo': 'window.ftNextUi._myftDigestPromo',
 		'n-ui/myft-hint': 'window.ftNextUi._myftHint',

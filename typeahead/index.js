@@ -1,11 +1,10 @@
 /*global fetch*/
 const Delegate = require('ftdomdelegate');
-const debounce = require('../../utils').debounce;
+const debounce = require('../utils').debounce;
 import { SuggestionList } from './suggestion-list';
 
 const React = require('react');
 const ReactDom = require('react-dom');
-
 
 function getNonMatcher (container) {
 	if (typeof container === 'string') {
@@ -30,11 +29,11 @@ function isOutside (el, container) {
 }
 
 class Typeahead {
-	constructor (containerEl, dataSrc) {
+	constructor (containerEl) {
 		this.container = containerEl;
 		this.searchEl = this.container.querySelector('input[type="text"]');
 		this.submitButton = this.container.querySelector('button[type="submit"]')
-		this.dataSrc = dataSrc;
+		this.dataSrc = `//${window.location.host}/search-api/suggestions?partial=`;
 		this.minLength = 2;
 		this.init();
 	}
