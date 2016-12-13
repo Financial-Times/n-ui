@@ -34,7 +34,11 @@ a11y: test-build
 	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
 	PA11Y=true node _test-server/app
 
-test: verify test-unit test-build run nightwatch a11y
+# test: verify test-unit test-build run nightwatch a11y
+
+test:
+	@echo 'Temporarily failing all builds while debugging deploy issues'
+	exit 2
 
 test-dev: verify test-unit-dev
 
