@@ -30,10 +30,10 @@ function isOutside (el, container) {
 }
 
 class Typeahead {
-	constructor (containerEl, dataSrc) {
+	constructor (containerEl, type, dataSrc) {
 		this.container = containerEl;
 		this.searchEl = this.container.querySelector('input[type="text"]');
-		this.submitButton = this.container.querySelector('button[type="submit"]')
+		this.type = type;
 		this.dataSrc = dataSrc;
 		this.minLength = 2;
 		this.init();
@@ -42,7 +42,7 @@ class Typeahead {
 	init () {
 		this.suggestions = [];
 		this.suggestionListContainer = document.createElement('div');
-		this.container.insertBefore(this.suggestionListContainer, this.submitButton);
+		this.searchEl.parentNode.insertBefore(this.suggestionListContainer, null);
 		this.suggestionsView = ReactDom.render(<SuggestionList/>, this.suggestionListContainer);
 		this.searchTermHistory = [];
 
@@ -175,7 +175,8 @@ class Typeahead {
 		this.suggestions = suggestions;
 		this.suggestionsView.setState({
 			searchTerm: this.searchTerm,
-			suggestions: this.suggestions
+			suggestions: this.suggestions,
+			single: this.type !== 'suggestions'
 		});
 		this.show();
 	}
