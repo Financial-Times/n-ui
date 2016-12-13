@@ -46,7 +46,7 @@ module.exports = {
 		window[`ftNext${conditionName}Loaded`] ? action() : document.addEventListener(`ftNext${conditionName}Loaded`, action)
 	},
 	broadcast: (name, data, bubbles = true) => {
-		const rootEl = document.body;
+		const rootEl = Element.isPrototypeOf(this) ? this : document.body;
 		const event = (function () {
 			try {
 				return new CustomEvent(name, {bubbles: bubbles, cancelable: true, detail: data});

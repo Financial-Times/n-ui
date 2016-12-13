@@ -1,6 +1,6 @@
 /*global fetch*/
 const Delegate = require('ftdomdelegate');
-const debounce = require('../utils').debounce;
+import { debounce, broadcast } from '../utils';
 import { SuggestionList } from './suggestion-list';
 
 const React = require('react');
@@ -29,11 +29,12 @@ function isOutside (el, container) {
 }
 
 class Typeahead {
-	constructor (containerEl, type) {
+	constructor (containerEl) {
 		this.container = containerEl;
 		this.searchEl = this.container.querySelector('input[type="text"]');
 		this.dataSrc = `//${window.location.host}/search-api/suggestions?partial=`;
-		this.type = type;
+		this.categories = (this.container.getAttribute('data-typeahead-categories') || 'tags').split(',');
+		this.selectAction = this.container.getAttribute('data-typeahead-select-action') || null;
 		this.minLength = 2;
 		this.init();
 	}
@@ -51,6 +52,7 @@ class Typeahead {
 		this.onType = debounce(this.onType, 150).bind(this);
 		this.onDownArrow = this.onDownArrow.bind(this);
 		this.onSuggestionKey = this.onSuggestionKey.bind(this);
+		this.onSelect = this.onSelect.bind(this);
 
 		this.delegate.on('keyup', 'input[type="text"]', (ev) => {
 			switch(ev.which) {
@@ -80,7 +82,9 @@ class Typeahead {
 			this.show();
 		});
 
-		this.delegate.on('keyup', '.o-header__typeahead a, .o-header__typeahead button[type="submit"]', this.onSuggestionKey);
+		this.delegate.on('keyup', '.o-header__typeahead a', this.onSuggestionKey);
+		this.delegate.on('click', '.o-header__typeahead a', this.onSelect);
+		// this.delegate.on('keyup', '.o-header__typeahead button[type="submit"]', this.onSuggestionKey);
 		// prevent scroll to item
 		this.delegate.on('keydown', 'input, .o-header__typeahead a', ev => {
 			if (ev.which === 40 || ev.which === 38) {
@@ -108,9 +112,7 @@ class Typeahead {
 
 	onSuggestionKey (ev) {
 		if (ev.which === 13) { // Enter pressed
-			ev.stopPropagation();
-			// we don't prevent default as the link's url is a link to the search page
-			return;
+			return this.onSelect(ev);
 		}
 
 		if (ev.which === 40) { // down arrow pressed
@@ -132,6 +134,20 @@ class Typeahead {
 			} else {
 				this.suggestionLinks[newIndex].focus();
 			}
+		}
+	}
+
+	onSelect (ev) {
+		ev.stopPropagation();
+		if (this.selectAction === 'event') {
+			broadcast.call(this.container, 'next.typeahead.select', {
+				event: ev,
+				typeahead: this
+			})
+			ev.preventDefault()
+		} else {
+			// we don't prevent default as the link's url is a link to the search page
+			return;
 		}
 	}
 
@@ -175,7 +191,7 @@ class Typeahead {
 		this.suggestionsView.setState({
 			searchTerm: this.searchTerm,
 			suggestions: this.suggestions,
-			single: this.type !== 'suggestions'
+			single: this.categories
 		});
 		this.show();
 	}
