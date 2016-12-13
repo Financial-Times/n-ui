@@ -34,7 +34,8 @@ class Typeahead {
 		this.searchEl = this.container.querySelector('input[type="text"]');
 		this.dataSrc = `//${window.location.host}/search-api/suggestions?partial=`;
 		this.categories = (this.container.getAttribute('data-typeahead-categories') || 'tags').split(',');
-		this.selectAction = this.container.getAttribute('data-typeahead-select-action') || null;
+		this.itemTag = this.container.getAttribute('data-typeahead-item-tag') || 'a';
+		this.includeViewAllLink = this.container.hasAttribute('data-typeahead-view-all') || null;
 		this.minLength = 2;
 		this.init();
 	}
@@ -43,7 +44,11 @@ class Typeahead {
 		this.suggestions = [];
 		this.suggestionListContainer = document.createElement('div');
 		this.searchEl.parentNode.insertBefore(this.suggestionListContainer, null);
-		this.suggestionsView = ReactDom.render(<SuggestionList/>, this.suggestionListContainer);
+		this.suggestionsView = ReactDom.render(<SuggestionList
+			categories={this.categories}
+			itemTag={this.itemTag}
+			includeViewAllLink={this.includeViewAlllink}
+		/>, this.suggestionListContainer);
 		this.searchTermHistory = [];
 
 		this.delegate = new Delegate(this.container);
@@ -82,8 +87,8 @@ class Typeahead {
 			this.show();
 		});
 
-		this.delegate.on('keyup', '.o-header__typeahead a', this.onSuggestionKey);
-		this.delegate.on('click', '.o-header__typeahead a', this.onSelect);
+		this.delegate.on('keyup', '.o-header__typeahead a, .o-header__typeahead button', this.onSuggestionKey);
+		this.delegate.on('click', '.o-header__typeahead a, .o-header__typeahead button', this.onSelect);
 		// this.delegate.on('keyup', '.o-header__typeahead button[type="submit"]', this.onSuggestionKey);
 		// prevent scroll to item
 		this.delegate.on('keydown', 'input, .o-header__typeahead a', ev => {
@@ -139,11 +144,14 @@ class Typeahead {
 
 	onSelect (ev) {
 		ev.stopPropagation();
-		if (this.selectAction === 'event') {
-			broadcast.call(this.container, 'next.typeahead.select', {
-				event: ev,
+		if (this.itemTag === 'button') {
+			let target = ev.target;
+			while (target.nodeName !== 'BUTTON') {
+				target = target.parentNode;
+			}
+			broadcast.call(this.container, 'next.typeahead.select', Object.assign({
 				typeahead: this
-			})
+			}, target.dataset))
 			ev.preventDefault()
 		} else {
 			// we don't prevent default as the link's url is a link to the search page
@@ -190,8 +198,7 @@ class Typeahead {
 		this.suggestions = suggestions;
 		this.suggestionsView.setState({
 			searchTerm: this.searchTerm,
-			suggestions: this.suggestions,
-			single: this.categories
+			suggestions: this.suggestions
 		});
 		this.show();
 	}

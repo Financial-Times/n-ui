@@ -4,6 +4,11 @@ function regExpEscape (s) {
 	return s.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
+const headingMapping = {
+	tags: 'News',
+	equities: 'Equities'
+}
+
 export class SuggestionList extends React.Component {
 	constructor () {
 		super();
@@ -20,7 +25,7 @@ export class SuggestionList extends React.Component {
 	}
 
 	renderHeading (group) {
-		return this.state.single ? '' : <h3 className="o-header__typeahead-heading">{group.heading}</h3>;
+		return this.props.categories.length > 1 ? '' : <h3 className="o-header__typeahead-heading">{group.heading}</h3>;
 	}
 
 	renderTailLink (group) {
@@ -44,11 +49,19 @@ export class SuggestionList extends React.Component {
 			return <ul className="o-header__typeahead-item-list">
 				{ group.suggestions.map(suggestion => (
 					<li className="o-header__typeahead-item">
+
+						{this.props.itemTag === 'button' ? <button type="button" className={'o-header__typeahead-link ' + group.linkClassName}
+							href={suggestion.url}
+							data-trackable="button"
+							data-suggestion-id={suggestion.id}
+							data-suggestion-type={suggestion.type}
+							dangerouslySetInnerHTML={{__html:suggestion.html}}></button> :
 						<a className={'o-header__typeahead-link ' + group.linkClassName}
 							href={suggestion.url}
 							data-trackable="link"
-							data-concept-id={suggestion.id}
-							dangerouslySetInnerHTML={{__html:suggestion.html}}></a>
+							data-suggestion-id={suggestion.id}
+							data-suggestion-type={suggestion.type}
+							dangerouslySetInnerHTML={{__html:suggestion.html}}></a>}
 					</li>
 				)) }
 				<li className="o-header__typeahead-item">
@@ -64,18 +77,19 @@ export class SuggestionList extends React.Component {
 		const hasSuggestions = hasTags || hasEquities;
 		const suggestions = [];
 
-		if(hasTags) {
+		if(this.props.categories.includes('tags') && hasTags) {
 			suggestions.push({
-				heading: 'News',
+				heading: headingMapping['tags'],
 				linkClassName: 'o-header__typeahead-link--news',
 				trackable: 'news',
 				suggestions: this.state.suggestions.tags.slice(0, 6)
 					.map(suggestion => ({
 						html: this.highlight(suggestion.name),
 						url: suggestion.url,
-						id: suggestion.id
+						id: suggestion.id,
+						type: 'tag'
 					})),
-				tailLink: {
+				tailLink: this.props.viewAll && {
 					url: `/search?q=${this.state.searchTerm}`,
 					innerHtml: <span>See all news matching <mark>{this.state.searchTerm}</mark></span>,
 					trackable: 'see-all'
@@ -84,9 +98,9 @@ export class SuggestionList extends React.Component {
 
 		}
 
-		if(hasEquities) {
+		if(this.props.categories.includes('equities') && hasEquities) {
 			suggestions.push({
-				heading: 'Equities',
+				heading: headingMapping['equities'],
 				trackable: 'equities',
 				linkClassName: 'o-header__typeahead-link--equities',
 				emptyHtml: <div className="o-header__typeahead__no-results-message">No equities found</div>,
@@ -94,9 +108,10 @@ export class SuggestionList extends React.Component {
 					.map(suggestion => ({
 						html: `<span class="o-header__typeahead-link__equity-name">${this.highlight(suggestion.name)}</span><abbr>${this.highlight(suggestion.symbol)}</abbr>`,
 						url: suggestion.url,
-						id: suggestion.symbol
+						id: suggestion.symbol,
+						type: 'equity'
 					})),
-				tailLink: {
+				tailLink: this.props.viewAll && {
 					// React takes care of protecting us from XSS here
 					url: `https://markets.ft.com/data/search?query=${this.state.searchTerm}`,
 					innerHtml: <span>See all quotes matching <mark>{this.state.searchTerm}</mark></span>,
