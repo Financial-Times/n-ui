@@ -17,8 +17,9 @@ function init (flags) {
 		if (flags.get('searchMultiTypeahead')) {
 			for (let i = 0; i < typeaheadElements.length; i++) {
 				const form = typeaheadElements[i];
+				const type = form.getAttribute('data-typeahead-type') || 'suggestions';
 
-				new TypeaheadNew(form);
+				new TypeaheadNew(form, type);
 			}
 
 		} else {

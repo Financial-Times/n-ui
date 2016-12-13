@@ -3,7 +3,7 @@ const shellpromise = require('shellpromise');
 const semver = require('semver');
 const fetch = require('node-fetch');
 const deployStatic = require('@financial-times/n-heroku-tools').deployStatic.task;
-const tag = process.env.CIRCLE_TAG;
+let tag = process.env.CIRCLE_TAG;
 let versions;
 let isOfficialRelease = false;
 
@@ -13,9 +13,12 @@ if (!tag) {
 	versions = [tag];
 } else {
 	isOfficialRelease = true;
+	if (tag.charAt(0) !== 'v') {
+		tag = `v${tag}`;
+	}
 	versions = [
-		tag,
-		tag.split('.').slice(0,1).join('.')
+		tag.split('.').shift(),
+		tag
 	]
 }
 
@@ -63,7 +66,6 @@ shellpromise('find . -path "./dist/*"')
 					})
 						.then(() => files.map(file => {
 							const paths = [
-								`https://next-geebee.ft.com/n-ui/cached/${version}/${file.split('/').pop()}`,
 								`https://www.ft.com/__assets/n-ui/cached/${version}/${file.split('/').pop()}`
 							];
 							return Promise.all(paths.map(purge));
