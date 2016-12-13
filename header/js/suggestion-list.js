@@ -59,7 +59,7 @@ export class SuggestionList extends React.Component {
 	}
 
 	render () {
-		const hasTags = this.state.suggestions.tags.length && this.state.suggestions.tags.length;
+		const hasTags = this.state.suggestions.tags && this.state.suggestions.tags.length;
 		const hasEquities = this.state.suggestions.equities && this.state.suggestions.equities.length;
 		const hasSuggestions = hasTags || hasEquities;
 		const suggestions = [];
