@@ -11,6 +11,7 @@ import footer from '../../footer';
 import myft from '../../myft';
 import digestPromo from '../../myft-digest-promo';
 import myftHint from '../../myft-hint';
+import offlineToast from '../../offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 
@@ -130,6 +131,9 @@ export class ComponentInitializer {
 			if (config.features.lazyLoadImages && !this.initializedFeatures.lazyLoadImages) {
 				lazyLoadImages();
 				this.initializedFeatures.lazyLoadImages = true
+			}
+			if (flags.get('showOfflineToast')) {
+				offlineToast.init();
 			}
 
 			mainCss
