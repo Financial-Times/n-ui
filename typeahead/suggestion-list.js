@@ -9,6 +9,12 @@ const headingMapping = {
 	equities: 'Equities'
 }
 
+const KEYS = {
+	ENTER: 13,
+	UP_ARROW: 38,
+	DOWN_ARROW: 40
+}
+
 export class SuggestionList extends React.Component {
 	constructor () {
 		super();
@@ -25,7 +31,7 @@ export class SuggestionList extends React.Component {
 	}
 
 	renderHeading (group) {
-		return this.props.categories.length > 1 ? '' : <h3 className="o-header__typeahead-heading">{group.heading}</h3>;
+		return this.props.categories.length > 1 ? <h3 className="o-header__typeahead-heading">{group.heading}</h3> : '';
 	}
 
 	renderTailLink (group) {
@@ -40,6 +46,34 @@ export class SuggestionList extends React.Component {
 		}
 	}
 
+	handleKeyDown (ev) {
+		if (ev.which === KEYS.ENTER) {
+			ev.stopPropagation();
+			// we don't prevent default as the link's url is a link to the search page
+			return;
+		}
+
+		if (ev.which === KEYS.DOWN_ARROW) {
+			const index = this.items.indexOf(ev.target);
+			const newIndex = index + 1;
+			if (newIndex < this.items.length) {
+				this.items[newIndex].focus();
+			} else {
+				this.items[0].focus();
+			}
+			return;
+		}
+
+		if (ev.which === KEYS.UP_ARROW) {
+			const index = this.items.indexOf(ev.target);
+			const newIndex = index - 1;
+			if (newIndex < 0) {
+				this.props.searchEl.focus();
+			} else {
+				this.items[newIndex].focus();
+			}
+		}
+	}
 
 	renderItems (group) {
 
@@ -49,19 +83,13 @@ export class SuggestionList extends React.Component {
 			return <ul className="o-header__typeahead-item-list">
 				{ group.suggestions.map(suggestion => (
 					<li className="o-header__typeahead-item">
-
-						{this.props.itemTag === 'button' ? <button type="button" className={'o-header__typeahead-link ' + group.linkClassName}
-							href={suggestion.url}
-							data-trackable="button"
-							data-suggestion-id={suggestion.id}
-							data-suggestion-type={suggestion.type}
-							dangerouslySetInnerHTML={{__html:suggestion.html}}></button> :
 						<a className={'o-header__typeahead-link ' + group.linkClassName}
+							ref={(c) => { this.items.push(c) }}
 							href={suggestion.url}
 							data-trackable="link"
 							data-suggestion-id={suggestion.id}
 							data-suggestion-type={suggestion.type}
-							dangerouslySetInnerHTML={{__html:suggestion.html}}></a>}
+							dangerouslySetInnerHTML={{__html:suggestion.html}}></a>
 					</li>
 				)) }
 				<li className="o-header__typeahead-item">
@@ -76,8 +104,8 @@ export class SuggestionList extends React.Component {
 		const hasEquities = this.state.suggestions.equities && this.state.suggestions.equities.length;
 		const hasSuggestions = hasTags || hasEquities;
 		const suggestions = [];
-
-		if(this.props.categories.includes('tags') && hasTags) {
+		this.items = [];
+		if (this.props.categories.includes('tags') && hasTags) {
 			suggestions.push({
 				heading: headingMapping['tags'],
 				linkClassName: 'o-header__typeahead-link--news',
@@ -98,7 +126,7 @@ export class SuggestionList extends React.Component {
 
 		}
 
-		if(this.props.categories.includes('equities') && hasEquities) {
+		if (this.props.categories.includes('equities') && hasEquities) {
 			suggestions.push({
 				heading: headingMapping['equities'],
 				trackable: 'equities',
@@ -120,7 +148,11 @@ export class SuggestionList extends React.Component {
 			});
 		}
 
-		return <div className="o-header__typeahead" hidden={ !hasSuggestions} data-trackable="typeahead">
+		return <div
+			className="o-header__typeahead"
+			hidden={ !hasSuggestions }
+			data-trackable="typeahead"
+			onKeyDown={this.handleKeyDown.bind(this)}>
 			{ suggestions.map(group => (
 				<div className={'o-header__typeahead__group ' + group.className} data-trackable={group.trackable}>
 					{this.renderHeading(group)}

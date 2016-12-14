@@ -11,7 +11,7 @@ function init (flags) {
 	// initialise separate sticky header
 	new OHeader(document.querySelector('[data-o-header--sticky]'));
 
-	const typeaheadElements = document.querySelectorAll('[data-typeahead]');
+	const typeaheadElements = document.querySelectorAll('.o-header [data-typeahead], .o-header__drawer [data-typeahead]');
 
 	if (flags.get('typeahead') && typeaheadElements.length) {
 		if (flags.get('searchMultiTypeahead')) {

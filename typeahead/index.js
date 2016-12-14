@@ -1,6 +1,6 @@
 /*global fetch*/
 const Delegate = require('ftdomdelegate');
-import { debounce, broadcast } from '../utils';
+import { debounce } from '../utils';
 import { SuggestionList } from './suggestion-list';
 
 const React = require('react');
@@ -44,22 +44,28 @@ class Typeahead {
 		this.suggestions = [];
 		this.suggestionListContainer = document.createElement('div');
 		this.searchEl.parentNode.insertBefore(this.suggestionListContainer, null);
+		// TO DO allow passing a preact component of choice in in stead of suggestion list
 		this.suggestionsView = ReactDom.render(<SuggestionList
 			categories={this.categories}
 			itemTag={this.itemTag}
 			includeViewAllLink={this.includeViewAlllink}
+			searchEl={this.searchEl}
 		/>, this.suggestionListContainer);
 		this.searchTermHistory = [];
 
-		this.delegate = new Delegate(this.container);
 		this.bodyDelegate = new Delegate(document.body);
-		this.suggest = this.suggest.bind(this);
 		this.onType = debounce(this.onType, 150).bind(this);
-		this.onDownArrow = this.onDownArrow.bind(this);
-		this.onSuggestionKey = this.onSuggestionKey.bind(this);
-		this.onSelect = this.onSelect.bind(this);
+		this.onFocus = this.onFocus.bind(this);
 
-		this.delegate.on('keyup', 'input[type="text"]', (ev) => {
+		// this.delegate.on('keyup', '.o-header__typeahead button[type="submit"]', this.onSuggestionKey);
+		// prevent scroll to item
+		this.searchEl.addEventListener('keydown', ev => {
+			if (ev.which === 40 || ev.which === 38) {
+				ev.preventDefault();
+			}
+		})
+
+		this.searchEl.addEventListener('keyup', ev => {
 			switch(ev.which) {
 				case 13 : return; // enter
 				case 9 : return; // tab
@@ -75,27 +81,8 @@ class Typeahead {
 			}
 		});
 
-
-		this.delegate.on('focus', 'input[type="text"]', (ev) => {
-			ev.target.setSelectionRange ? ev.target.setSelectionRange(0, ev.target.value.length) : ev.target.select();
-			this.show();
-		});
-
-
-		this.delegate.on('click', 'input[type="text"]', (ev) => {
-			ev.target.setSelectionRange ? ev.target.setSelectionRange(0, ev.target.value.length) : ev.target.select();
-			this.show();
-		});
-
-		this.delegate.on('keyup', '.o-header__typeahead a, .o-header__typeahead button', this.onSuggestionKey);
-		this.delegate.on('click', '.o-header__typeahead a, .o-header__typeahead button', this.onSelect);
-		// this.delegate.on('keyup', '.o-header__typeahead button[type="submit"]', this.onSuggestionKey);
-		// prevent scroll to item
-		this.delegate.on('keydown', 'input, .o-header__typeahead a', ev => {
-			if (ev.which === 40 || ev.which === 38) {
-				ev.preventDefault();
-			}
-		})
+		this.searchEl.addEventListener('focus', this.onFocus);
+		this.searchEl.addEventListener('click', this.onFocus);
 	}
 
 	// EVENT HANDLERS
@@ -108,54 +95,15 @@ class Typeahead {
 		}.bind(this));
 	}
 
+	onFocus (ev) {
+		ev.target.setSelectionRange ? ev.target.setSelectionRange(0, ev.target.value.length) : ev.target.select();
+		this.show();
+	}
+
 	onDownArrow () {
 		this.suggestionLinks = Array.from(this.suggestionListContainer.querySelectorAll('a'));
 		if (this.suggestionLinks.length) {
 			this.suggestionLinks[0].focus();
-		}
-	}
-
-	onSuggestionKey (ev) {
-		if (ev.which === 13) { // Enter pressed
-			return this.onSelect(ev);
-		}
-
-		if (ev.which === 40) { // down arrow pressed
-			const index = this.suggestionLinks.indexOf(ev.target);
-			const newIndex = index + 1;
-			if (newIndex < this.suggestionLinks.length) {
-				this.suggestionLinks[newIndex].focus();
-			} else {
-				this.suggestionLinks[0].focus();
-			}
-			return;
-		}
-
-		if (ev.which === 38) { // up arrow pressed
-			const index = this.suggestionLinks.indexOf(ev.target);
-			const newIndex = index - 1;
-			if (newIndex < 0) {
-				this.searchEl.focus();
-			} else {
-				this.suggestionLinks[newIndex].focus();
-			}
-		}
-	}
-
-	onSelect (ev) {
-		ev.stopPropagation();
-		if (this.itemTag === 'button') {
-			let target = ev.target;
-			while (target.nodeName !== 'BUTTON') {
-				target = target.parentNode;
-			}
-			broadcast.call(this.container, 'next.typeahead.select', Object.assign({
-				typeahead: this
-			}, target.dataset))
-			ev.preventDefault()
-		} else {
-			// we don't prevent default as the link's url is a link to the search page
-			return;
 		}
 	}
 
@@ -169,7 +117,7 @@ class Typeahead {
 					}
 					return response.json();
 				})
-				.then(this.suggest)
+				.then(suggestions => this.suggest(suggestions))
 				.catch((err) => {
 					setTimeout(() => {
 						throw err;
