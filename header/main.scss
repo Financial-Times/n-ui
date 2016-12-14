@@ -14,6 +14,14 @@
 			display: block;
 		}
 
+		// inelegant gymnastics to fix focus outline of the first breadcrumb link
+		.o-header__subnav-wrap-outside {
+			margin-left: -2px;
+		}
+		.o-header__subnav-list--breadcrumb .o-header__subnav-item:first-child .o-header__subnav-link {
+			margin-left: 2px;
+		}
+
 		// add next opt-out buttons
 		.o-header__drawer-menu-button {
 			@include oButtons('medium', 'standout');
