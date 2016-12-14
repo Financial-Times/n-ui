@@ -29,13 +29,14 @@ function isOutside (el, container) {
 }
 
 class Typeahead {
-	constructor (containerEl) {
+	constructor (containerEl, listComponent) {
 		this.container = containerEl;
+		this.listComponent = listComponent || SuggestionList;
 		this.searchEl = this.container.querySelector('input[type="text"]');
 		this.dataSrc = `//${window.location.host}/search-api/suggestions?partial=`;
 		this.categories = (this.container.getAttribute('data-typeahead-categories') || 'tags').split(',');
 		this.itemTag = this.container.getAttribute('data-typeahead-item-tag') || 'a';
-		this.includeViewAllLink = this.container.hasAttribute('data-typeahead-view-all') || null;
+		this.includeViewAllLink = this.container.hasAttribute('data-typeahead-view-all');
 		this.minLength = 2;
 		this.init();
 	}
@@ -45,10 +46,10 @@ class Typeahead {
 		this.suggestionListContainer = document.createElement('div');
 		this.searchEl.parentNode.insertBefore(this.suggestionListContainer, null);
 		// TO DO allow passing a preact component of choice in in stead of suggestion list
-		this.suggestionsView = ReactDom.render(<SuggestionList
+		this.suggestionsView = ReactDom.render(<this.listComponent
 			categories={this.categories}
 			itemTag={this.itemTag}
-			includeViewAllLink={this.includeViewAlllink}
+			includeViewAllLink={this.includeViewAllLink}
 			searchEl={this.searchEl}
 		/>, this.suggestionListContainer);
 		this.searchTermHistory = [];
@@ -57,7 +58,6 @@ class Typeahead {
 		this.onType = debounce(this.onType, 150).bind(this);
 		this.onFocus = this.onFocus.bind(this);
 
-		// this.delegate.on('keyup', '.o-header__typeahead button[type="submit"]', this.onSuggestionKey);
 		// prevent scroll to item
 		this.searchEl.addEventListener('keydown', ev => {
 			if (ev.which === 40 || ev.which === 38) {

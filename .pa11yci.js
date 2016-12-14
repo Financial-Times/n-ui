@@ -55,6 +55,7 @@ const pa11yIgnore = [
 	'tour-tip-group',
 	'tooltip',
 	'tracking',
+	'typeahead',
 	'typography',
 	'utils',
 	'viewport',

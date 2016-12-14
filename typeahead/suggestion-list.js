@@ -61,6 +61,7 @@ export class SuggestionList extends React.Component {
 			} else {
 				this.items[0].focus();
 			}
+			ev.preventDefault(); //disable page scrolling
 			return;
 		}
 
@@ -72,6 +73,7 @@ export class SuggestionList extends React.Component {
 			} else {
 				this.items[newIndex].focus();
 			}
+			ev.preventDefault(); //disable page scrolling
 		}
 	}
 
@@ -117,7 +119,7 @@ export class SuggestionList extends React.Component {
 						id: suggestion.id,
 						type: 'tag'
 					})),
-				tailLink: this.props.viewAll && {
+				tailLink: this.props.includeViewAllLink && {
 					url: `/search?q=${this.state.searchTerm}`,
 					innerHtml: <span>See all news matching <mark>{this.state.searchTerm}</mark></span>,
 					trackable: 'see-all'
@@ -139,7 +141,7 @@ export class SuggestionList extends React.Component {
 						id: suggestion.symbol,
 						type: 'equity'
 					})),
-				tailLink: this.props.viewAll && {
+				tailLink: this.props.includeViewAllLink && {
 					// React takes care of protecting us from XSS here
 					url: `https://markets.ft.com/data/search?query=${this.state.searchTerm}`,
 					innerHtml: <span>See all quotes matching <mark>{this.state.searchTerm}</mark></span>,
