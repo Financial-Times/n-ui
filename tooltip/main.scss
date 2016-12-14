@@ -10,7 +10,8 @@
 		border: 1px solid getColor('pink-tint3');
 		position: absolute;
 		opacity: 0;
-		transition: opacity 250ms linear;
+		transform: translateY(50%);
+		transition: opacity 500ms $o-visual-effects-transition-fade, transform 500ms $o-visual-effects-transition-slide;
 		z-index: 2;
 		white-space: normal !important;
 
@@ -24,6 +25,7 @@
 
 		&--visible {
 			opacity: 1;
+			transform: translateY(0);
 		}
 
 		&--hidden {
