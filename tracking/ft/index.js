@@ -3,7 +3,8 @@ const oGrid = require('o-grid');
 const oViewport = require('o-viewport');
 const nextEvents = require('./next-events');
 
-import {broadcast} from '../../utils'
+
+import {broadcast, cookieStore} from '../../utils'
 
 
 function nodesToArray (nodelist) {
@@ -75,6 +76,12 @@ const oTrackingWrapper = {
 						context[key] = pageMeta[key];
 					}
 				}
+			}
+
+			// if we're on the homepage add viewStyle = ("compact"|"standard") to allow people to differentiate
+			if(location.pathname === '/'){
+				const viewStyle = cookieStore.get('ft-homepage-view') || 'standard';
+				pageViewConf.context.viewStyle = viewStyle;
 			}
 
 			oTracking.init({
