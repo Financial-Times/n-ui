@@ -15,16 +15,14 @@
 		</div>
 
 		<div class="o-header__drawer-search">
-			<form class="o-header__drawer-search-form" action="/search" role="search" aria-label="Site search" data-typeahead>
+			<form class="o-header__drawer-search-form" action="/search" role="search" aria-label="Site search" data-typeahead data-typeahead-categories="tags,equities" data-typeahead-view-all>
 				<label class="o-header__visually-hidden" for="o-header-drawer-search-term">Search the <abbr title="Financial Times">FT</abbr></label>
-				<input class="o-header__drawer-search-term" id="o-header-drawer-search-term" name="q" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search the FT" data-trackable="search-term">
+				<input class="o-header__drawer-search-term" id="o-header-drawer-search-term" name="q" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search the FT" data-trackable="search-term" data-typeahead-input>
 				<button class="o-header__drawer-search-submit" type="submit" data-trackable="search-submit">
 					<span class="o-header__visually-hidden">Search</span>
 				</button>
 			</form>
 		</div>
-
-
 
 		<nav class="o-header__drawer-menu o-header__drawer-menu--primary o-header__drawer-homepage">
 

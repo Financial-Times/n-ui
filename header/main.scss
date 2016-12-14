@@ -55,6 +55,10 @@
 			}
 		}
 
+		.o-header__search-close {
+			margin-bottom: -3px;
+		}
+
 		@include nUiHeaderMarketingPromo;
 
 	}
