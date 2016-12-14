@@ -54,15 +54,15 @@
 		width: 44px;
 
 		&:before {
-			@include oIconsGetIcon('cross', getColor('cold-2'), 20);
+			@include oIconsGetIcon('cross', getColor('cold-2'), 40);
 			content: '';
 			position: absolute;
-			right: 8px;
-			top: 8px;
+			right: 2px;
+			top: 2px;
 		}
 
 		&:hover:before {
-			@include oIconsGetIcon('cross', getColor('cold-1'), 20, $apply-base-styles: false);
+			@include oIconsGetIcon('cross', getColor('cold-1'), 40, $apply-base-styles: false, $apply-width-height: false);
 		}
 	}
 
