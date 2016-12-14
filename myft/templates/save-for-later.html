@@ -10,8 +10,8 @@
 	data-alternate-label="Saved to myFT"
 	data-alternate-text="Saved"
 	data-content-id="{{contentId}}" {{! duplicated here for tracking}}
-	aria-label="Save this article to myFT for later"
-	title="Save this article to myFT for later"
+	aria-label="{{#if headline}}Save “{{headline}}” to myFT for later{{else}}Save this article to myFT for later{{/if}}"
+	title="{{#if headline}}Save “{{headline}}” to myFT for later{{else}}Save this article to myFT for later{{/if}}"
 >{{#if buttonText}}{{buttonText}}{{else}}Save{{/if}}</button>
 </form>
 {{/if}}
