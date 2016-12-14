@@ -128,21 +128,22 @@ function setTourButton () {
 	}
 }
 
-// this is the 'old' welcome functionality, where you only saw the sticky welcome once
-// we might go back to this once users are confident with new site
-function initOneTimeSticky () {
-	if (Boolean(superstore.local.get(localStorageProp())) === false && hasLocalStorage()) {
+function initSticky () {
+	const prop = localStorageProp();
+	if (prop === HAS_MINIMIZED_COMPACT && Boolean(superstore.local.get(prop)) === false && hasLocalStorage()) {
 		const closeButton = fixedEl.querySelector('button');
-		closeButton.onclick = function () {
-			fixedEl.hidden = true;
-			staticEl.hidden = false;
-			superstore.local.set(localStorageProp(), 1);
-		};
-
+		closeButton.onclick = hideSticky;
 		fixedEl.hidden = false;
 		staticEl.hidden = true;
+	}else{
+		hideSticky();
 	}
+}
 
+function hideSticky (){
+	fixedEl.hidden = true;
+	staticEl.hidden = false;
+	superstore.local.set(localStorageProp(), 1);
 }
 
 function init () {
@@ -171,7 +172,7 @@ function init () {
 			}
 		}
 	} else { // old removable message
-		initOneTimeSticky();
+		initSticky();
 	}
 };
 
