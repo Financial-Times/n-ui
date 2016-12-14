@@ -21,7 +21,7 @@
 	.myft-ui__button--manage,
 	.myft-ui__button--myft-manage {
 		&[aria-pressed="true"]:before {
-			@include oIconsGetIcon('cross-disk', getColor('white'), 14);
+			@include oIconsGetIcon('cross', getColor('white'), 28);
 		}
 	}
 

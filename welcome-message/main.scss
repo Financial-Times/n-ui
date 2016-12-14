@@ -255,7 +255,7 @@
 	}
 
 	.n-welcome-message__close {
-		@include oIconsGetIcon('cross-disk', getColor('grey-tint4'), 40);
+		@include oIconsGetIcon('cross', getColor('grey-tint4'), 40);
 		position: absolute;
 		top: 10px;
 		right: 10px;

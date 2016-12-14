@@ -22,7 +22,7 @@
     "ftdomdelegate": "^2.0.3",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
     "n-image": "^4.4.1",
-    "n-notification": "^4.0.0",
+    "n-notification": "^5.0.2",
     "n-service-worker": "^1.5.0",
     "n-sliding-popup": "^1.0.0",
     "next-myft-client": "^6.4.2",
