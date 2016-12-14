@@ -1,4 +1,5 @@
 const React = require('react');
+const DISPLAY_ITEMS = 5;
 
 function regExpEscape (s) {
 	return s.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -88,6 +89,8 @@ export class SuggestionList extends React.Component {
 						<a className={'o-header__typeahead-link ' + group.linkClassName}
 							ref={(c) => { this.items.push(c) }}
 							href={suggestion.url}
+							// eslint-disable-next-line react/no-unknown-property
+							tabindex="0"
 							data-trackable="link"
 							data-suggestion-id={suggestion.id}
 							data-suggestion-type={suggestion.type}
@@ -107,12 +110,12 @@ export class SuggestionList extends React.Component {
 		const hasSuggestions = hasTags || hasEquities;
 		const suggestions = [];
 		this.items = [];
-		if (this.props.categories.includes('tags') && hasTags) {
+		if (this.props.categories.includes('tags')) {
 			suggestions.push({
 				heading: headingMapping['tags'],
 				linkClassName: 'o-header__typeahead-link--news',
 				trackable: 'news',
-				suggestions: this.state.suggestions.tags.slice(0, 6)
+				suggestions: this.state.suggestions.tags.slice(0, DISPLAY_ITEMS)
 					.map(suggestion => ({
 						html: this.highlight(suggestion.name),
 						url: suggestion.url,
@@ -128,13 +131,13 @@ export class SuggestionList extends React.Component {
 
 		}
 
-		if (this.props.categories.includes('equities') && hasEquities) {
+		if (this.props.categories.includes('equities')) {
 			suggestions.push({
 				heading: headingMapping['equities'],
 				trackable: 'equities',
 				linkClassName: 'o-header__typeahead-link--equities',
 				emptyHtml: <div className="o-header__typeahead__no-results-message">No equities found</div>,
-				suggestions: this.state.suggestions.equities.slice(0, 6)
+				suggestions: this.state.suggestions.equities.slice(0, DISPLAY_ITEMS)
 					.map(suggestion => ({
 						html: `<span class="o-header__typeahead-link__equity-name">${this.highlight(suggestion.name)}</span><abbr>${this.highlight(suggestion.symbol)}</abbr>`,
 						url: suggestion.url,
