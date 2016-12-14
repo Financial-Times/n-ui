@@ -1,4 +1,5 @@
 const React = require('react');
+const DISPLAY_ITEMS = 5;
 
 function regExpEscape (s) {
 	return s.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -112,7 +113,7 @@ export class SuggestionList extends React.Component {
 				heading: headingMapping['tags'],
 				linkClassName: 'o-header__typeahead-link--news',
 				trackable: 'news',
-				suggestions: this.state.suggestions.tags.slice(0, 6)
+				suggestions: this.state.suggestions.tags.slice(0, DISPLAY_ITEMS)
 					.map(suggestion => ({
 						html: this.highlight(suggestion.name),
 						url: suggestion.url,
@@ -134,7 +135,7 @@ export class SuggestionList extends React.Component {
 				trackable: 'equities',
 				linkClassName: 'o-header__typeahead-link--equities',
 				emptyHtml: <div className="o-header__typeahead__no-results-message">No equities found</div>,
-				suggestions: this.state.suggestions.equities.slice(0, 6)
+				suggestions: this.state.suggestions.equities.slice(0, DISPLAY_ITEMS)
 					.map(suggestion => ({
 						html: `<span class="o-header__typeahead-link__equity-name">${this.highlight(suggestion.name)}</span><abbr>${this.highlight(suggestion.symbol)}</abbr>`,
 						url: suggestion.url,
