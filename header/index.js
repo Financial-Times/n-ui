@@ -1,7 +1,7 @@
 const OHeader = require('o-header');
 const Typeahead = require('./js/typeahead');
 const promoHandler = require('./js/promoHandler');
-const TypeaheadNew = require('./js/typeahead-new');
+const TypeaheadNew = require('../typeahead');
 
 function init (flags) {
 	promoHandler.init(flags);
@@ -11,22 +11,13 @@ function init (flags) {
 	// initialise separate sticky header
 	new OHeader(document.querySelector('[data-o-header--sticky]'));
 
-	const typeaheadElements = document.querySelectorAll('[data-typeahead]');
+	const typeaheadElements = document.querySelectorAll('.o-header [data-typeahead], .o-header__drawer [data-typeahead]');
 
 	if (flags.get('typeahead') && typeaheadElements.length) {
 		if (flags.get('searchMultiTypeahead')) {
 			for (let i = 0; i < typeaheadElements.length; i++) {
 				const form = typeaheadElements[i];
-				const type = form.getAttribute('data-typeahead-type') || 'suggestions';
-
-				new TypeaheadNew(
-					form,
-					type,
-					`//${window.location.host}/search-api/${type}?partial=`,
-					function () {
-						form.submit();
-					}
-				);
+				new TypeaheadNew(form);
 			}
 
 		} else {

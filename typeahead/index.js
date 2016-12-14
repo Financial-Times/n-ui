@@ -1,11 +1,10 @@
 /*global fetch*/
 const Delegate = require('ftdomdelegate');
-const debounce = require('../../utils').debounce;
+import { debounce } from '../utils';
 import { SuggestionList } from './suggestion-list';
 
 const React = require('react');
 const ReactDom = require('react-dom');
-
 
 function getNonMatcher (container) {
 	if (typeof container === 'string') {
@@ -30,11 +29,14 @@ function isOutside (el, container) {
 }
 
 class Typeahead {
-	constructor (containerEl, type, dataSrc) {
+	constructor (containerEl, listComponent) {
 		this.container = containerEl;
+		this.listComponent = listComponent || SuggestionList;
 		this.searchEl = this.container.querySelector('input[type="text"]');
-		this.type = type;
-		this.dataSrc = dataSrc;
+		this.dataSrc = `//${window.location.host}/search-api/suggestions?partial=`;
+		this.categories = (this.container.getAttribute('data-typeahead-categories') || 'tags').split(',');
+		this.itemTag = this.container.getAttribute('data-typeahead-item-tag') || 'a';
+		this.includeViewAllLink = this.container.hasAttribute('data-typeahead-view-all');
 		this.minLength = 2;
 		this.init();
 	}
@@ -43,17 +45,27 @@ class Typeahead {
 		this.suggestions = [];
 		this.suggestionListContainer = document.createElement('div');
 		this.searchEl.parentNode.insertBefore(this.suggestionListContainer, null);
-		this.suggestionsView = ReactDom.render(<SuggestionList/>, this.suggestionListContainer);
+		// TO DO allow passing a preact component of choice in in stead of suggestion list
+		this.suggestionsView = ReactDom.render(<this.listComponent
+			categories={this.categories}
+			itemTag={this.itemTag}
+			includeViewAllLink={this.includeViewAllLink}
+			searchEl={this.searchEl}
+		/>, this.suggestionListContainer);
 		this.searchTermHistory = [];
 
-		this.delegate = new Delegate(this.container);
 		this.bodyDelegate = new Delegate(document.body);
-		this.suggest = this.suggest.bind(this);
 		this.onType = debounce(this.onType, 150).bind(this);
-		this.onDownArrow = this.onDownArrow.bind(this);
-		this.onSuggestionKey = this.onSuggestionKey.bind(this);
+		this.onFocus = this.onFocus.bind(this);
 
-		this.delegate.on('keyup', 'input[type="text"]', (ev) => {
+		// prevent scroll to item
+		this.searchEl.addEventListener('keydown', ev => {
+			if (ev.which === 40 || ev.which === 38) {
+				ev.preventDefault();
+			}
+		})
+
+		this.searchEl.addEventListener('keyup', ev => {
 			switch(ev.which) {
 				case 13 : return; // enter
 				case 9 : return; // tab
@@ -69,25 +81,8 @@ class Typeahead {
 			}
 		});
 
-
-		this.delegate.on('focus', 'input[type="text"]', (ev) => {
-			ev.target.setSelectionRange ? ev.target.setSelectionRange(0, ev.target.value.length) : ev.target.select();
-			this.show();
-		});
-
-
-		this.delegate.on('click', 'input[type="text"]', (ev) => {
-			ev.target.setSelectionRange ? ev.target.setSelectionRange(0, ev.target.value.length) : ev.target.select();
-			this.show();
-		});
-
-		this.delegate.on('keyup', '.o-header__typeahead a, .o-header__typeahead button[type="submit"]', this.onSuggestionKey);
-		// prevent scroll to item
-		this.delegate.on('keydown', 'input, .o-header__typeahead a', ev => {
-			if (ev.which === 40 || ev.which === 38) {
-				ev.preventDefault();
-			}
-		})
+		this.searchEl.addEventListener('focus', this.onFocus);
+		this.searchEl.addEventListener('click', this.onFocus);
 	}
 
 	// EVENT HANDLERS
@@ -100,39 +95,15 @@ class Typeahead {
 		}.bind(this));
 	}
 
+	onFocus (ev) {
+		ev.target.setSelectionRange ? ev.target.setSelectionRange(0, ev.target.value.length) : ev.target.select();
+		this.show();
+	}
+
 	onDownArrow () {
 		this.suggestionLinks = Array.from(this.suggestionListContainer.querySelectorAll('a'));
 		if (this.suggestionLinks.length) {
 			this.suggestionLinks[0].focus();
-		}
-	}
-
-	onSuggestionKey (ev) {
-		if (ev.which === 13) { // Enter pressed
-			ev.stopPropagation();
-			// we don't prevent default as the link's url is a link to the search page
-			return;
-		}
-
-		if (ev.which === 40) { // down arrow pressed
-			const index = this.suggestionLinks.indexOf(ev.target);
-			const newIndex = index + 1;
-			if (newIndex < this.suggestionLinks.length) {
-				this.suggestionLinks[newIndex].focus();
-			} else {
-				this.suggestionLinks[0].focus();
-			}
-			return;
-		}
-
-		if (ev.which === 38) { // up arrow pressed
-			const index = this.suggestionLinks.indexOf(ev.target);
-			const newIndex = index - 1;
-			if (newIndex < 0) {
-				this.searchEl.focus();
-			} else {
-				this.suggestionLinks[newIndex].focus();
-			}
 		}
 	}
 
@@ -146,7 +117,7 @@ class Typeahead {
 					}
 					return response.json();
 				})
-				.then(this.suggest)
+				.then(suggestions => this.suggest(suggestions))
 				.catch((err) => {
 					setTimeout(() => {
 						throw err;
@@ -175,8 +146,7 @@ class Typeahead {
 		this.suggestions = suggestions;
 		this.suggestionsView.setState({
 			searchTerm: this.searchTerm,
-			suggestions: this.suggestions,
-			single: this.type !== 'suggestions'
+			suggestions: this.suggestions
 		});
 		this.show();
 	}

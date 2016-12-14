@@ -4,6 +4,17 @@ function regExpEscape (s) {
 	return s.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
+const headingMapping = {
+	tags: 'News',
+	equities: 'Equities'
+}
+
+const KEYS = {
+	ENTER: 13,
+	UP_ARROW: 38,
+	DOWN_ARROW: 40
+}
+
 export class SuggestionList extends React.Component {
 	constructor () {
 		super();
@@ -20,7 +31,7 @@ export class SuggestionList extends React.Component {
 	}
 
 	renderHeading (group) {
-		return this.state.single ? '' : <h3 className="o-header__typeahead-heading">{group.heading}</h3>;
+		return this.props.categories.length > 1 ? <h3 className="o-header__typeahead-heading">{group.heading}</h3> : '';
 	}
 
 	renderTailLink (group) {
@@ -35,6 +46,36 @@ export class SuggestionList extends React.Component {
 		}
 	}
 
+	handleKeyDown (ev) {
+		if (ev.which === KEYS.ENTER) {
+			ev.stopPropagation();
+			// we don't prevent default as the link's url is a link to the search page
+			return;
+		}
+
+		if (ev.which === KEYS.DOWN_ARROW) {
+			const index = this.items.indexOf(ev.target);
+			const newIndex = index + 1;
+			if (newIndex < this.items.length) {
+				this.items[newIndex].focus();
+			} else {
+				this.items[0].focus();
+			}
+			ev.preventDefault(); //disable page scrolling
+			return;
+		}
+
+		if (ev.which === KEYS.UP_ARROW) {
+			const index = this.items.indexOf(ev.target);
+			const newIndex = index - 1;
+			if (newIndex < 0) {
+				this.props.searchEl.focus();
+			} else {
+				this.items[newIndex].focus();
+			}
+			ev.preventDefault(); //disable page scrolling
+		}
+	}
 
 	renderItems (group) {
 
@@ -45,9 +86,11 @@ export class SuggestionList extends React.Component {
 				{ group.suggestions.map(suggestion => (
 					<li className="o-header__typeahead-item">
 						<a className={'o-header__typeahead-link ' + group.linkClassName}
+							ref={(c) => { this.items.push(c) }}
 							href={suggestion.url}
 							data-trackable="link"
-							data-concept-id={suggestion.id}
+							data-suggestion-id={suggestion.id}
+							data-suggestion-type={suggestion.type}
 							dangerouslySetInnerHTML={{__html:suggestion.html}}></a>
 					</li>
 				)) }
@@ -63,19 +106,20 @@ export class SuggestionList extends React.Component {
 		const hasEquities = this.state.suggestions.equities && this.state.suggestions.equities.length;
 		const hasSuggestions = hasTags || hasEquities;
 		const suggestions = [];
-
-		if(hasTags) {
+		this.items = [];
+		if (this.props.categories.includes('tags') && hasTags) {
 			suggestions.push({
-				heading: 'News',
+				heading: headingMapping['tags'],
 				linkClassName: 'o-header__typeahead-link--news',
 				trackable: 'news',
 				suggestions: this.state.suggestions.tags.slice(0, 6)
 					.map(suggestion => ({
 						html: this.highlight(suggestion.name),
 						url: suggestion.url,
-						id: suggestion.id
+						id: suggestion.id,
+						type: 'tag'
 					})),
-				tailLink: {
+				tailLink: this.props.includeViewAllLink && {
 					url: `/search?q=${this.state.searchTerm}`,
 					innerHtml: <span>See all news matching <mark>{this.state.searchTerm}</mark></span>,
 					trackable: 'see-all'
@@ -84,9 +128,9 @@ export class SuggestionList extends React.Component {
 
 		}
 
-		if(hasEquities) {
+		if (this.props.categories.includes('equities') && hasEquities) {
 			suggestions.push({
-				heading: 'Equities',
+				heading: headingMapping['equities'],
 				trackable: 'equities',
 				linkClassName: 'o-header__typeahead-link--equities',
 				emptyHtml: <div className="o-header__typeahead__no-results-message">No equities found</div>,
@@ -94,9 +138,10 @@ export class SuggestionList extends React.Component {
 					.map(suggestion => ({
 						html: `<span class="o-header__typeahead-link__equity-name">${this.highlight(suggestion.name)}</span><abbr>${this.highlight(suggestion.symbol)}</abbr>`,
 						url: suggestion.url,
-						id: suggestion.symbol
+						id: suggestion.symbol,
+						type: 'equity'
 					})),
-				tailLink: {
+				tailLink: this.props.includeViewAllLink && {
 					// React takes care of protecting us from XSS here
 					url: `https://markets.ft.com/data/search?query=${this.state.searchTerm}`,
 					innerHtml: <span>See all quotes matching <mark>{this.state.searchTerm}</mark></span>,
@@ -105,7 +150,11 @@ export class SuggestionList extends React.Component {
 			});
 		}
 
-		return <div className="o-header__typeahead" hidden={ !hasSuggestions} data-trackable="typeahead">
+		return <div
+			className="o-header__typeahead"
+			hidden={ !hasSuggestions }
+			data-trackable="typeahead"
+			onKeyDown={this.handleKeyDown.bind(this)}>
 			{ suggestions.map(group => (
 				<div className={'o-header__typeahead__group ' + group.className} data-trackable={group.trackable}>
 					{this.renderHeading(group)}
