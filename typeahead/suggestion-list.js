@@ -108,7 +108,7 @@ export class SuggestionList extends React.Component {
 		const hasSuggestions = hasTags || hasEquities;
 		const suggestions = [];
 		this.items = [];
-		if (this.props.categories.includes('tags') && hasTags) {
+		if (this.props.categories.includes('tags')) {
 			suggestions.push({
 				heading: headingMapping['tags'],
 				linkClassName: 'o-header__typeahead-link--news',
@@ -129,7 +129,7 @@ export class SuggestionList extends React.Component {
 
 		}
 
-		if (this.props.categories.includes('equities') && hasEquities) {
+		if (this.props.categories.includes('equities')) {
 			suggestions.push({
 				heading: headingMapping['equities'],
 				trackable: 'equities',
