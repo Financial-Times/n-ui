@@ -89,7 +89,7 @@ export class SuggestionList extends React.Component {
 						<a className={'o-header__typeahead-link ' + group.linkClassName}
 							ref={(c) => { this.items.push(c) }}
 							href={suggestion.url}
-                            tabindex="0"
+							tabindex="0"
 							data-trackable="link"
 							data-suggestion-id={suggestion.id}
 							data-suggestion-type={suggestion.type}
