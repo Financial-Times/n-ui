@@ -89,7 +89,8 @@ export class SuggestionList extends React.Component {
 						<a className={'o-header__typeahead-link ' + group.linkClassName}
 							ref={(c) => { this.items.push(c) }}
 							href={suggestion.url}
-							tabIndex="0"
+							// eslint-disable-next-line react/no-unknown-property
+							tabindex="0"
 							data-trackable="link"
 							data-suggestion-id={suggestion.id}
 							data-suggestion-type={suggestion.type}
