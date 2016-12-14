@@ -4,7 +4,7 @@
 	.n-tooltip {
 		background-color: white;
 		max-width: 250px;
-		padding: 0.8em 1em 0.8em 0.8em;
+		padding: 15px 30px 15px 20px;
 		border-radius: 5px;
 		filter: drop-shadow(-4px 4px 12px rgba(0, 0, 0, 0.5));
 		border: 1px solid getColor('pink-tint3');
@@ -53,7 +53,7 @@
 		position: absolute;
 		right: 5px;
 		top: 5px;
-		@include oIconsGetIcon('cross', getColor('grey-tint5'), 12);
+		@include oIconsGetIcon('cross', getColor('grey-tint5'), 20);
 		opacity: 0.4;
 		border: 0;
 		margin: 0;
