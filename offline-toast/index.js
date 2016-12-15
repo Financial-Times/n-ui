@@ -9,7 +9,7 @@ function show (msg) {
 }
 
 function init () {
-	navigator.serviceWorker.addEventListener('message', function (event) {
+	window.addEventListener('message', function (event) {
 		const data = event.data;
 		const command = data.command;
 		if (command === 'precacheDone' && data.data.message === '') {
