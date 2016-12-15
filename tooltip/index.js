@@ -6,8 +6,6 @@ const TOOLTIP_CLOSE_CLASS = TOOLTIP_CLASS+'__close';
 const TOOLTIP_HIDDEN_CLASS = TOOLTIP_CLASS+'--hidden';
 const LEFT_TAIL_CLASS = TOOLTIP_CLASS+'--left-tail';
 
-const ANIM_LENGTH = 250;
-
 let tooltipCount = 0;
 
 const DEFAULT_OPTIONS = {
@@ -43,8 +41,28 @@ export class NToolTip{
 		this.tooltip.querySelector('.'+TOOLTIP_CLOSE_CLASS).addEventListener('click', this.hide.bind(this));
 		this._position = this.position.bind(this);
 		if(this.options.showMode === 'load'){
-			this.show();
+			setTimeout(() => this.show(), 2000);
 		}
+		this.tooltip.addEventListener(this.transitionEndEvent, this.onTransitionEnd.bind(this));
+	}
+
+	get transitionEndEvent (){
+		if(!this._transitionEndEvent){
+			const el = document.createElement('fakeelement');
+			const transitions = {
+				'transition':'transitionend',
+				'OTransition':'oTransitionEnd',
+				'MozTransition':'transitionend',
+				'WebkitTransition':'webkitTransitionEnd'
+			};
+			Object.keys(transitions).forEach(t => {
+				if(el.style[t] !== undefined){
+					this._transitionEndEvent = transitions[t];
+				}
+			})
+		}
+
+		return this._transitionEndEvent;
 	}
 
 	show (){
@@ -57,9 +75,6 @@ export class NToolTip{
 	hide () {
 		this.tooltip.classList.remove(TOOLTIP_VISIBLE_CLASS);
 		window.removeEventListener('resize', this._position);
-		setTimeout(() => {
-			this.tooltip.classList.add(TOOLTIP_HIDDEN_CLASS);
-		}, ANIM_LENGTH);
 	}
 
 	position (){
@@ -75,5 +90,11 @@ export class NToolTip{
 
 		this.tooltip.style.top = top + 'px';
 		this.tooltip.style.left = left + 'px';
+	}
+
+	onTransitionEnd (){
+		if(!this.tooltip.classList.contains(TOOLTIP_VISIBLE_CLASS)){
+			this.tooltip.classList.add(TOOLTIP_HIDDEN_CLASS);
+		}
 	}
 }
