@@ -43,7 +43,8 @@ export class SuggestionList extends React.Component {
 				'data-trackable': group.tailLink.trackable
 			};
 
-			return <a {...linkAttrs} ref={(c) => { this.items.push(c) }}>{group.tailLink.innerHtml}</a>
+			// eslint-disable-next-line react/no-unknown-property
+			return <a {...linkAttrs} ref={(c) => { this.items.push(c) }} tabindex="0">{group.tailLink.innerHtml}</a>
 		}
 	}
 
