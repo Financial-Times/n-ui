@@ -80,8 +80,8 @@ const oTrackingWrapper = {
 
 			// if we're on the homepage add viewStyle = ("compact"|"standard") to allow people to differentiate
 			if(location.pathname === '/'){
-				const viewStyle = cookieStore.get('ft-homepage-view') || 'standard';
-				pageViewConf.context.viewStyle = viewStyle;
+				const mode = cookieStore.get('ft-homepage-view') || 'standard';
+				pageViewConf.context.mode = mode;
 			}
 
 			oTracking.init({
