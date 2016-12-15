@@ -1,13 +1,9 @@
-.o-header__search-form,
-.o-header__drawer-search-form {
+[data-typeahead] {
 	position: relative;
 }
 
-.o-header__search-close {
-	margin-bottom: -3px;
-}
 
-.o-header__typeahead {
+.n-typeahead {
 
 	@include nUtilZIndexFor('typeahead');
 	position: absolute;
@@ -28,12 +24,12 @@
 	}
 }
 
-.o-header__typeahead[hidden],
-.o-header__typeahead:empty {
+.n-typeahead[hidden],
+.n-typeahead:empty {
 	display: none;
 }
 
-.o-header__typeahead-heading {
+.n-typeahead__heading {
 
 	@include oTypographySans(l);
 
@@ -51,19 +47,19 @@
 	}
 }
 
-.o-header__typeahead__group {
+.n-typeahead__group {
 	padding: $spacing-unit;
 	flex: 1;
 }
 
-.o-header__typeahead-item-list,
-.o-header__typeahead-item {
+.n-typeahead__item-list,
+.n-typeahead__item {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
 
-.o-header__typeahead-link {
+.n-typeahead__link {
 	cursor: pointer;
 	color: getColor('grey-tint5');
 	border-bottom: 0;
@@ -117,11 +113,11 @@
 }
 
 // hide item divider at bottom of last item
-.o-header__typeahead-item:last-child .o-header__typeahead-link:before {
+.n-typeahead__item:last-child .n-typeahead__link:before {
 	opacity: 0;
 }
 
-.o-header__typeahead-link--tail {
+.n-typeahead__link--tail {
 
 	&:after {
 		@include oIconsGetIcon(arrow-right, getColor('grey-tint5'), 14);
@@ -134,19 +130,19 @@
 	}
 }
 
-.o-header__typeahead-link--news {
+.n-typeahead__link--news {
 	color: getColor('claret-1');
 }
 
 // for nice alignment of equity name and index
-.o-header__typeahead-link--equities {
+.n-typeahead__link--equities {
 	display: flex;
 }
 
-.o-header__typeahead-link__equity-name {
+.n-typeahead__link__equity-name {
 	flex: 1 1 auto;
 }
 
-.o-header__typeahead__no-results-message {
+.n-typeahead__no-results-message {
 	padding: 0 $spacing-unit;
 }

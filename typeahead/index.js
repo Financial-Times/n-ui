@@ -32,7 +32,7 @@ class Typeahead {
 	constructor (containerEl, listComponent) {
 		this.container = containerEl;
 		this.listComponent = listComponent || SuggestionList;
-		this.searchEl = this.container.querySelector('input[type="text"]');
+		this.searchEl = this.container.querySelector('[data-typeahead-input]');
 		this.dataSrc = `//${window.location.host}/search-api/suggestions?partial=`;
 		this.categories = (this.container.getAttribute('data-typeahead-categories') || 'tags').split(',');
 		this.itemTag = this.container.getAttribute('data-typeahead-item-tag') || 'a';
