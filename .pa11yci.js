@@ -46,6 +46,7 @@ const pa11yIgnore = [
 	'n-ui',
 	'normalize',
 	'notification',
+	'offline-toast',
 	'opt-out',
 	'overlay',
 	'page-heading',

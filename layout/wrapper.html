@@ -97,6 +97,11 @@
 			<div class="n-layout__row n-layout__row--content">
 				{{{body}}}
 			</div>
+
+			{{#if @root.flags.offlineToastMessage}}
+				{{>n-ui/offline-toast/template}}
+			{{/if}}
+
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{#if @root.flags.welcomePanel}}

@@ -11,6 +11,7 @@ import footer from '../../footer';
 import myft from '../../myft';
 import digestPromo from '../../myft-digest-promo';
 import myftHint from '../../myft-hint';
+import offlineToast from '../../offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 
@@ -90,10 +91,16 @@ export class ComponentInitializer {
 				this.initializedFeatures.tracking = true;
 			}
 
+			if (navigator.serviceWorker && flags.get('offlineToastMessage')) {
+				offlineToast.init();
+			}
+
 			if (flags.get('serviceWorker')) {
 				serviceWorker
 					.register(flags)
 					.catch(() => { });
+
+				serviceWorker.message({ type: 'updateCache', data: {}});
 			} else {
 				serviceWorker.unregister();
 			}
@@ -131,6 +138,7 @@ export class ComponentInitializer {
 				lazyLoadImages();
 				this.initializedFeatures.lazyLoadImages = true
 			}
+
 
 			mainCss
 				.then(() => {
