@@ -42,7 +42,7 @@ export class SuggestionList extends React.Component {
 				'data-trackable': group.tailLink.trackable
 			};
 
-			return <a {...linkAttrs} >{group.tailLink.innerHtml}</a>
+			return <a {...linkAttrs} ref={(c) => { this.items.push(c) }}>{group.tailLink.innerHtml}</a>
 		}
 	}
 
