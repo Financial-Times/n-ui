@@ -132,7 +132,7 @@ export class ComponentInitializer {
 				lazyLoadImages();
 				this.initializedFeatures.lazyLoadImages = true
 			}
-			if (flags.get('showOfflineToast')) {
+			if (navigator.serviceWorker && flags.get('offlineToastMessage')) {
 				offlineToast.init();
 			}
 
