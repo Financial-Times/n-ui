@@ -12,10 +12,15 @@ function init () {
 	window.addEventListener('message', function (event) {
 		const data = event.data;
 		const command = data.command;
-		if (command === 'precacheDone' && data.data.message === '') {
+		if (command && command === 'precacheDone') {
 			show(`Read FT top stories even when you're offline.`)
 		}
-		if (command === 'offlineLanding') {
+	});
+
+	navigator.serviceWorker.addEventListener('message', function (event) {
+		const data = event.data;
+		const command = data.command;
+		if (command && command === 'offlineLanding') {
 			show('Content unavailable offline.<br/>Read our top stories instead.')
 		}
 	})
