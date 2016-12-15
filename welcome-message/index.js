@@ -132,7 +132,9 @@ function initSticky () {
 	const prop = localStorageProp();
 	if (prop === HAS_MINIMIZED_COMPACT && Boolean(superstore.local.get(prop)) === false && hasLocalStorage()) {
 		const closeButton = fixedEl.querySelector('button');
+		const primaryCTA = fixedEl.querySelector('.n-welcome-banner__button--primary');
 		closeButton.onclick = hideSticky;
+		primaryCTA.onclick = hideSticky;
 		fixedEl.hidden = false;
 		staticEl.hidden = true;
 	}else{

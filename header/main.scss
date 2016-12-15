@@ -116,7 +116,8 @@
 	}
 
 	.o-header__drawer-current-edition {
-		color: getColor('grey-tint5');
+		// not in o-colors! Blame Ollie
+		color: #66605a;
 		margin: 0.5em 0;
 	}
 
