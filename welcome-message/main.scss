@@ -137,7 +137,7 @@
 		display: none;
 		margin: 0;
 
-		@include oGridRespondTo(M){
+		@include oGridRespondTo(M) {
 			display: inline;
 		}
 	}
