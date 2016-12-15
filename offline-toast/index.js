@@ -13,7 +13,7 @@ function init () {
 		const data = event.data;
 		const command = data.command;
 		if (command && command === 'precacheDone') {
-			show(`Read FT top stories even when you're offline.`)
+			show('Read FT top stories even when you\'re offline.')
 		}
 	});
 
