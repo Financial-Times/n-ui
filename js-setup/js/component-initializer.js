@@ -91,6 +91,10 @@ export class ComponentInitializer {
 				this.initializedFeatures.tracking = true;
 			}
 
+			if (navigator.serviceWorker && flags.get('offlineToastMessage')) {
+				offlineToast.init();
+			}
+
 			if (flags.get('serviceWorker')) {
 				serviceWorker
 					.register(flags)
@@ -132,9 +136,7 @@ export class ComponentInitializer {
 				lazyLoadImages();
 				this.initializedFeatures.lazyLoadImages = true
 			}
-			if (navigator.serviceWorker && flags.get('offlineToastMessage')) {
-				offlineToast.init();
-			}
+
 
 			mainCss
 				.then(() => {
