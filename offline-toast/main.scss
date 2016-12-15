@@ -1,29 +1,23 @@
 $o-visual-effects-transition-slide: cubic-bezier(1, 0, 0.5, 1.275);
 
 .offline-notification-toast {
-  position: fixed;
-  width: 60%;
-  top: 100%;
-  background-color: black;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  opacity: .8;
-  color: white;
-  text-align: center;
-  border-radius: 50px;
-  display: table;
-  padding: 6px 0;
-  z-index: 50;
-  transition: transform 1s $o-visual-effects-transition-slide;
+	position: fixed;
+	width: 100%;
+	top: 100%;
+	background-color: oColorsGetPaletteColor('cold-2');;
+	color: white;
+	text-align: center;
+	display: table;
+	padding: 10px 0;
+	z-index: 50;
+	transition: transform 1s $o-visual-effects-transition-slide;
 
-  &.display {
-    transform: translateY(-200%);
-  }
+	&.display {
+		transform: translateY(-100%);
+	}
 }
 
 .offline-notification-toast__message {
-    display: table-cell;
-    vertical-align: middle;
+		display: table-cell;
+		vertical-align: middle;
 }
