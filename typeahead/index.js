@@ -160,6 +160,14 @@ class Typeahead {
 		this.bodyDelegate.off();
 	}
 
+	reset () {
+		this.hide();
+		this.suggestions = [];
+		this.searchTermHistory = [];
+		this.searchTerm = '';
+		this.searchEl.value = '';
+	}
+
 	show () {
 		this.suggestionListContainer.removeAttribute('hidden');
 		['focus', 'touchstart', 'mousedown']
