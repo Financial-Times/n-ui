@@ -46,6 +46,11 @@
 		left: 0;
 		transform: translateZ(0);
 		padding: 40px 16px;
+		display: none;
+
+		@include oGridRespondTo(S) {
+			display: block;
+		}
 	}
 
 	.n-welcome-banner--collapsed {
@@ -245,7 +250,15 @@
 	}
 
 	.n-welcome-banner__column--text {
-		padding-right: 20px;
+		padding-right: 0px;
+		display: block;
+		margin-bottom: 10px;
+
+		@include oGridRespondTo(S) {
+			display: table-cell;
+			margin-bottom: 0px;
+			padding-right: 10px;
+		}
 	}
 
 	.n-welcome-message__column--actions {
