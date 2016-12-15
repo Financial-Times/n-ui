@@ -99,6 +99,8 @@ export class ComponentInitializer {
 				serviceWorker
 					.register(flags)
 					.catch(() => { });
+
+				serviceWorker.message({ type: 'updateCache', data: {}});
 			} else {
 				serviceWorker.unregister();
 			}
