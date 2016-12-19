@@ -21,7 +21,7 @@ To work with n-ui when it's bower linked into an app you will need to `export NE
 
 ## A11y testing
 
-We hope to be able to a11y test all components before they are used in an app and cause lots of applications to fail builds. For now we are testing components in CI using pa11y and this requires some additional set up when creating a new component. Any directory in the root is considered to be a component and will require this additional set up.
+We hope to be able to a11y test all components before they are used in an app and end up causing lots of applications to fail builds. For now we are testing components in CI using pa11y and this requires some additional set up when creating a new component. Any directory in the root is considered to be a component and will require this additional set up.
 
 * Inside a component directory there must be a `pa11y-config.js` that must return JSON
 * The must have an `entry` property and and may contain a `data` property if required
