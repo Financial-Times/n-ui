@@ -19,6 +19,15 @@ This project consists of many modules. They include the primitive building block
 
 To work with n-ui when it's bower linked into an app you will need to `export NEXT_APP_SHELL=local" in your app and then proceed exactly as you would for any other component
 
+## A11y testing
+
+We hope to be able to a11y test all components before they are used in an app and cause lots of applications to fail builds. For now we are testing components in CI using pa11y and this requires some additional set up when creating a new component. Any directory in the root is considered to be a component and will require this additional set up.
+
+* Inside a component directory there must be a `pa11y-config.js` that must return JSON
+* The must have an `entry` property and and may contain a `data` property if required
+	* The `entry` value should point to the main template for the component without any file extension and relative to the component root.
+	* The `data` can be used if you need to pass any fixture data to the component for testing. 
+
 
 ## Releasing n-ui
 When you release an n-ui tag 2 things happen
