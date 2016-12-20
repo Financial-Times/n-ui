@@ -177,7 +177,8 @@
 		margin: 0 0 0 $spacing-unit/2;
 		color: getColor('white');
 		border-bottom-color: getColor('white');
-		&:hover {
+		&:hover,
+		&:focus {
 			color: getColor('white');
 		}
 	}
