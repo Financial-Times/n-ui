@@ -1,6 +1,6 @@
 const oViewport = require('o-viewport');
 const broadcast = require('../../../utils').broadcast;
-const ATTENTION_INTERVAL = 5000;
+const ATTENTION_INTERVAL = 15000;
 const ATTENTION_EVENTS = ['load', 'click', 'focus', 'scroll', 'mousemove', 'touchstart', 'touchend', 'touchcancel', 'touchleave'];
 const UNATTENTION_EVENTS = ['blur'];
 const eventToSend = ('onbeforeunload' in window) ? 'beforeunload' : 'unload';
