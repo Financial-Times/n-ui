@@ -1,6 +1,6 @@
 'use strict';
 const fs = require('fs');
-const express = require('@financial-times/n-express');
+const express = require('../server');
 const path = require('path');
 const deployStatic = require('@financial-times/n-heroku-tools').deployStatic.task;
 const chalk = require('chalk');

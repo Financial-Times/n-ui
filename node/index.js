@@ -1,4 +1,5 @@
 const nExpress = require('@financial-times/n-express')
+const nextJsonLd = require('@financial-times/next-json-ld');
 // Models
 const NavigationModel = require('./src/navigation/navigationModel');
 const EditionsModel = require('./src/navigation/editionsModel');
@@ -11,30 +12,41 @@ const hashedAssets = require('./src/lib/hashed-assets');
 const assetsMiddleware = require('./src/middleware/assets');
 const verifyAssetsExist = require('./src/lib/verify-assets-exist');
 
+module.exports = options => {
+	options = options || {};
+
 	const defaults = {
-		withHandlebars: false,
-		withNavigation: false,
-		withNavigationHierarchy: false,
-		withAnonMiddleware: false,
-		hasNUiBundle: true,
-		// TODO always default to false for next major version
-		withAssets: options.withHandlebars || false,
-		hasHeadCss: false,
-		withJsonLd: false
+		withHandlebars: true,
+		withNavigation: true,
+		withNavigationHierarchy: true,
+		withAnonMiddleware: true,
+		withNUiJsBundle: true,
+		withAssets: true,
+		withHeadCss: true,
+		withJsonLd: true,
+		withFlags: true
 	};
 
-	app.locals.__name = name = normalizeName(name);
+	Object.keys(defaults).forEach(prop => {
+		if (typeof options[prop] === 'undefined') {
+			options[prop] = defaults[prop];
+		}
+	});
+
+	const {app, meta, addInitPromise} = nExpress.getAppContainer(options)
+
+	app.locals.__name = meta.name;
 	app.locals.__environment = process.env.NODE_ENV || '';
 	app.locals.__isProduction = app.locals.__environment.toUpperCase() === 'PRODUCTION';
-	app.locals.__rootDirectory = directory;
+	app.locals.__rootDirectory = meta.directory;
 
 	try {
-		app.locals.__version = require(directory + '/public/__about.json').appVersion;
+		app.locals.__version = require(meta.directory + '/public/__about.json').appVersion;
 	} catch (e) {}
 
 	// 100% public end points
 	if (!app.locals.__isProduction) {
-		app.use('/' + name, express.static(directory + '/public', { redirect: false }));
+		app.use('/' + meta.name, nExpress.static(meta.directory + '/public', { redirect: false }));
 	}
 
 	// set the edition so it can be added to the html tag and used for tracking
@@ -61,15 +73,11 @@ const verifyAssetsExist = require('./src/lib/verify-assets-exist');
 		});
 	}
 
-	// verification that expected assets exist
-	verifyAssetsExist.verify(app.locals);
-	hashedAssets.init(app.locals);
-
 	// add statutory metadata to construct the page
 	if (options.withNavigation) {
 		const navigation = new NavigationModel({withNavigationHierarchy:options.withNavigationHierarchy});
 		const editions = new EditionsModel();
-		initPromises.push(navigation.init());
+		addInitPromise(navigation.init());
 		app.use(editions.middleware.bind(editions));
 		app.use(navigation.middleware.bind(navigation));
 	}
@@ -78,26 +86,37 @@ const verifyAssetsExist = require('./src/lib/verify-assets-exist');
 		app.use(anon.middleware);
 	}
 
-	if (options.withHandlebars) {
-
-		// Set up handlebars as the templating engine
-		initPromises.push(handlebars({
-			app: app,
-			directory: directory,
-			options: options
-		}));
-
-		// Decorate responses with data about which assets the page needs
-		if (options.withAssets) {
-			app.use(assetsMiddleware(options, directory));
-		}
-
-		// Handle the akamai -> fastly -> akamai etc. circular redirect bug
-		app.use(function (req, res, next) {
-			res.locals.forceOptInDevice = req.get('FT-Force-Opt-In-Device') === 'true';
-			res.vary('FT-Force-Opt-In-Device');
-			next();
-		});
-
+	if (options.withFlags) {
 		app.use(welcomeBannerModelFactory);
 	}
+
+	// Handle the akamai -> fastly -> akamai etc. circular redirect bug
+	app.use(function (req, res, next) {
+		res.locals.forceOptInDevice = req.get('FT-Force-Opt-In-Device') === 'true';
+		res.vary('FT-Force-Opt-In-Device');
+		next();
+	});
+
+	// verification that expected assets exist
+	verifyAssetsExist.verify(app.locals);
+	hashedAssets.init(app.locals);
+
+	// Set up handlebars as the templating engine
+	addInitPromise(handlebars({
+		app: app,
+		directory: meta.directory,
+		options: options
+	}));
+
+	// Decorate responses with data about which assets the page needs
+	if (options.withAssets) {
+		app.use(assetsMiddleware(options, meta.directory));
+	}
+
+	return app;
+}
+
+module.exports.Router = nExpress.Router;
+module.exports.static = nExpress.static;
+module.exports.metrics = nExpress.metrics;
+module.exports.flags = nExpress.flags;
