@@ -14,19 +14,19 @@ function init (flags) {
 	const typeaheadElements = document.querySelectorAll('.o-header [data-typeahead], .o-header__drawer [data-typeahead]');
 
 	if (flags.get('typeahead') && typeaheadElements.length) {
-		// if (flags.get('searchMultiTypeahead')) {
+		if (flags.get('searchMultiTypeahead')) {
 			for (let i = 0; i < typeaheadElements.length; i++) {
 				const form = typeaheadElements[i];
 				new TypeaheadNew(form);
 			}
 
-		// } else {
+		} else {
 
-		// 	for (let i = 0; i < typeaheadElements.length; i++) {
-		// 		let element = typeaheadElements[i]
-		// 		new Typeahead( element, `//${window.location.host}/search-suggestions?q=` );
-		// 	}
-		// }
+			for (let i = 0; i < typeaheadElements.length; i++) {
+				let element = typeaheadElements[i]
+				new Typeahead( element, `//${window.location.host}/search-suggestions?q=` );
+			}
+		}
 	}
 }
 
