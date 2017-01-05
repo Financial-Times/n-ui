@@ -1,5 +1,6 @@
 const nExpress = require('@financial-times/n-express')
 const nextJsonLd = require('@financial-times/next-json-ld');
+const path = require('path');
 // Models
 const NavigationModel = require('./src/navigation/navigationModel');
 const EditionsModel = require('./src/navigation/editionsModel');
@@ -24,7 +25,8 @@ module.exports = options => {
 		withAssets: true,
 		withHeadCss: true,
 		withJsonLd: true,
-		withFlags: true
+		withFlags: true,
+		layoutsDir: path.join(__dirname, '../layout'),
 	};
 
 	Object.keys(defaults).forEach(prop => {
@@ -102,9 +104,10 @@ module.exports = options => {
 	const hasher = hashedAssets.init(app.locals);
 	// Set up handlebars as the templating engine
 	addInitPromise(handlebars({
-		app: app,
+		app,
 		directory: meta.directory,
-		options: options
+		options,
+		hasher
 	}));
 
 	// Decorate responses with data about which assets the page needs

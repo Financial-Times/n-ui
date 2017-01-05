@@ -1,5 +1,4 @@
 const handlebars = require('@financial-times/n-handlebars');
-const hashedAssets = require('../lib/hashed-assets');
 
 module.exports = function (conf) {
 	const app = conf.app;
@@ -12,7 +11,7 @@ module.exports = function (conf) {
 	];
 
 	helpers.hashedAsset = function (options) {
-		return hashedAssets.get(options.fn(this));
+		return conf.hasher.get(options.fn(this));
 	};
 
 	if (options.partialsDirectory) {
@@ -23,7 +22,7 @@ module.exports = function (conf) {
 		partialsDir,
 		defaultLayout: false,
 		// The most common use case, n-ui/layout is not bundled with this package
-		layoutsDir: typeof options.layoutsDir !== 'undefined' ? options.layoutsDir : (directory + '/bower_components/n-ui/layout'),
+		layoutsDir: options.layoutsDir,
 		helpers: helpers,
 		directory: directory,
 		viewsDirectory: options.viewsDirectory
