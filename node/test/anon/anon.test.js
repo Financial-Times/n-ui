@@ -1,7 +1,7 @@
 'use strict';
 /*global describe, it, beforeEach*/
 const request = require('supertest');
-const nextExpress = require('../../main');
+const nextExpress = require('../../index');
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const verifyAssetsExist = require('../../src/lib/verify-assets-exist');

@@ -6,30 +6,30 @@ const denodeify = require('denodeify');
 const path = require('path');
 const fs = require('fs');
 const readFile = denodeify(fs.readFile);
-const hashedAssets = require('../lib/hashed-assets');
 const semver = require('semver');
 const nPolyfillIo = require('@financial-times/n-polyfill-io');
 const chokidar = require('chokidar');
 
-function constructLinkHeader (file, meta, opts) {
-	meta = meta || {};
-	opts = opts || {};
-	const header = [];
-	header.push(`<${opts.hashed ? hashedAssets.get(file) : file }>`);
-	Object.keys(meta).forEach(key => {
-		header.push(`${key}="${meta[key]}"`)
-	});
+function constructLinkHeader (hashedAssets) {
+	return function (file, meta, opts) {
+		meta = meta || {};
+		opts = opts || {};
+		const header = [];
+		header.push(`<${opts.hashed ? hashedAssets.get(file) : file }>`);
+		Object.keys(meta).forEach(key => {
+			header.push(`${key}="${meta[key]}"`)
+		});
 
-	if (!meta.rel) {
-		header.push('rel="preload"')
+		if (!meta.rel) {
+			header.push('rel="preload"')
+		}
+
+		header.push('nopush');
+		this.append('Link', header.join('; '))
 	}
-
-	header.push('nopush');
-	this.append('Link', header.join('; '))
 }
 
-module.exports = function (options, directory) {
-
+module.exports = function (options, directory, hashedAssets) {
 	let nUiUrlRoot;
 	const localAppShell = process.env.NEXT_APP_SHELL === 'local';
 	// Attempt to get information about which version of n-ui is installed
@@ -74,7 +74,7 @@ If you do not need this behaviour run
 	} catch (e) {}
 
 
-	const headCsses = options.hasHeadCss ? fs.readdirSync(`${directory}/public`)
+	const headCsses = options.withHeadCss ? fs.readdirSync(`${directory}/public`)
 		.filter(name => /^head[\-a-z]*\.css$/.test(name))
 		.map(name => [name, fs.readFileSync(`${directory}/public/${name}`, 'utf-8')])
 		.reduce((currentHeadCsses, currentHeadCss) => {
@@ -100,6 +100,8 @@ If you do not need this behaviour run
 			});
 	}
 
+	const linkHeader = constructLinkHeader(hashedAssets);
+
 	return (req, res, next) => {
 		// This middleware relies on the presence of res.locals.flags.
 		// In some scenarios (e.g. using handlebars but not flags) this
@@ -108,7 +110,7 @@ If you do not need this behaviour run
 
 		const swCriticalCss = req.get('ft-next-sw') && res.locals.flags.swCriticalCss;
 		// define a helper for adding a link header
-		res.linkResource = constructLinkHeader;
+		res.linkResource = linkHeader;
 
 		// backwards compatible - can remove once n-ui templates updated everywhere
 		res.locals.headCsses = headCsses;
@@ -118,7 +120,7 @@ If you do not need this behaviour run
 			res.locals.criticalCss = [];
 
 			// work out which assets will be required by the page
-			if (options.hasNUiBundle) {
+			if (options.withNUiJsBundle) {
 				res.locals.nUiConfig = nUiConfig;
 				res.locals.javascriptBundles.push(
 					`${nUiUrlRoot}es5${(res.locals.flags.nUiBundleUnminified || localAppShell ) ? '' : '.min'}.js`
@@ -152,7 +154,7 @@ If you do not need this behaviour run
 				cssVariant = cssVariant ? '-' + cssVariant : '';
 
 				// define which css to output in the critical path
-				if (options.hasHeadCss) {
+				if (options.withHeadCss) {
 					if (`head${cssVariant}-n-ui-core` in headCsses) {
 						if (swCriticalCss) {
 							res.locals.cssBundles.push({

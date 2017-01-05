@@ -99,8 +99,7 @@ module.exports = options => {
 
 	// verification that expected assets exist
 	verifyAssetsExist.verify(app.locals);
-	hashedAssets.init(app.locals);
-
+	const hasher = hashedAssets.init(app.locals);
 	// Set up handlebars as the templating engine
 	addInitPromise(handlebars({
 		app: app,
@@ -110,7 +109,7 @@ module.exports = options => {
 
 	// Decorate responses with data about which assets the page needs
 	if (options.withAssets) {
-		app.use(assetsMiddleware(options, meta.directory));
+		app.use(assetsMiddleware(options, meta.directory, hasher));
 	}
 
 	return app;

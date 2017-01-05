@@ -23,6 +23,13 @@ test-unit-dev:
 test-build:
 	webpack --config webpack.config.demo.js
 
+test-server: export FT_NEXT_BACKEND_KEY=test-backend-key
+test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
+test-server: export FT_NEXT_BACKEND_KEY_OLDEST=test-backend-key-oldest
+test-server:
+	mocha node/test/**/*.test.js --recursive
+
+
 nightwatch:
 	nht nightwatch test/js-success.nightwatch.js
 
