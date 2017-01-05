@@ -1,4 +1,3 @@
-'use strict';
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noCallThru().noPreserveCache();
@@ -21,7 +20,7 @@ describe('Heirarchy Mixin', () => {
 	});
 
 	it('Should setup a poller to get taxonomy from the api', () => {
-		const expectedUrl = `http://next-navigation.ft.com/v1/taxonomy`;
+		const expectedUrl = 'http://next-navigation.ft.com/v1/taxonomy';
 		new HierarchyMixin();
 		sinon.assert.called(pollerStub.stub);
 		let options = pollerStub.stub.lastCall.args[0];
@@ -45,7 +44,7 @@ describe('Heirarchy Mixin', () => {
 			let ancestors = mixin.ancestors(ukEconomyId);
 			expect(ancestors).to.be.an.instanceOf(Array);
 			expect(ancestors.length).to.equal(expected.length);
-			for(let i=0, l=ancestors.length; i<l; i++){
+			for(let i=0, l=ancestors.length; i<l; i++) {
 				expect(ancestors[i].id).to.equal(expected[i].id);
 			}
 		})
@@ -105,7 +104,7 @@ describe('Heirarchy Mixin', () => {
 			let children = mixin.children(companiesId);
 			expect(children).to.be.an.instanceOf(Array);
 			expect(children.length).to.equal(expected.length);
-			for(let i=0, l=children.length; i<l; i++){
+			for(let i=0, l=children.length; i<l; i++) {
 				expect(children[i].id).to.equal(expected[i].id);
 			}
 		})
@@ -113,13 +112,13 @@ describe('Heirarchy Mixin', () => {
 
 	describe('Fallback', () => {
 
-		function apiDownS3Up(){
+		function apiDownS3Up () {
 			fetchMock.restore();
 			fetchMock.mock(/next-navigation\.ft\.com/, 500);
 			fetchMock.mock(/ft-next-navigation\.s3-website-eu-west-1\.amazonaws\.com/, require('../fixtures/navigationLists.json'), {name:'s3bucket'});
 		}
 
-		function apiDownS3Down(){
+		function apiDownS3Down () {
 			fetchMock.restore();
 			fetchMock.mock(/next-navigation\.ft\.com/, 500);
 			fetchMock.mock(/ft-next-navigation\.s3-website-eu-west-1\.amazonaws\.com/, 500, {name:'s3bucket'});

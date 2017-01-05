@@ -1,4 +1,3 @@
-'use strict';
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noCallThru().noPreserveCache();
@@ -24,7 +23,7 @@ describe('Navigation middleware', () => {
 
 	describe('data polling', () => {
 		it('Should setup a poller to get the lists data', () => {
-			const url = `http://next-navigation.ft.com/v1/lists`;
+			const url = 'http://next-navigation.ft.com/v1/lists';
 			new NavigationModel();
 			sinon.assert.called(pollerStub.stub);
 			sinon.assert.calledWith(pollerStub.stub, sinon.match({ url }));
@@ -95,7 +94,7 @@ describe('Navigation middleware', () => {
 				let shouldHaveNav = cases[url];
 				req.url = url;
 				instance.middleware(req, res, next);
-				if(shouldHaveNav){
+				if(shouldHaveNav) {
 					expect(res.locals.navigation.lists.navbar_mobile).to.exist;
 					expect(res.locals.navigation.lists.navbar_mobile).to.be.an('array');
 				}else{
@@ -175,13 +174,13 @@ describe('Navigation middleware', () => {
 
 	describe('Fallback', () => {
 
-		function apiDownS3Up(){
+		function apiDownS3Up () {
 			fetchMock.restore();
 			fetchMock.mock(/next-navigation\.ft\.com/, 500);
 			fetchMock.mock(/ft-next-navigation\.s3-website-eu-west-1\.amazonaws\.com/, require('../fixtures/navigationLists.json'), {name:'s3bucket'});
 		}
 
-		function apiDownS3Down(){
+		function apiDownS3Down () {
 			fetchMock.restore();
 			fetchMock.mock(/next-navigation\.ft\.com/, 500);
 			fetchMock.mock(/ft-next-navigation\.s3-website-eu-west-1\.amazonaws\.com/, 500, {name:'s3bucket'});
@@ -204,7 +203,7 @@ describe('Navigation middleware', () => {
 			const defaultData = require('../../src/navigation/defaultData.json');
 			const navigation = new NavigationModel();
 			return navigation.init().then(() => {
-				for(let list of ['drawer', 'navbar_desktop', 'footer']){
+				for(let list of ['drawer', 'navbar_desktop', 'footer']) {
 					expect(navigation.list(list)).to.deep.equal(defaultData[list]);
 				}
 

@@ -50,14 +50,14 @@ module.exports = options => {
 	}
 
 	// set the edition so it can be added to the html tag and used for tracking
-	app.use(function(req, res, next) {
+	app.use(function (req, res, next) {
 		const edition = req.get('ft-edition') || '';
 		app.locals.__edition = edition;
 		next();
 	});
 
 	// set the ab test state so it can be added to the html tag and used by client code
-	app.use(function(req, res, next) {
+	app.use(function (req, res, next) {
 		const abState = req.get('ft-ab') || '';
 		app.locals.__abState = abState;
 		next();
@@ -65,7 +65,7 @@ module.exports = options => {
 
 
 	if (options.withJsonLd) {
-		app.use(function(req, res, next) {
+		app.use(function (req, res, next) {
 			if (res.locals.flags && res.locals.flags.newSchema) {
 				res.locals.jsonLd = [nextJsonLd.webPage()];
 			}

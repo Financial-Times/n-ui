@@ -1,6 +1,3 @@
-/* eslint strict: 0 */
-'use strict';
-
 const logger = require('@financial-times/n-logger').default;
 const denodeify = require('denodeify');
 const path = require('path');

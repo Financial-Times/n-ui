@@ -1,6 +1,3 @@
-/*jshint node:true*/
-'use strict';
-
 const PORT = process.env.PORT || 3000;
 const express = require('../../../index.js');
 const yell = require('./src/yell');
@@ -11,15 +8,15 @@ const app = module.exports = express({
 	layoutsDir: __dirname + '/views/'
 });
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
 	res.send('Hello world');
 });
 
-app.get('/__flags.json', function(req, res) {
+app.get('/__flags.json', function (req, res) {
 	res.send(res.locals.flags);
 });
 
-app.get('/templated', function(req, res) {
+app.get('/templated', function (req, res) {
 	res.render('main', Object.assign({
 		title: 'FT',
 		image: 'https://avatars0.githubusercontent.com/u/3502508?v=3',
@@ -38,7 +35,7 @@ app.get('/templated', function(req, res) {
 	}, req.query || {}));
 });
 
-app.get('/with-layout', function(req, res) {
+app.get('/with-layout', function (req, res) {
 	res.locals.__isProduction = req.query.prod || res.locals.__isProduction;
 	res.render('main', {
 		layout: 'wrapper',
@@ -68,7 +65,7 @@ const router = new express.Router();
 
 app.use('/router', router);
 
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
 	res.send('Hello router');
 });
 

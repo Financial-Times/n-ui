@@ -1,5 +1,3 @@
-'use strict';
-
 const shellpromise = require('shellpromise');
 const expect = require('chai').expect;
 const join = require('path').join;

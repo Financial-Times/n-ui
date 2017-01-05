@@ -11,7 +11,7 @@ module.exports = function (conf) {
 		directory + ('/node_modules/@financial-times')
 	];
 
-	helpers.hashedAsset = function(options) {
+	helpers.hashedAsset = function (options) {
 		return hashedAssets.get(options.fn(this));
 	};
 

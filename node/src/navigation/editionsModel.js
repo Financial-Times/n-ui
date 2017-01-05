@@ -1,4 +1,3 @@
-"use strict";
 const availableEditions = [
 	{
 		id: 'uk',
@@ -12,15 +11,15 @@ const availableEditions = [
 
 module.exports = class EditionsModel {
 
-	get available(){
+	get available () {
 		return availableEditions;
 	}
 
-	get ids(){
+	get ids () {
 		return availableEditions.map(e => e.id);
 	}
 
-	middleware(req, res, next){
+	middleware (req, res, next) {
 		let currentEdition = req.get('FT-Edition') || 'uk';
 
 		// if query string contains ?edition=..., switch to that edition (and save in a cookie)

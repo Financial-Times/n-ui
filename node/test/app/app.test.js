@@ -1,17 +1,12 @@
 /*global it, describe, beforeEach, before, after*/
-'use strict';
-const path = require('path');
 const request = require('supertest');
 
 // stub the setup api calls
 const fetchMock = require('fetch-mock');
-const metrics = require('next-metrics');
 const sinon = require('sinon');
 const nUi = require('../../index');
 const expect = require('chai').expect;
-const raven = require('@financial-times/n-raven');
 const flags = require('next-feature-flags-client');
-const handlebars = require('@financial-times/n-handlebars');
 const verifyAssetsExist = require('../../src/lib/verify-assets-exist');
 
 let app;
@@ -31,33 +26,33 @@ describe('simple app', function () {
 		fetchMock.restore();
 	});
 
-	it('should have its own route', function(done) {
+	it('should have its own route', function (done) {
 		request(app)
 			.get('/')
 			.expect(200, 'Hello world', done);
 	});
 
 	describe('inherited from, and auto configured in, n-express', function () {
-		it('should be possible to add routers', function(done) {
+		it('should be possible to add routers', function (done) {
 			request(app)
 				.get('/router/')
 				.expect('Vary', /FT-Flags/i)
 				.expect(200, 'Hello router', done);
 		});
 
-		it('should have a robots.txt', function(done) {
+		it('should have a robots.txt', function (done) {
 			request(app)
 				.get('/robots.txt')
 				.expect(200, done);
 		});
 
-		it('should have an about json', function(done) {
+		it('should have an about json', function (done) {
 			request(app)
 				.get('/__about')
 				.expect(200, done);
 		});
 
-		it('should have a static resource', function(done) {
+		it('should have a static resource', function (done) {
 			request(app)
 				.get('/demo-app/test.txt')
 				.expect(200, 'Static file\n', done);
@@ -117,26 +112,26 @@ describe('simple app', function () {
 
 	describe('templating', function () {
 
-		it('should do templating', function(done) {
+		it('should do templating', function (done) {
 			request(app)
 				.get('/templated')
 				.expect(200, /FT/, done);
 		});
 
-		it('should not inherit any markup by default', function(done) {
+		it('should not inherit any markup by default', function (done) {
 			request(app)
 				.get('/templated')
 				.expect(200, /^<h1>FT - on/, done);
 		});
 
-		it('should be possible to inherit a layout', function(done) {
+		it('should be possible to inherit a layout', function (done) {
 			request(app)
 				.get('/with-layout')
 				.expect(200, /^<!DOCTYPE html>(.|[\r\n])*head(.|[\r\n])*body(.|[\r\n])*h1(.|[\r\n])*h2(.|[\r\n])*<\/html>/, done);
 		});
 
 		//fixme - this test breaks on Travis
-		it.skip('should integrate with the image service', function(done) {
+		it.skip('should integrate with the image service', function (done) {
 			const expected = process.env.TRAVIS ?
 				/image\.webservices\.ft\.com\/v1\/images\/raw/ :
 				/next-geebee\.ft\.com\/image\/v1\/images\/raw/;
@@ -145,19 +140,19 @@ describe('simple app', function () {
 				.expect(200, expected, done);
 		});
 
-		it('should support loading partials via bower', function(done) {
+		it('should support loading partials via bower', function (done) {
 			request(app)
 				.get('/templated')
 				.expect(200, /End of dep 2 partial/, done);
 		});
 
-		it('should support app-specific helpers', function(done) {
+		it('should support app-specific helpers', function (done) {
 			request(app)
 				.get('/templated')
 				.expect(200, /HELLO/, done);
 		});
 
-		it('should expose app name to views', function(done) {
+		it('should expose app name to views', function (done) {
 			request(app)
 				.get('/templated')
 				.expect(200, /on app demo-app/, done);
@@ -168,12 +163,12 @@ describe('simple app', function () {
 			// these two helpers
 			// a) provide a sample of n-handlebars' features to make sure it is being consumed at all
 			// b) are the trickiest ones most likely to break
-			it('should provide inheritance helpers', function(done) {
+			it('should provide inheritance helpers', function (done) {
 				request(app)
 					.get('/templated')
 					.expect(200, /block1default block2override/, done);
 			});
-			it('should provide a dynamic partials helper', function(done) {
+			it('should provide a dynamic partials helper', function (done) {
 				request(app)
 					.get('/templated')
 					.expect(200, /dynamic-partial/, done)
@@ -181,7 +176,7 @@ describe('simple app', function () {
 			});
 		});
 
-		it('should treat undefined flags as offy (like falsey)', function(done) {
+		it('should treat undefined flags as offy (like falsey)', function (done) {
 			request(app)
 				.get('/templated')
 				// Currently fails - suggest we just ditch this feature, as per

@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('../../..');
 const app = module.exports = express({
 	name: 'bad-assets',

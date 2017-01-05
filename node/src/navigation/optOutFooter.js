@@ -1,5 +1,3 @@
-"use strict";
-
 // this provides an opt-out link in the footer for the compulsory opt-in phase of Next
 module.exports = function (items, currentUrl) {
 	const optOutLink = {

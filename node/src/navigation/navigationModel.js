@@ -1,4 +1,3 @@
-'use strict';
 const Poller = require('ft-poller');
 const ms = require('ms');
 const url = require('url');
@@ -12,46 +11,46 @@ const FALLBACK_URL = 'http://ft-next-navigation.s3-website-eu-west-1.amazonaws.c
 
 const defaultData = require('./defaultData.json');
 
-function clone(obj){
+function clone (obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
 module.exports = class NavigationModel {
 
-	constructor(options){
+	constructor (options) {
 		this.options = Object.assign({}, {withNavigationHierarchy:false}, options || {});
 		this.poller = new Poller({
 			url: API_URL,
 			refreshInterval: ms('15m')
 		});
-		if(this.options.withNavigationHierarchy){
+		if(this.options.withNavigationHierarchy) {
 			this.hierarchy = new HierarchyMixin();
 		}
 
 	}
 
-	init(){
+	init () {
 		let promises = [
 			this.getInitialData()
 		];
-		if(this.options.withNavigationHierarchy){
+		if(this.options.withNavigationHierarchy) {
 			promises.push(this.hierarchy.init());
 		}
 
 		return Promise.all(promises);
 	}
 
-	getInitialData(){
+	getInitialData () {
 		return this.poller.start({initialRequest:true}).catch(err => {
 			log.error({event:'NAVIGATION_API_DOWN', message:err.message});
 			return this.fallback();
 		})
 	}
 
-	fallback(){
+	fallback () {
 		return fetch(FALLBACK_URL)
 			.then(response => {
-				if(!response.ok){
+				if(!response.ok) {
 					log.error({event:'FALLBACK_URL_FAILURE', url:FALLBACK_URL, status:response.status});
 					return defaultData;
 				}
@@ -68,27 +67,27 @@ module.exports = class NavigationModel {
 			})
 	}
 
-	getData(){
+	getData () {
 		return this.poller.getData() || this.fallbackData;
 	}
 
-	list(name){
+	list (name) {
 		let data = this.getData();
-		if(!data){
+		if(!data) {
 			throw new Error('No lists data loaded');
 		}
 
-		if(!data[name]){
+		if(!data[name]) {
 			throw new Error(`No list with name '${name}' found`);
 		}
 
 		return clone(data[name]);
 	}
 
-	static showMobileNav(currentUrl, navData){
+	static showMobileNav (currentUrl, navData) {
 		const currentPathName = url.parse(currentUrl).pathname;
-		for(let item of navData){
-			if(currentPathName === item.href || (item.id && currentUrl.includes(item.id))){
+		for(let item of navData) {
+			if(currentPathName === item.href || (item.id && currentUrl.includes(item.id))) {
 				return true;
 			}
 		}
@@ -96,7 +95,7 @@ module.exports = class NavigationModel {
 		return false;
 	}
 
-	middleware(req, res, next){
+	middleware (req, res, next) {
 		let currentEdition = res.locals.editions.current.id;
 		res.locals.navigation = {
 			lists: {}
@@ -106,29 +105,29 @@ module.exports = class NavigationModel {
 		const currentUrl = req.get('ft-blocked-url') || req.get('FT-Vanity-Url') || req.url;
 
 		let data = this.getData();
-		if(!data){
+		if(!data) {
 			next();
 			return;
 		}
 
 
-		for(let listName of Object.keys(data)){
+		for (let listName of Object.keys(data)) {
 
 			// not really a list
 			// tood: remove meganav from data returned by api
-			if(listName === 'meganav'){
+			if(listName === 'meganav') {
 				continue;
 			}
 
 			// mobile nav only on homepage
-			if(listName === 'navbar_mobile' && !NavigationModel.showMobileNav(currentUrl, data[listName][currentEdition])){
+			if(listName === 'navbar_mobile' && !NavigationModel.showMobileNav(currentUrl, data[listName][currentEdition])) {
 				continue;
 			}
 
 			let listData = this.list(listName);
 
 			// List data could be an object with arrays for each edition, or just an array if the same for every edition
-			if(!Array.isArray(listData)){
+			if(!Array.isArray(listData)) {
 				listData = listData[currentEdition] || listData;
 			}
 
@@ -149,7 +148,7 @@ module.exports = class NavigationModel {
 		// take the actual path rather than a vanity
 		if (this.options.withNavigationHierarchy && /^\/stream\//.test(req.path)) {
 			const regexResult = /stream\/(.+)Id\/(.+)/i.exec(req.path);
-			if(regexResult && regexResult.length === 3){
+			if(regexResult && regexResult.length === 3) {
 				let id = regexResult[2];
 				res.locals.navigation.currentItem = this.hierarchy.find(id).item;
 				res.locals.navigation.ancestors = this.hierarchy.ancestors(id);
