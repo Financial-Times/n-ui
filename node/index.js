@@ -14,9 +14,8 @@ const assetsMiddleware = require('./src/middleware/assets');
 const verifyAssetsExist = require('./src/lib/verify-assets-exist');
 
 module.exports = options => {
-	options = options || {};
 
-	const defaults = {
+	options = Object.assign({}, {
 		withHandlebars: true,
 		withNavigation: true,
 		withNavigationHierarchy: true,
@@ -26,14 +25,10 @@ module.exports = options => {
 		withHeadCss: true,
 		withJsonLd: true,
 		withFlags: true,
+		withBackendAuthentication: true,
+		withServiceMetrics: true,
 		layoutsDir: path.join(__dirname, '../layout'),
-	};
-
-	Object.keys(defaults).forEach(prop => {
-		if (typeof options[prop] === 'undefined') {
-			options[prop] = defaults[prop];
-		}
-	});
+	}, options || {});
 
 	const {app, meta, addInitPromise} = nExpress.getAppContainer(options)
 
