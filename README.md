@@ -118,5 +118,9 @@ The navigation model also controls the edition switching logic.  The following p
 - Exposes everything in the app's `./public` folder via `./{{name-of-app}}` (only in non-production environments, please use [next-assets](https://github.com/Financial-Times/next-assets) or hashed-assets in production)
 
 ## Webpack
-
-//TODO n-ui will expose a slightly preconfigured n-webpack
+In your `webpack.config.js` simply include the following to generate all the assets needed by your n-ui enabled app:
+```
+module.exports = require('@financial-times/n-ui/webpack')({
+	entry: // an object specifying webpack entry points
+})
+```
