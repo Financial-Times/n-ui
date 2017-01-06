@@ -94,16 +94,21 @@ module.exports = options => {
 		next();
 	});
 
+	let hasher = str => str;
 	// verification that expected assets exist
-	verifyAssetsExist.verify(app.locals);
-	const hasher = hashedAssets.init(app.locals);
-	// Set up handlebars as the templating engine
-	addInitPromise(handlebars({
-		app,
-		directory: meta.directory,
-		options,
-		hasher
-	}));
+	if (options.withAssets) {
+		verifyAssetsExist.verify(app.locals);
+		hasher = hashedAssets.init(app.locals);
+	}
+	if (options.withHandlebars) {
+		// Set up handlebars as the templating engine
+		addInitPromise(handlebars({
+			app,
+			directory: meta.directory,
+			options,
+			hasher
+		}));
+	}
 
 	// Decorate responses with data about which assets the page needs
 	if (options.withAssets) {
