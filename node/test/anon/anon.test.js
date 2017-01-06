@@ -2,25 +2,19 @@
 const request = require('supertest');
 const nextExpress = require('../../index');
 const expect = require('chai').expect;
-const sinon = require('sinon');
-const verifyAssetsExist = require('../../src/lib/verify-assets-exist');
 
 describe('Anonymous Middleware', function () {
 	let app;
 	let locals;
 
 	before(function () {
-		sinon.stub(verifyAssetsExist, 'verify');
-		app = nextExpress({ withFlags:true, withHandlebars:false, withAnonMiddleware:true });
+		app = nextExpress({ withFlags:true, withHandlebars:false, withAssets: false});
 		app.get('/', function (req, res) {
 			locals = res.locals;
 			res.sendStatus(200).end();
 		});
 	});
 
-	after(() => {
-		verifyAssetsExist.verify.restore();
-	});
 
 	it('Should set the res.locals.anon property', function (done) {
 		request(app)

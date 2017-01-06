@@ -44,6 +44,7 @@ const pa11yIgnore = [
 	'myft-digest-promo',
 	'myft-hint',
 	'n-ui',
+	'node',
 	'normalize',
 	'notification',
 	'offline-toast',
