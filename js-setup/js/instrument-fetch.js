@@ -1,20 +1,6 @@
 let theFetch;
 export default function (flags, oErrors) {
 	theFetch = theFetch || window.fetch;
-	// allow use of our proxy for apis when cors not available
-	if (!('withCredentials' in new XMLHttpRequest())) {
-		const realFetch = window.fetch;
-
-		window.fetch = function (url, opts) {
-			if (opts.useCorsProxy) {
-				const urlObj = new URL(url);
-				opts.headers = opts.headers || {};
-				opts.headers['api-host'] = urlObj.origin;
-				url = url.replace(urlObj.origin, '/__api-proxy')
-			}
-			return realFetch.call(this, url, opts)
-		};
-	}
 
 	// turn on more detailed error reporting of ajax calls
 	if (flags.get('clientAjaxErrorReporting')) {
