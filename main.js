@@ -45,6 +45,8 @@ import * as subscriptionOfferPrompt from './subscription-offer-prompt';
 export const _subscriptionOfferPrompt = subscriptionOfferPrompt;
 import * as tooltip from './tooltip';
 export const _tooltip = tooltip;
+import * as syndication from './syndication';
+export const _syndication = syndication;
 
 // Export some third party components we're unlikely to remove in a hurry
 import ftdomdelegate from 'ftdomdelegate';

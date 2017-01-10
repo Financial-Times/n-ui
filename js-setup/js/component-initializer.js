@@ -14,6 +14,7 @@ import myftHint from '../../myft-hint';
 import offlineToast from '../../offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
+import * as syndication from '../../syndication';
 
 export const presets = {
 	discrete: {
@@ -31,7 +32,8 @@ export const presets = {
 		subscriptionOfferPrompt: true,
 		myft: true,
 		ads: true,
-		tooltip: true
+		tooltip: true,
+		syndication: true
 	}
 };
 
@@ -183,6 +185,11 @@ export class ComponentInitializer {
 							flags
 						});
 						this.initializedFeatures.myftUi = true;
+					}
+
+					if (config.features.syndication && !this.initializedFeatures.syndication){
+						syndication.init(flags);
+						this.initializedFeatures.syndication = true;
 					}
 				});
 
