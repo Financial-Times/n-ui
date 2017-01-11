@@ -30,7 +30,8 @@ $n-ui-features: (
 	typography: 'critical',
 	utils: 'critical',
 	welcomeMessage: true,
-	tooltip: true
+	tooltip: true,
+	syndication: false
 ) !default;
 
 /// Declare any feature dependencies
@@ -52,7 +53,8 @@ $n-ui-presets: (
 		myftHint: 'critical',
 		notification: true,
 		welcomeMessage: true,
-		tooltip: true
+		tooltip: true,
+		syndication: true
 	)
 );
 

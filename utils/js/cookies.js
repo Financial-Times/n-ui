@@ -38,4 +38,24 @@ function remove (name){
 	return set(name, '', {expires:new Date(0)});
 }
 
-module.exports = {get, set, has, getRegexForName, remove};
+function user (){
+	const userCookie = get('FT_User');
+	const userCookieValue = name => {
+		if(!userCookie){
+			return '';
+		}
+
+		const result = new RegExp(`${name}=([^:]+)`).exec(userCookie);
+		if(!result || result.length < 2){
+			return '';
+		}
+
+		return result[1];
+	};
+
+	return {
+		products: () => userCookieValue('PRODUCTS')
+	}
+}
+
+module.exports = {get, set, has, getRegexForName, remove, user};

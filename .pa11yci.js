@@ -20,6 +20,7 @@ const config = {
 
 const pa11yIgnore = [
 	'.git',
+	'.idea',
 	'node_modules',
 	'bower_components',
 	'public',
@@ -61,7 +62,8 @@ const pa11yIgnore = [
 	'typography',
 	'utils',
 	'viewport',
-	'welcome-message'
+	'welcome-message',
+	'syndication'
 ];
 
 function getDirectories(srcpath) {
