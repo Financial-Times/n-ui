@@ -1,4 +1,4 @@
-import {$$, cookieStore} from '../utils';
+import {$$, $, cookieStore} from '../utils';
 
 const USER_PRODUCTS_SERVICE_URL = 'https://session-next.ft.com/products';
 const SYNDICATION_PRODUCT_CODE = 'S1';
@@ -32,14 +32,31 @@ function checkIfUserisSyndicationCustomer (){
 		})
 }
 
+function updateTeasers(teasers){
+	teasers.forEach(teaser => {
+		const heading = teaser.querySelector('.o-teaser__heading');
+		const link = heading.querySelector('a');
+		const uuid = link.pathname.replace('/content/', '');
+		heading.insertBefore(createSyndicationLink(uuid), link);
+	});
+}
+
+function updateMainArticle(article){
+	const container = article.querySelector('.article-headline');
+	const title = container.querySelector('.article-classifier__gap');
+	const uuid = article.getAttribute('data-content-id');
+	container.insertBefore(createSyndicationLink(uuid), title);
+}
+
 export function init (flags){
 	if(!flags.get('syndication')){
 		return;
 	}
 
-	const syndicatableArticles = $$('.o-teaser--syndicatable');
+	const syndicatableTeasers = $$('.o-teaser--syndicatable');
+	const syndicatableMainArticle = $('.article[data-syndicatable="yes"]');
 
-	if(!syndicatableArticles.length){
+	if(!syndicatableTeasers.length && !syndicatableMainArticle){
 		return;
 	}
 
@@ -50,11 +67,12 @@ export function init (flags){
 			}
 
 			document.body.setAttribute(SYNDICATION_USER_ATTR, 'true');
-			syndicatableArticles.forEach(article => {
-				const heading = article.querySelector('.o-teaser__heading');
-				const link = heading.querySelector('a');
-				const uuid = link.pathname.replace('/content/', '');
-				heading.insertBefore(createSyndicationLink(uuid), link);
-			})
-		})
+			if(syndicatableTeasers.length){
+				updateTeasers(syndicatableTeasers);
+			}
+
+			if(syndicatableMainArticle){
+				updateMainArticle(syndicatableMainArticle);
+			}
+		});
 }
