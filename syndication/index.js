@@ -32,7 +32,7 @@ function checkIfUserisSyndicationCustomer (){
 		})
 }
 
-function updateTeasers(teasers){
+function updateTeasers (teasers){
 	teasers.forEach(teaser => {
 		const heading = teaser.querySelector('.o-teaser__heading');
 		const link = heading.querySelector('a');
@@ -41,7 +41,7 @@ function updateTeasers(teasers){
 	});
 }
 
-function updateMainArticle(article){
+function updateMainArticle (article){
 	const container = article.querySelector('.article-headline');
 	const title = container.querySelector('.article-classifier__gap');
 	const uuid = article.getAttribute('data-content-id');
