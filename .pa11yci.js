@@ -80,6 +80,11 @@ components.forEach((component) => {
 
 	try {
 		componentConfig = require(`./${component}/pa11y-config.js`);
+
+		if(!componentConfig.pa11yData.length) {
+			throw new Error();
+		}
+
 	} catch (e) {
 		return missingPa11yConfig.push(component);
 	};
@@ -88,7 +93,7 @@ components.forEach((component) => {
 		url: `localhost:5005/components/${component}`,
 		rootElement: 'body'
 	};
-	const componentPa11yData = cloneData(componentConfig.pa11yData);
+	const componentPa11yData = cloneData(componentConfig.pa11yData || []);
 	const mergeWithDefaults = (data) => Object.assign({}, componentDefaults, data);
 	const componentUrls = componentPa11yData.map(mergeWithDefaults);
 	const addToPa11yUrls = (componentUrls) => componentUrls.map((url) => config.urls.push(url));
@@ -97,7 +102,7 @@ components.forEach((component) => {
 });
 
 if(missingPa11yConfig.length) {
-	throw new Error(error(`Error: Components need to have a pa11y-config, components missing a pa11y-config: ${missingPa11yConfig.join()}`));
+	throw new Error(error(`Components need to have a demo-config.js file, containing a non-empty \`pa11yData\` array. Components without these are: ${missingPa11yConfig.join(', ')}.`));
 }
 
 module.exports = config;
