@@ -84,11 +84,9 @@ components.forEach((component) => {
 		return missingPa11yConfig.push(component);
 	};
 
-	if(componentConfig) {
-		config.urls.push({
-			"url": `localhost:5005/components/${component}`
-		});
-	}
+	config.urls.push({
+		url: `localhost:5005/components/${component}`
+	});
 });
 
 if(missingPa11yConfig.length) {
