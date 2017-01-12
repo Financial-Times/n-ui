@@ -10,8 +10,7 @@ const config = {
 			"headers": {
 				"Cookie": "next-flags=ads:off,cookieMessage:off; secure=true"
 			}
-		},
-		"rootElement": "#a11y"
+		}
 	},
 	"urls": [
 		"http://localhost:5005"

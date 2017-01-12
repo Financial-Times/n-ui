@@ -33,7 +33,6 @@ app.get('/components/:component?', (req, res) => {
 	let config = require(`../${component}/pa11y-config`);
 
 	res.render(`../../${component}/${config.entry}`, {
-		pa11y: true,
 		title: 'Test App',
 		layout: '../layout/vanilla'
 	});
