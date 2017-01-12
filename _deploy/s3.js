@@ -67,7 +67,7 @@ function brotlify () {
 		files
 			.filter(f => /\.(js|css)$/.test(f))
 			.map(fileName =>
-				readFile(path.join(process.cwd(), fileName), 'utf8')
+				readFile(path.join(process.cwd(), fileName))
 					.then(brotli.compress)
 					.then(contents => writeFile(path.join(process.cwd(), fileName + '.brotli'), contents))
 			)
