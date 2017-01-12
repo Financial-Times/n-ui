@@ -30,12 +30,14 @@ app.get('/', (req, res) => {
 app.use(require('./middleware/assets'));
 app.get('/components/:component?', (req, res) => {
 	const component = req.params.component;
-	let config = require(`../${component}/pa11y-config`);
-
-	res.render(`../../${component}/${config.entry}`, {
+	const config = require(`../${component}/pa11y-config`);
+	const handlebarsDataClone = JSON.parse(JSON.stringify(config.handlebarsData));
+	const model = Object.assign({
 		title: 'Test App',
 		layout: '../layout/vanilla'
-	});
+	}, handlebarsDataClone);
+
+	res.render(`../../${component}/${config.handlebarsData.template}`, model);
 });
 
 app.get('*', (req, res) => {
