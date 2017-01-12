@@ -10,6 +10,12 @@ module.exports = function (conf) {
 		directory + ('/node_modules/@financial-times')
 	];
 
+	if (conf.hasher) {
+		helpers.hashedAsset = function (options) {
+			return conf.hasher.get(options.fn(this));
+		};
+	}
+
 	if (options.partialsDirectory) {
 		partialsDir.push(options.partialsDirectory);
 	}
