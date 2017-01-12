@@ -74,6 +74,7 @@ function getDirectories(srcpath) {
 
 const missingPa11yConfig = [];
 const components = getDirectories('./');
+const cloneData = (data) => JSON.parse(JSON.stringify(data));
 
 components.forEach((component) => {
 	let componentConfig;
@@ -84,9 +85,16 @@ components.forEach((component) => {
 		return missingPa11yConfig.push(component);
 	};
 
-	config.urls.push({
-		url: `localhost:5005/components/${component}`
-	});
+	const componentDefaults = {
+		url: `localhost:5005/components/${component}`,
+		rootElement: 'body'
+	};
+	const componentPa11yData = cloneData(componentConfig.pa11yData);
+	const mergeWithDefaults = (data) => Object.assign({}, componentDefaults, data);
+	const componentUrls = componentPa11yData.map(mergeWithDefaults);
+	const addToPa11yUrls = (componentUrls) => componentUrls.map((url) => config.urls.push(url));
+
+	addToPa11yUrls(componentUrls);
 });
 
 if(missingPa11yConfig.length) {
