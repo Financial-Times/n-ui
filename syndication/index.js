@@ -1,6 +1,6 @@
-import {$$, $, cookieStore} from '../utils';
+import {$$, $} from '../utils';
 
-const USER_PRODUCTS_SERVICE_URL = 'https://session-next.ft.com/products';
+import {products as getUserProducts} from 'next-session-client';
 const SYNDICATION_PRODUCT_CODE = 'S1';
 const SYNDICATION_USER_ATTR = 'data-syndication-user';
 const SYNDICATION_LINK_CLASS = 'o-teaser__syndication-indicator';
@@ -15,22 +15,16 @@ const createSyndicationLink = uuid => {
 };
 
 function checkIfUserisSyndicationCustomer (){
-	const user = cookieStore.user();
-	if(user){
-		return Promise.resolve(user.products().includes('S1'));
-	}
-
-	return fetch(USER_PRODUCTS_SERVICE_URL, {credentials:'include'})
+	getUserProducts()
 		.then(response => {
-			if(!response.ok){
-				throw new Error(`${USER_PRODUCTS_SERVICE_URL} returned ${response.status} ${response.statusText}`);
+			if(!response || !response.products){
+				return false;
 			}else{
-				return response.json();
+				return response.products.includes(SYNDICATION_PRODUCT_CODE);
 			}
-		})
-		.then(json => {
-			return (json.products && json.products.includes(SYNDICATION_PRODUCT_CODE));
-		})
+		}).catch(() => {
+			return false;
+	});
 }
 
 function updateTeasers (teasers){

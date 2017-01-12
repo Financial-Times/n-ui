@@ -42,17 +42,4 @@ describe('Cookie Utils', () => {
 		expect(cookieStore.has(name)).to.be.true;
 		expect(cookieStore.get(name)).to.equal(value);
 	});
-
-	context('User', () => {
-
-		before(() => {
-			cookieStore.set('FT_User', 'USERID=4011624548:EMAIL=paul.i.wilson@ft.com:FNAME=Paul:LNAME=Wilson:TIME=%5BTue%2C+10-Jan-2017+14%3A22%3A14+GMT%5D:USERNAME=paul.i.wilson@ft.com:REMEMBER=_REMEMBER_:ERIGHTSID=11624548:PRODUCTS=_Tools_S1_P0_P2_:RESOURCES=:GROUPS=:X=');
-		});
-
-		it('Should be able to get a user\'s products', () => {
-			const user = cookieStore.user();
-			const products = user.products();
-			expect(products).to.equal('_Tools_S1_P0_P2_')
-		})
-	})
 });
