@@ -19,6 +19,7 @@ const app = module.exports = express({
 	partialsDirectory: process.cwd(),
 	directory: process.cwd()
 });
+
 app.get('/', (req, res) => {
 	res.render('default', {
 		title: 'Test App',
@@ -29,10 +30,9 @@ app.get('/', (req, res) => {
 app.use(require('./middleware/assets'));
 app.get('/components/:component?', (req, res) => {
 	const component = req.params.component;
-	let template = require(`../${component}/pa11y-config`);
-	template = template.entry;
+	let config = require(`../${component}/pa11y-config`);
 
-	res.render(`../../${component}/${template}`, {
+	res.render(`../../${component}/${config.entry}`, {
 		pa11y: true,
 		title: 'Test App',
 		layout: '../layout/vanilla'

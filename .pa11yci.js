@@ -72,8 +72,8 @@ function getDirectories(srcpath) {
 	});
 }
 
-const components = getDirectories('./')
 const missingPa11yConfig = [];
+const components = getDirectories('./');
 
 components.forEach((component) => {
 	const hasPa11yConfig = fs.readdirSync(`./${component}`).some((file) => {
