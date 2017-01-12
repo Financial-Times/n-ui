@@ -37,7 +37,7 @@ function updateTeasers (teasers){
 	teasers.forEach(updateTeaser);
 }
 
-function updateTeaser(teaser){
+function updateTeaser (teaser){
 	const heading = teaser.querySelector('.o-teaser__heading');
 
 	if(heading.querySelector('.'+SYNDICATION_LINK_CLASS)){
@@ -55,7 +55,7 @@ function updateMainArticle (article){
 	container.insertBefore(createSyndicationLink(uuid), title);
 }
 
-function onAsyncContentLoaded(){
+function onAsyncContentLoaded (){
 	const syndicatableTeasers = $$('.o-teaser--syndicatable');
 	updateTeasers(syndicatableTeasers);
 }
