@@ -24,7 +24,8 @@ if (!tag) {
 		tag = `v${tag}`;
 	}
 	versions = [
-		tag.split('.').shift(),
+		tag.split('.').slice(0, 1).join('.'),
+		tag.split('.').slice(0, 2).join('.'),
 		tag
 	]
 }
@@ -53,53 +54,75 @@ function purge (path) {
 		.then(() => purgeOnce(path, '...gone!'))
 }
 
-function brotlify () {
-	return shellpromise('find . -path "./dist/*"')
-		.then(files => Promise.all(
-			files.split('\n')
-				.filter(f => !!f && /\.(js|css)$/.test(f))
-				.map(f => f.trim())
-				.map(fileName =>
-					readFile(path.join(process.cwd(), fileName), 'utf8')
-						.then(brotli.compress)
-						.then(contents => writeFile(path.join(process.cwd(), fileName + '.brotli'), contents))
-				)
-		))
-}
-
-
-function getDeployList () {
-	return shellpromise('find . -path "./dist/*"')
+function getFileList (dir) {
+	return shellpromise(`find . -path "./dist/${dir}/*"`)
 		.then(files =>
 			files.split('\n')
 				.filter(f => !!f)
-				.filter(f => !/^n-ui-core\.css/.test(f))
 		)
 }
 
-brotlify()
-	.then(getDeployList)
-	.then(files => Promise.all(
-		versions
-			.map((version, i) => {
-				return deployStatic({
-					files: files,
-					destination: `n-ui/cached/${version}`,
-					bucket: 'ft-next-n-ui-prod',
-					strip: 1,
-					monitor: isOfficialRelease && i === 0, // only monitor the size of the first copy deployed,
-					monitorStripDirectories: true,
-					cacheControl: 'must-revalidate, max-age=1200',
-					surrogateControl: 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400'
-				})
-					.then(() => files.map(file => {
-						const paths = [
-							`https://www.ft.com/__assets/n-ui/cached/${version}/${file.split('/').pop()}`
-						];
-						return Promise.all(paths.map(purge));
-					}))
-			})
+function brotlify () {
+	return getFileList('assets').then(files => Promise.all(
+		files
+			.filter(f => /\.(js|css)$/.test(f))
+			.map(fileName =>
+				readFile(path.join(process.cwd(), fileName), 'utf8')
+					.then(brotli.compress)
+					.then(contents => writeFile(path.join(process.cwd(), fileName + '.brotli'), contents))
+			)
 	))
+}
+
+function staticAssets () {
+	return brotlify()
+		.then(() => getFileList('assets'))
+		.then(files => Promise.all(
+			versions
+				.map((version, i) => {
+					return deployStatic({
+						files: files,
+						destination: `n-ui/cached/${version}`,
+						bucket: 'ft-next-n-ui-prod',
+						strip: 2,
+						monitor: isOfficialRelease && i === 0, // only monitor the size of the first copy deployed,
+						monitorStripDirectories: true,
+						cacheControl: 'must-revalidate, max-age=1200',
+						surrogateControl: 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400'
+					})
+						.then(() => files.map(file => {
+							const paths = [
+								`https://www.ft.com/__assets/n-ui/cached/${version}/${file.split('/').pop()}`
+							];
+							return Promise.all(paths.map(purge));
+						}))
+				})
+		))
+}
+
+function layouts () {
+	return getFileList('templates')
+		.then(files => Promise.all(
+			versions
+				.map((version) => {
+					return deployStatic({
+						files: files,
+						destination: `templates/${version}`,
+						bucket: 'ft-next-n-ui-prod',
+						strip: 2,
+						cacheControl: 'no-cache, max-age=0, must-revalidate'
+					})
+				})
+		))
+
+}
+
+
+Promise.all([
+	staticAssets(),
+	layouts()
+])
+	.then(() => process.exit(0))
 	.catch(err => {
 		console.log(err) //eslint-disable-line
 		process.exit(2)

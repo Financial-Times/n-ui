@@ -47,6 +47,7 @@ test: verify pally-conf test-server test-unit test-build run nightwatch a11y
 test-dev: verify test-unit-dev
 
 deploy: assets
+	node ./_deploy/compile-layouts
 	node ./_deploy/s3.js
 	$(MAKE) npm-publish
 
