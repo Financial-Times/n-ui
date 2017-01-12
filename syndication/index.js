@@ -14,8 +14,8 @@ const createSyndicationLink = uuid => {
 	return a;
 };
 
-function checkIfUserisSyndicationCustomer (){
-	getUserProducts()
+function checkIfUserIsSyndicationCustomer (){
+	return getUserProducts()
 		.then(response => {
 			if(!response || !response.products){
 				return false;
@@ -68,7 +68,7 @@ export function init (flags){
 
 	document.body.addEventListener('asyncContentLoaded', onAsyncContentLoaded);
 
-	checkIfUserisSyndicationCustomer()
+	checkIfUserIsSyndicationCustomer()
 		.then(userIsSyndicationCustomer => {
 			if(!userIsSyndicationCustomer){
 				return;
