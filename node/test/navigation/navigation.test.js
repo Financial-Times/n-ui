@@ -129,9 +129,9 @@ describe('Navigation middleware', () => {
 			let ukSectionUd = 'Ng==-U2VjdGlvbnM=';
 			let expectedChildren = [
 				{
-					'name': 'UK Economy',
-					'id': 'MTA5-U2VjdGlvbnM=',
-					'href': '/global-economy/uk'
+					'href': '/uk-business-economy',
+					'id': 'Nw==-U2VjdGlvbnM=',
+					'name': 'UK Business & Economy'
 				},
 				{
 					'name': 'UK Politics & Policy',
