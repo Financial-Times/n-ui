@@ -48,7 +48,7 @@
 		padding: 40px 16px;
 		display: none;
 
-		@include oGridRespondTo(S) {
+		@include oGridRespondTo(M) {
 			display: block;
 		}
 	}
@@ -100,6 +100,16 @@
 		@include oGridRespondTo('XL') {
 			display: table-cell;
 		}
+	}
+
+	.n-welcome-banner__logo {
+		display: inline-block;
+		background-image: url('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-logo-square-coloured?source=next&format=png&width=50');
+		background-image: url('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-logo-square-coloured?source=next&format=svg');
+		background-size: contain;
+		width: 50px;
+		height: 50px;
+		margin-right: 20px;
 	}
 
 	.n-welcome-banner__heading {
@@ -208,7 +218,6 @@
 	.n-welcome-banner__button--close {
 		background: transparent;
 		border: 1px solid getColor('white');
-		border-radius: 50%;
 		margin: 1px 0;
 		padding: 2px 0 0;
 		width: 34px;
