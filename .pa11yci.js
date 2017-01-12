@@ -4,16 +4,16 @@ const path = require('path');
 const error = chalk.bold.red;
 
 const config = {
-	"defaults": {
-		"timeout": 10000,
-		"page": {
-			"headers": {
-				"Cookie": "next-flags=ads:off,cookieMessage:off; secure=true"
+	defaults: {
+		timeout: 10000,
+		page: {
+			headers: {
+				Cookie: 'next-flags=ads:off,cookieMessage:off; secure=true'
 			}
 		}
 	},
-	"urls": [
-		"http://localhost:5005"
+	urls: [
+		'http://localhost:5005'
 	]
 };
 
