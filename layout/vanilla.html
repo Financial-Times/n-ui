@@ -22,15 +22,7 @@
 		</script>
 	</head>
 	<body class="o-hoverable-on" data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
-		{{#if pa11y}}
-			<div id="a11y">
-		{{/if}}
-
 		{{{body}}}
-
-		{{#if pa11y}}
-			</div>
-		{{/if}}
 		{{>n-ui/js-setup/templates/bootstrapper}}
 	</body>
 </html>

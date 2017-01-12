@@ -19,6 +19,7 @@ const app = module.exports = express({
 	partialsDirectory: process.cwd(),
 	directory: process.cwd()
 });
+
 app.get('/', (req, res) => {
 	res.render('default', {
 		title: 'Test App',
@@ -29,14 +30,14 @@ app.get('/', (req, res) => {
 app.use(require('./middleware/assets'));
 app.get('/components/:component?', (req, res) => {
 	const component = req.params.component;
-	let template = require(`../${component}/pa11y-config`);
-	template = template.entry;
-
-	res.render(`../../${component}/${template}`, {
-		pa11y: true,
+	const config = require(`../${component}/pa11y-config`);
+	const handlebarsDataClone = JSON.parse(JSON.stringify(config.handlebarsData));
+	const model = Object.assign({
 		title: 'Test App',
 		layout: '../layout/vanilla'
-	});
+	}, handlebarsDataClone);
+
+	res.render(`../../${component}/${config.handlebarsData.template}`, model);
 });
 
 app.get('*', (req, res) => {

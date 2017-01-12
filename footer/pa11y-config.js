@@ -1,6 +1,8 @@
-const config = {
-	entry: 'template'
-}
-
-
-module.exports = config;
+module.exports = {
+	handlebarsData: {
+		template: 'template'
+	},
+	pa11yData: [{
+		rootElement: '#site-footer'
+	}]
+};
