@@ -76,15 +76,15 @@ const missingPa11yConfig = [];
 const components = getDirectories('./');
 
 components.forEach((component) => {
-	const hasPa11yConfig = fs.readdirSync(`./${component}`).some((file) => {
-		return file === 'pa11y-config.js';
-	});
+	let componentConfig;
 
-	if (!hasPa11yConfig) {
-		missingPa11yConfig.push(component);
-	}
+	try {
+		componentConfig = require(`./${component}/pa11y-config.js`);
+	} catch (e) {
+		return missingPa11yConfig.push(component);
+	};
 
-	if(hasPa11yConfig) {
+	if(componentConfig) {
 		config.urls.push({
 			"url": `localhost:5005/components/${component}`
 		});
