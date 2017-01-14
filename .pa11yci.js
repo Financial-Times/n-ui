@@ -4,22 +4,22 @@ const path = require('path');
 const error = chalk.bold.red;
 
 const config = {
-	"defaults": {
-		"timeout": 10000,
-		"page": {
-			"headers": {
-				"Cookie": "next-flags=ads:off,cookieMessage:off; secure=true"
+	defaults: {
+		timeout: 10000,
+		page: {
+			headers: {
+				Cookie: 'next-flags=ads:off,cookieMessage:off; secure=true'
 			}
-		},
-		"rootElement": "#a11y"
+		}
 	},
-	"urls": [
-		"http://localhost:5005"
+	urls: [
+		'http://localhost:5005'
 	]
 };
 
 const pa11yIgnore = [
 	'.git',
+	'.idea',
 	'node_modules',
 	'bower_components',
 	'public',
@@ -61,7 +61,8 @@ const pa11yIgnore = [
 	'typography',
 	'utils',
 	'viewport',
-	'welcome-message'
+	'welcome-message',
+	'syndication'
 ];
 
 function getDirectories(srcpath) {
@@ -70,27 +71,38 @@ function getDirectories(srcpath) {
 	});
 }
 
-const components = getDirectories('./')
 const missingPa11yConfig = [];
+const components = getDirectories('./');
+const cloneData = (data) => JSON.parse(JSON.stringify(data));
 
 components.forEach((component) => {
-	const hasPa11yConfig = fs.readdirSync(`./${component}`).some((file) => {
-		return file === 'pa11y-config.js';
-	});
+	let componentConfig;
 
-	if (!hasPa11yConfig) {
-		missingPa11yConfig.push(component);
-	}
+	try {
+		componentConfig = require(`./${component}/pa11y-config.js`);
 
-	if(hasPa11yConfig) {
-		config.urls.push({
-			"url": `localhost:5005/components/${component}`
-		});
-	}
+		if(!componentConfig.pa11yData.length) {
+			throw new Error();
+		}
+
+	} catch (e) {
+		return missingPa11yConfig.push(component);
+	};
+
+	const componentDefaults = {
+		url: `localhost:5005/components/${component}`,
+		rootElement: 'body'
+	};
+	const componentPa11yData = cloneData(componentConfig.pa11yData || []);
+	const mergeWithDefaults = (data) => Object.assign({}, componentDefaults, data);
+	const componentUrls = componentPa11yData.map(mergeWithDefaults);
+	const addToPa11yUrls = (componentUrls) => componentUrls.map((url) => config.urls.push(url));
+
+	addToPa11yUrls(componentUrls);
 });
 
 if(missingPa11yConfig.length) {
-	throw new Error(error(`Error: Components need to have a pa11y-config, components missing a pa11y-config: ${missingPa11yConfig.join()}`));
+	throw new Error(error(`Components need to have a demo-config.js file, containing a non-empty \`pa11yData\` array. Components without these are: ${missingPa11yConfig.join(', ')}.`));
 }
 
 module.exports = config;

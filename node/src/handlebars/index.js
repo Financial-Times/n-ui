@@ -10,9 +10,11 @@ module.exports = function (conf) {
 		directory + ('/node_modules/@financial-times')
 	];
 
-	helpers.hashedAsset = function (options) {
-		return conf.hasher.get(options.fn(this));
-	};
+	if (conf.hasher) {
+		helpers.hashedAsset = function (options) {
+			return conf.hasher.get(options.fn(this));
+		};
+	}
 
 	if (options.partialsDirectory) {
 		partialsDir.push(options.partialsDirectory);
@@ -21,7 +23,6 @@ module.exports = function (conf) {
 	return handlebars(app, {
 		partialsDir,
 		defaultLayout: false,
-		// The most common use case, n-ui/layout is not bundled with this package
 		layoutsDir: options.layoutsDir,
 		helpers: helpers,
 		directory: directory,

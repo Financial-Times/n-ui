@@ -1,29 +1,13 @@
 // MAKE ANY DISCOUNT CHANGES HERE
 // Update flags and next-product selector accordingly
+
+import {products as getUserProducts} from 'next-session-client';
+
 const discount = {
 	L: 50,
 	S: 25,
 	S_5: 25
 }
-
-function fetchSession () {
-	return fetch('https://session-next.ft.com/products', {
-		timeout: 2000,
-		credentials: 'include'
-	});
-}
-
-function extractResult (response) {
-	switch (response.status) {
-		case 404:
-			return {};
-		case 200:
-			return response.json();
-		default:
-			throw new Error(`${response.status} - ${response.statusTest}`);
-	}
-}
-
 
 function supportsCors () {
 	return ('withCredentials' in new XMLHttpRequest());
@@ -112,8 +96,7 @@ export function init (flags) {
 
 		// If it's a CORS-compatible browser, fetch the session
 		if (supportsCors()) {
-			fetchSession()
-				.then(extractResult)
+			getUserProducts()
 				.then(decorateTheSession)
 				.then(function (session) {
 					if (session.isForAnonymousUser || session.isForRegisteredUser || session.isForWeekendUser) {
