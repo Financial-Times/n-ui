@@ -170,14 +170,25 @@ class Typeahead {
 
 	show () {
 		this.suggestionListContainer.removeAttribute('hidden');
-		['focus', 'touchstart', 'mousedown']
-			.forEach(type => {
-				this.bodyDelegate.on(type, (ev) => {
-					if (isOutside(ev.target, this.container)) {
-						this.hide();
-					}
-				});
-			})
+
+		this.bodyDelegate.on('focus', ev => {
+			if (isOutside(ev.target, this.container)) {
+				this.hide();
+			}
+		});
+
+		this.lastTouchStart;
+		this.bodyDelegate.on('mousedown', ev => {
+			this.lastTouchStart = {clientX: ev.clientX, clientY: ev.clientY};
+		});
+		this.bodyDelegate.on('mouseup', ev => {
+			// if it looks like a click rather than a swipe
+			if ((Math.abs(ev.clientX - this.lastTouchStart.clientX) + Math.abs(ev.clientY - this.lastTouchStart.clientY)) < 300) {
+				if (isOutside(ev.target, this.container)) {
+					this.hide();
+				}
+			}
+		});
 	}
 }
 
