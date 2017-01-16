@@ -4,7 +4,7 @@ const denodeify = require('denodeify');
 const readFile = denodeify(fs.readFile);
 const writeFile = denodeify(fs.writeFile);
 const shellpromise = require('shellpromise');
-
+const getVersions = require('./get-versions');
 const Handlebars = require('@financial-times/n-handlebars');
 
 Handlebars.standalone({
@@ -28,6 +28,7 @@ Handlebars.standalone({
 							})
 					)
 			))
+			.then(() => writeFile(path.join(process.cwd(), 'dist/templates/latest.json'),`{"version":"${getVersions().versions.pop()}"}`))
 	)
 	.then(() => process.exit(0))
 	.catch(err => {

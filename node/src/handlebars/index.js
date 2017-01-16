@@ -2,8 +2,22 @@ const handlebars = require('@financial-times/n-handlebars');
 const Poller = require('ft-poller');
 const fs = require('fs');
 const vm = require('vm');
+const shellpromise = require('shellpromise');
+const AWS = require('aws-sdk');
+const denodeify = require('denodeify');
+const s3bucket = new AWS.S3({
+	params: {
+		Bucket: 'ft-next-n-ui-prod' + (process.env.REGION === 'US' ? '-us' : ''),
+		region: process.env.REGION === 'US' ? 'us-east-1' : 'eu-west-1',
+		accessKeyId: process.env.AWS_ACCESS_N_UI,
+		secretAccessKey: process.env.AWS_SECRET_N_UI
+	}
+});
+
+const getS3Object = denodeify(s3bucket.getObject.bind(s3bucket));
+
 // todo calculate properly
-const majorVersion = 'v2'
+const majorVersion = 'dummy-release'
 
 module.exports = function (conf) {
 	const app = conf.app;
@@ -39,56 +53,43 @@ module.exports = function (conf) {
 		viewsDirectory: options.viewsDirectory
 	})
 		.then(instance => {
-			if (process.env.NEXT_APP_SHELL !== 'local' && process.env.TRIAL_POLLING_LAYOUTS === 'true') {
-				return shellpromise('ls ./layout/*.html')
+			if (process.env.NEXT_APP_SHELL !== 'local' && process.env.TEST_POLLING_LAYOUTS === 'true') {
+				shellpromise('ls ./layout/*.html')
 					.then(files =>
 						files.split('\n')
 							.filter(f => !!f)
-							.map(f => `https://ft-next-n-ui-prod.s3-eu-west-1.amazonaws.com/templates/${majorVersion}/${f.replace(/^\.\//, '')}.precompiled`)
+							.map(f => f.replace(/^\.\/layout\//, ''))
 					)
-					// .then(urls => urls.concat(`https://ft-next-n-ui-prod.s3-eu-west-1.amazonaws.com/templates/${majorVersion}/latest.json`))
-					.then(urls => {
-						new Poller({
-							url: urls[1],
-							refreshInterval: 60000,
-							parseData: templates => {
-								templates
-									.map(tpl => {
-										tpl = tpl
-											.replace('</body>', `<div style=\\"background: white;position: absolute;top: 0;left:0;color:red;font-size:50px\\">${Date.now()}</div></body>`)
-										const script = new vm.Script(`(${tpl})`);
-									  const tplAsObj = script.runInNewContext();
-										instance.compiled[layoutsDir + '/wrapper.html'] = instance.handlebars.template(tplAsObj);
+					.then(files => files.concat(`latest.json`))
+					.then(fileNames => {
+						setInterval(() => {
+							Promise.all(
+								fileNames.map(fileName => {
+									if (/\.html$/.test(fileName)) {
+										fileName = fileName + '.precompiled'
+									}
+									return getS3Object({
+										Key: `templates/${majorVersion}/${fileName}`,
+										ResponseContentEncoding: 'utf8'
 									})
-							},
-							autostart: true
-						})
+										.then(obj => obj.Body.toString('utf8'))
+								})
+							)
+								.then(fileContents => {
+									fileNames.forEach((fileName, i) => {
+										if (fileName === 'latest.json') {
+											app.locals.latestNUiVersion = JSON.parse(fileContents[i]).version;
+										} else if (/\.html$/.test(fileName)) {
+											const tpl = fileContents[i].replace('</body>', `<div style=\\"background: white;position: absolute;top: 0;left:0;color:red;font-size:50px\\">${Date.now()}</div></body>`)
+											const script = new vm.Script(`(${tpl})`);
+										  const tplAsObj = script.runInNewContext();
+											instance.compiled[`${options.layoutsDir}/${fileName}`] = instance.handlebars.template(tplAsObj);
+										}
+									})
+								})
+						}, 10000)
 					})
-
 			}
 			return instance;
 		});
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- }
