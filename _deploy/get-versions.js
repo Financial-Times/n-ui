@@ -1,3 +1,5 @@
+const semver = require('semver');
+
 module.exports = function () {
 
 	let tag = process.env.CIRCLE_TAG;

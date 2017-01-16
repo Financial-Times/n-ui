@@ -1,6 +1,4 @@
 const handlebars = require('@financial-times/n-handlebars');
-const Poller = require('ft-poller');
-const fs = require('fs');
 const vm = require('vm');
 const shellpromise = require('shellpromise');
 const AWS = require('aws-sdk');
@@ -60,7 +58,7 @@ module.exports = function (conf) {
 							.filter(f => !!f)
 							.map(f => f.replace(/^\.\/layout\//, ''))
 					)
-					.then(files => files.concat(`latest.json`))
+					.then(files => files.concat('latest.json'))
 					.then(fileNames => {
 						setInterval(() => {
 							Promise.all(
@@ -82,7 +80,7 @@ module.exports = function (conf) {
 										} else if (/\.html$/.test(fileName)) {
 											const tpl = fileContents[i].replace('</body>', `<div style=\\"background: white;position: absolute;top: 0;left:0;color:red;font-size:50px\\">${Date.now()}</div></body>`)
 											const script = new vm.Script(`(${tpl})`);
-										  const tplAsObj = script.runInNewContext();
+											const tplAsObj = script.runInNewContext();
 											instance.compiled[`${options.layoutsDir}/${fileName}`] = instance.handlebars.template(tplAsObj);
 										}
 									})

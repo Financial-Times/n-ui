@@ -1,6 +1,5 @@
 'use strict';
 const shellpromise = require('shellpromise');
-const semver = require('semver');
 const fetch = require('node-fetch');
 const deployStatic = require('@financial-times/n-heroku-tools').deployStatic.task;
 const brotli = require('brotli');
