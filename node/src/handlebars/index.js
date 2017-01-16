@@ -1,5 +1,6 @@
 const handlebars = require('@financial-times/n-handlebars');
 const vm = require('vm');
+const path = require('path');
 const shellpromise = require('shellpromise');
 const AWS = require('aws-sdk');
 const denodeify = require('denodeify');
@@ -15,7 +16,7 @@ const s3bucket = new AWS.S3({
 const getS3Object = denodeify(s3bucket.getObject.bind(s3bucket));
 
 // todo calculate properly
-const majorVersion = 'dummy-release'
+const majorVersion = require(path.join(process.cwd(), 'bower.json')).dependencies['n-ui'].replace('^', '').split('.')[0];
 
 module.exports = function (conf) {
 	const app = conf.app;
@@ -76,9 +77,12 @@ module.exports = function (conf) {
 								.then(fileContents => {
 									fileNames.forEach((fileName, i) => {
 										if (fileName === 'latest.json') {
-											app.locals.latestNUiVersion = JSON.parse(fileContents[i]).version;
+											app.locals.latestNUiVersions = JSON.parse(fileContents[i]).versions;
 										} else if (/\.html$/.test(fileName)) {
-											const tpl = fileContents[i].replace('</body>', `<div style=\\"background: white;position: absolute;top: 0;left:0;color:red;font-size:50px\\">${Date.now()}</div></body>`)
+											let tpl = fileContents[i];
+											if (process.env.SHOW_LAYOUT_TIME) {
+												tpl = tpl.replace('</body>', `<div style=\\"background: white;position: absolute;top: 0;left:0;color:red;font-size:50px\\">${Date.now()}</div></body>`)
+											}
 											const script = new vm.Script(`(${tpl})`);
 											const tplAsObj = script.runInNewContext();
 											instance.compiled[`${options.layoutsDir}/${fileName}`] = instance.handlebars.template(tplAsObj);

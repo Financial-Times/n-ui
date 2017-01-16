@@ -28,7 +28,12 @@ Handlebars.standalone({
 							})
 					)
 			))
-			.then(() => writeFile(path.join(process.cwd(), 'dist/templates/latest.json'),`{"version":"${getVersions().versions.pop()}"}`))
+			// not a layout, but this data will be used by layouts to work out
+			// which urls to use for css and js assets
+			.then(() => writeFile(
+				path.join(process.cwd(), 'dist/templates/latest.json'),
+				JSON.stringify(getVersions().versions)
+			))
 	)
 	.then(() => process.exit(0))
 	.catch(err => {
