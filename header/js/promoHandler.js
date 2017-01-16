@@ -1,7 +1,7 @@
 // MAKE ANY DISCOUNT CHANGES HERE
 // Update flags and next-product selector accordingly
 
-import {products as getUserProducts} from 'next-session-client';
+import { products } from 'next-session-client';
 
 const discount = {
 	L: 50,
@@ -11,6 +11,13 @@ const discount = {
 
 function supportsCors () {
 	return ('withCredentials' in new XMLHttpRequest());
+}
+
+function getUserProducts(){
+	return products()
+		.catch(() => {
+			return {};
+		});
 }
 
 function decorateTheSession (session) {
