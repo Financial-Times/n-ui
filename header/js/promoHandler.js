@@ -13,7 +13,7 @@ function supportsCors () {
 	return ('withCredentials' in new XMLHttpRequest());
 }
 
-function getUserProducts(){
+function getUserProducts (){
 	return products()
 		.catch(() => {
 			return {};
