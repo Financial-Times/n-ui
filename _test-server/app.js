@@ -13,7 +13,7 @@ const app = module.exports = express({
 	withHandlebars: true,
 	withNavigation: true,
 	withAnonMiddleware: true,
-	hasHeadCss: true,
+	withLayoutPolling: false,
 	layoutsDir: path.join(process.cwd(), '/layout'),
 	viewsDirectory: '/_test-server/views',
 	partialsDirectory: process.cwd(),

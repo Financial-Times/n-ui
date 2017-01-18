@@ -12,6 +12,7 @@ const handlebars = require('./src/handlebars');
 const hashedAssets = require('./src/lib/hashed-assets');
 const assetsMiddleware = require('./src/middleware/assets');
 const verifyAssetsExist = require('./src/lib/verify-assets-exist');
+const nUiManager = require('./src/lib/n-ui-manager');
 
 module.exports = options => {
 
@@ -37,6 +38,8 @@ module.exports = options => {
 	app.locals.__environment = process.env.NODE_ENV || '';
 	app.locals.__isProduction = app.locals.__environment.toUpperCase() === 'PRODUCTION';
 	app.locals.__rootDirectory = meta.directory;
+
+	nUiManager.init(meta.directory, options);
 
 	try {
 		app.locals.__version = require(meta.directory + '/public/__about.json').appVersion;

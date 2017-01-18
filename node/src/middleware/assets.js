@@ -3,9 +3,9 @@ const denodeify = require('denodeify');
 const path = require('path');
 const fs = require('fs');
 const readFile = denodeify(fs.readFile);
-const semver = require('semver');
 const nPolyfillIo = require('@financial-times/n-polyfill-io');
 const chokidar = require('chokidar');
+const nUiManager = require('../lib/n-ui-manager');
 
 function constructLinkHeader (hashedAssets) {
 	return function (file, meta, opts) {
@@ -27,12 +27,10 @@ function constructLinkHeader (hashedAssets) {
 }
 
 module.exports = function (options, directory, hashedAssets) {
-	let nUiUrlRoot;
+	const nUiUrlRoot = nUiManager.getUrlRoot(hashedAssets);
 	const localAppShell = process.env.NEXT_APP_SHELL === 'local';
-	// Attempt to get information about which version of n-ui is installed
-	try {
-		if (localAppShell) {
-			logger.warn(`
+	if (localAppShell) {
+		logger.warn(`
 /*********** n-express warning ************/
 
 You have set the environment variable NEXT_APP_SHELL=local
@@ -47,23 +45,7 @@ If you do not need this behaviour run
 
 /*********** n-express warning ************/
 `);
-			nUiUrlRoot = hashedAssets.get('n-ui/');
-		} else {
-			const nUiRelease = require(path.join(directory, 'bower_components/n-ui/.bower.json'))._release;
-			if (!semver.valid(nUiRelease)) {
-				// for non semver releases, use the tag in its entirety
-				nUiUrlRoot = nUiRelease;
-			}	else if (/(beta|rc)/.test(nUiRelease)) {
-				// for beta releases, prepend a v
-				nUiUrlRoot = 'v' + nUiRelease;
-			} else {
-				// for normal semver releases prepend a v to the major version
-				nUiUrlRoot = 'v' + nUiRelease.split('.').slice(0,1)[0]
-			}
-			nUiUrlRoot = `//www.ft.com/__assets/n-ui/cached/${nUiUrlRoot}/`;
-		}
-
-	} catch (e) {}
+	}
 	// Attempt to retrieve the json file used to configure n-ui
 	let nUiConfig;
 	try {

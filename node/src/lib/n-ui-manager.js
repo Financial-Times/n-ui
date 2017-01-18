@@ -1,10 +1,11 @@
+const semver = require('semver');
+const nLogger = require('@financial-times/n-logger').default
 const vm = require('vm');
 const path = require('path');
 const fs = require('fs');
 const denodeify = require('denodeify');
 const readdir = denodeify(fs.readdir.bind(fs));
 const AWS = require('aws-sdk');
-
 const s3bucket = new AWS.S3({
 	params: {
 		Bucket: 'ft-next-n-ui-prod' + (process.env.REGION === 'US' ? '-us' : ''),
@@ -16,24 +17,36 @@ const s3bucket = new AWS.S3({
 
 const getS3Object = denodeify(s3bucket.getObject.bind(s3bucket));
 
-const bowerJson = require(path.join(process.cwd(), 'bower.json'));
+let appBowerJson;
+let nUiBowerJson;
 
 // Tells the app which major version of n-ui to poll for layouts
-let nUiMajorVersion = bowerJson.name === 'n-ui' ? 'dummy-release' : bowerJson.dependencies['n-ui'].replace('^', '').split('.')[0];
+let nUiMajorVersion;
 
-// This is temporary so I can enable it on a really unimportant app for a little while
+
 let shouldPollForLayouts = false;
 
-if (process.env.TEST_POLLING_LAYOUTS === 'true') {
-	shouldPollForLayouts = true;
+module.exports.init = (directory, options) => {
+	appBowerJson = require(path.join(directory, 'bower.json'));
+	nUiMajorVersion = appBowerJson.name === 'n-ui' ? 'dummy-release' : appBowerJson.dependencies['n-ui'].replace('^', '').split('.')[0];
+	nUiBowerJson = require(path.join(directory, 'bower_components/n-ui/.bower.json'))
+
+	// This is temporary so I can enable it on a really unimportant app for a little while
+	if (process.env.TEST_POLLING_LAYOUTS === 'true') {
+		if (options.withLayoutPolling) {
+			shouldPollForLayouts = true;
+		}
+	}
+
+	if (process.env.NEXT_APP_SHELL === 'local') {
+		shouldPollForLayouts = false;
+	}
 }
 
-if (process.env.NEXT_APP_SHELL === 'local') {
-	shouldPollForLayouts = false;
-}
+let latestNUiVersions;
 
 module.exports.poller = function (handlebarsInstance, app, options) {
-	if (!shouldPollForLayouts || !options.withLayoutPolling) {
+	if (!shouldPollForLayouts) {
 		return
 	}
 	readdir(options.layoutsDir)
@@ -61,12 +74,12 @@ module.exports.poller = function (handlebarsInstance, app, options) {
 					.then(fileContents => {
 						files.forEach((file, i) => {
 							if (file === 'latest.json') {
-								app.locals.latestNUiVersions = JSON.parse(fileContents[i]).versions;
+								latestNUiVersions = JSON.parse(fileContents[i]).versions;
 							} else if (/\.html$/.test(file)) {
 								let tpl = fileContents[i];
 
 								if (process.env.DEBUG_LAYOUT_POLLING) {
-									tpl = tpl.replace('</body>', `<script>console.log("${Date.now()}");</script></body>`)
+									tpl = tpl.replace('</body>', `<script>console.log('${Date.now()}');</script></body>`)
 								}
 
 								// The precompiled template is a javascript file we need to execute
@@ -77,6 +90,49 @@ module.exports.poller = function (handlebarsInstance, app, options) {
 							}
 						})
 					})
-			}, 60000)
+					.catch(err => nLogger.error(err));
+			}, process.env.DEBUG_LAYOUT_POLLING ? 10000 : 60000)
 		})
+}
+
+let defaultUrlRoot;
+
+function getDefaultUrlRoot (hashedAssets) {
+	if (!defaultUrlRoot) {
+
+		let nUiUrlRoot;
+		const localAppShell = process.env.NEXT_APP_SHELL === 'local';
+		// Attempt to get information about which version of n-ui is installed
+		try {
+			if (localAppShell) {
+				nUiUrlRoot = hashedAssets.get('n-ui/');
+			} else {
+				const nUiRelease = nUiBowerJson._release;
+				if (!semver.valid(nUiRelease)) {
+					// for non semver releases, use the tag in its entirety
+					nUiUrlRoot = nUiRelease;
+				}	else if (/(beta|rc)/.test(nUiRelease)) {
+					// for beta releases, prepend a v
+					nUiUrlRoot = 'v' + nUiRelease;
+				} else {
+					// for normal semver releases prepend a v to the major version
+					nUiUrlRoot = 'v' + nUiRelease.split('.').slice(0,1)[0]
+				}
+				nUiUrlRoot = `//www.ft.com/__assets/n-ui/cached/${nUiUrlRoot}/`;
+			}
+
+		} catch (e) {}
+		defaultUrlRoot = nUiUrlRoot;
+	}
+
+	return defaultUrlRoot;
+
+}
+
+module.exports.getUrlRoot = (hashedAssets) => {
+	if (shouldPollForLayouts && latestNUiVersions) {
+		return `//www.ft.com/__assets/n-ui/cached/${latestNUiVersions[0]}/`;
+	} else {
+		return getDefaultUrlRoot(hashedAssets);
+	}
 }
