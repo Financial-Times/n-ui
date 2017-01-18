@@ -27,7 +27,7 @@ function constructLinkHeader (hashedAssets) {
 }
 
 module.exports = function (options, directory, hashedAssets) {
-	const nUiUrlRoot = nUiManager.getUrlRoot(hashedAssets);
+
 	const localAppShell = process.env.NEXT_APP_SHELL === 'local';
 	if (localAppShell) {
 		logger.warn(`
@@ -82,6 +82,8 @@ If you do not need this behaviour run
 	const linkHeader = constructLinkHeader(hashedAssets);
 
 	return (req, res, next) => {
+
+		const nUiUrlRoot = nUiManager.getUrlRoot(hashedAssets);
 		// This middleware relies on the presence of res.locals.flags.
 		// In some scenarios (e.g. using handlebars but not flags) this
 		// won't be present
