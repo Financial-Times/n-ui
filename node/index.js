@@ -28,7 +28,7 @@ module.exports = options => {
 		withFlags: true,
 		withBackendAuthentication: true,
 		withServiceMetrics: true,
-		withLayoutPolling: true,
+		withLayoutPolling: false,
 		layoutsDir: path.join(__dirname, '../layout'),
 	}, options || {});
 

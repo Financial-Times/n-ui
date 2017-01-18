@@ -17,8 +17,8 @@ const s3bucket = new AWS.S3({
 
 const getS3Object = denodeify(s3bucket.getObject.bind(s3bucket));
 
-let appBowerJson;
-let nUiBowerJson;
+let appBowerJson = {};
+let nUiBowerJson = {};
 
 // Tells the app which major version of n-ui to poll for layouts
 let nUiMajorVersion;
@@ -27,10 +27,10 @@ let nUiMajorVersion;
 let shouldPollForLayouts = false;
 
 module.exports.init = (directory, options) => {
-	appBowerJson = require(path.join(directory, 'bower.json'));
-	nUiMajorVersion = appBowerJson.name === 'n-ui' ? 'dummy-release' : appBowerJson.dependencies['n-ui'].replace('^', '').split('.')[0];
-	nUiBowerJson = require(path.join(directory, 'bower_components/n-ui/.bower.json'))
 
+	try {
+		nUiBowerJson = require(path.join(directory, 'bower_components/n-ui/.bower.json'))
+	} catch (e) {}
 	// This is temporary so I can enable it on a really unimportant app for a little while
 	if (process.env.TEST_POLLING_LAYOUTS === 'true') {
 		if (options.withLayoutPolling) {
@@ -40,6 +40,11 @@ module.exports.init = (directory, options) => {
 
 	if (process.env.NEXT_APP_SHELL === 'local') {
 		shouldPollForLayouts = false;
+	}
+
+	if (shouldPollForLayouts) {
+		appBowerJson = require(path.join(directory, 'bower.json'));
+		nUiMajorVersion = appBowerJson.name === 'n-ui' ? 'dummy-release' : appBowerJson.dependencies['n-ui'].replace('^', '').split('.')[0];
 	}
 }
 
