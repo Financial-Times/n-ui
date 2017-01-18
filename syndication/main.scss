@@ -5,7 +5,9 @@
 		width: 12px;
 		height: 12px;
 		margin-right: 5px;
+	}
 
+	.o-teaser__syndication-indicator--yes {
 		&:after {
 			content: 'Download';
 			color: white;
@@ -20,6 +22,10 @@
 		&:hover:after {
 			display: block;
 		}
+	}
+
+	.o-teaser__syndication-indicator--verify {
+		display: none !important;
 	}
 
 	.o-teaser--hero .o-teaser__syndication-indicator {

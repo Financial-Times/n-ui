@@ -4,15 +4,12 @@ const request = require('supertest');
 // stub the setup api calls
 const fetchMock = require('fetch-mock');
 const sinon = require('sinon');
-const nUi = require('../index');
 const expect = require('chai').expect;
-const flags = require('next-feature-flags-client');
 const AWS = require('aws-sdk-mock');
 const precompiledWrapper = require('fs').readFileSync(require('path').join(__dirname, './fixtures/layouts/wrapper.html.precompiled'), 'utf8');
 
 describe.skip('layout-polling', function () {
 	let app;
-	let clock;
 	let s3Mock;
 	let s3Response;
 

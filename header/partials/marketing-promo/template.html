@@ -1,7 +1,9 @@
 {{#if @root.flags.headerMarketingPromo}}
 	<div class="n-header__marketing-promo" data-trackable="marketing-promo:header">
 		<div class="n-header__marketing-promo__container o-header__container">
-			<a href="{{#if @root.flags.headerMarketingPromoDiscountByCohort}}https://next.ft.com/products{{else}}https://sub.ft.com/spa_5/?ftcamp=subs/ft_display/full_price/upper_right_2015/upper_right_2015/acquisition&utm_source=upper_right_2015&utm_medium=ft_display&utm_term=full_price&utm_campaign=upper_right_2015&segid=0300494{{/if}}" class="n-header__marketing-promo__box" data-trackable="marketing-promo:box">
+			{{#with @root.navigation.lists.account.subscribe}}
+				<a href="{{href}}?segid=0300494" class="n-header__marketing-promo__box" data-trackable="marketing-promo:box">
+			{{/with}}
 				<div class="n-header__marketing-promo__link" data-trackable="marketing-promo:link">
 
 				{{#ifAll @root.flags.headerMarketingPromoDiscountByCohort @root.flags.barrierDiscountByCohort}}

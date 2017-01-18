@@ -84,8 +84,10 @@
 
 	.n-welcome-banner__column--actions {
 		text-align: right;
-		white-space: nowrap;
 		padding: 0 $spacing-unit;
+		@include oGridRespondTo('M') {
+			white-space: nowrap;
+		}
 	}
 
 	.n-welcome-banner__column--m {
@@ -115,9 +117,11 @@
 	.n-welcome-banner__heading {
 		@include oTypographySans('m');
 		padding: 0;
-		white-space: nowrap;
 		display: inline-block;
 		margin: 0;
+		@include oGridRespondTo('M') {
+			white-space: nowrap;
+		}
 	}
 
 	.n-welcome-banner__heading--row {
@@ -183,13 +187,16 @@
 	}
 
 	.n-welcome-banner__link-action {
-		display: inline-block;
+		display: inline;
 		margin: 0 0 0 $spacing-unit/2;
 		color: getColor('white');
 		border-bottom-color: getColor('white');
 		&:hover,
 		&:focus {
 			color: getColor('white');
+		}
+		@include oGridRespondTo('M') {
+			display: inline-block;
 		}
 	}
 
@@ -264,7 +271,7 @@
 		display: block;
 		margin-bottom: 10px;
 
-		@include oGridRespondTo(S) {
+		@include oGridRespondTo(M) {
 			display: table-cell;
 			margin-bottom: 0px;
 			padding-right: 10px;

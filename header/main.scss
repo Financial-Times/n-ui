@@ -40,7 +40,7 @@
 
 		// skip links for keyboard users
 		.n-skip-link {
-			@include zIndexFor('notification');
+			@include nUtilZIndexFor('notification');
 			position: absolute;
 			top: 1em;
 			left: -9999px;
