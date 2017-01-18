@@ -4,10 +4,10 @@ const request = require('supertest');
 // stub the setup api calls
 const fetchMock = require('fetch-mock');
 const sinon = require('sinon');
-const nUi = require('../../index');
+const nUi = require('../index');
 const expect = require('chai').expect;
 const flags = require('next-feature-flags-client');
-const verifyAssetsExist = require('../../src/lib/verify-assets-exist');
+const verifyAssetsExist = require('../src/lib/verify-assets-exist');
 
 let app;
 
@@ -21,7 +21,7 @@ describe('simple app', function () {
 			.mock('http://ft-next-health-eu.herokuapp.com/failure-simulation-config', {failures: []})
 			.catch(200);
 
-		app = require('../fixtures/app/main');
+		app = require('./fixtures/app/main');
 
 		fetchMock.restore();
 	});

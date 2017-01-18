@@ -96,7 +96,7 @@ module.exports.poller = function (handlebarsInstance, app, options) {
 						})
 					})
 					.catch(err => nLogger.error(err));
-			}, process.env.DEBUG_LAYOUT_POLLING ? 10000 : 60000)
+			}, process.env.LAYOUT_POLLING_INTERVAL || (process.env.DEBUG_LAYOUT_POLLING ? 10000 : 60000))
 		})
 }
 

@@ -21,6 +21,7 @@
     "@financial-times/n-heroku-tools": "^6.17.0",
     "ascii-table": "0.0.9",
     "autoprefixer": "^6.3.6",
+    "aws-sdk-mock": "^1.6.1",
     "babel-core": "^6.2.1",
     "babel-loader": "^6.2.4",
     "babel-plugin-add-module-exports": "^0.1.4",
