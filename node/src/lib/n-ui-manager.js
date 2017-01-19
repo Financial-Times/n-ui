@@ -5,18 +5,20 @@ const path = require('path');
 const fs = require('fs');
 const denodeify = require('denodeify');
 const readdir = denodeify(fs.readdir.bind(fs));
+
 const AWS = require('aws-sdk');
 const s3bucket = new AWS.S3({
 	params: {
 		Bucket: 'ft-next-n-ui-prod' + (process.env.REGION === 'US' ? '-us' : ''),
 		region: process.env.REGION === 'US' ? 'us-east-1' : 'eu-west-1',
-		accessKeyId: process.env.AWS_ACCESS_N_UI,
-		secretAccessKey: process.env.AWS_SECRET_N_UI
 	}
 });
 
-nLogger.info({accessKeyId: process.env.AWS_ACCESS_N_UI,
-		secretAccessKey: process.env.AWS_SECRET_N_UI})
+
+// so hacky, but without clearing out the default set of credential providers, andy passed in to AWS
+// config in code get clobbered by the global defaults (i.e. reading from env vars)
+s3bucket.config.credentialProvider.providers = AWS.CredentialProviderChain.defaultProviders.slice(10);
+s3bucket.config.credentialProvider.providers.push(new AWS.Credentials(process.env.AWS_ACCESS_N_UI, process.env.AWS_SECRET_N_UI))
 
 const getS3Object = denodeify(s3bucket.getObject.bind(s3bucket));
 
@@ -25,7 +27,6 @@ let nUiBowerJson = {};
 
 // Tells the app which major version of n-ui to poll for layouts
 let nUiMajorVersion;
-
 
 let shouldPollForLayouts = false;
 
@@ -79,8 +80,7 @@ module.exports.poller = function (handlebarsInstance, app, options) {
 							.then(obj => obj.Body.toString('utf8'))
 							.catch(err => {
 								nLogger.info(`failed to fetch ${file}`)
-								nLogger.error(err)
-								throw err
+								throw err;
 							})
 					})
 				)
