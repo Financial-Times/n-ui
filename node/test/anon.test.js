@@ -1,6 +1,6 @@
 /*global describe, it, beforeEach*/
 const request = require('supertest');
-const nextExpress = require('../../index');
+const nextExpress = require('../index');
 const expect = require('chai').expect;
 
 describe('Anonymous Middleware', function () {

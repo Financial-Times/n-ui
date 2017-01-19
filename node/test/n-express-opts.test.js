@@ -1,5 +1,5 @@
 /*global it, describe*/
-const nUi = require('../../index');
+const nUi = require('../index');
 const nExpress = require('@financial-times/n-express');
 const sinon = require('sinon')
 const expect = require('chai').expect;

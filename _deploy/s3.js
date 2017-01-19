@@ -1,6 +1,5 @@
 'use strict';
 const shellpromise = require('shellpromise');
-const semver = require('semver');
 const fetch = require('node-fetch');
 const deployStatic = require('@financial-times/n-heroku-tools').deployStatic.task;
 const brotli = require('brotli');
@@ -9,26 +8,8 @@ const path = require('path')
 const fs = require('fs');
 const readFile = denodeify(fs.readFile);
 const writeFile = denodeify(fs.writeFile);
-
-let tag = process.env.CIRCLE_TAG;
-let versions;
-let isOfficialRelease = false;
-
-if (!tag) {
-	versions = ['dummy-release'];
-} else if (!semver.valid(tag) || /(beta|rc)/.test(tag)) {
-	versions = [tag];
-} else {
-	isOfficialRelease = true;
-	if (tag.charAt(0) !== 'v') {
-		tag = `v${tag}`;
-	}
-	versions = [
-		tag.split('.').slice(0, 1).join('.'),
-		tag.split('.').slice(0, 2).join('.'),
-		tag
-	]
-}
+const getVersions = require('./get-versions');
+const {versions, isOfficialRelease} = getVersions();
 
 function purgeOnce (path, message) {
 	return fetch(path, {
@@ -109,6 +90,7 @@ function layouts () {
 						files: files,
 						destination: `templates/${version}`,
 						bucket: 'ft-next-n-ui-prod',
+						acl: 'private',
 						strip: 2,
 						cacheControl: 'no-cache, max-age=0, must-revalidate'
 					})
