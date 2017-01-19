@@ -85,7 +85,8 @@ function layouts () {
 	return getFileList('templates')
 		.then(files => Promise.all(
 			versions
-				.map((version) => {
+				.map(version => {
+					version = 'v2'
 					return deployStatic({
 						files: files,
 						destination: `templates/${version}`,

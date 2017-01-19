@@ -44,7 +44,7 @@ module.exports.init = (directory, options) => {
 
 	if (shouldPollForLayouts) {
 		appBowerJson = require(path.join(directory, 'bower.json'));
-		nUiMajorVersion = appBowerJson.name === 'n-ui' ? 'dummy-release' : appBowerJson.dependencies['n-ui'].replace('^', '').split('.')[0];
+		nUiMajorVersion = appBowerJson.name === 'n-ui' ? 'dummy-release' : ('v' + appBowerJson.dependencies['n-ui'].replace('^', '').split('.')[0]);
 	}
 }
 
