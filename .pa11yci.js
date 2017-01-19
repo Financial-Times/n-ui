@@ -35,10 +35,8 @@ const pa11yIgnore = [
 	'expander',
 	'forms',
 	'grid',
-	'header',
 	'icons',
 	'js-setup',
-	'layout',
 	'myft',
 	'myft-common',
 	'myft-digest-promo',
@@ -61,7 +59,6 @@ const pa11yIgnore = [
 	'typography',
 	'utils',
 	'viewport',
-	'welcome-message',
 	'syndication'
 ];
 
