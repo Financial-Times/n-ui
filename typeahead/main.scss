@@ -1,148 +1,150 @@
-[data-typeahead] {
-	position: relative;
-}
 
-
-.n-typeahead {
-
-	@include nUtilZIndexFor('typeahead');
-	position: absolute;
-	top: 100%;
-	left: 0;
-	box-sizing: border-box;
-	width: 100%;
-	margin: -2px 0 0;
-	border: 1px solid rgba(0, 0, 0, 0.3);
-	overflow: hidden;
-	background: getColor('white');
-	text-align: left;
-	display: flex;
-	flex-direction: column;
-
-	@include oGridRespondTo('L') {
-		flex-direction: row;
+@mixin nTypeahead {
+	[data-typeahead] {
+		position: relative;
 	}
-}
 
-.n-typeahead[hidden],
-.n-typeahead:empty {
-	display: none;
-}
+	.n-typeahead {
 
-.n-typeahead__heading {
-
-	@include oTypographySans(l);
-
-	position: relative;
-	margin: 0;
-	padding: $spacing-unit 0;
-
-	&:before {
-		border-top: 8px solid getColor('black');
-		content: '';
+		@include nUtilZIndexFor('typeahead');
+		position: absolute;
+		top: 100%;
 		left: 0;
-		top: 0;
-		position: absolute;
+		box-sizing: border-box;
 		width: 100%;
-	}
-}
+		margin: -2px 0 0;
+		border: 1px solid rgba(0, 0, 0, 0.3);
+		overflow: hidden;
+		background: getColor('white');
+		text-align: left;
+		display: flex;
+		flex-direction: column;
 
-.n-typeahead__group {
-	padding: $spacing-unit;
-	flex: 1;
-}
-
-.n-typeahead__item-list,
-.n-typeahead__item {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-.n-typeahead__link {
-	cursor: pointer;
-	color: getColor('grey-tint5');
-	border-bottom: 0;
-	box-sizing: border-box;
-	display: block;
-	text-decoration: none;
-	padding: $spacing-unit/2 $spacing-unit;
-
-	// for positioning the dividing line
-	position: relative;
-	margin-top: -1px;
-
-	mark {
-		color: inherit;
-		background: none;
-		font-weight: oFontsWeight(semibold);
+		@include oGridRespondTo('L') {
+			flex-direction: row;
+		}
 	}
 
-	abbr {
-		float: right;
-		padding-left: 10px;
-		flex: 0 0 auto;
+	.n-typeahead[hidden],
+	.n-typeahead:empty {
+		display: none;
 	}
 
-	&:before {
-		content: '';
+	.n-typeahead__heading {
+
+		@include oTypographySans(l);
+
+		position: relative;
+		margin: 0;
+		padding: $spacing-unit 0;
+
+		&:before {
+			border-top: 8px solid getColor('black');
+			content: '';
+			left: 0;
+			top: 0;
+			position: absolute;
+			width: 100%;
+		}
+	}
+
+	.n-typeahead__group {
+		padding: $spacing-unit;
+		flex: 1;
+	}
+
+	.n-typeahead__item-list,
+	.n-typeahead__item {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.n-typeahead__link {
+		cursor: pointer;
+		color: getColor('grey-tint5');
+		border-bottom: 0;
+		box-sizing: border-box;
 		display: block;
-		border-bottom: 1px solid getColor('grey-tint2');
-		position: absolute;
-		bottom: 0;
-		left: $spacing-unit;
-		right: $spacing-unit;
-		height: 1px;
+		text-decoration: none;
+		padding: $spacing-unit/2 $spacing-unit;
+
+		// for positioning the dividing line
+		position: relative;
+		margin-top: -1px;
+
+		mark {
+			color: inherit;
+			background: none;
+			font-weight: oFontsWeight(semibold);
+		}
+
+		abbr {
+			float: right;
+			padding-left: 10px;
+			flex: 0 0 auto;
+		}
+
+		&:before {
+			content: '';
+			display: block;
+			border-bottom: 1px solid getColor('grey-tint2');
+			position: absolute;
+			bottom: 0;
+			left: $spacing-unit;
+			right: $spacing-unit;
+			height: 1px;
+		}
+
+		&:hover,
+		&:focus {
+			background: getColor('teal-1');
+			color: getColor('white');
+		}
+
+		&:hover:before,
+		&:focus:before {
+			opacity: 0;
+		}
+
+		&:hover mark,
+		&:focus mark {
+			color: inherit;
+		}
 	}
 
-	&:hover,
-	&:focus {
-		background: getColor('teal-1');
-		color: getColor('white');
-	}
-
-	&:hover:before,
-	&:focus:before {
+	// hide item divider at bottom of last item
+	.n-typeahead__item:last-child .n-typeahead__link:before {
 		opacity: 0;
 	}
 
-	&:hover mark,
-	&:focus mark {
-		color: inherit;
-	}
-}
+	.n-typeahead__link--tail {
 
-// hide item divider at bottom of last item
-.n-typeahead__item:last-child .n-typeahead__link:before {
-	opacity: 0;
-}
+		&:after {
+			@include oIconsGetIcon(arrow-right, getColor('grey-tint5'), 14);
+			margin: 0 0 -2px 2px;
+			content: '';
+		}
 
-.n-typeahead__link--tail {
-
-	&:after {
-		@include oIconsGetIcon(arrow-right, getColor('grey-tint5'), 14);
-		margin: 0 0 -2px 2px;
-		content: '';
+		&:hover:after {
+			@include oIconsGetIcon(arrow-right, getColor('white'), 14)
+		}
 	}
 
-	&:hover:after {
-		@include oIconsGetIcon(arrow-right, getColor('white'), 14)
+	.n-typeahead__link--news {
+		color: getColor('claret-1');
 	}
-}
 
-.n-typeahead__link--news {
-	color: getColor('claret-1');
-}
+	// for nice alignment of equity name and index
+	.n-typeahead__link--equities {
+		display: flex;
+	}
 
-// for nice alignment of equity name and index
-.n-typeahead__link--equities {
-	display: flex;
-}
+	.n-typeahead__link__equity-name {
+		flex: 1 1 auto;
+	}
 
-.n-typeahead__link__equity-name {
-	flex: 1 1 auto;
-}
-
-.n-typeahead__no-results-message {
-	padding: 0 $spacing-unit;
+	.n-typeahead__no-results-message {
+		padding: 0 $spacing-unit;
+	}
 }
