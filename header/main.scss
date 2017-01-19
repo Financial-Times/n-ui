@@ -1,6 +1,5 @@
 @import 'o-header/main';
 @import 'scss/marketing-promo';
-@import 'scss/typeahead';
 @import '../typeahead/main';
 
 @if nUiApply('header') {
@@ -60,12 +59,14 @@
 		}
 
 		@include nUiHeaderMarketingPromo;
-
+		.n-typeahead {
+			display: none;
+		}
 	}
 
 	@include oHeaderDrawer;
 	@include oHeaderSticky;
-
+	@include nTypeahead;
 	// fix up z-indexes
 	.o-header__drawer {
 		@include nUtilZIndexFor('drawer');
@@ -105,10 +106,6 @@
 		.o-header--sticky {
 			display: none;
 		}
-	}
-
-	@if nUiApply('header', 'typeahead') {
-		@include nUiHeaderTypeahead;
 	}
 
 	.o-header__top-link--myft {
