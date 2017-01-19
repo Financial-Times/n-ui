@@ -15,6 +15,9 @@ const s3bucket = new AWS.S3({
 	}
 });
 
+nLogger.info({accessKeyId: process.env.AWS_ACCESS_N_UI,
+		secretAccessKey: process.env.AWS_SECRET_N_UI})
+
 const getS3Object = denodeify(s3bucket.getObject.bind(s3bucket));
 
 let appBowerJson = {};
@@ -74,6 +77,11 @@ module.exports.poller = function (handlebarsInstance, app, options) {
 							ResponseContentEncoding: 'utf8'
 						})
 							.then(obj => obj.Body.toString('utf8'))
+							.catch(err => {
+								nLogger.info(`failed to fetch ${file}`)
+								nLogger.error(err)
+								throw err
+							})
 					})
 				)
 					.then(fileContents => {
@@ -96,7 +104,9 @@ module.exports.poller = function (handlebarsInstance, app, options) {
 						})
 					})
 					.then(() => nLogger.info('Layout templates updated'))
-					.catch(err => nLogger.error(err));
+					.catch(err => {
+						nLogger.error(err)
+					});
 			}, process.env.LAYOUT_POLLING_INTERVAL || (process.env.DEBUG_LAYOUT_POLLING ? 10000 : 60000))
 		})
 }
