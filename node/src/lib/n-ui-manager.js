@@ -95,6 +95,7 @@ module.exports.poller = function (handlebarsInstance, app, options) {
 							}
 						})
 					})
+					.then(() => nLogger.info('Layout templates updated'))
 					.catch(err => nLogger.error(err));
 			}, process.env.LAYOUT_POLLING_INTERVAL || (process.env.DEBUG_LAYOUT_POLLING ? 10000 : 60000))
 		})
