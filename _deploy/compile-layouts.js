@@ -4,7 +4,7 @@ const denodeify = require('denodeify');
 const readFile = denodeify(fs.readFile);
 const writeFile = denodeify(fs.writeFile);
 const shellpromise = require('shellpromise');
-
+const getVersions = require('./get-versions');
 const Handlebars = require('@financial-times/n-handlebars');
 
 Handlebars.standalone({
@@ -27,6 +27,12 @@ Handlebars.standalone({
 								return writeFile(destination, precompiled)
 							})
 					)
+			))
+			// not a layout, but this data will be used by layouts to work out
+			// which urls to use for css and js assets
+			.then(() => writeFile(
+				path.join(process.cwd(), 'dist/templates/latest.json'),
+				JSON.stringify(getVersions().versions)
 			))
 	)
 	.then(() => process.exit(0))

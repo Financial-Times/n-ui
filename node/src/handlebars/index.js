@@ -1,4 +1,6 @@
 const handlebars = require('@financial-times/n-handlebars');
+const nUiManager = require('../lib/n-ui-manager');
+
 
 module.exports = function (conf) {
 	const app = conf.app;
@@ -16,6 +18,11 @@ module.exports = function (conf) {
 		};
 	}
 
+	// always enable in-memory view caching
+	// - needed in prod to allow polling for layout updates
+	// - in dev most changes result in the app restarting anyway, so in-memory caching shouldn't impair development
+	app.enable('view cache');
+
 	if (options.partialsDirectory) {
 		partialsDir.push(options.partialsDirectory);
 	}
@@ -28,4 +35,8 @@ module.exports = function (conf) {
 		directory: directory,
 		viewsDirectory: options.viewsDirectory
 	})
+		.then(instance => {
+			nUiManager.poller(instance, app, options)
+			return instance;
+		});
 }

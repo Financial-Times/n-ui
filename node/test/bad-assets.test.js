@@ -1,7 +1,7 @@
 const shellpromise = require('shellpromise');
 const expect = require('chai').expect;
 const join = require('path').join;
-const appPath = join(__dirname, '../fixtures/bad-assets');
+const appPath = join(__dirname, './fixtures/bad-assets');
 
 function appStart () {
 	return shellpromise(`node -e "require('${appPath}/main').listen.then(() => { console.log('event=SUCCESS'); process.exit(); });"`

@@ -1,0 +1,164 @@
+{"1":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = container.lambda(depth0, depth0)) != null ? stack1 : "");
+},"3":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = container.invokePartial(partials["n-service-worker/unregister"],depth0,{"name":"n-service-worker/unregister","data":data,"indent":"\t\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
+},"5":function(container,depth0,helpers,partials,data) {
+    var helper;
+
+  return "		<base target=\"_parent\" href=\""
+    + container.escapeExpression(((helper = (helper = helpers.setBase || (depth0 != null ? depth0.setBase : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"setBase","hash":{},"data":data}) : helper)))
+    + "\">\n";
+},"7":function(container,depth0,helpers,partials,data) {
+    return "		<link rel=\"dns-prefetch\" href=\""
+    + container.escapeExpression(container.lambda(depth0, depth0))
+    + "\">\n";
+},"9":function(container,depth0,helpers,partials,data) {
+    var stack1, helper, alias1=depth0 != null ? depth0 : {};
+
+  return "		<link rel=\"preconnect\" href=\""
+    + container.escapeExpression(((helper = (helper = helpers.host || (depth0 != null ? depth0.host : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"host","hash":{},"data":data}) : helper)))
+    + "\""
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.crossorigin : depth0),{"name":"if","hash":{},"fn":container.program(10, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">\n";
+},"10":function(container,depth0,helpers,partials,data) {
+    var helper;
+
+  return " crossorigin=\""
+    + container.escapeExpression(((helper = (helper = helpers.crossorigin || (depth0 != null ? depth0.crossorigin : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"crossorigin","hash":{},"data":data}) : helper)))
+    + "\"";
+},"12":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=container.lambda, alias2=container.escapeExpression;
+
+  return "		<meta property=\"og:title\" content=\""
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.og : depth0)) != null ? stack1.title : stack1), depth0))
+    + "\">\n		<meta property=\"og:url\" content=\""
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.og : depth0)) != null ? stack1.url : stack1), depth0))
+    + "\">\n		<meta property=\"og:description\" content=\""
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.og : depth0)) != null ? stack1.description : stack1), depth0))
+    + "\">\n		"
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.og : depth0)) != null ? stack1.image : stack1),{"name":"if","hash":{},"fn":container.program(13, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\n		<meta property=\"og:type\" content=\"article\">\n		<meta property=\"og:site_name\" content=\"Financial Times\">\n";
+},"13":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<meta property=\"og:image\" content=\""
+    + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.og : depth0)) != null ? stack1.image : stack1), depth0))
+    + "\">";
+},"15":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=container.lambda, alias2=container.escapeExpression;
+
+  return "		<meta property=\"twitter:card\" content=\""
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.twitterCard : depth0)) != null ? stack1.card : stack1), depth0))
+    + "\">\n		<meta property=\"twitter:site\" content=\"@FinancialTimes\">\n		<meta property=\"twitter:title\" content=\""
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.twitterCard : depth0)) != null ? stack1.title : stack1), depth0))
+    + "\">\n		<meta property=\"twitter:description\" content=\""
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.twitterCard : depth0)) != null ? stack1.description : stack1), depth0))
+    + "\">\n		"
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.twitterCard : depth0)) != null ? stack1.image : stack1),{"name":"if","hash":{},"fn":container.program(16, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\n";
+},"16":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<meta property=\"twitter:image\" content=\""
+    + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.twitterCard : depth0)) != null ? stack1.image : stack1), depth0))
+    + "\">";
+},"18":function(container,depth0,helpers,partials,data) {
+    return "";
+},"20":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "			<script type=\"application/ld+json\">\n				"
+    + ((stack1 = (helpers.json || (depth0 && depth0.json) || helpers.helperMissing).call(depth0 != null ? depth0 : {},depth0,{"name":"json","hash":{},"data":data})) != null ? stack1 : "")
+    + "\n			</script>\n";
+},"22":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "/"
+    + container.escapeExpression(container.lambda(((stack1 = (data && data.root)) && stack1.trackablePageName), depth0));
+},"24":function(container,depth0,helpers,partials,data) {
+    return "			<script type=\"text/javascript\">\n				(function() {\n					var ARTICLE_URL = window.location.href;\n					var CONTENT_ID = 'everything';\n					document.write(\n						'<scr' + 'ipt ' +\n						'src=\"//survey.g.doubleclick.net/survey?site=_ykzfqallocklxfmrw3y6sankbe' +\n						'&amp;url=' + encodeURIComponent(ARTICLE_URL) +\n						(CONTENT_ID ? '&amp;cid=' + encodeURIComponent(CONTENT_ID) : '') +\n						'&amp;random=' + (new Date).getTime() +\n						'\" type=\"text/javascript\">' + '\\x3C/scr' + 'ipt>'\n					);\n				})();\n			</script>\n";
+},"26":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "			"
+    + ((stack1 = (helpers.outputBlock || (depth0 && depth0.outputBlock) || helpers.helperMissing).call(depth0 != null ? depth0 : {},"sticky-advert",{"name":"outputBlock","hash":{},"fn":container.program(18, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\n";
+},"28":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = container.invokePartial(partials["n-ui/offline-toast/template"],depth0,{"name":"n-ui/offline-toast/template","data":data,"indent":"\t\t\t\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
+},"30":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = (helpers.unlessEquals || (depth0 && depth0.unlessEquals) || helpers.helperMissing).call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.nUi : depth0)) != null ? stack1.welcomeMessage : stack1),false,{"name":"unlessEquals","hash":{},"fn":container.program(31, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+},"31":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = container.invokePartial(partials["n-ui/welcome-message/template"],depth0,{"name":"n-ui/welcome-message/template","data":data,"indent":"\t\t\t\t\t\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
+},"33":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = (helpers.unlessEquals || (depth0 && depth0.unlessEquals) || helpers.helperMissing).call(depth0 != null ? depth0 : {},((stack1 = ((stack1 = (depth0 != null ? depth0.nUi : depth0)) != null ? stack1.header : stack1)) != null ? stack1.variant : stack1),"logo-only",{"name":"unlessEquals","hash":{},"fn":container.program(34, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+},"34":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = container.invokePartial(partials["n-ui/header/partials/drawer/template"],depth0,{"name":"n-ui/header/partials/drawer/template","data":data,"indent":"\t\t\t\t\t\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, helper, options, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.lambda, alias5=container.escapeExpression, buffer =
+  "<!DOCTYPE html>\n"
+    + ((stack1 = container.invokePartial(partials["n-ui/layout/partials/html-tag"],depth0,{"name":"n-ui/layout/partials/html-tag","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "	<head>\n		<meta charset=\"utf-8\">\n		<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n		<title>";
+  stack1 = ((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(options={"name":"title","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data}),(typeof helper === alias3 ? helper.call(alias1,options) : helper));
+  if (!helpers.title) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</title>\n		<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n		<meta name=\"theme-color\" content=\"#333333\">\n"
+    + ((stack1 = helpers.unless.call(alias1,((stack1 = ((stack1 = (data && data.root)) && stack1.flags)) && stack1.serviceWorker),{"name":"unless","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.setBase : depth0),{"name":"if","hash":{},"fn":container.program(5, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.dnsPrefetch : depth0),{"name":"each","hash":{},"fn":container.program(7, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "		<link rel=\"preconnect\" href=\"https://next-geebee.ft.com\">\n		<link rel=\"preconnect\" href=\"https://spoor-api.ft.com\">\n		<link rel=\"preconnect\" href=\"https://session-next.ft.com\" crossorigin=\"use-credentials\">\n\n		<link rel=\"preconnect\" href=\"https://ads-api.ft.com\">\n		<link rel=\"preconnect\" href=\"https://www.googletagservices.com\">\n		<link rel=\"preconnect\" href=\"https://partner.googleadservices.com\">\n		<link rel=\"preconnect\" href=\"https://securepubads.g.doubleclick.net\">\n\n"
+    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.preconnect : depth0),{"name":"each","hash":{},"fn":container.program(9, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = container.invokePartial(partials["n-ui/js-setup/templates/fire-condition"],depth0,{"name":"n-ui/js-setup/templates/fire-condition","data":data,"indent":"\t\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + ((stack1 = container.invokePartial(partials["n-ui/layout/partials/stylesheets"],depth0,{"name":"n-ui/layout/partials/stylesheets","data":data,"indent":"\t\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "\n		<link rel=\"icon\" type=\"image/png\" href=\"https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-32x32.png\" sizes=\"32x32\">\n		<link rel=\"icon\" type=\"image/png\" href=\"https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png\" sizes=\"194x194\">\n		<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"https://www.ft.com/__assets/creatives/brand-ft/icons/v2/apple-touch-icon-180x180.png\">\n		<link rel=\"manifest\" href=\"/assets/manifest/manifest-v4.json\">\n\n		<meta name=\"msapplication-TileColor\" content=\"#fff1e0\">\n		<meta name=\"msapplication-TileImage\" content=\"https://www.ft.com/__assets/creatives/brand-ft/icons/v2/mstile-144x144.png\">\n"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.og : depth0),{"name":"if","hash":{},"fn":container.program(12, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.twitterCard : depth0),{"name":"if","hash":{},"fn":container.program(15, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\n		"
+    + ((stack1 = (helpers.outputBlock || (depth0 && depth0.outputBlock) || alias2).call(alias1,"head",{"name":"outputBlock","hash":{},"fn":container.program(18, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\n\n		<script>\n"
+    + ((stack1 = container.invokePartial(partials["n-ui/js-setup/templates/ctm"],depth0,{"name":"n-ui/js-setup/templates/ctm","data":data,"indent":"\t\t\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + ((stack1 = container.invokePartial(partials["n-ui/typography/enhance-fonts"],depth0,{"name":"n-ui/typography/enhance-fonts","data":data,"indent":"\t\t\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "		</script>\n\n"
+    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.jsonLd : depth0),{"name":"each","hash":{},"fn":container.program(20, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "	</head>\n	<body data-next-is-logged-in=\""
+    + alias5(alias4(((stack1 = ((stack1 = (data && data.root)) && stack1.anon)) && stack1.userIsLoggedIn), depth0))
+    + "\" data-trackable=\"page:"
+    + alias5(alias4(((stack1 = (data && data.root)) && stack1.__name), depth0))
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (data && data.root)) && stack1.trackablePageName),{"name":"if","hash":{},"fn":container.program(22, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\">\n"
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.withGcs : depth0),{"name":"if","hash":{},"fn":container.program(24, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "		<div class=\"o-cookie-message o-cookie-message--banner-centric\" data-o-component=\"o-cookie-message\"></div>\n\n"
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = ((stack1 = (data && data.root)) && stack1.flags)) && stack1.stickyHeaderAd),{"name":"if","hash":{},"fn":container.program(26, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\n		<div class=\"n-layout\">\n			<div class=\"n-layout__row n-layout__row--header\">\n				"
+    + ((stack1 = (helpers.outputBlock || (depth0 && depth0.outputBlock) || alias2).call(alias1,"above-header",{"name":"outputBlock","hash":{},"fn":container.program(18, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\n"
+    + ((stack1 = container.invokePartial(partials["n-ui/header/template"],depth0,{"name":"n-ui/header/template","hash":{"content":(depth0 != null ? depth0.header : depth0)},"data":data,"indent":"\t\t\t\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "			</div>\n			<div class=\"n-layout__row n-layout__row--content\">\n				"
+    + ((stack1 = ((helper = (helper = helpers.body || (depth0 != null ? depth0.body : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"body","hash":{},"data":data}) : helper))) != null ? stack1 : "")
+    + "\n			</div>\n\n"
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = ((stack1 = (data && data.root)) && stack1.flags)) && stack1.offlineToastMessage),{"name":"if","hash":{},"fn":container.program(28, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\n			<div class=\"n-layout__row n-layout__row--footer\">\n				"
+    + ((stack1 = (helpers.outputBlock || (depth0 && depth0.outputBlock) || alias2).call(alias1,"footer",{"name":"outputBlock","hash":{},"fn":container.program(18, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\n"
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = ((stack1 = (data && data.root)) && stack1.flags)) && stack1.welcomePanel),{"name":"if","hash":{},"fn":container.program(30, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = container.invokePartial(partials["n-ui/footer/template"],depth0,{"name":"n-ui/footer/template","data":data,"indent":"\t\t\t\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = ((stack1 = (data && data.root)) && stack1.flags)) && stack1.fancyDrawer),{"name":"if","hash":{},"fn":container.program(33, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "			</div>\n		</div>\n"
+    + ((stack1 = container.invokePartial(partials["n-ui/js-setup/templates/bootstrapper"],depth0,{"name":"n-ui/js-setup/templates/bootstrapper","data":data,"indent":"\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + ((stack1 = container.invokePartial(partials["n-ui/tracking/templates/core-analytics"],depth0,{"name":"n-ui/tracking/templates/core-analytics","data":data,"indent":"\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + ((stack1 = container.invokePartial(partials["n-service-worker/appcache/iframe"],depth0,{"name":"n-service-worker/appcache/iframe","data":data,"indent":"\t","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "	</body>\n</html>\n";
+},"usePartial":true,"useData":true}

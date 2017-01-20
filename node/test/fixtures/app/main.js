@@ -5,6 +5,7 @@ const yell = require('./src/yell');
 const app = module.exports = express({
 	directory: __dirname,
 	helpers: { yell: yell },
+	withLayoutPolling: false,
 	layoutsDir: __dirname + '/views/'
 });
 
