@@ -32,9 +32,7 @@ Handlebars.standalone({
 			// which urls to use for css and js assets
 			.then(() => writeFile(
 				path.join(process.cwd(), 'dist/templates/latest.json'),
-				JSON.stringify(getVersions().versions.map(v => {
-					return /-beta/.test(v) ? v.split('.')[0]: v
-				}))
+				JSON.stringify(getVersions().versions)
 			))
 	)
 	.then(() => process.exit(0))
