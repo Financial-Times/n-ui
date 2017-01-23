@@ -35,11 +35,9 @@ module.exports.init = (directory, options) => {
 	try {
 		nUiBowerJson = require(path.join(directory, 'bower_components/n-ui/.bower.json'))
 	} catch (e) {}
-	// This is temporary so I can enable it on a really unimportant app for a little while
-	if (process.env.TEST_POLLING_LAYOUTS === 'true') {
-		if (options.withLayoutPolling) {
-			shouldPollForLayouts = true;
-		}
+
+	if (options.withLayoutPolling) {
+		shouldPollForLayouts = true;
 	}
 
 	if (process.env.NEXT_APP_SHELL === 'local') {
@@ -91,10 +89,6 @@ module.exports.poller = function (handlebarsInstance, app, options) {
 							} else if (/\.html$/.test(file)) {
 								let tpl = fileContents[i];
 
-								if (process.env.DEBUG_LAYOUT_POLLING) {
-									tpl = tpl.replace('</body>', `<script>console.log('${Date.now()}');</script></body>`)
-								}
-
 								// The precompiled template is a javascript file we need to execute
 								// This accomplishes that without writing to disk or leaking scope
 								const script = new vm.Script(`(${tpl})`);
@@ -107,7 +101,7 @@ module.exports.poller = function (handlebarsInstance, app, options) {
 					.catch(err => {
 						nLogger.error(err)
 					});
-			}, process.env.LAYOUT_POLLING_INTERVAL || (process.env.DEBUG_LAYOUT_POLLING ? 10000 : 60000))
+			}, process.env.LAYOUT_POLLING_INTERVAL || 60000)
 		})
 }
 
