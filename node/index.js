@@ -19,7 +19,7 @@ module.exports = options => {
 	options = Object.assign({}, {
 		withHandlebars: true,
 		withNavigation: true,
-		withNavigationHierarchy: false,
+		withNavigationHierarchy: true,
 		withAnonMiddleware: true,
 		withNUiJsBundle: true,
 		withAssets: true,

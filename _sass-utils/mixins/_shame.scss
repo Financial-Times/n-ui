@@ -34,3 +34,10 @@
 		background-size: 7px 7px;
 	}
 }
+
+/// Crosshatch background
+/// @deprecated
+@mixin nCrosshatchBG($args...) {
+	@warn '`nCrosshatchBG` has been deprecated, use `nUiPinstripeBG` instead';
+	@include nUiPinstripeBG($args...);
+}

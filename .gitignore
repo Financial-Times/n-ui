@@ -11,6 +11,8 @@
 .scss-lint.yml
 /public/head-n-ui-core.css
 /public/head-n-ui-core.css.map
+/public/head.css
+/public/head.css.map
 /public/main.css
 /public/main.css.map
 /public/main-without-n-ui.js

@@ -1,6 +1,6 @@
-// Note that hiding of footer while waiting for main.css to load is done in layout
+$o-footer-is-silent: not nUiHas('footer') !default;
 
-$o-footer-is-silent: false !default;
+@include nUiMaybeCriticalStart('footer');
 
 @import "o-footer/main";
 
@@ -26,3 +26,6 @@ $o-footer-is-silent: false !default;
 		margin-bottom: -4px;
 	}
 }
+
+
+@include nUiMaybeCriticalEnd('footer');

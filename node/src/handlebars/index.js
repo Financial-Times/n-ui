@@ -6,10 +6,17 @@ module.exports = function (conf) {
 	const app = conf.app;
 	const directory = conf.directory;
 	const options = conf.options;
+	const helpers = options.helpers || {};
 	const partialsDir = [
 		directory + (options.viewsDirectory || '/views') + '/partials',
 		directory + ('/node_modules/@financial-times')
 	];
+
+	if (conf.hasher) {
+		helpers.hashedAsset = function (options) {
+			return conf.hasher.get(options.fn(this));
+		};
+	}
 
 	// always enable in-memory view caching
 	// - needed in prod to allow polling for layout updates
@@ -24,7 +31,7 @@ module.exports = function (conf) {
 		partialsDir,
 		defaultLayout: false,
 		layoutsDir: options.layoutsDir,
-		helpers: options.helpers || {},
+		helpers: helpers,
 		directory: directory,
 		viewsDirectory: options.viewsDirectory
 	})

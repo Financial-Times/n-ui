@@ -31,7 +31,7 @@ import notification from './notification';
 export const _notification = notification;
 import expander from './expander';
 export const _expander = expander;
-import grid from 'o-grid';
+import grid from './grid';
 export const _grid = grid;
 import overlay from './overlay';
 export const _overlay = overlay;

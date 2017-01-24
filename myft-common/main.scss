@@ -1,25 +1,7 @@
 @import '../buttons/main';
 
-@mixin buttonWithIcon($iconSpace, $iconSize, $color, $iconOff, $iconOn: $iconOff) {
-	$topMargin: #{$iconSize * -0.5}px;
-	$horizontalMargin: #{($iconSpace - $iconSize) / 2}px;
-	position: relative;
-	padding-left: #{$iconSpace}px;
-	&:before {
-		@include oIconsGetIcon($iconOff, $color, $iconSize);
-		content: ' ';
-		position: absolute;
-		top: 50%;
-		left: $horizontalMargin;
-		margin: $topMargin $horizontalMargin 0 0;
-	}
-	&[aria-pressed="true"]:before {
-		@include oIconsGetIcon($iconOn, $color, $iconSize);
-	}
-}
-
 @mixin nUiMyftCommon () {
-	@include nUiCriticalStart('core');
+	@include nUiMaybeCriticalStart('myftCommon');
 	.myft-ui,
 	.n-myft-ui {
 		display: inline-block;
@@ -85,7 +67,7 @@
 		width: 34px;
 		margin: 0 8px -5px;
 	}
-	@include nUiCriticalEnd('core');
+	@include nUiMaybeCriticalEnd('myftCommon');
 }
 
 @if nUiApply('myftCommon') {

@@ -42,7 +42,10 @@ describe('bootstrapping', () => {
 
 		const parasite = {
 			bootstrap: CI.bootstrap,
+			configure: CI.configure
 		};
+		parasite.configure({parasite: true});
+		expect(CI.configuration.parasite).to.be.true;
 		parasite.bootstrap();
 		expect(jsLoader.prototype.bootstrap.calledOnce).to.be.true;
 	})
@@ -117,5 +120,40 @@ describe('bootstrapping', () => {
 						expect(cb.calledOnce).to.be.true;
 					});
 			});
+	});
+
+
+	describe('backwards compatibility', () => {
+
+		it('can pass in a callback as first argument', () => {
+			const CI = new ComponentInitializer();
+			CI.configure({features: {header: true}});
+			const cb = sinon.stub();
+			return CI.bootstrap(cb)
+				.then(() => {
+					expect(CI.isInitialized('header')).to.be.true;
+					expect(cb.calledOnce).to.be.true;
+				});
+		});
+
+		it('can pass in null callback as first argument', () => {
+			const CI = new ComponentInitializer();
+			CI.configure({features: {header: true}});
+			return CI.bootstrap(null)
+				.then(() => {
+					expect(CI.isInitialized('header')).to.be.true;
+				});
+		});
+
+		it('can use flat config object', () => {
+			const CI = new ComponentInitializer();
+			CI.configure({header: true});
+			const cb = sinon.stub();
+			return CI.bootstrap(undefined, cb)
+				.then(() => {
+					expect(CI.isInitialized('header')).to.be.true;
+					expect(cb.calledOnce).to.be.true;
+				});
+		});
 	});
 });

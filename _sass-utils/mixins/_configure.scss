@@ -59,6 +59,17 @@
 	// add manually configured features
 	@include nUiConfigureFeatures($features);
 
+	// deprecated features
+	@if $output-critical {
+		$n-ui-output-critical: true !global;
+		@warn '$output-critical parameter has been deprecated. Please use global $n-ui-output-critical flag instead.';
+	}
+
+	@if $variant {
+		$n-ui-variant: $variant !global;
+		@warn '$variant parameter has been deprecated. Please use global $n-ui-variant flag instead.';
+	}
+
 	$n-ui-configured: true !global;
 }
 

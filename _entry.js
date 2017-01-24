@@ -22,6 +22,7 @@ module.exports = function (withPreact, exclusions) {
 		'o-date': 'window.ftNextUi._date',
 		'n-ui/expander': 'window.ftNextUi._expander',
 		'o-expander': 'window.ftNextUi._expander',
+		'n-ui/grid': 'window.ftNextUi._grid',
 		'o-grid': 'window.ftNextUi._grid',
 		'n-ui/overlay': 'window.ftNextUi._overlay',
 		'o-overlay': 'window.ftNextUi._overlay',

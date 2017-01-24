@@ -3,6 +3,8 @@
 
 @if nUiApply('welcomeMessage') {
 
+	@include nUiMaybeCriticalStart('welcomeMessage');
+
 	.n-welcome-banner,
 	.n-welcome-message {
 		position: relative;
@@ -312,4 +314,5 @@
 
 	/* END styles only for old welcome message (pre 'banner' layout) */
 
+	@include nUiMaybeCriticalEnd('welcomeMessage');
 }
