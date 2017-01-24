@@ -57,12 +57,6 @@ export class ComponentInitializer {
 		return !!this.initializedFeatures[feature];
 	}
 
-	configure (options = {}) {
-		// NOTE: just store configuration for now, need to wait for polyfill to load before assigning
-		// n-ui.configure is deprecated - pass in your config object as a first argument to bootstrap instead
-		this.configuration = options;
-	}
-
 	bootstrap (config, cb) {
 
 		// VERY IMPORTANT NOTE
@@ -76,7 +70,7 @@ export class ComponentInitializer {
 		}
 
 		cb = cb || (() => null);
-		config = config || this.configuration || {};
+		config = config || {};
 
 		// belt and braces backwards compatibility for old api, which expected a flat config object
 		if (!config.features) {

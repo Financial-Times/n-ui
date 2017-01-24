@@ -1,7 +1,3 @@
-@include nUiMaybeCriticalStart('cookieMessage');
-
 $o-cookie-message-is-silent: not nUiHas('cookieMessage') !default;
 
 @import 'o-cookie-message/main';
-
-@include nUiMaybeCriticalEnd('cookieMessage');

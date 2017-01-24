@@ -1,5 +1,5 @@
 // scss-lint:disable PlaceholderInExtend, NameFormat
-@include nUiMaybeCriticalStart('grid');
+@include nUiCriticalStart('core');
 
 // Set gutters to be slightly smaller than the default on larger screens
 $o-grid-gutters: (
@@ -41,4 +41,4 @@ $o-grid-shuffle-selectors: false;
 
 }
 
-@include nUiMaybeCriticalEnd('grid');
+@include nUiCriticalEnd('core');
