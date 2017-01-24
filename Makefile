@@ -28,7 +28,7 @@ test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
 test-server: export FT_NEXT_BACKEND_KEY_OLDEST=test-backend-key-oldest
 test-server: export LAYOUT_POLLING_INTERVAL=100
 test-server:
-	mocha node/test/*.test.js node/test/**/*.test.js  --recursive
+	mocha node/test/app.test.js node/test/**/*.test.js  --recursive
 
 
 nightwatch:

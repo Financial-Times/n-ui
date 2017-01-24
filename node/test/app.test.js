@@ -77,6 +77,7 @@ describe('simple app', function () {
 				name: 'noflags',
 				directory: __dirname,
 				withFlags: false,
+				withLayoutPolling: false,
 				withHeadCss: false // otherwise it errors as public folder doesn't exist
 			});
 			app.get('/', function (req, res) {
