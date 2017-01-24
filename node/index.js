@@ -2,7 +2,7 @@ const nExpress = require('@financial-times/n-express')
 const nextJsonLd = require('@financial-times/next-json-ld');
 const path = require('path');
 // Models
-const NavigationModel = require('./src/navigation/navigationModel');
+const navigation = require('./src/navigation/navigationModel');
 const EditionsModel = require('./src/navigation/editionsModel');
 const anon = require('./src/anon');
 const welcomeBannerModelFactory = require('./src/welcome-banner/model');
@@ -76,9 +76,8 @@ module.exports = options => {
 
 	// add statutory metadata to construct the page
 	if (options.withNavigation) {
-		const navigation = new NavigationModel({withNavigationHierarchy:options.withNavigationHierarchy});
 		const editions = new EditionsModel();
-		addInitPromise(navigation.init());
+		addInitPromise(navigation.init({withNavigationHierarchy:options.withNavigationHierarchy}));
 		app.use(editions.middleware.bind(editions));
 		app.use(navigation.middleware.bind(navigation));
 	}

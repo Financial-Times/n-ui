@@ -5,21 +5,20 @@ const decorateSelectedLink = require('./decorate');
 const HierarchyMixin = require('./hierarchyMixin');
 const log = require('@financial-times/n-logger').default;
 
-const API_URL = 'http://next-navigation.ft.com/v1/lists';
-const FALLBACK_URL = 'http://ft-next-navigation.s3-website-eu-west-1.amazonaws.com/json/lists.json';
-
-const defaultData = require('./defaultData.json');
 
 function clone (obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
-module.exports = class NavigationModel {
+class NavigationModelV1 {
 
 	constructor (options) {
+		this.API_URL = 'http://next-navigation.ft.com/v1/lists';
+		this.FALLBACK_URL = 'http://ft-next-navigation.s3-website-eu-west-1.amazonaws.com/json/lists.json';
+		this.defaultData = require('./defaultData.json');
 		this.options = Object.assign({}, {withNavigationHierarchy:false}, options || {});
 		this.poller = new Poller({
-			url: API_URL,
+			url: this.API_URL,
 			refreshInterval: ms('15m')
 		});
 		if(this.options.withNavigationHierarchy) {
@@ -47,11 +46,11 @@ module.exports = class NavigationModel {
 	}
 
 	fallback () {
-		return fetch(FALLBACK_URL)
+		return fetch(this.FALLBACK_URL)
 			.then(response => {
 				if(!response.ok) {
-					log.error({event:'FALLBACK_URL_FAILURE', url:FALLBACK_URL, status:response.status});
-					return defaultData;
+					log.error({event:'FALLBACK_URL_FAILURE', url:this.FALLBACK_URL, status:response.status});
+					return this.defaultData;
 				}
 
 				log.info({event:'NAVIGATION_LISTS_USING_S3_BUCKET'});
@@ -61,8 +60,8 @@ module.exports = class NavigationModel {
 				this.fallbackData = data;
 			})
 			.catch(err => {
-				log.error({event:'FALLBACK_URL_FAILURE', url:FALLBACK_URL, error:err.message, stack:err.stack.replace(/\n/g, '; ')});
-				this.fallbackData = defaultData;
+				log.error({event:'FALLBACK_URL_FAILURE', url:this.FALLBACK_URL, error:err.message, stack:err.stack.replace(/\n/g, '; ')});
+				this.fallbackData = this.defaultData;
 			})
 	}
 
@@ -119,7 +118,7 @@ module.exports = class NavigationModel {
 			}
 
 			// mobile nav only on homepage
-			if(listName === 'navbar_mobile' && !NavigationModel.showMobileNav(currentUrl, data[listName][currentEdition])) {
+			if(listName === 'navbar_mobile' && !NavigationModelV1.showMobileNav(currentUrl, data[listName][currentEdition])) {
 				continue;
 			}
 
@@ -156,3 +155,21 @@ module.exports = class NavigationModel {
 		next();
 	}
 };
+
+let navigationModelV1;
+
+module.exports = {
+	NavigationModelV1,
+	init: options => {
+		navigationModelV1 = new NavigationModelV1(options);
+		return Promise.all([navigationModelV1.init()]);
+	},
+	middleware : (req, res, next) => {
+		if(res.locals.flags.origamiNavigation){
+			//todo - replace this with V2 when it exists
+			return navigationModelV1.middleware(req, res, next);
+		}else{
+			return navigationModelV1.middleware(req, res, next);
+		}
+	}
+}
