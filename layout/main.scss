@@ -1,6 +1,6 @@
 @if nUiApply('layout') {
 
-	@include nUiCriticalStart;
+	@include nUiCriticalStart('core');
 
 	.core .o--if-js,
 	.enhanced .o--if-no-js {
@@ -49,7 +49,7 @@
 		display: none;
 	}
 
-	@include nUiCriticalEnd;
+	@include nUiCriticalEnd('core');
 
 	// undo the above hiding of the footer
 	.n-layout__row--footer {

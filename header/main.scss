@@ -4,7 +4,7 @@
 
 @if nUiApply('header') {
 
-	@include nUiCritical {
+	@include nUiCritical('core') {
 
 		@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu', 'simple'));
 		// force display of search row
