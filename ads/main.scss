@@ -1,6 +1,10 @@
-@include nUiMaybeCriticalStart('ads');
+// While ads aren't critical content, these minimal styles to
+// reserve space on the page are critical to avod content moving
+// around too much later
 
-$o-ads-is-silent: not nUiHas('ads') !default;
+@include nUiCriticalStart;
+
+$o-ads-is-silent: false !default;
 
 // Ad breakpoint where leaderboards start working
 $ad-medium-breakpoint: 760px;
@@ -10,7 +14,6 @@ $ad-max-responsive-width: 1440px;
 @import 'o-ads/main';
 
 @if nUiApply('ads') {
-
 	.core .o-ads {
 		display: none;
 	}
@@ -40,7 +43,6 @@ $ad-max-responsive-width: 1440px;
 			clear: both;
 		}
 	}
-
 }
 
-@include nUiMaybeCriticalEnd('ads');
+@include nUiCriticalEnd;

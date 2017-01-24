@@ -1,4 +1,4 @@
-@include nUiMaybeCriticalStart('utils');
+@include nUiCriticalStart;
 
 @import 'mixins';
 
@@ -75,4 +75,4 @@
 
 }
 
-@include nUiMaybeCriticalEnd('utils');
+@include nUiCriticalEnd;

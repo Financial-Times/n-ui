@@ -1,7 +1,3 @@
-@include nUiMaybeCriticalStart('notification');
-
 $n-notification-is-silent: not nUiHas('notification') !default;
 
 @import 'n-notification/main';
-
-@include nUiMaybeCriticalEnd('notification');

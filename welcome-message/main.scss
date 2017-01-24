@@ -3,7 +3,7 @@
 
 @if nUiApply('welcomeMessage') {
 
-	@include nUiMaybeCriticalStart('welcomeMessage');
+	@include nUiCriticalStart;
 
 	.n-welcome-banner,
 	.n-welcome-message {
@@ -314,5 +314,5 @@
 
 	/* END styles only for old welcome message (pre 'banner' layout) */
 
-	@include nUiMaybeCriticalEnd('welcomeMessage');
+	@include nUiCriticalEnd;
 }
