@@ -1,4 +1,4 @@
-@include nUiMaybeCriticalStart('normalize');
+@include nUiCriticalStart('core');
 
 @if nUiApply('normalize') {
 
@@ -239,4 +239,4 @@
 
 }
 
-@include nUiMaybeCriticalEnd('normalize');
+@include nUiCriticalEnd('core');

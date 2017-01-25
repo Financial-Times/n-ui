@@ -9,7 +9,7 @@ $n-ui-features: (
 	ads: 'critical',
 	buttons: false,
 	colors: true,
-	cookieMessage: false,
+	cookieMessage: true,
 	expander: false,
 	footer: true,
 	forms: false,
@@ -17,12 +17,12 @@ $n-ui-features: (
 	header: 'critical',
 	icons: true,
 	layout: 'critical',
-	myft: false,
-	myftCommon: false,
+	myft: true,
+	myftCommon: 'critical',
 	myftDigestPromo: false,
 	myftHint: false,
 	normalize: 'critical',
-	notification: false,
+	notification: true,
 	overlay: false,
 	pageHeading: false,
 	tourTip: false,
@@ -31,7 +31,7 @@ $n-ui-features: (
 	utils: 'critical',
 	welcomeMessage: true,
 	tooltip: true,
-	syndication: false
+	syndication: true
 ) !default;
 
 /// Declare any feature dependencies
@@ -45,19 +45,7 @@ $n-ui-feature-dependencies: (
 /// @type Map
 $n-ui-presets: (
 	discrete: (),
-	complete: (
-		cookieMessage: true,
-		myftCommon: 'critical',
-		myft: true,
-		myftDigestPromo: 'critical',
-		myftHint: 'critical',
-		notification: true,
-		welcomeMessage: true,
-		tooltip: true,
-		syndication: true
-	)
+	complete: ()
 );
-
-
 
 @import '_sass-utils/main';
