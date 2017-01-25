@@ -18,14 +18,6 @@ $n-ui-z-index-order: (
 	'notification'
 );
 
-/// Utility for setting z-indexes
-/// @param {String} $use-case
-/// @output A z-index rule
-@mixin zIndexFor($use-case) {
-	@warn '`zindexFor` is deprecated, use `nUtilZIndexFor` instead';
-	@include nUtilZIndexFor($use-case);
-}
-
 @mixin nUtilZIndexFor($use-case) {
 	$index: index($n-ui-z-index-order, $use-case);
 

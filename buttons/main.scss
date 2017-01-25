@@ -3,6 +3,5 @@
 $o-buttons-is-silent: false !default;
 
 @import 'o-buttons/main';
-@import 'mixins';
 
 @include nUiMaybeCriticalEnd('buttons');

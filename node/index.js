@@ -19,7 +19,7 @@ module.exports = options => {
 	options = Object.assign({}, {
 		withHandlebars: true,
 		withNavigation: true,
-		withNavigationHierarchy: true,
+		withNavigationHierarchy: false,
 		withAnonMiddleware: true,
 		withNUiJsBundle: true,
 		withAssets: true,
@@ -28,7 +28,7 @@ module.exports = options => {
 		withFlags: true,
 		withBackendAuthentication: true,
 		withServiceMetrics: true,
-		withLayoutPolling: false,
+		withLayoutPolling: true,
 		layoutsDir: path.join(__dirname, '../layout'),
 	}, options || {});
 
