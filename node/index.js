@@ -2,7 +2,7 @@ const nExpress = require('@financial-times/n-express')
 const nextJsonLd = require('@financial-times/next-json-ld');
 const path = require('path');
 // Models
-const navigation = require('./src/navigation/navigationModel');
+const navigation = require('./src/navigation/');
 const EditionsModel = require('./src/navigation/editionsModel');
 const anon = require('./src/anon');
 const welcomeBannerModelFactory = require('./src/welcome-banner/model');
