@@ -1,352 +1,47 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noCallThru().noPreserveCache();
-const pollerStub = require('../stubs/poller.stub');
-const decorateSpy = sinon.spy(data => data);
-const navigationListDataStub = require('../stubs/navigationListData.json');
-const fetchMock = require('fetch-mock');
 
-describe('Navigation middleware', () => {
+describe.only('Navigation middleware', () => {
 
-	describe('V1', () => {
-		let NavigationModel;
+	let navigation;
+	let navigationModelV1Stub = {init:sinon.spy(), middleware:sinon.spy()};
+	let navigationModelV2Stub = {init:sinon.spy(), middleware:sinon.spy()};
 
-		beforeEach(() => {
-			NavigationModel = proxyquire('../../src/navigation/navigationModel', {
-				'ft-poller': pollerStub.stub,
-				'./decorate': decorateSpy
-			}).NavigationModelV1;
-		});
-
-		afterEach(() => {
-			pollerStub.stub.reset();
-			decorateSpy.reset();
-		});
-
-		describe('data polling', () => {
-			it('Should setup a poller to get the lists data', () => {
-				const url = 'http://next-navigation.ft.com/v1/lists';
-				new NavigationModel();
-				sinon.assert.called(pollerStub.stub);
-				sinon.assert.calledWith(pollerStub.stub, sinon.match({ url }));
-			});
-		});
-
-		describe('internals', () => {
-			const SECTION_ID = 'MQ==-U2VjdGlvbnM=';
-
-			let instance;
-			let result;
-			let res;
-			let req;
-			let next;
-
-			beforeEach(() => {
-				res = { locals: { editions: { current: { id: 'uk' } } } };
-				req = { url: `/stream/sectionsId/${SECTION_ID}` };
-				next = sinon.stub();
-
-				req.get = sinon.stub();
-
-				req.get.withArgs('FT-Edition').returns('uk');
-				req.get.withArgs('FT-Vanity-Url').returns(null);
-				req.get.withArgs('ft-blocked-url').returns(null);
-
-				pollerStub.setup(navigationListDataStub);
-
-				instance = new NavigationModel();
-				result = instance.init();
-
-				return result;
-			});
-
-			it('returns a promise for the initial request when init is called', () => {
-				expect(result).to.be.an.instanceOf(Promise);
-				expect(result.then).to.be.a('function');
-			});
-
-			it('exposes the required navigation lists', () => {
-				['drawer', 'footer', 'navbar_desktop', 'navbar_mobile'].forEach(list => {
-					expect(instance.list(list)).to.exist;
-				});
-			});
-
-			it('exposes middleware which returns a navigation list', () => {
-				instance.middleware(req, res, next);
-
-				expect(res.locals.navigation).to.exist;
-				expect(res.locals.navigation.lists).to.exist;
-				expect(res.locals.navigation.lists).to.be.an('object');
-
-				sinon.assert.called(next);
-			});
-
-
-			it('Should not include the mobile nav data if not on a page it links to', () => {
-				const cases = {
-					'/' : true,
-					'/?edition=international' : true,
-					'/fastft' : true,
-					'/stream/brandId/NTlhNzEyMzMtZjBjZi00Y2U1LTg0ODUtZWVjNmEyYmU1NzQ2-QnJhbmRz' : true,
-					'/world': false,
-					'/content/80125fd4-57a9-11e6-9f70-badea1b336d4' : false
-				};
-
-				Object.keys(cases).forEach(url => {
-					let shouldHaveNav = cases[url];
-					req.url = url;
-					instance.middleware(req, res, next);
-					if(shouldHaveNav) {
-						expect(res.locals.navigation.lists.navbar_mobile).to.exist;
-						expect(res.locals.navigation.lists.navbar_mobile).to.be.an('array');
-					}else{
-						expect(res.locals.navigation.lists.navbar_mobile).not.to.exist;
-					}
-				})
-			});
-
-
-
-			it('recognises vanity URLs', () => {
-				req.get.withArgs('FT-Vanity-Url').returns('/vanity');
-				instance.middleware(req, res, next);
-				sinon.assert.calledWith(decorateSpy, sinon.match.any, sinon.match('/vanity'));
-			});
-
-			it('recognises blocked URLs', () => {
-				req.get.withArgs('ft-blocked-url').returns('/blocked');
-				instance.middleware(req, res, next);
-				sinon.assert.calledWith(decorateSpy, sinon.match.any, sinon.match('/blocked'));
-			});
-		});
-
-		describe('Hierarchy', () => {
-
-			it('Should instantiate the heirarchy mixin if withNavigationHierarchy:true', () => {
-				let model = new NavigationModel({withNavigationHierarchy:true});
-				expect(model.hierarchy).to.exist;
-			});
-
-			it('Should add hierarchy properties to res.locals.navigation', () => {
-				let ukSectionUd = 'Ng==-U2VjdGlvbnM=';
-				let expectedChildren = [
-					{
-						'href': '/uk-business-economy',
-						'id': 'Nw==-U2VjdGlvbnM=',
-						'name': 'UK Business & Economy'
-					},
-					{
-						'name': 'UK Politics & Policy',
-						'id': 'OA==-U2VjdGlvbnM=',
-						'href': '/world/uk/politics'
-					},
-					{
-						'name': 'UK Companies',
-						'id': 'NjM=-U2VjdGlvbnM=',
-						'href': '/companies/uk'
-					}
-				];
-
-				let expectedAncestors = [
-					{
-
-						'name': 'World',
-						'id': 'MQ==-U2VjdGlvbnM=',
-						'href': '/world'
-					}
-				];
-
-				let res = {locals: {editions:{current:{id:'uk'}}}};
-				let req = {path: `/stream/sectionsId/${ukSectionUd}`, get: () => 'uk'};
-				let next = sinon.spy();
-				pollerStub.setup(navigationListDataStub);
-
-				let model = new NavigationModel({withNavigationHierarchy:true});
-				return model.init().then(() => {
-					model.middleware(req, res, next);
-					expect(res.locals.navigation.currentItem).to.exist;
-					expect(res.locals.navigation.currentItem.id).to.equal(ukSectionUd);
-					expect(res.locals.navigation.ancestors).to.deep.equal(expectedAncestors);
-					expect(res.locals.navigation.children).to.deep.equal(expectedChildren);
-
-					sinon.assert.called(next);
-				})
-			});
-		});
-
-		describe('Fallback', () => {
-
-			function apiDownS3Up () {
-				fetchMock.restore();
-				fetchMock.mock(/next-navigation\.ft\.com/, 500);
-				fetchMock.mock(/ft-next-navigation\.s3-website-eu-west-1\.amazonaws\.com/, require('../fixtures/navigationLists.json'), {name:'s3bucket'});
-			}
-
-			function apiDownS3Down () {
-				fetchMock.restore();
-				fetchMock.mock(/next-navigation\.ft\.com/, 500);
-				fetchMock.mock(/ft-next-navigation\.s3-website-eu-west-1\.amazonaws\.com/, 500, {name:'s3bucket'});
-			}
-
-			beforeEach(() => {
-				NavigationModel = require('../../src/navigation/navigationModel').NavigationModelV1;
-			});
-
-			afterEach(() => {
-				fetchMock.restore();
-			});
-
-			it('Should get data from the s3 bucket if the api is down', () => {
-				apiDownS3Up();
-				const navigation = new NavigationModel();
-				return navigation.init().then(() => {
-					expect(fetchMock.called('s3bucket')).to.be.true;
-				});
-			});
-
-			it('Should use the hardcoded default data if s3 is also down', () => {
-				apiDownS3Down();
-				const defaultData = require('../../src/navigation/defaultData.json');
-				const navigation = new NavigationModel();
-				return navigation.init().then(() => {
-					for(let list of ['drawer', 'navbar_desktop', 'footer']) {
-						expect(navigation.list(list)).to.deep.equal(defaultData[list]);
-					}
-
-				});
-			});
-		});
+	before(() => {
+		const NavigationModelV1Stub = sinon.stub().returns(navigationModelV1Stub);
+		const NavigationModelV2Stub = sinon.stub().returns(navigationModelV2Stub);
+		navigation = proxyquire('../../src/navigation/index', {'./navigationModelV1':NavigationModelV1Stub, './navigationModelV2':NavigationModelV2Stub});
 	});
 
-	describe('V2', () => {
-
-		let NavigationModel;
-		const navigationDataFixture = require('../stubs/navigationv2Data.json');
-		const navigationHierarchyFixture = require('../stubs/navigationHierarcyWorldUk.json');
-
-		before(() => {
-			NavigationModel = require('../../src/navigation/navigationModel').NavigationModelV2;
-		});
-
-		context('Navigation data', () => {
-			beforeEach(() => {
-				fetchMock.mock(
-					'http://next-navigation.ft.com/v2/menus',
-					{
-						body: navigationDataFixture
-					},
-					{
-						name: 'Navigation Service V2'
-					}
-				)
-			});
-
-			afterEach(() => {
-				fetchMock.reset();
-				fetchMock.restore();
-			});
-
-			it('Should use v2 of the navigation-api for data', () => {
-				const navigation = new NavigationModel();
-				return navigation.init()
-					.then(() => {
-						expect(fetchMock.called('Navigation Service V2')).to.be.true;
-					})
-			});
-
-			it('Should expose middleware to set the various menus', (done) => {
-				const navigation = new NavigationModel();
-				const res = {
-					locals:{
-						editions:{
-							current:{id:'uk'}
-						}
-					}
-				};
-				const req = {
-					get: sinon.stub().returns(null).withArgs('FT-Vanity-Url').returns('/world'),
-					url: '/stream/sectionId/MQ==-U2VjdGlvbnM='
-				};
-				const expectedMenus = ['drawer', 'footer', 'navbar-simple', 'navbar-right', 'navbar'];
-				const next = () => {
-					expect(Object.keys(res.locals.navigation.menus)).to.deep.equal(expectedMenus);
-					done()
-				};
-				navigation.init()
-					.then(() => {
-						navigation.middleware(req, res, next);
-					}).catch(done);
-			});
-		});
-
-		describe('Fallback', () => {
-			beforeEach(() => {
-				fetchMock.mock('http://next-navigation.ft.com/v2/menus', 503)
-			});
-
-			afterEach(() => {
-				fetchMock.restore();
-			});
-
-			it('Should use the hardcoded data if the service is down', (done) => {
-				const navigation = new NavigationModel();
-				const res = {
-					locals:{
-						editions:{
-							current:{id:'uk'}
-						}
-					}
-				};
-				const req = {
-					get: sinon.stub().returns(null).withArgs('FT-Vanity-Url').returns('/world'),
-					url: '/stream/sectionId/MQ==-U2VjdGlvbnM='
-				};
-				const expectedMenus = ['drawer', 'navbar-simple', 'navbar'];
-				const next = () => {
-					expect(Object.keys(res.locals.navigation.menus)).to.deep.equal(expectedMenus);
-					done()
-				};
-				navigation.init()
-					.then(() => {
-						navigation.middleware(req, res, next);
-					}).catch(done);
-			});
-		});
-
-		describe('Hierarchy', () => {
-			beforeEach(() => {
-				fetchMock.mock('http://next-navigation.ft.com/v2/menus', navigationDataFixture, {name: 'Navigation Service V2'});
-				fetchMock.mock('begin:http://next-navigation.ft.com/v2/hierarchy', navigationHierarchyFixture, {name: 'Navigation Service Hierarchy'});
-			});
-
-			afterEach(() => {
-				fetchMock.reset();
-				fetchMock.restore();
-			});
-
-
-			it('Should use the v2/hierarchy endpoint to get data if hierarchy option is passed', (done) => {
-				const navigation = new NavigationModel({withNavigationHierarchy:true});
-				const res = {
-					locals:{
-						editions:{
-							current:{id:'uk'}
-						}
-					}
-				};
-				const req = {
-					get: sinon.stub().returns(null).withArgs('FT-Vanity-Url').returns('/world'),
-					url: '/stream/sectionId/MQ==-U2VjdGlvbnM='
-				};
-				const next = () => {
-					expect(res.locals.navigation.hierarchy).to.deep.equal(navigationHierarchyFixture);
-					done()
-				};
-				navigation.init()
-					.then(() => {
-						navigation.middleware(req, res, next);
-					}).catch(done);
-			});
-		});
+	afterEach(() => {
+		navigationModelV1Stub.middleware.reset();
+		navigationModelV2Stub.middleware.reset();
 	});
+
+	it('Should call init() on both models', () => {
+		navigation.init();
+		sinon.assert.called(navigationModelV2Stub.init);
+		sinon.assert.called(navigationModelV1Stub.init);
+	});
+
+	it('Should use the V2 Model is the origamiNavigation flag is on', () => {
+		const req = {};
+		const res = {locals:{flags:{origamiNavigation:true}}};
+		const next = () => {};
+		navigation.init();
+		navigation.middleware(req, res, next);
+		sinon.assert.called(navigationModelV2Stub.middleware);
+		sinon.assert.notCalled(navigationModelV1Stub.middleware);
+	});
+
+	it('Should use the V1 Model is the origamiNavigation flag is off', () => {
+		const req = {};
+		const res = {locals:{flags:{origamiNavigation:false}}};
+		const next = () => {};
+		navigation.init();
+		navigation.middleware(req, res, next);
+		sinon.assert.notCalled(navigationModelV2Stub.middleware);
+		sinon.assert.called(navigationModelV1Stub.middleware);
+	})
 });
