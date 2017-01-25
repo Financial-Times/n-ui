@@ -50,9 +50,9 @@
 	}
 
 	@include nUiCriticalEnd('core');
-
+	// needed to stop css minimize merging the selectors above and below
 	// undo the above hiding of the footer
-	.n-layout__row--footer {
+	.n-layout__row--footer.n-layout__row--footer {
 		display: table-row;
 	}
 }
