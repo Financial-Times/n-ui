@@ -17,7 +17,7 @@
 	.myft-ui__button--manage,
 	.myft-ui__button--myft-manage {
 		&[aria-pressed="true"]:before {
-			@include oIconsGetIcon('cross', getColor('white'), 28);
+			@include oIconsGetIcon('cross', getColor('white'), 28, $iconset-version: 1);
 		}
 	}
 
@@ -115,7 +115,7 @@
 			color: getColor('green');
 
 			&:before {
-				@include oIconsGetIcon('tick', getColor('green'), 14);
+				@include oIconsGetIcon('tick', getColor('green'), 14, $iconset-version: 1);
 				content: '';
 				margin-right: 3px;
 			}
