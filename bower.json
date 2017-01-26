@@ -36,7 +36,7 @@
     "o-forms": "^2.0.0",
     "o-grid": "^4.2.0",
     "o-header": "^6.10.0",
-    "o-icons": "^5.2.0",
+    "o-icons": ">=4.4.2 <6",
     "o-overlay": "^1.8.2",
     "o-tracking": "^1.1.8",
     "o-typography": "^4.2.0",

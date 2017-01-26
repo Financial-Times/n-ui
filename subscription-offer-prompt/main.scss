@@ -61,7 +61,7 @@
 	color: oColorsGetPaletteColor('grey-tint5');
 
 	&:before {
-		@include oIconsGetIcon('tick', #35bd14, 14);
+		@include oIconsGetIcon('tick', #35bd14, 14, $iconset-version: 1);
 		content: '';
 		margin-right: 4px;
 		position: absolute;
