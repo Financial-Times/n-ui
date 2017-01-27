@@ -98,7 +98,9 @@ module.exports = options => {
 		next();
 	});
 
-	let hasher = str => str;
+	let hasher = {
+		get: str => str
+	};
 	// verification that expected assets exist
 	if (options.withAssets) {
 		verifyAssetsExist.verify(app.locals);
@@ -113,6 +115,8 @@ module.exports = options => {
 			hasher
 		}));
 	}
+
+	app.hasher = hasher;
 
 	// Decorate responses with data about which assets the page needs
 	if (options.withAssets) {

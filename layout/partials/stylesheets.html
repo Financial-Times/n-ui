@@ -15,13 +15,6 @@
 				<link rel="stylesheet" href="{{path}}">
 			{{/ifAll}}
 		{{/each}}
-	{{else}}
-		<link rel="stylesheet" href="{{#hashedAsset}}main{{#if @root.cssVariant}}-{{@root.cssVariant}}{{/if}}.css{{/hashedAsset}}">
 	{{/if}}
 
 <!--<![endif]-->
-
-<!--[if lte IE 8]>
-<link rel="stylesheet" href="{{#hashedAsset}}main{{#if @root.cssVariant}}-{{@root.cssVariant}}{{/if}}-ie8.css{{/hashedAsset}}">
-<script src="https://www.ft.com/__assets/creatives/js/html5shiv.min.js"></script>
-<![endif]-->
