@@ -55,7 +55,7 @@ describe('NavigationModelV2', () => {
 				get: sinon.stub().returns(null).withArgs('FT-Vanity-Url').returns('/world'),
 				url: '/stream/sectionId/MQ==-U2VjdGlvbnM='
 			};
-			const expectedMenus = ['drawer', 'footer', 'navbar-simple', 'navbar-right', 'navbar'];
+			const expectedMenus = ['drawer', 'footer', 'navbar-simple', 'navbar-right', 'navbar', 'user', 'anon'];
 			const next = () => {
 				expect(Object.keys(res.locals.navigation.menus)).to.deep.equal(expectedMenus);
 				done()

@@ -79,7 +79,7 @@ module.exports = options => {
 		const editions = new EditionsModel();
 		addInitPromise(navigation.init({withNavigationHierarchy:options.withNavigationHierarchy}));
 		app.use(editions.middleware.bind(editions));
-		app.use(navigation.middleware.bind(navigation));
+		app.use(navigation.middleware);
 	}
 
 	if (options.withAnonMiddleware) {
