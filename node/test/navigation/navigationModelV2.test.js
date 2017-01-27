@@ -1,9 +1,5 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const proxyquire = require('proxyquire').noCallThru().noPreserveCache();
-const pollerStub = require('../stubs/poller.stub');
-const decorateSpy = sinon.spy(data => data);
-const navigationListDataStub = require('../stubs/navigationListData.json');
 const fetchMock = require('fetch-mock');
 
 describe('NavigationModelV2', () => {
