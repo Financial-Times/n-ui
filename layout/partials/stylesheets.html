@@ -1,20 +1,17 @@
-<!--[if gte IE 9]><!-->
-	{{#if @root.criticalCss}}
-		<style class="n-layout-head-css">
-			{{#each @root.criticalCss}}
-				{{{this}}}
-			{{/each}}
-		</style>
-		{{#each @root.cssBundles}}
-			{{#ifAll @root.criticalCss isLazy}}
-				<link rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';{{#if isMain}}window.ftNextFireCondition('MainCssLoaded'){{/if}}">
-				<noscript>
-					<link rel="stylesheet" href="{{path}}">
-				</noscript>
-			{{else}}
-				<link rel="stylesheet" href="{{path}}">
-			{{/ifAll}}
+{{#if @root.criticalCss}}
+	<style class="n-layout-head-css">
+		{{#each @root.criticalCss}}
+			{{{this}}}
 		{{/each}}
-	{{/if}}
-
-<!--<![endif]-->
+	</style>
+	{{#each @root.cssBundles}}
+		{{#ifAll @root.criticalCss isLazy}}
+			<link rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';{{#if isMain}}window.ftNextFireCondition('MainCssLoaded'){{/if}}">
+			<noscript>
+				<link rel="stylesheet" href="{{path}}">
+			</noscript>
+		{{else}}
+			<link rel="stylesheet" href="{{path}}">
+		{{/ifAll}}
+	{{/each}}
+{{/if}}
