@@ -8,7 +8,6 @@ let navigationModelV2;
 
 module.exports = {
 	init: options => {
-		console.log('init', options);
 		navigationModelV1 = new NavigationModelV1(options);
 		navigationModelV2 = new NavigationModelV2(options);
 

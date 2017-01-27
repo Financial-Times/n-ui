@@ -19,7 +19,6 @@ const clone = obj => JSON.parse(JSON.stringify(obj));
 module.exports = class NavigationModelV2 {
 
 	constructor (options){
-		console.log(options);
 		this.apiDataUrl = 'http://next-navigation.ft.com/v2/menus';
 		this.apiHierarcyUrl = 'http://next-navigation.ft.com/v2/hierarchy';
 		this.fallbackData = require('./defaultDataV2.json');
@@ -120,7 +119,6 @@ module.exports = class NavigationModelV2 {
 					res.locals.navigation.hierarchy = data;
 					res.locals.navigation.breadcrumb = data.ancestors.concat([data.item]);
 					res.locals.navigation.subsections = data.children;
-					console.log('breadcrumb', res.locals.navigation.breadcrumb);
 				})
 				.catch(e => {
 					if(e.event){
