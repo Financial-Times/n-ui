@@ -7,7 +7,7 @@ function regExpEscape (s) {
 
 const headingMapping = {
 	tags: 'News',
-	equities: 'Equities'
+	equities: 'Securities'
 }
 
 const KEYS = {
