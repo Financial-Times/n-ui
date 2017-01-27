@@ -1,3 +1,4 @@
+<!--[if gte IE 9]><!-->
 {{#if @root.criticalCss}}
 	<style class="n-layout-head-css">
 		{{#each @root.criticalCss}}
@@ -15,3 +16,10 @@
 		{{/ifAll}}
 	{{/each}}
 {{/if}}
+<!--<![endif]-->
+
+<!--[if lt IE 9]><!-->
+	{{#each @root.cssBundles}}
+		<link rel="stylesheet" href="{{path}}">
+	{{/each}}
+<!--<![endif]-->
