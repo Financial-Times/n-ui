@@ -8,7 +8,10 @@ const menuNameMap = new Map([
 	['footer', 'footer'],
 	['navbar-simple', 'navbar-simple'],
 	['navbar-right', 'navbar-right'],
-	['navbar', {uk:'navbar-uk', international:'navbar-international'}]
+	['navbar-right-anon', 'navbar-right-anon'],
+	['navbar', {uk:'navbar-uk', international:'navbar-international'}],
+	['user', 'user'],
+	['anon', 'anon']
 ]);
 
 const clone = obj => JSON.parse(JSON.stringify(obj));
@@ -16,6 +19,7 @@ const clone = obj => JSON.parse(JSON.stringify(obj));
 module.exports = class NavigationModelV2 {
 
 	constructor (options){
+		console.log(options);
 		this.apiDataUrl = 'http://next-navigation.ft.com/v2/menus';
 		this.apiHierarcyUrl = 'http://next-navigation.ft.com/v2/hierarchy';
 		this.fallbackData = require('./defaultDataV2.json');
@@ -27,9 +31,10 @@ module.exports = class NavigationModelV2 {
 	}
 
 	init () {
-		return this.poller.start({initialRequest:true}).catch(err => {
-			log.error({event:'NAVIGATION_API_DOWN', message:err.message});
-		});
+		return this.poller.start({initialRequest:true})
+			.catch(err => {
+				log.error({event:'NAVIGATION_API_DOWN', message:err.message});
+			});
 	}
 
 	get data () {
@@ -50,9 +55,12 @@ module.exports = class NavigationModelV2 {
 	static decorateSelected (navData, currentUrl){
 		const currentPathName = url.parse(currentUrl).pathname;
 		for(let item of navData.items){
+			if(typeof item.url === 'string' && item.url.includes('${currentPath}')){
+				item.url = item.url.replace('${currentPath}', currentUrl);
+			}
+
 			if(item.url === currentPathName){
 				item.selected = true;
-				return;
 			}
 
 			if(item.submenu){
@@ -98,6 +106,7 @@ module.exports = class NavigationModelV2 {
 		}
 
 		if(this.options.withNavigationHierarchy){
+			log.info({event:'NAVIGATION_HIERARCHY_ENABLED'});
 			let hierarcyApiUrl = this.apiHierarcyUrl + currentUrl;
 			fetch(hierarcyApiUrl)
 				.then(response => {
@@ -109,6 +118,9 @@ module.exports = class NavigationModelV2 {
 				})
 				.then(data => {
 					res.locals.navigation.hierarchy = data;
+					res.locals.navigation.breadcrumb = data.ancestors.concat([data.item]);
+					res.locals.navigation.subsections = data.children;
+					console.log('breadcrumb', res.locals.navigation.breadcrumb);
 				})
 				.catch(e => {
 					if(e.event){
@@ -119,6 +131,7 @@ module.exports = class NavigationModelV2 {
 				})
 				.then(next);
 		}else{
+			log.info({event:'NAVIGATION_HIERARCHY_DISABLED'});
 			next();
 		}
 	}
