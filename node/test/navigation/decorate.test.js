@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 const fixture = require('../stubs/navigationListData.json');
 const subject = require('../../src/navigation/decorate');
 
-describe('Navigation middleware: decorateSelected', () => {
+describe('Navigation middleware: decorate', () => {
 	let clone;
 
 	Object.freeze(fixture);
