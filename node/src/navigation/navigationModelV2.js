@@ -116,6 +116,7 @@ module.exports = class NavigationModelV2 {
 					}
 				})
 				.then(data => {
+					res.locals.navigation.showSubNav = true;
 					res.locals.navigation.hierarchy = data;
 					res.locals.navigation.breadcrumb = data.ancestors.concat([data.item]);
 					res.locals.navigation.subsections = data.children;
