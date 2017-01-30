@@ -28,7 +28,16 @@ function getLayoutName () {
 		layout = document.querySelector('[data-ads-layout]').getAttribute('data-ads-layout');
 	}
 
-	return layout;
+	return 'test';
+}
+
+function getVariantNames () {
+	let abState = "-";
+	const abStateEl = document.querySelector('[data-ab-state]');
+	if(abStateEl) {
+		abState = abStateEl.getAttribute('data-ab-state');
+	}
+	return abState;
 }
 
 function getMetaData (name) {
@@ -112,6 +121,7 @@ log.isOn = function () {
 module.exports = {
 	debounce: debounce,
 	getLayoutName: getLayoutName,
+	getVariantNames: getVariantNames,
 	getMetaData: getMetaData,
 	getReferrer: getReferrer,
 	keyValueString: keyValueString,
