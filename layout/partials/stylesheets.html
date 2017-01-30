@@ -1,22 +1,22 @@
-{{#if @root.criticalCss}}
+{{#ifAll @root.criticalCss isLazy}}
 	<style class="n-layout-head-css">
 		{{#each @root.criticalCss}}
 			{{{this}}}
 		{{/each}}
 	</style>
-	{{#each @root.cssBundles}}
-		{{#ifAll @root.criticalCss isLazy}}
-			<!--[if gte IE 9]><!-->
-			<link rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';{{#if isMain}}window.ftNextFireCondition('MainCssLoaded'){{/if}}">
-			<noscript>
-				<link rel="stylesheet" href="{{path}}">
-			</noscript>
-			<!--<![endif]-->
-			<!--[if lt IE 9]><!-->
+{{/ifAll}}
+{{#each @root.cssBundles}}
+	{{#ifAll @root.criticalCss isLazy}}
+		<!--[if gte IE 9]><!-->
+		<link rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';{{#if isMain}}window.ftNextFireCondition('MainCssLoaded'){{/if}}">
+		<noscript>
 			<link rel="stylesheet" href="{{path}}">
-			<!--<![endif]-->
-		{{else}}
-			<link rel="stylesheet" href="{{path}}">
-		{{/ifAll}}
-	{{/each}}
-{{/if}}
+		</noscript>
+		<!--<![endif]-->
+		<!--[if lt IE 9]><!-->
+		<link rel="stylesheet" href="{{path}}">
+		<!--<![endif]-->
+	{{else}}
+		<link rel="stylesheet" href="{{path}}">
+	{{/ifAll}}
+{{/each}}
