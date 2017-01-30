@@ -156,7 +156,7 @@ If you do not need this behaviour run
 				res.locals.cssBundles.push({
 					path: hashedAssets.get(`main${cssVariant}.css`),
 					isMain: true,
-					isLazy: true
+					isLazy: options.withHeadCss
 				});
 
 				res.locals.cssBundles.forEach(file => res.linkResource(file.path, {as: 'style'}));
