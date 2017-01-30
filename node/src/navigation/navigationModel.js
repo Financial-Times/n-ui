@@ -5,18 +5,21 @@ const decorateSelectedLink = require('./decorate');
 const HierarchyMixin = require('./hierarchyMixin');
 const log = require('@financial-times/n-logger').default;
 
-const clone = obj => JSON.parse(JSON.stringify(obj));
+const API_URL = 'http://next-navigation.ft.com/v1/lists';
+const FALLBACK_URL = 'http://ft-next-navigation.s3-website-eu-west-1.amazonaws.com/json/lists.json';
 
+const defaultData = require('./defaultData.json');
 
-module.exports = class NavigationModelV1 {
+function clone (obj) {
+	return JSON.parse(JSON.stringify(obj));
+}
+
+module.exports = class NavigationModel {
 
 	constructor (options) {
-		this.API_URL = 'http://next-navigation.ft.com/v1/lists';
-		this.FALLBACK_URL = 'http://ft-next-navigation.s3-website-eu-west-1.amazonaws.com/json/lists.json';
-		this.defaultData = require('./defaultData.json');
 		this.options = Object.assign({}, {withNavigationHierarchy:false}, options || {});
 		this.poller = new Poller({
-			url: this.API_URL,
+			url: API_URL,
 			refreshInterval: ms('15m')
 		});
 		if(this.options.withNavigationHierarchy) {
@@ -44,11 +47,11 @@ module.exports = class NavigationModelV1 {
 	}
 
 	fallback () {
-		return fetch(this.FALLBACK_URL)
+		return fetch(FALLBACK_URL)
 			.then(response => {
 				if(!response.ok) {
-					log.error({event:'FALLBACK_URL_FAILURE', url:this.FALLBACK_URL, status:response.status});
-					return this.defaultData;
+					log.error({event:'FALLBACK_URL_FAILURE', url:FALLBACK_URL, status:response.status});
+					return defaultData;
 				}
 
 				log.info({event:'NAVIGATION_LISTS_USING_S3_BUCKET'});
@@ -58,8 +61,8 @@ module.exports = class NavigationModelV1 {
 				this.fallbackData = data;
 			})
 			.catch(err => {
-				log.error({event:'FALLBACK_URL_FAILURE', url:this.FALLBACK_URL, error:err.message, stack:err.stack.replace(/\n/g, '; ')});
-				this.fallbackData = this.defaultData;
+				log.error({event:'FALLBACK_URL_FAILURE', url:FALLBACK_URL, error:err.message, stack:err.stack.replace(/\n/g, '; ')});
+				this.fallbackData = defaultData;
 			})
 	}
 
@@ -116,7 +119,7 @@ module.exports = class NavigationModelV1 {
 			}
 
 			// mobile nav only on homepage
-			if(listName === 'navbar_mobile' && !NavigationModelV1.showMobileNav(currentUrl, data[listName][currentEdition])) {
+			if(listName === 'navbar_mobile' && !NavigationModel.showMobileNav(currentUrl, data[listName][currentEdition])) {
 				continue;
 			}
 
