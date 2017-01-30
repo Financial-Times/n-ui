@@ -1,16 +1,35 @@
-<div class="o-header__mega-column o-header__mega-column--subsections" data-trackable="sections">
-	<h3 class="o-header__mega-heading">{{title}}</h3>
-	<div class="o-header__mega-content">
-		<ul class="o-header__mega-list">
-			{{#each data}}
-			{{#each this}}
-			<li class="o-header__mega-item">
-				<a class="o-header__mega-link" href="{{href}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="link">
-					{{name}}
-				</a>
-			</li>
-			{{/each}}
-			{{/each}}
-		</ul>
+{{#if @root.flags.origamiNavigation}}
+	<div class="o-header__mega-column o-header__mega-column--subsections" data-trackable="sections">
+		<h3 class="o-header__mega-heading">{{title}}</h3>
+		<div class="o-header__mega-content">
+			<ul class="o-header__mega-list">
+				{{#each data}}
+					{{#each this}}
+						<li class="o-header__mega-item">
+							<a class="o-header__mega-link" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="link">
+								{{label}}
+							</a>
+						</li>
+					{{/each}}
+				{{/each}}
+			</ul>
+		</div>
 	</div>
-</div>
+{{else}}
+	<div class="o-header__mega-column o-header__mega-column--subsections" data-trackable="sections">
+		<h3 class="o-header__mega-heading">{{title}}</h3>
+		<div class="o-header__mega-content">
+			<ul class="o-header__mega-list">
+				{{#each data}}
+					{{#each this}}
+						<li class="o-header__mega-item">
+							<a class="o-header__mega-link" href="{{href}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="link">
+							{{name}}
+							</a>
+						</li>
+					{{/each}}
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+{{/if}}
