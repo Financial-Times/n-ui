@@ -1,27 +1,3 @@
-{{#*inline "DrawerParentItem"}}
-	<div class="o-header__drawer-menu-toggle-wrapper">
-		<a class="o-header__drawer-menu-link o-header__drawer-menu-link--parent o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
-		<button class="o-header__drawer-menu-toggle o-header__drawer-menu-toggle--{{#if selected}}selected{{else}}unselected{{/if}}" aria-controls="o-header-drawer-child-{{@index}}" data-trackable="sub-level-toggle | {{label}}">
-			Show more {{label}} links
-		</button>
-	</div>
-	<ul class="o-header__drawer-menu-list o-header__drawer-menu-list--child" id="o-header-drawer-child-{{@index}}" data-trackable="sub-level">
-		{{#each submenu.items}}
-		<li class="o-header__drawer-menu-item">
-			<a class="o-header__drawer-menu-link o-header__drawer-menu-link--child o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
-		</li>
-		{{/each}}
-	</ul>
-{{/inline}}
-
-{{#*inline "DrawerSingleItem"}}
-	<a class="o-header__drawer-menu-link o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
-{{/inline}}
-
-{{#*inline "DrawerSpecialItem"}}
-	<a class="o-header__drawer-menu-link o-header__drawer-menu-link--secondary o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
-{{/inline}}
-
 <div class="o-header__drawer" id="o-header-drawer" role="navigation" aria-label="Drawer menu" data-o-header-drawer data-o-header-drawer--no-js data-trackable="drawer" data-trackable-terminate>
 	<div class="o-header__drawer-inner">
 
@@ -77,55 +53,62 @@
 			</ul>
 
 			<ul class="o-header__drawer-menu-list">
-				{{#with @root.navigation.menus.drawer}}
-					{{#with items.[0]}}
-						<li class="o-header__drawer-menu-item o-header__drawer-menu-item--heading">{{label}}</li>
-
-						{{#each submenu.items}}
-							<li class="o-header__drawer-menu-item">
-								{{#if submenu}}
-									{{> DrawerParentItem}}
+				{{#each @root.navigationLists.drawer}}
+					{{#each this}}
+						{{#if heading}}
+							<li class="o-header__drawer-menu-item o-header__drawer-menu-item--heading">
+								{{heading}}
+							</li>
+						{{else}}
+							<li class="o-header__drawer-menu-item {{#unless @index}}o-header__drawer-menu-item--divide{{/unless}}">
+								{{#if children}}
+									<div class="o-header__drawer-menu-toggle-wrapper">
+										{{#with item}}
+										<a class="o-header__drawer-menu-link o-header__drawer-menu-link--parent o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{href}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{name}}">{{name}}</a>
+										<button class="o-header__drawer-menu-toggle o-header__drawer-menu-toggle--{{#if selected}}selected{{else}}unselected{{/if}}" aria-controls="o-header-drawer-child-{{@index}}" data-trackable="sub-level-toggle | {{name}}">
+											Show more {{name}} links
+										</button>
+										{{/with}}
+									</div>
+									<ul class="o-header__drawer-menu-list o-header__drawer-menu-list--child" id="o-header-drawer-child-{{@index}}" data-trackable="sub-level">
+										{{#each children}}
+											<li class="o-header__drawer-menu-item">
+												<a class="o-header__drawer-menu-link o-header__drawer-menu-link--child o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{href}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{name}}">{{name}}</a>
+											</li>
+										{{/each}}
+									</ul>
 								{{else}}
-									{{> DrawerSingleItem}}
+									{{#with item}}
+									<a class="o-header__drawer-menu-link o-header__drawer-menu-link--{{../variation}} o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{href}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{name}}">{{name}}</a>
+									{{/with}}
 								{{/if}}
 							</li>
-						{{/each}}
-					{{/with}}
-
-					{{#with items.[1]}}
-						<li class="o-header__drawer-menu-item o-header__drawer-menu-item--heading">{{label}}</li>
-
-						{{#each submenu.items}}
-							<li class="o-header__drawer-menu-item">
-								{{> DrawerSingleItem}}
-							</li>
-						{{/each}}
-					{{/with}}
-
-					{{#with items.[2]}}
-						{{#each submenu.items}}
-							<li class="o-header__drawer-menu-item {{#unless @index}}o-header__drawer-menu-item--divide{{/unless}}">
-								{{> DrawerSpecialItem}}
-							</li>
-						{{/each}}
-					{{/with}}
-				{{/with}}
+						{{/if}}
+					{{/each}}
+				{{/each}}
 			</ul>
 		</nav>
 
 		<nav class="o-header__drawer-menu o-header__drawer-menu--user" data-trackable="user-nav">
 			<ul class="o-header__drawer-menu-list">
 				{{#if @root.anon.userIsLoggedIn}}
-					{{#each @root.navigation.menus.user.items}}
+					{{#each @root.navigationLists.drawer_bottom.user}}
 						<li class="o-header__drawer-menu-item">
-							<a class="o-header__drawer-menu-link" href="{{url}}" data-trackable="{{label}}">{{label}}</a>
+							<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">
+								{{name}}
+								{{#if showemail}}
+									<span class="o-header__drawer-menu-link-detail" data-o-header-drawer-user-email></span>
+								{{/if}}
+							</a>
 						</li>
 					{{/each}}
 				{{/if}}
 				{{#if @root.anon.userIsAnonymous}}
-					{{#each @root.naivgation.menus.anon.items}}
+					{{#each @root.navigationLists.drawer_bottom.anon}}
 						<li class="o-header__drawer-menu-item">
-							<a class="o-header__drawer-menu-link" href="{{url}}" data-trackable="{{label}}">{{label}}</a>
+							<a class="o-header__drawer-menu-link" href="{{href}}" data-trackable="{{name}}">
+								{{name}}
+							</a>
 						</li>
 					{{/each}}
 				{{/if}}
