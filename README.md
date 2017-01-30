@@ -10,8 +10,8 @@ This project consists of many modules. They include the primitive building block
 
 #### Standalone development
 
-* `make build run` or `make watch run` will
-	- start a server on `localhost:5005` which serves a demo page of most of the core n-ui components *Note: Any changes to templates require restarting the server*
+* `make build run` will
+	- start a server on `localhost:5005` which serves a demo page of most of the core n-ui components. *Note: Any changes to templates require restarting the server*
 	- build an n-ui bundle that will bootstrap the js and css for the page
 * `make test-unit-dev` will run unit tests in Chrome using karma. To add tests for a new subcomponents, or to only run tests for a single subcomponent, modify the `componentsToTest` list in karma.config.js. In CI these tests are run in more browsers using saucelabs
 
