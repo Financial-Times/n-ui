@@ -53,6 +53,8 @@ module.exports.init = (directory, options) => {
 let latestNUiVersions;
 
 module.exports.poller = function (handlebarsInstance, app, options) {
+	// temporarily disable this feature
+	return;
 	if (!shouldPollForLayouts) {
 		return
 	}
