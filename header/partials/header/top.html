@@ -20,8 +20,9 @@
 			</div>
 			{{#unlessEquals nUi.header.variant 'logo-only'}}
 				<div class="o-header__top-column o-header__top-column--right">
+					{{#with @root.navigationLists.account.myft}}
 					<span class="o-header__top-link--myft__container">
-						<a class="o-header__top-link o-header__top-link--myft" href="/myft" data-trackable="my-ft" data-tour-stage="myFt" aria-label="My F T">
+						<a class="o-header__top-link o-header__top-link--myft" href="{{href}}" data-trackable="my-ft" data-tour-stage="myFt" aria-label="My F T">
 							<span class="o-header__visually-hidden">myFT</span>
 						</a>
 						{{#if @root.flags.myftHint}}
@@ -32,6 +33,7 @@
 							{{/unless}}
 						{{/if}}
 					</span>
+					{{/with}}
 				</div>
 			{{/unlessEquals}}
 		</div>

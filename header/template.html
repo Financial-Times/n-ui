@@ -21,39 +21,24 @@
 	{{#ifEquals nUi.header.variant 'logo-only'}}
 		{{> n-ui/header/partials/header/top}}
 	{{else}}
-		{{#if @root.flags.origamiNavigation}}
-			{{> n-ui/header/partials/header/anon_v1}}
-		{{else}}
-			{{> n-ui/header/partials/header/anon_v2}}
-		{{/if}}
-
+		{{> n-ui/header/partials/header/anon}}
 		{{> n-ui/header/partials/header/top}}
 		{{> n-ui/header/partials/header/search context="primary"}}
-		{{#if @root.flags.origamiNavigation}}
-			{{> n-ui/header/partials/header/nav_v2}}
-		{{else}}
-			{{> n-ui/header/partials/header/nav_v1}}
-		{{/if}}
-
+		{{> n-ui/header/partials/header/nav}}
 	{{/ifEquals}}
 
 	{{#outputBlock 'sub-header'}}{{/outputBlock}}
 
 	{{#unlessEquals nUi.header.variant 'logo-only'}}
-		{{#if @root.flags.origamiNavigation}}
-			{{>n-ui/header/partials/subnav/template_v2}}
-		{{else}}
-			{{!-- old compatibility template --}}
-			{{!-- TODO: switch all uses to res.locals.subnav = { breadcrumb: [], subsections: [] } --}}
-			{{#if @root.currentNav}}
-				{{>n-ui/header/partials/subnav/template-old}}
-			{{/if}}
-
-			{{#if @root.subnav}}
-				{{>n-ui/header/partials/subnav/template-new}}
-			{{/if}}
+		{{!-- old compatibility template --}}
+		{{!-- TODO: switch all uses to res.locals.subnav = { breadcrumb: [], subsections: [] } --}}
+		{{#if @root.currentNav}}
+			{{>n-ui/header/partials/subnav/template-old}}
 		{{/if}}
 
+		{{#if @root.subnav}}
+			{{>n-ui/header/partials/subnav/template-new}}
+		{{/if}}
 	{{/unlessEquals}}
 </header>
 
