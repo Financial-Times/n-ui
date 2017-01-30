@@ -3,6 +3,7 @@ const express = require('../../../index.js');
 const yell = require('./src/yell');
 
 const app = module.exports = express({
+	systemCode: 'n-ui-test',
 	directory: __dirname,
 	helpers: { yell: yell },
 	withLayoutPolling: false,
