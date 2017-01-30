@@ -109,10 +109,20 @@
 						{{>n-ui/welcome-message/template}}
 					{{/unlessEquals}}
 				{{/if}}
-				{{>n-ui/footer/template}}
+
+				{{#if @root.flags.origamiNavigation}}
+					{{>n-ui/footer/template_v2}}
+				{{else}}
+					{{>n-ui/footer/template}}
+				{{/if}}
+
 				{{#if @root.flags.fancyDrawer}}
 					{{#unlessEquals nUi.header.variant 'logo-only'}}
-						{{>n-ui/header/partials/drawer/template}}
+						{{#if @root.flags.origamiNavigation}}
+							{{>n-ui/header/partials/drawer/template_v2}}
+						{{else}}
+							{{>n-ui/header/partials/drawer/template_v1}}
+						{{/if}}
 					{{/unlessEquals}}
 				{{/if}}
 			</div>
