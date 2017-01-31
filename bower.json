@@ -41,13 +41,14 @@
     "o-tracking": "^1.1.8",
     "o-typography": "^4.2.0",
     "o-video": "^2.3.21",
-    "o-viewport": "^2.0.0",
+    "o-viewport": ">= 2.0.0 < 4.0.0",
     "o-visual-effects": ">=0.1.0 < 2.0.0",
     "superstore": "^2.1.0",
     "superstore-sync": "^2.1.1"
   },
   "resolutions": {
     "o-icons": "^5.2.0",
-    "o-visual-effects": "^1.0.0"
+    "o-visual-effects": "^1.0.0",
+    "o-viewport": "^3.0.1"
   }
 }
