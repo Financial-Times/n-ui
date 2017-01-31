@@ -28,7 +28,7 @@ function getLayoutName () {
 		layout = document.querySelector('[data-ads-layout]').getAttribute('data-ads-layout');
 	}
 
-	return 'test';
+	return layout;
 }
 
 function getVariantNames () {
