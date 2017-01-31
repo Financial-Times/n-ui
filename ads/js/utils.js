@@ -32,7 +32,7 @@ function getLayoutName () {
 }
 
 function getVariantNames () {
-	let abState = "-";
+	let abState = '-';
 	const abStateEl = document.querySelector('[data-ab-state]');
 	if(abStateEl) {
 		abState = abStateEl.getAttribute('data-ab-state');
