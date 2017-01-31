@@ -17,7 +17,7 @@ This project consists of many modules. They include the primitive building block
 
 #### Bower linking
 
-To work with n-ui when it's bower linked into an app you will need to `export NEXT_APP_SHELL=local" in your app and then proceed exactly as you would for any other component
+To work with n-ui when it's bower linked into an app you will need to `export NEXT_APP_SHELL=local` in your app and then proceed exactly as you would for any other component
 
 ## A11y testing
 
