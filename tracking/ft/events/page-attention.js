@@ -31,7 +31,7 @@ class Attention {
 
 		// Add event to send data on unload
 		EXIT_EVENTS.forEach(event => {
-			window.addEvendtListener(event, () => {
+			window.addEventListener(event, () => {
 				if(this.hasSentEvent) {
 					return;
 				}
