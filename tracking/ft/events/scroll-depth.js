@@ -1,63 +1,59 @@
 const broadcast = require('../../../utils').broadcast;
-const throttle = require('lodash/function/throttle');
+const nextEvents = require('../next-events');
 
-let mockedWindowHeight;
-// these are what scroll depth are bucketed into
-const percentageBuckets = [25, 50, 75, 100];
-
-function getPercentageViewable (elementQuerySelector) {
-	const scrollableElement = document.querySelector(elementQuerySelector);
-	const windowHeight = mockedWindowHeight || window.innerHeight;
-	return (100 / scrollableElement.getBoundingClientRect().height) * (windowHeight - scrollableElement.getBoundingClientRect().top);
-}
-function fireBeacon (percentage, contextSource) {
-	// need to also send all 'smaller' percentages
-	const currentBuckets = percentageBuckets.filter(function (bucket) {
-		return bucket <= percentage;
-	});
-	currentBuckets.forEach(function (currentBucket) {
-		if (scrollDepth.percentagesViewed.indexOf(currentBucket) === -1) {
-			const data = {
-				action: 'scrolldepth',
-				category: 'page',
-				meta: {
-					percentagesViewed: currentBucket
-				},
-				context: {
-					product: 'next',
-					source: contextSource
-				}
-			};
-			broadcast('oTracking.event', data);
-			scrollDepth.percentagesViewed.push(currentBucket);
+const fireBeacon = (contextSource, percentage) => {
+	const data = {
+		action: 'scrolldepth',
+		category: 'page',
+		meta: {
+			percentagesViewed: percentage,
+			attention: nextEvents.attention.get()
+		},
+		context: {
+			product: 'next',
+			source: contextSource
 		}
-	});
-}
+	};
+	broadcast('oTracking.event', data);
+};
 
 const scrollDepth = {
-	// keep a log so we don't send the same percentage multiple times
-	percentagesViewed: [],
 
-	init: function (elementQuerySelector, contextSource, opts) {
-
+	init: (contextSource, { percentages = [25, 50, 75, 100], selector = 'body'} = { }) => {
 		if (!(contextSource && contextSource.length)) {
 			throw new Error('contextSource required');
 		}
 
-		if (!(elementQuerySelector && elementQuerySelector.length)) {
-			throw new Error('elementQuerySelector required');
-		}
+		const intersectionCallback = (observer, changes) => {
+			changes.forEach(change => {
+				const scrollDepthMarkerEl = change.target;
+				fireBeacon(contextSource, scrollDepthMarkerEl.getAttribute('data-percentage'));
+				scrollDepthMarkerEl.parentNode.removeChild(scrollDepthMarkerEl);
+				observer.unobserve(scrollDepthMarkerEl);
+			});
+		};
 
-		opts = opts || {};
-		// allow mocking of window height
-		mockedWindowHeight = opts.windowHeight;
-		if (document.querySelector(elementQuerySelector)) {
-			// how much of the scrollable element can we initially see
-			fireBeacon(getPercentageViewable(elementQuerySelector));
-			// throttle scrolling
-			window.addEventListener('scroll', throttle(function () {
-				fireBeacon(getPercentageViewable(elementQuerySelector), contextSource);
-			}, opts.delay !== undefined ? opts.delay : 250));
+
+		const element = document.querySelector(selector);
+		if (element && window.IntersectionObserver) {
+			const observer = new IntersectionObserver(
+				function (changes) {
+					intersectionCallback(this, changes);
+				}
+			);
+			percentages.forEach(percentage => {
+				// add a scroll depth marker element
+				const targetEl = document.createElement('div');
+				targetEl.className = 'n-ui__scroll-depth-marker';
+				targetEl.style.position = 'absolute';
+				targetEl.style.top = `${percentage}%`;
+				targetEl.style.bottom = '0';
+				targetEl.style.width = '100%';
+				targetEl.style.zIndex = '-1';
+				targetEl.setAttribute('data-percentage', percentage);
+				element.appendChild(targetEl);
+				observer.observe(targetEl);
+			});
 		}
 	}
 };

@@ -70,23 +70,19 @@ class Attention {
 		}
 	}
 
+	get () {
+		//getter should restart attention capturing as endAttention updates the value:
+		this.endAttention();
+		this.startAttention();
+		return this.totalAttentionTime;
+	}
+
 	addVideoEvents () {
-		this.videoPlayers;
-		if (window.FTVideo) {
-			this.videoPlayers = document.getElementsByClassName('BrightcoveExperience');
-			for (let i = 0; i < this.videoPlayers.length; i++) {
-				window.FTVideo.createPlayerAsync(this.videoPlayers[i].id, function (player) {
-					player.on(player.MEDIA_PLAY_EVENT, ev => this.startConstantAttention(ev));
-					player.on(player.MEDIA_STOP_EVENT, ev => this.endConstantAttention(ev));
-				});
-			}
-		} else {
-			this.videoPlayers = document.getElementsByTagName('video');
-			for (let i = 0; i < this.videoPlayers.length; i++) {
-				this.videoPlayers[i].addEventListener('playing', ev => this.startConstantAttention(ev));
-				this.videoPlayers[i].addEventListener('pause', ev => this.endConstantAttention(ev));
-				this.videoPlayers[i].addEventListener('ended', ev => this.endConstantAttention(ev));
-			}
+		this.videoPlayers = document.getElementsByTagName('video');
+		for (let i = 0; i < this.videoPlayers.length; i++) {
+			this.videoPlayers[i].addEventListener('playing', ev => this.startConstantAttention(ev));
+			this.videoPlayers[i].addEventListener('pause', ev => this.endConstantAttention(ev));
+			this.videoPlayers[i].addEventListener('ended', ev => this.endConstantAttention(ev));
 		}
 	}
 

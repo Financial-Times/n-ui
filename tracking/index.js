@@ -10,6 +10,7 @@ module.exports = {
 			require('./third-party/sourcepoint')(flags);
 		});
 	},
-	scrollDepthComponents: require('./ft/events/scroll-depth-components')
+	scrollDepthComponents: require('./ft/events/scroll-depth-components'),
+	scrollDepth: require('./ft/events/scroll-depth')
 
 };
