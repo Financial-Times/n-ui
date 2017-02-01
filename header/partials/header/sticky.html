@@ -18,9 +18,9 @@
 				<div class="o-header__top-takeover">
 					<div class="o-header__nav">
 						<ul class="o-header__nav-list o-header__nav-list--left" data-trackable="primary-nav">
-							{{#each @root.navigationLists.navbar_desktop}}
+							{{#each @root.navigation.menus.navbar.items}}
 							<li class="o-header__nav-item">
-								<a class="o-header__nav-link o-header__nav-link--primary {{#ifEquals @root.currentNav.topLevelRelative.href href}}o-header-nav__list-link--highlight{{/ifEquals}}" href="{{href}}" data-trackable="{{name}}" tabindex="-1">{{name}}</a>
+								<a class="o-header__nav-link o-header__nav-link--primary {{#ifEquals @root.currentNav.topLevelRelative.href url}}o-header-nav__list-link--highlight{{/ifEquals}}" href="{{url}}" data-trackable="{{label}}" tabindex="-1">{{label}}</a>
 							</li>
 							{{/each}}
 						</ul>
@@ -38,27 +38,20 @@
 					{{#unlessEquals nUi.header.userNav false}}
 						<div class="o-header__nav">
 							<ul class="o-header__nav-list o-header__nav-list--right" data-trackable="user-nav">
-								<li class="o-header__nav-item">
-									{{#with @root.navigationLists.account.signin}}
-										<a class="o-header__nav-link" href="{{href}}" data-trackable="{{name}}" tabindex="-1">{{name}}</a>
-									{{/with}}
-								</li>
-								<li class="o-header__nav-item o-header__nav-item--expanded">
-									{{#with @root.navigationLists.account.subscribe}}
-										<a class="o-header__nav-button" href="{{href}}" data-trackable="{{name}}" tabindex="-1">{{name}}</a>
-									{{/with}}
-								</li>
+								{{#each @root.navigation.menus.navbar-right-anon}}
+									<li class="o-header__nav-item">
+										<a class="o-header__nav-link" href="{{url}}" data-trackable="{{label}}" tabindex="-1">{{label}}</a>
+									</li>
+								{{/each}}
 							</ul>
 						</div>
 					{{/unlessEquals}}
 				{{/if}}
 
 				{{#if @root.anon.userIsLoggedIn}}
-					{{#with @root.navigationLists.account.myft}}
-					<a class="o-header__top-link o-header__top-link--myft" href="{{href}}" data-trackable="my-ft" tabindex="-1">
+					<a class="o-header__top-link o-header__top-link--myft" href="/myft" data-trackable="my-ft" tabindex="-1">
 						<span class="o-header__visually-hidden">myFT</span>
 					</a>
-					{{/with}}
 				{{/if}}
 			</div>
 
