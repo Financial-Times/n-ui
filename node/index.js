@@ -1,6 +1,7 @@
 const nExpress = require('@financial-times/n-express')
 const nextJsonLd = require('@financial-times/next-json-ld');
 const path = require('path');
+const fs = require('fs');
 // Models
 const NavigationModel = require('./src/navigation/navigationModel');
 const EditionsModel = require('./src/navigation/editionsModel');
@@ -42,7 +43,14 @@ module.exports = options => {
 	nUiManager.init(meta.directory, options);
 
 	try {
+		// expose app version to the client side
 		app.locals.__version = require(meta.directory + '/public/__about.json').appVersion;
+
+		// expose n-ui version to monitoring
+		const nUiVersion = require(path.join(meta.directory, 'node_modules/@financial-times/n-ui/package.json')).version;
+		const about = require(path.join(meta.directory, '/public/__about.json'));
+		about.nUiVersion = nUiVersion;
+		fs.writeFileSync(path.join(meta.directory, '/public/__about.json'), JSON.stringify(about));
 	} catch (e) {}
 
 	// 100% public end points
