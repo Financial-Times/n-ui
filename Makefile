@@ -51,6 +51,8 @@ deploy: assets
 	node ./_deploy/compile-layouts
 	node ./_deploy/s3.js
 	$(MAKE) npm-publish
+	sleep 20
+	nht rebuild --all --serves user-page
 
 serve:
 	@echo '`make serve` is no longer needed to bower link.'
