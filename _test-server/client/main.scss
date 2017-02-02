@@ -6,3 +6,7 @@ $n-ui-output-critical: true;
 );
 
 @import '../../bootstrap';
+
+body {
+	position: relative; //required for scroll depth markers to work
+}
