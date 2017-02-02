@@ -10,6 +10,7 @@ const readFile = denodeify(fs.readFile);
 const writeFile = denodeify(fs.writeFile);
 const getVersions = require('./get-versions');
 const {versions, isOfficialRelease} = getVersions();
+const semver = require('semver');
 
 function purgeOnce (path, message) {
 	return fetch(path, {
@@ -68,8 +69,10 @@ function staticAssets () {
 						strip: 2,
 						monitor: isOfficialRelease && i === 0, // only monitor the size of the first copy deployed,
 						monitorStripDirectories: true,
-						cacheControl: 'must-revalidate, max-age=1200',
-						surrogateControl: 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400'
+						// cache resources which use valid semver for a long time, as these are never overwritten
+						// cache e.g v2, v2.2 entries with shorter, revalidatable headers
+						cacheControl: semver.valid(version) ? 'max-age=31536000, immutable' : 'must-revalidate, max-age=1200',
+						surrogateControl: semver.valid(version) ? 'max-age=31536000, immutable' : 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400'
 					})
 						.then(() => files.map(file => {
 							const paths = [
