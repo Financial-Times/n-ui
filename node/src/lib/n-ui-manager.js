@@ -28,8 +28,10 @@ function getUrlRoot (hashedAssets) {
 					// for beta releases, prepend a v
 					nUiUrlRoot = 'v' + nUiRelease;
 				} else {
-					// for normal semver releases prepend a v to the minor version
-					nUiUrlRoot = 'v' + nUiRelease.split('.').slice(0, 2)[0]
+					// for now we point at the full version (while n-ui is very much in flux)
+					// this conditional is left here so that it's easier to see where to change to
+					// point at a minor/major version if expedient in future
+					nUiUrlRoot = 'v' + nUiRelease
 				}
 				nUiUrlRoot = `//www.ft.com/__assets/n-ui/cached/${nUiUrlRoot}/`;
 			}
