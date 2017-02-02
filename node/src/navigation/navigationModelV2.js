@@ -21,19 +21,30 @@ module.exports = class NavigationModelV2 {
 	constructor (options){
 		this.apiDataUrl = 'http://next-navigation.ft.com/v2/menus';
 		this.apiHierarcyUrl = 'http://next-navigation.ft.com/v2/hierarchy';
+		this.apiIdMapUrl = 'http://next-navigation.ft.com/v2/ids';
 		this.fallbackData = require('./defaultDataV2.json');
 		this.options = Object.assign({}, {withNavigationHierarchy:false}, options || {});
 		this.poller = new Poller({
 			url: this.apiDataUrl,
 			refreshInterval: ms('15m')
 		});
+		this.idMapPoller = new Poller({
+			url: this.apiIdMapUrl,
+			refeshInterval: ms('15m')
+		});
 	}
 
 	init () {
-		return this.poller.start({initialRequest:true})
-			.catch(err => {
-				log.error({event:'NAVIGATION_API_DOWN', message:err.message});
-			});
+		const promises = [];
+		promises.push(this.poller.start({initialRequest:true}));
+
+		if(this.options.withNavigationHierarchy){
+			promises.push(this.idMapPoller.start({initialRequest:true}));
+		}
+
+		return Promise.all(promises).catch(err => {
+			log.error({event:'NAVIGATION_API_DOWN', message:err.message});
+		});
 	}
 
 	get data () {
@@ -108,6 +119,7 @@ module.exports = class NavigationModelV2 {
 
 		if(this.options.withNavigationHierarchy){
 			log.info({event:'NAVIGATION_HIERARCHY_ENABLED'});
+			res.locals.navigation.idMap = this.idMapPoller.getData() || {};
 			let hierarcyApiUrl = this.apiHierarcyUrl + currentUrl;
 			fetch(hierarcyApiUrl)
 				.then(response => {
