@@ -22,12 +22,26 @@ function initOAds (flags, appName, adOptions) {
 
 	document.addEventListener('oAds.complete', onAdsCompleteCallback);
 
+	let consolidateMetrics = function(container, metrics){
+		let slotName = container.dataset['oAdsName'];
+		metrics += "|slotName=" + slotName;
+		if (container.dataset['oAdsTargeting']!=="") container.dataset['oAdsTargeting'] +=';';
+		container.dataset['oAdsTargeting'] += "metrics=" + metrics;
+	}
 
 	const ads = Ads.init(initObj)
 	ads.then(res => {
+		console.log(initObj.gpt);
+		let metrics = 'metrics=';
+	//	metrics += (initObj.pt) ? 'pageType=' + initObj.pt + '|' || '';
+		metrics += 'adUnit=' + initObj.gpt.site + '/' + initObj.gpt.zone;
 		const containers = [].slice.call(document.querySelectorAll('.o-ads'));
+		containers.forEach(function (element) {
+        consolidateMetrics(element, metrics);
+			});
 		slotCount = containers.length;
 		utils.log.info(slotCount + ' ad slots found on page');
+
 		containers.forEach(res.slots.initSlot.bind(res.slots))
 	});
 }
