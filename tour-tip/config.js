@@ -62,7 +62,7 @@ module.exports = {
 				size: 's'
 			},
 			content: {
-				title: 'Share 10 articles a month with non-subscribers, who can read them – absolutely free',
+				title: 'As a Premium user, share 20 articles a month with non-subscribers, who can read them – absolutely free',
 				imageAlt: 'Illustration of the Gift Article button in article pages',
 				imageUrl: 'https://www.ft.com/__assets/creatives/tour/gift-7.svg',
 				ctas: [{
@@ -79,7 +79,7 @@ module.exports = {
 				size: 'm'
 			},
 			content: {
-				title: 'Share 10 articles a month with non-subscribers, who can read them – absolutely free',
+				title: 'As a Premium user, share 20 articles a month with non-subscribers, who can read them – absolutely free',
 				imageAlt: 'Illustration of the Gift Article button in article pages',
 				imageUrl: 'https://www.ft.com/__assets/creatives/tour/gift-7.svg',
 				ctas: [{
@@ -98,7 +98,7 @@ module.exports = {
 			},
 			content: {
 				title: 'Gift an FT article',
-				body: 'Start the conversation. Share up to 10 articles a month with colleagues, friends or family – absolutely free. Even if they’re not subscribed to the FT.',
+				body: 'Start the conversation. As a Premium user, share up to 20 articles a month with colleagues, friends or family – absolutely free. Even if they’re not subscribed to the FT.',
 				imageAlt: 'Illustration of the Gift Article button in article pages',
 				imageUrl: 'https://www.ft.com/__assets/creatives/tour/gift-7.svg'
 			}
