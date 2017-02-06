@@ -3,10 +3,12 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>{{#title}}{{{this}}} &mdash; {{/title}}FT.com</title>
+		<title>{{#title}}{{{this}}}{{/title}}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="theme-color" content="#333333">
-
+		{{#unless @root.flags.serviceWorker}}
+		{{>n-service-worker/unregister}}
+		{{/unless}}
 		{{#if setBase}}
 		<base target="_parent" href="{{setBase}}">
 		{{/if}}
@@ -14,7 +16,6 @@
 		<link rel="dns-prefetch" href="{{this}}">
 		{{/each}}
 		<link rel="preconnect" href="https://next-geebee.ft.com">
-		<link rel="preconnect" href="https://next-geebee.ft.com" crossorigin="use-credentials">
 		<link rel="preconnect" href="https://spoor-api.ft.com">
 		<link rel="preconnect" href="https://session-next.ft.com" crossorigin="use-credentials">
 
@@ -26,16 +27,16 @@
 		{{#each preconnect}}
 		<link rel="preconnect" href="{{host}}"{{#if crossorigin}} crossorigin="{{crossorigin}}"{{/if}}>
 		{{/each}}
-
+		{{>n-ui/js-setup/templates/fire-condition}}
 		{{>n-ui/layout/partials/stylesheets}}
 
-		<link rel="icon" type="image/png" href="https://next-geebee.ft.com/assets/brand-ft/icons/favicon-32x32.png" sizes="32x32">
-		<link rel="icon" type="image/png" href="https://next-geebee.ft.com/assets/brand-ft/icons/favicon-194x194.png" sizes="194x194">
-		<link rel="apple-touch-icon" sizes="180x180" href="https://next-geebee.ft.com/assets/brand-ft/icons/apple-touch-icon-180x180.png">
-		<link rel="manifest" href="/assets/manifest/manifest-v3.json">
+		<link rel="icon" type="image/png" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png" sizes="194x194">
+		<link rel="apple-touch-icon" sizes="180x180" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/apple-touch-icon-180x180.png">
+		<link rel="manifest" href="/assets/manifest/manifest-v4.json">
 
 		<meta name="msapplication-TileColor" content="#fff1e0">
-		<meta name="msapplication-TileImage" content="https://next-geebee.ft.com/assets/brand-ft/icons/mstile-144x144.png">
+		<meta name="msapplication-TileImage" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/mstile-144x144.png">
 		{{#if og}}
 		<meta property="og:title" content="{{ og.title }}">
 		<meta property="og:url" content="{{ og.url }}">
@@ -58,6 +59,12 @@
 			{{>n-ui/js-setup/templates/ctm}}
 			{{>n-ui/typography/enhance-fonts}}
 		</script>
+
+		{{#each jsonLd}}
+			<script type="application/ld+json">
+				{{{json this}}}
+			</script>
+		{{/each}}
 	</head>
 	<body data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
 		{{#if withGcs}}
@@ -76,6 +83,12 @@
 				})();
 			</script>
 		{{/if}}
+		<div class="o-cookie-message o-cookie-message--banner-centric" data-o-component="o-cookie-message"></div>
+
+		{{#if @root.flags.stickyHeaderAd}}
+			{{#outputBlock 'sticky-advert'}}{{/outputBlock}}
+		{{/if}}
+
 		<div class="n-layout">
 			<div class="n-layout__row n-layout__row--header">
 				{{#outputBlock 'above-header'}}{{/outputBlock}}
@@ -84,21 +97,38 @@
 			<div class="n-layout__row n-layout__row--content">
 				{{{body}}}
 			</div>
+
+			{{#if @root.flags.offlineToastMessage}}
+				{{>n-ui/offline-toast/template}}
+			{{/if}}
+
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{#if @root.flags.welcomePanel}}
-					{{#ifEquals nUi.welcomeMessage false}}
-					{{else}}
+					{{#unlessEquals nUi.welcomeMessage false}}
 						{{>n-ui/welcome-message/template}}
-					{{/ifEquals}}
+					{{/unlessEquals}}
 				{{/if}}
-				{{>n-ui/footer/template}}
+
+				{{#if @root.flags.origamiNavigation}}
+					{{>n-ui/footer/template_v2}}
+				{{else}}
+					{{>n-ui/footer/template}}
+				{{/if}}
+
 				{{#if @root.flags.fancyDrawer}}
-					{{>n-ui/header/partials/drawer/template}}
+					{{#unlessEquals nUi.header.variant 'logo-only'}}
+						{{#if @root.flags.origamiNavigation}}
+							{{>n-ui/header/partials/drawer/template_v2}}
+						{{else}}
+							{{>n-ui/header/partials/drawer/template_v1}}
+						{{/if}}
+					{{/unlessEquals}}
 				{{/if}}
 			</div>
 		</div>
 	{{>n-ui/js-setup/templates/bootstrapper}}
 	{{>n-ui/tracking/templates/core-analytics}}
+	{{>n-service-worker/appcache/iframe}}
 	</body>
 </html>

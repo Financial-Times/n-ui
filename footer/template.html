@@ -1,16 +1,29 @@
-<footer class="o-footer o-footer--theme-dark" data-o-component="o-footer" data-o-footer--no-js data-trackable="footer" data-trackable-terminate>
+<footer id="site-footer" class="o-footer o-footer--theme-dark" data-o-component="o-footer" data-o-footer--no-js data-trackable="footer" data-trackable-terminate>
 	<div class="o-footer__container">
 
 		<div class="o-footer__row">
 			<nav class="o-footer__matrix" role="navigation" aria-label="Useful links">
 				{{#each @root.navigationLists.footer}}
 				<div class="o-footer__matrix-group o-footer__matrix-group--{{items.length}}" data-trackable="group | {{title}}">
-					<h6 class="o-footer__matrix-title" {{#collapsible}}aria-controls="o-footer-section-{{@index}}"{{/collapsible}}>
+					<div class="o-footer__matrix-title" {{#collapsible}}aria-controls="o-footer-section-{{@index}}"{{/collapsible}}>
 						{{{title}}}
-					</h6>
+					</div>
 					<div class="o-footer__matrix-content" id="o-footer-section-{{@index}}">
 						{{#each items}}
 							<div class="o-footer__matrix-column">
+								{{!-- yes that's lot of logic: https://trello.com/c/iA2BROho/1206-link-in-footer-to-opt-out --}}
+
+								{{#ifAll ../optOutLink @root.flags.nextFTOptOutFooter @root.flags.optInOut}}
+									{{#unless @root.forceOptInDevice}}
+										{{#if @root.anon.userIsLoggedIn}}
+											<a class="o-footer__matrix-link n-footer__link--s js-optout-link" data-trackable="{{../optOutLink.trackableName}}" href="{{../optOutLink.href}}">
+												{{{../optOutLink.name}}}
+											</a>
+										{{/if}}
+									{{/unless}}
+									<a class="o-footer__matrix-link js-webapp-link" data-trackable="visit-webapp" href="https://app.ft.com" hidden>Open in app</a>
+									<a class="o-footer__matrix-link js-android-link" data-trackable="open-android-app" href="http://www.ft.com/androidapp" hidden>Open in app</a>
+								{{/ifAll}}
 								{{#.}}
 									<a class="o-footer__matrix-link" href="{{href}}" data-trackable="{{name}}">{{{name}}}</a>
 								{{/.}}
@@ -20,6 +33,9 @@
 				</div>
 				{{/each}}
 			</nav>
+			<div class="o-footer__more-from-ft">
+				<a href="/more-from-ft-group">More from the FT Group <i class="o-icons-icon o-icons-icon--arrow-right"></i></a>
+			</div>
 		</div>
 
 		<div class="o-footer__copyright" role="contentinfo" data-trackable="small-print">

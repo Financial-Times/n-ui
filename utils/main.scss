@@ -1,4 +1,4 @@
-@include nUiCriticalStart('utils');
+@include nUiCriticalStart('core');
 
 @import 'mixins';
 
@@ -34,37 +34,20 @@
 
 	.n-util-visually-hidden {
 		position: absolute;
-		clip: rect(0 0 0 0);
 		margin: -1px;
 		border: 0;
 		overflow: hidden;
 		padding: 0;
-		width: 1px;
-		height: 1px;
+		width: 0;
+		height: 0;
+		white-space: nowrap;
 	}
 
-	.n-util-hide-no-js {
-		.no-js & {
-			display: none;
-		}
-	}
-
-	.n-util-hide-js {
-		.js & {
-			display: none;
-		}
-	}
-
-	.n-util-hide-core {
-		.core & {
-			display: none;
-		}
-	}
-
-	.n-util-hide-enhanced {
-		.enhanced & {
-			display: none;
-		}
+	.no-js .n-util-hide-no-js,
+	.js .n-util-hide-js,
+	.core .n-util-hide-core,
+	.enhanced .n-util-hide-enhanced {
+		display: none;
 	}
 
 	//
@@ -92,4 +75,4 @@
 
 }
 
-@include nUiCriticalEnd('utils');
+@include nUiCriticalEnd('core');

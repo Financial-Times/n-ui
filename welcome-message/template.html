@@ -1,14 +1,23 @@
 <div class="o-grid-container">
-	<div class="n-welcome-message n-welcome-message--static" data-trackable="welcome">
-		{{>n-ui/welcome-message/message}}
+	<div class="{{#if @root.flags.nextFtTour}}n-welcome-banner{{else}}n-welcome-message{{/if}} n-welcome-message--static" data-trackable="welcome">
+		{{#if @root.flags.nextFtTour}}
+			{{>n-ui/welcome-message/banner}}
+		{{else}}
+			{{>n-ui/welcome-message/message}}
+		{{/if}}
 	</div>
 </div>
 
-<div class="n-welcome-message n-welcome-message--fixed" data-trackable="welcome" hidden>
-	<div class="o-grid-container">
-		{{>n-ui/welcome-message/message}}
+	<div class="n-welcome-message n-welcome-message--fixed" data-trackable="welcome" hidden>
+		<div class="o-grid-container">
+			<div class="o-grid-row">
+				<div data-o-grid-colspan="12 XL10 XLoffset1">
+					{{#if @root.flags.nextFtTour}}
+						{{>n-ui/welcome-message/banner}}
+					{{else}}
+						{{>n-ui/welcome-message/message}}
+					{{/if}}
+				</div>
+			</div>
+		</div>
 	</div>
-	<button type="button" class="n-welcome-message__close">
-		<span class="n-util-visually-hidden">Close</span>
-	</button>
-</div>

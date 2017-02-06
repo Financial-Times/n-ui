@@ -1,7 +1,8 @@
-<a class="n-util-visually-hidden" href="#primary-nav">Skip to navigation</a>
-<a class="n-util-visually-hidden" href="#site-content">Skip to content</a>
+<a data-trackable="a11y-survey-screen-reader" class="n-skip-link" href="https://www.ft.com/accessibility">Accessibility help</a>
+<a data-trackable="a11y-skip-to-navigation" class="n-skip-link" href="#site-navigation">Skip to navigation</a>
+<a data-trackable="a11y-skip-to-content" class="n-skip-link" href="#site-content">Skip to content</a>
+<a data-trackable="a11y-skip-to-footer" class="n-skip-link" href="#site-footer">Skip to footer</a>
 
-<div class="header-ad-placeholder__top ad-placeholder"></div>
 {{#if content.before}}
 	<div class="o-header-before">{{{content.before}}}</div>
 {{/if}}
@@ -9,34 +10,61 @@
 	{{> n-ui/header/partials/marketing-promo/template}}
 {{/unlessEquals}}
 
-<header class="o-header" data-o-component="o-header" id="primary-nav" data-o-header--no-js>
+{{#ifEquals @root.viewStyle 'compact'}}
+	<header id="site-navigation" class="o-header o-header--simple" data-o-component="o-header" data-o-header--no-js tabindex="-1">
+{{else}}
+	<header id="site-navigation" class="o-header" data-o-component="o-header" data-o-header--no-js tabindex="-1">
+{{/ifEquals}}
+
+
+
 	{{#ifEquals nUi.header.variant 'logo-only'}}
 		{{> n-ui/header/partials/header/top}}
 	{{else}}
-		{{> n-ui/header/partials/header/anon}}
+		{{#if @root.flags.origamiNavigation}}
+			{{> n-ui/header/partials/header/anon_v1}}
+		{{else}}
+			{{> n-ui/header/partials/header/anon_v2}}
+		{{/if}}
+
 		{{> n-ui/header/partials/header/top}}
 		{{> n-ui/header/partials/header/search context="primary"}}
-		{{> n-ui/header/partials/header/nav}}
+		{{#if @root.flags.origamiNavigation}}
+			{{> n-ui/header/partials/header/nav_v2}}
+		{{else}}
+			{{> n-ui/header/partials/header/nav_v1}}
+		{{/if}}
+
 	{{/ifEquals}}
 
 	{{#outputBlock 'sub-header'}}{{/outputBlock}}
 
 	{{#unlessEquals nUi.header.variant 'logo-only'}}
-		{{!-- old compatibility template --}}
-		{{!-- TODO: switch all uses to res.locals.subnav = { breadcrumb: [], subsections: [] } --}}
-		{{#ifAll @root.flags.sectionBreadcrumbs @root.currentNav}}
-			{{>n-ui/header/partials/subnav/template-old}}
-		{{/ifAll}}
+		{{#if @root.flags.origamiNavigation}}
+			{{>n-ui/header/partials/subnav/template_v2}}
+		{{else}}
+			{{!-- old compatibility template --}}
+			{{!-- TODO: switch all uses to res.locals.subnav = { breadcrumb: [], subsections: [] } --}}
+			{{#if @root.currentNav}}
+				{{>n-ui/header/partials/subnav/template-old}}
+			{{/if}}
 
-		{{#if @root.subnav}}
-			{{>n-ui/header/partials/subnav/template-new}}
+			{{#if @root.subnav}}
+				{{>n-ui/header/partials/subnav/template-new}}
+			{{/if}}
 		{{/if}}
+
 	{{/unlessEquals}}
 </header>
 
-{{#if @root.flags.stickyNav}}
+{{#unless nUi.header.disableSticky}}
 	<header class="o-header o-header--simple o-header--sticky o--if-js" aria-hidden="true" role="presentation" data-o-header--sticky>
-		{{> n-ui/header/partials/header/sticky}}
+		{{#if @root.flags.origamiNavigation}}
+			{{> n-ui/header/partials/header/sticky_v2}}
+		{{else}}
+			{{> n-ui/header/partials/header/sticky_v1}}
+		{{/if}}
+
 		{{> n-ui/header/partials/header/search context="sticky"}}
 	</header>
-{{/if}}
+{{/unless}}

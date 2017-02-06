@@ -1,15 +1,16 @@
 const oViewport = require('o-viewport');
 const broadcast = require('../../../utils').broadcast;
-const ATTENTION_INTERVAL = 5000;
+const ATTENTION_INTERVAL = 15000;
 const ATTENTION_EVENTS = ['load', 'click', 'focus', 'scroll', 'mousemove', 'touchstart', 'touchend', 'touchcancel', 'touchleave'];
 const UNATTENTION_EVENTS = ['blur'];
-const eventToSend = ('onbeforeunload' in window) ? 'beforeunload' : 'unload';
+const EXIT_EVENTS = ['beforeunload', 'unload', 'pagehide'];
 
 class Attention {
 	constructor () {
 		this.totalAttentionTime = 0;
 		this.startAttentionTime;
 		this.endAttentionTime;
+		this.hasSentEvent = false;
 	}
 
 	init () {
@@ -29,16 +30,22 @@ class Attention {
 		this.addVideoEvents();
 
 		// Add event to send data on unload
-		window.addEventListener(eventToSend, () => {
-			this.endAttention();
-			broadcast('oTracking.event', {
-				category: 'page',
-				action: 'interaction',
-				context: {
-					attention: {
-						total: this.totalAttentionTime
-					}
+		EXIT_EVENTS.forEach(event => {
+			window.addEventListener(event, () => {
+				if(this.hasSentEvent) {
+					return;
 				}
+				this.hasSentEvent = true;
+				this.endAttention();
+				broadcast('oTracking.event', {
+					category: 'page',
+					action: 'interaction',
+					context: {
+						attention: {
+							total: this.totalAttentionTime
+						}
+					}
+				});
 			});
 		});
 
@@ -70,23 +77,19 @@ class Attention {
 		}
 	}
 
+	get () {
+		//getter should restart attention capturing as endAttention updates the value:
+		this.endAttention();
+		this.startAttention();
+		return this.totalAttentionTime;
+	}
+
 	addVideoEvents () {
-		this.videoPlayers;
-		if (window.FTVideo) {
-			this.videoPlayers = document.getElementsByClassName('BrightcoveExperience');
-			for (let i = 0; i < this.videoPlayers.length; i++) {
-				window.FTVideo.createPlayerAsync(this.videoPlayers[i].id, function (player) {
-					player.on(player.MEDIA_PLAY_EVENT, ev => this.startConstantAttention(ev));
-					player.on(player.MEDIA_STOP_EVENT, ev => this.endConstantAttention(ev));
-				});
-			}
-		} else {
-			this.videoPlayers = document.getElementsByTagName('video');
-			for (let i = 0; i < this.videoPlayers.length; i++) {
-				this.videoPlayers[i].addEventListener('playing', ev => this.startConstantAttention(ev));
-				this.videoPlayers[i].addEventListener('pause', ev => this.endConstantAttention(ev));
-				this.videoPlayers[i].addEventListener('ended', ev => this.endConstantAttention(ev));
-			}
+		this.videoPlayers = document.getElementsByTagName('video');
+		for (let i = 0; i < this.videoPlayers.length; i++) {
+			this.videoPlayers[i].addEventListener('playing', ev => this.startConstantAttention(ev));
+			this.videoPlayers[i].addEventListener('pause', ev => this.endConstantAttention(ev));
+			this.videoPlayers[i].addEventListener('ended', ev => this.endConstantAttention(ev));
 		}
 	}
 

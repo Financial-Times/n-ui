@@ -17,28 +17,15 @@ function debounce (func, wait, immediate) {
 	};
 };
 
-function getAppName () {
-	const element = document.querySelector('[data-next-app]');
-	if (element) {
-		return element.getAttribute('data-next-app');
-	}
-	return 'unknown';
-}
-
-
 function getLayoutName () {
 	let layout = 'default';
-	const abStateEl = document.querySelector('[data-ab-state]');
-	const element = document.querySelector('[data-ads-layout]');
-	if (element) {
-		layout = element.getAttribute('data-ads-layout');
+
+	if (window.location.search.indexOf('adsLayout') === 1) {
+		const regex = new RegExp('(adsLayout=([^&#]*)|&|#|$)');
+		layout = regex.exec(window.location.search.substring(1))[2];
 	}
-	if(abStateEl) {
-		const abState = abStateEl.getAttribute('data-ab-state');
-		const adsLayoutAB = abState && abState.match(/adsLazyLoadPosition:(control|50pc|100pc|onload)/);
-		if(adsLayoutAB && adsLayoutAB.length > 1) {
-			layout = `lazyload-${adsLayoutAB[1]}`;
-		}
+	else if (document.querySelector('[data-ads-layout]')) {
+		layout = document.querySelector('[data-ads-layout]').getAttribute('data-ads-layout');
 	}
 
 	return layout;
@@ -124,7 +111,6 @@ log.isOn = function () {
 
 module.exports = {
 	debounce: debounce,
-	getAppName: getAppName,
 	getLayoutName: getLayoutName,
 	getMetaData: getMetaData,
 	getReferrer: getReferrer,

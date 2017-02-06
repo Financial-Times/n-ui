@@ -1,32 +1,13 @@
 {{#if @root.flags.javascript}}
-(function () {
-	var classes = document.documentElement.className;
-	classes = classes.replace(/\bno-js\b/, 'js');
+var classes = document.documentElement.className; {{!note: once we ditch support for ie9 we can just use classlist}}
+classes = classes.replace(/\bno-js\b/, 'js'); {{!note: needed for JS that's run out of the scope of the bootstrap (inline onclicks, etc)}}
 
-	// HACK: make the following browsers core as they're unsupported by the polyfill service
-	var isSupported = true;
+window.cutsTheMustard = (typeof Function.prototype.bind !== 'undefined' && typeof document.documentElement.dataset === 'object' && ('withCredentials' in new XMLHttpRequest()));
+if (window.cutsTheMustard) {
+	classes = classes.replace(/\bcore\b/, 'enhanced');
+}
 
-	{{#if @root.flags.forceCoreExperience}}
-
-	var unsupported = {};
-
-
-	for (var browser in unsupported) {
-		if (unsupported[browser](navigator.userAgent)) {
-			isSupported = false;
-			break;
-		}
-	}
-	{{/if}}
-
-	window.cutsTheMustard = isSupported && (typeof Function.prototype.bind !== 'undefined');
-
-	if (window.cutsTheMustard) {
-		classes = classes.replace(/\bcore\b/, 'enhanced');
-	}
-
-	document.documentElement.className = classes;
-})();
+document.documentElement.className = classes;
 {{else}}
 window.cutsTheMustard = false;
 {{/if}}

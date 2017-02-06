@@ -128,7 +128,7 @@ Reporter.prototype.dispatch = function (data) {
 		})
 		.catch((err) => {
 			this.updateLink('&#10008; Failed to report Ad, try #slack');
-			return console.error(`Failed to report Ad: ${err}`); // log out error
+			return console.error(`Failed to report Ad: ${err}`); //eslint-disable-line
 		});
 };
 

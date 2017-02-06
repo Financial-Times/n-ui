@@ -10,7 +10,7 @@ or prefix the block with `@include nUiCriticalStart` and follow with `@include n
 - - -
 For brand images and logos (as opposed to icons) use the `nGetImage()` mixin. It can be used for any image in any image set supported by the origami image service e.g.
 ```
-@include @include nGetImage('logo', 'brand-fastft', null, 60, 17);
+@include nGetImage('logo', 'brand-fastft', null, 60, 17);
 ```
 - - -
 To check all styles that should be critical are being included in the critical path css delete the `<link ... href="/appname/main.css">` tag from your page's html. Alternatively, set your network throttling to _Regular 3G_ or worse
@@ -34,6 +34,6 @@ The webpack build for karma can be a bit flaky in node 4 (no idea why). Try upgr
 - - -
 To initialise your app's js superquick define an `n-ui-config.js` file in your `./client/` directory. This will be use inline to kick off initialisation instantly (you should still require it and pass in to `n-ui/bootstrap` in your app's js file though, as this is the fallback if the `nUiBundle` flag is off)
 - - -
-If you get lots of bower conflicts when installing, **always** cancel the build and try `rm -rf bower_components && bower install`. Bower often adds unnecessary resolutions when the install is not completely fresh
+If you get lots of bower conflicts when installing, **always** cancel the build and try `rm -rf bower_components; bower install`. Bower often adds unnecessary resolutions when the install is not completely fresh
 - - -
 When working locally, if you don't want to load the n-ui bundle from the CDN turn the `nUiBundle` flag off

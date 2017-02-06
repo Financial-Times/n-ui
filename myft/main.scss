@@ -4,11 +4,8 @@
 @import '../overlay/main';
 @import '../myft-common/main';
 @import 'scss/preference';
-@import 'scss/follow-email';
 
 @if nUiApply('myft') {
-	@include nUiCriticalStart('myft');
-
 	// hacky fix for now as myft and myftCommon are not totally decoupled
 	@if not nUiApply('myftCommon') {
 		@include nUiMyftCommon;
@@ -16,13 +13,11 @@
 
 	@include nUiMyftPrefs;
 
-	@include nUiCriticalEnd('myft');
-
 	// 'unfollow' button
 	.myft-ui__button--manage,
 	.myft-ui__button--myft-manage {
 		&[aria-pressed="true"]:before {
-			@include oIconsGetIcon('cross-disk', getColor('white'), 14);
+			@include oIconsGetIcon('cross', getColor('white'), 28, $iconset-version: 1);
 		}
 	}
 
@@ -120,7 +115,7 @@
 			color: getColor('green');
 
 			&:before {
-				@include oIconsGetIcon('tick', getColor('green'), 14);
+				@include oIconsGetIcon('tick', getColor('green'), 14, $iconset-version: 1);
 				content: '';
 				margin-right: 3px;
 			}

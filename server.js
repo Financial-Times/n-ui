@@ -1,3 +1,1 @@
-module.exports = {
-	middleware: require('./layout/middleware')
-};
+module.exports = require('./node')

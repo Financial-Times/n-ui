@@ -3,7 +3,8 @@ const oGrid = require('o-grid');
 const oViewport = require('o-viewport');
 const nextEvents = require('./next-events');
 
-import {broadcast} from '../../utils'
+
+import {broadcast, cookieStore} from '../../utils'
 
 
 function nodesToArray (nodelist) {
@@ -64,9 +65,23 @@ const oTrackingWrapper = {
 
 			const edition = document.querySelector('[data-next-edition]') ? document.querySelector('[data-next-edition]').getAttribute('data-next-edition') : null;
 			context.edition = edition;
-			const segmentId = String(window.location.search).match(/[?&]segmentId=([^?&])/) || [];
+			const segmentId = String(window.location.search).match(/[?&]segmentId=([^?&]+)/) || [];
 			if (segmentId[1]) {
 				context['marketing_segment_id'] = segmentId[1];
+			}
+			const pageMeta = window.FT && window.FT.pageMeta;
+			if (pageMeta && (pageMeta === Object(pageMeta))) {
+				for (let key in pageMeta) {
+					if (pageMeta.hasOwnProperty(key)) {
+						context[key] = pageMeta[key];
+					}
+				}
+			}
+
+			// if we're on the homepage add viewStyle = ("compact"|"standard") to allow people to differentiate
+			if(location.pathname === '/'){
+				const mode = cookieStore.get('ft-homepage-view') || 'standard';
+				pageViewConf.context.mode = mode;
 			}
 
 			oTracking.init({
@@ -86,7 +101,10 @@ const oTrackingWrapper = {
 			};
 
 			// FIXME - should not fire on barriers, but needs to be around for a while data analytics fix their SQL
-			oTracking.page(pageViewConf.context);
+			// Page view must not be triggered in any form of frameset, only a genuine page view, or the error page domain, as error pages are served in iframes.
+			if(window === window.top || window.location.hostname === 'errors-next.ft.com') {
+				oTracking.page(pageViewConf.context);
+			}
 
 			if (barrierType) {
 

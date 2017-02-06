@@ -34,28 +34,6 @@ function init () {
 	}
 }
 
-function showExpectedCount () {
-	myftClient.personaliseUrl('/myft/average-push-frequency/').then(function (url) {
-		fetch(url, {
-			headers: {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json'
-			},
-			credentials: 'include'
-		})
-		.then(res => res.json())
-		.then(function (data) {
-			// TODO: Remove the label[0] selector after launching the new prefs page
-			const el = infoText || pushButtonContainer.getElementsByTagName('label')[0];
-
-			if(data && data.pushesPerDay && el) {
-				el.textContent += ` (~${data.pushesPerDay} alerts a day)`;
-			}
-		});
-	});
-
-}
-
 // Once the service worker is registered set the initial state
 function initialiseState () {
 	// Are Notifications supported in the service worker?
@@ -68,7 +46,7 @@ function initialiseState () {
 	// If its denied, it's a permanent block until the
 	// user changes the permission
 	if (Notification.permission === 'denied') {
-		console.warn('Notification permissions denied');
+		console.warn('Notification permissions denied'); //eslint-disable-line
 		return;
 	}
 
@@ -92,7 +70,6 @@ function initialiseState () {
 				// push messages.
 				pushButton.disabled = false;
 				pushButtonContainer.classList.add('js-push-supported');
-				showExpectedCount();
 				if (!subscription) {
 					// We aren't subscribed to push, so set UI
 					// to allow the user to enable push
@@ -108,7 +85,7 @@ function initialiseState () {
 				isPushEnabled = true;
 			})
 			.catch(function (err) {
-				console.warn('Error during getSubscription()', err);
+				console.warn('Error during getSubscription()', err); //eslint-disable-line
 			});
 	});
 }
@@ -181,7 +158,7 @@ function unsubscribe () {
 					nButtons.toggleState(pushButton);
 				});
 			}).catch(function (e) {
-				console.error('Error thrown while unsubscribing from push messaging.', e);
+				console.error('Error thrown while unsubscribing from push messaging.', e); //eslint-disable-line
 			});
 	});
 }

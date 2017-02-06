@@ -1,0 +1,36 @@
+{
+  "sections": [
+    {
+      "id": "topics-s",
+      "settings": {
+        "hasTourPageLink": true,
+        "isDismissable": false,
+        "isReversed": false,
+        "size": "s"
+      },
+      "data": {
+        "title": "Track topics most important to you in myFT.",
+        "imageAlt": "Illustation of the \"Companies\" page, showing an \"Added\" button next to it",
+        "imageUrl": "https://www.ft.com/__assets/creatives/tour/topics-1.svg",
+        "ctaUrl": "/tour",
+        "ctaLabel": "More tips"
+      }
+    },
+    {
+      "id": "topics-m",
+      "settings": {
+        "hasTourPageLink": true,
+        "isDismissable": false,
+        "isReversed": false,
+        "size": "m"
+      },
+      "data": {
+        "title": "Track topics most important to you in myFT.",
+        "imageAlt": "Illustation of the \"Companies\" page, showing an \"Added\" button next to it",
+        "imageUrl": "https://www.ft.com/__assets/creatives/tour/topics-1.svg",
+        "ctaUrl": "/tour",
+        "ctaLabel": "Discover more tips"
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+@import '../../configure';
+$n-ui-output-critical: true;
+
+@include nUiConfigure(
+	$preset: 'complete'
+);
+
+@import '../../bootstrap';
+
+body {
+	position: relative; //required for scroll depth markers to work
+}

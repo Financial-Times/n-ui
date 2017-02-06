@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+const React = require('react');
 
 // convert classes to array by splitting string on ' ', or if already array, just return
 const classesToArray = thing => Array.isArray(thing) ? thing : thing.split(' ');
@@ -15,7 +15,7 @@ const exists = thing => thing;
 * @param {string} concepts.taxonomy
 * @param {(string|Array)} [classes] - Additional class(es) for the follow component
 */
-class FollowCollection extends Component {
+class FollowCollection extends React.Component {
 	render () {
 		let classes = ['n-myft-ui', 'n-myft-ui--follow'];
 		if (this.props.classes) {
@@ -28,29 +28,36 @@ class FollowCollection extends Component {
 
 		const conceptIds = this.props.concepts.map(c => c.id).join(',');
 
-		return <form
-			className={classes.join(' ')}
-			method="POST"
-			data-myft-ui="follow"
-			data-concept-id={conceptIds}
-			action="#">
-			<input type="hidden" value={this.props.concepts.map(c => c.taxonomy).join(',')} name="taxonomy" />
-			<input type="hidden" value={this.props.concepts.map(c => c.name).join(',')} name="name" />
-			{(this.props.flags.myFtApiWrite) ? (
-				<button
-					aria-label={'Add all topics in the ' + this.props.name + ' collection to my F T'}
-					aria-pressed='false'
-					className={buttonClasses.join(' ')}
-					data-alternate-label={'Remove all topics in the ' + this.props.name + ' collection from my F T'}
-					data-alternate-text="Added"
-					data-trackable="follow"
-					data-concept-id={conceptIds} // duplicated here for tracking
-						title={'Add all topics in the ' + this.props.name + ' collection to my F T'}
-					type="submit">
-						Add all to myFT
-				</button>) : ''}
-		</form>
+		return React.createElement(
+			'form',
+			{
+				className: classes.join(' '),
+				method: 'POST',
+				'data-myft-ui': 'follow',
+				'data-concept-id': conceptIds,
+				action: '#' },
+			React.createElement('input', { type: 'hidden', value: this.props.concepts.map(function (c) {
+				return c.taxonomy;
+			}).join(','), name: 'taxonomy' }),
+			React.createElement('input', { type: 'hidden', value: this.props.concepts.map(function (c) {
+				return c.name;
+			}).join(','), name: 'name' }),
+			this.props.flags.myFtApiWrite ? React.createElement(
+				'button',
+				{
+					'aria-label': 'Add all topics in the ' + this.props.name + ' collection to my F T',
+					'aria-pressed': 'false',
+					className: buttonClasses.join(' '),
+					'data-alternate-label': 'Remove all topics in the ' + this.props.name + ' collection from my F T',
+					'data-alternate-text': 'Added',
+					'data-trackable': 'follow',
+					'data-concept-id': conceptIds // duplicated here for tracking
+					, title: 'Add all topics in the ' + this.props.name + ' collection to my F T',
+					type: 'submit' },
+				'Add all to myFT'
+			) : ''
+		);
 	}
 }
 
-export default FollowCollection;
+module.exports = FollowCollection;

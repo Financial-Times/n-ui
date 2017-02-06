@@ -1,13 +1,10 @@
-const getCookieValue = key => {
-	const regex = new RegExp(`${key}=([^;]+)`, 'i');
-	const a = regex.exec(document.cookie);
-	return (a) ? a[1] : undefined;
-}
+const cookieStore = require('./js/cookies');
+
 let spoorNumber;
 
 const getSpoorNumber = () => {
 	if (!spoorNumber) {
-		let spoorId = getCookieValue('spoor-id').replace(/-/g, '');
+		let spoorId = cookieStore.get('spoor-id').replace(/-/g, '');
 		spoorId = spoorId.substring(spoorId.length - 12, spoorId.length); // Don't overflow the int
 		spoorNumber = parseInt(spoorId, 16);
 	}
@@ -45,7 +42,8 @@ module.exports = {
 			timeout = setTimeout(later, wait);
 		};
 	},
-	uuid: require('./js/uuid'),
+	uuid: function uuid (a){return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,uuid)},
+	ascii: require('./js/to-ascii'),
 	loadScript: (src) => {
 		return new Promise((res, rej) => {
 			const script = window.ftNextLoadScript(src);
@@ -54,12 +52,10 @@ module.exports = {
 		});
 	},
 	waitForCondition: (conditionName, action) => {
-		return window[`ftNext${conditionName}Loaded`] ?
-			action() :
-			document.addEventListener(`ftNext${conditionName}Loaded`, action);
+		window[`ftNext${conditionName}Loaded`] ? action() : document.addEventListener(`ftNext${conditionName}Loaded`, action)
 	},
-	broadcast: (name, data, bubbles = true) => {
-		const rootEl = document.body;
+	broadcast: function (name, data, bubbles = true) {
+		const rootEl = Element.prototype.isPrototypeOf(this) ? this : document.body;
 		const event = (function () {
 			try {
 				return new CustomEvent(name, {bubbles: bubbles, cancelable: true, detail: data});
@@ -71,12 +67,11 @@ module.exports = {
 		rootEl.dispatchEvent(event);
 	},
 	perfMark: name => {
-		const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+		const performance = window.LUX || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 		if (performance && performance.mark) {
 			performance.mark(name);
 		}
 	},
-	getCookieValue: getCookieValue,
 	sampleUsers: (pct, seed) => {
 		if (!seed) {
 			throw new Error('sampleUsers needs a seed string to be passed in as the second parameter')
@@ -84,5 +79,9 @@ module.exports = {
 		const seedAsNumber = seed.split('').reduce((num, str) => num + str.charCodeAt(0));
 		return (getSpoorNumber() + seedAsNumber) % 100 < pct
 	}
+	cookieStore,
+
+	// legacy method - keeping for backwards compatibility
+	getCookieValue: cookieStore.get
 
 };

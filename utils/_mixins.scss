@@ -9,22 +9,14 @@ $n-ui-z-index-basis: 100;
 /// Ordered list of z-indexes use cases
 /// @type List
 $n-ui-z-index-order: (
+	'welcome',
 	'meganav',
 	'sticky-header',
 	'drawer',
 	'typeahead',
-	'welcome',
 	'overlay',
 	'notification'
 );
-
-/// Utility for setting z-indexes
-/// @param {String} $use-case
-/// @output A z-index rule
-@mixin zIndexFor($use-case) {
-	@warn '`zindexFor` is deprecated, use `nUtilZIndexFor` instead';
-	@include nUtilZIndexFor($use-case);
-}
 
 @mixin nUtilZIndexFor($use-case) {
 	$index: index($n-ui-z-index-order, $use-case);

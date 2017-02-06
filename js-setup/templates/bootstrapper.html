@@ -15,49 +15,28 @@
 		return o;
 	};
 
-	window.ftNextFireCondition = function (condition) {
-		var evName = 'ftNext' + condition;
-		if (!window[evName]) {
-			var ev = new CustomEvent(evName);
-			document.dispatchEvent(ev);
-			window[evName] = 1;
-		}
-	};
-
 	{{>n-ui/layout/partials/css-loader}}
 
-	var polyfillUrl = '{{#if @root.flags.polyfillQA}}https://qa.polyfill.io{{else}}https://next-geebee.ft.com/polyfill{{/if}}/v2/polyfill.min.js';
-	var polyfillCallbackName = 'ftNextPolyfillServiceCallback';
-
-	window[polyfillCallbackName] = function () {
+	window.{{@root.polyfillCallbackName}} = function () {
 		window.ftNextFireCondition('PolyfillLoaded');
 	};
 
 	(function () {
 		if (cutsTheMustard) {
 			{{#each @root.javascriptBundles}}
-				ftNextLoadScript('{{this}}');
+				ftNextLoadScript('{{{this}}}');
 			{{/each}}
-			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '{{#if @root.flags.polyfillsRUM}}&rum=1{{/if}}&features=' + [
-				'default',
-				'requestAnimationFrame',
-				'Promise',
-				'matchMedia',
-				'HTMLPictureElement',
-				'fetch',
-				'Array.prototype.find',
-				'Array.prototype.findIndex',
-				'IntersectionObserver'
-			].join(',') + '&flags=gated&unknown=polyfill{{#unless @root.flags.polyfillSymbol}}&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set{{/unless}}');
 		} else {
-			ftNextLoadScript(polyfillUrl + '?callback=' + polyfillCallbackName + '&features=' + [
-				'default',
-				'HTMLPictureElement|always|gated'
-			].join(',') + '&flags=gated&unknown=polyfill');
+			ftNextLoadScript('{{{@root.polyfillUrls.core}}}');
 		}
 	})();
+
 </script>
 {{else}}
 	<!-- always load the picturefill polyfill -->
-	<script src="https://next-geebee.ft.com/polyfill/v2/polyfill.min.js?features=HTMLPictureElement|always|gated"></script>
+	{{#if @root.polyfillUrls}}
+		<script src="{{@root.polyfillUrls.core}}"></script>
+	{{else}}
+		<script src="https://next-geebee.ft.com/polyfill/v2/polyfill.min.js?features=HTMLPictureElement|always|gated"></script>
+	{{/if}}
 {{/if}}

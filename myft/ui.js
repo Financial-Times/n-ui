@@ -8,7 +8,6 @@ const Delegate = require('ftdomdelegate');
 
 const delegate = new Delegate(document.body);
 const grabUrlHashWithPrefix = require('./js/grab-url-hash-with-prefix');
-const followEmail = require('./js/follow-email');
 const uuid = require('../utils').uuid;
 const $$ = require('../utils').$$
 
@@ -18,7 +17,6 @@ const signInLink = '/login';
 let flags;
 let results = {};
 let initialised;
-let collectionPending = false;
 
 const types = {
 	saved: 'content',
@@ -49,13 +47,18 @@ const idProperties = {
 };
 
 const nNotificationMsgs = {
-	followAnon: `Please <a href="${subscribeUrl}" data-trackable="Subscribe">subscribe</a> or <a href="${signInLink}" data-trackable="Sign In">sign in</a> to follow this topic.`,
+	followAnon: `Please <a href="${subscribeUrl}" data-trackable="Subscribe">subscribe</a> or <a href="${signInLink}" data-trackable="Sign In">sign in</a> to add this topic to myFT.`,
 	saveAnon: `Please <a href="${subscribeUrl}" data-trackable="Subscribe">subscribe</a> or <a href="${signInLink}" data-trackable="Sign In">sign in</a> to save this article.`,
 	opted: 'You‘ve opted into our new site. You can return to FT.com at any time.'
 };
 
 function myFtFeatureFromEvent (ev) {
 	return ev.type.replace('myft.', '').split('.')[1];
+}
+
+function actionFromEvent (ev) {
+	const eventType = ev.type.split('.');
+	return eventType[eventType.length - 1];
 }
 
 function getUuid (item) {
@@ -271,24 +274,6 @@ function updateAfterIO (myftFeature, detail) {
 	let messagePromise = Promise.resolve({});
 
 	switch (myftFeature) {
-		case 'followed':
-			if (flags.get('myFtFollowEmail') && detail.results && !collectionPending) {
-
-				if (!followEmail.prefs.subscribedToDigest && !followEmail.prefs.userDismissed && detail.data.name) {
-
-					return myftClient.personaliseUrl(`/myft/api/onsite/follow-email/form?fragment=true&name=${encodeURIComponent(detail.data.name)}`)
-						.then(url => fetch(url, { credentials: 'same-origin' }))
-						.then(res => res.text())
-						.then(html => openOverlay(html, {
-							name: 'myft-follow',
-							shaded: false
-						}))
-						.then(overlay => followEmail.setUpOverlayListeners(overlay))
-						.catch(err => console.log(err));
-
-				}
-			}
-			break;
 		case 'saved':
 			if (flags.get('myftLists') && detail.results) {
 				messagePromise = myftClient.getAll('created', 'list')
@@ -304,14 +289,6 @@ function updateAfterIO (myftFeature, detail) {
 			break;
 		case 'contained':
 			messagePromise = getPersonaliseUrlPromise(`list/${detail.actorId}`, 'contained', detail);
-			break;
-		case 'preferred':
-			//FIXME: remove this and make myFtClient.loaded update after client-side changes
-			if (detail.subject === 'email-digest') {
-				followEmail.prefs.subscribedToDigest = true;
-			} else if (detail.subject === 'follow-email-dismissed') {
-				followEmail.prefs.userDismissed = true;
-			}
 			break;
 	}
 
@@ -333,11 +310,6 @@ function onLoad (ev) {
 	const myftFeature = myFtFeatureFromEvent(ev);
 	results[myftFeature] = ev.detail.Items || ev.detail.items || [];
 
-	//FIXME: remove this and make myFtClient.loaded update after client-side changes
-	if (myftFeature === 'preferred') {
-		followEmail.setInitialPrefs();
-	}
-
 	updateUiForFeature({
 		myftFeature,
 		subjects: results[myftFeature],
@@ -346,7 +318,7 @@ function onLoad (ev) {
 }
 
 // extract properties with _rel. prefix into nested object, as expected by the API for relationship props
-function extractMetaData(inputs) {
+function extractMetaData (inputs) {
 	const meta = {};
 
 	inputs.forEach((input) => {
@@ -402,11 +374,6 @@ function getInteractionHandler (myftFeature) {
 				const taxonomies = meta.taxonomy.split(',');
 				const names = meta.name.split(',');
 
-				// Prevents the email overlay from triggering if there are bulk follow actions
-				if (conceptIds.length > 1) {
-					collectionPending = true;
-				}
-
 				const followPromises = conceptIds.map((conceptId, i) => {
 					const singleMeta = Object.assign({}, meta, {
 						name: names[i],
@@ -416,9 +383,7 @@ function getInteractionHandler (myftFeature) {
 				});
 
 				Promise.all(followPromises)
-					.then(() => toggleButton(activeButton, action === 'add'))
-					.catch(() => {})
-					.then(() => collectionPending = false)
+					.then(() => toggleButton(activeButton, action === 'add'));
 
 			} else {
 				myftClient[action](actors[myftFeature], actorId, myftFeature, type, id, meta);
@@ -480,16 +445,13 @@ export function init (opts) {
 					state: true
 				});
 
-				//FIXME: remove this and make myFtClient.loaded update after client-side changes
-				if (myftFeature === 'preferred') {
-					followEmail.setInitialPrefs();
-				}
-
 			} else {
 				document.body.addEventListener(`myft.user.${myftFeature}.${types[myftFeature]}.load`, onLoad);
 			}
-			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.add`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail));
-			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.remove`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail));
+
+			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.add`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail, actionFromEvent(ev)));
+			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.remove`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail, actionFromEvent(ev)));
+			document.body.addEventListener(`myft.${actors[myftFeature]}.${myftFeature}.${types[myftFeature]}.update`, ev => updateAfterIO(myFtFeatureFromEvent(ev), ev.detail, actionFromEvent(ev)));
 
 			delegate.on('submit', uiSelectors[myftFeature], getInteractionHandler(myftFeature));
 		});

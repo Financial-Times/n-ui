@@ -1,8 +1,7 @@
-@include nUiCriticalStart('buttons');
+@include nUiMaybeCriticalStart('buttons');
 
 $o-buttons-is-silent: false !default;
 
 @import 'o-buttons/main';
-@import 'mixins';
 
-@include nUiCriticalEnd('buttons');
+@include nUiMaybeCriticalEnd('buttons');

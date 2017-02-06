@@ -18,26 +18,10 @@ describe('Utils', () => {
 		window.console = windowConsole;
 	});
 
-	it('Should return an app name from data-next-app attribute', () => {
-		const appName = 'unit-test-application-name';
-		markup.set('<div data-next-app="' + appName + '"></div>');
-		expect(utils.getAppName()).to.equal(appName);
-	});
-
-	it('Should return a default app name when one is not found in data-next-app attribute or link href attribute', () => {
-		expect(utils.getAppName()).to.equal('unknown');
-	});
-
 	it('Should return a layout name from data-ads-layout attribute', () => {
 		const layoutName = 'test-layout-name';
 		markup.set('<div data-ads-layout="' + layoutName + '"></div>');
 		expect(utils.getLayoutName()).to.equal(layoutName);
-	});
-
-	it('Should return a layout name for the lazy load test if in a variant', () => {
-		const layoutName = 'test-layout-name';
-		markup.set('<div data-ab-state="adsLazyLoadPosition:50pc" data-ads-layout="' + layoutName + '"></div>');
-		expect(utils.getLayoutName()).to.equal('lazyload-50pc');
 	});
 
 	it('Should return a default layout name when no data-ads-layout is present', () => {

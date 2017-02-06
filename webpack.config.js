@@ -3,11 +3,16 @@ const nWebpack = require('@financial-times/n-webpack');
 const fs = require('fs');
 const AsciiTable = require('ascii-table');
 
+// Create an ascii table with metadata about the contents of the bundle
 let deps = fs.readdirSync('./bower_components').map(dir => {
 	if (dir === 'n-ui') {
 		return 'n-ui@' + process.env.CIRCLE_TAG;
 	} else {
-		return dir + '@' + require(`./bower_components/${dir}/.bower.json`).version;
+		try {
+			return dir + '@' + require(`./bower_components/${dir}/.bower.json`).version;
+		} catch (e) {
+			return dir + '@bower-linked'
+		}
 	}
 })
 	.concat([
@@ -27,48 +32,41 @@ const coreConfig = {
 		library: 'ftNextUi',
 		devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
 	},
-	include: /.*/,
+	include: [/.*/],
 	exclude: [/node_modules/],
 	wrap: {
 		before: '/*\n' + depsTable.toString() + '\n*/'
 	}
 };
 
+// Build variants of the bundle that work with different combinations of feature flags
+// Only build some of them when bower linking in dev to save build time
 module.exports = [
-	nWebpack(Object.assign({}, coreConfig, {
-		withBabelPolyfills: true,
-		env: 'dev',
-		entry: {
-			'./dist/es5-core-js.js': './_deploy/wrapper.js'
-		},
-	})),
-	nWebpack(Object.assign({}, coreConfig, {
+	{
 		withBabelPolyfills: false,
 		env: 'dev',
 		entry: {
-			'./dist/es5-polyfill-io.js': './_deploy/wrapper.js'
+			'./dist/assets/es5.js': './_deploy/wrapper.js'
 		},
-	})),
-	nWebpack(Object.assign({}, coreConfig, {
-		withBabelPolyfills: true,
-		env: 'prod',
-		entry: {
-			'./dist/es5-core-js.min.js': './_deploy/wrapper.js'
-		},
-	})),
-	nWebpack(Object.assign({}, coreConfig, {
+		buildInDev: true
+	},
+	{
 		withBabelPolyfills: false,
 		env: 'prod',
 		entry: {
-			'./dist/es5-polyfill-io.min.js': './_deploy/wrapper.js'
-		},
-	})),
-	nWebpack(Object.assign({}, coreConfig, {
+			'./dist/assets/es5.min.js': './_deploy/wrapper.js'
+		}
+	},
+	{
 		withBabelPolyfills: false,
 		env: 'prod',
 		entry: {
-			'./dist/n-ui-core.css': './_deploy/shared-head.scss'
+			'./dist/assets/n-ui-core.css': './_deploy/shared-head.scss'
 		},
-		wrap: undefined
-	}))
-];
+		withHeadCss: true,
+		wrap: undefined,
+		buildInDev: true
+	}
+]
+.filter(conf => conf.buildInDev || !process.env.DEV_BUILD)
+.map(conf => nWebpack(Object.assign({}, coreConfig, conf)));

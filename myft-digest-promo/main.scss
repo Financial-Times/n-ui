@@ -1,0 +1,117 @@
+@if nUiApply('myftDigestPromo') {
+
+	@include nUiCritical('myftDigestPromo') {
+			.n-myft-digest-promo {
+				display: none;
+			}
+	};
+
+	$icon-width-s: 90px;
+	$icon-width-m: 90px;
+
+	.n-myft-digest-promo {
+		@include clearfix();
+
+		float: none;
+		position: relative;
+		background-color: getColor('warm-5');
+		border-bottom: 1px solid getColor('warm-3');
+		border-top: 1px solid getColor('warm-3');
+	}
+
+	.n-myft-digest-promo--enabled {
+		display: block;
+	}
+
+	.n-myft-digest-promo__container {
+		position: relative;
+		@include oGridRespondTo('M') {
+			@include oGridCenter;
+			@include oGridOffset(2);
+		}
+	}
+
+	.n-myft-digest-promo__dismiss-btn {
+		position: absolute;
+		top: 5px;
+		right: 0;
+		background-color: transparent;
+		border-color: transparent;
+		height: 22px;
+		width: 22px;
+
+		&::before {
+			@include oIconsGetIcon('cross', getColor('grey-tint5'), 20, $iconset-version: 1);
+			position: absolute;
+			top: 0;
+			right: 0;
+			content: '';
+		}
+	}
+
+	.n-myft-digest-promo__content {
+		position: relative;
+		padding-left: $icon-width-s;
+		padding-top: $spacing-unit;
+
+		&::before {
+			position: absolute;
+			content: '';
+			display: block;
+			width: $icon-width-s;
+			height: 80px;
+			left: 0px;
+			background-image: url("https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fwww.ft.com%2F__assets%2Fcreatives%2Fmyft-alerts-prefs%2Fenvelope.svg?source=next&fit=scale-down&compression=best&width=50");
+			background-repeat: no-repeat;
+			background-size: 60px auto;
+			background-position: 10px 0;
+		}
+
+		@include oGridRespondTo('M') {
+			padding-left: $icon-width-m;
+
+			&::before {
+				width: $icon-width-m;
+			}
+		}
+	}
+
+	.n-myft-digest-promo__heading {
+		@include oTypographySansBold(m);
+
+		margin-top: 0px;
+		margin-bottom: 7px;
+	}
+
+	.n-myft-digest-promo__para {
+		margin-top: 0px;
+	}
+
+	.n-myft-digest-promo__branding {
+		font-weight: normal;
+		white-space: nowrap;
+	}
+
+	.n-myft-digest-promo__cta-wrapper {
+		display: flex;
+		overflow: auto;
+		align-items: flex-end;
+		justify-content: flex-end;
+		padding-bottom: $spacing-unit;
+		clear: both;
+	}
+
+	.n-myft-digest-promo__cta-btn {
+		display: inline-block;
+		text-transform: none;
+		width: 100%;
+		margin-left: 80px;
+
+		@include oGridRespondTo('M') {
+			min-width: 150px;
+			width: 150px;
+			margin-left: 0;
+			float: right;
+		}
+	}
+}

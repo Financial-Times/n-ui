@@ -1,0 +1,7 @@
+<div class="n-welcome-banner__wrapper">
+	{{#if @root.flags.nextWelcomeCloses}}
+		{{>n-ui/welcome-message/partials/closable}}
+	{{else}}
+		{{>n-ui/welcome-message/partials/welcome}}
+	{{/if}}
+</div>

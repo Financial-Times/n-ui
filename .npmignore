@@ -15,3 +15,7 @@ circle.yml
 karma.conf.js
 Makefile
 n.Makefile
+public
+/_deploy
+/_sass-utils
+/_test-server

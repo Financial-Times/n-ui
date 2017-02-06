@@ -1,38 +1,30 @@
 // MAKE ANY DISCOUNT CHANGES HERE
 // Update flags and next-product selector accordingly
+
+import { products } from 'next-session-client';
+
 const discount = {
 	L: 50,
 	S: 25,
 	S_5: 25
 }
 
-function fetchSession () {
-	return fetch('https://session-next.ft.com/', {
-		timeout: 2000,
-		credentials: 'include'
-	});
-}
-
-function extractResult (response) {
-	switch (response.status) {
-		case 404:
-			return {};
-		case 200:
-			return response.json();
-		default:
-			throw new Error(`${response.status} - ${response.statusTest}`);
-	}
-}
-
-
 function supportsCors () {
 	return ('withCredentials' in new XMLHttpRequest());
+}
+
+function getUserProducts (){
+	return products()
+		.catch(() => {
+			return {};
+		});
 }
 
 function decorateTheSession (session) {
 	session.isForRegisteredUser = sessionIsForRegisteredUser(session);
 	session.isForWeekendUser = sessionIsForWeekendUser(session);
-	session.isForAnonymousUser = !session.products;
+	// no products. see https://jira.ft.com/browse/NFT-700
+	session.isForAnonymousUser = !session.products && !session.uuid;
 	return session;
 }
 
@@ -58,6 +50,20 @@ function showPromo (flags) {
 	}
 }
 
+function showElectionPromo () {
+	const promo = document.querySelector('.n-header__marketing-promo');
+	if (promo) {
+		promo.style.background = '#0088C1';
+		promo.innerHTML = `
+		<div class="n-header__marketing-promo__container o-header__container">
+			<a href="https://www.ft.com/products?segmentId=05a3d326-9abe-5885-4ee2-8d58d9a9a4ea" class="n-header__marketing-promo__box n-header__marketing-promo__box--us" data-trackable="marketing-promo:box">
+				<div class="n-header__marketing-promo__link" data-trackable="marketing-promo-elections:link">LIMITED TIME OFFER: Subscribe &amp; save 25%</div>
+			</a>
+		</div>`;
+		promo.classList.add('visible');
+	}
+}
+
 function checkAnonWithoutSession () {
 	return document.cookie.indexOf('USERNAME');
 }
@@ -74,6 +80,10 @@ function sessionIsForWeekendUser (session) {
 		&& session.products.indexOf('P6') > -1
 		&& session.products.indexOf('P1') === -1
 		&& session.products.indexOf('P2') === -1;
+}
+
+function showElectionsOffer (flags) {
+	return flags.get('discountOn') && flags.get('headerMarketingPromo');
 }
 
 /**
@@ -93,12 +103,17 @@ export function init (flags) {
 
 		// If it's a CORS-compatible browser, fetch the session
 		if (supportsCors()) {
-			fetchSession()
-				.then(extractResult)
+			getUserProducts()
 				.then(decorateTheSession)
 				.then(function (session) {
 					if (session.isForAnonymousUser || session.isForRegisteredUser || session.isForWeekendUser) {
-						showPromo(flags);
+
+						if (showElectionsOffer(flags)) {
+							showElectionPromo()
+						} else {
+							showPromo(flags);
+						}
+
 					}
 				});
 		}

@@ -9,13 +9,15 @@ const componentsToTest = [
 	'ads',
 	'myft',
 	'tracking',
-	'welcome-message'
-]
+	'opt-out',
+	'subscription-offer-prompt',
+	'utils'
+];
 
-module.exports = function (config) {
+module.exports = function (karma) {
 
 
-	config.set({
+	const config = {
 
 		// base path that will be used to resolve all patterns (eg. files, exclude)
 		basePath: '',
@@ -40,7 +42,7 @@ module.exports = function (config) {
 			].join(',') + '&excludes=Symbol,Symbol.iterator,Symbol.species,Map,Set'
 		].concat(componentsToTest.map(name => name + '/**/*.spec.js')),
 
-		// preprocess matching files before serving them to  the browser
+		// preprocess matching files before serving them to	the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: componentsToTest.reduce((obj, name) => {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap']
@@ -60,11 +62,6 @@ module.exports = function (config) {
 							presets: ['es2015', 'react'],
 							plugins: [['add-module-exports', {loose: true}], ['transform-es2015-classes', { loose: true }]]
 						}
-					},
-					// don't use requireText plugin (use the 'raw' plugin)
-					{
-						test: /follow-email\.js$/,
-						loader: 'imports?requireText=>require'
 					},
 					// set 'this' scope to window
 					{
@@ -104,8 +101,8 @@ module.exports = function (config) {
 
 
 		// level of logging
-		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel: config.LOG_INFO,
+		// possible values: karma.LOG_DISABLE || karma.LOG_ERROR || karma.LOG_WARN || karma.LOG_INFO || karma.LOG_DEBUG
+		logLevel: karma.LOG_INFO,
 
 
 		// enable / disable watching file and executing tests whenever any file changes
@@ -124,6 +121,7 @@ module.exports = function (config) {
 			require('karma-sourcemap-loader'),
 			require('karma-webpack'),
 			require('karma-chrome-launcher'),
+			require('karma-sauce-launcher'),
 			require('karma-html-reporter')
 		],
 		client: {
@@ -134,8 +132,39 @@ module.exports = function (config) {
 				}
 		},
 
+		// wait 10 minutes for a browser if we have to...
+		captureTimeout: (1000 * 60) * 10,
+
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
 		singleRun: true
-	});
+	};
+
+
+	if (process.env.CI) {
+		const nightwatchBrowsers = require('@financial-times/n-heroku-tools/config/nightwatch').test_settings;
+		const unstableBrowsers = (process.env.SAUCELABS_UNSTABLE_BROWSERS_JS || '').split(',').concat((process.env.SAUCELABS_UNSTABLE_BROWSERS || '').split(','));
+		// FIXME - mocha + chai do not support ie9. Can we switch to something else I wonder? Or try to polyfill the features it needs
+		unstableBrowsers.push('ie9');
+		const whitelistedBrowsers = process.env.SAUCELABS_BROWSERS.split(',');
+		const sauceBrowsers = Object.keys(nightwatchBrowsers).reduce((browserList, browserName) => {
+			if (browserName === 'default' || unstableBrowsers.indexOf(browserName) > -1 || whitelistedBrowsers.indexOf(browserName) === -1) {
+				return browserList;
+			}
+			browserList[`${browserName}_sauce`] = Object.assign({base: 'SauceLabs'}, nightwatchBrowsers[browserName].desiredCapabilities);
+			return browserList;
+		}, {})
+		config.customLaunchers = sauceBrowsers;
+		config.sauceLabs = {
+			testName: 'n-ui unit tests',
+			username: process.env.SAUCE_USER,
+			accessKey: process.env.SAUCE_KEY,
+			recordScreenshots: true
+		}
+
+		config.browsers = Object.keys(sauceBrowsers);
+		config.reporters.push('saucelabs');
+	}
+
+	karma.set(config);
 };

@@ -141,8 +141,8 @@ describe('js loader', function () {
 						expect(callback.calledOnce).to.be.true;
 						expect(callback.calledWith(result)).to.be.true;
 						done();
-					}, 0);
-				}, 0);
+					}, 100);
+				}, 100);
 
 			});
 
@@ -154,7 +154,7 @@ describe('js loader', function () {
 					expect(callback.calledOnce).to.be.true;
 					expect(callback.calledWith(result)).to.be.true;
 					done();
-				}, 0);
+				}, 100);
 			});
 		});
 
@@ -170,7 +170,7 @@ describe('js loader', function () {
 				setTimeout(function () {
 					expect(document.querySelector('html').classList.contains('js-success')).to.be.true;
 					done();
-				}, 0);
+				}, 100);
 			});
 
 			it('should add js-success class if callback returns resolved promise', function (done) {
@@ -183,7 +183,7 @@ describe('js loader', function () {
 						expect(document.querySelector('html').classList.contains('js-success')).to.be.true;
 						done();
 					});
-				}, 0);
+				}, 100);
 			});
 
 			it('should not carry out success actions if a preload', function (done) {
@@ -192,7 +192,7 @@ describe('js loader', function () {
 				setTimeout(function () {
 					expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
 					done();
-				}, 0);
+				}, 100);
 			});
 
 
@@ -217,7 +217,7 @@ describe('js loader', function () {
 							expect(oErrors.error.called).to.be.true;
 							done();
 						});
-					}, 0);
+					}, 100);
 				});
 
 				it('should not add js-success class and log error if callback returns rejected promise', function (done) {
@@ -231,7 +231,7 @@ describe('js loader', function () {
 							expect(oErrors.error.called).to.be.true;
 							done();
 						});
-					}, 0);
+					}, 100);
 				});
 
 				it('should not add js-success class if callback returns hanging promise', function (done) {
@@ -244,8 +244,8 @@ describe('js loader', function () {
 							expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
 							expect(oErrors.error.called).to.be.false;
 							done();
-						}, 0);
-					}, 0);
+						}, 100);
+					}, 100);
 				});
 			});
 		});
