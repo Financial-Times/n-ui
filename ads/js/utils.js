@@ -31,6 +31,22 @@ function getLayoutName () {
 	return layout;
 }
 
+function getVariantNames () {
+	let abState = '-';
+	const abStateEl = document.querySelector('[data-ab-state]');
+	if(abStateEl) {
+		abState = abStateEl.getAttribute('data-ab-state');
+	}
+	return abState;
+}
+
+let consolidateMetrics = function (container, metrics){
+	let slotName = container.dataset['oAdsName'];
+	metrics += '' + slotName;
+	if (container.dataset['oAdsTargeting']!=='') container.dataset['oAdsTargeting'] +=';';
+	container.dataset['oAdsTargeting'] += 'metrics=' + metrics;
+}
+
 function getMetaData (name) {
 	const meta = document.querySelector('meta[name="'+name+'"]');
 	if (meta) {
@@ -112,6 +128,8 @@ log.isOn = function () {
 module.exports = {
 	debounce: debounce,
 	getLayoutName: getLayoutName,
+	getVariantNames: getVariantNames,
+	consolidateMetrics: consolidateMetrics,
 	getMetaData: getMetaData,
 	getReferrer: getReferrer,
 	keyValueString: keyValueString,
