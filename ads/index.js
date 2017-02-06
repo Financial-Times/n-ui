@@ -16,7 +16,13 @@ const customTimings = {};
 
 function initOAds (flags, appName, adOptions) {
 	const initObj = oAdsConfig(flags, appName, adOptions);
-
+	console.log(initObj);
+	let regexPageType = /(pt=)([^;]*)/;
+	let regexMVT = /(mvt=)([^;]*)/;
+	let res = Ads.utils.responsive.getCurrent();
+	console.log(res);
+	let metrics = '';
+	metrics += 'adUnit=' + initObj.gpt.site + '/' + initObj.gpt.zone;
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
 
@@ -30,15 +36,11 @@ function initOAds (flags, appName, adOptions) {
 	}
 
 	const ads = Ads.init(initObj)
-
-	let regex = /(pt=)([^;]*)/;
-	let metrics = '';
-	metrics += (initObj.dfp_targeting && initObj.dfp_targeting.match(regex) && initObj.dfp_targeting.match(regex)[2]) ? 'pageType=' + initObj.dfp_targeting.match(regex)[2]
-+ '|' : '';
-
 	ads.then(res => {
-		metrics += 'adUnit=' + initObj.gpt.site + '/' + initObj.gpt.zone;
 		const containers = [].slice.call(document.querySelectorAll('.o-ads'));
+		console.log(res.targeting.get());
+		metrics += (res.targeting.get().pt) ? '|pageType=' + res.targeting.get().pt : '';
+		metrics += (res.targeting.get().res) ? '|res=' + res.targeting.get().res : '';
 		containers.forEach(function (element) {
         consolidateMetrics(element, metrics);
 			});
