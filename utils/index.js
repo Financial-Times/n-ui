@@ -1,6 +1,10 @@
-// tricky recursive function, but it works
-function uuid (a){return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,uuid)}
 const cookieStore = require('./js/cookies');
+
+const getSpoorNumber = () => {
+	let spoorId = cookieStore.get('spoor-id').replace(/-/g, '');
+	spoorId = spoorId.substring(spoorId.length - 12, spoorId.length); // Don't overflow the int
+	return parseInt(spoorId, 16);
+}
 
 module.exports = {
 	$: function (sel, ctx) { return (ctx || document).querySelector(sel) },
@@ -33,7 +37,7 @@ module.exports = {
 			timeout = setTimeout(later, wait);
 		};
 	},
-	uuid: uuid,
+	uuid: function uuid (a){return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,uuid)},
 	ascii: require('./js/to-ascii'),
 	loadScript: (src) => {
 		return new Promise((res, rej) => {
@@ -62,6 +66,13 @@ module.exports = {
 		if (performance && performance.mark) {
 			performance.mark(name);
 		}
+	},
+	sampleUsers: (pct, seed) => {
+		if (!seed) {
+			throw new Error('sampleUsers needs a seed string to be passed in as the second parameter')
+		}
+		const seedAsNumber = seed.split('').reduce((num, str, i) => num + Math.pow(2, i) * str.charCodeAt(0), 0);
+		return (getSpoorNumber() + seedAsNumber) % 100 < pct
 	},
 	cookieStore,
 
