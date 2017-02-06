@@ -8,12 +8,12 @@
 
 				{{#ifAll @root.flags.headerMarketingPromoDiscountByCohort @root.flags.barrierDiscountByCohort}}
 					{{#ifEquals @root.flags.barrierDiscountByCohort 'trial_5'}}
-						Subscribe to the FT
+						<span aria-label="Subscribe to the Financial Times">Subscribe to the FT</span>
 					{{else}}
 						LIMITED TIME ONLY: Subscribe &amp; save <span id="discountPercent"></span>
 					{{/ifEquals}}
 				{{else}}
-					Subscribe to the FT
+					<span aria-label="Subscribe to the Financial Times">Subscribe to the FT</span>
 				{{/ifAll}}</div>
 			</a>
 		</div>
