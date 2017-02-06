@@ -18,13 +18,19 @@ const fontConfigs = [
 		family: 'MetricWeb',
 		weight: 600,
 		labels: ['sansBold', 'sansDataBold']
-	}
+	},
+	{
+		family: 'FinancierDisplayWeb',
+		weight: 700,
+		labels: ['serifDisplayBold']
+	},
 ];
 
 export function load (el) {
 	if (new RegExp(`(^|\\s)${fontLoadedCookieName}=1(;|$)`).test(document.cookie)) {
 		return Promise.resolve();
 	}
+
 	const fontPromises = fontConfigs.map(fontConfig => {
 		return new FontFaceObserver(fontConfig.family, { weight: fontConfig.weight })
 			.load()
