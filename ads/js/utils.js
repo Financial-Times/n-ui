@@ -42,8 +42,9 @@ function getVariantNames () {
 
 let consolidateMetrics = function (container, metrics){
 	let slotName = container.dataset['oAdsName'];
-	metrics += '' + slotName;
-	if (container.dataset['oAdsTargeting']!=='') container.dataset['oAdsTargeting'] +=';';
+	metrics += '|slotName='+ slotName;
+	if (container.dataset['oAdsTargeting']) {container.dataset['oAdsTargeting'] +=';'}
+	else container.dataset['oAdsTargeting'] = '';
 	container.dataset['oAdsTargeting'] += 'metrics=' + metrics;
 }
 

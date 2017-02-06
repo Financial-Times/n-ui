@@ -16,13 +16,18 @@ const customTimings = {};
 
 function initOAds (flags, appName, adOptions) {
 	const initObj = oAdsConfig(flags, appName, adOptions);
+
+	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
 
 	document.addEventListener('oAds.complete', onAdsCompleteCallback);
 
+
 	const ads = Ads.init(initObj)
 	ads.then(res => {
 		const containers = [].slice.call(document.querySelectorAll('.o-ads'));
+		slotCount = containers.length;
+		utils.log.info(slotCount + ' ad slots found on page');
 		if (flags && flags.get('AdsMetricsInOneKey')) {
 			let metrics = '';
 			metrics += 'adUnit=' + initObj.gpt.site + '/' + initObj.gpt.zone;
@@ -32,11 +37,10 @@ function initOAds (flags, appName, adOptions) {
 				utils.consolidateMetrics(element, metrics);
 			});
 		}
-		slotCount = containers.length;
-		utils.log.info(slotCount + ' ad slots found on page');
 		containers.forEach(res.slots.initSlot.bind(res.slots))
 	});
 }
+
 
 function initStickyHeaderAdvert (flags) {
 	if(flags && flags.get('stickyHeaderAd')) {
