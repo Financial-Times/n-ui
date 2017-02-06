@@ -30,10 +30,13 @@ function initOAds (flags, appName, adOptions) {
 	}
 
 	const ads = Ads.init(initObj)
+
+	let regex = /(pt=)([^;]*)/;
+	let metrics = '';
+	metrics += (initObj.dfp_targeting && initObj.dfp_targeting.match(regex) && initObj.dfp_targeting.match(regex)[2]) ? 'pageType=' + initObj.dfp_targeting.match(regex)[2]
++ '|' : '';
+
 	ads.then(res => {
-		console.log(initObj.gpt);
-		let metrics = 'metrics=';
-	//	metrics += (initObj.pt) ? 'pageType=' + initObj.pt + '|' || '';
 		metrics += 'adUnit=' + initObj.gpt.site + '/' + initObj.gpt.zone;
 		const containers = [].slice.call(document.querySelectorAll('.o-ads'));
 		containers.forEach(function (element) {
@@ -41,11 +44,9 @@ function initOAds (flags, appName, adOptions) {
 			});
 		slotCount = containers.length;
 		utils.log.info(slotCount + ' ad slots found on page');
-
 		containers.forEach(res.slots.initSlot.bind(res.slots))
 	});
 }
-
 
 function initStickyHeaderAdvert (flags) {
 	if(flags && flags.get('stickyHeaderAd')) {
