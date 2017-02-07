@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 const fixture = require('../stubs/navigationListData.json');
-const subject = require('../../src/navigation/decorate');
+const subject = require('../../models/navigation/decorate');
 
 describe('Navigation middleware: decorateSelected', () => {
 	let clone;

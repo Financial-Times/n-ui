@@ -3,17 +3,17 @@ const nextJsonLd = require('@financial-times/next-json-ld');
 const path = require('path');
 const fs = require('fs');
 // Models
-const navigation = require('./src/navigation/');
-const EditionsModel = require('./src/navigation/editionsModel');
-const anon = require('./src/anon');
-const welcomeBannerModelFactory = require('./src/welcome-banner/model');
+const navigation = require('./models/navigation/');
+const EditionsModel = require('./models/navigation/editionsModel');
+const anon = require('./models/anon');
+const welcomeBannerModelFactory = require('./models/welcome-banner/model');
 
 // templating and assets
-const handlebars = require('./src/handlebars');
-const hashedAssets = require('./src/lib/hashed-assets');
-const assetsMiddleware = require('./src/middleware/assets');
-const verifyAssetsExist = require('./src/lib/verify-assets-exist');
-const nUiManager = require('./src/lib/n-ui-manager');
+const handlebars = require('./lib/handlebars');
+const hashedAssets = require('./lib/hashed-assets');
+const assetsMiddleware = require('./lib/assets');
+const verifyAssetsExist = require('./lib/verify-assets-exist');
+const nUiManager = require('./lib/n-ui-manager');
 
 module.exports = options => {
 
@@ -107,6 +107,9 @@ module.exports = options => {
 
 	// verification that expected assets exist
 	if (options.withAssets) {
+		if (options.withHeadCss) {
+
+		}
 		verifyAssetsExist.verify(app.locals);
 		let hasher = hashedAssets.init(app.locals);
 		app.getHashedAssetUrl = hasher.get;

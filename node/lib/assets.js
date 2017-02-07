@@ -5,7 +5,7 @@ const fs = require('fs');
 const readFile = denodeify(fs.readFile);
 const nPolyfillIo = require('@financial-times/n-polyfill-io');
 const chokidar = require('chokidar');
-const nUiManager = require('../lib/n-ui-manager');
+const nUiManager = require('./n-ui-manager');
 
 function constructLinkHeader (hashedAssets) {
 	return function (file, meta, opts) {
@@ -136,7 +136,7 @@ If you do not need this behaviour run
 
 				// define which css to output in the critical path
 				if (options.withHeadCss) {
-					if (`head${cssVariant}-n-ui-core` in headCsses) {
+					if (`head-n-ui-core` in headCsses) {
 						if (swCriticalCss) {
 							res.locals.cssBundles.push({
 								path: `${nUiUrlRoot}main.css`
@@ -147,7 +147,7 @@ If you do not need this behaviour run
 							if (res.locals.flags.swCriticalCss) {
 								res.linkResource(`${nUiUrlRoot}main.css`, {as: 'style', rel: 'prefetch'});
 							}
-							res.locals.criticalCss.push(headCsses[`head${cssVariant}-n-ui-core`])
+							res.locals.criticalCss.push(headCsses[`head-n-ui-core`])
 						}
 					}
 					res.locals.criticalCss.push(headCsses[`head${cssVariant}`]);

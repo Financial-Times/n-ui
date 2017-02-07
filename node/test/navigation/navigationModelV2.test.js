@@ -9,7 +9,7 @@ describe('NavigationModelV2', () => {
 	const navigationHierarchyFixture = require('../stubs/navigationHierarcyWorldUk.json');
 
 	before(() => {
-		NavigationModel = require('../../src/navigation/navigationModelV2');
+		NavigationModel = require('../../models/navigation/navigationModelV2');
 	});
 
 	context('Navigation data', () => {

@@ -1,7 +1,7 @@
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-describe.only('Navigation middleware', () => {
+describe('Navigation middleware', () => {
 
 	let navigation;
 	let navigationModelV1Stub = {init:sinon.spy(), middleware:sinon.spy()};
@@ -10,7 +10,7 @@ describe.only('Navigation middleware', () => {
 	before(() => {
 		const NavigationModelV1Stub = sinon.stub().returns(navigationModelV1Stub);
 		const NavigationModelV2Stub = sinon.stub().returns(navigationModelV2Stub);
-		navigation = proxyquire('../../src/navigation/index', {'./navigationModelV1':NavigationModelV1Stub, './navigationModelV2':NavigationModelV2Stub});
+		navigation = proxyquire('../../models/navigation/index', {'./navigationModelV1':NavigationModelV1Stub, './navigationModelV2':NavigationModelV2Stub});
 	});
 
 	afterEach(() => {
