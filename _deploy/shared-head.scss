@@ -1,6 +1,6 @@
+$n-ui-output-critical: true;
 @import "../configure";
 @include nUiConfigure(
-	$preset: 'complete',
-	$output-critical: true
+	$preset: 'complete'
 );
 @import "../bootstrap";
