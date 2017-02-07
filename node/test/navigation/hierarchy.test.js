@@ -16,7 +16,7 @@ describe('Heirarchy Mixin', () => {
 	//const ukId = 'Ng==-U2VjdGlvbnM=';
 
 	before(() => {
-		HierarchyMixin = proxyquire('../../models/navigation/hierarchyMixin', {'ft-poller':pollerStub.stub});
+		HierarchyMixin = proxyquire('../../src/navigation/hierarchyMixin', {'ft-poller':pollerStub.stub});
 	});
 
 	it('Should setup a poller to get taxonomy from the api', () => {
@@ -125,7 +125,7 @@ describe('Heirarchy Mixin', () => {
 		}
 
 		before(() => {
-			HierarchyMixin = require('../../models/navigation/hierarchyMixin');
+			HierarchyMixin = require('../../src/navigation/hierarchyMixin');
 		});
 
 		after(() => {

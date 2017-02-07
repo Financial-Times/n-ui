@@ -10,7 +10,7 @@ describe('NavigationModelV1', () => {
 	let NavigationModel;
 
 	beforeEach(() => {
-		NavigationModel = proxyquire('../../models/navigation/navigationModelV1', {
+		NavigationModel = proxyquire('../../src/navigation/navigationModelV1', {
 			'ft-poller': pollerStub.stub,
 			'./decorate': decorateSpy
 		});
@@ -187,7 +187,7 @@ describe('NavigationModelV1', () => {
 		}
 
 		beforeEach(() => {
-			NavigationModel = require('../../models/navigation/navigationModelV1');
+			NavigationModel = require('../../src/navigation/navigationModelV1');
 		});
 
 		afterEach(() => {
@@ -204,7 +204,7 @@ describe('NavigationModelV1', () => {
 
 		it('Should use the hardcoded default data if s3 is also down', () => {
 			apiDownS3Down();
-			const defaultData = require('../../models/navigation/defaultData.json');
+			const defaultData = require('../../src/navigation/defaultData.json');
 			const navigation = new NavigationModel();
 			return navigation.init().then(() => {
 				for(let list of ['drawer', 'navbar_desktop', 'footer']) {

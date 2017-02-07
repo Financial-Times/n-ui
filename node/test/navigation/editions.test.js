@@ -6,7 +6,7 @@ describe('Editions', () => {
 	let Editions;
 
 	before(() => {
-		Editions = require('../../models/navigation/editionsModel');
+		Editions = require('../../src/navigation/editionsModel');
 	});
 
 	it('Should return available editions', () => {
