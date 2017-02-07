@@ -12,7 +12,9 @@ function generateUrlRoot (hashedAssets) {
 			nUiUrlRoot = hashedAssets.get('n-ui/');
 		} else {
 			const nUiRelease = nUiBowerJson._release;
-			if (!semver.valid(nUiRelease)) {
+			if (!nUiRelease) {
+				nUiUrlRoot = 'dummy-release';
+			} else if (!semver.valid(nUiRelease)) {
 				// for non semver releases, use the tag in its entirety
 				nUiUrlRoot = nUiRelease;
 			}	else if (/(beta|rc)/.test(nUiRelease)) {

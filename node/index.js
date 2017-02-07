@@ -11,7 +11,7 @@ const welcomeBannerModelFactory = require('./models/welcome-banner');
 // templating and assets
 const handlebars = require('./lib/handlebars');
 const hashedAssets = require('./lib/hashed-assets');
-const assetsMiddleware = require('./lib/assets');
+const assets = require('./lib/assets');
 const verifyAssetsExist = require('./lib/verify-assets-exist');
 const nUiManager = require('./lib/n-ui-manager');
 
@@ -108,7 +108,11 @@ module.exports = options => {
 		verifyAssetsExist.verify(app.locals);
 		let hasher = hashedAssets.init(app.locals);
 		app.getHashedAssetUrl = hasher.get;
-		app.use(assetsMiddleware(options, meta.directory, hasher));
+		const assetManagement = assets.init(options, meta.directory, hasher);
+		app.use(assetManagement.middleware);
+		if (options.withHeadCss) {
+			addInitPromise(assetManagement.fetchNUiCss())
+		}
 	}
 
 	if (options.withHandlebars) {

@@ -89,6 +89,7 @@
     "classnames": "^2.2.5",
     "ft-poller": "^2.9.0",
     "ms": "^0.7.2",
+    "n-eager-fetch": "^2.1.3",
     "preact": "^7.1.0",
     "preact-compat": "^3.11.0",
     "proptypes": "^0.14.3",

@@ -5,8 +5,9 @@ const nUiManager = require('./n-ui-manager');
 const linkHeaderFactory = require('./link-header');
 const stylesheetManager = require('./stylesheet-manager');
 const messages = require('./messages');
+const nEagerFetch = require('n-eager-fetch');
 
-module.exports = function (options, directory, hashedAssets) {
+function init (options, directory, hashedAssets) {
 
 	const useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
 
@@ -19,78 +20,103 @@ module.exports = function (options, directory, hashedAssets) {
 		nUiConfig = Object.assign({}, require(path.join(directory, 'client/n-ui-config')), {preload: true})
 	} catch (e) {}
 
-
 	const stylesheets = stylesheetManager.getStylesheets(options, directory);
 	const linkHeader = linkHeaderFactory(hashedAssets);
 	const nUiUrlRoot = nUiManager.getUrlRoot(hashedAssets);
 
-	return (req, res, next) => {
-
-		// This middleware relies on the presence of res.locals.flags.
-		// In some scenarios (e.g. using handlebars but not flags) this
-		// won't be present
-		const flags = res.locals.flags || {};
-
-		// define a helper for adding a link header
-		res.linkResource = linkHeader;
-
-		res.locals.stylesheets = stylesheets;
-
-		if (req.accepts('text/html')) {
-			res.locals.javascriptBundles = [];
-			res.locals.cssBundles = [];
-			res.locals.criticalCss = [];
-			res.locals.nUiConfig = nUiConfig;
-
-			// work out which assets will be required by the page
-			const polyfillRoot = `//${flags.polyfillQA ? 'qa.polyfill.io' : 'next-geebee.ft.com/polyfill'}/v2/polyfill.min.js`;
-
-			res.locals.polyfillCallbackName = nPolyfillIo.callbackName;
-			res.locals.polyfillUrls = {
-				enhanced: polyfillRoot + nPolyfillIo.getQueryString({enhanced: true}),
-				core: polyfillRoot + nPolyfillIo.getQueryString({enhanced: false})
-			}
-
-			res.locals.javascriptBundles.push(
-				`${nUiUrlRoot}es5${(flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
-				hashedAssets.get('main-without-n-ui.js'),
-				res.locals.polyfillUrls.enhanced
-			);
-
-			// output the default link headers just before rendering
-			const originalRender = res.render;
-
-			res.render = function (template, templateData) {
-
-				let cssVariant = templateData.cssVariant || res.locals.cssVariant;
-				cssVariant = cssVariant ? `-${cssVariant}` : '';
-
-				// define which css to output in the critical path
-				if (options.withHeadCss) {
-					if ('head-n-ui-core' in stylesheets) {
-						res.locals.criticalCss.push(stylesheets['head-n-ui-core'])
+	return {
+		fetchNUiCss: () => {
+			return nEagerFetch(`${nUiUrlRoot}head-n-ui-core.css`, {retry: 3})
+				.then(res => {
+					if (res.ok) {
+						return res.text();
 					}
-					res.locals.criticalCss.push(stylesheets[`head${cssVariant}`]);
-				}
-
-				res.locals.cssBundles.push({
-					path: hashedAssets.get(`main${cssVariant}.css`),
-					isMain: true,
-					isLazy: options.withHeadCss
+					throw new Error('Failed to fetch n-ui stylesheet');
+				})
+				.then(text => stylesheets['head-n-ui-core'] = text)
+				.then(() => logger.info('head-n-ui-core.css successfully retrieved from s3'))
+				.catch(err => {
+					logger.error('event=N_UI_CSS_FETCH_FAILURE', err)
+					// for now we catch the error as the app builds the css anyway
+					// After it's been in prod a while the plan is to stop building the css in every app
+					// Then the error will need to be rethrown so the app fails to start
+					// throw err;
 				});
+		},
 
-				res.locals.cssBundles.forEach(file => res.linkResource(file.path, {as: 'style'}));
-				res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
+		middleware: (req, res, next) => {
 
-				if (templateData.withAssetPrecache) {
-					res.locals.cssBundles.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
-					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
+			// This middleware relies on the presence of res.locals.flags.
+			// In some scenarios (e.g. using handlebars but not flags) this
+			// won't be present
+			const flags = res.locals.flags || {};
+
+			// define a helper for adding a link header
+			res.linkResource = linkHeader;
+
+			res.locals.stylesheets = stylesheets;
+
+			if (req.accepts('text/html')) {
+				res.locals.javascriptBundles = [];
+				res.locals.cssBundles = [];
+				res.locals.criticalCss = [];
+				res.locals.nUiConfig = nUiConfig;
+
+				// work out which assets will be required by the page
+				const polyfillRoot = `//${flags.polyfillQA ? 'qa.polyfill.io' : 'next-geebee.ft.com/polyfill'}/v2/polyfill.min.js`;
+
+				res.locals.polyfillCallbackName = nPolyfillIo.callbackName;
+				res.locals.polyfillUrls = {
+					enhanced: polyfillRoot + nPolyfillIo.getQueryString({enhanced: true}),
+					core: polyfillRoot + nPolyfillIo.getQueryString({enhanced: false})
 				}
 
-				return originalRender.apply(res, [].slice.call(arguments));
-			}
-		}
+				res.locals.javascriptBundles.push(
+					`${nUiUrlRoot}es5${(flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
+					hashedAssets.get('main-without-n-ui.js'),
+					res.locals.polyfillUrls.enhanced
+				);
 
-		next();
+				// output the default link headers just before rendering
+				const originalRender = res.render;
+
+				res.render = function (template, templateData) {
+
+					let cssVariant = templateData.cssVariant || res.locals.cssVariant;
+					cssVariant = cssVariant ? `-${cssVariant}` : '';
+
+					// define which css to output in the critical path
+					if (options.withHeadCss) {
+						if ('head-n-ui-core' in stylesheets) {
+							res.locals.criticalCss.push(stylesheets['head-n-ui-core'])
+						}
+						res.locals.criticalCss.push(stylesheets[`head${cssVariant}`]);
+					}
+
+					res.locals.cssBundles.push({
+						path: hashedAssets.get(`main${cssVariant}.css`),
+						isMain: true,
+						isLazy: options.withHeadCss
+					});
+
+					res.locals.cssBundles.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
+
+					if (templateData.withAssetPrecache) {
+						res.locals.cssBundles.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
+						res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
+					}
+
+					return originalRender.apply(res, [].slice.call(arguments));
+				}
+			}
+
+			next();
+		}
 	}
+}
+
+
+module.exports = {
+	init
 }
