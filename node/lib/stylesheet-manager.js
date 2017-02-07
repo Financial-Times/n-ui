@@ -1,3 +1,4 @@
+const logger = require('@financial-times/n-logger').default;
 const denodeify = require('denodeify');
 const fs = require('fs');
 const readFile = denodeify(fs.readFile);

@@ -34,8 +34,8 @@ module.exports = function (options, directory, hashedAssets) {
 		// define a helper for adding a link header
 		res.linkResource = linkHeader;
 
-		// backwards compatible - can remove once n-ui templates updated everywhere
 		res.locals.stylesheets = stylesheets;
+
 		if (req.accepts('text/html')) {
 			res.locals.javascriptBundles = [];
 			res.locals.cssBundles = [];
@@ -67,8 +67,8 @@ module.exports = function (options, directory, hashedAssets) {
 
 				// define which css to output in the critical path
 				if (options.withHeadCss) {
-					if (`head-n-ui-core` in stylesheets) {
-						res.locals.criticalCss.push(stylesheets[`head-n-ui-core`])
+					if ('head-n-ui-core' in stylesheets) {
+						res.locals.criticalCss.push(stylesheets['head-n-ui-core'])
 					}
 					res.locals.criticalCss.push(stylesheets[`head${cssVariant}`]);
 				}
