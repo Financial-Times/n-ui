@@ -218,5 +218,12 @@ describe('Utils', () => {
 		expect(utils.getReferrer()).to.equal(document.referrer);
 	});
 
+	it('Should add metrics to slot level targeting via data-attribute', () => {
+		markup.set('<div class="metrics-test" data-o-ads-name="metrics"></div>');
+		let myCont = document.querySelector('.metrics-test');
+		utils.consolidateMetrics(myCont, 'adUnit=ft.com/companies');
+		expect (myCont.dataset['oAdsTargeting']).to.equal('metrics=adUnit=ft.com/companies|slotName=metrics');
+	});
+
 
 });
