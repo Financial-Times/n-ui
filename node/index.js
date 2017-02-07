@@ -6,7 +6,7 @@ const fs = require('fs');
 const navigation = require('./models/navigation/');
 const EditionsModel = require('./models/navigation/editionsModel');
 const anon = require('./models/anon');
-const welcomeBannerModelFactory = require('./models/welcome-banner/model');
+const welcomeBannerModelFactory = require('./models/welcome-banner');
 
 // templating and assets
 const handlebars = require('./lib/handlebars');
@@ -94,9 +94,7 @@ module.exports = options => {
 		app.use(anon.middleware);
 	}
 
-	if (options.withFlags) {
-		app.use(welcomeBannerModelFactory);
-	}
+	app.use(welcomeBannerModelFactory);
 
 	// Handle the akamai -> fastly -> akamai etc. circular redirect bug
 	app.use(function (req, res, next) {
@@ -107,9 +105,6 @@ module.exports = options => {
 
 	// verification that expected assets exist
 	if (options.withAssets) {
-		if (options.withHeadCss) {
-
-		}
 		verifyAssetsExist.verify(app.locals);
 		let hasher = hashedAssets.init(app.locals);
 		app.getHashedAssetUrl = hasher.get;
