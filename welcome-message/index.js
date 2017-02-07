@@ -129,6 +129,15 @@ function setTourButton () {
 }
 
 function initSticky () {
+
+	// only show the sticky banner thrice
+	const viewCount = superstore.local.get('n-welcome-message-ad-view-count') || 0;
+	if (viewCount >= 3) {
+		hideSticky();
+	} else {
+		superstore.local.set('n-welcome-message-ad-view-count', viewCount + 1);
+	}
+
 	const prop = localStorageProp();
 	if (prop === HAS_MINIMIZED_COMPACT && Boolean(superstore.local.get(prop)) === false && hasLocalStorage()) {
 		const closeButton = fixedEl.querySelector('button');
