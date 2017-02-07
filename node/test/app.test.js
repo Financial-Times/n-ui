@@ -7,7 +7,7 @@ const sinon = require('sinon');
 const nUi = require('../index');
 const expect = require('chai').expect;
 const flags = require('next-feature-flags-client');
-const verifyAssetsExist = require('../src/lib/verify-assets-exist');
+const verifyAssetsExist = require('../lib/verify-assets-exist');
 
 let app;
 

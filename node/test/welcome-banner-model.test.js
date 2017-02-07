@@ -6,7 +6,7 @@ describe('Welcome Banner Model', () => {
 	let welcomeBannerModelFactory;
 
 	before(() => {
-		welcomeBannerModelFactory = require('../src/welcome-banner/model');
+		welcomeBannerModelFactory = require('../model/welcome-banner');
 	});
 
 	const wait = t => new Promise(r => setTimeout(r, t));
