@@ -10,7 +10,7 @@ describe('NavigationModelV2', () => {
 	const idMapFixture = require('../fixtures/idsFixture.json');
 
 	before(() => {
-		NavigationModel = require('../../models/navigation/navigationModelV2');
+		NavigationModel = require('../../src/navigation/navigationModelV2');
 	});
 
 	context('Navigation data', () => {

@@ -3,17 +3,17 @@ const nextJsonLd = require('@financial-times/next-json-ld');
 const path = require('path');
 const fs = require('fs');
 // Models
-const navigation = require('./models/navigation/');
-const EditionsModel = require('./models/navigation/editionsModel');
-const anon = require('./models/anon');
-const welcomeBannerModelFactory = require('./models/welcome-banner');
+const navigation = require('./src/navigation/');
+const EditionsModel = require('./src/navigation/editionsModel');
+const anon = require('./src/anon');
+const welcomeBannerModelFactory = require('./src/welcome-banner/model');
 
 // templating and assets
-const handlebars = require('./lib/handlebars');
-const hashedAssets = require('./lib/hashed-assets');
-const assetsMiddleware = require('./lib/assets');
-const verifyAssetsExist = require('./lib/verify-assets-exist');
-const nUiManager = require('./lib/n-ui-manager');
+const handlebars = require('./src/handlebars');
+const hashedAssets = require('./src/lib/hashed-assets');
+const assetsMiddleware = require('./src/middleware/assets');
+const verifyAssetsExist = require('./src/lib/verify-assets-exist');
+const nUiManager = require('./src/lib/n-ui-manager');
 
 module.exports = options => {
 
@@ -94,7 +94,9 @@ module.exports = options => {
 		app.use(anon.middleware);
 	}
 
-	app.use(welcomeBannerModelFactory);
+	if (options.withFlags) {
+		app.use(welcomeBannerModelFactory);
+	}
 
 	// Handle the akamai -> fastly -> akamai etc. circular redirect bug
 	app.use(function (req, res, next) {
