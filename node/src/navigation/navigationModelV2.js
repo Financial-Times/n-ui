@@ -106,7 +106,7 @@ module.exports = class NavigationModelV2 {
 				continue;
 			}
 
-			if(menuName === 'navbar-simple' && NavigationModelV2.showSimpleNav(currentUrl, menuData)){
+			if(menuName === 'navbar-simple' && !NavigationModelV2.showSimpleNav(currentUrl, menuData)){
 				continue;
 			}
 
