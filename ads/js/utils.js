@@ -31,6 +31,15 @@ function getLayoutName () {
 	return layout;
 }
 
+function getVariantNames () {
+	let abState = '-';
+	const abStateEl = document.querySelector('[data-ab-state]');
+	if(abStateEl) {
+		abState = abStateEl.getAttribute('data-ab-state');
+	}
+	return abState;
+}
+
 function getMetaData (name) {
 	const meta = document.querySelector('meta[name="'+name+'"]');
 	if (meta) {
@@ -112,6 +121,7 @@ log.isOn = function () {
 module.exports = {
 	debounce: debounce,
 	getLayoutName: getLayoutName,
+	getVariantNames: getVariantNames,
 	getMetaData: getMetaData,
 	getReferrer: getReferrer,
 	keyValueString: keyValueString,
