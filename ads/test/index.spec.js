@@ -45,11 +45,30 @@ describe('Main', () => {
 	it('Should bind the adverts found on page to o-ads library', () => {
 		const flags = { get: () => true };
 		const adInit = sandbox.stub(ads.slots, 'initSlot');
-		sandbox.stub(ads, 'init', () => Promise.resolve({slots: { initSlot: adInit }, config: sinon.stub }));
+		sandbox.stub(ads, 'init', () => Promise.resolve({
+			targeting : {
+				get : function (){return 'abc';}
+			},
+			slots: { initSlot: adInit }, config: sinon.stub }));
 		return main.init(flags, { name: 'article' }).then(() => {
 			expect(adInit).to.have.been.called;
 		});
 	});
+
+	it('Should call consolidateMetrics before initSlot', () => {
+		const flags = { get: () => true };
+		const adInit = sandbox.stub(ads.slots, 'initSlot');
+		const consolidateMetrics = sandbox.stub(utils, 'consolidateMetrics');
+		sandbox.stub(ads, 'init', () => Promise.resolve({
+			targeting : {
+				get : function (){return 'abc';}
+			},
+			slots: { initSlot: adInit }, config: sinon.stub }));
+		return main.init(flags, { name: 'article' }).then(() => {
+			expect(consolidateMetrics).to.have.been.called;
+		});
+	});
+
 
 	it('Should log info and performance mark for the first ad when ads are loaded in slots', (done) => {
 		const flags = { get: () => true };
