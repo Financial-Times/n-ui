@@ -129,7 +129,7 @@ log.isOn = function () {
 module.exports = {
 	debounce: debounce,
 	getLayoutName: getLayoutName,
-	getVariantNames: getVariantNames,
+	getABTestState: getABTestState,
 	consolidateMetrics: consolidateMetrics,
 	getMetaData: getMetaData,
 	getReferrer: getReferrer,
