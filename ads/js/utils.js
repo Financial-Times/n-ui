@@ -31,7 +31,7 @@ function getLayoutName () {
 	return layout;
 }
 
-function getVariantNames () {
+function getABTestState () {
 	let abState = '-';
 	const abStateEl = document.querySelector('[data-ab-state]');
 	if(abStateEl) {
@@ -40,8 +40,8 @@ function getVariantNames () {
 	return abState;
 }
 
-let consolidateMetrics = function (container, metrics){
-	let slotName = container.dataset['oAdsName'];
+function consolidateMetrics (container, metrics) {
+	const slotName = container.dataset['oAdsName'];
 	metrics += '|slotName='+ slotName;
 	if (container.dataset['oAdsTargeting']) {container.dataset['oAdsTargeting'] +=';'}
 	else container.dataset['oAdsTargeting'] = '';

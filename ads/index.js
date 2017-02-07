@@ -33,6 +33,7 @@ function initOAds (flags, appName, adOptions) {
 			metrics += 'adUnit=' + initObj.gpt.site + '/' + initObj.gpt.zone;
 			metrics += (res.targeting.get().pt) ? '|pageType=' + res.targeting.get().pt : '';
 			metrics += (res.targeting.get().res) ? '|res=' + res.targeting.get().res : '';
+			metrics += (res.targeting.get().mvt) ? '|mvt=' + res.targeting.get().mvt : '';
 			containers.forEach(function (element) {
 				utils.consolidateMetrics(element, metrics);
 			});
@@ -40,7 +41,6 @@ function initOAds (flags, appName, adOptions) {
 		containers.forEach(res.slots.initSlot.bind(res.slots))
 	});
 }
-
 
 function initStickyHeaderAdvert (flags) {
 	if(flags && flags.get('stickyHeaderAd')) {
