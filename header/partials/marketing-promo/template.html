@@ -1,9 +1,8 @@
 {{#if @root.flags.headerMarketingPromo}}
 	<div class="n-header__marketing-promo" data-trackable="marketing-promo:header">
 		<div class="n-header__marketing-promo__container o-header__container">
-			{{#with @root.navigation.lists.account.subscribe}}
-				<a href="{{href}}?segid=0300494" class="n-header__marketing-promo__box" data-trackable="marketing-promo:box">
-			{{/with}}
+			<a href="/products?segid=0300494" class="n-header__marketing-promo__box" data-trackable="marketing-promo:box">
+
 				<div class="n-header__marketing-promo__link" data-trackable="marketing-promo:link">
 
 				{{#ifAll @root.flags.headerMarketingPromoDiscountByCohort @root.flags.barrierDiscountByCohort}}
