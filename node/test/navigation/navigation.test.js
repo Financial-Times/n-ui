@@ -1,7 +1,7 @@
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-describe.only('Navigation middleware', () => {
+describe('Navigation middleware', () => {
 
 	let navigation;
 	let navigationModelV1Stub = {init:sinon.spy(), middleware:sinon.spy()};

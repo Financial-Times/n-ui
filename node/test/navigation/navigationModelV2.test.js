@@ -7,6 +7,7 @@ describe('NavigationModelV2', () => {
 	let NavigationModel;
 	const navigationDataFixture = require('../stubs/navigationv2Data.json');
 	const navigationHierarchyFixture = require('../stubs/navigationHierarcyWorldUk.json');
+	const idMapFixture = require('../fixtures/idsFixture.json');
 
 	before(() => {
 		NavigationModel = require('../../src/navigation/navigationModelV2');
@@ -51,7 +52,7 @@ describe('NavigationModelV2', () => {
 				get: sinon.stub().returns(null).withArgs('FT-Vanity-Url').returns('/world'),
 				url: '/stream/sectionId/MQ==-U2VjdGlvbnM='
 			};
-			const expectedMenus = ['drawer', 'footer', 'navbar-simple', 'navbar-right', 'navbar', 'user', 'anon'];
+			const expectedMenus = ['drawer', 'footer', 'navbar-right', 'navbar-right-anon', 'navbar', 'user', 'anon'];
 			const next = () => {
 				expect(Object.keys(res.locals.navigation.menus)).to.deep.equal(expectedMenus);
 				done()
@@ -82,8 +83,8 @@ describe('NavigationModelV2', () => {
 				}
 			};
 			const req = {
-				get: sinon.stub().returns(null).withArgs('FT-Vanity-Url').returns('/world'),
-				url: '/stream/sectionId/MQ==-U2VjdGlvbnM='
+				get: sinon.stub().returns(null).withArgs('FT-Vanity-Url').returns('/'),
+				url: '/'
 			};
 			const expectedMenus = ['drawer', 'navbar-simple', 'navbar'];
 			const next = () => {
@@ -101,6 +102,7 @@ describe('NavigationModelV2', () => {
 		beforeEach(() => {
 			fetchMock.mock('http://next-navigation.ft.com/v2/menus', navigationDataFixture, {name: 'Navigation Service V2'});
 			fetchMock.mock('begin:http://next-navigation.ft.com/v2/hierarchy', navigationHierarchyFixture, {name: 'Navigation Service Hierarchy'});
+			fetchMock.mock('http://next-navigation.ft.com/v2/ids', idMapFixture, {name:'Ids'});
 		});
 
 		afterEach(() => {
