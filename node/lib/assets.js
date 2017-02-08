@@ -29,9 +29,9 @@ function init (options, directory, hashedAssets) {
 		fetchNUiCss: () => {
 			return ratRace(
 				[
-					nUiUrlRoot,
-					nUiUrlRoot.replace('https://www.ft.com', 'http://ft-next-n-ui-prod.s3-website-eu-west-1.amazonaws.com'),
-					nUiUrlRoot.replace('https://www.ft.com', 'http://ft-next-n-ui-prod-us.s3-website-us-east-1.amazonaws.com')
+					'https:' + nUiUrlRoot,
+					nUiUrlRoot.replace('//www.ft.com', 'http://ft-next-n-ui-prod.s3-website-eu-west-1.amazonaws.com'),
+					nUiUrlRoot.replace('//www.ft.com', 'http://ft-next-n-ui-prod-us.s3-website-us-east-1.amazonaws.com')
 				]
 					.map(urlRoot =>
 						nEagerFetch(`${urlRoot}head-n-ui-core.css`, {retry: 3})
@@ -54,7 +54,8 @@ function init (options, directory, hashedAssets) {
 					// After it's been in prod a while the plan is to stop building the css in every app
 					// Then the error will need to be rethrown so the app fails to start
 					// throw err;
-				});
+				})
+				.then(() => stylesheets);
 		},
 
 		middleware: (req, res, next) => {
