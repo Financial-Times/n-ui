@@ -6,7 +6,6 @@ const app = module.exports = express({
 	systemCode: 'n-ui-test',
 	directory: __dirname,
 	helpers: { yell: yell },
-	withLayoutPolling: false,
 	layoutsDir: __dirname + '/views/'
 });
 
@@ -39,12 +38,12 @@ app.get('/templated', function (req, res) {
 
 app.get('/with-layout', function (req, res) {
 	res.locals.__isProduction = req.query.prod || res.locals.__isProduction;
-	res.render('main', {
+	res.render('main', Object.assign({
 		layout: 'wrapper',
 		title: 'FT',
 		items: [1,2,3,4,5],
 		text : '<p>Paragraph 1</p><p>Paragraph 2</p><p>Paragraph 3</p>'
-	});
+	}, req.query || {}));
 });
 
 
