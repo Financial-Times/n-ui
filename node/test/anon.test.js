@@ -8,7 +8,7 @@ describe('Anonymous Middleware', function () {
 	let locals;
 
 	before(function () {
-		app = nextExpress({ withFlags:true, withHandlebars:false, withAssets: false});
+		app = nextExpress({ withFlags:true, withHandlebars:false, withAssets: false, systemCode: 'anon'});
 		app.get('/', function (req, res) {
 			locals = res.locals;
 			res.sendStatus(200).end();
