@@ -27,6 +27,9 @@ function init (options, directory, hashedAssets) {
 
 	return {
 		fetchNUiCss: () => {
+			if (process.env.LOCAL_APP_SHELL === 'local') {
+				return Promise.resolve();
+			}
 			return ratRace(
 				[
 					'https:' + nUiUrlRoot,
