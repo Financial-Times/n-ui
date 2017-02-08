@@ -67,8 +67,8 @@ module.exports = function (options, directory, hashedAssets) {
 
 				// define which css to output in the critical path
 				if (options.withHeadCss) {
-					if ('head-n-ui-core' in stylesheets) {
-						res.locals.criticalCss.push(stylesheets['head-n-ui-core'])
+					if (`head${cssVariant}-n-ui-core` in stylesheets) {
+						res.locals.criticalCss.push(stylesheets[`head${cssVariant}-n-ui-core`])
 					}
 					res.locals.criticalCss.push(stylesheets[`head${cssVariant}`]);
 				}
