@@ -188,6 +188,24 @@ describe('simple app', function () {
 
 	});
 
+	describe('styles', () => {
+		it('should inline head.css & head-n-ui-core.css', (done) => {
+			request(app)
+				.get('/with-layout?layout=wrapper')
+				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core.css\s*head.css\s*<\/style>/)
+				.expect(200, /<link rel="preload" href="\/demo-app\/main\.css" as="style" onload=/, done);
+
+		})
+
+		it('should inline head-variant.css & head-variant-n-ui-core.css', (done) => {
+			request(app)
+				.get('/with-layout?layout=wrapper&cssVariant=variant')
+				.expect(200, /<style class="n-layout-head-css">\s*head-variant-n-ui-core.css\s*head-variant.css\s*<\/style>/)
+				.expect(200, /<link rel="preload" href="\/demo-app\/main-variant\.css" as="style" onload=/, done);
+
+		})
+	})
+
 	describe('hashed assets and preloading', () => {
 
 		it('should preload main.css, main-with-n-ui.js and polyfill', done => {

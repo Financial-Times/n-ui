@@ -27,6 +27,7 @@ test-server: export FT_NEXT_BACKEND_KEY=test-backend-key
 test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
 test-server: export FT_NEXT_BACKEND_KEY_OLDEST=test-backend-key-oldest
 test-server:
+	cp layout/partials/stylesheets.html node/test/fixtures/app/views/partials
 	mocha node/test/app.test.js node/test/**/*.test.js  --recursive
 
 nightwatch:
