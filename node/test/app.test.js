@@ -18,6 +18,7 @@ describe('simple app', function () {
 
 		fetchMock
 			.mock(/next-flags\.ft\.com/, [{name: 'flaggy'}])
+			.mock('https://www.ft.com/__assets/n-ui/cached/v1.1.1/head-n-ui-core.css', 'head-n-ui-core-new')
 			.mock('http://ft-next-health-eu.herokuapp.com/failure-simulation-config', {failures: []})
 			.catch(200);
 
@@ -192,7 +193,7 @@ describe('simple app', function () {
 		it('should inline head.css & head-n-ui-core.css', (done) => {
 			request(app)
 				.get('/with-layout?layout=wrapper')
-				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core.css\s*head.css\s*<\/style>/)
+				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core-new\s*head.css\s*<\/style>/)
 				.expect(200, /<link rel="preload" href="\/demo-app\/main\.css" as="style" onload=/, done);
 
 		})
@@ -200,7 +201,7 @@ describe('simple app', function () {
 		it('should inline head-variant.css & head-variant-n-ui-core.css', (done) => {
 			request(app)
 				.get('/with-layout?layout=wrapper&cssVariant=variant')
-				.expect(200, /<style class="n-layout-head-css">\s*head-variant-n-ui-core.css\s*head-variant.css\s*<\/style>/)
+				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core-new\s*head-variant.css\s*<\/style>/)
 				.expect(200, /<link rel="preload" href="\/demo-app\/main-variant\.css" as="style" onload=/, done);
 
 		})

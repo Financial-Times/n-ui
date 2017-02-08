@@ -43,7 +43,13 @@ function init (options, directory, hashedAssets) {
 							})
 					)
 			)
-				.then(text => stylesheets['head-n-ui-core'] = text)
+				.then(text => {
+					// if it's an empty string, something probably went wrong
+					if (!text.length) {
+						throw new Error('Fetched empty n-ui stylesheet');
+					}
+					stylesheets['head-n-ui-core'] = text
+				})
 				.then(() => logger.warn({
 					event: 'N_UI_CSS_FETCH_SUCCESS',
 					message: 'head-n-ui-core.css successfully retrieved from s3'
@@ -105,8 +111,8 @@ function init (options, directory, hashedAssets) {
 						// variants of head-n-ui-core no longer exist, but the app may not necessarily
 						// have successfully fetched head-n-ui-core from network, so fallback to the variant
 						// file while trying it out
-						if (`head-n-ui-core` in stylesheets) {
-							res.locals.criticalCss.push(stylesheets[`head-n-ui-core`])
+						if ('head-n-ui-core' in stylesheets) {
+							res.locals.criticalCss.push(stylesheets['head-n-ui-core'])
 						} else if (`head${cssVariant}-n-ui-core` in stylesheets) {
 							res.locals.criticalCss.push(stylesheets[`head${cssVariant}-n-ui-core`])
 						}
