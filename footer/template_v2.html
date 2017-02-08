@@ -4,22 +4,22 @@
 		<div class="o-footer__row">
 			<nav class="o-footer__matrix" role="navigation" aria-label="Useful links">
 				{{#each @root.navigation.menus.footer.items}}
-					{{#if submenu}}
-						<div class="o-footer__matrix-group o-footer__matrix-group--{{submenu.items.length}}">
-							<h6 class="o-footer__matrix-title">
-								{{{label}}}
-							</h6>
-							<div class="o-footer__matrix-content" id="o-footer-section-{{submenu.items.length}}">
-								{{#each submenu.items}}
-									<div class="o-footer__matrix-column">
-										{{#each this}}
-											<a class="o-footer__matrix-link" href="{{url}}" data-trackable="{{label}}">{{{label}}}</a>
-										{{/each}}
-									</div>
-								{{/each}}
-							</div>
+				{{#if submenu}}
+				<div class="o-footer__matrix-group o-footer__matrix-group--{{submenu.items.length}}">
+					<h6 class="o-footer__matrix-title" {{#ifEquals submenu.items.length 2}}aria-controls="o-footer-section-{{@index}}"{{/ifEquals}}>
+					{{{label}}}
+					</h6>
+					<div class="o-footer__matrix-content" id="o-footer-section-{{@index}}">
+						{{#each submenu.items}}
+						<div class="o-footer__matrix-column">
+							{{#each this}}
+							<a class="o-footer__matrix-link" href="{{url}}" data-trackable="{{label}}">{{{label}}}</a>
+							{{/each}}
 						</div>
-					{{/if}}
+						{{/each}}
+					</div>
+				</div>
+				{{/if}}
 				{{/each}}
 			</nav>
 

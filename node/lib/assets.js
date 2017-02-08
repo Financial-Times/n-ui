@@ -6,6 +6,7 @@ const linkHeaderFactory = require('./link-header');
 const stylesheetManager = require('./stylesheet-manager');
 const messages = require('./messages');
 const nEagerFetch = require('n-eager-fetch');
+const ratRace = require('promise-rat-race');
 
 function init (options, directory, hashedAssets) {
 
@@ -26,15 +27,27 @@ function init (options, directory, hashedAssets) {
 
 	return {
 		fetchNUiCss: () => {
-			return nEagerFetch(`${nUiUrlRoot}head-n-ui-core.css`, {retry: 3})
-				.then(res => {
-					if (res.ok) {
-						return res.text();
-					}
-					throw new Error('Failed to fetch n-ui stylesheet');
-				})
+			return ratRace(
+				[
+					nUiUrlRoot,
+					nUiUrlRoot.replace('https://www.ft.com', 'http://ft-next-n-ui-prod.s3-website-eu-west-1.amazonaws.com'),
+					nUiUrlRoot.replace('https://www.ft.com', 'http://ft-next-n-ui-prod-us.s3-website-us-east-1.amazonaws.com')
+				]
+					.map(urlRoot =>
+						nEagerFetch(`${urlRoot}head-n-ui-core.css`, {retry: 3})
+							.then(res => {
+								if (res.ok) {
+									return res.text();
+								}
+								throw new Error('Failed to fetch n-ui stylesheet');
+							})
+					)
+			)
 				.then(text => stylesheets['head-n-ui-core'] = text)
-				.then(() => logger.info('head-n-ui-core.css successfully retrieved from s3'))
+				.then(() => logger.warn({
+					event: 'N_UI_CSS_FETCH_SUCCESS',
+					message: 'head-n-ui-core.css successfully retrieved from s3'
+				}))
 				.catch(err => {
 					logger.error('event=N_UI_CSS_FETCH_FAILURE', err)
 					// for now we catch the error as the app builds the css anyway
@@ -85,12 +98,20 @@ function init (options, directory, hashedAssets) {
 					let cssVariant = templateData.cssVariant || res.locals.cssVariant;
 					cssVariant = cssVariant ? `-${cssVariant}` : '';
 
+
 					// define which css to output in the critical path
 					if (options.withHeadCss) {
-						if ('head-n-ui-core' in stylesheets) {
-							res.locals.criticalCss.push(stylesheets['head-n-ui-core'])
+						// variants of head-n-ui-core no longer exist, but the app may not necessarily
+						// have successfully fetched head-n-ui-core from network, so fallback to the variant
+						// file while trying it out
+						if (`head-n-ui-core` in stylesheets) {
+							res.locals.criticalCss.push(stylesheets[`head-n-ui-core`])
+						} else if (`head${cssVariant}-n-ui-core` in stylesheets) {
+							res.locals.criticalCss.push(stylesheets[`head${cssVariant}-n-ui-core`])
 						}
-						res.locals.criticalCss.push(stylesheets[`head${cssVariant}`]);
+						if (`head${cssVariant}` in stylesheets) {
+							res.locals.criticalCss.push(stylesheets[`head${cssVariant}`]);
+						}
 					}
 
 					res.locals.cssBundles.push({
