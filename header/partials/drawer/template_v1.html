@@ -37,6 +37,7 @@
 				{{/each}}
 				{{/if}}
 
+				{{#unless @root.anon.userIsAnonymous}}
 				{{#if @root.flags.compactView}}
 				{{#ifEquals @root.__name "front-page"}}
 				{{#ifEquals @root.viewStyle "compact"}}
@@ -50,6 +51,7 @@
 				{{/ifEquals}}
 				{{/ifEquals}}
 				{{/if}}
+				{{/unless}}
 			</ul>
 
 			<ul class="o-header__drawer-menu-list">
