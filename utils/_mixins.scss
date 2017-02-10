@@ -42,7 +42,7 @@ $n-ui-z-index-order: (
 	*zoom: 1;
 }
 
-@mixin nUtilsVisuallyHidden() {
+@mixin nUtilsVisuallyHidden {
 	position: absolute;
 	margin: -1px;
 	border: 0;
