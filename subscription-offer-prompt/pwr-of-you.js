@@ -17,7 +17,7 @@ const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorag
  *	* usElection2016DiscountSlider flag is true
  */
 const shouldPromptBeShown = (flags) => {
-	console.log("here shouldPromptBeShown")
+	// console.log("here shouldPromptBeShown")
 	return getPromptLastClosed()
 			.then(promptLastClosed => {
 				return (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && flags.get('PowerOfYouSlider');
@@ -86,17 +86,17 @@ const createPrompt = () => {
 };
 
 export const init = (flags) => {
-	console.log("here 1");
+	// console.log("here 1");
 	return shouldPromptBeShown(flags)
 		.then(shouldShow => {
-			console.log("here 3");
+			// console.log("here 3");
 			if (shouldShow) {
 				return createPrompt();
-				console.log("here 4");
+				// console.log("here 4");
 			}
 		})
 		.catch(error => {
-			console.log(error);
+			// console.log(error);
 			broadcast('oErrors.log', {
 				error,
 				info: {
