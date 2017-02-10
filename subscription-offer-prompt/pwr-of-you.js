@@ -19,7 +19,7 @@ const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorag
 const shouldPromptBeShown = (flags) => {
 	return getPromptLastClosed()
 			.then(promptLastClosed => {
-				return (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) /*&& flags.get('TODO_PWR_OF_YOU_FLAG_NAME')*/;
+				return (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && flags.get('TODO_PWR_OF_YOU_FLAG_NAME');
 			})
 };
 
