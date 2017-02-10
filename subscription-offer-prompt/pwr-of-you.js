@@ -27,7 +27,31 @@ const shouldPromptBeShown = (flags) => {
 // OK for now to have it be the same as the lionel slider
 const popupTemplate = () => `
 	<aside class="subscription-prompt--wrapper subscription-prompt--pwr" data-trackable="subscription-offer-pwr-of-you">
-		pwr of you HTML
+		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
+			<span class="n-sliding-popup-close-label">Close</span>
+		</button>
+		<div class="o-grid-row">
+			<div data="o-grid-colspan-12">powr of you logo</div>
+		</div>
+		<div class="o-grid-row">
+			<div class="subscription-prompt--header" data-o-grid-colspan="12">
+				<p> Everyone takes your data. </p>
+				<p> Time for <span class="orange-highlight">you</span> to take control</p>
+			</div>
+		</div>
+		<div class="o-grid-row">
+			<div data="o-grid-colspan-12 subscription-prompt--info">
+				<p> Your time online is valuable. It's driving the $500 billion data economy. Want to get your share? </p>
+			</div>
+		</div>
+		<div class="o-grid-row">
+			<div data="o-grid-colspan-6">
+				<button class="o-buttons">Tell me more</button>
+			</div>
+			<div data="o-grid-colspan-6">
+				<button class="o-buttons o-buttons--standout">Yes</button>
+			</div>
+		</div>
 	</aside>
 `;
 
