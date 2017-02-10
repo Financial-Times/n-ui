@@ -138,10 +138,10 @@
 		}
 
 		.n-myft-ui__button[aria-pressed="true"]:before {
-			@include oIconsGetIcon('tick-thin', getColor('link-1'), 12);
+			@include oIconsGetIcon('tick', getColor('link-1'), 16);
 			content: ' ';
 			left: $spacing-unit/2;
-			margin: -6px $spacing-unit/4 0 0;
+			margin: -8px $spacing-unit/4 0 0;
 			position: absolute;
 			top: 50%;
 		}
