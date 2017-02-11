@@ -44,15 +44,16 @@ function init (options, directory, hashedAssets) {
 								}
 								throw new Error('Failed to fetch n-ui stylesheet');
 							})
+							.then(text => {
+								// if it's an empty string, something probably went wrong
+								if (!text.length) {
+									throw new Error('Fetched empty n-ui stylesheet');
+								}
+								return text;
+							})
 					)
-					.then(text => {
-						// if it's an empty string, something probably went wrong
-						if (!text.length) {
-							throw new Error('Fetched empty n-ui stylesheet');
-						}
-						stylesheets['head-n-ui-core'] = text
-					})
 			)
+				.then(text => stylesheets['head-n-ui-core'] = text)
 				.then(() => logger.warn({
 					event: 'N_UI_CSS_FETCH_SUCCESS',
 					message: 'head-n-ui-core.css successfully retrieved from s3'
