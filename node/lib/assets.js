@@ -11,7 +11,7 @@ const verifyAssetsExist = require('./verify-assets-exist');
 function init (options, directory, locals) {
 
 	verifyAssetsExist.verify(locals);
-	let hasher = hashedAssets.init(locals);
+	const hasher = hashedAssets.init(locals);
 	nUiManager.init(directory, hasher);
 
 
