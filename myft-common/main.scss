@@ -33,6 +33,10 @@
 		@include oButtonsTheme(inverse);
 	}
 
+	.n-myft-ui__button--uncolored {
+		@include oButtonsTheme(uncolored);
+	}
+
 	.n-myft-ui__button--medium {
 		@include oButtonsSize(medium);
 	}
@@ -57,8 +61,13 @@
 		.n-myft-ui__button {
 			@include buttonWithIcon(26, 24, getColor('link-1'), 'plus', 'tick');
 		}
+
 		.n-myft-ui__button--inverse {
-			@include buttonWithIcon(26, 24, getColor('link-2'), 'plus', 'tick');
+			@include buttonWithIcon(26, 24, getColor('white'), 'plus', 'tick');
+		}
+
+		.n-myft-ui__button--uncolored {
+			@include buttonWithIcon(26, 24, getColor('black'), 'plus', 'tick');
 		}
 	}
 
