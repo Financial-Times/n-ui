@@ -52,7 +52,7 @@ module.exports = function (options, directory, hashedAssets) {
 			}
 
 			res.locals.javascriptBundles.push(
-				`${nUiUrlRoot}es5${(flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
+				useLocalAppShell ? hashedAssets.get('es5.js') : `${nUiUrlRoot}es5${(flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
 				hashedAssets.get('main-without-n-ui.js'),
 				res.locals.polyfillUrls.enhanced
 			);
