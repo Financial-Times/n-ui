@@ -45,7 +45,7 @@ function consolidateMetrics (container, metrics) {
 	const regexPos = /pos=[^;]*/;
 	if (container.dataset['oAdsTargeting']) {
 		const pos = container.dataset['oAdsTargeting'].match(regexPos);
-		if (pos) {metrics '|' +=pos;}
+		if (pos) {metrics += '|' + pos;}
 	}
 	container.dataset['oAdsTargeting'] += 'metrics=' + metrics + ';';
 }
