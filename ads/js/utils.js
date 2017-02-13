@@ -41,7 +41,6 @@ function getABTestState () {
 }
 
 function consolidateMetrics (container, metrics) {
-	const slotName = container.dataset['oAdsName'];
 	const regexPos = /pos=[^;]*/;
 	if (container.dataset['oAdsTargeting']) {
 		const pos = container.dataset['oAdsTargeting'].match(regexPos);
