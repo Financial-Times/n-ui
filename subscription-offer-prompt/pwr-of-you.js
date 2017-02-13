@@ -33,7 +33,8 @@ const popupTemplate = () => `
 		</button>
 		<div class="o-grid-row">
 			<div data-o-grid-colspan="12">
-				<img src="{{#resize 300}}//www.ft.com/__assets/creatives/third-party/direct-debit-transparent.png{{/resize}}">
+				<img src="https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fwww.ft.com%2F__assets%2Fcreatives%2Fthird-party%2FPowr-of-You-Logo_3600w.png?width=250&amp;source=next&amp;fit=scale-down" alt="Power of you logo"role="presentation" aria-hidden="true">
+				<!-- <img src="{{#resize 300}}//www.ft.com/__assets/creatives/third-party/Powr-of-You-Logo_3600w.png{{/resize}}"> -->
 			</div>
 		</div>
 		<div class="o-grid-row subscription-prompt--pwr__lead">
@@ -49,10 +50,10 @@ const popupTemplate = () => `
 		</div>
 		<div class="o-grid-row">
 			<div data-o-grid-colspan="6">
-				<button class="o-buttons o-buttons--big subscription-prompt--pwr__button">Tell me more</button>
+				<a class="o-buttons o-buttons--big subscription-prompt--pwr__button" href="https://www.powrofyou.com/?utm_source=ext&utm_campaign=ft">Tell me more </a>
 			</div>
 			<div data-o-grid-colspan="6">
-				<button class="o-buttons o-buttons--big o-buttons--standout subscription-prompt--pwr__button">Yes</button>
+				<a class="o-buttons o-buttons--big o-buttons--standout subscription-prompt--pwr__button" href="https://www.powrofyou.com/JoinUs?utm_source=ext&utm_campaign=ft">Yes</a>
 			</div>
 		</div>
 	</aside>

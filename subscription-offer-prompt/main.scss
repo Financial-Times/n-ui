@@ -122,8 +122,9 @@
 }
 
 .subscription-prompt--pwr__lead {
-	font-size: 20px;
+	font-size: 24px;
 	font-weight: 600;
+	margin-top: 10px;
 	& .subscription-prompt--pwr__lead__highlight {
 		color: oColorsGetPaletteColor('orange');
 	}
