@@ -30,7 +30,7 @@ function initOAds (flags, appName, adOptions) {
 		utils.log.info(slotCount + ' ad slots found on page');
 		if (flags && flags.get('AdsMetricsInOneKey')) {
 			let metrics = '';
-			metrics += 'adUnit=' + utils.getMetaData('dfp_site') + '/' + utils.getMetaData('dfp_zone');
+			metrics += 'adUnit=' + res.config().gpt.site + '/' + res.config().gpt.zone;
 			metrics += (res.targeting.get().pt) ? '|pageType=' + res.targeting.get().pt : '';
 			metrics += (res.targeting.get().res) ? '|res=' + res.targeting.get().res : '';
 			metrics += (res.targeting.get().mvt) ? '|mvt=' + res.targeting.get().mvt : '';

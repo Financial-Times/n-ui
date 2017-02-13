@@ -42,10 +42,12 @@ function getABTestState () {
 
 function consolidateMetrics (container, metrics) {
 	const slotName = container.dataset['oAdsName'];
-	metrics += '|slotName='+ slotName;
-	if (container.dataset['oAdsTargeting']) {container.dataset['oAdsTargeting'] +=';'}
-	else container.dataset['oAdsTargeting'] = '';
-	container.dataset['oAdsTargeting'] += 'metrics=' + metrics;
+	const regexPos = /pos=[^;]*/;
+	if (container.dataset['oAdsTargeting']) {
+		const pos = container.dataset['oAdsTargeting'].match(regexPos);
+		if (pos) {metrics '|' +=pos;}
+	}
+	container.dataset['oAdsTargeting'] += 'metrics=' + metrics + ';';
 }
 
 function getMetaData (name) {
