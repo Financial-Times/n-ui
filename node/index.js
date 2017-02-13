@@ -10,10 +10,7 @@ const welcomeBannerModelFactory = require('./models/welcome-banner');
 
 // templating and assets
 const handlebars = require('./lib/handlebars');
-const hashedAssets = require('./lib/hashed-assets');
 const assets = require('./lib/assets');
-const verifyAssetsExist = require('./lib/verify-assets-exist');
-const nUiManager = require('./lib/n-ui-manager');
 
 module.exports = options => {
 
@@ -39,10 +36,6 @@ module.exports = options => {
 	app.locals.__environment = process.env.NODE_ENV || '';
 	app.locals.__isProduction = app.locals.__environment.toUpperCase() === 'PRODUCTION';
 	app.locals.__rootDirectory = meta.directory;
-
-
-
-	nUiManager.init(meta.directory, options);
 
 	try {
 		// expose app version to the client side
@@ -107,11 +100,9 @@ module.exports = options => {
 
 	// verification that expected assets exist
 	if (options.withAssets) {
-		verifyAssetsExist.verify(app.locals);
-		let hasher = hashedAssets.init(app.locals);
-		app.getHashedAssetUrl = hasher.get;
-		const assetManagement = assets.init(options, meta.directory, hasher);
-		app.use(assetManagement.middleware);
+		const assetManager = assets.init(options, meta.directory, app.locals);
+		app.getHashedAssetUrl = assetManager.hasher.get;
+		app.use(assetManager.middleware);
 	}
 
 	if (options.withHandlebars) {

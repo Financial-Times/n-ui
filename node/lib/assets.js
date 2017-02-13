@@ -5,8 +5,15 @@ const nUiManager = require('./n-ui-manager');
 const linkHeaderFactory = require('./link-header');
 const stylesheetManager = require('./stylesheet-manager');
 const messages = require('./messages');
+const hashedAssets = require('./hashed-assets');
+const verifyAssetsExist = require('./verify-assets-exist');
 
-function init (options, directory, hashedAssets) {
+function init (options, directory, locals) {
+
+	verifyAssetsExist.verify(locals);
+	let hasher = hashedAssets.init(locals);
+	nUiManager.init(directory, hasher);
+
 
 	const useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
 
@@ -21,10 +28,11 @@ function init (options, directory, hashedAssets) {
 
 
 	const stylesheets = stylesheetManager.getStylesheets(options, directory);
-	const linkHeader = linkHeaderFactory(hashedAssets);
-	const nUiUrlRoot = nUiManager.getUrlRoot(hashedAssets);
+	const linkHeader = linkHeaderFactory(hasher);
+	const nUiUrlRoot = nUiManager.getUrlRoot(hasher);
 
 	return {
+		hasher,
 		middleware: (req, res, next) => {
 
 			// This middleware relies on the presence of res.locals.flags.
@@ -54,7 +62,7 @@ function init (options, directory, hashedAssets) {
 
 				res.locals.javascriptBundles.push(
 					`${nUiUrlRoot}es5${(flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
-					hashedAssets.get('main-without-n-ui.js'),
+					hasher.get('main-without-n-ui.js'),
 					res.locals.polyfillUrls.enhanced
 				);
 
@@ -75,7 +83,7 @@ function init (options, directory, hashedAssets) {
 					}
 
 					res.locals.cssBundles.push({
-						path: hashedAssets.get(`main${cssVariant}.css`),
+						path: hasher.get(`main${cssVariant}.css`),
 						isMain: true,
 						isLazy: options.withHeadCss
 					});
