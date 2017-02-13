@@ -219,10 +219,10 @@ describe('Utils', () => {
 	});
 
 	it('Should add metrics to slot level targeting via data-attribute', () => {
-		markup.set('<div class="metrics-test" data-o-ads-name="metrics"></div>');
+		markup.set('<div class="metrics-test" data-o-ads-targeting="pos=top;"></div>');
 		let myCont = document.querySelector('.metrics-test');
 		utils.consolidateMetrics(myCont, 'adUnit=ft.com/companies');
-		expect (myCont.dataset['oAdsTargeting']).to.equal('metrics=adUnit=ft.com/companies|slotName=metrics');
+		expect (myCont.dataset['oAdsTargeting']).to.equal('pos=top;metrics=adUnit=ft.com/companies|pos=top;');
 	});
 
 
