@@ -23,8 +23,6 @@ const shouldPromptBeShown = (flags) => {
 		})
 };
 
-// TODO we'll move HTML out of here so it can be Pa11y'd
-// OK for now to have it be the same as the lionel slider
 const popupTemplate = () => `
 	<aside class="subscription-prompt--wrapper subscription-prompt--pwr" data-trackable="subscription-offer-pwr-of-you">
 		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
@@ -73,7 +71,6 @@ const createPrompt = () => {
 	setTimeout(() => {
 		slidingPopup.open();
 
-		// TODO find out what tracking we need
 		broadcast('oTracking.event', {
 			category: 'message',
 			action: 'show',

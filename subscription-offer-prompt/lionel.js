@@ -31,8 +31,7 @@ const getTlsVersion = () => fetch('https://www.howsmyssl.com/a/check')
 const shouldPromptBeShown = () => {
 	return Promise.all([getProductSelectorLastSeen(), getPromptLastClosed(), getTlsVersion()])
 			.then(([barrierLastSeen, promptLastClosed, tlsVersion]) =>
-				// TODO revert. Just for testing pwrofyou
-				false || barrierLastSeen && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && tlsVersion > 1.0
+				barrierLastSeen && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && tlsVersion > 1.0
 			);
 };
 

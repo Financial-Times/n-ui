@@ -10,7 +10,6 @@ describe('"Pwr Of You" Prompt', () => {
 
 	beforeEach(() => {
 		flags = { get: (val) => val === 'b2cMessagePrompt' || val === 'PowerOfYouSlider' };
-		// return localStorage.set('last-closed-pwr', null);
 		return localStorage.set('last-closed-pwr', Date.now() - (1000 * 60 * 60 * 24 * 36))
 	});
 
