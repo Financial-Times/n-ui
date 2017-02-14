@@ -4,14 +4,14 @@
 const path = require('path');
 const BowerWebpackPlugin = require('bower-webpack-plugin');
 const componentsToTest = [
-	'test',
-	'js-setup',
-	'ads',
-	'myft',
-	'tracking',
-	'opt-out',
+	// 'test',
+	// 'js-setup',
+	// 'ads',
+	// 'myft',
+	// 'tracking',
+	// 'opt-out',
 	'subscription-offer-prompt',
-	'utils'
+	// 'utils'
 ];
 
 module.exports = function (karma) {

@@ -17,15 +17,10 @@ const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorag
  *	* usElection2016DiscountSlider flag is true
  */
 const shouldPromptBeShown = (flags) => {
-	console.log("here shouldPromptBeShown")
 	return getPromptLastClosed()
-			.then(promptLastClosed => {
-				console.log("here getPromptLastClosed")
-				console.log('FLAGS', flags)
-				console.log("flag = ", flags.get('PowerOfYouSlider'));
-				console.log("promptLastClosed = ", promptLastClosed);
-				return (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && flags.get('PowerOfYouSlider');
-			})
+		.then(promptLastClosed => {
+			return (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && flags.get('PowerOfYouSlider');
+		})
 };
 
 // TODO we'll move HTML out of here so it can be Pa11y'd
@@ -70,17 +65,13 @@ const createPopupHTML = () =>
 	}, popupTemplate());
 
 const createPrompt = () => {
-	log("here createPrompt");
 	const prompt = createPopupHTML();
 	prompt.onClose = setPromptLastClosed;
 	document.body.appendChild(prompt);
 	const slidingPopup = new SlidingPopup(prompt);
-	console.log("slidingPopup = ", slidingPopup);
-	console.log("promt = ", prompt);
 
 	setTimeout(() => {
 		slidingPopup.open();
-
 
 		// TODO find out what tracking we need
 		broadcast('oTracking.event', {
@@ -97,14 +88,13 @@ const createPrompt = () => {
 export const init = (flags) => {
 	return shouldPromptBeShown(flags)
 		.then(shouldShow => {
-			console.log("shouldShow = ", shouldShow);
 			if (shouldShow) {
-				return createPrompt();
+				let test = createPrompt();
+				return test;
 			}
+
 		})
 		.catch(error => {
-			console.log("reached error");
-			console.log(error);
 			broadcast('oErrors.log', {
 				error,
 				info: {
