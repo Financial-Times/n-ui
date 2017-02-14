@@ -18,3 +18,4 @@
 key.pem
 key-cert.pem
 /test-page.html
+node/test/fixtures/bad-assets/.gitignore
