@@ -2,7 +2,6 @@
 import subscriptionOfferPrompt from '../index';
 import * as lionel from '../lionel';
 import * as powrOfYou from '../pwr-of-you';
-import Superstore from 'superstore';
 
 describe('Subscription Offer Prompt Init', () => {
 
