@@ -1,4 +1,3 @@
-/*global fetch*/
 const Delegate = require('ftdomdelegate');
 import { debounce } from '../utils';
 import { SuggestionList } from './suggestion-list';
@@ -101,7 +100,7 @@ class Typeahead {
 	}
 
 	onDownArrow () {
-		this.suggestionLinks = Array.from(this.suggestionListContainer.querySelectorAll('a'));
+		this.suggestionLinks = Array.from(this.suggestionListContainer.querySelectorAll('.n-typeahead__link'));
 		if (this.suggestionLinks.length) {
 			this.suggestionLinks[0].focus();
 		}
@@ -163,6 +162,14 @@ class Typeahead {
 	reset () {
 		this.hide();
 		this.suggestions = [];
+		this.suggestionLinks = [];
+		this.suggestionsView.setState({
+			suggestions: {
+				tags: [],
+				equities: []
+			},
+			searchTerm: ''
+		});
 		this.searchTermHistory = [];
 		this.searchTerm = '';
 		this.searchEl.value = '';
