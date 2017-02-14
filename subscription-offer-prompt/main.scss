@@ -108,7 +108,29 @@
 
 // PWR OF YOU STYLES - TEMPORARY PROMO SLIDER
 .subscription-prompt--pwr {
-	background-color: red;
-	padding: 30px;
-	color: white;
+	padding: 10px;
+	background-color: white;
+	color: oColorsGetPaletteColor('grey-tint5');
+	& p {
+		margin: 0px;
+	}
+}
+
+.subscription-prompt--pwr__button {
+	width: 95%;
+	height: 20px;
+}
+
+.subscription-prompt--pwr__lead {
+	font-size: 24px;
+	font-weight: 600;
+	margin-top: 10px;
+	& .subscription-prompt--pwr__lead__highlight {
+		color: oColorsGetPaletteColor('orange');
+	}
+}
+
+.subscription-prompt--pwr__main {
+	font-size: 18px;
+	margin: 10px 0 28px;
 }
