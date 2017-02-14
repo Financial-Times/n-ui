@@ -1,12 +1,12 @@
 @import '../buttons/main';
 
-@mixin buttonWithIcon($iconSpace, $iconSize, $color, $iconOff, $iconOn: $iconOff) {
+@mixin buttonWithIcon($iconSpace, $iconSize, $colorOff, $iconOff, $iconOn: $iconOff, $colorOn: $colorOff) {
 	$topMargin: #{$iconSize * -0.5}px;
 	$horizontalMargin: #{($iconSpace - $iconSize) / 2}px;
 	position: relative;
 	padding-left: #{$iconSpace}px;
 	&:before {
-		@include oIconsGetIcon($iconOff, $color, $iconSize);
+		@include oIconsGetIcon($iconOff, $colorOff, $iconSize);
 		content: ' ';
 		position: absolute;
 		top: 50%;
@@ -14,7 +14,7 @@
 		margin: $topMargin $horizontalMargin 0 0;
 	}
 	&[aria-pressed="true"]:before {
-		@include oIconsGetIcon($iconOn, $color, $iconSize);
+		@include oIconsGetIcon($iconOn, $colorOn, $iconSize);
 	}
 }
 
@@ -63,11 +63,11 @@
 		}
 
 		.n-myft-ui__button--inverse {
-			@include buttonWithIcon(26, 24, getColor('white'), 'plus', 'tick');
+			@include buttonWithIcon(26, 24, getColor('white'), 'plus', 'tick', getColor('black'));
 		}
 
 		.n-myft-ui__button--uncolored {
-			@include buttonWithIcon(26, 24, getColor('black'), 'plus', 'tick');
+			@include buttonWithIcon(26, 24, getColor('black'), 'plus', 'tick', getColor('white'));
 		}
 	}
 
