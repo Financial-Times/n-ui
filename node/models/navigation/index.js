@@ -14,12 +14,7 @@ module.exports = {
 		return Promise.all([navigationModelV1.init(), navigationModelV2.init()]);
 	},
 	middleware : (req, res, next) => {
-		if(res.locals.flags.origamiNavigation){
-			log.info({event:'NAVIGATION_DATA', source:'Origami'});
-			return navigationModelV2.middleware(req, res, next);
-		}else{
-			log.info({event:'NAVIGATION_DATA', source:'Next'});
-			return navigationModelV1.middleware(req, res, next);
-		}
+		log.info({event:'NAVIGATION_MIDDLEWARE', source:'Origami'});
+		return navigationModelV2.middleware(req, res, next);
 	}
-}
+};

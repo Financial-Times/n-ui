@@ -8,8 +8,8 @@ const path = require('path')
 const fs = require('fs');
 const readFile = denodeify(fs.readFile);
 const writeFile = denodeify(fs.writeFile);
-const getVersions = require('./get-versions');
-const {versions, isOfficialRelease} = getVersions();
+const getVersion = require('./get-version');
+const {version, isOfficialRelease} = getVersion();
 const semver = require('semver');
 
 function purgeOnce (path, message) {
@@ -59,54 +59,31 @@ function brotlify () {
 function staticAssets () {
 	return brotlify()
 		.then(() => getFileList('assets'))
-		.then(files => Promise.all(
-			versions
-				.map((version, i) => {
-					return deployStatic({
-						files: files,
-						destination: `n-ui/cached/${version}`,
-						bucket: 'ft-next-n-ui-prod',
-						strip: 2,
-						monitor: isOfficialRelease && i === 0, // only monitor the size of the first copy deployed,
-						monitorStripDirectories: true,
-						// cache resources which use valid semver for a long time, as these are never overwritten
-						// cache e.g v2, v2.2 entries with shorter, revalidatable headers
-						cacheControl: semver.valid(version) ? 'max-age=31536000, immutable' : 'must-revalidate, max-age=1200',
-						surrogateControl: semver.valid(version) ? 'max-age=31536000, immutable' : 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400'
-					})
-						.then(() => files.map(file => {
-							const paths = [
-								`https://www.ft.com/__assets/n-ui/cached/${version}/${file.split('/').pop()}`
-							];
-							return Promise.all(paths.map(purge));
-						}))
+		.then(files =>
+			deployStatic({
+				files: files,
+				destination: `n-ui/cached/${version}`,
+				bucket: 'ft-next-n-ui-prod',
+				strip: 2,
+				monitor: isOfficialRelease,
+				waitForOk: true,
+				monitorStripDirectories: true,
+				// cache resources which use valid semver for a long time, as these are never overwritten
+				// cache e.g v2, v2.2 entries with shorter, revalidatable headers
+				cacheControl: semver.valid(version) ? 'max-age=31536000, immutable' : 'must-revalidate, max-age=1200',
+				surrogateControl: semver.valid(version) ? 'max-age=31536000, immutable' : 'must-revalidate, max-age=3600, stale-while-revalidate=60, stale-on-error=86400'
+			})
+				.then(() => {
+					if (!semver.valid(version)) {
+						return Promise.all(
+							files.map(file => purge(`https://www.ft.com/__assets/n-ui/cached/${version}/${file.split('/').pop()}`))
+						)
+					}
 				})
-		))
+		)
 }
 
-function layouts () {
-	return getFileList('templates')
-		.then(files => Promise.all(
-			versions
-				.map(version => {
-					return deployStatic({
-						files: files,
-						destination: `templates/${version}`,
-						bucket: 'ft-next-n-ui-prod',
-						acl: 'private',
-						strip: 2,
-						cacheControl: 'no-cache, max-age=0, must-revalidate'
-					})
-				})
-		))
-
-}
-
-
-Promise.all([
-	staticAssets(),
-	layouts()
-])
+staticAssets()
 	.then(() => process.exit(0))
 	.catch(err => {
 		console.log(err) //eslint-disable-line

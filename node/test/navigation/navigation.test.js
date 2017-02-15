@@ -24,23 +24,13 @@ describe('Navigation middleware', () => {
 		sinon.assert.called(navigationModelV1Stub.init);
 	});
 
-	it('Should use the V2 Model is the origamiNavigation flag is on', () => {
+	it('Should use the V2 Model', () => {
 		const req = {};
-		const res = {locals:{flags:{origamiNavigation:true}}};
+		const res = {locals:{flags:{}}};
 		const next = () => {};
 		navigation.init();
 		navigation.middleware(req, res, next);
 		sinon.assert.called(navigationModelV2Stub.middleware);
 		sinon.assert.notCalled(navigationModelV1Stub.middleware);
 	});
-
-	it('Should use the V1 Model is the origamiNavigation flag is off', () => {
-		const req = {};
-		const res = {locals:{flags:{origamiNavigation:false}}};
-		const next = () => {};
-		navigation.init();
-		navigation.middleware(req, res, next);
-		sinon.assert.notCalled(navigationModelV2Stub.middleware);
-		sinon.assert.called(navigationModelV1Stub.middleware);
-	})
 });

@@ -47,11 +47,11 @@ test: verify pally-conf test-server test-unit test-build run nightwatch a11y
 test-dev: verify test-unit-dev
 
 deploy: assets
-	node ./_deploy/compile-layouts
 	node ./_deploy/s3.js
 	$(MAKE) npm-publish
-	sleep 20
-	nht rebuild --all --serves user-page
+	# only autodeploy all apps in office hours
+	HOUR=$$(date +%H); DAY=$$(date +%u); if [ $$HOUR -ge 9 ] && [ $$HOUR -lt 17 ] && [ $$DAY -ge 0 ] && [ $$DAY -lt 6 ]; then \
+	echo "REBUILDING ALL APPS" && sleep 20 && nht rebuild --all --serves user-page; fi
 
 serve:
 	@echo '`make serve` is no longer needed to bower link.'

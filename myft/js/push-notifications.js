@@ -10,7 +10,6 @@ let pushButton;
 let infoText;
 
 function init () {
-
 	pushButtonContainer = document.querySelector('[data-preference-name="push-notifications"]');
 	pushButton = pushButtonContainer ? pushButtonContainer.querySelector('.js-myft-ui__button') : null;
 	infoText = pushButtonContainer ? pushButtonContainer.querySelector('.js-myft-ui__info') : null;
@@ -28,10 +27,7 @@ function init () {
 		}
 	});
 
-	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('/myft/worker.js')
-		.then(initialiseState);
-	}
+	initialiseState();
 }
 
 // Once the service worker is registered set the initial state
@@ -187,9 +183,11 @@ function sendSubscriptionToServer (subscription, isRemove) {
 		.then(function (currentSubscription) {
 			let endpoints = [];
 			let thisEndpoint = endpointWorkaround(subscription);
+
 			if(currentSubscription && currentSubscription.items && currentSubscription.items.length) {
 				endpoints = currentSubscription.items;
 			}
+
 			const index = endpoints.indexOf(thisEndpoint);
 			if(isRemove || (!thisEndpoint && index >= 0)) {
 				myftClient.remove('user', null, 'enabled', 'endpoint', encodeURIComponent(thisEndpoint));

@@ -4,12 +4,12 @@ const path = require('path');
 let nUiBowerJson = {};
 let nUiUrlRoot;
 
-function generateUrlRoot (hashedAssets) {
+function generateUrlRoot (hasher) {
 	const localAppShell = process.env.NEXT_APP_SHELL === 'local';
 	// Attempt to get information about which version of n-ui is installed
 	try {
 		if (localAppShell) {
-			nUiUrlRoot = hashedAssets.get('n-ui/');
+			nUiUrlRoot = hasher.get('n-ui/');
 		} else {
 			const nUiRelease = nUiBowerJson._release;
 			if (!nUiRelease) {
@@ -32,11 +32,11 @@ function generateUrlRoot (hashedAssets) {
 	} catch (e) {}
 }
 
-module.exports.init = (directory) => {
+module.exports.init = (directory, hasher) => {
 	try {
 		nUiBowerJson = require(path.join(directory, 'bower_components/n-ui/.bower.json'))
 	} catch (e) {}
-	generateUrlRoot()
+	generateUrlRoot(hasher)
 }
 
 module.exports.getUrlRoot = () => nUiUrlRoot;

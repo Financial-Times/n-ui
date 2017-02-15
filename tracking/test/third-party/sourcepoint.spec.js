@@ -35,6 +35,7 @@ describe('sourcepoint', function () {
 			sourcepointScript.remove();
 		}
 		document.removeEventListener('sp.blocking', () => {});
+		document.removeEventListener('sp.not_blocking', () => {});
 	});
 
 	it('should not insert the Sourcepoint script to the page when flag is off', function () {
@@ -51,24 +52,12 @@ describe('sourcepoint', function () {
 		expect(sourcepointLoaded).to.equal(false);
 	});
 
-	it('should not insert the Sourcepoint script to the page when there spoor-id does not start with 0', function () {
+	it('should not insert the Sourcepoint script to the page when their spoor-id does not start with 0', function () {
 		document.cookie = 'spoor-id=1234567890;';
 		sandbox.stub(flags, 'get').withArgs('sourcepoint').returns(true);
 		window.dispatchEvent(new Event('ftNextLoaded'));
 		let sourcepointLoaded = checkSourcepointScriptLoaded();
 		expect(sourcepointLoaded).to.equal(false);
-	});
-
-	it('should send an oTracking event when sourcepoint event has been fired', function (done) {
-		document.cookie = 'spoor-id=0123456789;';
-		sandbox.stub(flags, 'get').withArgs('sourcepoint').returns(true);
-		window.dispatchEvent(new Event('ftNextLoaded'));
-		document.body.addEventListener('oTracking.event', function (event) {
-			expect(event.detail.category).to.equal('ads');
-			expect(event.detail.action).to.equal('blocked');
-			done();
-		});
-		window.document.dispatchEvent(new Event('sp.blocking'));
 	});
 
 	it('should insert the Sourcepoint script to the page', function () {
@@ -77,6 +66,31 @@ describe('sourcepoint', function () {
 		window.dispatchEvent(new Event('ftNextLoaded'));
 		let sourcepointLoaded = checkSourcepointScriptLoaded();
 		expect(sourcepointLoaded).to.equal(true);
+	});
+
+	it('should send an oTracking event with action blocked when sourcepoint event has been fired', function (done) {
+		document.cookie = 'spoor-id=0123456789;';
+		sandbox.stub(flags, 'get').withArgs('sourcepoint').returns(true);
+		window.dispatchEvent(new Event('ftNextLoaded'));
+		document.body.addEventListener('oTracking.event', function listener (event) {
+			document.body.removeEventListener('oTracking.event', listener);
+			expect(event.detail.category).to.equal('ads');
+			expect(event.detail.action).to.equal('blocked');
+			done();
+		});
+		window.document.dispatchEvent(new Event('sp.blocking'));
+	});
+
+	it('should send an oTracking event with action unblocked when sourcepoint event has been fired', function (done) {
+		document.cookie = 'spoor-id=0123456789;';
+		sandbox.stub(flags, 'get').withArgs('sourcepoint').returns(true);
+		document.body.addEventListener('oTracking.event', function listener (event) {
+			document.body.removeEventListener('oTracking.event', listener);
+			expect(event.detail.category).to.equal('ads');
+			expect(event.detail.action).to.equal('unblocked');
+			done();
+		});
+		window.document.dispatchEvent(new Event('sp.not_blocking'));
 	});
 
 });

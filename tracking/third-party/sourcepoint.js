@@ -1,21 +1,29 @@
 import {broadcast} from '../../utils';
 
-const isAllocated = function () {
+const isAllocated = () => {
 	return /spoor-id=0/.test(document.cookie);
 }
 
+const event = (action) => {
+	return {
+		category: 'ads',
+		action: action,
+		context: {
+			provider: 'sourcepoint'
+		}
+	};
+};
+
 // Loads Sourcepoint
-module.exports = function (flags) {
+module.exports = (flags) => {
 	if (flags && flags.get('sourcepoint') && isAllocated()) {
 
-		document.addEventListener('sp.blocking', function () {
-			broadcast('oTracking.event', {
-				category: 'ads',
-				action: 'blocked',
-				context: {
-					provider: 'sourcepoint'
-				}
-			});
+		document.addEventListener('sp.blocking', () => {
+			broadcast('oTracking.event', event('blocked'));
+		});
+
+		document.addEventListener('sp.not_blocking', () => {
+			broadcast('oTracking.event', event('unblocked'));
 		});
 
 		const sp = document.createElement('script');

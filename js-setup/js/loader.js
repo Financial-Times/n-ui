@@ -54,7 +54,7 @@ class JsSetup {
 
 		oErrors.init({
 			enabled: flags.get('clientErrorReporting') && this.appInfo.isProduction,
-			sentryEndpoint: 'https://edb56e86be2446eda092e69732d8654b@app.getsentry.com/32594',
+			sentryEndpoint: 'https://edb56e86be2446eda092e69732d8654b@sentry.io/32594',
 			siteVersion: this.appInfo.version,
 			logLevel: flags.get('clientDetailedErrorReporting') ? 'contextonly' : 'off',
 			tags: { appName: this.appInfo.name },
