@@ -159,7 +159,7 @@ export class ComponentInitializer {
 					}
 
 					if (config.features.welcomeMessage && !this.initializedFeatures.welcomeMessage) {
-						flags.get('welcomePanel') && welcomeMessage.init();
+						(flags.get('welcomePanel') || flags.get('compactView')) && welcomeMessage.init();
 						this.initializedFeatures.welcomeMessage = true;
 					}
 
