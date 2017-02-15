@@ -66,6 +66,7 @@ function staticAssets () {
 				bucket: 'ft-next-n-ui-prod',
 				strip: 2,
 				monitor: isOfficialRelease,
+				waitForOk: true,
 				monitorStripDirectories: true,
 				// cache resources which use valid semver for a long time, as these are never overwritten
 				// cache e.g v2, v2.2 entries with shorter, revalidatable headers
