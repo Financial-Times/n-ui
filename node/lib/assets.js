@@ -11,7 +11,6 @@ const hashedAssets = require('./hashed-assets');
 const verifyAssetsExist = require('./verify-assets-exist');
 
 function init (options, directory, locals) {
-
 	verifyAssetsExist.verify(locals);
 	const hasher = hashedAssets.init(locals);
 	nUiManager.init(directory, hasher);
@@ -51,21 +50,23 @@ function init (options, directory, locals) {
 								}
 								throw new Error('Failed to fetch n-ui stylesheet');
 							})
+							.then(text => {
+								// if it's an empty string, something probably went wrong
+								if (!text.length) {
+									throw new Error('Fetched empty n-ui stylesheet');
+								}
+								return text;
+							})
 					)
 			)
-				.then(text => {
-					// if it's an empty string, something probably went wrong
-					if (!text.length) {
-						throw new Error('Fetched empty n-ui stylesheet');
-					}
-					stylesheets['head-n-ui-core'] = text
-				})
+				.then(text => stylesheets['head-n-ui-core'] = text)
 				.then(() => logger.warn({
 					event: 'N_UI_CSS_FETCH_SUCCESS',
 					message: 'head-n-ui-core.css successfully retrieved from s3'
 				}))
 				.catch(err => {
 					logger.error('event=N_UI_CSS_FETCH_FAILURE', err)
+					// TODO
 					// for now we catch the error as the app builds the css anyway
 					// After it's been in prod a while the plan is to stop building the css in every app
 					// Then the error will need to be rethrown so the app fails to start
@@ -125,13 +126,13 @@ function init (options, directory, locals) {
 						} else if (`head${cssVariant}-n-ui-core` in stylesheets) {
 							res.locals.criticalCss.push(stylesheets[`head${cssVariant}-n-ui-core`])
 						}
-						if (`head${cssVariant}` in stylesheets) {
+						if (`head${cssVariant}` in stylesheets && stylesheets[`head${cssVariant}`].length) {
 							res.locals.criticalCss.push(stylesheets[`head${cssVariant}`]);
 						}
 					}
 
 					res.locals.cssBundles.push({
-						path: hashedAssets.get(`main${cssVariant}.css`),
+						path: hasher.get(`main${cssVariant}.css`),
 						isMain: true,
 						isLazy: options.withHeadCss
 					});

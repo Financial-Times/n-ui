@@ -3,7 +3,7 @@ const nUiManager = require ('../lib/n-ui-manager');
 const fetchMock = require('fetch-mock');
 const expect = require('chai').expect
 nUiManager.init(__dirname + '/fixtures/app');
-const initAssets = () => assets.init({withHeadCss: true}, __dirname + '/fixtures/app', str => `hashed/${str}`)
+const initAssets = () => assets.init({withHeadCss: true}, __dirname + '/fixtures/app', {__rootDirectory: __dirname + '/fixtures/app'})
 
 describe('assets lib', () => {
 	it('should try update n-ui head css from multiple urls', () => {
