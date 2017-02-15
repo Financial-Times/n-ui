@@ -24,14 +24,15 @@ const shouldPromptBeShown = (flags) => {
 };
 
 const popupTemplate = () => `
-	<aside class="subscription-prompt--wrapper subscription-prompt--pwr" data-trackable="subscription-offer-pwr-of-you">
+	<aside class="subscription-prompt--pwr" data-trackable="subscription-offer-pwr-of-you">
 		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
 			<span class="n-sliding-popup-close-label">Close</span>
 		</button>
 		<div class="o-grid-row">
-			<div data-o-grid-colspan="12">
-				<img src="https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fwww.ft.com%2F__assets%2Fcreatives%2Fthird-party%2FPowr-of-You-Logo_3600w.png?width=250&amp;source=next&amp;fit=scale-down" alt="Power of you logo"role="presentation" aria-hidden="true">
+			<div data-o-grid-colspan="5">
+				<img class="subscription-prompt--pwr__img" src="https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fgithub.com%2FFinancial-Times%2Fnext-assets%2Fblob%2Fmaster%2Fpublic-src%2Fthird-party%2FPowr-of-You-Logo_3600w.png%3Fraw%3Dtrue?source=next&width=250" alt="Power of you logo"role="presentation" aria-hidden="true">
 			</div>
+			<div data-o-grid-colspan="7"></div>
 		</div>
 		<div class="o-grid-row subscription-prompt--pwr__lead">
 			<div data-o-grid-colspan="12">
@@ -46,10 +47,10 @@ const popupTemplate = () => `
 		</div>
 		<div class="o-grid-row">
 			<div data-o-grid-colspan="6">
-				<a class="o-buttons o-buttons--big subscription-prompt--pwr__button" data-trackable="pwr_tell-me-more" href="https://www.powrofyou.com/?utm_source=ext&utm_campaign=ft">Tell me more </a>
+				<a class="o-buttons subscription-prompt--pwr__button" data-trackable="pwr_tell-me-more" href="https://www.powrofyou.com/?utm_source=ext&utm_campaign=ft">Tell me more </a>
 			</div>
 			<div data-o-grid-colspan="6">
-				<a class="o-buttons o-buttons--big o-buttons--standout subscription-prompt--pwr__button" data-trackable="pwr_sign-up" href="https://www.powrofyou.com/JoinUs?utm_source=ext&utm_campaign=ft">Yes</a>
+				<a class="o-buttons o-buttons--big o-buttons--standout subscription-prompt--pwr__button subscription-prompt--pwr__button--standout" data-trackable="pwr_sign-up" href="https://www.powrofyou.com/JoinUs?utm_source=ext&utm_campaign=ft">Yes</a>
 			</div>
 		</div>
 	</aside>
