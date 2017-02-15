@@ -104,11 +104,17 @@
 
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
-				{{#ifSome @root.flags.welcomePanel @root.flags.compactView}}
+				{{#if @root.flags.welcomePanel}}
 					{{#unlessEquals nUi.welcomeMessage false}}
 						{{>n-ui/welcome-message/template}}
 					{{/unlessEquals}}
-				{{/ifSome}}
+				{{else}}
+					{{#ifAll @root.flags.compactView isCompactView}}
+						{{#unlessEquals nUi.welcomeMessage false}}
+							{{>n-ui/welcome-message/template}}
+						{{/unlessEquals}}
+					{{/ifAll}}
+				{{/if}}
 
 					{{>n-ui/footer/template}}
 
