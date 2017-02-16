@@ -42,7 +42,7 @@ const popupTemplate = () => `
 		</div>
 		<div class="o-grid-row">
 			<div data-o-grid-colspan="12" class="subscription-prompt--pwr__main">
-				<p> Your time online is valuable. It's driving the $500 billion data economy. Want to get your share? </p>
+				<p> Your time online is valuable. It's driving the $210 billion data economy. Want to get your share? </p>
 			</div>
 		</div>
 		<div class="o-grid-row">

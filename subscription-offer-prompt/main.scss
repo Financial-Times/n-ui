@@ -145,7 +145,7 @@
 	margin-top: 10px;
 
 	& .subscription-prompt--pwr__lead__highlight {
-		color: oColorsGetPaletteColor('orange');
+		color: #F05223;
 	}
 
 	@include oGridRespondTo($until: S) {
