@@ -30,7 +30,7 @@ const popupTemplate = () => `
 		</button>
 		<div class="o-grid-row">
 			<div data-o-grid-colspan="5">
-				<img class="subscription-prompt--pwr__img" src="https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fgithub.com%2FFinancial-Times%2Fnext-assets%2Fblob%2Fmaster%2Fpublic-src%2Fthird-party%2FPowr-of-You-Logo_3600w.png%3Fraw%3Dtrue?source=next&width=250" alt="Power of you logo"role="presentation" aria-hidden="true">
+				<img class="subscription-prompt--pwr__img" src="https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fgithub.com%2FFinancial-Times%2Fnext-assets%2Fblob%2Fmaster%2Fpublic-src%2Fthird-party%2FPowr-of-You-Logo_3600w.png%3Fraw%3Dtrue?source=next&width=250" alt=""role="presentation" aria-hidden="true">
 			</div>
 			<div data-o-grid-colspan="7"></div>
 		</div>
