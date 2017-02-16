@@ -6,8 +6,6 @@
 	@warn 'you should not import n-ui/bootstrap twice';
 }
 
-@import 'env';
-
 @import 'ads/main';
 @import 'expander/main';
 // TODO: header has to come first, as footer indirectly depends on a mixin in it. Need to decouple

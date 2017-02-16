@@ -14,20 +14,13 @@ module.exports = function (withPreact, exclusions) {
 		'n-ui/notification': 'window.ftNextUi._notification',
 		'n-ui/myft': 'window.ftNextUi._myft',
 		'n-ui/typeahead': 'window.ftNextUi._typeahead',
-		'n-ui/utils': 'window.ftNextUi._utils',
+		'n-ui-foundations': 'window.ftNextUi._foundations',
 		'n-ui/myft-digest-promo': 'window.ftNextUi._myftDigestPromo',
 		'n-ui/myft-hint': 'window.ftNextUi._myftHint',
 		// wrapped origami components
-		'n-ui/date': 'window.ftNextUi._date',
 		'o-date': 'window.ftNextUi._date',
-		'n-ui/expander': 'window.ftNextUi._expander',
-		'o-expander': 'window.ftNextUi._expander',
 		'o-grid': 'window.ftNextUi._grid',
-		'n-ui/overlay': 'window.ftNextUi._overlay',
-		'o-overlay': 'window.ftNextUi._overlay',
-		'n-ui/viewport': 'window.ftNextUi._viewport',
 		'o-viewport': 'window.ftNextUi._viewport',
-		'o-video': 'window.ftNextUi._video',
 		'n-image': 'window.ftNextUi._image',
 
 		// other components

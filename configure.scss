@@ -7,28 +7,18 @@
 /// @private
 $n-ui-features: (
 	ads: 'critical',
-	buttons: false,
-	colors: true,
 	cookieMessage: true,
-	expander: false,
 	footer: true,
-	forms: false,
-	grid: 'critical',
 	header: 'critical',
-	icons: true,
 	layout: 'critical',
 	myft: true,
 	myftCommon: 'critical',
 	myftDigestPromo: false,
 	myftHint: false,
-	normalize: 'critical',
 	notification: true,
-	overlay: false,
 	pageHeading: false,
 	tourTip: false,
 	tourTipGroup: false,
-	typography: 'critical',
-	utils: 'critical',
 	welcomeMessage: true,
 	tooltip: true,
 	syndication: true
@@ -37,7 +27,7 @@ $n-ui-features: (
 /// Declare any feature dependencies
 /// @type Map
 $n-ui-feature-dependencies: (
-	myft: ('forms', 'notification', 'overlay', 'myftCommon'),
+	myft: ('forms', 'notification', 'myftCommon'),
 	tourTipGroup: ('tourTip')
 );
 
