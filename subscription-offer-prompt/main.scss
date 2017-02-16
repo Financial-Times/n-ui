@@ -111,26 +111,55 @@
 	padding: 10px;
 	background-color: white;
 	color: oColorsGetPaletteColor('grey-tint5');
+
 	& p {
 		margin: 0px;
+	}
+
+	@include oGridRespondTo($until: S) {
+		padding: 0;
 	}
 }
 
 .subscription-prompt--pwr__button {
+	@include oButtons(big);
 	width: 95%;
 	height: 20px;
+
+	@include oGridRespondTo($until: S) {
+		@include oButtons(small);
+	}
+
+	&.subscription-prompt--pwr__button--standout {
+		@include oButtonsTheme(standout);
+	}
+}
+
+.subscription-prompt--pwr__img {
+	width: 100%;
 }
 
 .subscription-prompt--pwr__lead {
 	font-size: 24px;
 	font-weight: 600;
 	margin-top: 10px;
+
 	& .subscription-prompt--pwr__lead__highlight {
 		color: oColorsGetPaletteColor('orange');
+	}
+
+	@include oGridRespondTo($until: S) {
+		font-size: 16px;
+		margin-top: 7px;
 	}
 }
 
 .subscription-prompt--pwr__main {
 	font-size: 18px;
 	margin: 10px 0 28px;
+
+	@include oGridRespondTo($until: S) {
+		font-size: 14px;
+		margin: 7px 0 24px;
+	}
 }
