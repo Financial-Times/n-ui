@@ -6,7 +6,7 @@
 
 	.n-typeahead {
 
-		@include nUtilZIndexFor('typeahead');
+		@include nUiZIndexFor('typeahead');
 		position: absolute;
 		top: 100%;
 		left: 0;

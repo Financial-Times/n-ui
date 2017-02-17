@@ -6,8 +6,8 @@
 	@warn 'you should not import n-ui/bootstrap twice';
 }
 
+@import 'n-ui-foundations/main';
 @import 'ads/main';
-@import 'expander/main';
 // TODO: header has to come first, as footer indirectly depends on a mixin in it. Need to decouple
 @import 'header/main';
 @import 'footer/main';
@@ -23,7 +23,7 @@
 @import 'syndication/main';
 
 // TODO: move these components into n-ui
-@import 'cookie-message/main';
+@import 'o-cookie-message/main';
 @import 'welcome-message/main';
 @import 'subscription-offer-prompt/main';
 

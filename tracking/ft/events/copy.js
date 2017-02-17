@@ -1,4 +1,4 @@
-const broadcast = require('../../../utils').broadcast;
+const broadcast = require('n-ui-foundations').broadcast;
 
 const Copy = function (root) {
 	this.root = root || document;

@@ -5,7 +5,7 @@ In this case we are only interested in the editorial; specifically the HUD (head
 Eventually this will be replaced by FT's in-house "lantern" application, utilising our own data.
 */
 
-import {loadScript, getCookieValue} from '../../utils';
+import {loadScript, getCookieValue} from 'n-ui-foundations';
 
 const enableChartbeat = () => {
 	window._sf_async_config = {

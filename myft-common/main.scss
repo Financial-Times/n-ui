@@ -1,4 +1,4 @@
-@import '../buttons/main';
+@import 'o-buttons/main';
 
 @mixin buttonWithIcon($iconSpace, $iconSize, $colorOff, $iconOff, $iconOn: $iconOff, $colorOn: $colorOff) {
 	$topMargin: #{$iconSize * -0.5}px;

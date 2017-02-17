@@ -5,7 +5,7 @@ import {
 	difference, dateInFuture, addToDate,
 	element, elementExists, createElement,
 	padLeft, toCurrency,
-} from '../utils';
+} from 'n-ui-foundations';
 
 const _localStorage = window.localStorage;
 const _sessionStorage = window.sessionStorage;

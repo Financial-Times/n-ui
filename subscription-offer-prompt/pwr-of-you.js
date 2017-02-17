@@ -2,7 +2,7 @@ import SlidingPopup from 'n-sliding-popup';
 import Superstore from 'superstore'
 
 import * as utils from './utils';
-import { broadcast } from '../utils';
+import { broadcast } from 'n-ui-foundations';
 
 const promptLastSeenStorage = new Superstore('local', 'n-ui.subscription-offer-pwr-of-you');
 const promptLastSeenStorageKey = 'last-closed-pwr';

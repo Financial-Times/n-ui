@@ -29,7 +29,7 @@
 		}
 
 		.o-header__mega {
-			@include nUtilZIndexFor('meganav');
+			@include nUiZIndexFor('meganav');
 		}
 
 		.o-header__drawer,
@@ -39,7 +39,7 @@
 
 		// skip links for keyboard users
 		.n-skip-link {
-			@include nUtilZIndexFor('notification');
+			@include nUiZIndexFor('notification');
 			position: absolute;
 			top: 1em;
 			left: -9999px;
@@ -69,10 +69,10 @@
 	@include nTypeahead;
 	// fix up z-indexes
 	.o-header__drawer {
-		@include nUtilZIndexFor('drawer');
+		@include nUiZIndexFor('drawer');
 	}
 	.o-header--sticky {
-		@include nUtilZIndexFor('sticky-header');
+		@include nUiZIndexFor('sticky-header');
 	}
 
 	.o-header__drawer,
