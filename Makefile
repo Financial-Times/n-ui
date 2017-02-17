@@ -46,7 +46,7 @@ a11y: test-build pally-conf
 	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
 	PA11Y=true node _test-server/app
 
-# Note: `run` executes `node _test-server/app`, which fires up exchange, then deploys 
+# Note: `run` executes `node _test-server/app`, which fires up exchange, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
 test: developer-note verify pally-conf test-server test-unit test-build run nightwatch a11y
 
