@@ -113,7 +113,7 @@ const oTrackingWrapper = {
 				// https://docs.google.com/document/d/18_yV2s813XCrBF7w6196FLhLJzWXK4hXT2sIpDZVvhQ/edit?ts=575e9368#
 				const opportunity = {
 					type: (isProductSelector) ? 'products' : 'barrier',
-					subtype: barrierType.getAttribute('data-barrier')
+					subtype: barrierType.getAttribute('data-opportunity-subtype') || barrierType.getAttribute('data-barrier')
 				}
 
 				const offers = document.querySelectorAll('[data-offer-id]');

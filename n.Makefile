@@ -28,7 +28,7 @@ NPM_INSTALL = npm prune --production=false && npm install
 BOWER_INSTALL = bower prune && bower install --config.registry.search=http://registry.origami.ft.com --config.registry.search=https://bower.herokuapp.com
 JSON_GET_VALUE = grep $1 | head -n 1 | sed 's/[," ]//g' | cut -d : -f 2
 IS_GIT_IGNORED = grep -q $(if $1, $1, $@) .gitignore
-VERSION = v3
+VERSION = v6
 APP_NAME = $(shell cat package.json 2>/dev/null | $(call JSON_GET_VALUE,name))
 DONE = echo ✓ $@ done
 CONFIG_VARS = curl -fsL https://ft-next-config-vars.herokuapp.com/$1/$(call APP_NAME)$(if $2,.$2,) -H "Authorization: `heroku config:get APIKEY --app ft-next-config-vars`"
@@ -175,7 +175,9 @@ _verify_pa11y_testable:
 _run_pa11y:
 	echo $(CIRCLE_BRANCH)
 ifneq ($(CIRCLE_BRANCH),)
-	@export TEST_URL=http://${TEST_APP}.herokuapp.com; pa11y-ci;
+	@export TEST_URL=${TEST_APP}; \
+	echo ${TEST_APP} | grep http -s || export TEST_URL=http://${TEST_APP}.herokuapp.com; \
+	pa11y-ci;
 else
 	@export TEST_URL=http://local.ft.com:3002; pa11y-ci;
 endif

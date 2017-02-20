@@ -5,22 +5,30 @@ import * as utils from './utils';
 import { broadcast } from 'n-ui-foundations';
 
 const promptLastSeenStorage = new Superstore('local', 'n-ui.subscription-offer-pwr-of-you');
+const lionelLastSeenStorage = new Superstore('local', 'n-ui.subscription-offer-prompt');
+
 const promptLastSeenStorageKey = 'last-closed-pwr';
+const lionelLastSeenStorageKey = 'last-closed';
 
 const getPromptLastClosed = () => promptLastSeenStorage.get(promptLastSeenStorageKey);
+
+const getLionelLastClosed = () => lionelLastSeenStorage.get(lionelLastSeenStorageKey);
 
 const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorageKey, Date.now());
 
 /**
  * Show the prompt if
  *	* the prompt has not been closed, or was last closed more than 30 days ago
- *	* usElection2016DiscountSlider flag is true
+ *	* PowrOfYouSlider flag is true
+ *	* The lionel slider has been closed at least once (lionelLastSeenStorageKey exists)
  */
 const shouldPromptBeShown = (flags) => {
-	return getPromptLastClosed()
-		.then(promptLastClosed => {
-			return (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && flags.get('PowerOfYouSlider');
-		})
+	return Promise.all([
+			getPromptLastClosed(),
+			getLionelLastClosed(),
+		]).then(([promptLastClosed, lionelLastClosed]) => {
+			return !!lionelLastClosed && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && flags.get('PowerOfYouSlider');
+		});
 };
 
 const popupTemplate = () => `
@@ -42,7 +50,7 @@ const popupTemplate = () => `
 		</div>
 		<div class="o-grid-row">
 			<div data-o-grid-colspan="12" class="subscription-prompt--pwr__main">
-				<p> Your time online is valuable. It's driving the $500 billion data economy. Want to get your share? </p>
+				<p> Your time online is valuable. It's driving the $210 billion data economy. Want to get your share? </p>
 			</div>
 		</div>
 		<div class="o-grid-row">
