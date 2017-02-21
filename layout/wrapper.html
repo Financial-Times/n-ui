@@ -108,6 +108,12 @@
 					{{#unlessEquals nUi.welcomeMessage false}}
 						{{>n-ui/welcome-message/template}}
 					{{/unlessEquals}}
+				{{else}}
+					{{#ifAll @root.flags.compactView isCompactView}}
+						{{#unlessEquals nUi.welcomeMessage false}}
+							{{>n-ui/welcome-message/template}}
+						{{/unlessEquals}}
+					{{/ifAll}}
 				{{/if}}
 
 					{{>n-ui/footer/template}}

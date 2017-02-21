@@ -62,8 +62,8 @@ const pa11yIgnore = [
 	'syndication'
 ];
 
-function getDirectories(srcpath) {
-	return fs.readdirSync(srcpath).filter(function(file) {
+function getDirectories (srcpath) {
+	return fs.readdirSync(srcpath).filter(function (file) {
 		return fs.statSync(path.join(srcpath, file)).isDirectory() && pa11yIgnore.indexOf(file) < 0;
 	});
 }

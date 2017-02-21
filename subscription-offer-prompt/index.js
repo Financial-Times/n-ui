@@ -35,7 +35,7 @@ const isLoggedIn = utils.getCookie('FTSession');
 export default function init (flags) {
 	const messagesEnabled = flags.get('b2cMessagePrompt');
 
-	if (isLoggedIn() || document.querySelector('.ft-subscription-panel') || !messagesEnabled || document.querySelector('.inline-barrier') ) {
+	if (isLoggedIn() || document.querySelector('.ft-subscription-panel') || !messagesEnabled || document.querySelector('.inline-barrier') || document.querySelector('.sub-header--fastft') ) {
 		return;
 	}
 	else {
