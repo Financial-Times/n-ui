@@ -69,6 +69,7 @@ deploy: assets
 	HOUR=$$(date +%H); DAY=$$(date +%u); if [ $$HOUR -ge 9 ] && [ $$HOUR -lt 17 ] && [ $$DAY -ge 0 ] && [ $$DAY -lt 6 ]; then \
 	# temporary disable autobuild *just in case* this css thing goes wrong
 	# echo "REBUILDING ALL APPS" && sleep 20 && nht rebuild --all --serves user-page; fi
+	echo "TEMPORARILY NOT REBUILDING ALL APPS"
 
 serve:
 	@echo '`make serve` is no longer needed to bower link.'
