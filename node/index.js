@@ -103,6 +103,9 @@ module.exports = options => {
 		const assetManager = assets.init(options, meta.directory, app.locals);
 		app.getHashedAssetUrl = assetManager.hasher.get;
 		app.use(assetManager.middleware);
+		if (options.withHeadCss) {
+			addInitPromise(assetManager.fetchNUiCss())
+		}
 	}
 
 	if (options.withHandlebars) {
