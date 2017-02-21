@@ -237,7 +237,7 @@
 
 	/* START styles only for old welcome message (pre 'banner layout') */
 	.n-welcome-message__heading {
-		@include oTypographySansSize('m', $load-progressively: true);
+		@include oTypographySansSize('m');
 		margin: 0 0 $spacing-unit/4;
 	}
 
