@@ -53,6 +53,7 @@ app.get('*', (req, res) => {
 
 app.listen(5005)
 	.then(app => {
+		const developerFeedback = '*\r\n* Developers note: _test-server/app only does anything if there\'s a `process.env.PA11Y` or a `process.env.CIRCLE_BUILD_NUM` environment variable. Basically, it\'s only meant to run in CircleCI. \r\n*';
 		if (process.env.PA11Y) {
 			const spawn = require('child_process').spawn;
 			const pa11y = spawn('pa11y-ci');
@@ -68,9 +69,9 @@ app.listen(5005)
 			pa11y.on('close', (code) => {
 				process.exit(code)
 			});
-		} else if (process.env.CIRCLE_BUILD_NUM) {
-			// in CI generate a test page and send it to S3
-
+		}
+		// In CircleCI: Deploy a test static site to s3 (Amazon AWS) for testing.
+		else if (process.env.CIRCLE_BUILD_NUM) {
 			fetch('http://localhost:5005/', {
 				headers: {
 					'FT-Flags': 'ads:off'
@@ -99,5 +100,8 @@ app.listen(5005)
 					console.error(err) //eslint-disable-line
 					process.exit(2);
 				})
+		}
+		else {
+			console.error(developerFeedback) //eslint-disable-line
 		}
 	});

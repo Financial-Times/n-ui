@@ -17,7 +17,11 @@ watch:
 test-unit:
 	karma start karma.conf.js
 
+# test-unit-dev is only for development environments.
 test-unit-dev:
+	$(info *)
+	$(info * Developers note: This test will never "complete". It's meant to run in a separate tab. It'll automatically rerun tests whenever one of your files changes.)
+	$(info *)
 	karma start karma.conf.js --single-run false --auto-watch true
 
 test-build:
@@ -42,8 +46,20 @@ a11y: test-build pally-conf
 	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
 	PA11Y=true node _test-server/app
 
-test: verify pally-conf test-server test-unit test-build run nightwatch a11y
+# Note: `run` executes `node _test-server/app`, which fires up exchange, then deploys
+# a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
+test: developer-note verify pally-conf test-server test-unit test-build run nightwatch a11y
 
+developer-note:
+ifeq ($(NODE_ENV),) # Not production
+ifeq ($(CIRCLE_BRANCH),) # Not CircleCI
+	$(info *)
+	$(info * Developers note: `make test` is meant for CircleCI, not development. Instead, you should `make test-dev`.)
+	$(info *)
+endif
+endif
+
+# Test-dev is only for development environments.
 test-dev: verify test-unit-dev
 
 deploy: assets
