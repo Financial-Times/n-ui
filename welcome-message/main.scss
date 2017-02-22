@@ -34,7 +34,7 @@
 }
 
 .n-welcome-message--fixed {
-	@include nUtilZIndexFor('welcome');
+	@include nUiZIndexFor('welcome');
 	@include oEffectsShadowsElevation('mid');
 	position: fixed;
 	right: 0;

@@ -3,7 +3,6 @@ window.nextFeatureFlags = [{name: 'aFlag', state: true}];
 const nUi = require('../main');
 const jsSetup = require('../js-setup');
 const entry = require('../_entry');
-import { presets } from '../js-setup/js/component-initializer';
 
 describe('n-ui', () => {
 
