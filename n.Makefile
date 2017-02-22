@@ -28,7 +28,7 @@ NPM_INSTALL = npm prune --production=false && npm install
 BOWER_INSTALL = bower prune && bower install --config.registry.search=http://registry.origami.ft.com --config.registry.search=https://bower.herokuapp.com
 JSON_GET_VALUE = grep $1 | head -n 1 | sed 's/[," ]//g' | cut -d : -f 2
 IS_GIT_IGNORED = grep -q $(if $1, $1, $@) .gitignore
-VERSION = v6
+VERSION = v10
 APP_NAME = $(shell cat package.json 2>/dev/null | $(call JSON_GET_VALUE,name))
 DONE = echo ✓ $@ done
 CONFIG_VARS = curl -fsL https://ft-next-config-vars.herokuapp.com/$1/$(call APP_NAME)$(if $2,.$2,) -H "Authorization: `heroku config:get APIKEY --app ft-next-config-vars`"
@@ -92,7 +92,7 @@ ifneq ($(CIRCLE_BUILD_NUM),)
 # The app is using n-ui
 ifneq ($(shell grep -s -Fim 1 n-ui bower.json),)
 # versions in package.json and bower.json are not equal
-ifneq ($(shell grep -s -Fim 1 \"version\" bower_components/n-ui/.bower.json | sed s/,//),$(shell grep -s -Fim 1 \"version\" node_modules/@financial-times/n-ui/package.json | sed s/,//))
+ifneq ($(shell awk '$$1 == "\"version\":" {print $$2}' bower_components/n-ui/.bower.json | sed s/,//),$(shell awk '$$1 == "\"version\":" {print $$2}'  node_modules/@financial-times/n-ui/package.json | sed s/,//))
 	$(error 'Projects using n-ui must maintain parity between versions. Rebuild without cache and update your bower.json and package.json if necessary')
 endif
 endif
