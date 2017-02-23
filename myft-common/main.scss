@@ -94,6 +94,16 @@
 		width: 34px;
 		margin: 0 8px -5px;
 	}
+
+	// shouldn't really be in here, but a temporary hack while n-ui styles are on the move
+	.myft-hint {
+		display: none;
+	}
+
+	.n-myft-digest-promo {
+		display: none;
+	}
+
 	@include nUiStylesheetEnd('head-n-ui-core');
 }
 
