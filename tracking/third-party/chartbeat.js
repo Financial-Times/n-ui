@@ -5,7 +5,15 @@ In this case we are only interested in the editorial; specifically the HUD (head
 Eventually this will be replaced by FT's in-house "lantern" application, utilising our own data.
 */
 
-import {loadScript, getCookieValue} from 'n-ui-foundations';
+import {cookieStore} from 'n-ui-foundations';
+
+const loadScript = (src) => {
+	return new Promise((res, err) => {
+		const script = window.ftNextLoadScript(src);
+		script.addEventListener('load', res);
+		script.addEventListener('error', err);
+	});
+};
 
 const enableChartbeat = () => {
 	window._sf_async_config = {
@@ -30,7 +38,7 @@ module.exports = flags => {
 		enableChartbeat();
 	}
 	else if (flags.get('chartbeat')) {
-		const spoorId = getCookieValue('spoor-id');
+		const spoorId = cookieStore.get('spoor-id');
 		const spoorNumber = spoorId.replace(/-/g, '');
 		const spoorNumberTrim = spoorNumber.substring(spoorNumber.length - 12, spoorNumber.length); // Don't overflow the int
 		const spoorNumberDec = parseInt(spoorNumberTrim, 16);
