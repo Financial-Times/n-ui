@@ -8,7 +8,8 @@ if (!window.console) {
 }
 
 import {load as loadFonts} from 'n-ui-foundations/typography/font-loader';
-import {loadScript, waitForCondition, perfMark} from 'n-ui-foundations';
+import {loadScript, waitForCondition} from './utils';
+import {perfMark} from 'n-ui-foundations';
 import instrumentFetch from './instrument-fetch';
 const oErrors = require('o-errors');
 

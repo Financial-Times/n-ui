@@ -4,7 +4,7 @@ const ComponentInitializer = require('../js/component-initializer').ComponentIni
 const jsLoader = require('../js/loader');
 const header = require('../../header');
 const footer = require('../../footer');
-const date = require('../../date');
+const date = require('o-date');
 const ads = require('../../ads');
 const tracking = require('../../tracking');
 

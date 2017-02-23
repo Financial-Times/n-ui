@@ -3,7 +3,6 @@ window.nextFeatureFlags = [{name: 'aFlag', state: true}];
 const nUi = require('../main');
 const jsSetup = require('../js-setup');
 const entry = require('../_entry');
-import { presets } from '../js-setup/js/component-initializer';
 
 describe('n-ui', () => {
 
@@ -12,25 +11,22 @@ describe('n-ui', () => {
 		expect(nUi.configure).to.equal(jsSetup.configure);
 	});
 
-	Array.from(
-		new Set(
-			Object.keys(presets.complete).filter(key => !!presets.complete[key])
-		)
-	).concat([
+	[
+		'date',
+		'myft',
+		'ads',
+		'tooltip',
+		'syndication',
 		'tracking',
-		'utils',
 		'ftdomdelegate',
 		'superstore',
 		'superstoreSync',
 		'React',
 		'ReactDom',
 		'notification',
-		'expander',
 		'grid',
-		'overlay',
-		'viewport',
-		'video'
-	])
+		'viewport'
+	]
 		.forEach(mod => {
 			it(`should export _${mod}`, () => {
 				expect(nUi['_' + mod]).to.exist;
@@ -49,7 +45,6 @@ describe('n-ui', () => {
 		describe('aliasing origami components', () => {
 			Object.keys(aliases)
 				.forEach(alias => {
-
 					if (/^n-ui\//.test(alias)) {
 						const oAlias = alias.replace(/^n-ui\//, 'o-');
 						if (aliases[oAlias]) {
