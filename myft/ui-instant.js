@@ -3,14 +3,14 @@
 * ui.js has become so complex that we are splitting instant alerts into its own file until it gets refactored
 */
 
-const nextButtons = require('../buttons');
+const nextButtons = require('../myft-common');
 const nNotification = require('../notification');
 const Delegate = require('ftdomdelegate');
 const myftClient = require('next-myft-client');
 
 const delegate = new Delegate(document.body);
-const $ = require('../utils').$
-const $$ = require('../utils').$$
+const $ = require('n-ui-foundations').$
+const $$ = require('n-ui-foundations').$$
 const subscribeUrl = '/products?segID=400863&segmentID=190b4443-dc03-bd53-e79b-b4b6fbd04e64';
 const signInLink = '/login';
 

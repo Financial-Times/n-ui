@@ -1,4 +1,4 @@
-import { $$ } from '../utils';
+import { $$ } from 'n-ui-foundations';
 
 const IOS_DEVICE_REGEX = /OS (7|8|9|10).* like Mac OS X.*/i;
 const ANDROID_DEVICE_REGEX = /Android (4\.[3-9]|[5-9])/i;

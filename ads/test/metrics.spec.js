@@ -1,6 +1,6 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
 const sendMetrics = require('../js/metrics')
-const utils = require('../../utils')
+const utils = require('n-ui-foundations')
 
 const broadcast = sinon.stub(utils, 'broadcast', () => {})
 

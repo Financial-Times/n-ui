@@ -1,6 +1,1 @@
-$n-ui-output-critical: true;
-@import "../configure";
-@include nUiConfigure(
-	$preset: 'complete'
-);
-@import "../bootstrap";
+@import "../main";

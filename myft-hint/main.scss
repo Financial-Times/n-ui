@@ -1,72 +1,72 @@
-@include nUiCritical('myftHint') {
-		.myft-hint {
-			display: none;
-		}
+@include nUiStylesheet('head-n-ui-core') {
+	.myft-hint {
+		display: none;
+	}
 };
 
-	@keyframes bounce {
-		from {
-			right: 90px;
-		}
-
-		to {
-			right: 100px;
-		}
+@keyframes bounce {
+	from {
+		right: 90px;
 	}
 
-	.myft-hint {
-		animation-duration: 1s;
-		animation-name: bounce;
-		animation-iteration-count: infinite;
-		animation-direction: alternate;
+	to {
+		right: 100px;
 	}
+}
 
-	.myft-hint__container {
-		background-color: getColor('white');
-		border: 1px solid getColor('pink-tint4');
-		white-space: nowrap;
-		position: relative;
-		border-radius: 5px;
-		box-shadow: -1px 1px getColor('pink-tint4');
-		&::before {
-			width: 0;
-			height: 0;
-			border-top: 12px solid transparent;
-			border-bottom: 12px solid transparent;
-			border-left: 12px solid getColor('pink-tint4');
-			content: '';
-			position: absolute;
-			top: 33%;
-			left: 100%;
-		}
-		&::after {
-			width: 0;
-			height: 0;
-			border-top: 10px solid transparent;
-			border-bottom: 10px solid transparent;
-			border-left: 10px solid getColor('white');
-			content: '';
-			position: absolute;
-			top: 35%;
-			left: 100%;
-		}
-	}
+.myft-hint {
+	animation-duration: 1s;
+	animation-name: bounce;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+}
 
-	.myft-hint__content {
-		@include oTypographySans(xs);
-		padding: 0;
-		margin: 8px 12px 8px 8px;
-		width: 100%;
-		text-align: left;
-		text-transform: none;
-		line-height: 120%;
+.myft-hint__container {
+	background-color: getColor('white');
+	border: 1px solid getColor('pink-tint4');
+	white-space: nowrap;
+	position: relative;
+	border-radius: 5px;
+	box-shadow: -1px 1px getColor('pink-tint4');
+	&::before {
+		width: 0;
+		height: 0;
+		border-top: 12px solid transparent;
+		border-bottom: 12px solid transparent;
+		border-left: 12px solid getColor('pink-tint4');
+		content: '';
+		position: absolute;
+		top: 33%;
+		left: 100%;
 	}
+	&::after {
+		width: 0;
+		height: 0;
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+		border-left: 10px solid getColor('white');
+		content: '';
+		position: absolute;
+		top: 35%;
+		left: 100%;
+	}
+}
 
-	.myft-hint__show {
-		@include oGridRespondTo('L') {
-			display: block;
-			position: absolute;
-			bottom: 20px;
-			right: 90px;
-		}
+.myft-hint__content {
+	@include oTypographySans(xs);
+	padding: 0;
+	margin: 8px 12px 8px 8px;
+	width: 100%;
+	text-align: left;
+	text-transform: none;
+	line-height: 120%;
+}
+
+.myft-hint__show {
+	@include oGridRespondTo('L') {
+		display: block;
+		position: absolute;
+		bottom: 20px;
+		right: 90px;
 	}
+}
