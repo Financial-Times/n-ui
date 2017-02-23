@@ -1,8 +1,8 @@
-@include nUiStylesheet('head-n-ui-core') {
+@include nUiStylesheetStart('head-n-ui-core');
 	.myft-hint {
 		display: none;
 	}
-};
+@include nUiStylesheetEnd('head-n-ui-core');
 
 @keyframes bounce {
 	from {
