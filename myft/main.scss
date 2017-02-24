@@ -1,7 +1,15 @@
 @import 'o-buttons/main';
+
+$o-forms-is-silent: false;
 @import 'o-forms/main';
+$o-forms-is-silent: true;
+
 @import '../notification/main';
+
+$o-overlay-is-silent: false;
 @import 'o-overlay/main';
+$o-overlay-is-silent: true;
+
 @import '../myft-common/main';
 @import 'scss/preference';
 
