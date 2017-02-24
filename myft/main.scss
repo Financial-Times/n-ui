@@ -10,7 +10,6 @@ $o-overlay-is-silent: false;
 @import 'o-overlay/main';
 $o-overlay-is-silent: true;
 
-@import '../myft-common/main';
 @import 'scss/preference';
 
 @include nUiMyftPrefs;
