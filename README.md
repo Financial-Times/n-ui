@@ -1,6 +1,6 @@
 # n-ui
 
-~~An experiment bunching some of Next's client-side code into a single repository. [Motivation](Explainer.md).~~
+~~An experiment bunching some of Next's client-side code into a single repository. [Motivation](Explainer.md).~~  
 Server, build and client side bootstrapping for next's user-facing applications.
 
 ### Dev workflow
