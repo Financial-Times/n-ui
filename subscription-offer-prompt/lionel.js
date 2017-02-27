@@ -9,7 +9,8 @@ const promptLastSeenStorageKey = 'last-closed';
 
 const getProductSelectorLastSeen = () => {
 	const sessionStore = new Superstore('session', 'next.product-selector');
-	return sessionStore.get('last-seen');
+	return sessionStore.get('last-seen')
+		.catch(() => null)
 };
 
 const getPromptLastClosed = () => promptLastSeenStorage.get(promptLastSeenStorageKey);
