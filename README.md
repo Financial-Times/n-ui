@@ -1,8 +1,7 @@
 # n-ui
 
-An experiment bunching some of Next's client-side code into a single repository. [Motivation](Explainer.md).
-
-This project consists of many modules. They include the primitive building blocks used by the majority of Next applications, constitute the basic look and feel of a page and integrate with upstream Origami modules for consistency across FT digital products.
+~~An experiment bunching some of Next's client-side code into a single repository. [Motivation](Explainer.md).~~  
+Server, build and client side bootstrapping for next's user-facing applications.
 
 ### Dev workflow
 
@@ -31,21 +30,16 @@ We hope to be able to a11y test all components before they are used in an app an
 
 ## Releasing n-ui
 When you release an n-ui tag 2 things happen
--serves user-page` from within an app to trigger a rebuild of all user facing apps
-- After a successful build the javascript will be bundled and pushed out to S3. The Fastly cache of this file will be purged immediately, but users may have the last version cached in their browser for up to 20 minutes. For this reason, it's best to observe the following:
-	- if there are style + template changes in your release, wait 20 minutes before triggering a rebuild of all apps
-	- be defensive and rigorous in coding your core experience - in the relatively unlikely event that an app rebuilds with the style + template changes before your js changes have deployed, the experience will not appear broken to the user _if_ you either hide the component or provide a good core experience whne the js to handle it isn't present
+- assets are built and deployed to s3
+- during work hours, all user-facing apps are rebuilt to pick up the changes
 
 ## Usage
 
-For CSS usage information see [the wiki](https://github.com/Financial-Times/n-ui/wiki).
+WIP
 
 ## Adding subcomponents
 
-1.	Create a subdirectory for your component, add code, docs and tests
-2.	For the js, make sure it’s referred to appropriately in `main.js`, `entry.js` and (if it’s part of the ‘app shell’) `js-setup/js/component-initializer.js`. If it has tests (which it should have) add the component’s name to the list at the top of `karma.conf.js`
-3.	For css add to `configure.css` and `env.css` as appropriate
-4.	Add use cases of the component to `_test/server/views/default.html` and `_test-server/template-copy-list.txt` as appropriate
+**Don't** - n-ui is no longer a place to dump all next components. If you need to create a new shared component create a new repo for it and use the `n-ui-foundations` component to access primitive styles as used in next.
 
 ## JS usage
 

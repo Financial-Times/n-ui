@@ -5,7 +5,7 @@ module.exports = {
 			size: 'l'
 		},
 		content: {
-			title: 'Welcome to the new FT',
+			title: 'Welcome to the FT',
 			body: 'Take a moment to explore key features below.',
 			imageAlt: 'A laptop with the new FT.com loaded',
 			imageUrl: 'https://www.ft.com/__assets/creatives/tour/pack-shot-2.png',
