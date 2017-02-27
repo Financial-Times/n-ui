@@ -2,127 +2,126 @@
 @import 'scss/marketing-promo';
 @import '../typeahead/main';
 
-@if nUiApply('header') {
 
-	@include nUiCritical('core') {
+@include nUiStylesheetStart('head-n-ui-core');
 
-		@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu', 'simple'));
-		// force display of search row
-		// <https://github.com/Financial-Times/o-header/blob/2ebf2cbe6b7508a03e0989ff57f1029e12c0506c/src/scss/rows/_search.scss#L13-L15>
-		.core [data-o-header-search] {
-			display: block;
-		}
-
-		// inelegant gymnastics to fix focus outline of the first breadcrumb link
-		.o-header__subnav-wrap-outside {
-			margin-left: -2px;
-		}
-		.o-header__subnav-list--breadcrumb .o-header__subnav-item:first-child .o-header__subnav-link {
-			margin-left: 2px;
-		}
-
-		// add next opt-out buttons
-		.o-header__drawer-menu-button {
-			@include oButtons('medium', 'standout');
-			display: block;
-			margin: $_o-header-drawer-padding-x;
-		}
-
-		.o-header__mega {
-			@include nUtilZIndexFor('meganav');
-		}
-
-		.o-header__drawer,
-		.o-header--sticky {
-			display: none;
-		}
-
-		// skip links for keyboard users
-		.n-skip-link {
-			@include nUtilZIndexFor('notification');
-			position: absolute;
-			top: 1em;
-			left: -9999px;
-			padding: 0.5em 1em;
-			background: getColor('purple-1');
-			color: getColor('white');
-
-			&:focus {
-				@include oEffectsShadowsElevation('high');
-				left: 0;
-				color: getColor('white');
-			}
-		}
-
-		.o-header__search-close {
-			margin-bottom: -3px;
-		}
-
-		@include nUiHeaderMarketingPromo;
-		.n-typeahead {
-			display: none;
-		}
+	@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu', 'simple'));
+	// force display of search row
+	// <https://github.com/Financial-Times/o-header/blob/2ebf2cbe6b7508a03e0989ff57f1029e12c0506c/src/scss/rows/_search.scss#L13-L15>
+	.core [data-o-header-search] {
+		display: block;
 	}
 
-	@include oHeaderDrawer;
-	@include oHeaderSticky;
-	@include nTypeahead;
-	// fix up z-indexes
-	.o-header__drawer {
-		@include nUtilZIndexFor('drawer');
+	// inelegant gymnastics to fix focus outline of the first breadcrumb link
+	.o-header__subnav-wrap-outside {
+		margin-left: -2px;
 	}
-	.o-header--sticky {
-		@include nUtilZIndexFor('sticky-header');
+	.o-header__subnav-list--breadcrumb .o-header__subnav-item:first-child .o-header__subnav-link {
+		margin-left: 2px;
+	}
+
+	// add next opt-out buttons
+	.o-header__drawer-menu-button {
+		@include oButtons('medium', 'standout');
+		display: block;
+		margin: $_o-header-drawer-padding-x;
+	}
+
+	.o-header__mega {
+		@include nUiZIndexFor('meganav');
 	}
 
 	.o-header__drawer,
 	.o-header--sticky {
-		display: block;
+		display: none;
 	}
 
-	.o-header__drawer__viewtoggle {
-		display: flex;
-		align-items: center;
-		padding: 0 16px;
-		font-size: 18px;
-		width: 100%;
-		box-sizing: border-box;
-		border-top: 1px solid #cec6b9;
-		border-bottom: 1px solid #cec6b9;
+	// skip links for keyboard users
+	.n-skip-link {
+		@include nUiZIndexFor('notification');
+		position: absolute;
+		top: 1em;
+		left: -9999px;
+		padding: 0.5em 1em;
+		background: getColor('purple-1');
+		color: getColor('white');
 
-		.o-header__viewtoggle__label {
-			padding: 12px 12px 12px 0;
+		&:focus {
+			@include oEffectsShadowsElevation('high');
+			left: 0;
+			color: getColor('white');
 		}
 	}
 
-	.o-header__drawer__view-toggle-item--active {
-		color: getColorFor(page, text);
-		border: 0;
-		cursor: text;
-		font-weight: bold;
+	.o-header__search-close {
+		margin-bottom: -3px;
 	}
 
-	@media print {
-		.o-header--sticky {
-			display: none;
-		}
+	@include nUiHeaderMarketingPromo;
+	.n-typeahead {
+		display: none;
 	}
 
-	.o-header__top-link--myft {
-		position: relative;
-	}
+@include nUiStylesheetEnd('head-n-ui-core');
 
-	.o-header__drawer-current-edition {
-		// not in o-colors! Blame Ollie
-		color: #66605a;
-		margin: 0.5em 0;
-	}
+@include oHeaderDrawer;
+@include oHeaderSticky;
+@include nTypeahead;
+// fix up z-indexes
+.o-header__drawer {
+	@include nUiZIndexFor('drawer');
+}
+.o-header--sticky {
+	@include nUiZIndexFor('sticky-header');
+}
 
-	.o-header__drawer-homepage {
-		border-top: 2px solid getColor('pink-tint2');
-	}
+.o-header__drawer,
+.o-header--sticky {
+	display: block;
+}
 
-	.o-header__drawer-search {
-		border-top: 2px solid getColor('pink-tint2');
+.o-header__drawer__viewtoggle {
+	display: flex;
+	align-items: center;
+	padding: 0 16px;
+	font-size: 18px;
+	width: 100%;
+	box-sizing: border-box;
+	border-top: 1px solid #cec6b9;
+	border-bottom: 1px solid #cec6b9;
+
+	.o-header__viewtoggle__label {
+		padding: 12px 12px 12px 0;
 	}
+}
+
+.o-header__drawer__view-toggle-item--active {
+	color: getColorFor(page, text);
+	border: 0;
+	cursor: text;
+	font-weight: bold;
+}
+
+@media print {
+	.o-header--sticky {
+		display: none;
+	}
+}
+
+.o-header__top-link--myft {
+	position: relative;
+}
+
+.o-header__drawer-current-edition {
+	// not in o-colors! Blame Ollie
+	color: #66605a;
+	margin: 0.5em 0;
+}
+
+.o-header__drawer-homepage {
+	border-top: 2px solid getColor('pink-tint2');
+}
+
+.o-header__drawer-search {
+	border-top: 2px solid getColor('pink-tint2');
 }

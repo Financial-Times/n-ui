@@ -2,14 +2,15 @@ import SlidingPopup from 'n-sliding-popup';
 import Superstore from 'superstore'
 
 import * as utils from './utils';
-import { broadcast } from '../utils';
+import { broadcast } from 'n-ui-foundations';
 
 const promptLastSeenStorage = new Superstore('local', 'n-ui.subscription-offer-prompt');
 const promptLastSeenStorageKey = 'last-closed';
 
 const getProductSelectorLastSeen = () => {
 	const sessionStore = new Superstore('session', 'next.product-selector');
-	return sessionStore.get('last-seen');
+	return sessionStore.get('last-seen')
+		.catch(() => null)
 };
 
 const getPromptLastClosed = () => promptLastSeenStorage.get(promptLastSeenStorageKey);

@@ -1,4 +1,4 @@
-const broadcast = require('../../../utils').broadcast;
+const broadcast = require('n-ui-foundations').broadcast;
 
 const track = (componentId, componentPos) =>
 	broadcast('oTracking.event', { category: 'page', action: 'scrolldepth', componentId, componentPos });

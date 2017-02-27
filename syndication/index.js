@@ -1,4 +1,4 @@
-import {$$, $} from '../utils';
+import {$$, $} from 'n-ui-foundations';
 
 import {products as getUserProducts} from 'next-session-client';
 const SYNDICATION_PRODUCT_CODE = 'S1';

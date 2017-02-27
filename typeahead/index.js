@@ -1,5 +1,5 @@
 const Delegate = require('ftdomdelegate');
-import { debounce } from '../utils';
+import { debounce } from 'n-ui-foundations';
 import { SuggestionList } from './suggestion-list';
 
 const React = require('react');

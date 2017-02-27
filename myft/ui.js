@@ -1,16 +1,16 @@
 //TODO: refactor the massive out of this
 
-const nextButtons = require('../buttons');
+const nextButtons = require('../myft-common');
 const nNotification = require('../notification');
-const Overlay = require('../overlay');
+const Overlay = require('o-overlay');
 const myftClient = require('next-myft-client');
 const Delegate = require('ftdomdelegate');
 
 const delegate = new Delegate(document.body);
 const pushNotifications = require('./js/push-notifications');
 const grabUrlHashWithPrefix = require('./js/grab-url-hash-with-prefix');
-const uuid = require('../utils').uuid;
-const $$ = require('../utils').$$
+const uuid = require('n-ui-foundations').uuid;
+const $$ = require('n-ui-foundations').$$
 
 const subscribeUrl = '/products?segID=400863&segmentID=190b4443-dc03-bd53-e79b-b4b6fbd04e64';
 const signInLink = '/login';

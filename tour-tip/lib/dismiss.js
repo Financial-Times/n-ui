@@ -1,5 +1,5 @@
 const superstore = require('superstore-sync');
-const broadcast = require('n-ui/utils').broadcast;
+const broadcast = require('n-ui-foundations').broadcast;
 
 let dismisserButtons = [];
 let tipContainerEls;

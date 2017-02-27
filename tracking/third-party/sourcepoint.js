@@ -1,4 +1,4 @@
-import {broadcast} from '../../utils';
+import {broadcast} from 'n-ui-foundations';
 
 const isAllocated = () => {
 	return /spoor-id=0/.test(document.cookie);

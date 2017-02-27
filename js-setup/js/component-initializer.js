@@ -1,10 +1,10 @@
 import Loader from './loader';
 import ads from '../../ads';
 import tracking from '../../tracking';
-import date from '../../date';
+import date from 'o-date';
 import header from '../../header';
 import optOut from '../../opt-out';
-import cookieMessage from '../../cookie-message';
+import oCookieMessage from 'o-cookie-message';
 import welcomeMessage from '../../welcome-message';
 import subscriptionOfferPrompt from '../../subscription-offer-prompt';
 import footer from '../../footer';
@@ -153,8 +153,8 @@ export class ComponentInitializer {
 						this.initializedFeatures.myftHint = true;
 					}
 
-					if (config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
-						cookieMessage(flags);
+					if (flags.get('cookieMessage') && config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
+						oCookieMessage.init();
 						this.initializedFeatures.cookieMessage = true;
 					}
 

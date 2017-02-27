@@ -1,4 +1,4 @@
-@import '../buttons/main';
+@import 'o-buttons/main';
 
 @mixin buttonWithIcon($iconSpace, $iconSize, $colorOff, $iconOff, $iconOn: $iconOff, $colorOn: $colorOff) {
 	$topMargin: #{$iconSize * -0.5}px;
@@ -19,7 +19,7 @@
 }
 
 @mixin nUiMyftCommon () {
-	@include nUiCriticalStart('core');
+	@include nUiStylesheetStart('head-n-ui-core');
 	.myft-ui,
 	.n-myft-ui {
 		display: inline-block;
@@ -94,9 +94,22 @@
 		width: 34px;
 		margin: 0 8px -5px;
 	}
-	@include nUiCriticalEnd('core');
+
+	// shouldn't really be in here, but a temporary hack while n-ui styles are on the move
+	.myft-hint {
+		display: none;
+	}
+
+	.n-myft-digest-promo {
+		display: none;
+	}
+
+	@include nUiStylesheetEnd('head-n-ui-core');
 }
 
-@if nUiApply('myftCommon') {
+$n-ui-myft-common-applied: false !default;
+
+@if $n-ui-myft-common-applied == false {
+	$n-ui-myft-common-applied: true;
 	@include nUiMyftCommon;
 }

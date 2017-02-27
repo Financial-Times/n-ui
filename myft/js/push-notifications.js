@@ -1,5 +1,5 @@
 const myftClient = require('next-myft-client');
-const nButtons = require('../../buttons');
+const nButtons = require('../../myft-common');
 
 const isLocalOrHTTPS = document.location.protocol === 'https:' ||
 	document.location.href.indexOf('localhost:') >= 0;

@@ -1,4 +1,4 @@
-const broadcast = require('../../../utils').broadcast;
+const broadcast = require('n-ui-foundations').broadcast;
 const nextEvents = require('../next-events');
 
 const fireBeacon = (contextSource, percentage) => {
