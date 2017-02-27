@@ -6,9 +6,9 @@
 				{{#each @root.navigation.menus.footer.items}}
 				{{#if submenu}}
 				<div class="o-footer__matrix-group o-footer__matrix-group--{{submenu.items.length}}">
-					<h6 class="o-footer__matrix-title" {{#ifEquals submenu.items.length 2}}aria-controls="o-footer-section-{{@index}}"{{/ifEquals}}>
+					<div class="o-footer__matrix-title" {{#ifEquals submenu.items.length 2}}aria-controls="o-footer-section-{{@index}}"{{/ifEquals}}>
 					{{{label}}}
-					</h6>
+					</div>
 					<div class="o-footer__matrix-content" id="o-footer-section-{{@index}}">
 						{{#each submenu.items}}
 						<div class="o-footer__matrix-column">
@@ -23,9 +23,9 @@
 				{{/each}}
 			</nav>
 
-			<h6 class="o-footer__external-link o-footer__matrix-title">
+			<div class="o-footer__external-link o-footer__matrix-title">
 				<a class="o-footer__more-from-ft o-footer__matrix-title" href="http://ft.com/more-from-ft-group">More from the FT Group</a>
-			</h6>
+			</div>
 		</div>
 
 		<div class="o-footer__copyright" role="contentinfo">
