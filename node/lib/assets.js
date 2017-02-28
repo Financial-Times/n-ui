@@ -90,10 +90,9 @@ function init (options, directory, locals) {
 				res.locals.javascriptBundles = [];
 				res.locals.cssBundles = {
 					inline: [],
-					blockingPush: [],
-					blocking: [],
-					lazy: []
+					link: []
 				};
+
 				res.locals.nUiConfig = nUiConfig;
 
 				// work out which assets will be required by the page
@@ -119,7 +118,6 @@ function init (options, directory, locals) {
 					let cssVariant = templateData.cssVariant || res.locals.cssVariant;
 					cssVariant = cssVariant ? `-${cssVariant}` : '';
 
-
 					// define which css to output in the critical path
 					if (options.withHeadCss) {
 						// variants of head-n-ui-core no longer exist, but the app may not necessarily
@@ -135,17 +133,17 @@ function init (options, directory, locals) {
 						}
 					}
 
-					res.locals.cssBundles[options.withHeadCss ? 'lazy' : 'blocking'].push({
-						path: hasher.get(`main${cssVariant}.css`)
+					res.locals.cssBundles.link.push({
+						path: hasher.get(`main${cssVariant}.css`),
+						lazyLoad: !!options.withHeadCss
 					});
 
-					res.locals.cssBundles.lazy.forEach(file => res.linkResource(file.path, {as: 'style'}));
-					res.locals.cssBundles.blocking.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.cssBundles.link.forEach(file => res.linkResource(file.path, {as: 'style'}));
 
 					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
 
 					if (templateData.withAssetPrecache) {
-						res.locals.cssBundles.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
+						res.locals.cssBundles.link.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
 						res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
 					}
 
