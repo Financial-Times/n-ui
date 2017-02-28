@@ -16,6 +16,9 @@
   "bugs": {
     "url": "https://github.com/Financial-Times/n-ui/issues"
   },
+  "bin": {
+    "nui": "./bin/nui"
+  },
   "homepage": "https://github.com/Financial-Times/n-ui#readme",
   "devDependencies": {
     "@financial-times/n-heroku-tools": "^6.19.0",
@@ -86,6 +89,7 @@
     "aws-sdk": "^2.7.21",
     "chokidar": "^1.6.1",
     "classnames": "^2.2.5",
+    "commander": "^2.9.0",
     "ft-poller": "^2.9.0",
     "ms": "^0.7.2",
     "n-eager-fetch": "^2.1.3",
