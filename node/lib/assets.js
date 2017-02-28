@@ -30,7 +30,7 @@ function init (options, directory, locals) {
 	const linkHeader = linkHeaderFactory(hasher);
 	const nUiUrlRoot = nUiManager.getUrlRoot(hasher);
 
-	const getStylesheetPath (stylesheetName) {
+	const getStylesheetPath = stylesheetName => {
 		return /n-ui/.test(stylesheetName) ? `${nUiUrlRoot}${stylesheetName}.css` : hasher(`${stylesheetName}.css`)
 	}
 
@@ -98,13 +98,8 @@ function init (options, directory, locals) {
 					blocking: []
 				};
 
-				if (options.withHeadCss) {
-					res.locals.cssBundles.inline = ['head']
-					res.locals.cssBundles.lazy = ['main']
-				} else {
-					res.locals.cssBundles.blocking = ['main']
-				}
-
+				res.locals.cssBundles.inline = ['head']
+				res.locals.cssBundles.lazy = ['main']
 				res.locals.nUiConfig = nUiConfig;
 
 				// work out which assets will be required by the page
@@ -128,10 +123,8 @@ function init (options, directory, locals) {
 				res.render = function (template, templateData) {
 
 					// Add standard n-ui stylesheets
-					if (options.withHeadCss) {
-						res.locals.cssBundles.inline.unshift('head-n-ui-core');
-						res.locals.cssBundles.lazy.unshift('n-ui-core');
-					}
+					res.locals.cssBundles.inline.unshift('head-n-ui-core');
+					res.locals.cssBundles.lazy.unshift('n-ui-core');
 
 					res.locals.cssBundles.inline = res.locals.cssBundles.inline.reduce((str, name) => {
 						if (!stylesheets[name]) {
