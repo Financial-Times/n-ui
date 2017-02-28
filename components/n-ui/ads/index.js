@@ -7,7 +7,8 @@ const Reporter = require('./js/reporter');
 const sendMetrics = require('./js/metrics');
 const Sticky = require('./js/sticky');
 
-import { perfMark } from 'n-ui-foundations'
+import nCounterAdBlocking from '@financial-times/n-counter-ad-blocking';
+import { perfMark } from 'n-ui-foundations';
 
 let slotCount;
 let slotsRendered = 0;
@@ -98,6 +99,8 @@ function onAdsComplete (flags, event) {
 
 module.exports = {
 	init: (flags, appInfo, opts) => {
+
+		nCounterAdBlocking.init(flags);
 
 		const adOptions = typeof opts === 'object' ? opts : {};
 

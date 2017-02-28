@@ -12,6 +12,7 @@ $ad-medium-breakpoint: 760px;
 $ad-max-responsive-width: 1440px;
 
 @import 'o-ads/main';
+@import 'n-counter-ad-blocking/main';
 
 @if nUiApply('ads') {
 	.core .o-ads {
