@@ -1,1 +1,1 @@
-@import 'n-myft-ui/myft-digest-promo/main';
+module.exports = require('n-myft-ui/myft-digest-promo');
