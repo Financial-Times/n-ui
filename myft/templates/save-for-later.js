@@ -1,1 +1,1 @@
-module.exports = require('n-myft-ui/myft/templates/save-for-later');
+module.exports = require('@financial-times/n-myft-ui/myft/templates/save-for-later');

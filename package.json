@@ -82,6 +82,7 @@
     "@financial-times/n-handlebars": "^1.15.0",
     "@financial-times/n-polyfill-io": "^1.0.9",
     "@financial-times/n-webpack": "^2.0.0",
+    "@financial-times/n-myft-ui": "1.0.0-beta.4",
     "@financial-times/next-json-ld": "^0.1.0",
     "aws-sdk": "^2.7.21",
     "chokidar": "^1.6.1",

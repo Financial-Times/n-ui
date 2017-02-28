@@ -23,7 +23,6 @@
     "n-image": "^4.4.1",
     "n-service-worker": "^1.8.0",
     "n-sliding-popup": "^1.0.0",
-    "next-myft-client": "^6.4.2",
     "o-ads": "^6.0.0",
     "o-cookie-message": "^2.0.0",
     "o-errors": "^3.5.1",
@@ -32,6 +31,6 @@
     "o-tracking": "^1.1.8",
     "n-ui-foundations": "^1.0.0",
     "o-expander": "^4.2.2",
-    "n-myft-ui": "1.0.0-beta.2"
+    "n-myft-ui": "1.0.0-beta.4"
   }
 }

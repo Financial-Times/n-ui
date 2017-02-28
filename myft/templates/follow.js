@@ -1,1 +1,1 @@
-module.exports = require('n-myft-ui/myft/templates/follow');
+module.exports = require('@financial-times/n-myft-ui/myft/templates/follow');
