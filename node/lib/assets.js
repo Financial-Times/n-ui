@@ -88,8 +88,12 @@ function init (options, directory, locals) {
 
 			if (req.accepts('text/html')) {
 				res.locals.javascriptBundles = [];
-				res.locals.cssBundles = [];
-				res.locals.criticalCss = [];
+				res.locals.cssBundles = {
+					inline: [],
+					blockingPush: [],
+					blocking: [],
+					lazy: []
+				};
 				res.locals.nUiConfig = nUiConfig;
 
 				// work out which assets will be required by the page
@@ -122,22 +126,22 @@ function init (options, directory, locals) {
 						// have successfully fetched head-n-ui-core from network, so fallback to the variant
 						// file while trying it out
 						if ('head-n-ui-core' in stylesheets) {
-							res.locals.criticalCss.push(stylesheets['head-n-ui-core'])
+							res.locals.cssBundles.inline.push(stylesheets['head-n-ui-core'])
 						} else if (`head${cssVariant}-n-ui-core` in stylesheets) {
-							res.locals.criticalCss.push(stylesheets[`head${cssVariant}-n-ui-core`])
+							res.locals.cssBundles.inline.push(stylesheets[`head${cssVariant}-n-ui-core`])
 						}
 						if (`head${cssVariant}` in stylesheets && stylesheets[`head${cssVariant}`].length) {
-							res.locals.criticalCss.push(stylesheets[`head${cssVariant}`]);
+							res.locals.cssBundles.inline.push(stylesheets[`head${cssVariant}`]);
 						}
 					}
 
-					res.locals.cssBundles.push({
-						path: hasher.get(`main${cssVariant}.css`),
-						isMain: true,
-						isLazy: options.withHeadCss
+					res.locals.cssBundles[options.withHeadCss ? 'lazy' : 'blocking'].push({
+						path: hasher.get(`main${cssVariant}.css`)
 					});
 
-					res.locals.cssBundles.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.cssBundles.lazy.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.cssBundles.blocking.forEach(file => res.linkResource(file.path, {as: 'style'}));
+
 					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
 
 					if (templateData.withAssetPrecache) {
