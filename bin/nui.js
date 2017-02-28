@@ -11,14 +11,6 @@ function shell (processToRun, options) {
 		console.log("shellpromise: about to spawn " + processToRun);
 	}
 	return new Promise(function(resolve, reject) {
-		var spawnOpts = {
-			env: options.env || process.env,
-			cwd: options.cwd || process.cwd(),
-		};
-
-		if (options.verbose) {
-			spawnOpts.stdio = 'inherit';
-		}
 		var local = spawn('sh', ['-c', processToRun], {
 			env: options.env || process.env,
 			cwd: options.cwd || process.cwd(),
