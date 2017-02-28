@@ -30,6 +30,10 @@ function init (options, directory, locals) {
 	const linkHeader = linkHeaderFactory(hasher);
 	const nUiUrlRoot = nUiManager.getUrlRoot(hasher);
 
+	const getStylesheetPath (stylesheetName) {
+		return /n-ui/.test(stylesheetName) ? `${nUiUrlRoot}${stylesheetName}.css` : hasher(`${stylesheetName}.css`)
+	}
+
 	return {
 		hasher,
 		fetchNUiCss: () => {
@@ -90,8 +94,16 @@ function init (options, directory, locals) {
 				res.locals.javascriptBundles = [];
 				res.locals.cssBundles = {
 					inline: [],
-					link: []
+					lazy: [],
+					blocking: []
 				};
+
+				if (options.withHeadCss) {
+					res.locals.cssBundles.inline = ['head']
+					res.locals.cssBundles.lazy = ['main']
+				} else {
+					res.locals.cssBundles.blocking = ['main']
+				}
 
 				res.locals.nUiConfig = nUiConfig;
 
@@ -115,31 +127,42 @@ function init (options, directory, locals) {
 
 				res.render = function (template, templateData) {
 
-					let cssVariant = templateData.cssVariant || res.locals.cssVariant;
-					cssVariant = cssVariant ? `-${cssVariant}` : '';
-
-					// define which css to output in the critical path
+					// Add standard n-ui stylesheets
 					if (options.withHeadCss) {
-						// variants of head-n-ui-core no longer exist, but the app may not necessarily
-						// have successfully fetched head-n-ui-core from network, so fallback to the variant
-						// file while trying it out
-						if ('head-n-ui-core' in stylesheets) {
-							res.locals.cssBundles.inline.push(stylesheets['head-n-ui-core'])
-						} else if (`head${cssVariant}-n-ui-core` in stylesheets) {
-							res.locals.cssBundles.inline.push(stylesheets[`head${cssVariant}-n-ui-core`])
-						}
-						if (`head${cssVariant}` in stylesheets && stylesheets[`head${cssVariant}`].length) {
-							res.locals.cssBundles.inline.push(stylesheets[`head${cssVariant}`]);
-						}
+						res.locals.cssBundles.inline.unshift('head-n-ui-core');
+						res.locals.cssBundles.lazy.unshift('n-ui-core');
 					}
 
-					res.locals.cssBundles.link.push({
-						path: hasher.get(`main${cssVariant}.css`),
-						lazyLoad: !!options.withHeadCss
-					});
+					// convert the style information to a format more useful to the templates
+					const templateCssInfo = {
+						link: []
+					};
+
+					templateCssInfo.inline = res.locals.cssBundles.inline.reduce((str, name) => {
+						if (!stylesheets[name]) {
+							throw `Stylesheet ${name} does not exist`;
+						}
+						return str + stylesheets[name];
+					}, '');
+
+					res.locals.cssBundles.lazy.forEach(name => {
+						templateCssInfo.link.push({
+							path: getStylesheetPath(name),
+							lazyLoad: true
+						});
+					})
+
+					res.locals.cssBundles.blocking.forEach(name => {
+						templateCssInfo.link.push({
+							path: getStylesheetPath(name),
+							lazyLoad: false
+						});
+					})
+
+
+					res.locals.cssBundles = templateCssInfo;
 
 					res.locals.cssBundles.link.forEach(file => res.linkResource(file.path, {as: 'style'}));
-
 					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
 
 					if (templateData.withAssetPrecache) {
