@@ -6,8 +6,7 @@
 	</style>
 {{/if}}
 
-{{#each @root.cssBundles.link}}
-	{{#if lazyLoad}}
+{{#each @root.cssBundles.lazy}}
 		<!--[if gte IE 9]><!-->
 		<link data-is-next rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';window.ftNextCssFileLoaded()">
 		<noscript>
@@ -17,7 +16,7 @@
 		<!--[if lt IE 9]>
 		<link rel="stylesheet" href="{{path}}">
 		<![endif]-->
-	{{else}}
-		<link rel="stylesheet" href="{{path}}">
-	{{/if}}
+{{/each}}
+{{#each @root.cssBundles.blocking}}
+	<link rel="stylesheet" href="{{path}}">
 {{/each}}

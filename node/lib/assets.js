@@ -133,40 +133,23 @@ function init (options, directory, locals) {
 						res.locals.cssBundles.lazy.unshift('n-ui-core');
 					}
 
-					// convert the style information to a format more useful to the templates
-					const templateCssInfo = {
-						link: []
-					};
-
-					templateCssInfo.inline = res.locals.cssBundles.inline.reduce((str, name) => {
+					res.locals.cssBundles.inline = res.locals.cssBundles.inline.reduce((str, name) => {
 						if (!stylesheets[name]) {
 							throw `Stylesheet ${name} does not exist`;
 						}
 						return str + stylesheets[name];
 					}, '');
 
-					res.locals.cssBundles.lazy.forEach(name => {
-						templateCssInfo.link.push({
-							path: getStylesheetPath(name),
-							lazyLoad: true
-						});
-					})
+					res.locals.cssBundles.lazy = res.locals.cssBundles.lazy.map(getStylesheetPath);
+					res.locals.cssBundles.blocking = res.locals.cssBundles.blocking.map(getStylesheetPath);
 
-					res.locals.cssBundles.blocking.forEach(name => {
-						templateCssInfo.link.push({
-							path: getStylesheetPath(name),
-							lazyLoad: false
-						});
-					})
-
-
-					res.locals.cssBundles = templateCssInfo;
-
-					res.locals.cssBundles.link.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.cssBundles.lazy.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.cssBundles.blocking.forEach(file => res.linkResource(file.path, {as: 'style'}));
 					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
 
 					if (templateData.withAssetPrecache) {
-						res.locals.cssBundles.link.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
+						res.locals.cssBundles.lazy.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
+						res.locals.cssBundles.blocking.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
 						res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
 					}
 
