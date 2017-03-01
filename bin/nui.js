@@ -4,6 +4,8 @@ const spawn = require('child_process').spawn;
 const program = require('commander');
 const colors = require('colors');
 const util = require('util');
+const fs = require('fs');
+const path = require('path');
 
 function shell (processToRun, options) {
 	options = options || {};
@@ -86,8 +88,35 @@ program.version(require('../package.json').version);
 program
 	.command('build')
 	.description('Builds n-ui apps, ready to be deployed t oyour favourite s3 bucket or heroku host')
-	.action(function () {
-		shell('webpack')
+	.option('--production', 'Builds with production settings')
+	.action(function (options) {
+
+// # Remind developers that if they want to use a local version of n-ui,
+// # they need to `export NEXT_APP_SHELL=local`
+// dev-n-ui:
+// ifeq ($(NODE_ENV),) # Not production
+// ifeq ($(CIRCLE_BRANCH),) # Not CircleCI
+// ifneq ($(shell grep -s -Fim 1 n-ui bower.json),) # The app is using n-ui
+// ifneq ($(NEXT_APP_SHELL),local) # NEXT_APP_SHELL is not set to local
+// 	$(info Developers: If you want your app to point to n-ui locally, then `export NEXT_APP_SHELL=local`)
+// endif
+// endif
+// endif
+// endif
+//
+// make public/__about.json ... but need to apply to non Procfiles? else next-errors??
+
+		shell(`webpack ${options.production ? '--bail' : '--dev'}`)
+			.then(() => {
+				//add to about json
+				//download n-ui files from network if not already present
+				//how to force fetching them after reinstall of n-ui
+			})
+			.then(() => {
+				if (options.production && fs.existsSync(path.join(process.cwd(), 'Procfile'))) {
+					return shell('haikro build');
+				}
+			})
 			.catch(utils.exit)
 	});
 
