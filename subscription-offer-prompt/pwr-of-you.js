@@ -16,9 +16,11 @@ const getLionelLastClosed = () => lionelLastSeenStorage.get(lionelLastSeenStorag
 
 const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorageKey, Date.now());
 
+const getCountryCode = () => fetch("/country", { credentials: 'same-origin' }).then(res => res.json())
 /**
  * Show the prompt if
  *	* the prompt has not been closed, or was last closed more than 30 days ago
+ *	* country code is USA or GBR
  *	* PowrOfYouSlider flag is true
  *	* The lionel slider has been closed at least once (lionelLastSeenStorageKey exists)
  */
@@ -26,8 +28,12 @@ const shouldPromptBeShown = (flags) => {
 	return Promise.all([
 			getPromptLastClosed(),
 			getLionelLastClosed(),
-		]).then(([promptLastClosed, lionelLastClosed]) => {
-			return !!lionelLastClosed && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && flags.get('PowerOfYouSlider');
+			getCountryCode(),
+		]).then(([promptLastClosed, lionelLastClosed, getCountryCode]) => {
+			return (!!lionelLastClosed
+			&& (getCountryCode === 'GBR' || getCountryCode === 'USA')
+			&& (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now())
+			&& flags.get('PowerOfYouSlider'));
 		});
 };
 
