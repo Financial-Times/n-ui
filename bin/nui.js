@@ -10,6 +10,7 @@ const ratRace = require('promise-rat-race');
 const nEagerFetch = require('n-eager-fetch');
 const shellpromise = require('shellpromise');
 const nUiManager = require('../node/lib/n-ui-manager')
+const nUiWebpack = require('../build-tools/webpack');
 
 function shell (processToRun, options) {
 	options = options || {};
@@ -160,7 +161,7 @@ program
 
 		devAdvice();
 
-		shell(`webpack ${options.production ? '--bail' : '--dev'}`)
+		shell(`webpack ${options.production ? '--bail' : '--dev'} --config ${path.join(__dirname, ../build-tools/wepback.js)}`)
 			.then(aboutJson)
 			.then(downloadAssets)
 			.then(() => {
@@ -179,7 +180,7 @@ program
 		devAdvice();
 
 		downloadAssets()
-			.then(() => shell('webpack --watch --dev')	)
+			.then(() => shell(`webpack --watch --dev --config ${path.join(__dirname, ../build-tools/wepback.js)}`)	)
 			.catch(utils.exit)
 	});
 
