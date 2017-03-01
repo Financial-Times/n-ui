@@ -55,5 +55,3 @@ module.exports.getReleaseRoots = () => {
 		`http://ft-next-n-ui-prod-us.s3-website-us-east-1.amazonaws.com/__assets/n-ui/cached/${releaseName}/`
 	]
 }
-
-

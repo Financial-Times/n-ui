@@ -8,38 +8,37 @@ const ratRace = require('promise-rat-race');
 const nEagerFetch = require('n-eager-fetch');
 const shellpromise = require('shellpromise');
 const nUiManager = require('../node/lib/n-ui-manager')
-const nUiWebpack = require('./webpack');
 
 function shell (processToRun, options) {
 	options = options || {};
 	if (options.verbose) {
-		console.log("shellpromise: about to spawn " + processToRun);
+		logger.info('shellpromise: about to spawn ' + processToRun);
 	}
-	return new Promise(function(resolve, reject) {
-		var local = spawn('sh', ['-c', processToRun], {
+	return new Promise((resolve, reject) => {
+		const local = spawn('sh', ['-c', processToRun], {
 			env: options.env || process.env,
 			cwd: options.cwd || process.cwd(),
 			stdio: 'inherit'
 		});
 
 		local.on('error', reject);
-		local.on('close', function(code) {
- 			if (code === 0) {
- 				resolve(processToRun + ' complete');
-  		} else {
- 				reject(processToRun + ' exited with exit code ' + code);
- 			}
+		local.on('close', (code) => {
+			if (code === 0) {
+				resolve(processToRun + ' complete');
+			} else {
+				reject(processToRun + ' exited with exit code ' + code);
+			}
 		});
 	});
 };
 
 
-function log(args, color){
+function log (args, color) {
 	let msg = util.format.apply(null, args);
 	if(color){
 		msg = colors[color](msg);
 	}
-	console.log(msg);
+	console.log(msg);//eslint-disable-line
 }
 
 const logger = {
@@ -186,7 +185,7 @@ program
 	.command('*')
 	.description('')
 	.action(function (app) {
-		utils.exit("The command ‘" + app + "’ is not known");
+		utils.exit('The command ‘' + app + '’ is not known');
 	});
 
 program.parse(process.argv);
