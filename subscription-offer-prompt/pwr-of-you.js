@@ -3,6 +3,7 @@ import Superstore from 'superstore'
 
 import * as utils from './utils';
 import { broadcast } from 'n-ui-foundations';
+import { getCountryCode } from './countryApi'
 
 const promptLastSeenStorage = new Superstore('local', 'n-ui.subscription-offer-pwr-of-you');
 const lionelLastSeenStorage = new Superstore('local', 'n-ui.subscription-offer-prompt');
@@ -16,7 +17,6 @@ const getLionelLastClosed = () => lionelLastSeenStorage.get(lionelLastSeenStorag
 
 const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorageKey, Date.now());
 
-const getCountryCode = () => fetch('/country', { credentials: 'same-origin' }).then(res => res.json())
 /**
  * Show the prompt if
  *	* the prompt has not been closed, or was last closed more than 30 days ago
