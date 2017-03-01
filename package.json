@@ -17,7 +17,7 @@
     "url": "https://github.com/Financial-Times/n-ui/issues"
   },
   "bin": {
-    "nui": "./bin/nui"
+    "nui": "./bin/nui.js"
   },
   "homepage": "https://github.com/Financial-Times/n-ui#readme",
   "devDependencies": {

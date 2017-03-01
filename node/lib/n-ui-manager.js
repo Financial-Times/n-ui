@@ -4,9 +4,9 @@ const path = require('path');
 let nUiBowerJson = {};
 let nUiUrlRoot;
 
-const getReleaseName = () => {
+const getReleaseName = directory => {
 	try {
-		nUiBowerJson = require(path.join(directory, 'bower_components/n-ui/.bower.json'))
+		nUiBowerJson = require(path.join(directory || process.cwd(), 'bower_components/n-ui/.bower.json'))
 	} catch (e) {}
 
 	const nUiRelease = nUiBowerJson._release;
@@ -26,14 +26,14 @@ const getReleaseName = () => {
 	}
 }
 
-const generateUrlRoot = (hasher) => {
+const generateUrlRoot = (directory, hasher) => {
 	const localAppShell = process.env.NEXT_APP_SHELL === 'local';
 	// Attempt to get information about which version of n-ui is installed
 	try {
 		if (localAppShell) {
 			nUiUrlRoot = hasher.get('n-ui/');
 		} else {
-			nUiUrlRoot = `//www.ft.com/__assets/n-ui/cached/${getReleaseName()}/`;
+			nUiUrlRoot = `//www.ft.com/__assets/n-ui/cached/${getReleaseName(directory)}/`;
 		}
 
 	} catch (e) {}
@@ -42,7 +42,7 @@ const generateUrlRoot = (hasher) => {
 
 
 module.exports.init = (directory, hasher) => {
-	generateUrlRoot(hasher)
+	generateUrlRoot(directory, hasher)
 }
 
 module.exports.getUrlRoot = () => nUiUrlRoot;
