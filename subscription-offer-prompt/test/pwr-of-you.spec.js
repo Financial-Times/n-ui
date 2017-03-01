@@ -28,8 +28,8 @@ describe('"Pwr Of You" Prompt', () => {
 
 	afterEach(() => {
 		return Promise.all([
-			localStorage.unset('last-closed-pwr'),
-			lionelStorage.unset('last-closed')
+			// localStorage.unset('last-closed-pwr'),
+			// lionelStorage.unset('last-closed')
 		])
 	});
 
