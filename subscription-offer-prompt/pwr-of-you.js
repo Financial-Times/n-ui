@@ -16,7 +16,7 @@ const getLionelLastClosed = () => lionelLastSeenStorage.get(lionelLastSeenStorag
 
 const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorageKey, Date.now());
 
-const getCountryCode = () => fetch("/country", { credentials: 'same-origin' }).then(res => res.json())
+const getCountryCode = () => fetch('/country', { credentials: 'same-origin' }).then(res => res.json())
 /**
  * Show the prompt if
  *	* the prompt has not been closed, or was last closed more than 30 days ago
