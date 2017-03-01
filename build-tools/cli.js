@@ -159,7 +159,7 @@ program
 
 		devAdvice();
 
-		shell(`webpack ${options.production ? '--bail' : '--dev'} --config ${path.join(__dirname, '../build-tools/wepback.js')}`)
+		shell(`webpack ${options.production ? '--bail' : '--dev'} --config ${path.join(__dirname, '../build-tools/webpack.js')}`)
 			.then(aboutJson)
 			.then(downloadAssets)
 			.then(() => {
@@ -178,7 +178,7 @@ program
 		devAdvice();
 
 		downloadAssets()
-			.then(() => shell(`webpack --watch --dev --config ${path.join(__dirname, ../build-tools/wepback.js)}`)	)
+			.then(() => shell(`webpack --watch --dev --config ${path.join(__dirname, '../build-tools/webpack.js')}`)	)
 			.catch(utils.exit)
 	});
 
