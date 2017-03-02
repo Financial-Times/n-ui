@@ -28,7 +28,7 @@ NPM_INSTALL = npm prune --production=false && npm install
 BOWER_INSTALL = bower prune && bower install --config.registry.search=http://registry.origami.ft.com --config.registry.search=https://bower.herokuapp.com
 JSON_GET_VALUE = grep $1 | head -n 1 | sed 's/[," ]//g' | cut -d : -f 2
 IS_GIT_IGNORED = grep -q $(if $1, $1, $@) .gitignore
-VERSION = v10
+VERSION = v14
 APP_NAME = $(shell cat package.json 2>/dev/null | $(call JSON_GET_VALUE,name))
 DONE = echo ✓ $@ done
 CONFIG_VARS = curl -fsL https://ft-next-config-vars.herokuapp.com/$1/$(call APP_NAME)$(if $2,.$2,) -H "Authorization: `heroku config:get APIKEY --app ft-next-config-vars`"
@@ -157,7 +157,7 @@ heroku-cli:
 # VERIFY SUB-TASKS
 
 _verify_eslint:
-	@if [ -e .eslintrc.js ]; then $(call GLOB,'*.js') | xargs eslint && $(DONE); fi
+	@if [ -e .eslintrc.js ]; then $(call GLOB,'*.js') | xargs eslint --ignore-pattern '!' && $(DONE); fi
 
 _verify_lintspaces:
 	@if [ -e .editorconfig ] && [ -e package.json ]; then $(call GLOB) | xargs lintspaces -e .editorconfig -i js-comments -i html-comments && $(DONE); fi
@@ -213,3 +213,11 @@ hel%: ## help: Show this help message.
 	@echo ""
 	@echo "targets:"
 	@grep -Eh '^.+:\ ##\ .+' ${MAKEFILE_LIST} | cut -d ' ' -f '3-' | column -t -s ':'
+
+# Wrapper for make deploy which prevents it running when build is a nightly
+deploy-by-day:
+ifeq ($(FT_NIGHTLY_BUILD),)
+	$(MAKE) deploy
+else
+	echo "Nightly build - exiting before deploy"
+endif
