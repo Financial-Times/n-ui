@@ -36,14 +36,14 @@ const shouldPromptBeShown = () => {
 			);
 };
 
-const popupTemplate = ({ discount, price, offerId }) => `
+const popupTemplate = ({ discount, price, offerId, offerText}) => `
 	<article class="subscription-prompt--wrapper" data-trackable="subscription-offer-prompt">
 		<button class="n-sliding-popup-close" data-n-component="n-sliding-popup-close" data-trackable="close">
 			<span class="n-sliding-popup-close-label">Close</span>
 		</button>
 		<div class="subscription-prompt--header" data-o-grid-colspan="12">
 			<span class="subscription-prompt--flag">Limited Offer</span>
-			<h1 class="subscription-prompt--heading">You qualify for a ${discount}% subscription discount</h1>
+			<h1 class="subscription-prompt--heading">${offerText}</h1>
 			<span class="subscription-prompt--subheading">
 				Pay just ${price} per week for annual Standard Digital access
 			</span>
@@ -71,6 +71,7 @@ const createPopupHTML = values =>
 		'data-n-component': 'o-sliding-popup',
 		'data-n-sliding-popup-position': 'bottom left',
 	}, popupTemplate(values));
+
 
 const createSubscriptionPrompt = values => {
 	const subscriptionPrompt = createPopupHTML(values);
@@ -108,19 +109,19 @@ const getPrice = countryCode => {
 	return utils.toCurrency.apply(null, prices[countryCode] || prices.default);
 };
 
-const getSubscriptionPromptValues = countryCode => {
+const getSubscriptionPromptValues = (countryCode, flags) => {
 	const price = getPrice(countryCode);
-	if (countryCode === 'USA') {
-		return { discount: 33, offerId: 'a9582121-87c2-09a7-0cc0-4caf594985d5', price };
+	if (countryCode === 'USA' || flags.get('priceFlashSale')) {
+		return { discount: 33, offerId: 'a9582121-87c2-09a7-0cc0-4caf594985d5', price, offerText: 'Save 33% now'};
 	} else {
-		return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price };
+		return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price, offerText: 'You qualify for a 25% subscription discount'};
 	}
 };
 
-export const init = () => {
+export const init = (flags) => {
 	return shouldPromptBeShown()
 		.then(shouldShow => {
-			if (shouldShow) {
+			if (true) {
 				return fetch('/country', { credentials: 'same-origin' })
 					.then(response => response.json())
 					.then((countryCode = 'GBR') => {
@@ -128,7 +129,7 @@ export const init = () => {
 						if (['SPM', 'ALA', 'BLM', 'MAF', 'AND', 'REU', 'GLP', 'MYT', 'MTQ', 'ZWE'].indexOf(countryCode) > -1) {
 							return;
 						}
-						const subscriptionValues = getSubscriptionPromptValues(countryCode);
+						const subscriptionValues = getSubscriptionPromptValues(countryCode, flags);
 						return createSubscriptionPrompt(subscriptionValues);
 					});
 			}
