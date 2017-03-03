@@ -31,6 +31,7 @@
     "o-tracking": "^1.1.8",
     "n-ui-foundations": "^1.0.0",
     "o-expander": "^4.2.2",
-    "next-session-client": "^2.3.1"
+    "next-session-client": "^2.3.1",
+    "n-counter-ad-blocking": "^0.0.8"
   }
 }

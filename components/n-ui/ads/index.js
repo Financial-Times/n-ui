@@ -7,7 +7,7 @@ const Reporter = require('./js/reporter');
 const sendMetrics = require('./js/metrics');
 const Sticky = require('./js/sticky');
 
-import nCounterAdBlocking from '@financial-times/n-counter-ad-blocking';
+import nCounterAdBlocking from 'n-counter-ad-blocking';
 import { perfMark } from 'n-ui-foundations';
 
 let slotCount;
