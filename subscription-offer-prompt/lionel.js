@@ -121,7 +121,7 @@ const getSubscriptionPromptValues = (countryCode, flags) => {
 export const init = (flags) => {
 	return shouldPromptBeShown()
 		.then(shouldShow => {
-			if (true) {
+			if (shouldShow) {
 				return fetch('/country', { credentials: 'same-origin' })
 					.then(response => response.json())
 					.then((countryCode = 'GBR') => {
