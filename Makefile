@@ -31,17 +31,14 @@ test-server: export FT_NEXT_BACKEND_KEY=test-backend-key
 test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
 test-server: export FT_NEXT_BACKEND_KEY_OLDEST=test-backend-key-oldest
 test-server: copy-stylesheet-loader
-ifneq ($(CIRCLECI),)
-	$(MAKE) coverage-report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
-else
-	mocha node/test/*.test.js node/test/**/*.test.js  --recursive
-endif
+	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) node/test/*.test.js node/test/**/*.test.js
+	cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 
 copy-stylesheet-loader:
 	cp layout/partials/stylesheets.html node/test/fixtures/app/views/partials
 
 coverage-report: ## coverage-report: Run the unit tests with code coverage enabled.
-	istanbul cover node_modules/.bin/_mocha.js --report=$(if $(CIRCLECI),lcovonly,lcov) node/test/*.test.js node/test/**/*.test.js
+	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) node/test/*.test.js node/test/**/*.test.js
 
 nightwatch:
 	nht nightwatch test/js-success.nightwatch.js
