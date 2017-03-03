@@ -63,7 +63,7 @@ describe('"Lionel Slider" Subscription Offer Prompt', () => {
 
 	it('should have correct html when the priceFlashSale flag is on', () =>
 		init(flags).then(popup => {
-			popup.el.innerHTML.should.contain('save 33% now')
+			popup.el.innerHTML.should.contain('Save 33% now')
 		})
 	);
 
