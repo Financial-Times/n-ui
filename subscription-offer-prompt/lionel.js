@@ -108,7 +108,6 @@ const getPrice = (countryCode, flags) => {
 			default: [395, 'EUR']
 		};
 	} else {
-		console.log("hanging out no flag");
 		prices = {
 			AUS: [479, 'AUD'],
 			CAN: [470, 'USD'], // This is different from API (479)
