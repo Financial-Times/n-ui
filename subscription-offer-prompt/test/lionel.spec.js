@@ -114,3 +114,103 @@ describe('"Lionel Slider" Subscription Offer Prompt', () => {
 	});
 
 });
+
+describe('"Lionel Slider" Subscription Offer Prompt - USA', () => {
+
+	const localStorage = new Superstore('local', 'n-ui.subscription-offer-prompt')
+	const sessionStorage = new Superstore('session', 'next.product-selector')
+
+	let flags;
+
+	beforeEach(() => {
+		flags = { get: (val) => val === 'b2cMessagePrompt' || val === 'priceFlashSale' };
+		const fetchStub = sinon.stub(window, 'fetch');
+		fetchStub
+			.withArgs('/country')
+			.returns(Promise.resolve({
+				json: () => Promise.resolve('USA')
+			}));
+		fetchStub
+			.withArgs('https://www.howsmyssl.com/a/check')
+			.returns(Promise.resolve({
+				json: () => Promise.resolve({ tls_version: 'TLS 1.2' })
+			}));
+
+		return Promise.all([
+			localStorage.set('last-closed', Date.now() - (1000 * 60 * 60 * 24 * 30)),
+			sessionStorage.set('last-seen', Date.now())
+		])
+	});
+
+	afterEach(() => {
+		window.fetch.restore();
+
+		// fixme - the tests fail in IE11 if these are not commented out.  I have no idea why..
+		return Promise.all([
+			// localStorage.unset('last-closed'),
+			// sessionStorage.unset('last-seen')
+		]);
+	});
+
+	it('should have correct price when the priceFlashSale flag is on', () =>
+		init(flags).then(popup => {
+			popup.el.innerHTML.should.contain('$4.29')
+		})
+	);
+
+	it('should have correct price when the priceFlashSale flag is off', () => {
+			flags = { get: (val) => val === 'b2cMessagePrompt'};
+			init(flags).then(popup => {
+				popup.el.innerHTML.should.contain('$4.29')
+			})
+		}
+	);
+
+});
+
+describe('"Lionel Slider" Subscription Offer Prompt - country code not listed', () => {
+
+	const localStorage = new Superstore('local', 'n-ui.subscription-offer-prompt')
+	const sessionStorage = new Superstore('session', 'next.product-selector')
+
+	let flags;
+
+	beforeEach(() => {
+		flags = { get: (val) => val === 'b2cMessagePrompt' || val === 'priceFlashSale' };
+		const fetchStub = sinon.stub(window, 'fetch');
+		fetchStub
+			.withArgs('/country')
+			.returns(Promise.resolve({
+				json: () => Promise.resolve('ISR')
+			}));
+		fetchStub
+			.withArgs('https://www.howsmyssl.com/a/check')
+			.returns(Promise.resolve({
+				json: () => Promise.resolve({ tls_version: 'TLS 1.2' })
+			}));
+
+		return Promise.all([
+			localStorage.set('last-closed', Date.now() - (1000 * 60 * 60 * 24 * 30)),
+			sessionStorage.set('last-seen', Date.now())
+		])
+	});
+
+	afterEach(() => {
+		window.fetch.restore();
+
+		// fixme - the tests fail in IE11 if these are not commented out.  I have no idea why..
+		return Promise.all([
+			// localStorage.unset('last-closed'),
+			// sessionStorage.unset('last-seen')
+		]);
+	});
+
+	it('should default to Euros when country code is one not listed', () => {
+			flags = { get: (val) => val === 'b2cMessagePrompt'};
+			init(flags).then(popup => {
+				popup.el.innerHTML.should.contain('€4.39')
+			})
+		}
+	);
+
+});

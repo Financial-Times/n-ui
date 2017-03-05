@@ -93,24 +93,39 @@ const createSubscriptionPrompt = values => {
 	return slidingPopup;
 };
 
-const getPrice = countryCode => {
-	const prices = {
-		AUS: [479, 'AUD'],
-		CAN: [470, 'USD'],
-		CHE: [489, 'CHF'],
-		GBR: [399, 'GBP'],
-		HKG: [3690, 'HKD'],
-		JPN: [65300, 'JPN'],
-		SGP: [619, 'SGD'],
-		USA: [429, 'USD'],
-		default: [439, 'EUR']
-	};
-
+const getPrice = (countryCode, flags) => {
+	let prices;
+	if (flags.get('priceFlashSale')) {
+		prices = {
+			AUS: [429, 'AUD'],
+			CAN: [429, 'USD'],
+			CHE: [439, 'CHF'],
+			GBR: [355, 'GBP'],
+			HKG: [3295, 'HKD'],
+			JPN: [583, 'JPN'],
+			SGP: [555, 'SGD'],
+			USA: [429, 'USD'],
+			default: [395, 'EUR']
+		};
+	} else {
+		console.log("hanging out no flag");
+		prices = {
+			AUS: [479, 'AUD'],
+			CAN: [470, 'USD'], // This is different from API (479)
+			CHE: [489, 'CHF'],
+			GBR: [399, 'GBP'],
+			HKG: [3690, 'HKD'], // This is different from API (3689)
+			JPN: [65300, 'JPN'], // This is different from API (653)
+			SGP: [619, 'SGD'],
+			USA: [429, 'USD'],
+			default: [439, 'EUR']
+		};
+	}
 	return utils.toCurrency.apply(null, prices[countryCode] || prices.default);
 };
 
 const getSubscriptionPromptValues = (countryCode, flags) => {
-	const price = getPrice(countryCode);
+	const price = getPrice(countryCode, flags);
 	if (countryCode === 'USA' || flags.get('priceFlashSale')) {
 		return { discount: 33, offerId: 'a9582121-87c2-09a7-0cc0-4caf594985d5', price, offerText: 'Save 33% now'};
 	} else {
