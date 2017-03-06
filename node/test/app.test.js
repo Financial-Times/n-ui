@@ -212,7 +212,7 @@ describe('simple app', function () {
 		it('should preload main.css, main-with-n-ui.js and polyfill', done => {
 			request(app)
 				.get('/templated')
-				.expect('Link', /<\/\/next-geebee\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<https:\/\/next-geebee\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/demo-app\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
 		});

@@ -93,7 +93,17 @@ function init (options, directory, locals) {
 				res.locals.nUiConfig = nUiConfig;
 
 				// work out which assets will be required by the page
-				const polyfillRoot = `//${flags.polyfillQA ? 'qa.polyfill.io' : 'next-geebee.ft.com/polyfill'}/v2/polyfill.min.js`;
+
+				let polyfillRoot;
+
+				if (flags.polyfillQA) {
+					polyfillRoot = 'https://qa.polyfill.io/v2/polyfill.min.js';
+				} else if (flags.polyfillSameDomain) {
+					polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
+				} else {
+					polyfillRoot = 'https://next-geebee.ft.com/polyfill/v2/polyfill.min.js';
+				}
+
 
 				res.locals.polyfillCallbackName = nPolyfillIo.callbackName;
 				res.locals.polyfillUrls = {
