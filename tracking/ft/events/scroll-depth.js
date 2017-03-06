@@ -28,7 +28,9 @@ const scrollDepth = {
 			changes.forEach(change => {
 				const scrollDepthMarkerEl = change.target;
 				fireBeacon(contextSource, scrollDepthMarkerEl.getAttribute('data-percentage'));
-				scrollDepthMarkerEl.parentNode.removeChild(scrollDepthMarkerEl);
+				if (scrollDepthMarkerEl.parentNode) {
+					scrollDepthMarkerEl.parentNode.removeChild(scrollDepthMarkerEl);
+				}
 				observer.unobserve(scrollDepthMarkerEl);
 			});
 		};
