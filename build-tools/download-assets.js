@@ -35,7 +35,8 @@ const downloadHeadCss = () => {
 			logger.warn(err)
 		})
 }
-const downloadAssets = () => {
+
+module.exports = () => {
 
 	return downloadHeadCss()
 		.then(() => {

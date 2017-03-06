@@ -1,4 +1,3 @@
-const spawn = require('child_process').spawn;
 const program = require('commander');
 const logger = require('./logger');
 const fs = require('fs');

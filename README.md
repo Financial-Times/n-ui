@@ -1,4 +1,4 @@
-# n-ui
+# n-ui [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-ui/badge.svg)](https://coveralls.io/github/Financial-Times/n-ui)
 
 ~~An experiment bunching some of Next's client-side code into a single repository. [Motivation](Explainer.md).~~
 Server, build and client side bootstrapping for next's user-facing applications.
