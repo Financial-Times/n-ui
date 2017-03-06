@@ -44,14 +44,16 @@ function getFileList (dir) {
 		)
 }
 
+const expectedBuiltFiles = [
+	'es5.js',
+	'es5.min.js',
+	'head-n-ui-core.css',
+	'n-ui-core.css'
+]
+
 function expectedAssets () {
 	return Promise.resolve(
-		[
-			'es5.js',
-			'es5.min.js',
-			'head-n-ui-core.css',
-			'n-ui-core.css'
-		]
+		expectedBuiltFiles
 			.map(filename => {
 				if(!fs.existsSync(path.join(__dirname, '../dist/assets/', filename))) {
 					throw new Error(`${filename} has not been built`);
@@ -59,6 +61,21 @@ function expectedAssets () {
 				return `./dist/assets/${filename}`
 			})
 	)
+}
+
+function noUnexpectedAssets (files) {
+	files
+		.filter(f => /\.(js|css)$/.test(f))
+		.map(filename => filename.split('/').pop())
+		.map(filename => {
+			if(expectedBuiltFiles.indexOf(filename) === -1) {
+				throw new Error(`\
+${filename} has been built but is not in the expectedBuiltFiles list.
+To avoid future regressions please add to the list (in _deploy/s3.js)
+`);
+			}
+		})
+	return files;
 }
 
 function brotlify (files) {
@@ -76,6 +93,7 @@ function staticAssets () {
 	return expectedAssets()
 		.then(brotlify)
 		.then(() => getFileList('assets'))
+		.then(noUnexpectedAssets)
 		.then(files =>
 			deployStatic({
 				files: files,
