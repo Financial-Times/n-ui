@@ -44,29 +44,56 @@ function getFileList (dir) {
 		)
 }
 
+const expectedBuiltFiles = [
+	'es5.js',
+	'es5.min.js',
+	'head-n-ui-core.css',
+	'n-ui-core.css'
+]
+
 function expectedAssets () {
-	return Promise.resolve([
-		'./dist/assets/es5.js',
-		'./dist/assets/es5.min.js',
-		'./dist/assets/head-n-ui-core.css',
-		'./dist/assets/n-ui-core.css'
-	])
+	return Promise.resolve(
+		expectedBuiltFiles
+			.map(filename => {
+				if(!fs.existsSync(path.join(__dirname, '../dist/assets/', filename))) {
+					throw new Error(`${filename} has not been built`);
+				}
+				return `./dist/assets/${filename}`
+			})
+	)
 }
 
-function brotlify () {
-	return expectedAssets.then(files => Promise.all(
+function noUnexpectedAssets (files) {
+	files
+		.filter(f => /\.(js|css)$/.test(f))
+		.map(filename => filename.split('/').pop())
+		.map(filename => {
+			if(expectedBuiltFiles.indexOf(filename) === -1) {
+				throw new Error(`\
+${filename} has been built but is not in the expectedBuiltFiles list.
+To avoid future regressions please add to the list (in _deploy/s3.js)
+`);
+			}
+		})
+	return files;
+}
+
+function brotlify (files) {
+	return Promise.all(
 		files
 			.map(fileName =>
 				readFile(path.join(process.cwd(), fileName))
 					.then(brotli.compress)
 					.then(contents => writeFile(path.join(process.cwd(), fileName + '.brotli'), contents))
 			)
-	))
+	)
 }
 
 function staticAssets () {
-	return brotlify()
+	return expectedAssets()
+		.then(brotlify)
 		.then(() => getFileList('assets'))
+		.then(noUnexpectedAssets)
 		.then(files =>
 			deployStatic({
 				files: files,
