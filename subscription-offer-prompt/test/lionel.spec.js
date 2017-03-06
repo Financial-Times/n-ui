@@ -1,9 +1,9 @@
-/* globals sinon */
-// import SlidingPopup from 'n-sliding-popup';
+/* globals expect,should,sinon */
+import SlidingPopup from 'n-sliding-popup';
 import Superstore from 'superstore';
 import { init } from '../lionel';
 
-// const delay = (ms, value) => new Promise(resolve => setTimeout(resolve.bind(null, value), ms));
+const delay = (ms, value) => new Promise(resolve => setTimeout(resolve.bind(null, value), ms));
 
 describe('Lionel Slider', function () {
 
