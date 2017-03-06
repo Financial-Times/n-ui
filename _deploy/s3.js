@@ -44,10 +44,18 @@ function getFileList (dir) {
 		)
 }
 
+function expectedAssets () {
+	return Promise.resolve([
+		'./dist/assets/es5.js',
+		'./dist/assets/es5.min.js',
+		'./dist/assets/head-n-ui-core.css',
+		'./dist/assets/n-ui-core.css'
+	])
+}
+
 function brotlify () {
-	return getFileList('assets').then(files => Promise.all(
+	return expectedAssets.then(files => Promise.all(
 		files
-			.filter(f => /\.(js|css)$/.test(f))
 			.map(fileName =>
 				readFile(path.join(process.cwd(), fileName))
 					.then(brotli.compress)
