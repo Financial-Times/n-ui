@@ -1,315 +1,311 @@
 @import 'o-visual-effects/main';
 @import 'o-icons/main';
 
-@if nUiApply('welcomeMessage') {
+.n-welcome-banner,
+.n-welcome-message {
+	position: relative;
+	padding: 16px 12px;
+	background: getColor('teal-1');
+	color: getColor('white');
 
-	.n-welcome-banner,
-	.n-welcome-message {
-		position: relative;
-		padding: 16px 12px;
-		background: getColor('teal-1');
+	@include oGridRespondTo('L') {
+		padding: 24px 16px;
+	}
+
+	@media print {
+		display: none;
+	}
+}
+
+.n-welcome-banner {
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+.n-welcome-message--static {
+	margin: 16px 0;
+
+	.if-fixed {
+		display: none;
+	}
+	@include oGridRespondTo('M') {
+		margin: 24px 0;
+	}
+}
+
+.n-welcome-message--fixed {
+	@include nUiZIndexFor('welcome');
+	@include oEffectsShadowsElevation('mid');
+	position: fixed;
+	right: 0;
+	bottom: -1px;
+	left: 0;
+	transform: translateZ(0);
+	padding: 40px 16px;
+	display: none;
+
+	@include oGridRespondTo(M) {
+		display: block;
+	}
+}
+
+.n-welcome-banner--collapsed {
+	left: auto;
+	right: $spacing-unit/2;
+	bottom: $spacing-unit/2;
+	border-radius: 6px;
+	padding: $spacing-unit/2;
+	@include oGridRespondTo('L') {
+		bottom: $spacing-unit;
+	}
+}
+
+.n-welcome-banner--closed {
+	display: none;
+}
+
+.n-welcome-banner__wrapper {
+	display: table;
+	width: 100%;
+}
+
+.n-welcome-banner__column {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.n-welcome-banner__column--fill {
+	width: 100%;
+}
+
+.n-welcome-banner__column--actions {
+	text-align: right;
+	padding: 0 $spacing-unit;
+	@include oGridRespondTo('M') {
+		white-space: nowrap;
+	}
+}
+
+.n-welcome-banner__column--m {
+	display: none;
+	@include oGridRespondTo('M') {
+		display: table-cell;
+	}
+}
+
+.n-welcome-banner__column--xl {
+	display: none;
+	@include oGridRespondTo('XL') {
+		display: table-cell;
+	}
+}
+
+.n-welcome-banner__logo {
+	display: inline-block;
+	background-image: url('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-logo-square-coloured?source=next&format=png&width=50');
+	background-image: url('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-logo-square-coloured?source=next&format=svg');
+	background-size: contain;
+	width: 50px;
+	height: 50px;
+	margin-right: 20px;
+}
+
+.n-welcome-banner__heading {
+	@include oTypographySans('m', $load-progressively: true);
+	padding: 0;
+	display: inline-block;
+	margin: 0;
+	@include oGridRespondTo('M') {
+		white-space: nowrap;
+	}
+}
+
+.n-welcome-banner__heading--row {
+	margin: 0 0 $spacing-unit/2;
+	display: block;
+	@include oGridRespondTo('M') {
+		display: table-cell;
+		margin: 0;
+	}
+	@include oGridRespondTo($until: S) {
+		text-align: center;
+		margin: 25px 0;
+	}
+}
+
+.n-welcome-banner__heading--minimized {
+	@include oTypographySans('s', $load-progressively: true);
+	display: none;
+	@at-root .n-welcome-banner--collapsed & {
+		display: table-cell;
+	}
+	@include oGridRespondTo('M') {
+		@include oTypographySans('m', $load-progressively: true);
+	}
+}
+
+.n-welcome-banner__strapline {
+	@include oTypographySans('m', $load-progressively: true);
+	padding: 0 $spacing-unit 0 0;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	display: none;
+	margin: 0;
+
+	@include oGridRespondTo(M) {
+		display: inline;
+	}
+}
+
+.n-welcome-banner__cta--s {
+	display: none;
+	@include oGridRespondTo('S') {
+		display: inline;
+	}
+}
+
+.n-welcome-banner__button {
+	@include oButtons($size: 'big', $theme: 'standout');
+	background: getColor('white');
+	color: getColor('teal-1');
+	text-transform: capitalize;
+	white-space: nowrap;
+	@include oGridRespondTo('S') {
+		text-transform: none;
+	}
+}
+
+.n-welcome-banner__button--secondary {
+	@include oButtons($size: 'big', $theme: 'standout');
+	color: getColor('white');
+	background-color: getColor('teal-1');
+	border-color: getColor('white');
+}
+
+.n-welcome-banner__link-action {
+	display: inline;
+	margin: 0 0 0 $spacing-unit/2;
+	color: getColor('white');
+	border-bottom-color: getColor('white');
+	&:hover,
+	&:focus {
 		color: getColor('white');
-
-		@include oGridRespondTo('L') {
-			padding: 24px 16px;
-		}
-
-		@media print {
-			display: none;
-		}
 	}
-
-	.n-welcome-banner {
-		padding-left: 16px;
-		padding-right: 16px;
+	@include oGridRespondTo('M') {
+		display: inline-block;
 	}
+}
 
-	.n-welcome-message--static {
-		margin: 16px 0;
-
-		.if-fixed {
-			display: none;
-		}
-		@include oGridRespondTo('M') {
-			margin: 24px 0;
-		}
+.n-welcome-banner__button--toggler {
+	background: transparent;
+	border: 1px solid getColor('white');
+	border-radius: 3px;
+	margin: 1px 0;
+	padding: 2px 0 0;
+	width: 34px;
+	height: 34px;
+	float: right;
+	overflow: hidden;
+	&:before {
+		content: '';
+		margin: $spacing-unit/2 0;
 	}
-
-	.n-welcome-message--fixed {
-		@include nUtilZIndexFor('welcome');
-		@include oEffectsShadowsElevation('mid');
-		position: fixed;
-		right: 0;
-		bottom: -1px;
-		left: 0;
-		transform: translateZ(0);
-		padding: 40px 16px;
-		display: none;
-
-		@include oGridRespondTo(M) {
-			display: block;
-		}
+	&[aria-expanded="true"]:before {
+		@include oIconsGetIcon('arrow-down', getColor('white'), 14);
 	}
-
-	.n-welcome-banner--collapsed {
-		left: auto;
-		right: $spacing-unit/2;
-		bottom: $spacing-unit/2;
-		border-radius: 6px;
-		padding: $spacing-unit/2;
-		@include oGridRespondTo('L') {
-			bottom: $spacing-unit;
-		}
+	&[aria-expanded="false"]:before {
+		@include oIconsGetIcon('arrow-up', getColor('white'), 14);
 	}
+}
 
-	.n-welcome-banner--closed {
-		display: none;
+.n-welcome-banner__button--close {
+	background: transparent;
+	border: 1px solid getColor('white');
+	margin: 1px 0;
+	padding: 2px 0 0;
+	width: 34px;
+	height: 34px;
+	float: right;
+	overflow: hidden;
+	&:before {
+		content: '';
+		@include oIconsGetIcon('cross', getColor('white'), 28);
 	}
+}
 
-	.n-welcome-banner__wrapper {
-		display: table;
-		width: 100%;
-	}
+/* START styles only for old welcome message (pre 'banner layout') */
+.n-welcome-message__heading {
+	@include oTypographySansSize('m');
+	margin: 0 0 $spacing-unit/4;
+}
 
-	.n-welcome-banner__column {
+.n-welcome-message__wrapper {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+
+.n-welcome-message__button {
+	@include oButtons($theme:'standout');
+	white-space: nowrap;
+	margin: $spacing-unit/2 $spacing-unit/2 0 0;
+}
+
+.n-welcome-message--hidden {
+	display: none;
+}
+
+.n-welcome-message__column {
+	@include oGridRespondTo('L') {
 		display: table-cell;
 		vertical-align: middle;
 	}
-
-	.n-welcome-banner__column--fill {
-		width: 100%;
-	}
-
-	.n-welcome-banner__column--actions {
-		text-align: right;
-		padding: 0 $spacing-unit;
-		@include oGridRespondTo('M') {
-			white-space: nowrap;
-		}
-	}
-
-	.n-welcome-banner__column--m {
-		display: none;
-		@include oGridRespondTo('M') {
-			display: table-cell;
-		}
-	}
-
-	.n-welcome-banner__column--xl {
-		display: none;
-		@include oGridRespondTo('XL') {
-			display: table-cell;
-		}
-	}
-
-	.n-welcome-banner__logo {
-		display: inline-block;
-		background-image: url('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-logo-square-coloured?source=next&format=png&width=50');
-		background-image: url('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-logo-square-coloured?source=next&format=svg');
-		background-size: contain;
-		width: 50px;
-		height: 50px;
-		margin-right: 20px;
-	}
-
-	.n-welcome-banner__heading {
-		@include oTypographySans('m', $load-progressively: true);
-		padding: 0;
-		display: inline-block;
-		margin: 0;
-		@include oGridRespondTo('M') {
-			white-space: nowrap;
-		}
-	}
-
-	.n-welcome-banner__heading--row {
-		margin: 0 0 $spacing-unit/2;
-		display: block;
-		@include oGridRespondTo('M') {
-			display: table-cell;
-			margin: 0;
-		}
-		@include oGridRespondTo($until: S) {
-			text-align: center;
-			margin: 25px 0;
-		}
-	}
-
-	.n-welcome-banner__heading--minimized {
-		@include oTypographySans('s', $load-progressively: true);
-		display: none;
-		@at-root .n-welcome-banner--collapsed & {
-			display: table-cell;
-		}
-		@include oGridRespondTo('M') {
-			@include oTypographySans('m', $load-progressively: true);
-		}
-	}
-
-	.n-welcome-banner__strapline {
-		@include oTypographySans('m', $load-progressively: true);
-		padding: 0 $spacing-unit 0 0;
-		text-rendering: optimizeLegibility;
-		-webkit-font-smoothing: antialiased;
-		display: none;
-		margin: 0;
-
-		@include oGridRespondTo(M) {
-			display: inline;
-		}
-	}
-
-	.n-welcome-banner__cta--s {
-		display: none;
-		@include oGridRespondTo('S') {
-			display: inline;
-		}
-	}
-
-	.n-welcome-banner__button {
-		@include oButtons($size: 'big', $theme: 'standout');
-		background: getColor('white');
-		color: getColor('teal-1');
-		text-transform: capitalize;
-		white-space: nowrap;
-		@include oGridRespondTo('S') {
-			text-transform: none;
-		}
-	}
-
-	.n-welcome-banner__button--secondary {
-		@include oButtons($size: 'big', $theme: 'standout');
-		color: getColor('white');
-		background-color: getColor('teal-1');
-		border-color: getColor('white');
-	}
-
-	.n-welcome-banner__link-action {
-		display: inline;
-		margin: 0 0 0 $spacing-unit/2;
-		color: getColor('white');
-		border-bottom-color: getColor('white');
-		&:hover,
-		&:focus {
-			color: getColor('white');
-		}
-		@include oGridRespondTo('M') {
-			display: inline-block;
-		}
-	}
-
-	.n-welcome-banner__button--toggler {
-		background: transparent;
-		border: 1px solid getColor('white');
-		border-radius: 3px;
-		margin: 1px 0;
-		padding: 2px 0 0;
-		width: 34px;
-		height: 34px;
-		float: right;
-		overflow: hidden;
-		&:before {
-			content: '';
-			margin: $spacing-unit/2 0;
-		}
-		&[aria-expanded="true"]:before {
-			@include oIconsGetIcon('arrow-down', getColor('white'), 14);
-		}
-		&[aria-expanded="false"]:before {
-			@include oIconsGetIcon('arrow-up', getColor('white'), 14);
-		}
-	}
-
-	.n-welcome-banner__button--close {
-		background: transparent;
-		border: 1px solid getColor('white');
-		margin: 1px 0;
-		padding: 2px 0 0;
-		width: 34px;
-		height: 34px;
-		float: right;
-		overflow: hidden;
-		&:before {
-			content: '';
-			@include oIconsGetIcon('cross', getColor('white'), 28);
-		}
-	}
-
-	/* START styles only for old welcome message (pre 'banner layout') */
-	.n-welcome-message__heading {
-		@include oTypographySansSize('m');
-		margin: 0 0 $spacing-unit/4;
-	}
-
-	.n-welcome-message__wrapper {
-		display: table;
-		table-layout: fixed;
-		width: 100%;
-	}
-
-	.n-welcome-message__button {
-		@include oButtons($theme:'standout');
-		white-space: nowrap;
-		margin: $spacing-unit/2 $spacing-unit/2 0 0;
-	}
-
-	.n-welcome-message--hidden {
-		display: none;
-	}
-
-	.n-welcome-message__column {
-		@include oGridRespondTo('L') {
-			display: table-cell;
-			vertical-align: middle;
-		}
-	}
-
-	.n-welcome-banner__column--text {
-		padding-right: 0px;
-		display: block;
-		margin-bottom: 10px;
-
-		@include oGridRespondTo(M) {
-			display: table-cell;
-			margin-bottom: 0px;
-			padding-right: 10px;
-		}
-	}
-
-	.n-welcome-message__column--actions {
-		@include oGridRespondTo('L') {
-			text-align: right;
-		}
-	}
-
-	.n-welcome-message__intro {
-		display: none;
-
-		@include oGridRespondTo('S') {
-			display: block;
-			margin: 0 0 12px;
-		}
-
-		@include oGridRespondTo('L') {
-			margin-bottom: 0;
-		}
-	}
-
-	.n-welcome-message__close {
-		@include oIconsGetIcon('cross', getColor('grey-tint4'), 40, $iconset-version: 1);
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		width: 20px;
-		height: 20px;
-		border: 0;
-		opacity: 0.8;
-
-		&:hover {
-			opacity: 1;
-		}
-	}
-
-	/* END styles only for old welcome message (pre 'banner' layout) */
-
 }
+
+.n-welcome-banner__column--text {
+	padding-right: 0px;
+	display: block;
+	margin-bottom: 10px;
+
+	@include oGridRespondTo(M) {
+		display: table-cell;
+		margin-bottom: 0px;
+		padding-right: 10px;
+	}
+}
+
+.n-welcome-message__column--actions {
+	@include oGridRespondTo('L') {
+		text-align: right;
+	}
+}
+
+.n-welcome-message__intro {
+	display: none;
+
+	@include oGridRespondTo('S') {
+		display: block;
+		margin: 0 0 12px;
+	}
+
+	@include oGridRespondTo('L') {
+		margin-bottom: 0;
+	}
+}
+
+.n-welcome-message__close {
+	@include oIconsGetIcon('cross', getColor('grey-tint4'), 40, $iconset-version: 1);
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 20px;
+	height: 20px;
+	border: 0;
+	opacity: 0.8;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+/* END styles only for old welcome message (pre 'banner' layout) */

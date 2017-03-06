@@ -1,58 +1,55 @@
-@if nUiApply('layout') {
+@include nUiStylesheetStart('head-n-ui-core');
 
-	@include nUiCriticalStart('core');
+.core .o--if-js,
+.enhanced .o--if-no-js {
+	display: none !important;
+}
 
-	.core .o--if-js,
-	.enhanced .o--if-no-js {
-		display: none !important;
+html {
+	@include oColorsFor(page);
+
+	&.enhanced {
+		// Prevent navigation menus from creating
+		// extra space on sides of the page
+		overflow-x: hidden;
 	}
+}
 
-	html {
-		@include oColorsFor(page);
+body {
+	margin: 0;
+}
 
-		&.enhanced {
-			// Prevent navigation menus from creating
-			// extra space on sides of the page
-			overflow-x: hidden;
-		}
-	}
+.n-layout {
+	display: table;
+	width: 100%;
+	min-height: 100vh;
+	table-layout: fixed;
+}
 
-	body {
-		margin: 0;
-	}
+.n-layout__row {
+	display: table-row;
+}
 
-	.n-layout {
-		display: table;
-		width: 100%;
-		min-height: 100vh;
-		table-layout: fixed;
-	}
+.n-layout__row--content {
+	height: 100%;
+}
 
+@media print {
+	.n-layout,
 	.n-layout__row {
-		display: table-row;
+		display: block;
 	}
+}
 
-	.n-layout__row--content {
-		height: 100%;
-	}
+// always hide the footer in head.css because typically its styles will not be
+// in head.css, so on short pages we'll get a FOUC
+.n-layout__row--footer {
+	display: none;
+}
 
-	@media print {
-		.n-layout,
-		.n-layout__row {
-			display: block;
-		}
-	}
-
-	// always hide the footer in head.css because typically its styles will not be
-	// in head.css, so on short pages we'll get a FOUC
-	.n-layout__row--footer {
-		display: none;
-	}
-
-	@include nUiCriticalEnd('core');
-	// needed to stop css minimize merging the selectors above and below
-	// undo the above hiding of the footer
-	.n-layout__row--footer.n-layout__row--footer {
-		display: table-row;
-	}
+@include nUiStylesheetEnd('head-n-ui-core');
+// needed to stop css minimize merging the selectors above and below
+// undo the above hiding of the footer
+.n-layout__row--footer.n-layout__row--footer {
+	display: table-row;
 }

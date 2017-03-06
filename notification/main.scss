@@ -1,3 +1,5 @@
-$n-notification-is-silent: not nUiHas('notification') !default;
+$n-notification-is-silent: false !default;
 
 @import 'n-notification/main';
+
+$n-notification-is-silent: true;

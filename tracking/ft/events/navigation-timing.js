@@ -1,4 +1,4 @@
-const broadcast = require('../../../utils').broadcast;
+const broadcast = require('n-ui-foundations').broadcast;
 
 // ordered performance timing events that are fired
 const timingEvents = [

@@ -7,7 +7,7 @@ const Reporter = require('./js/reporter');
 const sendMetrics = require('./js/metrics');
 const Sticky = require('./js/sticky');
 
-import { perfMark } from '../utils'
+import { perfMark } from 'n-ui-foundations'
 
 let slotCount;
 let slotsRendered = 0;

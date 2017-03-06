@@ -4,14 +4,12 @@
 const path = require('path');
 const BowerWebpackPlugin = require('bower-webpack-plugin');
 const componentsToTest = [
-	'test',
 	'js-setup',
 	'ads',
 	'myft',
 	'tracking',
 	'opt-out',
-	'subscription-offer-prompt',
-	'utils'
+	'subscription-offer-prompt'
 ];
 
 module.exports = function (karma) {
@@ -76,8 +74,7 @@ module.exports = function (karma) {
 			resolve: {
 				alias: {
 					'react': 'preact-compat',
-					'react-dom': 'preact-compat',
-					'n-ui/utils': require.resolve('./utils')
+					'react-dom': 'preact-compat'
 				},
 				root: [
 					path.join(__dirname, 'bower_components'),
