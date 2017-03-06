@@ -16,7 +16,6 @@ describe('"Pwr Of You" Prompt', () => {
 
 	beforeEach(() => {
 		flags = { get: (val) => val === 'b2cMessagePrompt' || val === 'PowerOfYouSlider' };
-
 		return Promise.all([
 			// pwr was closed over 30 days ago (we should show it again)
 			localStorage.set('last-closed-pwr', Date.now() - (1000 * 60 * 60 * 24 * 36)),
