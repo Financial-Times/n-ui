@@ -122,50 +122,50 @@ describe('Lionel Slider', function () {
 
 	// });
 
-	describe('"Lionel Slider" Subscription Offer Prompt - USA', () => {
-
-		beforeEach(() => {
-			fetchStub
-				.withArgs('/country')
-				.returns(Promise.resolve({
-					json: () => Promise.resolve('USA')
-				}));
-		});
-
-		it('should have correct price when the priceFlashSale flag is on', () =>
-			init(flags).then(popup => {
-				popup.el.innerHTML.should.contain('$4.29')
-			})
-		);
-
-		it('should have correct price when the priceFlashSale flag is off', () => {
-				flags = { get: (val) => val === 'b2cMessagePrompt'};
-				init(flags).then(popup => {
-					popup.el.innerHTML.should.contain('$4.29')
-				})
-			}
-		);
-
-	});
-
-	// describe('"Lionel Slider" Subscription Offer Prompt - country code not listed', () => {
+	// describe('"Lionel Slider" Subscription Offer Prompt - USA', () => {
 
 	// 	beforeEach(() => {
 	// 		fetchStub
 	// 			.withArgs('/country')
 	// 			.returns(Promise.resolve({
-	// 				json: () => Promise.resolve('ISR')
+	// 				json: () => Promise.resolve('USA')
 	// 			}));
 	// 	});
 
-	// 	it('should default to Euros when country code is one not listed', () => {
+	// 	it('should have correct price when the priceFlashSale flag is on', () =>
+	// 		init(flags).then(popup => {
+	// 			popup.el.innerHTML.should.contain('$4.29')
+	// 		})
+	// 	);
+
+	// 	it('should have correct price when the priceFlashSale flag is off', () => {
 	// 			flags = { get: (val) => val === 'b2cMessagePrompt'};
 	// 			init(flags).then(popup => {
-	// 				popup.el.innerHTML.should.contain('€4.39')
+	// 				popup.el.innerHTML.should.contain('$4.29')
 	// 			})
 	// 		}
 	// 	);
 
 	// });
+
+	describe('"Lionel Slider" Subscription Offer Prompt - country code not listed', () => {
+
+		beforeEach(() => {
+			fetchStub
+				.withArgs('/country')
+				.returns(Promise.resolve({
+					json: () => Promise.resolve('ISR')
+				}));
+		});
+
+		it('should default to Euros when country code is one not listed', () => {
+				flags = { get: (val) => val === 'b2cMessagePrompt'};
+				init(flags).then(popup => {
+					popup.el.innerHTML.should.contain('€4.39')
+				})
+			}
+		);
+
+	});
 
 });
