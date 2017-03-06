@@ -50,7 +50,11 @@
 		<meta property="twitter:site" content="@FinancialTimes">
 		<meta property="twitter:title" content="{{ twitterCard.title }}">
 		<meta property="twitter:description" content="{{ twitterCard.description }}">
-		{{#if twitterCard.image}}<meta property="twitter:image" content="{{ twitterCard.image }}">{{/if}}
+		{{#if twitterCard.image}}
+		<meta property="twitter:image" content="{{ twitterCard.image }}">
+		{{else}}
+		<meta property="twitter:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png">
+		{{/if}}
 		{{/if}}
 
 		{{#outputBlock 'head'}}{{/outputBlock}}
