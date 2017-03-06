@@ -97,11 +97,11 @@ function init (options, directory, locals) {
 				let polyfillRoot;
 
 				if (flags.polyfillQA) {
-					polyfillRoot = '//qa.polyfill.io/v2/polyfill.min.js';
+					polyfillRoot = 'https://qa.polyfill.io/v2/polyfill.min.js';
 				} else if (flags.polyfillSameDomain) {
-					polyfillRoot = '//www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
+					polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
 				} else {
-					polyfillRoot = '//next-geebee.ft.com/polyfill/v2/polyfill.min.js';
+					polyfillRoot = 'https://next-geebee.ft.com/polyfill/v2/polyfill.min.js';
 				}
 
 
