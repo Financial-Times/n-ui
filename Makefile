@@ -14,11 +14,11 @@ build:
 watch:
 	webpack --config webpack.config.demo.js --dev --watch
 
-test-unit:
+test-client:
 	karma start karma.conf.js
 
-# test-unit-dev is only for development environments.
-test-unit-dev:
+# test-client-dev is only for development environments.
+test-client-dev:
 	$(info *)
 	$(info * Developers note: This test will never "complete". It's meant to run in a separate tab. It'll automatically rerun tests whenever one of your files changes.)
 	$(info *)
@@ -57,7 +57,7 @@ a11y: test-build pally-conf
 
 # Note: `run` executes `node _test-server/app`, which fires up exchange, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
-test: developer-note verify pally-conf test-server test-unit test-build run nightwatch a11y
+test: developer-note verify pally-conf test-server test-client test-build run nightwatch a11y
 
 developer-note:
 ifeq ($(NODE_ENV),) # Not production
@@ -69,7 +69,7 @@ endif
 endif
 
 # Test-dev is only for development environments.
-test-dev: verify test-unit-dev
+test-dev: verify test-client-dev
 
 deploy: assets
 	node ./_deploy/s3.js

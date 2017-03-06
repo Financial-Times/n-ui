@@ -3,7 +3,6 @@ import ads from '../../ads';
 import tracking from '../../tracking';
 import date from 'o-date';
 import header from '../../header';
-import optOut from '../../opt-out';
 import oCookieMessage from 'o-cookie-message';
 import welcomeMessage from '../../welcome-message';
 import subscriptionOfferPrompt from '../../subscription-offer-prompt';
@@ -98,10 +97,6 @@ export class ComponentInitializer {
 				serviceWorker.message({ type: 'updateCache', data: {}});
 			} else {
 				serviceWorker.unregister();
-			}
-
-			if (flags.get('optInOut')) {
-				optOut.init();
 			}
 
 			if (config.features.myft && !this.initializedFeatures.myftclient) {
