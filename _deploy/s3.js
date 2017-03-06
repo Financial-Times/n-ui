@@ -44,20 +44,37 @@ function getFileList (dir) {
 		)
 }
 
-function brotlify () {
-	return getFileList('assets').then(files => Promise.all(
+function expectedAssets () {
+	return Promise.resolve(
+		[
+			'es5.js',
+			'es5.min.js',
+			'head-n-ui-core.css',
+			'n-ui-core.css'
+		]
+			.map(filename => {
+				if(!fs.existsSync(path.join(__dirname, '../dist/assets/', filename))) {
+					throw new Error(`${filename} has not been built`);
+				}
+				return `./dist/assets/${filename}`
+			})
+	)
+}
+
+function brotlify (files) {
+	return Promise.all(
 		files
-			.filter(f => /\.(js|css)$/.test(f))
 			.map(fileName =>
 				readFile(path.join(process.cwd(), fileName))
 					.then(brotli.compress)
 					.then(contents => writeFile(path.join(process.cwd(), fileName + '.brotli'), contents))
 			)
-	))
+	)
 }
 
 function staticAssets () {
-	return brotlify()
+	return expectedAssets()
+		.then(brotlify)
 		.then(() => getFileList('assets'))
 		.then(files =>
 			deployStatic({
