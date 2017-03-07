@@ -21,7 +21,6 @@ module.exports = options => {
 		withAnonMiddleware: true,
 		withNUiJsBundle: true,
 		withAssets: true,
-		withHeadCss: true,
 		withJsonLd: true,
 		withFlags: true,
 		withBackendAuthentication: true,

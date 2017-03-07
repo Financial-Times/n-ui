@@ -30,6 +30,10 @@ function init (options, directory, locals) {
 	const linkHeader = linkHeaderFactory(hasher);
 	const nUiUrlRoot = nUiManager.getUrlRoot(hasher);
 
+	const getStylesheetPath = stylesheetName => {
+		return /n-ui/.test(stylesheetName) ? `${nUiUrlRoot}${stylesheetName}.css` : hasher(`${stylesheetName}.css`)
+	}
+
 	return {
 		hasher,
 		fetchNUiCss: () => {
@@ -88,8 +92,14 @@ function init (options, directory, locals) {
 
 			if (req.accepts('text/html')) {
 				res.locals.javascriptBundles = [];
-				res.locals.cssBundles = [];
-				res.locals.criticalCss = [];
+				res.locals.cssBundles = {
+					inline: [],
+					lazy: [],
+					blocking: []
+				};
+
+				res.locals.cssBundles.inline = ['head']
+				res.locals.cssBundles.lazy = ['main']
 				res.locals.nUiConfig = nUiConfig;
 
 				// work out which assets will be required by the page
@@ -122,36 +132,27 @@ function init (options, directory, locals) {
 
 				res.render = function (template, templateData) {
 
-					let cssVariant = templateData.cssVariant || res.locals.cssVariant;
-					cssVariant = cssVariant ? `-${cssVariant}` : '';
+					// Add standard n-ui stylesheets
+					res.locals.cssBundles.inline.unshift('head-n-ui-core');
+					res.locals.cssBundles.lazy.unshift('n-ui-core');
 
-
-					// define which css to output in the critical path
-					if (options.withHeadCss) {
-						// variants of head-n-ui-core no longer exist, but the app may not necessarily
-						// have successfully fetched head-n-ui-core from network, so fallback to the variant
-						// file while trying it out
-						if ('head-n-ui-core' in stylesheets) {
-							res.locals.criticalCss.push(stylesheets['head-n-ui-core'])
-						} else if (`head${cssVariant}-n-ui-core` in stylesheets) {
-							res.locals.criticalCss.push(stylesheets[`head${cssVariant}-n-ui-core`])
+					res.locals.cssBundles.inline = res.locals.cssBundles.inline.reduce((str, name) => {
+						if (!stylesheets[name]) {
+							throw `Stylesheet ${name} does not exist`;
 						}
-						if (`head${cssVariant}` in stylesheets && stylesheets[`head${cssVariant}`].length) {
-							res.locals.criticalCss.push(stylesheets[`head${cssVariant}`]);
-						}
-					}
+						return str + stylesheets[name];
+					}, '');
 
-					res.locals.cssBundles.push({
-						path: hasher.get(`main${cssVariant}.css`),
-						isMain: true,
-						isLazy: options.withHeadCss
-					});
+					res.locals.cssBundles.lazy = res.locals.cssBundles.lazy.map(getStylesheetPath);
+					res.locals.cssBundles.blocking = res.locals.cssBundles.blocking.map(getStylesheetPath);
 
-					res.locals.cssBundles.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.cssBundles.lazy.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.cssBundles.blocking.forEach(file => res.linkResource(file.path, {as: 'style'}));
 					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
 
 					if (templateData.withAssetPrecache) {
-						res.locals.cssBundles.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
+						res.locals.cssBundles.lazy.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
+						res.locals.cssBundles.blocking.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
 						res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
 					}
 

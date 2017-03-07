@@ -14,4 +14,9 @@ window.ftNextFireCondition = function (condition) {
 		window[evName] = 1;
 	}
 };
+window.ftNextCssFileLoaded = function () {
+	if (!document.querySelector('link[data-is-next][rel="preload"][as="style"]')) {
+		window.ftNextFireCondition('AllStylesLoaded')
+	}
+}
 </script>

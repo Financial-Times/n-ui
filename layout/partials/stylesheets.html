@@ -1,14 +1,14 @@
-{{#if @root.criticalCss}}
+{{#if @root.cssBundles.inline}}
 	<style class="n-layout-head-css">
-		{{#each @root.criticalCss}}
+		{{#each @root.cssBundles.inline}}
 			{{{this}}}
 		{{/each}}
 	</style>
 {{/if}}
-{{#each @root.cssBundles}}
-	{{#ifAll @root.criticalCss isLazy}}
+
+{{#each @root.cssBundles.lazy}}
 		<!--[if gte IE 9]><!-->
-		<link rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';{{#if isMain}}window.ftNextFireCondition('MainCssLoaded'){{/if}}">
+		<link data-is-next rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';window.ftNextCssFileLoaded()">
 		<noscript>
 			<link rel="stylesheet" href="{{path}}">
 		</noscript>
@@ -16,7 +16,7 @@
 		<!--[if lt IE 9]>
 		<link rel="stylesheet" href="{{path}}">
 		<![endif]-->
-	{{else}}
-		<link rel="stylesheet" href="{{path}}">
-	{{/ifAll}}
+{{/each}}
+{{#each @root.cssBundles.blocking}}
+	<link rel="stylesheet" href="{{path}}">
 {{/each}}
