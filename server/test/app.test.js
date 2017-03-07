@@ -3,11 +3,7 @@ const request = require('supertest');
 
 // stub the setup api calls
 const fetchMock = require('fetch-mock');
-const sinon = require('sinon');
-const nUi = require('../index');
 const expect = require('chai').expect;
-const flags = require('next-feature-flags-client');
-const verifyAssetsExist = require('../lib/verify-assets-exist');
 
 let app;
 

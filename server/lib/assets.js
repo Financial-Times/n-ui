@@ -61,14 +61,14 @@ function init (options, directory, locals) {
 
 			if (req.accepts('text/html')) {
 				res.locals.javascriptBundles = [];
-				res.locals.cssBundles = {
+				res.locals.stylesheets = {
 					inline: [],
 					lazy: [],
 					blocking: []
 				};
 
-				res.locals.cssBundles.inline = ['head']
-				res.locals.cssBundles.lazy = ['main']
+				res.locals.stylesheets.inline = ['head']
+				res.locals.stylesheets.lazy = ['main']
 				res.locals.nUiConfig = nUiConfig;
 
 				// work out which assets will be required by the page
@@ -102,22 +102,22 @@ function init (options, directory, locals) {
 				res.render = function (template, templateData) {
 
 					// Add standard n-ui stylesheets
-					res.locals.cssBundles.inline.unshift('head-n-ui-core');
-					res.locals.cssBundles.lazy.unshift('n-ui-core');
+					res.locals.stylesheets.inline.unshift('head-n-ui-core');
+					res.locals.stylesheets.lazy.unshift('n-ui-core');
 
-					res.locals.cssBundles.inline = concatenateStyles(res.locals.cssBundles.inline);
+					res.locals.stylesheets.inline = concatenateStyles(res.locals.stylesheets.inline);
 
 					// TODO: DRY this out
-					res.locals.cssBundles.lazy = res.locals.cssBundles.lazy.map(getStylesheetPath);
-					res.locals.cssBundles.blocking = res.locals.cssBundles.blocking.map(getStylesheetPath);
+					res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(getStylesheetPath);
+					res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(getStylesheetPath);
 
-					res.locals.cssBundles.lazy.forEach(file => res.linkResource(file.path, {as: 'style'}));
-					res.locals.cssBundles.blocking.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file.path, {as: 'style'}));
 					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
 
 					if (templateData.withAssetPrecache) {
-						res.locals.cssBundles.lazy.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
-						res.locals.cssBundles.blocking.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
+						res.locals.stylesheets.lazy.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
+						res.locals.stylesheets.blocking.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
 						res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
 					}
 
