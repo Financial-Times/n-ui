@@ -1,22 +1,20 @@
 {{#if @root.cssBundles.inline}}
 	<style class="n-layout-head-css">
-		{{#each @root.cssBundles.inline}}
-			{{{this}}}
-		{{/each}}
+		{{{@root.cssBundles.inline}}}
 	</style>
 {{/if}}
 
 {{#each @root.cssBundles.lazy}}
 		<!--[if gte IE 9]><!-->
-		<link data-is-next rel="preload" href="{{path}}" as="style" onload="this.rel='stylesheet';window.ftNextCssFileLoaded()">
+		<link data-is-next rel="preload" href="{{this}}" as="style" onload="this.rel='stylesheet';window.ftNextCssFileLoaded()">
 		<noscript>
 			<link rel="stylesheet" href="{{path}}">
 		</noscript>
 		<!--<![endif]-->
 		<!--[if lt IE 9]>
-		<link rel="stylesheet" href="{{path}}">
+		<link rel="stylesheet" href="{{this}}">
 		<![endif]-->
 {{/each}}
 {{#each @root.cssBundles.blocking}}
-	<link rel="stylesheet" href="{{path}}">
+	<link rel="stylesheet" href="{{this}}">
 {{/each}}

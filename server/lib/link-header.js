@@ -3,7 +3,7 @@ module.exports = function linkHeaderFactory (hashedAssets) {
 		meta = meta || {};
 		opts = opts || {};
 		const header = [];
-		header.push(`<${opts.hashed ? hashedAssets.get(file) : file }>`);
+		header.push(`<${opts.hashed ? hashedAssets(file) : file }>`);
 		Object.keys(meta).forEach(key => {
 			header.push(`${key}="${meta[key]}"`)
 		});

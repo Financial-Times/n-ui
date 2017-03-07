@@ -11,7 +11,6 @@ const verifyAssetsExist = require('../lib/verify-assets-exist');
 
 let app;
 
-
 describe('simple app', function () {
 
 	before(() => {
@@ -112,7 +111,6 @@ describe('simple app', function () {
 
 
 	describe('templating', function () {
-
 		it('should do templating', function (done) {
 			request(app)
 				.get('/templated')
@@ -175,67 +173,56 @@ describe('simple app', function () {
 					.expect(200, /dynamic-partial/, done)
 					.expect(200, /dynamicroot-iamroot/, done);
 			});
-		});
 
-		it('should treat undefined flags as offy (like falsey)', function (done) {
-			request(app)
-				.get('/templated')
-				// Currently fails - suggest we just ditch this feature, as per
-				// https://github.com/Financial-Times/next-feature-flags-client/issues/26
-				//.expect(/<undefinedflag-off>Should appear<\/undefinedflag-off>/)
-				.expect(200, /<undefinedflag-on><\/undefinedflag-on>/, done);
-		});
+			it('should treat undefined flags as offy (like falsey)', function (done) {
+				request(app)
+					.get('/templated')
+					// Currently fails - suggest we just ditch this feature, as per
+					// https://github.com/Financial-Times/next-feature-flags-client/issues/26
+					//.expect(/<undefinedflag-off>Should appear<\/undefinedflag-off>/)
+					.expect(200, /<undefinedflag-on><\/undefinedflag-on>/, done);
+			});
 
+		});
 	});
 
 	describe('styles', () => {
 		it('should inline head.css & head-n-ui-core.css', (done) => {
 			request(app)
 				.get('/with-layout?layout=wrapper')
-				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core-new\s*head.css\s*<\/style>/)
-				.expect(200, /<link rel="preload" href="\/demo-app\/main\.css" as="style" onload=/, done);
+				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head\.css\s*<\/style>/)
+				.expect(200, /<link data-is-next rel="preload" href="\/demo-app\/main\.css" as="style" onload=/, done);
 
 		})
+		//TODO tests for multiple css
+	})
 
-		it('should inline head-variant.css & head-variant-n-ui-core.css', (done) => {
-			request(app)
-				.get('/with-layout?layout=wrapper&cssVariant=variant')
-				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core-new\s*head-variant.css\s*<\/style>/)
-				.expect(200, /<link rel="preload" href="\/demo-app\/main-variant\.css" as="style" onload=/, done);
+		describe('hashed assets and preloading', () => {
+
+			it('should preload main.css, main-with-n-ui.js and polyfill', done => {
+				request(app)
+					.get('/templated')
+					.expect('Link', /<https:\/\/next-geebee\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
+					.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
+					.expect('Link', /<\/demo-app\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
+			});
+
+			it('should not preload anything by default on non text/html requests', done => {
+				request(app)
+					.get('/non-html')
+					.end((err, res) => {
+						expect(res.headers.link).to.not.exist;
+						done();
+					})
+			});
+
+			//TODO multiple css preloads
+
+			it('should be possible to preload any file on any request', done => {
+				request(app)
+					.get('/non-html?preload=true')
+					.expect('Link', '</demo-app/it.js>; rel="preload"; as="script"; nopush, <https://place.com/it.js>; rel="preload"; as="script"; nopush', done)
+			});
 
 		})
-	})
-
-	describe('hashed assets and preloading', () => {
-
-		it('should preload main.css, main-with-n-ui.js and polyfill', done => {
-			request(app)
-				.get('/templated')
-				.expect('Link', /<https:\/\/next-geebee\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
-				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
-				.expect('Link', /<\/demo-app\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
-		});
-
-		it('should not preload anything by default on non text/html requests', done => {
-			request(app)
-				.get('/non-html')
-				.end((err, res) => {
-					expect(res.headers.link).to.not.exist;
-					done();
-				})
-		});
-
-		it('should preload main-variant.css as appropriate', done => {
-			request(app)
-				.get('/templated?cssVariant=variant')
-				.expect('Link', /<\/demo-app\/main-variant\.css>; as="style"; rel="preload"; nopush/, done)
-		});
-
-		it('should be possible to preload any file on any request', done => {
-			request(app)
-				.get('/non-html?preload=true')
-				.expect('Link', '</demo-app/it.js>; rel="preload"; as="script"; nopush, <https://place.com/it.js>; rel="preload"; as="script"; nopush', done)
-		});
-
-	})
 });
