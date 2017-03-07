@@ -9,6 +9,7 @@
 .editorconfig
 .eslintrc.js
 .scss-lint.yml
+/public/__about.json
 /public/head-n-ui-core.css
 /public/head-n-ui-core.css.map
 /public/main.css
