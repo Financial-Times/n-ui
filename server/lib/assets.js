@@ -34,6 +34,21 @@ function init (options, directory, locals) {
 		return /n-ui/.test(stylesheetName) ? `${nUiUrlRoot}${stylesheetName}.css` : hasher(`${stylesheetName}.css`)
 	}
 
+	const concatenatedStylesCache = {};
+
+	const concatenateStyles = stylesheetNames => {
+		const hash = stylesheetNames.join(':');
+		if (!concatenatedStylesCache[hash]) {
+			concatenatedStylesCache[hash] = stylesheetNames.reduce((str, name) => {
+				if (!stylesheets[name]) {
+					throw `Stylesheet ${name} does not exist`;
+				}
+				return str + stylesheets[name];
+			}, '');
+		}
+		return concatenatedStylesCache[hash];
+	}
+
 	return {
 		hasher,
 		fetchNUiCss: () => {
@@ -88,8 +103,6 @@ function init (options, directory, locals) {
 			// define a helper for adding a link header
 			res.linkResource = linkHeader;
 
-			res.locals.stylesheets = stylesheets;
-
 			if (req.accepts('text/html')) {
 				res.locals.javascriptBundles = [];
 				res.locals.cssBundles = {
@@ -135,13 +148,9 @@ function init (options, directory, locals) {
 					// Add standard n-ui stylesheets
 					res.locals.cssBundles.inline.unshift('head-n-ui-core');
 					res.locals.cssBundles.lazy.unshift('n-ui-core');
-					// TODO - memoize this
-					res.locals.cssBundles.inline = res.locals.cssBundles.inline.reduce((str, name) => {
-						if (!stylesheets[name]) {
-							throw `Stylesheet ${name} does not exist`;
-						}
-						return str + stylesheets[name];
-					}, '');
+
+					res.locals.cssBundles.inline = concatenateStyles(res.locals.cssBundles.inline);
+
 					// TODO: DRY this out
 					res.locals.cssBundles.lazy = res.locals.cssBundles.lazy.map(getStylesheetPath);
 					res.locals.cssBundles.blocking = res.locals.cssBundles.blocking.map(getStylesheetPath);
