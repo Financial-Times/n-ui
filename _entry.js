@@ -6,7 +6,6 @@ module.exports = function (withPreact, exclusions) {
 		'n-ui': 'window.ftNextUi',
 		'n-ui/ads': 'window.ftNextUi._ads',
 		'n-ui/tracking': 'window.ftNextUi._tracking',
-		'n-ui/notification': 'window.ftNextUi._notification',
 		'n-ui/typeahead': 'window.ftNextUi._typeahead',
 		'n-ui-foundations': 'window.ftNextUi._foundations',
 		// wrapped origami components

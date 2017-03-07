@@ -2,7 +2,5 @@ footer
 header
 js-setup
 layout
-myft
-opt-out
 tracking
 welcome-message

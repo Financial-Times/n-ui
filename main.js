@@ -17,8 +17,6 @@ import typeahead from './typeahead';
 export const _typeahead = typeahead;
 import foundations from 'n-ui-foundations';
 export const _foundations = foundations;
-import notification from './notification';
-export const _notification = notification;
 import grid from 'o-grid';
 export const _grid = grid;
 import viewport from 'o-viewport';
