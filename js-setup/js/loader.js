@@ -79,7 +79,7 @@ class JsSetup {
 		return Promise.resolve({
 			flags: flags,
 			appInfo: this.appInfo,
-			mainCss: new Promise(res => {
+			allStylesLoaded: new Promise(res => {
 				// if this element exists it means the page is setup to deliver critical/main css
 				if (document.querySelector('style.n-layout-head-css')) {
 					waitForCondition('AllStyles', res);

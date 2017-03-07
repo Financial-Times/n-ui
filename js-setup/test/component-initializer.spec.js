@@ -22,7 +22,7 @@ describe('bootstrapping', () => {
 					get: () => true
 				},
 				appInfo: {},
-				mainCss: Promise.resolve()
+				allStylesLoaded: Promise.resolve()
 			})
 		})
 	});

@@ -33,7 +33,7 @@ describe('js loader', function () {
 			promise.then(function (result) {
 				expect(result).to.be.an('object');
 				expect(result.flags.get).to.be.a('function');
-				expect(result.mainCss.then).to.be.a('function');
+				expect(result.allStylesLoaded.then).to.be.a('function');
 				expect(result.appInfo.isProduction).to.equal(true);
 				expect(result.appInfo.version).to.equal('v1');
 				expect(result.appInfo.name).to.equal('test-app');

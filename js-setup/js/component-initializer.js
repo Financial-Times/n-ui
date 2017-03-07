@@ -73,7 +73,7 @@ export class ComponentInitializer {
 
 		config.features = extend(extend({}, presets[config.preset]), config.features);
 
-		return this.loader.bootstrap(config, ({ flags, mainCss, appInfo }) => { // eslint-disable-line
+		return this.loader.bootstrap(config, ({ flags, allStylesLoaded, appInfo }) => { // eslint-disable-line
 
 			if (!this.initializedFeatures.tracking) {
 				// FT and next tracking
@@ -111,7 +111,7 @@ export class ComponentInitializer {
 			}
 
 
-			mainCss
+			allStylesLoaded
 				.then(() => {
 
 					if (config.features.footer && !this.initializedFeatures.footer) {
@@ -140,7 +140,7 @@ export class ComponentInitializer {
 					}
 				});
 
-			return Promise.resolve({flags, mainCss, appInfo})
+			return Promise.resolve({flags, allStylesLoaded, appInfo})
 				.then(cb)
 				.then(() => {
 					// TODO - lazy load this
@@ -153,7 +153,7 @@ export class ComponentInitializer {
 						tracking.lazyInit(flags);
 						this.initializedFeatures.lazyTracking = true;
 					}
-					return {flags, mainCss, appInfo}
+					return {flags, allStylesLoaded, appInfo}
 				})
 		})
 	}
