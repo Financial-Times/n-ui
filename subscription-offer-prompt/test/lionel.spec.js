@@ -16,7 +16,7 @@ describe('"Lionel Slider" Subscription Offer Prompt', () => {
 		flags = { get: (val) => val === 'b2cMessagePrompt' || val === 'priceFlashSale' };
 		const fetchStub = sinon.stub(window, 'fetch');
 		fetchStub
-			.withArgs('/country')
+			.withArgs('https://www.ft.com/country')
 			.returns(Promise.resolve({
 				json: () => Promise.resolve('GBR')
 			}));
@@ -126,7 +126,7 @@ describe('"Lionel Slider" Subscription Offer Prompt - USA', () => {
 		flags = { get: (val) => val === 'b2cMessagePrompt' || val === 'priceFlashSale' };
 		const fetchStub = sinon.stub(window, 'fetch');
 		fetchStub
-			.withArgs('/country')
+			.withArgs('https://www.ft.com/country')
 			.returns(Promise.resolve({
 				json: () => Promise.resolve('USA')
 			}));
@@ -179,7 +179,7 @@ describe('"Lionel Slider" Subscription Offer Prompt - country code not listed', 
 		flags = { get: (val) => val === 'b2cMessagePrompt' || val === 'priceFlashSale' };
 		const fetchStub = sinon.stub(window, 'fetch');
 		fetchStub
-			.withArgs('/country')
+			.withArgs('https://www.ft.com/country')
 			.returns(Promise.resolve({
 				json: () => Promise.resolve('ISR')
 			}));
