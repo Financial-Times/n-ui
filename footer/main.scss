@@ -10,19 +10,3 @@ $o-footer-is-silent: false !default;
 		display: block;
 	}
 }
-
-.o-footer__more-from-ft {
-	border-top: 1px solid #b0b0b0;
-	border-bottom: 1px solid #b0b0b0;
-	padding-top: 10px;
-	padding-bottom: 10px;
-
-	& a {
-		@include oTypographySansSize('s');
-		color: white;
-	}
-	.o-icons-icon--arrow-right {
-		@include oIconsGetIcon('arrow-right', getColor('white'), 16);
-		margin-bottom: -4px;
-	}
-}

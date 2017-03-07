@@ -21,10 +21,8 @@
     "ftdomdelegate": "^2.0.3",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
     "n-image": "^4.4.1",
-    "n-notification": "^5.0.5",
     "n-service-worker": "^1.8.0",
     "n-sliding-popup": "^1.0.0",
-    "next-myft-client": "^6.4.2",
     "o-ads": "^6.0.0",
     "o-cookie-message": "^2.0.0",
     "o-errors": "^3.5.1",
@@ -32,8 +30,7 @@
     "o-header": "^6.10.0",
     "o-tracking": "^1.1.8",
     "n-ui-foundations": "^1.0.0",
-    "o-overlay": "^1.12.1",
     "o-expander": "^4.2.2",
-    "o-forms": "^2.0.0"
+    "next-session-client": "^2.2.3"
   }
 }

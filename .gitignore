@@ -9,6 +9,7 @@
 .editorconfig
 .eslintrc.js
 .scss-lint.yml
+/public/__about.json
 /public/head-n-ui-core.css
 /public/head-n-ui-core.css.map
 /public/main.css
@@ -18,5 +19,6 @@
 key.pem
 key-cert.pem
 /test-page.html
-node/test/fixtures/app/views/partials/stylesheets.html
-node/test/fixtures/bad-assets/.gitignore
+server/test/fixtures/app/views/partials/stylesheets.html
+server/test/fixtures/bad-assets/.gitignore
+/coverage/

@@ -1,6 +1,6 @@
-# n-ui
+# n-ui [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-ui/badge.svg)](https://coveralls.io/github/Financial-Times/n-ui)
 
-~~An experiment bunching some of Next's client-side code into a single repository. [Motivation](Explainer.md).~~  
+~~An experiment bunching some of Next's client-side code into a single repository. [Motivation](Explainer.md).~~
 Server, build and client side bootstrapping for next's user-facing applications.
 
 ### Dev workflow
@@ -32,6 +32,22 @@ We hope to be able to a11y test all components before they are used in an app an
 When you release an n-ui tag 2 things happen
 - assets are built and deployed to s3
 - during work hours, all user-facing apps are rebuilt to pick up the changes
+
+## Build tool
+n-ui comes bundled with its own build tool - basically `webpack`, `haikro build` and a little bit of other stuff. To use it, add the following to your Makefile:
+
+```Makefile
+build:
+	nui build
+
+build-production:
+	nui build --production
+
+watch:
+	nui watch
+```
+
+To define entry points for your assets use a `n-ui-build.config.js` file in the root of your project, which can export any object compatible with n-webpack
 
 ## Usage
 

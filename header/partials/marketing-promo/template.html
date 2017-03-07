@@ -2,18 +2,13 @@
 	<div class="n-header__marketing-promo" data-trackable="marketing-promo:header">
 		<div class="n-header__marketing-promo__container o-header__container">
 			<a href="/products?segid=0300494" class="n-header__marketing-promo__box" data-trackable="marketing-promo:box">
-
 				<div class="n-header__marketing-promo__link" data-trackable="marketing-promo:link">
-
-				{{#ifAll @root.flags.headerMarketingPromoDiscountByCohort @root.flags.barrierDiscountByCohort}}
-					{{#ifEquals @root.flags.barrierDiscountByCohort 'trial_5'}}
-						<span aria-label="Subscribe to the Financial Times">Subscribe to the FT</span>
-					{{else}}
-						LIMITED TIME ONLY: Subscribe &amp; save <span id="discountPercent"></span>
-					{{/ifEquals}}
+				{{#if @root.flags.priceFlashSale}}
+					<span>Limited time offer, subscribe &amp; save 25% </span>
 				{{else}}
 					<span aria-label="Subscribe to the Financial Times">Subscribe to the FT</span>
-				{{/ifAll}}</div>
+				{{/if}}
+				</div>
 			</a>
 		</div>
 	</div>

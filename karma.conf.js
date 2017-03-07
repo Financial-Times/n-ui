@@ -4,7 +4,6 @@
 const path = require('path');
 const BowerWebpackPlugin = require('bower-webpack-plugin');
 const componentsToTest = [
-	'test',
 	'js-setup',
 	'ads',
 	'myft',

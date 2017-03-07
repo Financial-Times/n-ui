@@ -39,7 +39,7 @@ export default function init (flags) {
 		return;
 	}
 	else {
-		const lionelPromise = lionel.init();
+		const lionelPromise = lionel.init(flags);
 		lionelPromise.then((lionelSlider) => {
 			if (!lionelSlider) {
 				return pwrOfYou.init(flags);

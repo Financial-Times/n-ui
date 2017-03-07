@@ -2,6 +2,11 @@
 import subscriptionOfferPrompt from '../index';
 import * as lionel from '../lionel';
 import * as powrOfYou from '../pwr-of-you';
+import api from '../countryApi';
+
+sinon.stub(api, 'getCountryCode', function () {
+	return 'GBR';
+})
 
 describe('Subscription Offer Prompt Init', () => {
 

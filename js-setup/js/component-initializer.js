@@ -3,14 +3,10 @@ import ads from '../../ads';
 import tracking from '../../tracking';
 import date from 'o-date';
 import header from '../../header';
-import optOut from '../../opt-out';
 import oCookieMessage from 'o-cookie-message';
 import welcomeMessage from '../../welcome-message';
 import subscriptionOfferPrompt from '../../subscription-offer-prompt';
 import footer from '../../footer';
-import myft from '../../myft';
-import digestPromo from '../../myft-digest-promo';
-import myftHint from '../../myft-hint';
 import offlineToast from '../../offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
@@ -30,7 +26,6 @@ export const presets = {
 		cookieMessage: true,
 		welcomeMessage: true,
 		subscriptionOfferPrompt: true,
-		myft: true,
 		ads: true,
 		tooltip: true,
 		syndication: true
@@ -100,25 +95,6 @@ export class ComponentInitializer {
 				serviceWorker.unregister();
 			}
 
-			if (flags.get('optInOut')) {
-				optOut.init();
-			}
-
-			if (config.features.myft && !this.initializedFeatures.myftclient) {
-				const clientOpts = [];
-
-				if (flags.get('follow')) {
-					clientOpts.push({relationship: 'followed', type: 'concept'});
-				}
-
-				if (flags.get('saveForLater')) {
-					clientOpts.push({relationship: 'saved', type: 'content'});
-				}
-				myft.client.init(clientOpts);
-
-				this.initializedFeatures.myftClient = true
-			}
-
 			if (config.features.header && !this.initializedFeatures.header) {
 				header.init(flags);
 				this.initializedFeatures.header = true;
@@ -143,16 +119,6 @@ export class ComponentInitializer {
 						this.initializedFeatures.footer = true;
 					}
 
-					if (flags.get('myFtDigestPromo') && !this.initializedFeatures.myFtDigestPromo) {
-						digestPromo.init();
-						this.initializedFeatures.myFtDigestPromo = true;
-					}
-
-					if (flags.get('myftHint') && !this.initializedFeatures.myftHint) {
-						myftHint.init();
-						this.initializedFeatures.myftHint = true;
-					}
-
 					if (flags.get('cookieMessage') && config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
 						oCookieMessage.init();
 						this.initializedFeatures.cookieMessage = true;
@@ -166,18 +132,6 @@ export class ComponentInitializer {
 					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
 						subscriptionOfferPrompt(flags);
 						this.initializedFeatures.subscriptionOfferPrompt = true;
-					}
-
-					if (config.features.myft && !this.initializedFeatures.myftUi) {
-						myft.ui.init({
-							anonymous: !(/FTSession=/.test(document.cookie)),
-							flags
-						});
-						myft.uiInstant.init({
-							anonymous: !(/FTSession=/.test(document.cookie)),
-							flags
-						});
-						this.initializedFeatures.myftUi = true;
 					}
 
 					if (config.features.syndication && !this.initializedFeatures.syndication){

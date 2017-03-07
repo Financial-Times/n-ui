@@ -13,7 +13,6 @@ describe('n-ui', () => {
 
 	[
 		'date',
-		'myft',
 		'ads',
 		'tooltip',
 		'syndication',
@@ -23,7 +22,6 @@ describe('n-ui', () => {
 		'superstoreSync',
 		'React',
 		'ReactDom',
-		'notification',
 		'grid',
 		'viewport'
 	]

@@ -1,21 +1,43 @@
-/* globals should */
+/* globals expect,should,sinon */
 import Superstore from 'superstore';
 import { init } from '../pwr-of-you';
+import api from '../countryApi';
+
+sinon.stub(api, 'getCountryCode', function () {
+	return 'GBR'
+})
 
 describe('"Pwr Of You" Prompt', () => {
 
 	const localStorage = new Superstore('local', 'n-ui.subscription-offer-pwr-of-you')
+	const lionelStorage = new Superstore('local', 'n-ui.subscription-offer-prompt');
 
 	let flags;
 
 	beforeEach(() => {
 		flags = { get: (val) => val === 'b2cMessagePrompt' || val === 'PowerOfYouSlider' };
-		return localStorage.set('last-closed-pwr', Date.now() - (1000 * 60 * 60 * 24 * 36))
+		return Promise.all([
+			// pwr was closed over 30 days ago (we should show it again)
+			localStorage.set('last-closed-pwr', Date.now() - (1000 * 60 * 60 * 24 * 36)),
+			// lionel was closed recently
+			lionelStorage.set('last-closed', Date.now())
+		])
+
 	});
 
 	afterEach(() => {
-		return localStorage.unset('last-closed-pwr')
+		return Promise.all([
+			// localStorage.unset('last-closed-pwr'),
+			// lionelStorage.unset('last-closed')
+		])
 	});
+
+	// First check the popup is actually there
+	it ('should be a popup', () =>
+		init(flags).then(popup => {
+			expect(popup).to.be.ok;
+		})
+	);
 
 	it('should have correct attributes', () =>
 		init(flags).then(popup => {
