@@ -9,10 +9,10 @@ run:
 	node _test-server/app
 
 build:
-	webpack --config webpack.config.demo.js --dev
+	webpack --config _test-server/webpack.config.demo.js --dev
 
 watch:
-	webpack --config webpack.config.demo.js --dev --watch
+	webpack --config _test-server/webpack.config.demo.js --dev --watch
 
 test-unit:
 	karma start karma.conf.js
@@ -25,7 +25,7 @@ test-unit-dev:
 	karma start karma.conf.js --single-run false --auto-watch true
 
 test-build:
-	webpack --config webpack.config.demo.js
+	webpack --config _test-server/webpack.config.demo.js
 
 test-server: export FT_NEXT_BACKEND_KEY=test-backend-key
 test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
