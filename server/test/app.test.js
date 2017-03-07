@@ -15,7 +15,6 @@ let app;
 describe('simple app', function () {
 
 	before(() => {
-
 		fetchMock
 			.mock(/next-flags\.ft\.com/, [{name: 'flaggy'}])
 			.mock('https://www.ft.com/__assets/n-ui/cached/v1.1.1/head-n-ui-core.css', 'head-n-ui-core-new')

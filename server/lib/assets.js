@@ -12,7 +12,7 @@ const verifyAssetsExist = require('./verify-assets-exist');
 
 function init (options, directory, locals) {
 	verifyAssetsExist.verify(locals);
-	const hasher = hashedAssets.init(locals);
+	const hasher = hashedAssets.init(locals).get;
 	nUiManager.init(directory, hasher);
 
 	const useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
@@ -123,7 +123,7 @@ function init (options, directory, locals) {
 
 				res.locals.javascriptBundles.push(
 					`${nUiUrlRoot}es5${(flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
-					hasher.get('main-without-n-ui.js'),
+					hasher('main-without-n-ui.js'),
 					res.locals.polyfillUrls.enhanced
 				);
 
@@ -135,7 +135,6 @@ function init (options, directory, locals) {
 					// Add standard n-ui stylesheets
 					res.locals.cssBundles.inline.unshift('head-n-ui-core');
 					res.locals.cssBundles.lazy.unshift('n-ui-core');
-
 					// TODO - memoize this
 					res.locals.cssBundles.inline = res.locals.cssBundles.inline.reduce((str, name) => {
 						if (!stylesheets[name]) {
