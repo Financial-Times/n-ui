@@ -68,29 +68,6 @@ describe('simple app', function () {
 					done()
 				});
 		});
-		it.skip('should be possible to disable flags', function (done) {
-
-			sinon.stub(verifyAssetsExist, 'verify');
-			sinon.stub(flags, 'init').returns(Promise.resolve(null));
-			const app = nUi({
-				name: 'noflags',
-				directory: __dirname,
-				withFlags: false,
-				withLayoutPolling: false,
-				withHeadCss: false // otherwise it errors as public folder doesn't exist
-			});
-			app.get('/', function (req, res) {
-				res.end('', 200);
-			});
-			expect(flags.init.called).to.be.false;
-				request(app)
-				.get('/')
-				.expect(200, function () {
-					flags.init.restore();
-					verifyAssetsExist.verify.restore();
-					done();
-				});
-		});
 
 	});
 
@@ -194,7 +171,9 @@ describe('simple app', function () {
 				.expect(200, /<link data-is-next rel="preload" href="\/demo-app\/main\.css" as="style" onload=/, done);
 
 		})
-		//TODO tests for multiple css
+		it('should inline different choice of head.css', () => {
+			expect(false).to.be.true
+		})
 	})
 
 		describe('hashed assets and preloading', () => {
@@ -207,6 +186,10 @@ describe('simple app', function () {
 					.expect('Link', /<\/demo-app\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
 			});
 
+			it('should preload different choice of css files', () => {
+				expect(false).to.be.true
+			})
+
 			it('should not preload anything by default on non text/html requests', done => {
 				request(app)
 					.get('/non-html')
@@ -216,7 +199,7 @@ describe('simple app', function () {
 					})
 			});
 
-			//TODO multiple css preloads
+
 
 			it('should be possible to preload any file on any request', done => {
 				request(app)
