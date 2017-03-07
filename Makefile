@@ -34,7 +34,7 @@ test-server: copy-stylesheet-loader
 	mocha server/test/*.test.js node/test/**/*.test.js  --recursive
 
 copy-stylesheet-loader:
-	cp layout/partials/stylesheets.html node/test/fixtures/app/views/partials
+	cp layout/partials/stylesheets.html server/test/fixtures/app/views/partials
 
 coverage-report: ## coverage-report: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
