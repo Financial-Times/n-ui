@@ -136,7 +136,7 @@ export const init = (flags) => {
 	return shouldPromptBeShown()
 		.then(shouldShow => {
 			if (shouldShow) {
-				return fetch('/country', { credentials: 'same-origin' })
+				return fetch('https://www.ft.com/country', { credentials: 'same-origin' })
 					.then(response => response.json())
 					.then((countryCode = 'GBR') => {
 						// NOTE: for now, while pricing is inconsistent across slider, barrier and form, don't show it for these countries
