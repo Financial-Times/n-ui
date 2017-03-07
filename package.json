@@ -2,7 +2,7 @@
   "name": "@financial-times/n-ui",
   "version": "0.0.0",
   "description": "An experiment bunching some of Next's client-side code into a single repository.",
-  "main": "server.js",
+  "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "commit": "commit-wizard"
@@ -67,7 +67,6 @@
     "@financial-times/n-handlebars": "^1.15.0",
     "@financial-times/n-polyfill-io": "^1.0.9",
     "@financial-times/n-webpack": "^2.0.0",
-    "@financial-times/n-myft-ui": "^1.0.0",
     "@financial-times/next-json-ld": "^0.1.0",
     "aws-sdk": "^2.7.21",
     "chokidar": "^1.6.1",

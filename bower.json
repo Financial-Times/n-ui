@@ -31,6 +31,6 @@
     "o-tracking": "^1.1.8",
     "n-ui-foundations": "^1.0.0",
     "o-expander": "^4.2.2",
-    "n-myft-ui": "^1.0.0"
+    "next-session-client": "^2.2.3"
   }
 }

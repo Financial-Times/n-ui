@@ -1,7 +1,7 @@
 'use strict';
 
 const nWebpack = require('@financial-times/n-webpack');
-
+const path = require('path');
 module.exports = nWebpack({
 	withBabelPolyfills: false,
 	withHeadCss: true,
@@ -10,7 +10,7 @@ module.exports = nWebpack({
 		'./public/main.css': './_test-server/client/main.scss'
 	},
 	includes: [
-		__dirname
+		path.join(__dirname, '../')
 	],
 	exclude: [/node_modules/]
 });
