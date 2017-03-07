@@ -136,6 +136,7 @@ function init (options, directory, locals) {
 					res.locals.cssBundles.inline.unshift('head-n-ui-core');
 					res.locals.cssBundles.lazy.unshift('n-ui-core');
 
+					// TODO - memoize this
 					res.locals.cssBundles.inline = res.locals.cssBundles.inline.reduce((str, name) => {
 						if (!stylesheets[name]) {
 							throw `Stylesheet ${name} does not exist`;
@@ -143,6 +144,7 @@ function init (options, directory, locals) {
 						return str + stylesheets[name];
 					}, '');
 
+					// TODO: DRY this out
 					res.locals.cssBundles.lazy = res.locals.cssBundles.lazy.map(getStylesheetPath);
 					res.locals.cssBundles.blocking = res.locals.cssBundles.blocking.map(getStylesheetPath);
 

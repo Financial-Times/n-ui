@@ -2,7 +2,7 @@ include n.Makefile
 
 demo: run
 
-run:
+run: build-css-loader
 	rm -rf bower_components/n-ui
 	mkdir bower_components/n-ui
 	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
@@ -30,11 +30,14 @@ test-build:
 test-server: export FT_NEXT_BACKEND_KEY=test-backend-key
 test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
 test-server: export FT_NEXT_BACKEND_KEY_OLDEST=test-backend-key-oldest
-test-server: copy-stylesheet-loader
+test-server: copy-stylesheet-partial
 	mocha server/test/*.test.js node/test/**/*.test.js
 
-copy-stylesheet-loader:
+copy-stylesheet-partial:
 	cp layout/partials/stylesheets.html server/test/fixtures/app/views/partials
+
+build-css-loader:
+	uglifyjs layout/js/css-loader.js -o layout/partials/css-loader.html
 
 coverage-report: ## coverage-report: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
@@ -69,6 +72,7 @@ test-dev: verify test-unit-dev
 
 deploy: assets
 	node ./_deploy/s3.js
+	$(MAKE) build-css-loader
 	$(MAKE) npm-publish
 	# only autodeploy all apps in office hours
 	HOUR=$$(date +%H); DAY=$$(date +%u); if [ $$HOUR -ge 9 ] && [ $$HOUR -lt 17 ] && [ $$DAY -ge 0 ] && [ $$DAY -lt 6 ]; then \

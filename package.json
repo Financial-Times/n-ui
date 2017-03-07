@@ -60,7 +60,8 @@
     "semver": "^5.3.0",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
-    "supertest": "^2.0.1"
+    "supertest": "^2.0.1",
+    "uglifyjs": "^2.4.10"
   },
   "dependencies": {
     "@financial-times/n-express": "^19.0.0",
