@@ -24,6 +24,8 @@ const app = module.exports = express({
 	directory: process.cwd()
 });
 
+app.use(require('./middleware/assets'));
+
 app.get('/', (req, res) => {
 	res.render('default', {
 		title: 'Test App',
@@ -31,7 +33,7 @@ app.get('/', (req, res) => {
 	});
 });
 
-app.use(require('./middleware/assets'));
+
 app.get('/components/:component?', (req, res) => {
 	const component = req.params.component;
 	const config = require(`../${component}/pa11y-config`);

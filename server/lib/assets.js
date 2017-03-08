@@ -39,7 +39,7 @@ function init (options, directory, locals) {
 		if (!concatenatedStylesCache[hash]) {
 			concatenatedStylesCache[hash] = stylesheetNames.reduce((str, name) => {
 				if (!stylesheets[name]) {
-					throw `Stylesheet ${name} does not exist`;
+					throw `Stylesheet ${name}.css does not exist`;
 				}
 				return str + stylesheets[name];
 			}, '');

@@ -3,9 +3,6 @@ include n.Makefile
 demo: run
 
 run: build-css-loader
-	rm -rf bower_components/n-ui
-	mkdir bower_components/n-ui
-	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
 	node _test-server/app
 
 build:
