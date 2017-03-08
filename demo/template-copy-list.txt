@@ -1,6 +1,0 @@
-footer
-header
-browser/bootstrap
-layout
-tracking
-welcome-message
