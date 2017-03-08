@@ -24,7 +24,7 @@ components.forEach((component) => {
 	const componentConfig = require(`./${component}/pa11y-config.js`);
 
 	const componentDefaults = {
-		url: `localhost:5005/components/${component}`,
+		url: `localhost:5005/components/n-ui/${component}`,
 		rootElement: 'body'
 	};
 	const componentPa11yData = cloneData(componentConfig.pa11yData || []);
