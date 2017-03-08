@@ -6,13 +6,13 @@ const chokidar = require('chokidar');
 
 module.exports = {
 	getStylesheets: (options, directory) => {
-		const headCsses = options.withHeadCss ? fs.readdirSync(`${directory}/public`)
+		const headCsses = fs.readdirSync(`${directory}/public`)
 			.filter(name => /^head[\-a-z]*\.css$/.test(name))
 			.map(name => [name, fs.readFileSync(`${directory}/public/${name}`, 'utf-8')])
 			.reduce((currentHeadCsses, currentHeadCss) => {
 				currentHeadCsses[currentHeadCss[0].replace('.css', '')] = currentHeadCss[1];
 				return currentHeadCsses;
-			}, {}) : {};
+			}, {});
 
 		if (process.NODE_ENV !== 'production') {
 			const paths = Object.keys(headCsses).map(css => `${directory}/public/${css}.css`);

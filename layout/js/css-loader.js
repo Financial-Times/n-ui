@@ -35,6 +35,8 @@ SOFTWARE.
 		}
 	})();
 
+
+
 	function onloadCSS( ss, callback ) {
 		var called;
 
@@ -129,7 +131,7 @@ SOFTWARE.
 				onloadCSS(link, function () {
 					this.rel = "stylesheet";
 					if (/\/.*\/main[-a-z]*\.css/.test(this.href)) {
-						w.ftNextFireCondition('MainCssLoaded');
+						w.ftNextCssFileLoaded();
 					}
 				});
 			} else {
@@ -137,7 +139,7 @@ SOFTWARE.
 				link.rel = null;
 				onloadCSS(newLink, function () {
 					if (/\/main[-a-z]*\.css/.test(this.href)) {
-						w.ftNextFireCondition('MainCssLoaded');
+						w.ftNextCssFileLoaded();
 					}
 				});
 			}
