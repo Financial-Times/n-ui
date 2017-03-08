@@ -11,11 +11,11 @@ build:
 watch:
 	webpack --config _test-server/webpack.config.demo.js --dev --watch
 
-test-unit:
+test-browser:
 	karma start karma.conf.js
 
-# test-unit-dev is only for development environments.
-test-unit-dev:
+# test-browser-dev is only for development environments.
+test-browser-dev:
 	$(info *)
 	$(info * Developers note: This test will never "complete". It's meant to run in a separate tab. It'll automatically rerun tests whenever one of your files changes.)
 	$(info *)
@@ -31,7 +31,7 @@ test-server: copy-stylesheet-partial
 ifneq ($(CIRCLECI),)
 	make coverage-report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 else
-	mocha node/test/*.test.js node/test/**/*.test.js  --recursive
+	mocha server/test/*.test.js server/test/**/*.test.js
 endif
 
 copy-stylesheet-partial:
@@ -57,7 +57,7 @@ a11y: test-build pally-conf
 
 # Note: `run` executes `node _test-server/app`, which fires up exchange, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
-test: developer-note verify pally-conf test-server test-unit test-build run nightwatch a11y
+test: developer-note verify pally-conf test-server test-browser test-build run nightwatch a11y
 
 developer-note:
 ifeq ($(NODE_ENV),) # Not production
@@ -69,7 +69,7 @@ endif
 endif
 
 # Test-dev is only for development environments.
-test-dev: verify test-unit-dev
+test-dev: verify test-browser-dev
 
 deploy: assets
 	node ./_deploy/s3.js

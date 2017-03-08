@@ -1,8 +1,3 @@
-const chalk = require('chalk');
-const fs = require('fs');
-const path = require('path');
-const error = chalk.bold.red;
-
 const config = {
 	defaults: {
 		timeout: 10000,
@@ -18,9 +13,9 @@ const config = {
 };
 
 const components = [
-	'components/header',
-	'components/footer',
-	'components/welcome-message'
+	'components/n-ui/header',
+	'components/n-ui/footer',
+	'components/n-ui/welcome-message'
 ]
 
 const cloneData = (data) => JSON.parse(JSON.stringify(data));

@@ -5,9 +5,9 @@ const path = require('path');
 const BowerWebpackPlugin = require('bower-webpack-plugin');
 const componentsToTest = [
 	'js-setup',
-	'components/ads',
-	'components/tracking',
-	'components/subscription-offer-prompt'
+	'components/n-ui/ads',
+	'components/n-ui/tracking',
+	'components/n-ui/subscription-offer-prompt'
 ];
 
 module.exports = function (karma) {
