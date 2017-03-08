@@ -5,14 +5,12 @@ const nUiManager = require('./n-ui-manager');
 const linkHeaderFactory = require('./link-header');
 const stylesheetManager = require('./stylesheet-manager');
 const messages = require('./messages');
-const nEagerFetch = require('n-eager-fetch');
-const ratRace = require('promise-rat-race');
 const hashedAssets = require('./hashed-assets');
 const verifyAssetsExist = require('./verify-assets-exist');
 
 function init (options, directory, locals) {
 	verifyAssetsExist.verify(locals);
-	const hasher = hashedAssets.init(locals);
+	const hasher = hashedAssets.init(locals).get;
 	nUiManager.init(directory, hasher);
 
 	const useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
@@ -30,50 +28,27 @@ function init (options, directory, locals) {
 	const linkHeader = linkHeaderFactory(hasher);
 	const nUiUrlRoot = nUiManager.getUrlRoot(hasher);
 
+	const getStylesheetPath = stylesheetName => {
+		return /n-ui/.test(stylesheetName) ? `${nUiUrlRoot}${stylesheetName}.css` : hasher(`${stylesheetName}.css`)
+	}
+
+	const concatenatedStylesCache = {};
+
+	const concatenateStyles = stylesheetNames => {
+		const hash = stylesheetNames.join(':');
+		if (!concatenatedStylesCache[hash]) {
+			concatenatedStylesCache[hash] = stylesheetNames.reduce((str, name) => {
+				if (!stylesheets[name]) {
+					throw `Stylesheet ${name} does not exist`;
+				}
+				return str + stylesheets[name];
+			}, '');
+		}
+		return concatenatedStylesCache[hash];
+	}
+
 	return {
 		hasher,
-		fetchNUiCss: () => {
-			if (process.env.LOCAL_APP_SHELL === 'local') {
-				return Promise.resolve();
-			}
-			return ratRace(
-				[
-					'https:' + nUiUrlRoot,
-					nUiUrlRoot.replace('//www.ft.com', 'http://ft-next-n-ui-prod.s3-website-eu-west-1.amazonaws.com'),
-					nUiUrlRoot.replace('//www.ft.com', 'http://ft-next-n-ui-prod-us.s3-website-us-east-1.amazonaws.com')
-				]
-					.map(urlRoot =>
-						nEagerFetch(`${urlRoot}head-n-ui-core.css`, {retry: 3})
-							.then(res => {
-								if (res.ok) {
-									return res.text();
-								}
-								throw new Error('Failed to fetch n-ui stylesheet');
-							})
-							.then(text => {
-								// if it's an empty string, something probably went wrong
-								if (!text.length) {
-									throw new Error('Fetched empty n-ui stylesheet');
-								}
-								return text;
-							})
-					)
-			)
-				.then(text => stylesheets['head-n-ui-core'] = text)
-				.then(() => logger.warn({
-					event: 'N_UI_CSS_FETCH_SUCCESS',
-					message: 'head-n-ui-core.css successfully retrieved from s3'
-				}))
-				.catch(err => {
-					logger.error('event=N_UI_CSS_FETCH_FAILURE', err)
-					// TODO
-					// for now we catch the error as the app builds the css anyway
-					// After it's been in prod a while the plan is to stop building the css in every app
-					// Then the error will need to be rethrown so the app fails to start
-					// throw err;
-				})
-				.then(() => stylesheets);
-		},
 		middleware: (req, res, next) => {
 
 			// This middleware relies on the presence of res.locals.flags.
@@ -84,12 +59,16 @@ function init (options, directory, locals) {
 			// define a helper for adding a link header
 			res.linkResource = linkHeader;
 
-			res.locals.stylesheets = stylesheets;
-
 			if (req.accepts('text/html')) {
 				res.locals.javascriptBundles = [];
-				res.locals.cssBundles = [];
-				res.locals.criticalCss = [];
+				res.locals.stylesheets = {
+					inline: [],
+					lazy: [],
+					blocking: []
+				};
+
+				res.locals.stylesheets.inline = ['head']
+				res.locals.stylesheets.lazy = ['main']
 				res.locals.nUiConfig = nUiConfig;
 
 				// work out which assets will be required by the page
@@ -113,7 +92,7 @@ function init (options, directory, locals) {
 
 				res.locals.javascriptBundles.push(
 					`${nUiUrlRoot}es5${(flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
-					hasher.get('main-without-n-ui.js'),
+					hasher('main-without-n-ui.js'),
 					res.locals.polyfillUrls.enhanced
 				);
 
@@ -122,36 +101,23 @@ function init (options, directory, locals) {
 
 				res.render = function (template, templateData) {
 
-					let cssVariant = templateData.cssVariant || res.locals.cssVariant;
-					cssVariant = cssVariant ? `-${cssVariant}` : '';
+					// Add standard n-ui stylesheets
+					res.locals.stylesheets.inline.unshift('head-n-ui-core');
+					res.locals.stylesheets.lazy.unshift('n-ui-core');
 
+					res.locals.stylesheets.inline = concatenateStyles(res.locals.stylesheets.inline);
 
-					// define which css to output in the critical path
-					if (options.withHeadCss) {
-						// variants of head-n-ui-core no longer exist, but the app may not necessarily
-						// have successfully fetched head-n-ui-core from network, so fallback to the variant
-						// file while trying it out
-						if ('head-n-ui-core' in stylesheets) {
-							res.locals.criticalCss.push(stylesheets['head-n-ui-core'])
-						} else if (`head${cssVariant}-n-ui-core` in stylesheets) {
-							res.locals.criticalCss.push(stylesheets[`head${cssVariant}-n-ui-core`])
-						}
-						if (`head${cssVariant}` in stylesheets && stylesheets[`head${cssVariant}`].length) {
-							res.locals.criticalCss.push(stylesheets[`head${cssVariant}`]);
-						}
-					}
+					// TODO: DRY this out
+					res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(getStylesheetPath);
+					res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(getStylesheetPath);
 
-					res.locals.cssBundles.push({
-						path: hasher.get(`main${cssVariant}.css`),
-						isMain: true,
-						isLazy: options.withHeadCss
-					});
-
-					res.locals.cssBundles.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style'}));
+					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style'}));
 					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
 
 					if (templateData.withAssetPrecache) {
-						res.locals.cssBundles.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
+						res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
+						res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
 						res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
 					}
 

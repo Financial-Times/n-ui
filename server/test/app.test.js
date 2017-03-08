@@ -3,19 +3,13 @@ const request = require('supertest');
 
 // stub the setup api calls
 const fetchMock = require('fetch-mock');
-const sinon = require('sinon');
-const nUi = require('../index');
 const expect = require('chai').expect;
-const flags = require('next-feature-flags-client');
-const verifyAssetsExist = require('../lib/verify-assets-exist');
 
 let app;
-
 
 describe('simple app', function () {
 
 	before(() => {
-
 		fetchMock
 			.mock(/next-flags\.ft\.com/, [{name: 'flaggy'}])
 			.mock('https://www.ft.com/__assets/n-ui/cached/v1.1.1/head-n-ui-core.css', 'head-n-ui-core-new')
@@ -70,29 +64,6 @@ describe('simple app', function () {
 					done()
 				});
 		});
-		it.skip('should be possible to disable flags', function (done) {
-
-			sinon.stub(verifyAssetsExist, 'verify');
-			sinon.stub(flags, 'init').returns(Promise.resolve(null));
-			const app = nUi({
-				name: 'noflags',
-				directory: __dirname,
-				withFlags: false,
-				withLayoutPolling: false,
-				withHeadCss: false // otherwise it errors as public folder doesn't exist
-			});
-			app.get('/', function (req, res) {
-				res.end('', 200);
-			});
-			expect(flags.init.called).to.be.false;
-				request(app)
-				.get('/')
-				.expect(200, function () {
-					flags.init.restore();
-					verifyAssetsExist.verify.restore();
-					done();
-				});
-		});
 
 	});
 
@@ -113,7 +84,6 @@ describe('simple app', function () {
 
 
 	describe('templating', function () {
-
 		it('should do templating', function (done) {
 			request(app)
 				.get('/templated')
@@ -176,46 +146,32 @@ describe('simple app', function () {
 					.expect(200, /dynamic-partial/, done)
 					.expect(200, /dynamicroot-iamroot/, done);
 			});
-		});
 
-		it('should treat undefined flags as offy (like falsey)', function (done) {
-			request(app)
-				.get('/templated')
-				// Currently fails - suggest we just ditch this feature, as per
-				// https://github.com/Financial-Times/next-feature-flags-client/issues/26
-				//.expect(/<undefinedflag-off>Should appear<\/undefinedflag-off>/)
-				.expect(200, /<undefinedflag-on><\/undefinedflag-on>/, done);
-		});
+			it('should treat undefined flags as offy (like falsey)', function (done) {
+				request(app)
+					.get('/templated')
+					// Currently fails - suggest we just ditch this feature, as per
+					// https://github.com/Financial-Times/next-feature-flags-client/issues/26
+					//.expect(/<undefinedflag-off>Should appear<\/undefinedflag-off>/)
+					.expect(200, /<undefinedflag-on><\/undefinedflag-on>/, done);
+			});
 
+		});
 	});
 
-	describe('styles', () => {
+	describe('asset and preloading', () => {
 		it('should inline head.css & head-n-ui-core.css', (done) => {
 			request(app)
 				.get('/with-layout?layout=wrapper')
-				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core-new\s*head.css\s*<\/style>/)
-				.expect(200, /<link rel="preload" href="\/demo-app\/main\.css" as="style" onload=/, done);
-
+				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head\.css\s*<\/style>/, done)
 		})
 
-		it('should inline head-variant.css & head-variant-n-ui-core.css', (done) => {
+		it('should have preload link tags for main.css and n-ui-core.css', (done) => {
 			request(app)
-				.get('/with-layout?layout=wrapper&cssVariant=variant')
-				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core-new\s*head-variant.css\s*<\/style>/)
-				.expect(200, /<link rel="preload" href="\/demo-app\/main-variant\.css" as="style" onload=/, done);
-
+				.get('/with-layout?layout=wrapper')
+				.expect(200, /<link data-is-next rel="preload" href="\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css" as="style" onload=/)
+				.expect(200, /<link data-is-next rel="preload" href="\/demo-app\/main\.css" as="style" onload=/, done);
 		})
-	})
-
-	describe('hashed assets and preloading', () => {
-
-		it('should preload main.css, main-with-n-ui.js and polyfill', done => {
-			request(app)
-				.get('/templated')
-				.expect('Link', /<https:\/\/next-geebee\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
-				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
-				.expect('Link', /<\/demo-app\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
-		});
 
 		it('should not preload anything by default on non text/html requests', done => {
 			request(app)
@@ -226,11 +182,39 @@ describe('simple app', function () {
 				})
 		});
 
-		it('should preload main-variant.css as appropriate', done => {
+		it('should have preload link headers for css and js resources', done => {
 			request(app)
-				.get('/templated?cssVariant=variant')
-				.expect('Link', /<\/demo-app\/main-variant\.css>; as="style"; rel="preload"; nopush/, done)
+				.get('/templated')
+				.expect('Link', /<https:\/\/next-geebee\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css>; as="style"; rel="preload"; nopush/)
+				.expect('Link', /<\/demo-app\/main\.css>; as="style"; rel="preload"; nopush/)
+				.expect('Link', /<\/demo-app\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
 		});
+
+		it('should inline different choice of head.css', () => {
+			request(app)
+				.get('/css-variants?inline=head-variant,head-variant2')
+				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head-variant\.css\s*head-variant2\.css\s*<\/style>/)
+
+		})
+
+		it('should load different choice of css files', done => {
+			request(app)
+				.get('/css-variants?lazy=jam,marmalade&blocking=peanut')
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css>; as="style"; rel="preload"; nopush/)
+				.expect('Link', /<\/demo-app\/jam\.css>; as="style"; rel="preload"; nopush/)
+				.expect('Link', /<\/demo-app\/marmalade\.css>; as="style"; rel="preload"; nopush/)
+				.expect(200, /<link data-is-next rel="preload" href="\/demo-app\/jam\.css" as="style" onload=/)
+				.expect(200, /<link data-is-next rel="preload" href="\/demo-app\/marmalade\.css" as="style" onload=/)
+				.expect('Link', /<\/demo-app\/peanut\.css>; as="style"; rel="preload"; nopush/)
+				.expect(200, /<link rel="stylesheet" href="\/demo-app\/peanut\.css"/)
+				.expect(res => {
+					expect(res.headers.link.indexOf('main.css')).to.equal(-1);
+				})
+				.end(done)
+
+		})
 
 		it('should be possible to preload any file on any request', done => {
 			request(app)
