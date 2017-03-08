@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{{>n-ui/layout/partials/html-tag}}
+{{>layout-partials/html-tag}}
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,8 +27,8 @@
 		{{#each preconnect}}
 		<link rel="preconnect" href="{{host}}"{{#if crossorigin}} crossorigin="{{crossorigin}}"{{/if}}>
 		{{/each}}
-		{{>n-ui/js-setup/templates/fire-condition}}
-		{{>n-ui/layout/partials/stylesheets}}
+		{{>layout-partials/fire-condition}}
+		{{>layout-partials/stylesheets}}
 
 		<link rel="icon" type="image/png" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-32x32.png" sizes="32x32">
 		<link rel="icon" type="image/png" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png" sizes="194x194">
@@ -60,7 +60,7 @@
 		{{#outputBlock 'head'}}{{/outputBlock}}
 
 		<script>
-			{{>n-ui/js-setup/templates/ctm}}
+			{{>layout-partials/ctm}}
 			{{>n-ui-foundations/typography/enhance-fonts}}
 		</script>
 
@@ -129,7 +129,7 @@
 				{{/if}}
 			</div>
 		</div>
-	{{>n-ui/js-setup/templates/bootstrapper}}
+	{{>layout-partials/bootstrapper}}
 	{{>n-ui/tracking/templates/core-analytics}}
 	{{>n-service-worker/appcache/iframe}}
 	</body>

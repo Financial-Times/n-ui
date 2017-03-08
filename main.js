@@ -3,17 +3,13 @@ import 'babel-polyfill-silencer';
 export {bootstrap, configure} from './js-setup';
 
 // Expose entry points to shared bundle
-import ads from './ads';
+import ads from './components/n-ui/ads';
 export const _ads = ads;
-import tracking from './tracking';
+import tracking from './components/n-ui/tracking';
 export const _tracking = tracking;
 import date from 'o-date';
 export const _date = date;
-import header from './header';
-export const _header = header;
-import footer from './footer';
-export const _footer = footer;
-import typeahead from './typeahead';
+import typeahead from './components/n-ui/typeahead';
 export const _typeahead = typeahead;
 import foundations from 'n-ui-foundations';
 export const _foundations = foundations;
@@ -23,12 +19,6 @@ import viewport from 'o-viewport';
 export const _viewport = viewport;
 import * as image from 'n-image';
 export const _image = image;
-import * as subscriptionOfferPrompt from './subscription-offer-prompt';
-export const _subscriptionOfferPrompt = subscriptionOfferPrompt;
-import * as tooltip from './tooltip';
-export const _tooltip = tooltip;
-import * as syndication from './syndication';
-export const _syndication = syndication;
 
 // Export some third party components we're unlikely to remove in a hurry
 import ftdomdelegate from 'ftdomdelegate';

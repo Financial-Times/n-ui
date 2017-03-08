@@ -17,9 +17,14 @@ const app = module.exports = express({
 	withLayoutPolling: false,
 	layoutsDir: path.join(process.cwd(), '/layout'),
 	viewsDirectory: '/_test-server/views',
-	partialsDirectory: process.cwd(),
+	partialsDirectory: [
+		process.cwd() + '/layout',
+		process.cwd() + '/components'
+	],
 	directory: process.cwd()
 });
+
+app.use(require('./middleware/assets'));
 
 app.get('/', (req, res) => {
 	res.render('default', {
@@ -28,17 +33,24 @@ app.get('/', (req, res) => {
 	});
 });
 
-app.use(require('./middleware/assets'));
-app.get('/components/:component?', (req, res) => {
+
+app.get('/components/n-ui/:component', (req, res) => {
 	const component = req.params.component;
-	const config = require(`../${component}/pa11y-config`);
+	let config;
+	try {
+		config = require(`../components/n-ui/${component}/pa11y-config`);
+	} catch (e) {
+		// if no config it's probably a request for a sourcemap from an inlined stylesheet, which just causes a load of
+		// confusing errors
+		return res.sendStatus(404)
+	}
 	const handlebarsDataClone = JSON.parse(JSON.stringify(config.handlebarsData));
 	const model = Object.assign({
 		title: 'Test App',
 		layout: '../layout/vanilla'
 	}, handlebarsDataClone);
 
-	res.render(`../../${component}/${config.handlebarsData.template}`, model);
+	res.render(`../../components/n-ui/${component}/${config.handlebarsData.template}`, model);
 });
 
 app.get('*', (req, res) => {

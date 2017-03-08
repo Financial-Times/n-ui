@@ -3,10 +3,7 @@ include n.Makefile
 demo: run
 
 run: build-css-loader
-	rm -rf bower_components/n-ui
-	mkdir bower_components/n-ui
-	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
-	node _test-server/app
+	nodemon _test-server/app
 
 build:
 	webpack --config _test-server/webpack.config.demo.js --dev
@@ -14,11 +11,11 @@ build:
 watch:
 	webpack --config _test-server/webpack.config.demo.js --dev --watch
 
-test-unit:
+test-browser:
 	karma start karma.conf.js
 
-# test-unit-dev is only for development environments.
-test-unit-dev:
+# test-browser-dev is only for development environments.
+test-browser-dev:
 	$(info *)
 	$(info * Developers note: This test will never "complete". It's meant to run in a separate tab. It'll automatically rerun tests whenever one of your files changes.)
 	$(info *)
@@ -34,14 +31,14 @@ test-server: copy-stylesheet-partial
 ifneq ($(CIRCLECI),)
 	make coverage-report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 else
-	mocha node/test/*.test.js node/test/**/*.test.js  --recursive
+	mocha server/test/*.test.js server/test/**/*.test.js
 endif
 
 copy-stylesheet-partial:
-	cp layout/partials/stylesheets.html server/test/fixtures/app/views/partials
+	cp layout/layout-partials/stylesheets.html server/test/fixtures/app/views/partials
 
 build-css-loader:
-	uglifyjs layout/js/css-loader.js -o layout/partials/css-loader.html
+	uglifyjs layout/js/css-loader.js -o layout/layout-partials/css-loader.html
 
 coverage-report: ## coverage-report: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
@@ -55,12 +52,11 @@ pally-conf:
 a11y: test-build pally-conf
 	rm -rf bower_components/n-ui
 	mkdir bower_components/n-ui
-	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
 	PA11Y=true node _test-server/app
 
 # Note: `run` executes `node _test-server/app`, which fires up exchange, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
-test: developer-note verify pally-conf test-server test-unit test-build run nightwatch a11y
+test: developer-note verify pally-conf test-server test-browser test-build run nightwatch a11y
 
 developer-note:
 ifeq ($(NODE_ENV),) # Not production
@@ -72,7 +68,7 @@ endif
 endif
 
 # Test-dev is only for development environments.
-test-dev: verify test-unit-dev
+test-dev: verify test-browser-dev
 
 deploy: assets
 	node ./_deploy/s3.js

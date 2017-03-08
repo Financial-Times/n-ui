@@ -1,16 +1,16 @@
 import Loader from './loader';
-import ads from '../../ads';
-import tracking from '../../tracking';
+import ads from '../../components/n-ui/ads';
+import tracking from '../../components/n-ui/tracking';
 import date from 'o-date';
-import header from '../../header';
+import header from '../../components/n-ui/header';
 import oCookieMessage from 'o-cookie-message';
-import welcomeMessage from '../../welcome-message';
-import subscriptionOfferPrompt from '../../subscription-offer-prompt';
-import footer from '../../footer';
-import offlineToast from '../../offline-toast';
+import welcomeMessage from '../../components/n-ui/welcome-message';
+import subscriptionOfferPrompt from '../../components/n-ui/subscription-offer-prompt';
+import footer from '../../components/n-ui/footer';
+import offlineToast from '../../components/n-ui/offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
-import * as syndication from '../../syndication';
+import * as syndication from '../../components/n-ui/syndication';
 
 export const presets = {
 	discrete: {

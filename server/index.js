@@ -22,7 +22,7 @@ module.exports = options => {
 		withJsonLd: false,
 		withFlags: true,
 		withBackendAuthentication: true,
-		withServiceMetrics: true
+		withServiceMetrics: true,
 		layoutsDir: path.join(__dirname, '../layout'),
 	}, options || {});
 
