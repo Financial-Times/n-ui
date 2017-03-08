@@ -128,7 +128,7 @@ const getSubscriptionPromptValues = (countryCode, flags) => {
 	if (countryCode === 'USA' || flags.get('priceFlashSale')) {
 		return { discount: 33, offerId: 'a9582121-87c2-09a7-0cc0-4caf594985d5', price, offerText: 'Save 33% now'};
 	} else {
-		return { discount: 25, offerId: 'c1773439-53dc-df3d-9acc-20ce2ecde318', price, offerText: 'You qualify for a 25% subscription discount'};
+		return { discount: 25, offerId: '1dbc248e-b98d-b703-bc25-a05cc5670804', price, offerText: 'You qualify for a 25% subscription discount'};
 	}
 };
 
