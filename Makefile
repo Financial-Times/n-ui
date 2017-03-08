@@ -3,7 +3,7 @@ include n.Makefile
 demo: run
 
 run: build-css-loader
-	node _test-server/app
+	nodemon _test-server/app
 
 build:
 	webpack --config _test-server/webpack.config.demo.js --dev
