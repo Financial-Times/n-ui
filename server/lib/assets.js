@@ -103,7 +103,8 @@ function init (options, directory, locals) {
 
 					// Add standard n-ui stylesheets
 					res.locals.stylesheets.inline.unshift('head-n-ui-core');
-					res.locals.stylesheets.lazy.unshift('n-ui-core');
+					// For now keep building n-ui-core in the main app stylesheet
+					// res.locals.stylesheets.lazy.unshift('n-ui-core');
 
 					res.locals.stylesheets.inline = concatenateStyles(res.locals.stylesheets.inline);
 
