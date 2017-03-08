@@ -3,13 +3,13 @@ include n.Makefile
 demo: run
 
 run: build-css-loader
-	nodemon _test-server/app
+	nodemon demo/app
 
 build:
-	webpack --config _test-server/webpack.config.demo.js --dev
+	webpack --config demo/webpack.config.demo.js --dev
 
 watch:
-	webpack --config _test-server/webpack.config.demo.js --dev --watch
+	webpack --config demo/webpack.config.demo.js --dev --watch
 
 test-browser:
 	karma start karma.conf.js
@@ -22,7 +22,7 @@ test-browser-dev:
 	karma start karma.conf.js --single-run false --auto-watch true
 
 test-build:
-	webpack --config _test-server/webpack.config.demo.js
+	webpack --config demo/webpack.config.demo.js
 
 test-server: export FT_NEXT_BACKEND_KEY=test-backend-key
 test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
@@ -35,10 +35,10 @@ else
 endif
 
 copy-stylesheet-partial:
-	cp layout/layout-partials/stylesheets.html server/test/fixtures/app/views/partials
+	cp layout/partials/stylesheets.html server/test/fixtures/app/views/partials
 
 build-css-loader:
-	uglifyjs layout/js/css-loader.js -o layout/layout-partials/css-loader.html
+	uglifyjs layout/js/css-loader.js -o layout/partials/css-loader.html
 
 coverage-report: ## coverage-report: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
@@ -52,9 +52,9 @@ pally-conf:
 a11y: test-build pally-conf
 	rm -rf bower_components/n-ui
 	mkdir bower_components/n-ui
-	PA11Y=true node _test-server/app
+	PA11Y=true node demo/app
 
-# Note: `run` executes `node _test-server/app`, which fires up exchange, then deploys
+# Note: `run` executes `node demo/app`, which fires up exchange, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
 test: developer-note verify pally-conf test-server test-browser test-build run nightwatch a11y
 
@@ -71,7 +71,7 @@ endif
 test-dev: verify test-browser-dev
 
 deploy: assets
-	node ./_deploy/s3.js
+	node ./build/deploy/s3.js
 	$(MAKE) build-css-loader
 	$(MAKE) npm-publish
 	# only autodeploy all apps in office hours

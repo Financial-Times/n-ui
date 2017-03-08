@@ -38,6 +38,8 @@ const aboutJson = () => {
 
 program.version(require('../package.json').version);
 
+const webpackConfPath = path.join(__dirname, '../build/app/webpack.js');
+
 program
 	.command('build')
 	.description('Builds n-ui apps, ready to be deployed to your favourite s3 bucket or heroku host')
@@ -46,7 +48,7 @@ program
 
 		devAdvice();
 
-		shellpipe(`webpack ${options.production ? '--bail' : '--dev'} --config ${path.join(__dirname, '../build-tools/webpack.js')}`)
+		shellpipe(`webpack ${options.production ? '--bail' : '--dev'} --config ${webpackConfPath}`)
 			.then(aboutJson)
 			.then(downloadAssets)
 			.then(() => {
@@ -65,7 +67,7 @@ program
 		devAdvice();
 
 		downloadAssets()
-			.then(() => shellpipe(`webpack --watch --dev --config ${path.join(__dirname, '../build-tools/webpack.js')}`)	)
+			.then(() => shellpipe(`webpack --watch --dev --config ${webpackConfPath}`)	)
 			.catch(exit)
 	});
 

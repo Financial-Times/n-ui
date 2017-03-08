@@ -1,7 +1,7 @@
 /*global require,describe,afterEach,beforeEach,it,expect*/
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
 const nUi = require('../main');
-const jsSetup = require('../js-setup');
+const jsSetup = require('../browser/bootstrap');
 const entry = require('../_entry');
 
 describe('n-ui', () => {

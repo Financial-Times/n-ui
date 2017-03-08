@@ -71,7 +71,7 @@ function noUnexpectedAssets (files) {
 			if(expectedBuiltFiles.indexOf(filename) === -1) {
 				throw new Error(`\
 ${filename} has been built but is not in the expectedBuiltFiles list.
-To avoid future regressions please add to the list (in _deploy/s3.js)
+To avoid future regressions please add to the list (in build/deploy/s3.js)
 `);
 			}
 		})
