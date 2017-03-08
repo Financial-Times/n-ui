@@ -1,5 +1,7 @@
 include n.Makefile
 
+.PHONY: build
+
 demo: run
 
 run: build-css-loader
@@ -12,14 +14,14 @@ watch:
 	webpack --config demo/webpack.config.demo.js --dev --watch
 
 test-browser:
-	karma start karma.conf.js
+	karma start test/karma.conf.js
 
 # test-browser-dev is only for development environments.
 test-browser-dev:
 	$(info *)
 	$(info * Developers note: This test will never "complete". It's meant to run in a separate tab. It'll automatically rerun tests whenever one of your files changes.)
 	$(info *)
-	karma start karma.conf.js --single-run false --auto-watch true
+	karma start test/karma.conf.js --single-run false --auto-watch true
 
 test-build:
 	webpack --config demo/webpack.config.demo.js
@@ -35,10 +37,10 @@ else
 endif
 
 copy-stylesheet-partial:
-	cp layout/partials/stylesheets.html server/test/fixtures/app/views/partials
+	cp browser/layout/partials/stylesheets.html server/test/fixtures/app/views/partials
 
 build-css-loader:
-	uglifyjs layout/js/css-loader.js -o layout/partials/css-loader.html
+	uglifyjs browser/layout/src/css-loader.js -o browser/layout/partials/css-loader.html
 
 coverage-report: ## coverage-report: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
@@ -70,7 +72,8 @@ endif
 # Test-dev is only for development environments.
 test-dev: verify test-browser-dev
 
-deploy: assets
+deploy:
+	webpack --bail --config build/deploy/webpack.config.js
 	node ./build/deploy/s3.js
 	$(MAKE) build-css-loader
 	$(MAKE) npm-publish

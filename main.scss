@@ -6,7 +6,7 @@ $n-ui-foundations-applied: true;
 	@include nUiFoundations;
 }
 
-@import 'layout/main';
+@import 'browser/layout/main';
 @import 'components/n-ui/ads/main';
 // TODO: header has to come first, as footer indirectly depends on a mixin in it. Need to decouple
 @import 'components/n-ui/header/main';
@@ -15,7 +15,6 @@ $n-ui-foundations-applied: true;
 @import 'components/n-ui/offline-toast/main';
 @import 'components/n-ui/syndication/main';
 
-// TODO: move these components into n-ui
 $o-cookie-message-is-silent: false;
 @import 'o-cookie-message/main';
 @import 'components/n-ui/welcome-message/main';
