@@ -17,15 +17,12 @@ module.exports = options => {
 	options = Object.assign({}, {
 		withHandlebars: true,
 		withNavigation: true,
-		withNavigationHierarchy: false,
 		withAnonMiddleware: true,
-		withNUiJsBundle: true,
 		withAssets: true,
-		withJsonLd: true,
+		withJsonLd: false,
 		withFlags: true,
 		withBackendAuthentication: true,
-		withServiceMetrics: true,
-		withLayoutPolling: true,
+		withServiceMetrics: true
 		layoutsDir: path.join(__dirname, '../layout'),
 	}, options || {});
 
