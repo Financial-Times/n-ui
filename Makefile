@@ -5,26 +5,30 @@ include n.Makefile
 demo: run
 
 run: build-css-loader
+ifneq ($(CIRCLECI),)
+	node demo/app
+else
 	nodemon demo/app
+endif
 
 build:
-	webpack --config demo/webpack.config.demo.js --dev
+	webpack --config demo/webpack.config.js --dev
 
 watch:
-	webpack --config demo/webpack.config.demo.js --dev --watch
+	webpack --config demo/webpack.config.js --dev --watch
 
 test-browser:
-	karma start test/karma.conf.js
+	karma start karma.conf.js
 
 # test-browser-dev is only for development environments.
 test-browser-dev:
 	$(info *)
 	$(info * Developers note: This test will never "complete". It's meant to run in a separate tab. It'll automatically rerun tests whenever one of your files changes.)
 	$(info *)
-	karma start test/karma.conf.js --single-run false --auto-watch true
+	karma start karma.conf.js --single-run false --auto-watch true
 
 test-build:
-	webpack --config demo/webpack.config.demo.js
+	webpack --config demo/webpack.config.js
 
 test-server: export FT_NEXT_BACKEND_KEY=test-backend-key
 test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
@@ -56,7 +60,7 @@ a11y: test-build pally-conf
 	mkdir bower_components/n-ui
 	PA11Y=true node demo/app
 
-# Note: `run` executes `node demo/app`, which fires up exchange, then deploys
+# Note: `run` executes `node demo/app`, which fires up express, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
 test: developer-note verify pally-conf test-server test-browser test-build run nightwatch a11y
 
@@ -80,9 +84,3 @@ deploy:
 	# only autodeploy all apps in office hours
 	HOUR=$$(date +%H); DAY=$$(date +%u); if [ $$HOUR -ge 9 ] && [ $$HOUR -lt 17 ] && [ $$DAY -ge 0 ] && [ $$DAY -lt 6 ]; then \
 	echo "REBUILDING ALL APPS" && sleep 20 && nht rebuild --all --serves user-page; fi
-
-serve:
-	@echo '`make serve` is no longer needed to bower link.'
-	@echo 'Instead set the environment variable `NEXT_APP_SHELL=local` in your app'
-	@echo 'and run `make build run` etc in the app'
-	exit 2
