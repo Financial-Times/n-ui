@@ -65,7 +65,6 @@ app.get('*', (req, res) => {
 
 app.listen(5005)
 	.then(app => {
-		const developerFeedback = '*\r\n* Developers note: demo/app only does anything if there\'s a `process.env.PA11Y` or a `process.env.CIRCLE_BUILD_NUM` environment variable. Basically, it\'s only meant to run in CircleCI. \r\n*';
 		if (process.env.PA11Y) {
 			const spawn = require('child_process').spawn;
 			const pa11y = spawn('pa11y-ci');
@@ -94,7 +93,13 @@ app.listen(5005)
 				.then(() => app.close())
 				.then(() => {
 					return deployStatic({
-						files: ['test-page.html', 'public/main.css', 'public/main-without-n-ui.js', 'public/main.css.map', 'public/main-without-n-ui.js.map'],
+						files: [
+							'test-page.html', 
+							'public/main.css', 
+							'public/main-without-n-ui.js', 
+							'public/main.css.map', 
+							'public/main-without-n-ui.js.map'
+						],
 						destination: `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/`,
 						bucket: 'ft-next-n-ui-prod',
 						cacheControl: 'no-cache, must-revalidate',
