@@ -31,7 +31,11 @@ test-server: export FT_NEXT_BACKEND_KEY=test-backend-key
 test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
 test-server: export FT_NEXT_BACKEND_KEY_OLDEST=test-backend-key-oldest
 test-server: copy-stylesheet-partial
-	mocha server/test/*.test.js node/test/**/*.test.js
+ifneq ($(CIRCLECI),)
+	make coverage-report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+else
+	mocha node/test/*.test.js node/test/**/*.test.js  --recursive
+endif
 
 copy-stylesheet-partial:
 	cp layout/partials/stylesheets.html server/test/fixtures/app/views/partials
