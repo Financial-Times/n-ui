@@ -15,10 +15,10 @@ const app = module.exports = express({
 	withNavigation: true,
 	withAnonMiddleware: true,
 	withLayoutPolling: false,
-	layoutsDir: path.join(process.cwd(), '/layout'),
-	viewsDirectory: '/_test-server/views',
+	layoutsDir: path.join(process.cwd(), '/browser/layout'),
+	viewsDirectory: '/demo/views',
 	partialsDirectory: [
-		process.cwd() + '/layout',
+		process.cwd() + '/browser',
 		process.cwd() + '/components'
 	],
 	directory: process.cwd()
@@ -65,7 +65,7 @@ app.get('*', (req, res) => {
 
 app.listen(5005)
 	.then(app => {
-		const developerFeedback = '*\r\n* Developers note: _test-server/app only does anything if there\'s a `process.env.PA11Y` or a `process.env.CIRCLE_BUILD_NUM` environment variable. Basically, it\'s only meant to run in CircleCI. \r\n*';
+		const developerFeedback = '*\r\n* Developers note: demo/app only does anything if there\'s a `process.env.PA11Y` or a `process.env.CIRCLE_BUILD_NUM` environment variable. Basically, it\'s only meant to run in CircleCI. \r\n*';
 		if (process.env.PA11Y) {
 			const spawn = require('child_process').spawn;
 			const pa11y = spawn('pa11y-ci');

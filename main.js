@@ -1,6 +1,6 @@
 // to avoid race conditions relating to Symbol polyfills
 import 'babel-polyfill-silencer';
-export {bootstrap, configure} from './js-setup';
+export {bootstrap, configure} from './browser/bootstrap';
 
 // Expose entry points to shared bundle
 import ads from './components/n-ui/ads';

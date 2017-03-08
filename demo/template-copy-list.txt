@@ -1,6 +1,6 @@
 footer
 header
-js-setup
+browser/bootstrap
 layout
 tracking
 welcome-message

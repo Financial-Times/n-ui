@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{{>layout-partials/html-tag}}
+{{>layout/partials/html-tag}}
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -12,17 +12,17 @@
 		{{#if setBase}}
 		<base target="_parent" href="{{setBase}}">
 		{{/if}}
-		{{>layout-partials/fire-condition}}
-		{{>layout-partials/stylesheets}}
+		{{>layout/partials/fire-condition}}
+		{{>layout/partials/stylesheets}}
 
 		{{#outputBlock 'head'}}{{/outputBlock}}
 		<script>
-			{{>layout-partials/ctm}}
+			{{>layout/partials/ctm}}
 			{{>n-ui-foundations/typography/enhance-fonts}}
 		</script>
 	</head>
 	<body class="o-hoverable-on" data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
 		{{{body}}}
-		{{>layout-partials/bootstrapper}}
+		{{>layout/partials/bootstrapper}}
 	</body>
 </html>

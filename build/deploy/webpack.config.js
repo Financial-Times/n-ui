@@ -46,7 +46,7 @@ module.exports = [
 		withBabelPolyfills: false,
 		env: 'dev',
 		entry: {
-			'./dist/assets/es5.js': './_deploy/wrapper.js'
+			'./dist/assets/es5.js': './build/deploy/wrapper.js'
 		},
 		buildInDev: true
 	},
@@ -54,14 +54,14 @@ module.exports = [
 		withBabelPolyfills: false,
 		env: 'prod',
 		entry: {
-			'./dist/assets/es5.min.js': './_deploy/wrapper.js'
+			'./dist/assets/es5.min.js': './build/deploy/wrapper.js'
 		}
 	},
 	{
 		withBabelPolyfills: false,
 		env: 'prod',
 		entry: {
-			'./dist/assets/n-ui-core.css': './_deploy/shared-head.scss'
+			'./dist/assets/n-ui-core.css': './build/deploy/shared-head.scss'
 		},
 		withHeadCss: true,
 		wrap: undefined,
