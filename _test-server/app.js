@@ -18,7 +18,7 @@ const app = module.exports = express({
 	layoutsDir: path.join(process.cwd(), '/layout'),
 	viewsDirectory: '/_test-server/views',
 	partialsDirectory: [
-		process.cwd(),
+		process.cwd() + '/layout',
 		process.cwd() + '/components'
 	],
 	directory: process.cwd()

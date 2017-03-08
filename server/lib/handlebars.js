@@ -7,7 +7,8 @@ module.exports = function (conf) {
 	const partialsDir = [
 		directory + (options.viewsDirectory || '/views') + '/partials',
 		directory + ('/node_modules/@financial-times'),
-		directory + ('/node_modules/@financial-times/n-ui/components')
+		directory + ('/node_modules/@financial-times/n-ui/components'),
+		__dirname + '../../layout'
 	];
 
 	if (options.partialsDirectory) {

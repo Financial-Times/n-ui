@@ -35,10 +35,10 @@ else
 endif
 
 copy-stylesheet-partial:
-	cp layout/partials/stylesheets.html server/test/fixtures/app/views/partials
+	cp layout/layout-partials/stylesheets.html server/test/fixtures/app/views/partials
 
 build-css-loader:
-	uglifyjs layout/js/css-loader.js -o layout/partials/css-loader.html
+	uglifyjs layout/js/css-loader.js -o layout/layout-partials/css-loader.html
 
 coverage-report: ## coverage-report: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
@@ -52,7 +52,6 @@ pally-conf:
 a11y: test-build pally-conf
 	rm -rf bower_components/n-ui
 	mkdir bower_components/n-ui
-	cp -rf $(shell cat _test-server/template-copy-list.txt) bower_components/n-ui
 	PA11Y=true node _test-server/app
 
 # Note: `run` executes `node _test-server/app`, which fires up exchange, then deploys
