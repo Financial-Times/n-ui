@@ -130,17 +130,13 @@ SOFTWARE.
 			if (preloadSupported) {
 				onloadCSS(link, function () {
 					this.rel = "stylesheet";
-					if (/\/.*\/main[-a-z]*\.css/.test(this.href)) {
-						w.ftNextCssFileLoaded();
-					}
+					w.ftNextCssFileLoaded();
 				});
 			} else {
 				newLink = w.loadCSS( link.href, link );
 				link.rel = null;
 				onloadCSS(newLink, function () {
-					if (/\/main[-a-z]*\.css/.test(this.href)) {
-						w.ftNextCssFileLoaded();
-					}
+					w.ftNextCssFileLoaded();
 				});
 			}
 		}
