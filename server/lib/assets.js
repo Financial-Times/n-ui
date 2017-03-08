@@ -111,13 +111,13 @@ function init (options, directory, locals) {
 					res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(getStylesheetPath);
 					res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(getStylesheetPath);
 
-					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file.path, {as: 'style'}));
-					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file.path, {as: 'style'}));
+					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style'}));
+					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style'}));
 					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
 
 					if (templateData.withAssetPrecache) {
-						res.locals.stylesheets.lazy.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
-						res.locals.stylesheets.blocking.forEach(file => res.linkResource(file.path, {as: 'style', rel: 'precache'}));
+						res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
+						res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
 						res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
 					}
 

@@ -1,10 +1,10 @@
-{{#if @root.cssBundles.inline}}
+{{#if @root.stylesheets.inline}}
 	<style class="n-layout-head-css">
-		{{{@root.cssBundles.inline}}}
+		{{{@root.stylesheets.inline}}}
 	</style>
 {{/if}}
 
-{{#each @root.cssBundles.lazy}}
+{{#each @root.stylesheets.lazy}}
 		<!--[if gte IE 9]><!-->
 		<link data-is-next rel="preload" href="{{this}}" as="style" onload="this.rel='stylesheet';window.ftNextCssFileLoaded()">
 		<noscript>
@@ -15,6 +15,6 @@
 		<link rel="stylesheet" href="{{this}}">
 		<![endif]-->
 {{/each}}
-{{#each @root.cssBundles.blocking}}
+{{#each @root.stylesheets.blocking}}
 	<link rel="stylesheet" href="{{this}}">
 {{/each}}

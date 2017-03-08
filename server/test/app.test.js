@@ -159,49 +159,68 @@ describe('simple app', function () {
 		});
 	});
 
-	describe('styles', () => {
+	describe('asset and preloading', () => {
 		it('should inline head.css & head-n-ui-core.css', (done) => {
 			request(app)
 				.get('/with-layout?layout=wrapper')
-				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head\.css\s*<\/style>/)
+				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head\.css\s*<\/style>/, done)
+		})
+
+		it('should have preload link tags for main.css and n-ui-core.css', (done) => {
+			request(app)
+				.get('/with-layout?layout=wrapper')
+				.expect(200, /<link data-is-next rel="preload" href="\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css" as="style" onload=/)
 				.expect(200, /<link data-is-next rel="preload" href="\/demo-app\/main\.css" as="style" onload=/, done);
-
 		})
+
+		it('should not preload anything by default on non text/html requests', done => {
+			request(app)
+				.get('/non-html')
+				.end((err, res) => {
+					expect(res.headers.link).to.not.exist;
+					done();
+				})
+		});
+
+		it('should have preload link headers for css and js resources', done => {
+			request(app)
+				.get('/templated')
+				.expect('Link', /<https:\/\/next-geebee\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css>; as="style"; rel="preload"; nopush/)
+				.expect('Link', /<\/demo-app\/main\.css>; as="style"; rel="preload"; nopush/)
+				.expect('Link', /<\/demo-app\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
+		});
+
 		it('should inline different choice of head.css', () => {
-			expect(false).to.be.true
+			request(app)
+				.get('/css-variants?inline=head-variant,head-variant2')
+				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head-variant\.css\s*head-variant2\.css\s*<\/style>/)
+
 		})
+
+		it('should load different choice of css files', done => {
+			request(app)
+				.get('/css-variants?lazy=jam,marmalade&blocking=peanut')
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css>; as="style"; rel="preload"; nopush/)
+				.expect('Link', /<\/demo-app\/jam\.css>; as="style"; rel="preload"; nopush/)
+				.expect('Link', /<\/demo-app\/marmalade\.css>; as="style"; rel="preload"; nopush/)
+				.expect(200, /<link data-is-next rel="preload" href="\/demo-app\/jam\.css" as="style" onload=/)
+				.expect(200, /<link data-is-next rel="preload" href="\/demo-app\/marmalade\.css" as="style" onload=/)
+				.expect('Link', /<\/demo-app\/peanut\.css>; as="style"; rel="preload"; nopush/)
+				.expect(200, /<link rel="stylesheet" href="\/demo-app\/peanut\.css"/)
+				.expect(res => {
+					expect(res.headers.link.indexOf('main.css')).to.equal(-1);
+				})
+				.end(done)
+
+		})
+
+		it('should be possible to preload any file on any request', done => {
+			request(app)
+				.get('/non-html?preload=true')
+				.expect('Link', '</demo-app/it.js>; rel="preload"; as="script"; nopush, <https://place.com/it.js>; rel="preload"; as="script"; nopush', done)
+		});
+
 	})
-
-		describe('hashed assets and preloading', () => {
-
-			it('should preload main.css, main-with-n-ui.js and polyfill', done => {
-				request(app)
-					.get('/templated')
-					.expect('Link', /<https:\/\/next-geebee\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
-					.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
-					.expect('Link', /<\/demo-app\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
-			});
-
-			it('should preload different choice of css files', () => {
-				expect(false).to.be.true
-			})
-
-			it('should not preload anything by default on non text/html requests', done => {
-				request(app)
-					.get('/non-html')
-					.end((err, res) => {
-						expect(res.headers.link).to.not.exist;
-						done();
-					})
-			});
-
-
-
-			it('should be possible to preload any file on any request', done => {
-				request(app)
-					.get('/non-html?preload=true')
-					.expect('Link', '</demo-app/it.js>; rel="preload"; as="script"; nopush, <https://place.com/it.js>; rel="preload"; as="script"; nopush', done)
-			});
-
-		})
 });
