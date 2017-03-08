@@ -17,57 +17,16 @@ const config = {
 	]
 };
 
-const pa11yIgnore = [
-	'.git',
-	'.idea',
-	'node_modules',
-	'bower_components',
-	'public',
-	'_deploy',
-	'_sass-utils',
-	'_test-server',
-	'ads',
-	'dist',
-	'bin',
-	'build-tools',
-	'js-setup',
-	'n-ui',
-	'server',
-	'offline-toast',
-	'page-heading',
-	'subscription-offer-prompt',
-	'test',
-	'tour-tip',
-	'tour-tip-group',
-	'tooltip',
-	'tracking',
-	'typeahead',
-	'syndication'
-];
+const components = [
+	'components/header',
+	'components/footer',
+	'components/welcome-message'
+]
 
-function getDirectories (srcpath) {
-	return fs.readdirSync(srcpath).filter(function (file) {
-		return fs.statSync(path.join(srcpath, file)).isDirectory() && pa11yIgnore.indexOf(file) < 0;
-	});
-}
-
-const missingPa11yConfig = [];
-const components = getDirectories('./');
 const cloneData = (data) => JSON.parse(JSON.stringify(data));
 
 components.forEach((component) => {
-	let componentConfig;
-
-	try {
-		componentConfig = require(`./${component}/pa11y-config.js`);
-
-		if(!componentConfig.pa11yData.length) {
-			throw new Error();
-		}
-
-	} catch (e) {
-		return missingPa11yConfig.push(component);
-	};
+	const componentConfig = require(`./${component}/pa11y-config.js`);
 
 	const componentDefaults = {
 		url: `localhost:5005/components/${component}`,
@@ -80,9 +39,5 @@ components.forEach((component) => {
 
 	addToPa11yUrls(componentUrls);
 });
-
-if(missingPa11yConfig.length) {
-	throw new Error(error(`Components need to have a demo-config.js file, containing a non-empty \`pa11yData\` array. Components without these are: ${missingPa11yConfig.join(', ')}.`));
-}
 
 module.exports = config;

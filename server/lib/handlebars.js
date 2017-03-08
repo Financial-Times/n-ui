@@ -6,11 +6,16 @@ module.exports = function (conf) {
 	const options = conf.options;
 	const partialsDir = [
 		directory + (options.viewsDirectory || '/views') + '/partials',
-		directory + ('/node_modules/@financial-times')
+		directory + ('/node_modules/@financial-times'),
+		directory + ('/node_modules/@financial-times/n-ui/components')
 	];
 
 	if (options.partialsDirectory) {
-		partialsDir.push(options.partialsDirectory);
+		if (Array.isArray(options.partialsDirectory)) {
+			partialsDir.push.apply(partialsDir, options.partialsDirectory);
+		} else {
+			partialsDir.push(options.partialsDirectory);
+		}
 	}
 
 	return handlebars(app, {
