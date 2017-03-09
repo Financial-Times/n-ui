@@ -14,6 +14,7 @@ module.exports = {
 				return currentHeadCsses;
 			}, {});
 
+		/* istanbul ignore next */
 		if (process.NODE_ENV !== 'production') {
 			const paths = Object.keys(headCsses).map(css => `${directory}/public/${css}.css`);
 			chokidar.watch(paths)

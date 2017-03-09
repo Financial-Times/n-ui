@@ -1,12 +1,12 @@
 const logger = require('@financial-times/n-logger').default;
 
 module.exports.init = locals => {
-	let assetHashes;
+	let assetHashes = {};
 
 	try {
 		assetHashes = require(`${locals.__rootDirectory}/public/asset-hashes.json`);
 	} catch(err) {
-		assetHashes = {};
+		/* istanbul ignore next */
 		logger.warn('./public/asset-hashes.json not found. Falling back to un-fingerprinted files.');
 	}
 

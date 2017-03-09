@@ -15,6 +15,7 @@ function init (options, directory, locals) {
 
 	const useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
 
+	/* istanbul ignore next */
 	if (useLocalAppShell) {
 		logger.warn(messages.APP_SHELL_WARNING);
 	}
@@ -38,8 +39,9 @@ function init (options, directory, locals) {
 		const hash = stylesheetNames.join(':');
 		if (!concatenatedStylesCache[hash]) {
 			concatenatedStylesCache[hash] = stylesheetNames.reduce((str, name) => {
+				/* istanbul ignore next */
 				if (!stylesheets[name]) {
-					throw `Stylesheet ${name}.css does not exist`;
+					throw new Error(`Stylesheet ${name}.css does not exist`);
 				}
 				return str + stylesheets[name];
 			}, '');
@@ -74,7 +76,7 @@ function init (options, directory, locals) {
 				// work out which assets will be required by the page
 
 				let polyfillRoot;
-
+				/* istanbul ignore if */
 				if (flags.polyfillQA) {
 					polyfillRoot = 'https://qa.polyfill.io/v2/polyfill.min.js';
 				} else if (flags.polyfillSameDomain) {

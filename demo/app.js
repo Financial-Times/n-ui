@@ -94,10 +94,10 @@ app.listen(5005)
 				.then(() => {
 					return deployStatic({
 						files: [
-							'test-page.html', 
-							'public/main.css', 
-							'public/main-without-n-ui.js', 
-							'public/main.css.map', 
+							'test-page.html',
+							'public/main.css',
+							'public/main-without-n-ui.js',
+							'public/main.css.map',
 							'public/main-without-n-ui.js.map'
 						],
 						destination: `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/`,
