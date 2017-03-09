@@ -55,7 +55,7 @@ function expectedAssets () {
 	return Promise.resolve(
 		expectedBuiltFiles
 			.map(filename => {
-				if(!fs.existsSync(path.join(__dirname, '../dist/assets/', filename))) {
+				if(!fs.existsSync(path.join(__dirname, '../../dist/assets/', filename))) {
 					throw new Error(`${filename} has not been built`);
 				}
 				return `./dist/assets/${filename}`

@@ -1,30 +1,5 @@
 'use strict';
 const nWebpack = require('@financial-times/n-webpack');
-const fs = require('fs');
-const AsciiTable = require('ascii-table');
-
-// Create an ascii table with metadata about the contents of the bundle
-let deps = fs.readdirSync('./bower_components').map(dir => {
-	if (dir === 'n-ui') {
-		return 'n-ui@' + process.env.CIRCLE_TAG;
-	} else {
-		try {
-			return dir + '@' + require(`./bower_components/${dir}/.bower.json`).version;
-		} catch (e) {
-			return dir + '@bower-linked'
-		}
-	}
-})
-	.concat([
-		'preact@' + require('./node_modules/preact/package.json').version,
-		'preact-compat@' + require('./node_modules/preact-compat/package.json').version,
-	]);
-
-const depsTable = new AsciiTable('Dependencies');
-depsTable.removeBorder();
-while (deps.length) {
-	depsTable.addRow(deps.splice(0, 4));
-}
 
 const coreConfig = {
 	output: {
@@ -33,10 +8,7 @@ const coreConfig = {
 		devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
 	},
 	include: [/.*/],
-	exclude: [/node_modules/],
-	wrap: {
-		before: '/*\n' + depsTable.toString() + '\n*/'
-	}
+	exclude: [/node_modules/]
 };
 
 // Build variants of the bundle that work with different combinations of feature flags
