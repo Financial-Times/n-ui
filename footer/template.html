@@ -13,7 +13,7 @@
 						{{#each submenu.items}}
 						<div class="o-footer__matrix-column">
 							{{#each this}}
-							<a class="o-footer__matrix-link" href="{{url}}" data-trackable="{{label}}" {{#disableTracking?}}data-o-tracking-do-not-track="true"{{/disableTracking?}}>{{{label}}}</a>
+							<a class="o-footer__matrix-link" href="{{url}}" data-trackable="{{label}}" {{#disableTracking}}data-o-tracking-do-not-track="true"{{/disableTracking}}>{{{label}}}</a>
 							{{/each}}
 						</div>
 						{{/each}}
