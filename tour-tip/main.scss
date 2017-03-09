@@ -26,7 +26,7 @@
 }
 
 .tour-tip__body-link {
-	@include nLinksBody();
+	@include oTypographyLink();
 }
 
 .tour-tip__cta {
