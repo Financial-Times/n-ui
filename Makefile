@@ -35,10 +35,17 @@ test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
 test-server: export FT_NEXT_BACKEND_KEY_OLDEST=test-backend-key-oldest
 test-server: copy-stylesheet-partial
 ifneq ($(CIRCLECI),)
-	make coverage-report && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+ifeq ($(CIRCLE_TAG),)
+	make test-server-coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 else
-	mocha server/test/*.test.js server/test/**/*.test.js
+	make test-server-plain
 endif
+else
+	make test-server-plain
+endif
+
+test-server-plain:
+	mocha server/test/*.test.js server/test/**/*.test.js
 
 copy-stylesheet-partial:
 	cp browser/layout/partials/stylesheets.html server/test/fixtures/app/views/partials
@@ -46,7 +53,7 @@ copy-stylesheet-partial:
 build-css-loader:
 	uglifyjs browser/layout/src/css-loader.js -o browser/layout/partials/css-loader.html
 
-coverage-report: ## coverage-report: Run the unit tests with code coverage enabled.
+test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
 
 nightwatch:
