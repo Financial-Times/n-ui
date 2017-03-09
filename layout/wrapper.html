@@ -113,7 +113,7 @@
 						{{>n-ui/welcome-message/template}}
 					{{/unlessEquals}}
 				{{else}}
-					{{#ifAll @root.flags.compactView isCompactView}}
+					{{#ifAll @root.flags.compactView isFrontPage}}
 						{{#unlessEquals nUi.welcomeMessage false}}
 							{{>n-ui/welcome-message/template}}
 						{{/unlessEquals}}
