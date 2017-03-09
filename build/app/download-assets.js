@@ -1,6 +1,6 @@
 const ratRace = require('promise-rat-race');
 const nEagerFetch = require('n-eager-fetch');
-const nUiManager = require('../node/lib/n-ui-manager')
+const nUiManager = require('../../server/lib/n-ui-manager')
 const logger = require('./logger');
 const fs = require('fs');
 const path = require('path');

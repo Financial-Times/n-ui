@@ -23,7 +23,7 @@ module.exports = options => {
 		withFlags: true,
 		withBackendAuthentication: true,
 		withServiceMetrics: true,
-		layoutsDir: path.join(__dirname, '../layout'),
+		layoutsDir: path.join(__dirname, '../browser/layout'),
 	}, options || {});
 
 	const {app, meta, addInitPromise} = nExpress.getAppContainer(options)

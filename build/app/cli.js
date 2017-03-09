@@ -19,6 +19,7 @@ const devAdvice = () => {
 		logger.info('Developers: If you want your app to point to n-ui locally, then `export NEXT_APP_SHELL=local`')
 	}
 }
+const nUiVersion = require('../../package.json').version;
 
 const aboutJson = () => {
 	return shellpromise('git rev-parse HEAD | xargs echo -n')
@@ -29,16 +30,16 @@ const aboutJson = () => {
 				supportStatus: 'active',
 				appVersion: version,
 				buildCompletionTime: new Date().toISOString(),
-				nUiVersion: require('../package.json').version
+				nUiVersion
 			}
 		})
 		.then(about => fs.writeFileSync(path.join(process.cwd(), '/public/__about.json'), JSON.stringify(about, null, 2)))
 }
 
 
-program.version(require('../package.json').version);
+program.version(nUiVersion);
 
-const webpackConfPath = path.join(__dirname, '../build/app/webpack.js');
+const webpackConfPath = path.join(__dirname, 'webpack.js');
 
 program
 	.command('build')
