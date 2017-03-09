@@ -7,6 +7,7 @@ const stylesheetManager = require('./stylesheet-manager');
 const messages = require('./messages');
 const hashedAssets = require('./hashed-assets');
 const verifyAssetsExist = require('./verify-assets-exist');
+const metrics = require('next-metrics');
 
 function init (options, directory, locals) {
 	verifyAssetsExist.verify(locals);
@@ -34,6 +35,7 @@ function init (options, directory, locals) {
 	}
 
 	const concatenatedStylesCache = {};
+	const concatenatedStylesSizeCache = {};
 
 	const concatenateStyles = stylesheetNames => {
 		const hash = stylesheetNames.join(':');
@@ -45,7 +47,12 @@ function init (options, directory, locals) {
 				}
 				return str + stylesheets[name];
 			}, '');
+			concatenatedStylesSizeCache[hash] = concatenatedStylesCache[hash].length
 		}
+
+		metrics.histogram('head_css_size', concatenatedStylesSizeCache[hash]);
+		metrics.histogram(`head_css_size.${hash}`, concatenatedStylesSizeCache[hash]);
+
 		return concatenatedStylesCache[hash];
 	}
 
