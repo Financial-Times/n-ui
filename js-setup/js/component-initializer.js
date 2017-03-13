@@ -5,7 +5,6 @@ import date from 'o-date';
 import header from '../../header';
 import optOut from '../../opt-out';
 import oCookieMessage from 'o-cookie-message';
-import welcomeMessage from '../../welcome-message';
 import subscriptionOfferPrompt from '../../subscription-offer-prompt';
 import footer from '../../footer';
 import myft from 'n-myft-ui/myft';
@@ -156,11 +155,6 @@ export class ComponentInitializer {
 					if (flags.get('cookieMessage') && config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
 						oCookieMessage.init();
 						this.initializedFeatures.cookieMessage = true;
-					}
-
-					if (config.features.welcomeMessage && !this.initializedFeatures.welcomeMessage) {
-						(flags.get('welcomePanel') || flags.get('compactView')) && welcomeMessage.init();
-						this.initializedFeatures.welcomeMessage = true;
 					}
 
 					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
