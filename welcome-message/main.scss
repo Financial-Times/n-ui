@@ -7,16 +7,13 @@
 	background: getColor('teal-1');
 	color: getColor('white');
 
-	// @include oGridRespondTo('L') {
-	// 	padding: 24px 16px;
-	// }
+	@include oGridRespondTo('L') {
+		padding: 24px 16px;
+	}
 
 	@media print {
 		display: none;
 	}
-
-	padding-left: 16px;
-	padding-right: 16px;
 
 	margin: 16px 0;
 
@@ -103,10 +100,12 @@
 	margin: 0 0 0 $spacing-unit/2;
 	color: getColor('white');
 	border-bottom-color: getColor('white');
+
 	&:hover,
 	&:focus {
 		color: getColor('white');
 	}
+
 	@include oGridRespondTo('M') {
 		display: inline-block;
 	}

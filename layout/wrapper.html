@@ -108,9 +108,8 @@
 
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
-				{{#ifAll @root.flags.compactView isFrontPage}}
-					{{>n-ui/welcome-message/template}}
-				{{/ifAll}}
+
+				{{>n-ui/welcome-message/template}}
 
 				{{>n-ui/footer/template}}
 
