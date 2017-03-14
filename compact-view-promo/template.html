@@ -1,0 +1,22 @@
+{{!
+THIS COMPONENT HAS BEEN HIJACKED BY TOO MANY THINGS TOO MANY TIMES
+AND HAS BECOME A BIT OF A MESS. DON'T ADD TO IT - SPEAK TO UX/DESIGN
+ABOUT WHERE WE'RE GOING WITH CROSS-SITE MESSAGING
+}}
+{{#ifAll @root.flags.compactView isFrontPage}}
+<div class="o-grid-container">
+	<div class="n-welcome-banner  n-welcome-message--static" data-trackable="welcome">
+		{{>n-ui/compact-view-promo/banner }}
+	</div>
+</div>
+
+	<div class="n-welcome-message n-welcome-message--fixed" data-trackable="welcome" hidden>
+		<div class="o-grid-container">
+			<div class="o-grid-row">
+				<div data-o-grid-colspan="12 XL10 XLoffset1">
+					{{>n-ui/compact-view-promo/banner closable="true"}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/ifAll}}

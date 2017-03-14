@@ -23,6 +23,7 @@ const app = module.exports = express({
 
 app.get('/', (req, res) => {
 	res.render('default', {
+		isFrontPage: true,
 		title: 'Test App',
 		layout: 'wrapper'
 	});

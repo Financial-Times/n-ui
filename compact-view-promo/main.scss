@@ -22,6 +22,28 @@
 	}
 }
 
+
+.n-welcome-message--fixed {
+	@include nUiZIndexFor('welcome');
+	@include oEffectsShadowsElevation('mid');
+	position: fixed;
+	right: 0;
+	bottom: -1px;
+	left: 0;
+	transform: translateZ(0);
+	padding: 40px 16px;
+	background: getColor('teal-1');
+	color: getColor('white');
+
+	@include oGridRespondTo(M) {
+		display: block;
+	}
+}
+
+.n-welcome-banner--closed {
+	display: none;
+}
+
 .n-welcome-banner__wrapper {
 	display: table;
 	width: 100%;

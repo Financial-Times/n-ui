@@ -5,4 +5,4 @@ layout
 myft
 opt-out
 tracking
-welcome-message
+compact-view-promo

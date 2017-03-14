@@ -5,7 +5,7 @@ import date from 'o-date';
 import header from '../../header';
 import optOut from '../../opt-out';
 import oCookieMessage from 'o-cookie-message';
-import welcomeMessage from '../../welcome-message';
+import compactViewPromo from '../../compact-view-promo';
 import subscriptionOfferPrompt from '../../subscription-offer-prompt';
 import footer from '../../footer';
 import myft from 'n-myft-ui/myft';
@@ -20,15 +20,13 @@ export const presets = {
 	discrete: {
 		header: true,
 		footer: true,
-		date: true,
-		welcomeMessage: true
+		date: true
 	},
 	complete: {
 		header: true,
 		footer: true,
 		date: true,
 		cookieMessage: true,
-		welcomeMessage: true,
 		subscriptionOfferPrompt: true,
 		myft: true,
 		ads: true,
@@ -158,9 +156,9 @@ export class ComponentInitializer {
 						this.initializedFeatures.cookieMessage = true;
 					}
 
-					if (config.features.welcomeMessage && !this.initializedFeatures.welcomeMessage) {
-						(flags.get('welcomePanel') || flags.get('compactView')) && welcomeMessage.init();
-						this.initializedFeatures.welcomeMessage = true;
+					if (config.features.compactViewPromo && !this.initializedFeatures.compactViewPromo) {
+						(flags.get('compactView')) && compactViewPromo.init();
+						this.initializedFeatures.compactViewPromo = true;
 					}
 
 					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
