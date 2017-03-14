@@ -6,6 +6,7 @@ module.exports = function (withPreact, exclusions) {
 		'n-ui': 'window.ftNextUi',
 		'n-ui/ads': 'window.ftNextUi._ads',
 		'n-ui/tracking': 'window.ftNextUi._tracking',
+		'n-ui/tabbing': 'window.ftNextUi._tabbing',
 		'n-ui/notification': 'window.ftNextUi._notification',
 		'n-ui/myft': 'window.ftNextUi._myft',
 		'n-ui/typeahead': 'window.ftNextUi._typeahead',
