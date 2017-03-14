@@ -4,7 +4,6 @@ import tracking from '../../../components/n-ui/tracking';
 import date from 'o-date';
 import header from '../../../components/n-ui/header';
 import oCookieMessage from 'o-cookie-message';
-import welcomeMessage from '../../../components/n-ui/welcome-message';
 import subscriptionOfferPrompt from '../../../components/n-ui/subscription-offer-prompt';
 import footer from '../../../components/n-ui/footer';
 import offlineToast from '../../../components/n-ui/offline-toast';
@@ -16,15 +15,13 @@ export const presets = {
 	discrete: {
 		header: true,
 		footer: true,
-		date: true,
-		welcomeMessage: true
+		date: true
 	},
 	complete: {
 		header: true,
 		footer: true,
 		date: true,
 		cookieMessage: true,
-		welcomeMessage: true,
 		subscriptionOfferPrompt: true,
 		ads: true,
 		tooltip: true,
@@ -122,11 +119,6 @@ export class ComponentInitializer {
 					if (flags.get('cookieMessage') && config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
 						oCookieMessage.init();
 						this.initializedFeatures.cookieMessage = true;
-					}
-
-					if (config.features.welcomeMessage && !this.initializedFeatures.welcomeMessage) {
-						(flags.get('welcomePanel') || flags.get('compactView')) && welcomeMessage.init();
-						this.initializedFeatures.welcomeMessage = true;
 					}
 
 					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {

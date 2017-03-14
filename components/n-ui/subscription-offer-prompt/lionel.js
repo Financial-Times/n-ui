@@ -147,13 +147,5 @@ export const init = (flags) => {
 						return createSubscriptionPrompt(subscriptionValues);
 					});
 			}
-		})
-		.catch(error => {
-			broadcast('oErrors.log', {
-				error,
-				info: {
-					message: 'Error initialising subscription offer prompt'
-				}
-			})
 		});
 }

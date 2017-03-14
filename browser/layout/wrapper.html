@@ -108,19 +108,10 @@
 
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
-				{{#if @root.flags.welcomePanel}}
-					{{#unlessEquals nUi.welcomeMessage false}}
-						{{>n-ui/welcome-message/template}}
-					{{/unlessEquals}}
-				{{else}}
-					{{#ifAll @root.flags.compactView isCompactView}}
-						{{#unlessEquals nUi.welcomeMessage false}}
-							{{>n-ui/welcome-message/template}}
-						{{/unlessEquals}}
-					{{/ifAll}}
-				{{/if}}
 
-					{{>n-ui/footer/template}}
+				{{>n-ui/welcome-message/template}}
+
+				{{>n-ui/footer/template}}
 
 				{{#if @root.flags.fancyDrawer}}
 					{{#unlessEquals nUi.header.variant 'logo-only'}}
