@@ -1,6 +1,5 @@
 import * as utils from './utils';
 import * as lionel from './lionel';
-import * as pwrOfYou from './pwr-of-you';
 /*
 Show the subscription offer prompt.
 There are currently two offers:
@@ -39,12 +38,6 @@ export default function init (flags) {
 		return;
 	}
 	else {
-		const lionelPromise = lionel.init(flags);
-		lionelPromise.then((lionelSlider) => {
-			if (!lionelSlider) {
-				return pwrOfYou.init(flags);
-			}
-		})
-		return lionelPromise;
+		return lionel.init(flags);
 	}
 }
