@@ -108,10 +108,24 @@
 
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
+<<<<<<< HEAD
 
 				{{>n-ui/welcome-message/template}}
+=======
+				{{#if @root.flags.welcomePanel}}
+					{{#unlessEquals nUi.welcomeMessage false}}
+						{{>n-ui/welcome-message/template}}
+					{{/unlessEquals}}
+				{{else}}
+					{{#ifAll @root.flags.compactView isFrontPage}}
+						{{#unlessEquals nUi.welcomeMessage false}}
+							{{>n-ui/welcome-message/template}}
+						{{/unlessEquals}}
+					{{/ifAll}}
+				{{/if}}
+>>>>>>> parent of f0507d2... remove js aspect of welcome banner
 
-				{{>n-ui/footer/template}}
+					{{>n-ui/footer/template}}
 
 				{{#if @root.flags.fancyDrawer}}
 					{{#unlessEquals nUi.header.variant 'logo-only'}}

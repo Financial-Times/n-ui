@@ -111,6 +111,21 @@
 	}
 }
 
+.n-welcome-banner__button--close {
+	background: transparent;
+	border: 1px solid getColor('white');
+	margin: 1px 0;
+	padding: 2px 0 0;
+	width: 34px;
+	height: 34px;
+	float: right;
+	overflow: hidden;
+	&:before {
+		content: '';
+		@include oIconsGetIcon('cross', getColor('white'), 28);
+	}
+}
+
 .n-welcome-banner__column--text {
 	padding-right: 0px;
 	display: block;
