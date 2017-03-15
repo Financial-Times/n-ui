@@ -38,7 +38,8 @@ const oTrackingWrapper = {
 			const context = {
 				product: 'next',
 				app: appInfo && appInfo.name,
-				appVersion: appInfo && appInfo.version
+				appVersion: appInfo && appInfo.version,
+				swVersion: appInfo && appInfo.swVersion
 			};
 
 			const contentId = getRootData('content-id');
