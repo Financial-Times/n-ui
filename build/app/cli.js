@@ -15,7 +15,7 @@ const exit = err => {
 };
 
 const devAdvice = () => {
-	if (!process.env.CIRCLE_BRANCH) {
+	if (!process.env.CIRCLE_BRANCH && (!process.env.NEXT_APP_SHELL || process.env.NEXT_APP_SHELL !== 'local')) {
 		logger.info('Developers: If you want your app to point to n-ui locally, then `export NEXT_APP_SHELL=local`')
 	}
 }
