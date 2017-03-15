@@ -6,9 +6,7 @@ const BowerWebpackPlugin = require('bower-webpack-plugin');
 const componentsToTest = [
 	'js-setup',
 	'ads',
-	'myft',
 	'tracking',
-	'opt-out',
 	'subscription-offer-prompt'
 ];
 
@@ -86,7 +84,7 @@ module.exports = function (karma) {
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['progress'],
+		reporters: ['progress', 'istanbul'],
 
 
 		// web server port
@@ -135,10 +133,26 @@ module.exports = function (karma) {
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
 		singleRun: true
+
 	};
 
+	if (process.env.COVERAGE || process.env.CI) {
+		config.plugins.push(require('karma-istanbul'))
+		config.istanbulReporter = {
+      dir : 'coverage/',
+      reporters: [
+        // reporters not supporting the `file` property
+        { type: 'lcov', subdir: 'report-lcov' }
+      ]
+    }
+
+    componentsToEach.forEach(component => {
+    	// js-setup/js
+    })
+	}
 
 	if (process.env.CI) {
+
 		const nightwatchBrowsers = require('@financial-times/n-heroku-tools/config/nightwatch').test_settings;
 		const unstableBrowsers = (process.env.SAUCELABS_UNSTABLE_BROWSERS_JS || '').split(',').concat((process.env.SAUCELABS_UNSTABLE_BROWSERS || '').split(','));
 		// FIXME - mocha + chai do not support ie9. Can we switch to something else I wonder? Or try to polyfill the features it needs
