@@ -31,7 +31,7 @@ const generateUrlRoot = (directory, hasher) => {
 	// Attempt to get information about which version of n-ui is installed
 	try {
 		if (localAppShell) {
-			nUiUrlRoot = hasher.get('n-ui/');
+			nUiUrlRoot = hasher('n-ui/');
 		} else {
 			nUiUrlRoot = `//www.ft.com/__assets/n-ui/cached/${getReleaseName(directory)}/`;
 		}
