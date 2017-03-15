@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 const downloadHeadCss = () => {
-	if (process.env.LOCAL_APP_SHELL === 'local') {
+	if (process.env.NEXT_APP_SHELL === 'local') {
 		return Promise.resolve();
 	}
 	return ratRace(

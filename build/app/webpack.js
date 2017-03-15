@@ -75,7 +75,7 @@ If you do not need this behaviour run
 			exclude: [/node_modules/]
 		});
 
-		appShellBuild.entry['./public/n-ui/es5.js'] = './node_modules/@financial-times/n-ui/build/deploy/wrapper.js'
+		appShellBuild.entry['./public/n-ui/es5.js'] = './bower_components/n-ui/build/deploy/wrapper.js'
 		variants.push(appShellBuild);
 	}
 	// can't just variants.map(nWebpack) becaue second param truthiness
