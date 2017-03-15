@@ -7,6 +7,8 @@ import ads from './ads';
 export const _ads = ads;
 import tracking from './tracking';
 export const _tracking = tracking;
+import tabbing from './tabbing';
+export const _tabbing = tabbing;
 import date from 'o-date';
 export const _date = date;
 import header from './header';
