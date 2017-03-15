@@ -108,11 +108,8 @@
 
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
-
-				{{>n-ui/welcome-message/template}}
-
+				{{>n-ui/compact-view-promo/template}}
 				{{>n-ui/footer/template}}
-
 				{{#if @root.flags.fancyDrawer}}
 					{{#unlessEquals nUi.header.variant 'logo-only'}}
 						{{>n-ui/header/partials/drawer/template}}
