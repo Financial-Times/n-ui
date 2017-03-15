@@ -28,6 +28,7 @@ app.use(require('./middleware/assets'));
 
 app.get('/', (req, res) => {
 	res.render('default', {
+		isFrontPage: true,
 		title: 'Test App',
 		layout: 'wrapper'
 	});
