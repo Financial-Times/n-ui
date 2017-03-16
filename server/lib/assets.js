@@ -8,6 +8,15 @@ const messages = require('./messages');
 const hashedAssets = require('./hashed-assets');
 const verifyAssetsExist = require('./verify-assets-exist');
 const metrics = require('next-metrics');
+const gzip = denodeify(require('zlib').gzip);
+
+const calculateSize = content => {
+	return gzip(content)
+		.then(gzipped => ({
+			raw: Buffer.byteLength(content),
+			gzip: Buffer.byteLength(gzipped);
+		}))
+}
 
 function init (options, directory, locals) {
 	verifyAssetsExist.verify(locals);
@@ -47,11 +56,17 @@ function init (options, directory, locals) {
 				}
 				return str + stylesheets[name];
 			}, '');
-			concatenatedStylesSizeCache[hash] = concatenatedStylesCache[hash].length
+			concatenatedStylesSizeCache[hash] = calculateSize(concatenatedStylesCache[hash])
 		}
 
-		metrics.histogram('head_css_size', concatenatedStylesSizeCache[hash]);
-		metrics.histogram(`head_css_size.${hash}`, concatenatedStylesSizeCache[hash]);
+		concatenatedStylesSizeCache[hash]
+			.then(({raw, gzip}) => {
+				metrics.histogram('head_css_size.raw', raw);
+				metrics.histogram(`head_css_size.raw.${hash}`, raw);
+				metrics.histogram('head_css_size.gzip', gzip);
+				metrics.histogram(`head_css_size.gzip.${hash}`, gzip);
+			})
+
 
 		return concatenatedStylesCache[hash];
 	}
