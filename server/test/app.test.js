@@ -160,6 +160,12 @@ describe('simple app', function () {
 	});
 
 	describe('asset and preloading', () => {
+
+		it('should expose hashed asset helper', () => {
+			expect(app.getHashedAssetUrl).to.exist;
+			expect(typeof app.getHashedAssetUrl).to.equal('function');
+		})
+
 		it('should inline head.css & head-n-ui-core.css', (done) => {
 			request(app)
 				.get('/with-layout?layout=wrapper')
