@@ -1,7 +1,104 @@
 # n-ui [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-ui/badge.svg)](https://coveralls.io/github/Financial-Times/n-ui)
 
-~~An experiment bunching some of Next's client-side code into a single repository. [Motivation](Explainer.md).~~
 Server, build and client side bootstrapping for next's user-facing applications.
+
+## Quickstart
+
+n-ui has three parts - a server, js, css & handlebars client side 'app shell' and a build. Expect things to break if you don't use all 3.
+
+### Server
+
+n-ui is a wrapper around n-express which adds templating and asset loading features
+
+`npm install @financial-times/n-ui`
+
+```
+const app = require('@financial-times/n-ui')(opts)
+
+```
+
+Where opts is an object supporting all `n-express`'s options, but with many set to `true` by default (see `/server/index.js` for details). Additioanl options include
+
+- `partialsDirectory` String or array - path[s] to load partials from, this in addition to the standard `views/partials` that is set for every app
+- `layoutsDir` String - a path to load handlebars views from defults to `node_modules/@financial-times/n-ui/layout`
+- `withJsonLd` Boolean - output jsonLD schema information in the page head
+
+### Build
+n-ui comes bundled with its own build tool - basically `webpack`, `haikro build` and a little bit of other stuff. To use it, add the following to your Makefile:
+
+```Makefile
+build:
+	nui build
+
+build-production:
+	nui build --production
+
+watch:
+	nui watch
+```
+
+To define entry points for your assets use a `n-ui-build.config.js` file in the root of your project, which can export any object compatible with n-webpack
+
+
+### JS
+
+#### Config
+This should live in a `/client/n-ui-config.js` file
+
+```javascript
+module.exports = {
+	preset: 'complete', // 'discrete' will turn off ads & various popups
+	features: {
+		lazyLoadImages: true // turns individual features on/off. Check `/browser/bootstrap/js/component-initializer.js` for an upto date feature list
+	}
+}
+```
+
+#### App bootstrapping
+
+n-ui takes care of loading polyfills etc, and your application code shoudl be wrapped in the bootstrap method
+
+e.g.
+
+```javascript
+import { bootstrap } from 'n-ui';
+
+bootstrap(({ flags , appInfo, allStylesLoaded }) => {
+    if (flags.get('feature')) {
+        component.init();
+    }
+
+    allStylesLoaded
+	    .then(() => {
+	        lazyComponent.init();
+	    });
+});
+```
+
+### Sass
+Nothing fancy going on here any more 😄. No mixins (though the n-ui-foundations module has a few you will want to use), no tricky critical path css stuff.
+
+```sass
+@import "n-ui/main"
+```
+This will, when using the n-ui build tool, split n-ui's styles into head-n-ui-core.css and n-ui-core.css files, and the server will inline/linnk to these appropriately.
+
+
+### Local development
+
+#### Working in n-ui
+You should be able to work in n-ui as if it's an app - `make watch` and `make run` shodul work and serve a demo app on `local.ft.com:5005`
+
+#### Testing in an app
+`export NEXT_APP_SHELL=local` then use all your usual make tasks. Your app will build and serve n-ui from your locally installed bower components. You can do this whether you're bower/npm linking n-ui or not
+
+
+
+
+
+# Anything below here isn't necessarily 100% up to date - n-ui has changed a lot recently and updating the docs is ongoing
+
+
 
 ### Dev workflow
 
@@ -34,20 +131,8 @@ When you release an n-ui tag 2 things happen
 - during work hours, all user-facing apps are rebuilt to pick up the changes
 
 ## Build tool
-n-ui comes bundled with its own build tool - basically `webpack`, `haikro build` and a little bit of other stuff. To use it, add the following to your Makefile:
 
-```Makefile
-build:
-	nui build
 
-build-production:
-	nui build --production
-
-watch:
-	nui watch
-```
-
-To define entry points for your assets use a `n-ui-build.config.js` file in the root of your project, which can export any object compatible with n-webpack
 
 ## Usage
 
@@ -64,27 +149,6 @@ WIP
 If, for example, you want to use a beta of an origami component in a single app, or use React instead of preact
 In your app’s webpack.config.js, you can pass an `nUiExcludes` array as an option to nWebpack e.g. `nUiExcludes: [‘React’, ‘React-Dom’]`
 
-## Server
-
-n-ui is a wrapper around n-express which adds templating and asset loading features
-
-`npm install @financial-times/n-ui`
-
-```
-const app = require('@financial-times/n-ui')(opts)
-
-```
-
-Where opts is an object supporting all `n-express`'s options and the following, which all default to `true` unless specified otherwise. In additions `withFlags` is set to `true` by default here (in n-express it is `false` by default)
-
-- `withHandlebars` - adds handlebars as the rendering engine
-- `withAssets` - adds asset handling middleware, see [Linked Resources (preload)](#linked-resources-preload). Ignored if `withHandlebars` is not `true`
-- `withNavigation` - adds a data model for the navigation to each request (see below)
-- `withNavigationHierarchy` - adds additional data to the navigation model concerning the current page's ancestors and children
-- `withAnonMiddleware` - sets the user's signed in state in the data model, and varies the response accordingly
-- `withHeadCss` - if the app outputs a `head.css` file, read it (assumes it's in the `public` dir) and store in the `res.locals.headCss`
-- `partialsDirectory` String - a path to load partials from, this in addition to the standard `views/partials` that is set for every app
-- `layoutsDir` String - a path to load handlebars views from defults to `node_modules/@financial-times/n-ui/layout`
 
 ### Linked Resources (preload)
 Adds link headers to enable service workers to optimise requests for assets, defaulting to preload behaviour

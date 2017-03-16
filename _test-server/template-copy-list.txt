@@ -1,8 +1,0 @@
-footer
-header
-js-setup
-layout
-myft
-opt-out
-tracking
-compact-view-promo
