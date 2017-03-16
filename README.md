@@ -4,7 +4,7 @@ Server, build and client side bootstrapping for next's user-facing applications.
 
 ## Quickstart
 
-n-ui has three parts - a server, js, css & handlebars client side 'app shell' and a build. Expect things to break if you don't use all 3.
+n-ui has three parts - a server, a client side 'app shell' (js, css & handlebars layout), and a build. Expect things to break if you don't use all 3.
 
 ### Server
 
