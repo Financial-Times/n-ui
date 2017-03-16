@@ -24,13 +24,6 @@
 						<a class="o-header__top-link o-header__top-link--myft" href="/myft" data-trackable="my-ft" data-tour-stage="myFt" aria-label="My F T">
 							<span class="o-header__visually-hidden">myFT</span>
 						</a>
-						{{#if @root.flags.myftHint}}
-							{{#unless @root.anon.userIsAnonymous}}
-								{{#if @root.shouldRenderMyftHint}}
-									{{>n-ui/myft-hint/hint}}
-								{{/if}}
-							{{/unless}}
-						{{/if}}
 					</span>
 				</div>
 			{{/unlessEquals}}
