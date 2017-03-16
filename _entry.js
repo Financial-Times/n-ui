@@ -7,6 +7,9 @@ module.exports = function (withPreact, exclusions) {
 		'n-ui/ads': 'window.ftNextUi._ads',
 		'n-ui/tracking': 'window.ftNextUi._tracking',
 		'n-ui/typeahead': 'window.ftNextUi._typeahead',
+		'n-ui/components/n-ui/ads': 'window.ftNextUi._ads',
+		'n-ui/components/n-ui/tracking': 'window.ftNextUi._tracking',
+		'n-ui/components/n-ui/typeahead': 'window.ftNextUi._typeahead',
 		'n-ui-foundations': 'window.ftNextUi._foundations',
 		// wrapped origami components
 		'o-date': 'window.ftNextUi._date',
