@@ -134,18 +134,32 @@
 }
 
 .n-welcome-banner__button--close {
-	background: transparent;
-	border: 1px solid getColor('white');
-	margin: 1px 0;
-	padding: 2px 0 0;
-	width: 34px;
-	height: 34px;
-	float: right;
-	overflow: hidden;
-	&:before {
-		content: '';
-		@include oIconsGetIcon('cross', getColor('white'), 28);
+	@include oIconsGetIcon('cross', getColor('white'), 28);
+	position: absolute;
+	top: -20px;
+	right: -10px;
+	width: 20px;
+	height: 20px;
+	border: 0;
+	opacity: 1;
+
+	@include oGridRespondTo(S) {
+		background: transparent;
+		border: 1px solid getColor('white');
+		margin: 1px 0;
+		padding: 2px 0 0;
+		width: 34px;
+		height: 34px;
+		float: right;
+		overflow: hidden;
+		position: static;
+		&:before {
+			content: '';
+			@include oIconsGetIcon('cross', getColor('white'), 28);
+		}
 	}
+
+
 }
 
 .n-welcome-banner__column--text {
