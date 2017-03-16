@@ -7,16 +7,6 @@ const stylesheetManager = require('./stylesheet-manager');
 const messages = require('./messages');
 const hashedAssets = require('./hashed-assets');
 const verifyAssetsExist = require('./verify-assets-exist');
-const metrics = require('next-metrics');
-const gzip = denodeify(require('zlib').gzip);
-
-const calculateSize = content => {
-	return gzip(content)
-		.then(gzipped => ({
-			raw: Buffer.byteLength(content),
-			gzip: Buffer.byteLength(gzipped);
-		}))
-}
 
 function init (options, directory, locals) {
 	verifyAssetsExist.verify(locals);
@@ -35,40 +25,12 @@ function init (options, directory, locals) {
 		nUiConfig = Object.assign({}, require(path.join(directory, 'client/n-ui-config')), {preload: true})
 	} catch (e) {}
 
-	const stylesheets = stylesheetManager.getStylesheets(options, directory);
+	stylesheetManager.init(options, directory);
 	const linkHeader = linkHeaderFactory(hasher);
 	const nUiUrlRoot = nUiManager.getUrlRoot(hasher);
 
 	const getStylesheetPath = stylesheetName => {
 		return /n-ui/.test(stylesheetName) ? `${nUiUrlRoot}${stylesheetName}.css` : hasher(`${stylesheetName}.css`)
-	}
-
-	const concatenatedStylesCache = {};
-	const concatenatedStylesSizeCache = {};
-
-	const concatenateStyles = stylesheetNames => {
-		const hash = stylesheetNames.join(':');
-		if (!concatenatedStylesCache[hash]) {
-			concatenatedStylesCache[hash] = stylesheetNames.reduce((str, name) => {
-				/* istanbul ignore next */
-				if (!stylesheets[name]) {
-					throw new Error(`Stylesheet ${name}.css does not exist`);
-				}
-				return str + stylesheets[name];
-			}, '');
-			concatenatedStylesSizeCache[hash] = calculateSize(concatenatedStylesCache[hash])
-		}
-
-		concatenatedStylesSizeCache[hash]
-			.then(({raw, gzip}) => {
-				metrics.histogram('head_css_size.raw', raw);
-				metrics.histogram(`head_css_size.raw.${hash}`, raw);
-				metrics.histogram('head_css_size.gzip', gzip);
-				metrics.histogram(`head_css_size.gzip.${hash}`, gzip);
-			})
-
-
-		return concatenatedStylesCache[hash];
 	}
 
 	return {
@@ -130,7 +92,7 @@ function init (options, directory, locals) {
 					// For now keep building n-ui-core in the main app stylesheet
 					// res.locals.stylesheets.lazy.unshift('n-ui-core');
 
-					res.locals.stylesheets.inline = concatenateStyles(res.locals.stylesheets.inline);
+					res.locals.stylesheets.inline = stylesheetManager.concatenateStyles(res.locals.stylesheets.inline);
 
 					// TODO: DRY this out
 					res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(getStylesheetPath);
