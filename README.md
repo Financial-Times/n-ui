@@ -126,11 +126,3 @@ The navigation model also controls the edition switching logic.  The following p
 ### Other enhancements
 - Our [Handlebars](http://handlebarsjs.com/) engine loads partials from `bower_components` and has a number of [additional helpers](https://github.com/Financial-Times/n-handlebars). It also points to [n-layout](https://github.com/Financial-Times/n-layout) to provide a vanilla and 'wrapper' layout
 - Exposes everything in the app's `./public` folder via `./{{name-of-app}}` (only in non-production environments, please use [next-assets](https://github.com/Financial-Times/next-assets) or hashed-assets in production)
-
-## Webpack
-In your `webpack.config.js` simply include the following to generate all the assets needed by your n-ui enabled app:
-```
-module.exports = require('@financial-times/n-ui/webpack')({
-	entry: // an object specifying webpack entry points
-})
-```

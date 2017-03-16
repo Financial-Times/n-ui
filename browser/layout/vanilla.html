@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{{>layout/partials/html-tag}}
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>{{#title}}{{{this}}}{{/title}}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="theme-color" content="#fff1e0">
+		{{#unless @root.flags.serviceWorker}}
+		{{>n-service-worker/unregister}}
+		{{/unless}}
+		{{#if setBase}}
+		<base target="_parent" href="{{setBase}}">
+		{{/if}}
+		{{>layout/partials/fire-condition}}
+		{{>layout/partials/stylesheets}}
+
+		{{#outputBlock 'head'}}{{/outputBlock}}
+		<script>
+			{{>layout/partials/ctm}}
+			{{>n-ui-foundations/typography/enhance-fonts}}
+		</script>
+	</head>
+	<body class="o-hoverable-on" data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
+		{{{body}}}
+		{{>layout/partials/bootstrapper}}
+	</body>
+</html>

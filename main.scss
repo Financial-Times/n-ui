@@ -6,17 +6,16 @@ $n-ui-foundations-applied: true;
 	@include nUiFoundations;
 }
 
-@import 'ads/main';
+@import 'browser/layout/main';
+@import 'components/n-ui/ads/main';
 // TODO: header has to come first, as footer indirectly depends on a mixin in it. Need to decouple
-@import 'header/main';
-@import 'footer/main';
-@import 'layout/main';
-@import 'myft-common/main';
-@import 'offline-toast/main';
-@import 'syndication/main';
+@import 'components/n-ui/header/main';
+@import 'components/n-ui/footer/main';
 
-// TODO: move these components into n-ui
+@import 'components/n-ui/offline-toast/main';
+@import 'components/n-ui/syndication/main';
+
 $o-cookie-message-is-silent: false;
 @import 'o-cookie-message/main';
-@import 'compact-view-promo/main';
-@import 'subscription-offer-prompt/main';
+@import 'components/n-ui/compact-view-promo/main';
+@import 'components/n-ui/subscription-offer-prompt/main';

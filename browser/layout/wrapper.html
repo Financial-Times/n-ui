@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+{{>layout/partials/html-tag}}
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>{{#title}}{{{this}}}{{/title}}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="theme-color" content="#333333">
+		{{#unless @root.flags.serviceWorker}}
+		{{>n-service-worker/unregister}}
+		{{/unless}}
+		{{#if setBase}}
+		<base target="_parent" href="{{setBase}}">
+		{{/if}}
+		{{#each dnsPrefetch}}
+		<link rel="dns-prefetch" href="{{this}}">
+		{{/each}}
+		<link rel="preconnect" href="https://next-geebee.ft.com">
+		<link rel="preconnect" href="https://spoor-api.ft.com">
+		<link rel="preconnect" href="https://session-next.ft.com" crossorigin="use-credentials">
+
+		<link rel="preconnect" href="https://ads-api.ft.com">
+		<link rel="preconnect" href="https://www.googletagservices.com">
+		<link rel="preconnect" href="https://partner.googleadservices.com">
+		<link rel="preconnect" href="https://securepubads.g.doubleclick.net">
+
+		{{#each preconnect}}
+		<link rel="preconnect" href="{{host}}"{{#if crossorigin}} crossorigin="{{crossorigin}}"{{/if}}>
+		{{/each}}
+		{{>layout/partials/fire-condition}}
+		{{>layout/partials/stylesheets}}
+
+		<link rel="icon" type="image/png" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png" sizes="194x194">
+		<link rel="apple-touch-icon" sizes="180x180" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/apple-touch-icon-180x180.png">
+		<link rel="manifest" href="/assets/manifest/manifest-v4.json">
+
+		<meta name="msapplication-TileColor" content="#fff1e0">
+		<meta name="msapplication-TileImage" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/mstile-144x144.png">
+		{{#if og}}
+		<meta property="og:title" content="{{ og.title }}">
+		<meta property="og:url" content="{{ og.url }}">
+		<meta property="og:description" content="{{ og.description }}">
+		{{#if og.image}}<meta property="og:image" content="{{ og.image }}">{{/if}}
+		<meta property="og:type" content="article">
+		<meta property="og:site_name" content="Financial Times">
+		{{/if}}
+		{{#if twitterCard}}
+		<meta property="twitter:card" content="{{ twitterCard.card }}">
+		<meta property="twitter:site" content="@FinancialTimes">
+		<meta property="twitter:title" content="{{ twitterCard.title }}">
+		<meta property="twitter:description" content="{{ twitterCard.description }}">
+		{{#if twitterCard.image}}
+		<meta property="twitter:image" content="{{ twitterCard.image }}">
+		{{else}}
+		<meta property="twitter:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png">
+		{{/if}}
+		{{/if}}
+
+		{{#outputBlock 'head'}}{{/outputBlock}}
+
+		<script>
+			{{>layout/partials/ctm}}
+			{{>n-ui-foundations/typography/enhance-fonts}}
+		</script>
+
+		{{#each jsonLd}}
+			<script type="application/ld+json">
+				{{{json this}}}
+			</script>
+		{{/each}}
+	</head>
+	<body data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
+		{{#if withGcs}}
+			<script type="text/javascript">
+				(function() {
+					var ARTICLE_URL = window.location.href;
+					var CONTENT_ID = 'everything';
+					document.write(
+						'<scr' + 'ipt ' +
+						'src="//survey.g.doubleclick.net/survey?site=_ykzfqallocklxfmrw3y6sankbe' +
+						'&amp;url=' + encodeURIComponent(ARTICLE_URL) +
+						(CONTENT_ID ? '&amp;cid=' + encodeURIComponent(CONTENT_ID) : '') +
+						'&amp;random=' + (new Date).getTime() +
+						'" type="text/javascript">' + '\x3C/scr' + 'ipt>'
+					);
+				})();
+			</script>
+		{{/if}}
+		<div class="o-cookie-message o-cookie-message--banner-centric" data-o-component="o-cookie-message"></div>
+
+		{{#if @root.flags.stickyHeaderAd}}
+			{{#outputBlock 'sticky-advert'}}{{/outputBlock}}
+		{{/if}}
+
+		<div class="n-layout">
+			<div class="n-layout__row n-layout__row--header">
+				{{#outputBlock 'above-header'}}{{/outputBlock}}
+				{{>n-ui/header/template content=header}}
+			</div>
+			<div class="n-layout__row n-layout__row--content">
+				{{{body}}}
+			</div>
+
+			{{#if @root.flags.offlineToastMessage}}
+				{{>n-ui/offline-toast/template}}
+			{{/if}}
+
+			<div class="n-layout__row n-layout__row--footer">
+				{{#outputBlock 'footer'}}{{/outputBlock}}
+				{{>n-ui/compact-view-promo/template}}
+				{{>n-ui/footer/template}}
+				{{#if @root.flags.fancyDrawer}}
+					{{#unlessEquals nUi.header.variant 'logo-only'}}
+						{{>n-ui/header/partials/drawer/template}}
+					{{/unlessEquals}}
+				{{/if}}
+			</div>
+		</div>
+	{{>layout/partials/bootstrapper}}
+	{{>n-ui/tracking/templates/core-analytics}}
+	{{>n-service-worker/appcache/iframe}}
+	</body>
+</html>

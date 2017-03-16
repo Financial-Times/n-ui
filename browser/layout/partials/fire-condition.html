@@ -1,0 +1,22 @@
+<script>
+window.ftNextFireCondition = function (condition) {
+	var evName = 'ftNext' + condition;
+	if (!window[evName]) {
+		var ev;
+		try {
+			ev = new CustomEvent(evName);
+		// really annoying, but the CSSLoading might occur before polyfilling CustomEvent
+		} catch (e) {
+			ev = document.createEvent('CustomEvent')
+			ev.initCustomEvent(evName, false, false, null);
+		}
+		document.dispatchEvent(ev);
+		window[evName] = 1;
+	}
+};
+window.ftNextCssFileLoaded = function () {
+	if (!document.querySelector('link[data-is-next][rel="preload"][as="style"]')) {
+		window.ftNextFireCondition('AllStylesLoaded')
+	}
+}
+</script>

@@ -1,42 +1,24 @@
 // to avoid race conditions relating to Symbol polyfills
 import 'babel-polyfill-silencer';
-export {bootstrap, configure} from './js-setup';
+export {bootstrap, configure} from './browser/bootstrap';
 
 // Expose entry points to shared bundle
-import ads from './ads';
+import ads from './components/n-ui/ads';
 export const _ads = ads;
-import tracking from './tracking';
+import tracking from './components/n-ui/tracking';
 export const _tracking = tracking;
 import date from 'o-date';
 export const _date = date;
-import header from './header';
-export const _header = header;
-import footer from './footer';
-export const _footer = footer;
-import myft from 'n-myft-ui/myft';
-export const _myft = myft;
-import myftDigestPromo from 'n-myft-ui/myft-digest-promo';
-export const _myftDigestPromo = myftDigestPromo;
-import myftHint from 'n-myft-ui/myft-hint';
-export const _myftHint = myftHint;
-import typeahead from './typeahead';
+import typeahead from './components/n-ui/typeahead';
 export const _typeahead = typeahead;
 import foundations from 'n-ui-foundations';
 export const _foundations = foundations;
-import notification from './notification';
-export const _notification = notification;
 import grid from 'o-grid';
 export const _grid = grid;
 import viewport from 'o-viewport';
 export const _viewport = viewport;
 import * as image from 'n-image';
 export const _image = image;
-import * as subscriptionOfferPrompt from './subscription-offer-prompt';
-export const _subscriptionOfferPrompt = subscriptionOfferPrompt;
-import * as tooltip from './tooltip';
-export const _tooltip = tooltip;
-import * as syndication from './syndication';
-export const _syndication = syndication;
 
 // Export some third party components we're unlikely to remove in a hurry
 import ftdomdelegate from 'ftdomdelegate';

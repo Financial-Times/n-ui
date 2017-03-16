@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('../build-tools/cli');
+require('../build/app/cli');

@@ -1,0 +1,42 @@
+{{#if @root.flags.javascript}}
+<script>
+	window.nextFeatureFlags = {{{json @root.flagsArray}}};
+	{{#if @root.nUiConfig}}
+		window.ftNextUiConfig = {{{json @root.nUiConfig}}};
+	{{/if}}
+	{{#if anon}}window.nextIsAnonymous = {{anon.userIsAnonymous}};{{/if}}
+
+	window.ftNextLoadScript = function (src) {
+		var d = document, o = d.createElement('script');
+		o.async = o.defer = true;
+		o.src = src;
+		var s = d.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(o, s.nextSibling);
+		return o;
+	};
+
+	{{>layout/partials/css-loader}}
+
+	window.{{@root.polyfillCallbackName}} = function () {
+		window.ftNextFireCondition('PolyfillLoaded');
+	};
+
+	(function () {
+		if (cutsTheMustard) {
+			{{#each @root.javascriptBundles}}
+				ftNextLoadScript('{{{this}}}');
+			{{/each}}
+		} else {
+			ftNextLoadScript('{{{@root.polyfillUrls.core}}}');
+		}
+	})();
+
+</script>
+{{else}}
+	<!-- always load the picturefill polyfill -->
+	{{#if @root.polyfillUrls}}
+		<script src="{{@root.polyfillUrls.core}}"></script>
+	{{else}}
+		<script src="https://next-geebee.ft.com/polyfill/v2/polyfill.min.js?features=HTMLPictureElement|always|gated"></script>
+	{{/if}}
+{{/if}}
