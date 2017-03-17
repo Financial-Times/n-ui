@@ -46,33 +46,31 @@ module.exports = {
 	},
 
 	init: (options, directory) => {
-		const headCsses = fs.readdirSync(`${directory}/public`)
+		stylesheets = fs.readdirSync(`${directory}/public`)
 			.filter(name => /\.css$/.test(name))
-			.map(name => [name, fs.readFileSync(`${directory}/public/${name}`, 'utf-8')])
-			.reduce((currentHeadCsses, currentHeadCss) => {
-				currentHeadCsses[currentHeadCss[0].replace('.css', '')] = currentHeadCss[1];
-				return currentHeadCsses;
+			.map(name => {name, contents: fs.readFileSync(`${directory}/public/${name}`, 'utf-8')})
+			.reduce((map, {name, contents}) => {
+				map[name.replace('.css', '')] = contents;
+				return map;
 			}, {});
 
 		/* istanbul ignore next */
 		if (process.NODE_ENV !== 'production') {
-			const paths = Object.keys(headCsses).map(css => `${directory}/public/${css}.css`);
+			const paths = Object.keys(stylesheets).map(css => `${directory}/public/${css}.css`);
 			chokidar.watch(paths)
 				.on('change', (path) => {
 					readFile(path, 'utf-8').then((content) => {
 						const name = path.match(/\/(head.*).css$/)[1];
-						headCsses[name] = content;
+						stylesheets[name] = content;
 						logger.info(`Reloaded head CSS: ${name}`);
 					});
 				})
 				.on('unlink', (path) => {
 					const name = path.match(/\/(head.*).css$/)[1];
-					delete headCsses[name];
+					delete stylesheets[name];
 					logger.info(`Deleted head CSS: ${name}`);
 					logger.warn('Please note you will need to restart app if you add new head CSS files');
 				});
 		}
-
-		stylesheets = headCsses
 	}
 }
