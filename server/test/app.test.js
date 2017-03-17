@@ -198,6 +198,12 @@ describe('simple app', function () {
 				.expect('Link', /<\/demo-app\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
 		});
 
+		it('should have preload link header for masthead', done => {
+			request(app)
+				.get('/templated')
+				.expect('Link', /.*ftlogo\:brand-ft-masthead.*>; as="image"; rel="preload"; nopush/, done)
+		});
+
 		it('should inline different choice of head.css', (done) => {
 			request(app)
 				.get('/css-variants?inline=head-variant,style-variant2')

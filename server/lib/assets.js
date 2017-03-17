@@ -82,11 +82,12 @@ function init (options, directory, locals) {
 					res.locals.polyfillUrls.enhanced
 				);
 
+
 				// output the default link headers just before rendering
 				const originalRender = res.render;
 
 				res.render = function (template, templateData) {
-
+					res.linkResource('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-masthead?source=o-header&tint=%23333333,%23333333&format=svg', {as: 'image'});
 					// Add standard n-ui stylesheets
 					res.locals.stylesheets.inline.unshift('head-n-ui-core');
 					// For now keep building n-ui-core in the main app stylesheet
