@@ -47,7 +47,7 @@ module.exports = {
 
 	init: (options, directory) => {
 		const headCsses = fs.readdirSync(`${directory}/public`)
-			.filter(name => /^head[\-a-z]*\.css$/.test(name))
+			.filter(name => /\.css$/.test(name))
 			.map(name => [name, fs.readFileSync(`${directory}/public/${name}`, 'utf-8')])
 			.reduce((currentHeadCsses, currentHeadCss) => {
 				currentHeadCsses[currentHeadCss[0].replace('.css', '')] = currentHeadCss[1];

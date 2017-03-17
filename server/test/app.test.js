@@ -198,10 +198,10 @@ describe('simple app', function () {
 				.expect('Link', /<\/demo-app\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
 		});
 
-		it('should inline different choice of head.css', () => {
+		it('should inline different choice of head.css', (done) => {
 			request(app)
-				.get('/css-variants?inline=head-variant,head-variant2')
-				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head-variant\.css\s*head-variant2\.css\s*<\/style>/)
+				.get('/css-variants?inline=head-variant,style-variant2')
+				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head-variant\.css\s*style-variant2\.css\s*<\/style>/, done)
 
 		})
 
