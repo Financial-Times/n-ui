@@ -48,7 +48,7 @@ module.exports = {
 	init: (options, directory) => {
 		stylesheets = fs.readdirSync(`${directory}/public`)
 			.filter(name => /\.css$/.test(name))
-			.map(name => {name, contents: fs.readFileSync(`${directory}/public/${name}`, 'utf-8')})
+			.map(name => ({name, contents: fs.readFileSync(`${directory}/public/${name}`, 'utf-8')}))
 			.reduce((map, {name, contents}) => {
 				map[name.replace('.css', '')] = contents;
 				return map;
