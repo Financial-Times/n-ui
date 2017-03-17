@@ -60,13 +60,13 @@ module.exports = {
 			chokidar.watch(paths)
 				.on('change', (path) => {
 					readFile(path, 'utf-8').then((content) => {
-						const name = path.match(/\/(head.*).css$/)[1];
+						const name = path.match(/\.css$/)[1];
 						stylesheets[name] = content;
 						logger.info(`Reloaded head CSS: ${name}`);
 					});
 				})
 				.on('unlink', (path) => {
-					const name = path.match(/\/(head.*).css$/)[1];
+					const name = path.match(/\.css$/)[1];
 					delete stylesheets[name];
 					logger.info(`Deleted head CSS: ${name}`);
 					logger.warn('Please note you will need to restart app if you add new head CSS files');
