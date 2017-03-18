@@ -95,9 +95,10 @@ You should be able to work in n-ui as if it's an app - `make watch` and `make ru
 
 ### Releasing n-ui
 
-When you release an n-ui tag 2 things happen
+When you release an n-ui tag 3 things happen
 
 - assets are built and deployed to s3, from where they are linked to/downloaded by apps
+- the npm package is published
 - during work hours (9am to 4pm), all user-facing apps are rebuilt to pick up the changes
 
 # Anything below here isn't necessarily 100% up to date - n-ui has changed a lot recently and updating the docs is ongoing
