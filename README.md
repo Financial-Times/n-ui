@@ -4,7 +4,7 @@ Server, build and client side bootstrapping for next's user-facing applications.
 
 ## Quickstart
 
-n-ui has three parts - a server, a client side 'app shell' (js, css & handlebars layout), and a build. Expect things to break if you don't use all 3.
+n-ui has three parts - a server, a client side 'app shell' (js, css & handlebars layout), and a build. **Expect things to break if you don't use all 3.**
 
 ### Server
 
@@ -93,8 +93,12 @@ You should be able to work in n-ui as if it's an app - `make watch` and `make ru
 `export NEXT_APP_SHELL=local` then use all your usual make tasks. Your app will build and serve n-ui from your locally installed bower components. You can do this whether you're bower/npm linking n-ui or not
 
 
+### Releasing n-ui
 
+When you release an n-ui tag 2 things happen
 
+- assets are built and deployed to s3, from where they are linked to/downloaded by apps
+- during work hours (9am to 4pm), all user-facing apps are rebuilt to pick up the changes
 
 # Anything below here isn't necessarily 100% up to date - n-ui has changed a lot recently and updating the docs is ongoing
 
@@ -124,19 +128,6 @@ We hope to be able to a11y test all components before they are used in an app an
 	* The `entry` value should point to the main template for the component without any file extension and relative to the component root.
 	* The `data` can be used if you need to pass any fixture data to the component for testing.
 
-
-## Releasing n-ui
-When you release an n-ui tag 2 things happen
-- assets are built and deployed to s3
-- during work hours, all user-facing apps are rebuilt to pick up the changes
-
-## Build tool
-
-
-
-## Usage
-
-WIP
 
 ## Adding subcomponents
 
