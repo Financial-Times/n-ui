@@ -9,7 +9,7 @@ module.exports = {
 			hideElements: '.n-skip-link, [href="#o-header-drawer"]',
 			page: {
 				headers: {
-					'FT-Flags': 'ads:off,javascript:on,sourcepoint:off'
+					'FT-Flags': 'ads:off,javascript:on, sourcepoint:off'
 				}
 			}
 		},
