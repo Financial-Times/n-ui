@@ -100,7 +100,9 @@ function onAdsComplete (flags, event) {
 module.exports = {
 	init: (flags, appInfo, opts) => {
 
-		nCounterAdBlocking.init(flags);
+		window.addEventListener('ftNextLoaded', function () {
+			nCounterAdBlocking.init(flags);
+		});
 
 		const adOptions = typeof opts === 'object' ? opts : {};
 
