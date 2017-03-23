@@ -1,17 +1,3 @@
-const defaultWelcomeBannerModel = {
-	name: 'default',
-	title: 'Welcome to the new FT.com.',
-	strapline: 'The same global insight. Faster than ever before on all your devices.',
-	ctas : {
-		primary : {
-			text: 'View tips',
-			href: '/tour',
-			trackable: 'tour-page',
-			'component-attr': 'cta-take-tour'
-		}
-	}
-};
-
 const compactAdvertWelcomeBannerModel = {
 	name: 'compact-ad',
 	title: 'Try the new compact homepage.',
@@ -25,7 +11,7 @@ const compactAdvertWelcomeBannerModel = {
 	}
 };
 
-const compactViewWelcomeBannerModel = {
+const compactViewEnabledWelcomeBannerModel = {
 	name: 'compact-view',
 	title: 'You\'ve enabled the compact homepage.',
 	strapline: 'A list view of today\'s homepage, with fewer images',
@@ -39,20 +25,16 @@ const compactViewWelcomeBannerModel = {
 };
 
 function welcomeBannerModelFactory (req, res, next) {
-	let model;
-	if (!res.locals.flags || !res.locals.anon) {
-		model = defaultWelcomeBannerModel;
-	} else if (res.locals.flags.compactView && !res.locals.anon.userIsAnonymous && (req.path === '/') && (req.get('FT-Cookie-ft-homepage-view') !== 'compact')) {
-		model = compactAdvertWelcomeBannerModel;
-	} else if (res.locals.flags.compactView && req.path === '/' && req.get('FT-Cookie-ft-homepage-view') === 'compact') {
-		model = compactViewWelcomeBannerModel;
-	} else {
-		model = defaultWelcomeBannerModel;
+	if (res.locals.flags.compactView && req.path === '/' && !res.locals.anon.userIsAnonymous) {
+		if (req.get('FT-Cookie-ft-homepage-view') === 'compact') {
+			res.locals.welcomeBanner = compactViewEnabledWelcomeBannerModel;
+		} else {
+			res.locals.welcomeBanner = compactAdvertWelcomeBannerModel;
+		}
 	}
 
-	res.locals.welcomeBanner = model;
 	next();
 }
 
 module.exports = welcomeBannerModelFactory;
-module.exports._banners = {defaultWelcomeBannerModel, compactAdvertWelcomeBannerModel, compactViewWelcomeBannerModel};
+module.exports._banners = { compactAdvertWelcomeBannerModel, compactViewEnabledWelcomeBannerModel };
