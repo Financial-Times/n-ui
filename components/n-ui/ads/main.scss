@@ -46,3 +46,5 @@ $ad-max-responsive-width: 1440px;
 }
 
 @include nUiStylesheetEnd('head-n-ui-core');
+
+@import 'n-counter-ad-blocking/main';
