@@ -10,6 +10,7 @@ const createSyndicationLink = (uuid, syndicationStatus) => {
 	const a = document.createElement('a');
 	a.href = `http://ftsyndication.com/redirect.php?uuid=${uuid}`;
 	a.target = '_blank';
+	a.rel = 'noopener';
 	a.classList.add(SYNDICATION_LINK_CLASS);
 	a.classList.add(SYNDICATION_LINK_CLASS+'--'+syndicationStatus);
 	a.innerHTML = '<span>Download Article (opens in a new window)</span>';
