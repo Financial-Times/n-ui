@@ -34,7 +34,7 @@ const createSyndicationLinkOld = (uuid, title, syndicationStatus) => {
 };
 
 const createSyndiLinkNew = (data) => (`
-	<a href="https://ft-rss.herokuapp.com/content/${data.uuid}?format=${data.format.type}&download=true" class="syndi__link n-skip-link" data-trackable="download-${data.format.type}">Download <span class="n-util-visually-hidden">${data.title} </span>as ${data.format.name}</a>
+	<a href="https://ft-rss.herokuapp.com/content/${data.uuid}?format=${data.format.type}&download=true" class="syndi__link n-skip-link" data-trackable="download-${data.format.type}">Download <span class="n-util-visually-hidden">“${data.title}” </span>as ${data.format.name}</a>
 `);
 
 const createSyndiOverlay = (data) => {
