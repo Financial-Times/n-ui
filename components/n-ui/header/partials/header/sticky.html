@@ -38,7 +38,7 @@
 					{{#unlessEquals nUi.header.userNav false}}
 						<div class="o-header__nav">
 							<ul class="o-header__nav-list o-header__nav-list--right" data-trackable="user-nav">
-								{{#each @root.navigation.menus.navbar-right-anon}}
+								{{#each @root.navigation.menus.navbar-right-anon.items}}
 									<li class="o-header__nav-item">
 										<a class="o-header__nav-link" href="{{url}}" data-trackable="{{label}}" tabindex="-1">{{label}}</a>
 									</li>
