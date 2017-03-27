@@ -40,7 +40,6 @@ const createSyndiLinkNew = (data) => (`
 const createSyndiOverlay = (data) => {
 	const syndiLinks = downloadableFormats.map(format => createSyndiLinkNew(Object.assign({}, data, { format })));
 	return `
-		<p class="n-util-visually-hidden">This blah blah but put this afterwards!</p>
 		<div class="syndi__download-options">
 			${syndiLinks.join('\n\t')}
 		</div>
