@@ -97,9 +97,9 @@ function updateMainArticle (article, createSyndicator){
 	container.insertBefore(createSyndicator(uuid, title, syndicationStatus), title);
 }
 
-function onAsyncContentLoaded (){
+function onAsyncContentLoaded (createSyndicator){
 	const syndicatableTeasers = $$(TEASER_SELECTOR);
-	updateTeasers(syndicatableTeasers);
+	updateTeasers(syndicatableTeasers, createSyndicator);
 }
 
 export function init (flags){
@@ -113,8 +113,6 @@ export function init (flags){
 	if(!syndicatableTeasers.length && !syndicatableMainArticle){
 		return;
 	}
-
-	document.body.addEventListener('asyncContentLoaded', onAsyncContentLoaded);
 
 	//TODO: refactor this pyramid away
 	checkIfUserIsSyndicationCustomer()
@@ -133,6 +131,8 @@ export function init (flags){
 			.catch(err => err) // Show old syndicator if anything goes wrong
 			.then(() => {
 				const createSyndicator = (shouldUseNewSyndication) ? createSyndicatorNew : createSyndicationLinkOld;
+
+				document.body.addEventListener('asyncContentLoaded', () => onAsyncContentLoaded(createSyndicator));
 
 				if(syndicatableTeasers.length){
 					updateTeasers(syndicatableTeasers, createSyndicator);
