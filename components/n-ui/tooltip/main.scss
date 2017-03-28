@@ -35,7 +35,7 @@ $triangle-size:15px;
 		content: "";
 		position: absolute;
 		top: -30px;
-		left: 50%;
+		left: calc(50% + 15px);
 		transform: translateX(-100%);
 		border: $triangle-size solid transparent;
 		border-bottom-color: white;
