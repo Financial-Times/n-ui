@@ -79,7 +79,7 @@ export class NToolTip{
 
 	position (){
 		const elRect = this.el.getClientRects()[0];
-		const parentRect = this.el.parentNode.getClientRects()[0];
+		const parentRect = this.el.offsetParent.getClientRects()[0];
 		let left = (elRect.left - parentRect.left) + (elRect.width / 2) - (this.tooltip.offsetWidth / 2);
 		// the magic 15 is to account for the triangle
 		let top = (this.el.offsetTop + this.el.clientHeight + 15);
