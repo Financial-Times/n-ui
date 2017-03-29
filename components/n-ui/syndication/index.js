@@ -90,7 +90,8 @@ function updateTeaser (teaser, createSyndicator){
 
 function updateMainArticle (article, createSyndicator){
 	const syndicationStatus = article.getAttribute('data-syndicatable');
-	const container = article.querySelector('.article-headline');
+	//TODO: Use data-attributes instead of relying on HTML classes
+	const container = article.querySelector('.topper__headline') || article.querySelector('.article-headline');
 	const title = container.querySelector('.article-classifier__gap');
 	const uuid = article.getAttribute('data-content-id');
 	container.insertBefore(createSyndicator(uuid, title, syndicationStatus), title);
