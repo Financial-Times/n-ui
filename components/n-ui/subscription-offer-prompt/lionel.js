@@ -84,7 +84,9 @@ const createSubscriptionPrompt = values => {
 	subscriptionPrompt.onClose = () => {
 		setPromptLastClosed();
 
-		if(focusedElementBeforePrompt !== undefined)	focusedElementBeforePrompt.focus();
+		if(focusedElementBeforePrompt !== undefined) {
+			focusedElementBeforePrompt.focus();
+		}
 		subscriptionPrompt.removeEventListener('keydown', trapTab);
 		focusableElements.forEach((elem) => {
 			elem.setAttribute('tabindex', '-1');
@@ -96,7 +98,7 @@ const createSubscriptionPrompt = values => {
 	let lastTabStop = focusableElements[focusableElements.length - 1];
 
 	const trapTab = (e) => {
-		if(e.keyCode === 9) {
+		if(e.keyCode === 9) { //TAB key
 			if(e.shiftKey) {
 				if(document.activeElement === firstTabStop) {
 					e.preventDefault();
@@ -110,7 +112,7 @@ const createSubscriptionPrompt = values => {
 			}
 		}
 
-		if(e.keyCode === 27) {
+		if(e.keyCode === 27) { //ESC key
 			slidingPopup.close();
 		}
 	};
