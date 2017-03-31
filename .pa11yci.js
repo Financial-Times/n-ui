@@ -3,7 +3,7 @@ const config = {
 		timeout: 10000,
 		page: {
 			headers: {
-				Cookie: 'next-flags=ads:off,cookieMessage:off;secure=true'
+				Cookie: 'next-flags=ads:off,sourcepoint:off,cookieMessage:off;secure=true'
 			}
 		}
 	},
