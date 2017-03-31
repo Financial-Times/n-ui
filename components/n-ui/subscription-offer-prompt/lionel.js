@@ -74,12 +74,56 @@ const createPopupHTML = values =>
 
 
 const createSubscriptionPrompt = values => {
+	let focusedElementBeforePrompt;
+	let focusableElementsStrings = ['.subscription-prompt--subscribe-btn', '.n-sliding-popup-close'];
+
 	const subscriptionPrompt = createPopupHTML(values);
-	subscriptionPrompt.onClose = setPromptLastClosed;
+	let focusableElements = subscriptionPrompt.querySelectorAll(focusableElementsStrings);
+	focusableElements = Array.prototype.slice.call(focusableElements);
+
+	subscriptionPrompt.onClose = () => {
+		setPromptLastClosed();
+
+		if(focusedElementBeforePrompt !== undefined)	focusedElementBeforePrompt.focus();
+		subscriptionPrompt.removeEventListener('keydown', trapTab);
+		focusableElements.forEach((elem) => {
+			elem.setAttribute('tabindex', '-1');
+		});
+	}
 	document.body.appendChild(subscriptionPrompt);
+
+	let firstTabStop = focusableElements[0];
+	let lastTabStop = focusableElements[focusableElements.length - 1];
+
+	const trapTab = (e) => {
+		if(e.keyCode === 9) {
+			if(e.shiftKey) {
+				if(document.activeElement === firstTabStop) {
+					e.preventDefault();
+					lastTabStop.focus();
+				}
+			} else {
+				if(document.activeElement === lastTabStop) {
+					e.preventDefault();
+					firstTabStop.focus();
+				}
+			}
+		}
+
+		if(e.keyCode === 27) {
+			slidingPopup.close();
+		}
+	};
+
+	subscriptionPrompt.addEventListener('keydown', trapTab);
+
 	const slidingPopup = new SlidingPopup(subscriptionPrompt);
+
 	setTimeout(() => {
 		slidingPopup.open();
+		focusedElementBeforePrompt = document.activeElement;
+		firstTabStop.focus();
+
 		broadcast('oTracking.event', {
 			category: 'message',
 			action: 'show',
