@@ -28,12 +28,9 @@ const isLoggedIn = utils.getCookie('FTSession');
 /*
 @param {Object} flags -
 */
-// TODO a11y:
-// move focus to any pop up
-// make ESC close it and go back to previous focused element
+// TODO a11y: move focus to _any_ pop up
 export default function init (flags) {
 	const messagesEnabled = flags.get('b2cMessagePrompt');
-
 	if (isLoggedIn() || document.querySelector('.ft-subscription-panel') || !messagesEnabled || document.querySelector('.inline-barrier') || document.querySelector('.sub-header--fastft') ) {
 		return;
 	}
