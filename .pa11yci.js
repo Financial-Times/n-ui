@@ -5,7 +5,8 @@ const config = {
 			headers: {
 				Cookie: 'next-flags=ads:off,cookieMessage:off;secure=true'
 			}
-		}
+		},
+		rules: ['Principle1.Guideline1_3.1_3_1_AAA']
 	},
 	urls: [
 		'http://localhost:5005'
