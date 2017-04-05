@@ -10,7 +10,7 @@ const config = {
 	},
 	urls: [
 		'http://localhost:5005'
-	]n-typeahead__heading
+	]
 };
 
 const components = [
