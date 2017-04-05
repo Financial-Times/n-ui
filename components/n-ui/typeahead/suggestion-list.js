@@ -32,7 +32,7 @@ export class SuggestionList extends React.Component {
 	}
 
 	renderHeading (group) {
-		return this.props.categories.length > 1 ? <h3 className="n-typeahead__heading">{group.heading}</h3> : '';
+		return this.props.categories.length > 1 ? <div className="n-typeahead__heading">{group.heading}</div> : '';
 	}
 
 	renderTailLink (group) {
