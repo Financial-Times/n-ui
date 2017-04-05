@@ -40,5 +40,4 @@ components.forEach((component) => {
 	addToPa11yUrls(componentUrls);
 });
 
-console.log(config)
 module.exports = config;
