@@ -1,5 +1,3 @@
-const ci = false; // process.env.CIRCLE_BUILD_NUM; <- enable this when n-ui.ft.com fixed -LC
-
 const config = {
 	defaults: {
 		timeout: 10000,
@@ -11,8 +9,8 @@ const config = {
 		rules: ['Principle1.Guideline1_3.1_3_1_AAA']
 	},
 	urls: [
-		ci ? `https://n-ui.ft.com/n-ui/test-page/${ci}/test-page.html` : 'http://localhost:5005'
-	]
+		'http://localhost:5005'
+	]n-typeahead__heading
 };
 
 const components = [
@@ -29,7 +27,7 @@ components.forEach((component) => {
 	const componentConfig = require(`./${component}/pa11y-config.js`);
 
 	const componentDefaults = {
-		url: path + component,
+		url: `http://localhost:5005/${component}`,
 		rootElement: 'body'
 	};
 	const componentPa11yData = cloneData(componentConfig.pa11yData || []);
