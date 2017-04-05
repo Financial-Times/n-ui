@@ -79,7 +79,7 @@ module.exports = class TourTip extends React.Component {
 					{ className: 'tour-tip__text' },
 					this.renderTourLink(data),
 					React.createElement(
-						'h2',
+						'div',
 						{ className: 'tour-tip__standout' },
 						data.content.title
 					),
