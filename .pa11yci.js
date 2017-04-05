@@ -1,3 +1,5 @@
+const ci = false; // process.env.CIRCLE_BUILD_NUM; <- enable this when n-ui.ft.com fixed -LC
+
 const config = {
 	defaults: {
 		timeout: 10000,
@@ -9,7 +11,7 @@ const config = {
 		rules: ['Principle1.Guideline1_3.1_3_1_AAA']
 	},
 	urls: [
-		'http://localhost:5005'
+		ci ? `https://n-ui.ft.com/n-ui/test-page/${ci}/test-page.html` : 'http://localhost:5005'
 	]
 };
 
@@ -21,11 +23,13 @@ const components = [
 
 const cloneData = (data) => JSON.parse(JSON.stringify(data));
 
+const path = ci ? 'https://n-ui.ft.com/n-ui/test-page/' : 'localhost:5005/'
+
 components.forEach((component) => {
 	const componentConfig = require(`./${component}/pa11y-config.js`);
 
 	const componentDefaults = {
-		url: `localhost:5005/${component}`,
+		url: path + component,
 		rootElement: 'body'
 	};
 	const componentPa11yData = cloneData(componentConfig.pa11yData || []);
@@ -36,4 +40,5 @@ components.forEach((component) => {
 	addToPa11yUrls(componentUrls);
 });
 
+console.log(config)
 module.exports = config;
