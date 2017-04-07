@@ -14,8 +14,7 @@ const config = {
 
 const components = [
 	'components/n-ui/header',
-	'components/n-ui/footer',
-	'components/n-ui/compact-view-promo'
+	'components/n-ui/footer'
 ]
 
 const cloneData = (data) => JSON.parse(JSON.stringify(data));

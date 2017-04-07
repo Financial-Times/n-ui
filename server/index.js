@@ -6,7 +6,6 @@ const fs = require('fs');
 const navigation = require('./models/navigation/');
 const EditionsModel = require('./models/navigation/editionsModel');
 const anon = require('./models/anon');
-const welcomeBannerModelFactory = require('./models/welcome-banner');
 
 // templating and assets
 const handlebars = require('./lib/handlebars');
@@ -84,8 +83,6 @@ module.exports = options => {
 	if (options.withAnonMiddleware) {
 		app.use(anon.middleware);
 	}
-
-	app.use(welcomeBannerModelFactory);
 
 	// Handle the akamai -> fastly -> akamai etc. circular redirect bug
 	app.use(function (req, res, next) {
