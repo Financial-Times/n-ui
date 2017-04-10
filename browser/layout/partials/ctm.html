@@ -3,10 +3,9 @@ var classes = document.documentElement.className; {{!note: once we ditch support
 classes = classes.replace(/\bno-js\b/, 'js'); {{!note: needed for JS that's run out of the scope of the bootstrap (inline onclicks, etc)}}
 
 var getRandomValuesAvailable;
-try {
-	getRandomValuesAvailable = 'getRandomValues' in window.crypto
-} catch (e) {
-	getRandomValuesAvailable = 'getRandomValues' in window.msCrypto
+var cryptoApi = window.crypto || window.msCrypto;
+if (cryptoApi) {
+	getRandomValuesAvailable = 'getRandomValues' in cryptoApi;
 }
 
 window.cutsTheMustard = (
