@@ -4,7 +4,6 @@ import tracking from '../../../components/n-ui/tracking';
 import date from 'o-date';
 import header from '../../../components/n-ui/header';
 import oCookieMessage from 'o-cookie-message';
-import compactViewPromo from '../../../components/n-ui/compact-view-promo';
 import subscriptionOfferPrompt from '../../../components/n-ui/subscription-offer-prompt';
 import footer from '../../../components/n-ui/footer';
 import offlineToast from '../../../components/n-ui/offline-toast';
@@ -120,11 +119,6 @@ export class ComponentInitializer {
 					if (flags.get('cookieMessage') && config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
 						oCookieMessage.init();
 						this.initializedFeatures.cookieMessage = true;
-					}
-
-					if (config.features.compactViewPromo && !this.initializedFeatures.compactViewPromo) {
-						(flags.get('compactView')) && compactViewPromo.init();
-						this.initializedFeatures.compactViewPromo = true;
 					}
 
 					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
