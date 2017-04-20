@@ -3,7 +3,7 @@
 const nWebpack = require('@financial-times/n-webpack');
 const headCss = require('../build/lib/head-css')
 const path = require('path');
-const webPackConfig = headCss(nWebpack({
+const webpackConfig = headCss(nWebpack({
 	withBabelPolyfills: false,
 	entry: {
 		'./public/main-without-n-ui.js': './demo/client/main.js',
@@ -14,5 +14,7 @@ const webPackConfig = headCss(nWebpack({
 	],
 	exclude: [/node_modules/]
 }));
+
+console.log(JSON.stringify(webpackConfig, null, 2))
 
 module.exports = webpackConfig;
