@@ -1,6 +1,23 @@
 const path = require('path');
 const nWebpack = require('@financial-times/n-webpack');
 const fs = require('fs');
+const join = require('path').join;
+const Wrap = require('../lib/addons/wrap');
+const headCss = require('../lib/head-css')
+
+const gitignore = fs.readFileSync(join(process.cwd(), '.gitignore'), 'utf8')
+	.split('\n');
+
+
+function noGitignoreWildcard () {
+	gitignore.forEach(pattern => {
+		if (/^\/?public\/(.*\/\*|\*|$)/.test(pattern)) {
+			if (pattern !== '/public/n-ui/') {
+				throw new Error('Wildcard pattern or entire directories (i.e. /public/) for built public assets not allowed in your .gitignore. Please specify a path for each file');
+			}
+		}
+	});
+}
 
 function clone (obj) {
 	return JSON.parse(JSON.stringify(obj));
@@ -23,19 +40,34 @@ function filterEntryKeys (obj, rx, negativeMatch) {
 }
 
 function constructVariants (nWebpackOptions) {
+	noGitignoreWildCard();
 
 	// we no longer build a main.js for the app when generating the standard asset variants
 	const variants = [
-		Object.assign({}, nWebpackOptions, {
+		// all entry points excluding main.js generated as normal
+		headCss(nWebpack(Object.assign({}, nWebpackOptions, {
 			entry: filterEntryKeys(nWebpackOptions.entry, /main\.js$/, true)
-		})
+		})))
 	]
 
-	variants.push(Object.assign(clone(nWebpackOptions), {
+	// new entry point for main.js declaring external n-ui
+	const mainJs = nWebpack(Object.assign(clone(nWebpackOptions), {
 		language: 'js',
-		externals: {'n-ui': true},
 		entry: modifyEntryKeys(nWebpackOptions.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js'))
-	}))
+	})))
+
+	const nUiEntry = path.join(process.cwd(), 'bower_components/n-ui/_entry');
+	const nUiEntryPoints = require(nUiEntry)(options.nUiExcludes)
+	mainJs.externals = Object.assign({}, mainJs.externals, nUiEntryPoints);
+	mainJs.plugins.push(
+		new Wrap(
+			'(function(){function init(){\n',
+			'\n};window.ftNextnUiLoaded ? init() : document.addEventListener ? document.addEventListener(\'ftNextnUiLoaded\', init) : document.attachEvent(\'onftNextnUiLoaded\', init);})();',
+			{ match: /\.js$/ }
+		)
+	);
+
+	variants.push(mainJs);
 
 	if (process.env.NEXT_APP_SHELL === 'local') {
 		const nWebpackWarning = `
@@ -71,15 +103,16 @@ If you do not need this behaviour run
 				library: 'ftNextUi',
 				devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
 			},
-			entry: {},
+			entry: {
+				'./public/n-ui/es5.js': './bower_components/n-ui/build/deploy/wrapper.js'
+			},
 			exclude: [/node_modules/]
 		});
 
-		appShellBuild.entry['./public/n-ui/es5.js'] = './bower_components/n-ui/build/deploy/wrapper.js'
-		variants.push(appShellBuild);
+		variants.push(nWebpack(appShellBuild));
 	}
 	// can't just variants.map(nWebpack) becaue second param truthiness
-	return variants.map(conf => nWebpack(conf))
+	return variants
 }
 
 const baseConfig = Object.assign({}, {
