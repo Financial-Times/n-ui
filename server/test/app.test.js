@@ -191,7 +191,7 @@ describe('simple app', function () {
 		it('should have preload link headers for css and js resources', done => {
 			request(app)
 				.get('/templated')
-				.expect('Link', /<https:\/\/next-geebee\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<https:\/\/www\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
 				// .expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css>; as="style"; rel="preload"; nopush/)
 				.expect('Link', /<\/demo-app\/main\.css>; as="style"; rel="preload"; nopush/)

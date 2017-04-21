@@ -70,8 +70,8 @@ function init (options, directory, locals) {
 
 				res.locals.polyfillCallbackName = polyfillIo.callbackName;
 				res.locals.polyfillUrls = {
-					enhanced: polyfillRoot + polyfillIo.getQueryString({enhanced: true}),
-					core: polyfillRoot + polyfillIo.getQueryString({enhanced: false})
+					enhanced: polyfillRoot + polyfillIo.getQueryString('enhanced'),
+					core: polyfillRoot + polyfillIo.getQueryString('core')
 				}
 
 				res.locals.javascriptBundles.push(

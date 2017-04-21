@@ -1,4 +1,3 @@
-
 const sharedQueryConfig = {
 	enhanced: {
 		features: [
@@ -10,8 +9,7 @@ const sharedQueryConfig = {
 			'fetch',
 			'Array.prototype.find',
 			'Array.prototype.findIndex',
-			// alwyas pending https://github.com/Financial-Times/polyfill-service/pull/1041
-			'Array.prototype.includes|always|gated',
+			'Array.prototype.includes',
 			'IntersectionObserver',
 			'Map',
 			'Array.from',
@@ -28,12 +26,6 @@ const sharedQueryConfig = {
 }
 
 const callbackName = 'ftNextPolyfillServiceCallback';
-
-const queryStrings = ['enhanced', 'core']
-	.reduce((configsMap, configName) => {
-		configsMap[configName] = buildQueryString(configName)
-		return configsMap;
-	}, {})
 
 function buildQueryString (configName) {
 	const qs = [];
@@ -54,9 +46,13 @@ function buildQueryString (configName) {
 	return `?${qs.join('&')}`;
 }
 
+const queryStrings = Object.keys(sharedQueryConfig)
+	.reduce((configsMap, configName) => {
+		configsMap[configName] = buildQueryString(configName)
+		return configsMap;
+	}, {})
 
 module.exports = {
 	callbackName,
-	getQueryString: opts => queryStrings[optsToString(opts)],
-	getAllQueryStrings: () => queryStrings
+	getQueryString: setting => queryStrings[setting]
 }
