@@ -98,7 +98,7 @@ module.exports = {
 			},
 			content: {
 				title: 'Gift an FT article',
-				body: 'Start the conversation. As a Premium user, share up to 20 articles a month with colleagues, friends or family – absolutely free. Even if they’re not subscribed to the FT.',
+				body: 'Start the conversation. Standard users can share up to 10 articles a month with colleagues, friends or family, Premium users can share up to 20  – absolutely free. Even if they’re not subscribed to the FT.',
 				imageAlt: 'Illustration of the Gift Article button in article pages',
 				imageUrl: 'https://www.ft.com/__assets/creatives/tour/gift-7.svg'
 			}
