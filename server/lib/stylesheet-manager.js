@@ -28,7 +28,8 @@ module.exports = {
 				if (!stylesheets[name]) {
 					throw new Error(`Stylesheet ${name}.css does not exist`);
 				}
-				return str + stylesheets[name];
+				// remove source maps from inlined css as browser will error
+				return str + stylesheets[name].replace(/\/\*# sourceMappingURL=.*\*\//, '');
 			}, '');
 			concatenatedStylesSizeCache[hash] = calculateSize(concatenatedStylesCache[hash])
 		}
