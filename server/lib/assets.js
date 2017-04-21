@@ -110,7 +110,8 @@ function init (options, directory, locals) {
 							res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
 						}
 					} else {
-						res.unset('link');
+						res.locals.stylesheets = {inline: [], lazy: [], blocking: []};
+						res.set('link', '');
 					}
 					return originalRender.apply(res, [].slice.call(arguments));
 				}
