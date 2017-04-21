@@ -15,6 +15,4 @@ const webpackConfig = headCss(nWebpack({
 	exclude: [/node_modules/]
 }));
 
-console.log(JSON.stringify(webpackConfig, null, 2))
-
 module.exports = webpackConfig;
