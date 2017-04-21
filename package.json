@@ -73,6 +73,7 @@
     "classnames": "^2.2.5",
     "commander": "^2.9.0",
     "ft-poller": "^2.9.0",
+    "iltorb": "^1.2.1",
     "ms": "^0.7.2",
     "preact": "^7.1.0",
     "preact-compat": "^3.11.0",
