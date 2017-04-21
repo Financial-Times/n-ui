@@ -4,7 +4,6 @@ const fs = require('fs');
 const join = require('path').join;
 const Wrap = require('../lib/addons/wrap');
 const headCss = require('../lib/head-css')
-const hashedAssets = require('../lib/hashed-assets')
 
 const gitignore = fs.readFileSync(join(process.cwd(), '.gitignore'), 'utf8')
 	.split('\n');
@@ -47,9 +46,9 @@ noGitignoreWildcard();
 // we no longer build a main.js for the app when generating the standard asset variants
 const variants = [
 	// all entry points excluding main.js generated as normal
-	hashedAssets(headCss(nWebpack(Object.assign({}, baseConfig, {
+	headCss(nWebpack(Object.assign({}, baseConfig, {
 		entry: filterEntryKeys(baseConfig.entry, /main\.js$/, true)
-	}))))
+	})))
 ]
 
 // new entry point for main.js declaring external n-ui
@@ -69,7 +68,7 @@ mainJs.plugins.push(
 	)
 );
 
-variants.push(hashedAssets(mainJs));
+variants.push(mainJs);
 
 if (process.env.NEXT_APP_SHELL === 'local') {
 	const nWebpackWarning = `
