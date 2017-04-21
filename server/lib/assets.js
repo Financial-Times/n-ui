@@ -1,6 +1,6 @@
 const logger = require('@financial-times/n-logger').default;
 const path = require('path');
-const nPolyfillIo = require('@financial-times/n-polyfill-io');
+const polyfillIo = require('./polyfill-io');
 const nUiManager = require('./n-ui-manager');
 const linkHeaderFactory = require('./link-header');
 const stylesheetManager = require('./stylesheet-manager');
@@ -63,17 +63,15 @@ function init (options, directory, locals) {
 				/* istanbul ignore if */
 				if (flags.polyfillQA) {
 					polyfillRoot = 'https://qa.polyfill.io/v2/polyfill.min.js';
-				} else if (flags.polyfillSameDomain) {
-					polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
 				} else {
-					polyfillRoot = 'https://next-geebee.ft.com/polyfill/v2/polyfill.min.js';
+					polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
 				}
 
 
-				res.locals.polyfillCallbackName = nPolyfillIo.callbackName;
+				res.locals.polyfillCallbackName = polyfillIo.callbackName;
 				res.locals.polyfillUrls = {
-					enhanced: polyfillRoot + nPolyfillIo.getQueryString({enhanced: true}),
-					core: polyfillRoot + nPolyfillIo.getQueryString({enhanced: false})
+					enhanced: polyfillRoot + polyfillIo.getQueryString({enhanced: true}),
+					core: polyfillRoot + polyfillIo.getQueryString({enhanced: false})
 				}
 
 				res.locals.javascriptBundles.push(
