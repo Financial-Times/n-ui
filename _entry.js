@@ -1,6 +1,6 @@
 // for the purposes of exposing in a shared n-ui bundle
 // This will mean webpack can find them in this bundle under n-ui/componentName
-module.exports = function (withPreact, exclusions) {
+module.exports = function (exclusions) {
 	const entry = {
 		// n-ui components
 		'n-ui': 'window.ftNextUi',
@@ -23,10 +23,8 @@ module.exports = function (withPreact, exclusions) {
 		'superstore-sync': 'window.ftNextUi._superstoreSync',
 	}
 
-	if (withPreact) {
-		entry.react = 'window.ftNextUi._React';
-		entry['react-dom'] = 'window.ftNextUi._ReactDom';
-	}
+	entry.react = 'window.ftNextUi._React';
+	entry['react-dom'] = 'window.ftNextUi._ReactDom';
 
 	if (exclusions) {
 		exclusions.forEach(exc => delete entry[exc]);
