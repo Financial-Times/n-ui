@@ -188,9 +188,18 @@ describe('simple app', function () {
 				})
 		});
 
-		it('should have preload link headers for css and js resources', done => {
+		it('should not preload anything by default on non layout requests', done => {
 			request(app)
 				.get('/templated')
+				.end((err, res) => {
+					expect(res.headers.link).to.equal('')
+					done();
+				})
+		});
+
+		it('should have preload link headers for css and js resources', done => {
+			request(app)
+				.get('/templated?layout=wrapper')
 				.expect('Link', /<https:\/\/next-geebee\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
 				// .expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css>; as="style"; rel="preload"; nopush/)
@@ -200,20 +209,20 @@ describe('simple app', function () {
 
 		it('should have preload link header for masthead', done => {
 			request(app)
-				.get('/templated')
+				.get('/templated?layout=wrapper')
 				.expect('Link', /.*ftlogo\:brand-ft-masthead.*>; as="image"; rel="preload"; nopush/, done)
 		});
 
 		it('should inline different choice of head.css', (done) => {
 			request(app)
-				.get('/css-variants?inline=head-variant,style-variant2')
+				.get('/css-variants?inline=head-variant,style-variant2&layout=wrapper')
 				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head-variant\.css\s*style-variant2\.css\s*<\/style>/, done)
 
 		})
 
 		it('should load different choice of css files', done => {
 			request(app)
-				.get('/css-variants?lazy=jam,marmalade&blocking=peanut')
+				.get('/css-variants?lazy=jam,marmalade&blocking=peanut&layout=wrapper')
 				// .expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css>; as="style"; rel="preload"; nopush/)
 				.expect('Link', /<\/demo-app\/jam\.css>; as="style"; rel="preload"; nopush/)
 				.expect('Link', /<\/demo-app\/marmalade\.css>; as="style"; rel="preload"; nopush/)

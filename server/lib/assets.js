@@ -87,28 +87,32 @@ function init (options, directory, locals) {
 				const originalRender = res.render;
 
 				res.render = function (template, templateData) {
-					res.linkResource('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-masthead?source=o-header&tint=%23333333,%23333333&format=svg', {as: 'image'});
-					// Add standard n-ui stylesheets
-					res.locals.stylesheets.inline.unshift('head-n-ui-core');
-					// For now keep building n-ui-core in the main app stylesheet
-					// res.locals.stylesheets.lazy.unshift('n-ui-core');
+					if (templateData.layout) {
+						res.linkResource('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-masthead?source=o-header&tint=%23333333,%23333333&format=svg', {as: 'image'});
+						// Add standard n-ui stylesheets
+						res.locals.stylesheets.inline.unshift('head-n-ui-core');
+						// For now keep building n-ui-core in the main app stylesheet
+						// res.locals.stylesheets.lazy.unshift('n-ui-core');
 
-					res.locals.stylesheets.inline = stylesheetManager.concatenateStyles(res.locals.stylesheets.inline);
+						res.locals.stylesheets.inline = stylesheetManager.concatenateStyles(res.locals.stylesheets.inline);
 
-					// TODO: DRY this out
-					res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(getStylesheetPath);
-					res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(getStylesheetPath);
+						// TODO: DRY this out
+						res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(getStylesheetPath);
+						res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(getStylesheetPath);
 
-					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style'}));
-					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style'}));
-					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
+						res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style'}));
+						res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style'}));
+						res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
 
-					if (templateData.withAssetPrecache) {
-						res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
-						res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
-						res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
+						if (templateData.withAssetPrecache) {
+							res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
+							res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
+							res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
+						}
+					} else {
+						res.locals.stylesheets = {inline: [], lazy: [], blocking: []};
+						res.set('link', '');
 					}
-
 					return originalRender.apply(res, [].slice.call(arguments));
 				}
 			}
