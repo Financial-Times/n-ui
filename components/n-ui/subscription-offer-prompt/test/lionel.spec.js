@@ -21,7 +21,7 @@ describe('"Lionel Slider" Subscription Offer Prompt', () => {
 				json: () => Promise.resolve('GBR')
 			}));
 		fetchStub
-			.withArgs('https://www.howsmyssl.com/a/check')
+			.withArgs('https://howsmyssl.memb.ft.com/a/check')
 			.returns(Promise.resolve({
 				json: () => Promise.resolve({ tls_version: 'TLS 1.2' })
 			}));
@@ -131,7 +131,7 @@ describe('"Lionel Slider" Subscription Offer Prompt - USA', () => {
 				json: () => Promise.resolve('USA')
 			}));
 		fetchStub
-			.withArgs('https://www.howsmyssl.com/a/check')
+			.withArgs('https://howsmyssl.memb.ft.com/a/check')
 			.returns(Promise.resolve({
 				json: () => Promise.resolve({ tls_version: 'TLS 1.2' })
 			}));
@@ -184,7 +184,7 @@ describe('"Lionel Slider" Subscription Offer Prompt - country code not listed', 
 				json: () => Promise.resolve('ISR')
 			}));
 		fetchStub
-			.withArgs('https://www.howsmyssl.com/a/check')
+			.withArgs('https://howsmyssl.memb.ft.com/a/check')
 			.returns(Promise.resolve({
 				json: () => Promise.resolve({ tls_version: 'TLS 1.2' })
 			}));

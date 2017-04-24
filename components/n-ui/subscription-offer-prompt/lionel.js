@@ -17,7 +17,7 @@ const getPromptLastClosed = () => promptLastSeenStorage.get(promptLastSeenStorag
 
 const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorageKey, Date.now());
 
-const getTlsVersion = () => fetch('https://www.howsmyssl.com/a/check')
+const getTlsVersion = () => fetch('https://howsmyssl.memb.ft.com/a/check')
 	.then(response => response.json())
 	.then(({ tls_version = '' } = { }) => parseFloat(tls_version.replace('TLS ', '')));
 
