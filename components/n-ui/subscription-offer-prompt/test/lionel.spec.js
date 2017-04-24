@@ -20,11 +20,6 @@ describe('"Lionel Slider" Subscription Offer Prompt', () => {
 			.returns(Promise.resolve({
 				json: () => Promise.resolve('GBR')
 			}));
-		fetchStub
-			.withArgs('https://howsmyssl.memb.ft.com/a/check')
-			.returns(Promise.resolve({
-				json: () => Promise.resolve({ tls_version: 'TLS 1.2' })
-			}));
 
 		return Promise.all([
 			localStorage.set('last-closed', Date.now() - (1000 * 60 * 60 * 24 * 30)),
@@ -130,11 +125,6 @@ describe('"Lionel Slider" Subscription Offer Prompt - USA', () => {
 			.returns(Promise.resolve({
 				json: () => Promise.resolve('USA')
 			}));
-		fetchStub
-			.withArgs('https://howsmyssl.memb.ft.com/a/check')
-			.returns(Promise.resolve({
-				json: () => Promise.resolve({ tls_version: 'TLS 1.2' })
-			}));
 
 		return Promise.all([
 			localStorage.set('last-closed', Date.now() - (1000 * 60 * 60 * 24 * 30)),
@@ -182,11 +172,6 @@ describe('"Lionel Slider" Subscription Offer Prompt - country code not listed', 
 			.withArgs('https://www.ft.com/country')
 			.returns(Promise.resolve({
 				json: () => Promise.resolve('ISR')
-			}));
-		fetchStub
-			.withArgs('https://howsmyssl.memb.ft.com/a/check')
-			.returns(Promise.resolve({
-				json: () => Promise.resolve({ tls_version: 'TLS 1.2' })
 			}));
 
 		return Promise.all([
