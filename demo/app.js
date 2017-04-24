@@ -34,7 +34,6 @@ app.get('/', (req, res) => {
 	});
 });
 
-
 app.get('/components/n-ui/:component', (req, res) => {
 	const component = req.params.component;
 	let config;

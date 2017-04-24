@@ -2,8 +2,8 @@
 const shellpromise = require('shellpromise');
 const fetch = require('node-fetch');
 const deployStatic = require('@financial-times/n-heroku-tools').deployStatic.task;
-const brotli = require('brotli');
 const denodeify = require('denodeify');
+const compress = denodeify(require('iltorb').compress);
 const path = require('path')
 const fs = require('fs');
 const readFile = denodeify(fs.readFile);
@@ -78,13 +78,14 @@ To avoid future regressions please add to the list (in build/deploy/s3.js)
 	return files;
 }
 
+
 function brotlify (files) {
 	return Promise.all(
 		files
 			.map(fileName =>
 				readFile(path.join(process.cwd(), fileName))
-					.then(brotli.compress)
-					.then(contents => writeFile(path.join(process.cwd(), fileName + '.brotli'), contents))
+					.then(compress)
+					.then(contents => writeFile(path.join(process.cwd(), fileName + '.br'), contents))
 			)
 	)
 }
