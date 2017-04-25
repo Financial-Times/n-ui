@@ -17,22 +17,17 @@ const getPromptLastClosed = () => promptLastSeenStorage.get(promptLastSeenStorag
 
 const setPromptLastClosed = () => promptLastSeenStorage.set(promptLastSeenStorageKey, Date.now());
 
-const getTlsVersion = () => fetch('https://www.howsmyssl.com/a/check')
-	.then(response => response.json())
-	.then(({ tls_version = '' } = { }) => parseFloat(tls_version.replace('TLS ', '')));
-
 /**
  * Show the prompt if
  *	* not logged in
  *	* not on a barrier page
  *	* the barrier has been seen in this session
  *	* the prompt has not been closed, or was last closed more than 30 days ago
- *	* browser's' TLS version is > 1.0
  */
 const shouldPromptBeShown = () => {
-	return Promise.all([getProductSelectorLastSeen(), getPromptLastClosed(), getTlsVersion()])
-			.then(([barrierLastSeen, promptLastClosed, tlsVersion]) =>
-				barrierLastSeen && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now()) && tlsVersion > 1.0
+	return Promise.all([getProductSelectorLastSeen(), getPromptLastClosed()])
+			.then(([barrierLastSeen, promptLastClosed]) =>
+				barrierLastSeen && (!promptLastClosed || promptLastClosed + (1000 * 60 * 60 * 24 * 30) <= Date.now())
 			);
 };
 
