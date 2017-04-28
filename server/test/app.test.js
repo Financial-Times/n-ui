@@ -49,7 +49,7 @@ describe('simple app', function () {
 
 		it('should have a static resource', function (done) {
 			request(app)
-				.get('/demo-app/test.txt')
+				.get('/demo-app/test.html')
 				.expect(200, 'Static file\n', done);
 		});
 
