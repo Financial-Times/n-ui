@@ -51,7 +51,7 @@ program
 		devAdvice();
 
 		shellpipe(`webpack ${options.production ? '--bail' : '--dev'} --config ${webpackConfPath}`)
-			.then(assetHashes)
+			.then(() => options.production && assetHashes())
 			.then(aboutJson)
 			.then(downloadAssets)
 			.then(() => {
