@@ -10,19 +10,11 @@
 			{{#if data.content.body}}
 				<p class="tour-tip__body">{{{data.content.body}}}</p>
 			{{/if}}
-			{{#ifAll data.content.ctas data.content.ctas.length}}
-				{{#if data.settings.isAnon}}
-					{{#unless data.settings.hideCtaFromAnon}}
-						{{#each data.content.ctas}}
-							<a href="{{{url}}}" class="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{{label}}</a>
-						{{/each}}
-					{{/unless}}
-				{{else}}
-					{{#each data.content.ctas}}
-						<a href="{{{url}}}" class="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{{label}}</a>
-					{{/each}}
-				{{/if}}
-			{{/ifAll}}
+			{{#if data.content.ctas}}
+				{{#each data.content.ctas}}
+					<a href="{{{url}}}" class="tour-tip__cta o-buttons o-buttons--standout" data-trackable="cta">{{label}}</a>
+				{{/each}}
+			{{/if}}
 		</div>
 		{{#if data.content.imageUrl}}
 			<div class="tour-tip__img-container">
