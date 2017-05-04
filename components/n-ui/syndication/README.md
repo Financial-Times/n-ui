@@ -25,3 +25,10 @@ Here we add an additional modifier if syndication is available on this article
 
 **next-article** - https://github.com/Financial-Times/next-article/blob/master/views/content.html#L20
 Here a data attribute is added containing the syndication status of the article.
+
+**generic** - add the following data attributes to your markup:
+
+* `data-syndicatable-uuid` – the uuid of the content to syndicate
+* `data-syndicatable-title` – the title of the content to syndicate
+* `data-syndicatable` – `yes` / `no` / `verify`
+* `data-syndicatable-target` – the element to insert the syndication flag

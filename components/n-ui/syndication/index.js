@@ -97,6 +97,19 @@ function updateMainArticle (article, createSyndicator){
 	container.insertBefore(createSyndicator(uuid, title, syndicationStatus), title);
 }
 
+function updateGenerics (generics, createSyndicator){
+	generics.forEach(generic => updateGeneric(generic, createSyndicator));
+}
+
+function updateGeneric (container, createSyndicator){
+	const uuid = container.getAttribute('data-syndicatable-uuid');
+	const title = container.querySelector('[data-syndicatable-title]').innerHTML;
+	const syndicationStatus = container.getAttribute('data-syndicatable');
+	const target = container.querySelector('[data-syndicatable-target]');
+
+	target.parentNode.insertBefore(createSyndicator(uuid, title, syndicationStatus), target);
+}
+
 function onAsyncContentLoaded (createSyndicator){
 	const syndicatableTeasers = $$(TEASER_SELECTOR);
 	updateTeasers(syndicatableTeasers, createSyndicator);
@@ -110,7 +123,10 @@ export function init (flags){
 	const syndicatableTeasers = $$(TEASER_SELECTOR);
 	const syndicatableMainArticle = $('.article[data-syndicatable]');
 
-	if(!syndicatableTeasers.length && !syndicatableMainArticle){
+	// TODO: update article pages to use generic style?
+	const syndicatableGenerics = $$('[data-syndicatable]:not(.article)');
+
+	if(!syndicatableTeasers.length && !syndicatableMainArticle && !syndicatableGenerics.length){
 		return;
 	}
 
@@ -140,6 +156,10 @@ export function init (flags){
 
 				if(syndicatableMainArticle){
 					updateMainArticle(syndicatableMainArticle, createSyndicator);
+				}
+
+				if (syndicatableGenerics.length){
+					updateGenerics(syndicatableGenerics, createSyndicator);
 				}
 			});
 		});
