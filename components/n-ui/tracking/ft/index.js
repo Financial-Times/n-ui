@@ -46,7 +46,7 @@ const oTrackingWrapper = {
 				context.rootContentId = contentId;
 			}
 
-			const conceptId = getRootData('concept-id');
+			const conceptId = getRootData('concept-idv1') || getRootData('concept-id');
 			if (conceptId) {
 				context.rootConceptId = conceptId;
 				context.rootTaxonomy = getRootData('taxonomy');
