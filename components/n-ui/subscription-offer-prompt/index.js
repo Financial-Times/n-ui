@@ -24,6 +24,7 @@ show and which one. And then allow the prompt logic to further decide.
 */
 
 const isLoggedIn = utils.getCookie('FTSession');
+const isB2bUser = utils.getCookie('FTBarrierAcqCtxRef');
 
 /*
 @param {Object} flags -
@@ -31,7 +32,7 @@ const isLoggedIn = utils.getCookie('FTSession');
 // TODO a11y: move focus to _any_ pop up
 export default function init (flags) {
 	const messagesEnabled = flags.get('b2cMessagePrompt');
-	if (isLoggedIn() || document.querySelector('.ft-subscription-panel') || !messagesEnabled || document.querySelector('.inline-barrier') || document.querySelector('.sub-header--fastft') ) {
+	if (isLoggedIn() || isB2bUser() || document.querySelector('.ft-subscription-panel') || !messagesEnabled || document.querySelector('.inline-barrier') || document.querySelector('.sub-header--fastft') ) {
 		return;
 	}
 	else {

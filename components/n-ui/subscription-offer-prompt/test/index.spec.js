@@ -43,6 +43,13 @@ describe('Subscription Offer Prompt Init', () => {
 		lionelStub.should.not.have.been.called;
 	});
 
+	it('should not init any prompt if B2B referrer cookie exists', () => {
+		Object.defineProperty(document, 'cookie', { value: 'FTBarrierAcqCtxRef=foo', configurable: true });
+
+		subscriptionOfferPrompt(flags);
+		lionelStub.should.not.have.been.called;
+	});
+
 	it('should not init any prompt if b2cMessagePrompt flag is false', () => {
 		// stub out the flag.get(b2cMessagePrompt) = false
 		flags = { get: (val) => { if(val === 'b2cMessagePrompt') return false } }
@@ -51,7 +58,8 @@ describe('Subscription Offer Prompt Init', () => {
 		lionelStub.should.not.have.been.called;
 	});
 
-	it('should init "Lionel slider" if NOT logged in & NOT on barrier page & NOT on /us-election-2016 page', () => {
+	it('should init "Lionel slider" if NOT logged in & NOT on barrier page & NOT coming from a B2B prospect barrier & NOT on /us-election-2016 page', () => {
+
 		subscriptionOfferPrompt(flags);
 		lionelStub.should.have.callCount(1);
 
