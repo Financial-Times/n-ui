@@ -32,7 +32,7 @@ module.exports = function (flags, appName, adOptions) {
 		let url;
 		const apiUrlRoot = 'https://ads-api.ft.com/v1/';
 		if (appName === 'article') {
-			uuid = document.querySelector('[data-content-id]').getAttribute('data-content-id');
+			uuid = document.documentElement.getAttribute('data-content-id');
 
 			const referrer = utils.getReferrer();
 			url = `${apiUrlRoot}content/${uuid}`;
@@ -40,7 +40,7 @@ module.exports = function (flags, appName, adOptions) {
 				url += `?referrer=${encodeURIComponent(referrer.split(/[?#]/)[0])}`;
 			}
 		} else if (appName === 'stream-page') {
-			uuid = document.querySelector('[data-concept-id]').getAttribute('data-concept-id');
+			uuid = document.documentElement.getAttribute('data-concept-idv1') || document.documentElement.getAttribute('data-concept-id');
 			url = `${apiUrlRoot}concept/${uuid}`;
 		}
 
