@@ -5,7 +5,8 @@ const config = {
 			headers: {
 				Cookie: 'next-flags=ads:off,sourcepoint:off,cookieMessage:off;secure=true'
 			}
-		}
+		},
+		rules: ['Principle1.Guideline1_3.1_3_1_AAA']
 	},
 	urls: [
 		'http://localhost:5005'
@@ -19,11 +20,13 @@ const components = [
 
 const cloneData = (data) => JSON.parse(JSON.stringify(data));
 
+const path = ci ? 'https://n-ui.ft.com/n-ui/test-page/' : 'localhost:5005/'
+
 components.forEach((component) => {
 	const componentConfig = require(`./${component}/pa11y-config.js`);
 
 	const componentDefaults = {
-		url: `localhost:5005/${component}`,
+		url: `http://localhost:5005/${component}`,
 		rootElement: 'body'
 	};
 	const componentPa11yData = cloneData(componentConfig.pa11yData || []);
