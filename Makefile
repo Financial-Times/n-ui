@@ -2,6 +2,9 @@ include n.Makefile
 
 .PHONY: build
 
+IGNORE_A11Y = true
+#update n-makefile instaed to search for a11y alone, not make a11y
+
 demo: run
 
 run: build-css-loader
