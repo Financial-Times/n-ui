@@ -2,8 +2,10 @@ include n.Makefile
 
 .PHONY: build
 
+# n-ui has an unconventional make a11y recipe
+# so we ignore checking `make a11y` exists
+# but still run it
 IGNORE_A11Y = true
-#update n-makefile instaed to search for a11y alone, not make a11y
 
 demo: run
 
