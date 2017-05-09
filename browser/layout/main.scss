@@ -6,7 +6,9 @@
 }
 
 html {
-	@include oColorsFor(page);
+	// @include oColorsFor(page);
+
+	color: white;
 
 	&.enhanced {
 		// Prevent navigation menus from creating

@@ -23,3 +23,4 @@ server/test/fixtures/app/views/partials/stylesheets.html
 server/test/fixtures/bad-assets/.gitignore
 /coverage/
 /browser/layout/partials/css-loader.html
+/pa11y_screenCapture/*

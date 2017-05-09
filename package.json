@@ -55,11 +55,11 @@
     "node-fetch": "^1.6.0",
     "nodemon": "^1.9.2",
     "npm-prepublish": "^1.2.1",
-    "pa11y-ci": "^0.3.0",
+    "pa11y-ci": "^1.1.1",
     "pre-git": "^3.14.0",
     "proxyquire": "^1.7.10",
     "semver": "^5.3.0",
-    "sinon": "^1.17.4",
+    "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0",
     "supertest": "^2.0.1",
     "uglifyjs": "^2.4.10"

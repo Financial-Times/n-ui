@@ -8,7 +8,10 @@ const config = {
 		}
 	},
 	urls: [
-		'http://localhost:5005'
+		{
+			url: 'http://localhost:5005',
+			screenCapture: './pa11y_screenCapture/root.png'
+		}
 	]
 };
 
@@ -26,6 +29,9 @@ components.forEach((component) => {
 		url: `localhost:5005/${component}`,
 		rootElement: 'body'
 	};
+
+	componentDefaults.screenCapture = `./pa11y_screenCapture/${component}.png`;
+
 	const componentPa11yData = cloneData(componentConfig.pa11yData || []);
 	const mergeWithDefaults = (data) => Object.assign({}, componentDefaults, data);
 	const componentUrls = componentPa11yData.map(mergeWithDefaults);
@@ -33,5 +39,7 @@ components.forEach((component) => {
 
 	addToPa11yUrls(componentUrls);
 });
+
+console.log(config);
 
 module.exports = config;
