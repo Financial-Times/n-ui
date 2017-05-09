@@ -2,9 +2,9 @@ include n.Makefile
 
 .PHONY: build
 
-# n-ui has an unconventional make a11y recipe
-# so we ignore checking `make a11y` exists
-# but still run it
+# n-ui has an unconventional a11y recipe
+# so we ignore checking `make a11y` exists as part of provision
+# Pa11y will still run locally and in CI
 IGNORE_A11Y = true
 
 demo: run
