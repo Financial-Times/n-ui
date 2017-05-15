@@ -2,6 +2,7 @@
 // Update flags and next-product selector accordingly
 
 import { products } from 'next-session-client';
+import Superstore from 'superstore';
 
 const discount = {
 	L: 50,
@@ -35,6 +36,13 @@ function isSignupForm () {
 
 function isBarrier () {
 	return !!document.querySelector('.barrier');
+}
+
+function isB2BProspect () {
+	const sessionStore = new Superstore('session', 'next.product-selector');
+	return sessionStore.get('barrier-messaging')
+		.then(barrier => barrier === 'B2B')
+		.catch(() => false)
 }
 
 function showPromo (flags) {
@@ -95,32 +103,37 @@ function showElectionsOffer (flags) {
  * We want to hide the marketing promo from:
  * - Signup form
  * - Barriers
+ * - B2B prospects
  */
 export function init (flags) {
 
 	// If it's the signup form or a barrier, just stop
 	if (!isSignupForm() && !isBarrier()) {
+		// If the last barrier shown was B2B, just stop
+		isB2BProspect().then(isB2B => {
+			if(!isB2B){
+				// If it's a CORS-compatible browser, fetch the session
+				if (supportsCors()) {
+					getUserProducts()
+						.then(decorateTheSession)
+						.then(function (session) {
+							if (session.isForAnonymousUser || session.isForRegisteredUser || session.isForWeekendUser) {
 
-		// If it's a CORS-compatible browser, fetch the session
-		if (supportsCors()) {
-			getUserProducts()
-				.then(decorateTheSession)
-				.then(function (session) {
-					if (session.isForAnonymousUser || session.isForRegisteredUser || session.isForWeekendUser) {
+								if (showElectionsOffer(flags)) {
+									showElectionPromo()
+								} else {
+									showPromo(flags);
+								}
 
-						if (showElectionsOffer(flags)) {
-							showElectionPromo()
-						} else {
-							showPromo(flags);
-						}
-
-					}
-				});
-		}
-		else if (checkAnonWithoutSession()) {
-			// If can't do cors but anonymous, just show the promo
-			// Pending cors solution
-			showPromo(flags);
-		}
+							}
+						});
+				}
+				else if (checkAnonWithoutSession()) {
+					// If can't do cors but anonymous, just show the promo
+					// Pending cors solution
+					showPromo(flags);
+				}
+			}
+		});
 	}
 }
