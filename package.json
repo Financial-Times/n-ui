@@ -65,7 +65,7 @@
     "uglifyjs": "^2.4.10"
   },
   "dependencies": {
-    "@financial-times/n-webpack": "^3.0.0",
+    "@financial-times/n-webpack": "^3.0.1",
     "@financial-times/n-express": "^19.0.0",
     "@financial-times/n-handlebars": "^1.15.0",
     "@financial-times/next-json-ld": "^0.1.0",
