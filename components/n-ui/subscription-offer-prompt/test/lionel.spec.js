@@ -23,7 +23,8 @@ describe('"Lionel Slider" Subscription Offer Prompt', () => {
 
 		return Promise.all([
 			localStorage.set('last-closed', Date.now() - (1000 * 60 * 60 * 24 * 30)),
-			sessionStorage.set('last-seen', Date.now())
+			sessionStorage.set('last-seen', Date.now()),
+			sessionStorage.set('barrier-messaging', 'B2C')
 		])
 	});
 
@@ -33,7 +34,8 @@ describe('"Lionel Slider" Subscription Offer Prompt', () => {
 		// fixme - the tests fail in IE11 if these are not commented out.  I have no idea why..
 		return Promise.all([
 			// localStorage.unset('last-closed'),
-			// sessionStorage.unset('last-seen')
+			// sessionStorage.unset('last-seen'),
+			// sessionStorage.unset('barrier-messaging')
 		]);
 	});
 
@@ -103,8 +105,13 @@ describe('"Lionel Slider" Subscription Offer Prompt', () => {
 		return init(flags).then(popup => should.not.exist(popup));
 	});
 
-	it('should not show barrier page has not been visited in this session', () => {
+	it('should not show if barrier page has not been visited in this session', () => {
 		sessionStorage.unset('last-seen');
+		return init(flags).then(popup => should.not.exist(popup));
+	});
+
+	it('should not show in succession to a B2B barrier', () => {
+		sessionStorage.set('barrier-messaging', 'B2B')
 		return init(flags).then(popup => should.not.exist(popup));
 	});
 
@@ -128,7 +135,8 @@ describe('"Lionel Slider" Subscription Offer Prompt - USA', () => {
 
 		return Promise.all([
 			localStorage.set('last-closed', Date.now() - (1000 * 60 * 60 * 24 * 30)),
-			sessionStorage.set('last-seen', Date.now())
+			sessionStorage.set('last-seen', Date.now()),
+			sessionStorage.set('barrier-messaging', 'B2C')
 		])
 	});
 
@@ -138,7 +146,8 @@ describe('"Lionel Slider" Subscription Offer Prompt - USA', () => {
 		// fixme - the tests fail in IE11 if these are not commented out.  I have no idea why..
 		return Promise.all([
 			// localStorage.unset('last-closed'),
-			// sessionStorage.unset('last-seen')
+			// sessionStorage.unset('last-seen'),
+			// sessionStorage.unset('barrier-messaging')
 		]);
 	});
 
@@ -176,7 +185,8 @@ describe('"Lionel Slider" Subscription Offer Prompt - country code not listed', 
 
 		return Promise.all([
 			localStorage.set('last-closed', Date.now() - (1000 * 60 * 60 * 24 * 30)),
-			sessionStorage.set('last-seen', Date.now())
+			sessionStorage.set('last-seen', Date.now()),
+			sessionStorage.set('barrier-messaging', 'B2C')
 		])
 	});
 
@@ -186,7 +196,8 @@ describe('"Lionel Slider" Subscription Offer Prompt - country code not listed', 
 		// fixme - the tests fail in IE11 if these are not commented out.  I have no idea why..
 		return Promise.all([
 			// localStorage.unset('last-closed'),
-			// sessionStorage.unset('last-seen')
+			// sessionStorage.unset('last-seen'),
+			// sessionStorage.unset('barrier-messaging')
 		]);
 	});
 
