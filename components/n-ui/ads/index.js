@@ -14,6 +14,7 @@ let slotCount;
 let slotsRendered = 0;
 let onAdsCompleteCallback;
 const customTimings = {};
+let oadsReadyCalled = false;
 
 function initOAds (flags, appName, adOptions) {
 	const initObj = oAdsConfig(flags, appName, adOptions);
@@ -21,6 +22,12 @@ function initOAds (flags, appName, adOptions) {
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
 
+	document.addEventListener('oAds.ready', function(e){
+		if (!oadsReadyCalled) {
+			customTimings.firstAdRequested = new Date().getTime();
+			oadsReadyCalled = true;
+		}
+	});
 	document.addEventListener('oAds.complete', onAdsCompleteCallback);
 
 
