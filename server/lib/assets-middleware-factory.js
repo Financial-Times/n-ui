@@ -1,52 +1,12 @@
-const logger = require('@financial-times/n-logger').default;
-const path = require('path');
 const polyfillIo = require('./polyfill-io');
-const nUiManager = require('./n-ui-manager');
-const linkHeaderFactory = require('./link-header');
-const stylesheetManager = require('./stylesheet-manager');
-const messages = require('./messages');
-const hashedAssets = require('./hashed-assets');
-const verifyAssetsExist = require('./verify-assets-exist');
 
-function init (options, directory, app) {
-
-	// const refs = { locals }
-	const locals = app.locals;
-
-	// don't start unless all the expected assets are present
-	verifyAssetsExist.verify(locals);
-
-	// discover stylesheets so they can be inlined and linked to later
-	stylesheetManager.init(options, directory);
-
-	// initialise asset hashing
-	const assetHasher = hashedAssets.init(locals).get;
-	app.getHashedAssetUrl = assetHasher;
-
-	// create the link header helper
-	const linkHeader = linkHeaderFactory(assetHasher);
-
-	// handle local development
-	const useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
-	/* istanbul ignore next */
-	if (useLocalAppShell) {
-		logger.warn(messages.APP_SHELL_WARNING);
-	}
-
-	// Set up n-ui
-	nUiManager.init(directory, assetHasher);
-	let nUiConfig;
-	try {
-		nUiConfig = Object.assign({}, require(path.join(directory, 'client/n-ui-config')), {preload: true})
-	} catch (e) {}
-	const nUiUrlRoot = nUiManager.getUrlRoot(assetHasher);
-
+module.exports = ({ linkHeader, nUiConfig, nUiUrlRoot, useLocalAppShell, assetHasher, stylesheetManager}) => {
 	// helper to build stylesheet paths
 	const getStylesheetPath = stylesheetName => {
 		return /n-ui/.test(stylesheetName) ? `${nUiUrlRoot}${stylesheetName}.css` : assetHasher(`${stylesheetName}.css`)
 	}
 
-	const	middleware = (req, res, next) => {
+	return (req, res, next) => {
 
 		// define a helper for adding a link header
 		res.linkResource = linkHeader;
@@ -71,7 +31,6 @@ function init (options, directory, app) {
 			} else {
 				polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
 			}
-
 
 			res.locals.polyfillCallbackName = polyfillIo.callbackName;
 			res.locals.polyfillUrls = {
@@ -118,11 +77,4 @@ function init (options, directory, app) {
 
 		next();
 	}
-
-
-	app.use(middleware);
-}
-
-module.exports = {
-	init
 }

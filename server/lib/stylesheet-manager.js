@@ -46,7 +46,7 @@ module.exports = {
 		return concatenatedStylesCache[hash];
 	},
 
-	init: (options, directory) => {
+	init: ({ options, directory }) => {
 		stylesheets = fs.readdirSync(`${directory}/public`)
 			.filter(name => /\.css$/.test(name))
 			.map(name => ({name, contents: fs.readFileSync(`${directory}/public/${name}`, 'utf-8')}))

@@ -9,7 +9,7 @@ const anon = require('./models/anon');
 
 // templating and assets
 const handlebars = require('./lib/handlebars');
-const assets = require('./lib/assets');
+const assetLoading = require('./lib/asset-loading');
 
 module.exports = options => {
 
@@ -91,9 +91,8 @@ module.exports = options => {
 		next();
 	});
 
-	// verification that expected assets exist
 	if (options.withAssets) {
-		assets.init(options, meta.directory, app);
+		assetLoading.init(options, meta.directory, app);
 	}
 
 	if (options.withHandlebars) {

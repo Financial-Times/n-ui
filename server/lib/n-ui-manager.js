@@ -26,23 +26,18 @@ const getReleaseName = directory => {
 	}
 }
 
-const generateUrlRoot = (directory, hasher) => {
+
+module.exports.init = ({ directory, assetHasher }) => {
 	const localAppShell = process.env.NEXT_APP_SHELL === 'local';
 	// Attempt to get information about which version of n-ui is installed
 	try {
 		if (localAppShell) {
-			nUiUrlRoot = hasher('n-ui/');
+			nUiUrlRoot = assetHasher('n-ui/');
 		} else {
 			nUiUrlRoot = `//www.ft.com/__assets/n-ui/cached/${getReleaseName(directory)}/`;
 		}
 
 	} catch (e) {}
-}
-
-
-
-module.exports.init = (directory, hasher) => {
-	generateUrlRoot(directory, hasher)
 }
 
 module.exports.getUrlRoot = () => nUiUrlRoot;
