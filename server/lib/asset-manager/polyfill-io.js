@@ -1,6 +1,19 @@
+function buildQueryString (qsConfig) {
+	const qs = [];
+
+	Object.keys(qsConfig).forEach(key => {
+		const val = qsConfig[key];
+		qs.push(`${key}=${Array.isArray(val) ? val.join(',') : val}`)
+	})
+
+	qs.push('source=next', 'unknown=polyfill')
+
+	return `?${qs.join('&')}`;
+}
+
 const callback = 'ftNextPolyfillServiceCallback';
-const queryStringConfigs = {
-	enhanced: {
+const queryStrings = {
+	enhanced: buildQueryString({
 		features: [
 			'default',
 			'requestAnimationFrame',
@@ -19,47 +32,23 @@ const queryStringConfigs = {
 		],
 		flags: 'gated',
 		callback
-	},
-	core: {
+	}),
+	core: buildQueryString({
 		features: [
 			'HTMLPictureElement|always|gated'
 		]
-	}
-}
-
-function buildQueryString (configName) {
-	const qs = [];
-
-	const qsConfig = queryStringConfigs[configName];
-
-	Object.keys(qsConfig).forEach(key => {
-		const val = qsConfig[key];
-		qs.push(`${key}=${Array.isArray(val) ? val.join(',') : val}`)
 	})
-
-	qs.push('source=next', 'unknown=polyfill')
-
-	return `?${qs.join('&')}`;
 }
-
-const queryStrings = Object.keys(queryStringConfigs)
-	.reduce((configsMap, configName) => {
-		configsMap[configName] = buildQueryString(configName)
-		return configsMap;
-	}, {})
 
 module.exports = flags => {
-	let polyfillRoot;
 	/* istanbul ignore if */
-	if (flags.polyfillQA) {
-		polyfillRoot = 'https://qa.polyfill.io/v2/polyfill.min.js';
-	} else {
-		polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
-	}
+	const polyfillRoot = 'https://' +
+		(flags.polyfillQA ? 'qa.polyfill.io/' : 'www.ft.com/__origami/service/polyfill/') +
+		'v2/polyfill.min.js'
 
 	return {
 		callback,
-		enhanced: polyfillRoot + queryStrings['enhanced'] + `&callback=${callback}`,
+		enhanced: polyfillRoot + queryStrings['enhanced'],
 		core: polyfillRoot + queryStrings['core']
 	}
 }

@@ -2,6 +2,7 @@ const nExpress = require('@financial-times/n-express')
 const nextJsonLd = require('@financial-times/next-json-ld');
 const path = require('path');
 const fs = require('fs');
+
 // Models
 const navigation = require('./models/navigation/');
 const EditionsModel = require('./models/navigation/editionsModel');
@@ -103,7 +104,6 @@ module.exports = options => {
 			options
 		}));
 	}
-
 
 	return app;
 }
