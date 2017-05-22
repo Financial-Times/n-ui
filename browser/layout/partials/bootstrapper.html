@@ -17,7 +17,7 @@
 
 	{{>layout/partials/css-loader}}
 
-	window.{{@root.polyfillCallbackName}} = function () {
+	window.{{@root.polyfillIo.callback}} = function () {
 		window.ftNextFireCondition('PolyfillLoaded');
 	};
 
@@ -27,12 +27,12 @@
 				ftNextLoadScript('{{{this}}}');
 			{{/each}}
 		} else {
-			ftNextLoadScript('{{{@root.polyfillUrls.core}}}');
+			ftNextLoadScript('{{{@root.polyfillIo.core}}}');
 		}
 	})();
 
 </script>
 {{else}}
 	<!-- always load the picturefill polyfill -->
-	<script src="{{@root.polyfillUrls.core}}"></script>
+	<script src="{{@root.polyfillIo.core}}"></script>
 {{/if}}

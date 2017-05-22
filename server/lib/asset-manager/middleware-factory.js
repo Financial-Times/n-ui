@@ -1,6 +1,6 @@
 const polyfillIo = require('./polyfill-io');
 
-module.exports = ({ linkHeader, nUiConfig, nUiUrlRoot, useLocalAppShell, assetHasher, stylesheetManager}) => {
+module.exports = ({ linkHeaderHelper, nUiConfig, nUiUrlRoot, useLocalAppShell, assetHasher, stylesheetManager}) => {
 	// helper to build stylesheet paths
 	const getStylesheetPath = stylesheetName => {
 		return /n-ui/.test(stylesheetName) ? `${nUiUrlRoot}${stylesheetName}.css` : assetHasher(`${stylesheetName}.css`)
@@ -9,7 +9,7 @@ module.exports = ({ linkHeader, nUiConfig, nUiUrlRoot, useLocalAppShell, assetHa
 	return (req, res, next) => {
 
 		// define a helper for adding a link header
-		res.linkResource = linkHeader;
+		res.linkResource = linkHeaderHelper;
 		if (req.accepts('text/html')) {
 			res.locals.javascriptBundles = [];
 			res.locals.stylesheets = {
@@ -24,24 +24,12 @@ module.exports = ({ linkHeader, nUiConfig, nUiUrlRoot, useLocalAppShell, assetHa
 
 			// work out which assets will be required by the page
 
-			let polyfillRoot;
-			/* istanbul ignore if */
-			if (res.locals.flags.polyfillQA) {
-				polyfillRoot = 'https://qa.polyfill.io/v2/polyfill.min.js';
-			} else {
-				polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
-			}
-
-			res.locals.polyfillCallbackName = polyfillIo.callbackName;
-			res.locals.polyfillUrls = {
-				enhanced: polyfillRoot + polyfillIo.getQueryString('enhanced'),
-				core: polyfillRoot + polyfillIo.getQueryString('core')
-			}
+			res.locals.polyfillIo = polyfillIo(res.locals.flags);
 
 			res.locals.javascriptBundles.push(
 				`${nUiUrlRoot}es5${(res.locals.flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
 				assetHasher('main-without-n-ui.js'),
-				res.locals.polyfillUrls.enhanced
+				res.locals.polyfillIo.enhanced
 			);
 
 

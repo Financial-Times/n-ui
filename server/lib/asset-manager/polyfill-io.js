@@ -1,4 +1,5 @@
-const sharedQueryConfig = {
+const callback = 'ftNextPolyfillServiceCallback';
+const queryStringConfigs = {
 	enhanced: {
 		features: [
 			'default',
@@ -16,7 +17,8 @@ const sharedQueryConfig = {
 			'NodeList.prototype.@@iterator',
 			'Array.prototype.@@iterator'
 		],
-		flags: 'gated'
+		flags: 'gated',
+		callback
 	},
 	core: {
 		features: [
@@ -25,16 +27,10 @@ const sharedQueryConfig = {
 	}
 }
 
-const callbackName = 'ftNextPolyfillServiceCallback';
-
 function buildQueryString (configName) {
 	const qs = [];
 
-	const qsConfig = sharedQueryConfig[configName];
-
-	if (configName === 'enhanced') {
-		qsConfig.callback = callbackName;
-	}
+	const qsConfig = queryStringConfigs[configName];
 
 	Object.keys(qsConfig).forEach(key => {
 		const val = qsConfig[key];
@@ -46,13 +42,24 @@ function buildQueryString (configName) {
 	return `?${qs.join('&')}`;
 }
 
-const queryStrings = Object.keys(sharedQueryConfig)
+const queryStrings = Object.keys(queryStringConfigs)
 	.reduce((configsMap, configName) => {
 		configsMap[configName] = buildQueryString(configName)
 		return configsMap;
 	}, {})
 
-module.exports = {
-	callbackName,
-	getQueryString: setting => queryStrings[setting]
+module.exports = flags => {
+	let polyfillRoot;
+	/* istanbul ignore if */
+	if (flags.polyfillQA) {
+		polyfillRoot = 'https://qa.polyfill.io/v2/polyfill.min.js';
+	} else {
+		polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
+	}
+
+	return {
+		callback,
+		enhanced: polyfillRoot + queryStrings['enhanced'] + `&callback=${callback}`,
+		core: polyfillRoot + queryStrings['core']
+	}
 }

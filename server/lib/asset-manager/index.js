@@ -1,19 +1,19 @@
 const logger = require('@financial-times/n-logger').default;
 const path = require('path');
 const nUiManager = require('./n-ui-manager');
-const linkHeaderFactory = require('./link-header');
+const linkHeaderHelperFactory = require('./link-header-helper-factory');
 const stylesheetManager = require('./stylesheet-manager');
-const messages = require('./messages');
+const messages = require('../messages');
 const hashedAssets = require('./hashed-assets');
-const verifyAssetsExist = require('./verify-assets-exist');
-const assetsMiddlewareFactory = require('./assets-middleware-factory');
+const verifyExistence = require('./verify-existence');
+const middlewareFactory = require('./middleware-factory');
 
 function init (options, directory, app) {
 
 	const refs = { locals: app.locals, app, directory, options }
 
 	// don't start unless all the expected assets are present
-	verifyAssetsExist.verify(refs);
+	verifyExistence.verify(refs);
 
 	// discover stylesheets so they can be inlined and linked to later
 	stylesheetManager.init(refs);
@@ -25,8 +25,8 @@ function init (options, directory, app) {
 	refs.assetHasher = assetHasher
 
 	// create the link header helper
-	const linkHeader = linkHeaderFactory(refs);
-	refs.linkHeader = linkHeader;
+	const linkHeaderHelper = linkHeaderHelperFactory(refs);
+	refs.linkHeaderHelper = linkHeaderHelper;
 
 	// handle local development
 	refs.useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
@@ -42,7 +42,7 @@ function init (options, directory, app) {
 	} catch (e) {}
 	refs.nUiUrlRoot = nUiManager.getUrlRoot();
 
-	app.use(assetsMiddlewareFactory(refs));
+	app.use(middlewareFactory(refs));
 }
 
 module.exports = {

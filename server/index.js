@@ -9,7 +9,7 @@ const anon = require('./models/anon');
 
 // templating and assets
 const handlebars = require('./lib/handlebars');
-const assetLoading = require('./lib/asset-loading');
+const assetManager = require('./lib/asset-manager');
 
 module.exports = options => {
 
@@ -92,7 +92,7 @@ module.exports = options => {
 	});
 
 	if (options.withAssets) {
-		assetLoading.init(options, meta.directory, app);
+		assetManager.init(options, meta.directory, app);
 	}
 
 	if (options.withHandlebars) {
