@@ -8,112 +8,119 @@ const messages = require('./messages');
 const hashedAssets = require('./hashed-assets');
 const verifyAssetsExist = require('./verify-assets-exist');
 
-function init (options, directory, locals) {
+function init (options, directory, app) {
+
+	// const refs = { locals }
+	const locals = app.locals;
+
+	// don't start unless all the expected assets are present
 	verifyAssetsExist.verify(locals);
-	const hasher = hashedAssets.init(locals).get;
-	nUiManager.init(directory, hasher);
 
+	// discover stylesheets so they can be inlined and linked to later
+	stylesheetManager.init(options, directory);
+
+	// initialise asset hashing
+	const assetHasher = hashedAssets.init(locals).get;
+	app.getHashedAssetUrl = assetHasher;
+
+	// create the link header helper
+	const linkHeader = linkHeaderFactory(assetHasher);
+
+	// handle local development
 	const useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
-
 	/* istanbul ignore next */
 	if (useLocalAppShell) {
 		logger.warn(messages.APP_SHELL_WARNING);
 	}
-	// Attempt to retrieve the json file used to configure n-ui
+
+	// Set up n-ui
+	nUiManager.init(directory, assetHasher);
 	let nUiConfig;
 	try {
 		nUiConfig = Object.assign({}, require(path.join(directory, 'client/n-ui-config')), {preload: true})
 	} catch (e) {}
+	const nUiUrlRoot = nUiManager.getUrlRoot(assetHasher);
 
-	stylesheetManager.init(options, directory);
-	const linkHeader = linkHeaderFactory(hasher);
-	const nUiUrlRoot = nUiManager.getUrlRoot(hasher);
-
+	// helper to build stylesheet paths
 	const getStylesheetPath = stylesheetName => {
-		return /n-ui/.test(stylesheetName) ? `${nUiUrlRoot}${stylesheetName}.css` : hasher(`${stylesheetName}.css`)
+		return /n-ui/.test(stylesheetName) ? `${nUiUrlRoot}${stylesheetName}.css` : assetHasher(`${stylesheetName}.css`)
 	}
 
-	return {
-		hasher,
-		middleware: (req, res, next) => {
+	const	middleware = (req, res, next) => {
 
-			// This middleware relies on the presence of res.locals.flags.
-			// In some scenarios (e.g. using handlebars but not flags) this
-			// won't be present
-			const flags = res.locals.flags || {};
+		// define a helper for adding a link header
+		res.linkResource = linkHeader;
+		if (req.accepts('text/html')) {
+			res.locals.javascriptBundles = [];
+			res.locals.stylesheets = {
+				inline: [],
+				lazy: [],
+				blocking: []
+			};
 
-			// define a helper for adding a link header
-			res.linkResource = linkHeader;
+			res.locals.stylesheets.inline = ['head']
+			res.locals.stylesheets.lazy = ['main']
+			res.locals.nUiConfig = nUiConfig;
 
-			if (req.accepts('text/html')) {
-				res.locals.javascriptBundles = [];
-				res.locals.stylesheets = {
-					inline: [],
-					lazy: [],
-					blocking: []
-				};
+			// work out which assets will be required by the page
 
-				res.locals.stylesheets.inline = ['head']
-				res.locals.stylesheets.lazy = ['main']
-				res.locals.nUiConfig = nUiConfig;
-
-				// work out which assets will be required by the page
-
-				let polyfillRoot;
-				/* istanbul ignore if */
-				if (flags.polyfillQA) {
-					polyfillRoot = 'https://qa.polyfill.io/v2/polyfill.min.js';
-				} else {
-					polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
-				}
-
-
-				res.locals.polyfillCallbackName = polyfillIo.callbackName;
-				res.locals.polyfillUrls = {
-					enhanced: polyfillRoot + polyfillIo.getQueryString('enhanced'),
-					core: polyfillRoot + polyfillIo.getQueryString('core')
-				}
-
-				res.locals.javascriptBundles.push(
-					`${nUiUrlRoot}es5${(flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
-					hasher('main-without-n-ui.js'),
-					res.locals.polyfillUrls.enhanced
-				);
-
-
-				// output the default link headers just before rendering
-				const originalRender = res.render;
-
-				res.render = function (template, templateData) {
-					res.linkResource('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-masthead?source=o-header&tint=%23333333,%23333333&format=svg', {as: 'image'});
-					// Add standard n-ui stylesheets
-					res.locals.stylesheets.inline.unshift('head-n-ui-core');
-					// For now keep building n-ui-core in the main app stylesheet
-					// res.locals.stylesheets.lazy.unshift('n-ui-core');
-
-					res.locals.stylesheets.inline = stylesheetManager.concatenateStyles(res.locals.stylesheets.inline);
-
-					// TODO: DRY this out
-					res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(getStylesheetPath);
-					res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(getStylesheetPath);
-
-					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style'}));
-					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style'}));
-					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
-
-					if (templateData.withAssetPrecache) {
-						res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
-						res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
-						res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
-					}
-
-					return originalRender.apply(res, [].slice.call(arguments));
-				}
+			let polyfillRoot;
+			/* istanbul ignore if */
+			if (res.locals.flags.polyfillQA) {
+				polyfillRoot = 'https://qa.polyfill.io/v2/polyfill.min.js';
+			} else {
+				polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
 			}
 
-			next();
+
+			res.locals.polyfillCallbackName = polyfillIo.callbackName;
+			res.locals.polyfillUrls = {
+				enhanced: polyfillRoot + polyfillIo.getQueryString('enhanced'),
+				core: polyfillRoot + polyfillIo.getQueryString('core')
+			}
+
+			res.locals.javascriptBundles.push(
+				`${nUiUrlRoot}es5${(res.locals.flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
+				assetHasher('main-without-n-ui.js'),
+				res.locals.polyfillUrls.enhanced
+			);
+
+
+			// output the default link headers just before rendering
+			const originalRender = res.render;
+
+			res.render = function (template, templateData) {
+				res.linkResource('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-masthead?source=o-header&tint=%23333333,%23333333&format=svg', {as: 'image'});
+				// Add standard n-ui stylesheets
+				res.locals.stylesheets.inline.unshift('head-n-ui-core');
+				// For now keep building n-ui-core in the main app stylesheet
+				// res.locals.stylesheets.lazy.unshift('n-ui-core');
+
+				res.locals.stylesheets.inline = stylesheetManager.concatenateStyles(res.locals.stylesheets.inline);
+
+				// TODO: DRY this out
+				res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(getStylesheetPath);
+				res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(getStylesheetPath);
+
+				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style'}));
+				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style'}));
+				res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
+
+				if (templateData.withAssetPrecache) {
+					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
+					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
+					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
+				}
+
+				return originalRender.apply(res, [].slice.call(arguments));
+			}
 		}
+
+		next();
 	}
+
+
+	app.use(middleware);
 }
 
 module.exports = {

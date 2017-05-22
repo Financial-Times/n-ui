@@ -93,9 +93,7 @@ module.exports = options => {
 
 	// verification that expected assets exist
 	if (options.withAssets) {
-		const assetManager = assets.init(options, meta.directory, app.locals);
-		app.getHashedAssetUrl = assetManager.hasher;
-		app.use(assetManager.middleware);
+		assets.init(options, meta.directory, app);
 	}
 
 	if (options.withHandlebars) {
