@@ -22,7 +22,7 @@ function initOAds (flags, appName, adOptions) {
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
 
-	document.addEventListener('oAds.ready', function(e){
+	document.addEventListener('oAds.ready', function (){
 		if (!oadsReadyCalled) {
 			customTimings.firstAdRequested = new Date().getTime();
 			oadsReadyCalled = true;
