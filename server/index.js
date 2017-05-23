@@ -2,6 +2,7 @@ const nExpress = require('@financial-times/n-express')
 const nextJsonLd = require('@financial-times/next-json-ld');
 const path = require('path');
 const fs = require('fs');
+
 // Models
 const navigation = require('./models/navigation/');
 const EditionsModel = require('./models/navigation/editionsModel');
@@ -9,7 +10,7 @@ const anon = require('./models/anon');
 
 // templating and assets
 const handlebars = require('./lib/handlebars');
-const assets = require('./lib/assets');
+const assetManager = require('./lib/asset-manager');
 
 module.exports = options => {
 
@@ -91,11 +92,8 @@ module.exports = options => {
 		next();
 	});
 
-	// verification that expected assets exist
 	if (options.withAssets) {
-		const assetManager = assets.init(options, meta.directory, app.locals);
-		app.getHashedAssetUrl = assetManager.hasher;
-		app.use(assetManager.middleware);
+		assetManager.init(options, meta.directory, app);
 	}
 
 	if (options.withHandlebars) {
@@ -106,7 +104,6 @@ module.exports = options => {
 			options
 		}));
 	}
-
 
 	return app;
 }

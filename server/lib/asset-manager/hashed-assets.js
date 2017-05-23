@@ -1,6 +1,6 @@
 const logger = require('@financial-times/n-logger').default;
 
-module.exports.init = locals => {
+module.exports.init = ({ locals }) => {
 	let assetHashes = {};
 
 	try {
