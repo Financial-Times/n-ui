@@ -115,7 +115,7 @@ function onAsyncContentLoaded (createSyndicator){
 	updateTeasers(syndicatableTeasers, createSyndicator);
 }
 
-export function init (flags){
+function init (flags){
 	if(!flags.get('syndication')){
 		return;
 	}
@@ -163,4 +163,9 @@ export function init (flags){
 				}
 			});
 		});
+}
+
+export {
+	checkIfUserIsSyndicationCustomer,
+	init
 }
