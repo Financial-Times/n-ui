@@ -5,11 +5,9 @@ module.exports = function (exclusions) {
 		// n-ui components
 		'n-ui': 'window.ftNextUi',
 		'n-ui/ads': 'window.ftNextUi._ads',
-		'n-ui/syndication': 'window.ftNextUi._syndication',
 		'n-ui/tracking': 'window.ftNextUi._tracking',
 		'n-ui/typeahead': 'window.ftNextUi._typeahead',
 		'n-ui/components/n-ui/ads': 'window.ftNextUi._ads',
-		'n-ui/components/n-ui/syndication': 'window.ftNextUi._syndication',
 		'n-ui/components/n-ui/tracking': 'window.ftNextUi._tracking',
 		'n-ui/components/n-ui/typeahead': 'window.ftNextUi._typeahead',
 		'n-ui-foundations': 'window.ftNextUi._foundations',

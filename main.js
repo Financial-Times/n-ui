@@ -5,8 +5,6 @@ export {bootstrap, configure} from './browser/bootstrap';
 // Expose entry points to shared bundle
 import ads from './components/n-ui/ads';
 export const _ads = ads;
-import syndication from './components/n-ui/syndication';
-export const _syndication = syndication;
 import tracking from './components/n-ui/tracking';
 export const _tracking = tracking;
 import date from 'o-date';
