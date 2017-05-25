@@ -15,6 +15,11 @@ function getRootData (name) {
 	return document.documentElement.getAttribute(`data-${name}`);
 }
 
+function findInQueryString (name) {
+	let exp = new RegExp(`[?&]${name}=([^?&]+)`);
+	return (String(window.location.search).match(exp) || [])[1];
+}
+
 const oTrackingWrapper = {
 	init: function (flags, appInfo) {
 
@@ -66,10 +71,17 @@ const oTrackingWrapper = {
 
 			const edition = document.querySelector('[data-next-edition]') ? document.querySelector('[data-next-edition]').getAttribute('data-next-edition') : null;
 			context.edition = edition;
-			const segmentId = String(window.location.search).match(/[?&]segmentId=([^?&]+)/) || [];
-			if (segmentId[1]) {
-				context['marketing_segment_id'] = segmentId[1];
+
+			const segmentId = findInQueryString('segmentId');
+			if (segmentId) {
+				context['marketing_segment_id'] = segmentId;
 			}
+
+			const cpcCampaign = findInQueryString('cpccampaign');
+			if (cpcCampaign) {
+				context['cpc_campaign'] = cpcCampaign;
+			}
+
 			const pageMeta = window.FT && window.FT.pageMeta;
 			if (pageMeta && (pageMeta === Object(pageMeta))) {
 				for (let key in pageMeta) {
