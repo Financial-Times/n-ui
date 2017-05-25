@@ -15,6 +15,7 @@ let slotsRendered = 0;
 let onAdsCompleteCallback;
 const customTimings = {};
 let oadsReadyCalled = false;
+let oadsGptDisplay = false;
 
 function initOAds (flags, appName, adOptions) {
 	const initObj = oAdsConfig(flags, appName, adOptions);
@@ -28,8 +29,15 @@ function initOAds (flags, appName, adOptions) {
 			oadsReadyCalled = true;
 		}
 	});
-	document.addEventListener('oAds.complete', onAdsCompleteCallback);
 
+	document.addEventListener('oAds.gptDisplay', function (){
+		if (!oadsGptDisplay) {
+			customTimings.firstAdGptRequest = new Date().getTime();
+			oadsGptDisplay = true;
+		}
+	});
+
+	document.addEventListener('oAds.complete', onAdsCompleteCallback);
 
 	const ads = Ads.init(initObj)
 	ads.then(res => {
