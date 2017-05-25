@@ -13,7 +13,7 @@ $n-ui-foundations-applied: true;
 @import 'components/n-ui/footer/main';
 
 @import 'components/n-ui/offline-toast/main';
-@import 'components/n-ui/syndication/main';
+@import 'n-syndication/main';
 
 $o-cookie-message-is-silent: false;
 @import 'o-cookie-message/main';
