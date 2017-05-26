@@ -40,7 +40,7 @@ module.exports = function (flags, appName, adOptions) {
 				url += `?referrer=${encodeURIComponent(referrer.split(/[?#]/)[0])}`;
 			}
 		} else if (appName === 'stream-page') {
-			uuid = document.documentElement.getAttribute('data-concept-idv1') || document.documentElement.getAttribute('data-concept-id');
+			uuid = document.documentElement.getAttribute('data-concept-id');
 			url = `${apiUrlRoot}concept/${uuid}`;
 		}
 
