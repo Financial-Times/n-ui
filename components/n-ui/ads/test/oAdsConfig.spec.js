@@ -3,7 +3,6 @@ const utils = require('../js/utils');
 const oAdsConfig = require('../js/oAdsConfig');
 const adsSandbox = require('../js/sandbox');
 const fakeArticleUuid = '123456';
-const fakeConceptUuidV1 = '1234567';
 const fakeConceptUuid = '12345678';
 
 let sandbox;
@@ -123,18 +122,6 @@ describe('Config', () => {
 			const config = oAdsConfig(flags, 'article', { noTargeting: true });
 			expect(config.targetingApi).to.equal(null);
 		})
-
-
-		it('Should access v1 concept url to send to o-ads fetch if present', () => {
-			targeting.withArgs('data-concept-idv1').returns(fakeConceptUuidV1);
-			targeting.withArgs('data-concept-id').returns(fakeConceptUuid);
-
-			const flags = { get: () => true };
-			const config = oAdsConfig(flags, 'stream-page' );
-			const pageUrl = 'https://ads-api.ft.com/v1/concept/'
-
-			expect(config.targetingApi.page).to.equal(pageUrl + fakeConceptUuidV1);
-		});
 
 		it('Should access v2 concept url to send to o-ads fetch if present', () => {
 			targeting.withArgs('data-concept-id').returns(fakeConceptUuid);
