@@ -9,7 +9,7 @@ import footer from '../../components/n-ui/footer';
 import offlineToast from '../../components/n-ui/offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
-import * as syndication from '../../components/n-ui/syndication';
+import * as syndication from 'n-syndication';
 
 export const presets = {
 	discrete: {

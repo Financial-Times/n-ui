@@ -63,7 +63,6 @@ module.exports = function (karma) {
 		colors: true,
 		// possible values: karma.LOG_DISABLE || karma.LOG_ERROR || karma.LOG_WARN || karma.LOG_INFO || karma.LOG_DEBUG
 		logLevel: karma.LOG_INFO,
-		autoWatch: false,
 		browsers: ['Chrome'],
 		plugins: [
 			require('karma-mocha'),
@@ -84,10 +83,8 @@ module.exports = function (karma) {
 				}
 		},
 		captureTimeout: (1000 * 60),
-
-		// Continuous Integration mode
-		// if true, Karma captures browsers, runs the tests and exits
-		singleRun: true
+		singleRun: true,
+		autoWatch: false
 	};
 
 
