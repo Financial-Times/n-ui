@@ -2,11 +2,11 @@
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
 const ComponentInitializer = require('../js/component-initializer').ComponentInitializer;
 const jsLoader = require('../js/loader');
-const header = require('../../../components/n-ui/header');
-const footer = require('../../../components/n-ui/footer');
+const header = require('../../components/n-ui/header');
+const footer = require('../../components/n-ui/footer');
 const date = require('o-date');
-const ads = require('../../../components/n-ui/ads');
-const tracking = require('../../../components/n-ui/tracking');
+const ads = require('../../components/n-ui/ads');
+const tracking = require('../../components/n-ui/tracking');
 
 describe('bootstrapping', () => {
 	beforeEach(() => {

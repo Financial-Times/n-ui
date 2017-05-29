@@ -1,15 +1,18 @@
 // to avoid race conditions relating to Symbol polyfills
 import 'babel-polyfill-silencer';
-export {bootstrap, configure} from './browser/bootstrap';
+
+import { ComponentInitializer } from './component-initializer';
+
+export const { bootstrap } = new ComponentInitializer();
 
 // Expose entry points to shared bundle
-import ads from './components/n-ui/ads';
+import ads from '../../components/n-ui/ads';
 export const _ads = ads;
-import tracking from './components/n-ui/tracking';
+import tracking from '../../components/n-ui/tracking';
 export const _tracking = tracking;
 import date from 'o-date';
 export const _date = date;
-import typeahead from './components/n-ui/typeahead';
+import typeahead from '../../components/n-ui/typeahead';
 export const _typeahead = typeahead;
 import foundations from 'n-ui-foundations';
 export const _foundations = foundations;
