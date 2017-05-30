@@ -1,6 +1,6 @@
 'use strict';
 
-const nWebpack = require('@financial-times/n-webpack');
+const nWebpack = require('../build/webpack');
 const headCss = require('../build/lib/head-css')
 const path = require('path');
 const webpackConfig = headCss(nWebpack({

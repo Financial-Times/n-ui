@@ -1,5 +1,5 @@
 const path = require('path');
-const nWebpack = require('@financial-times/n-webpack');
+const nWebpack = require('../webpack');
 const fs = require('fs');
 const join = require('path').join;
 const Wrap = require('../lib/addons/wrap');
