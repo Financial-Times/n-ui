@@ -61,6 +61,9 @@ copy-stylesheet-partial:
 build-css-loader:
 	uglifyjs browser/layout/src/css-loader.js -o browser/layout/partials/css-loader.html
 
+build-webpack:
+	webpack --bail --config build/deploy/webpack.config.js
+
 test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
 
@@ -77,7 +80,7 @@ a11y: test-build pally-conf
 
 # Note: `run` executes `node demo/app`, which fires up express, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
-test: developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y
+test: developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y build-webpack
 
 developer-note:
 ifeq ($(NODE_ENV),) # Not production
@@ -92,7 +95,7 @@ endif
 test-dev: verify test-browser-dev test-webpack
 
 deploy:
-	webpack --bail --config build/deploy/webpack.config.js
+	make build-webpack
 	node ./build/deploy/s3.js
 	$(MAKE) build-css-loader
 	$(MAKE) npm-publish
