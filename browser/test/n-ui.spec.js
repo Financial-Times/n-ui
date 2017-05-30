@@ -1,21 +1,17 @@
 /*global require,describe,afterEach,beforeEach,it,expect*/
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
-const nUi = require('../main');
-const jsSetup = require('../browser/bootstrap');
-const entry = require('../_entry');
+const nUi = require('../js/main');
+const entry = require('../js/webpack-entry');
 
 describe('n-ui', () => {
 
 	it('should export jsSetup methods', () => {
-		expect(nUi.bootstrap).to.equal(jsSetup.bootstrap);
-		expect(nUi.configure).to.equal(jsSetup.configure);
+		expect(nUi.bootstrap).to.be.a('function');
 	});
 
 	[
 		'date',
 		'ads',
-		'tooltip',
-		'syndication',
 		'tracking',
 		'ftdomdelegate',
 		'superstore',
@@ -62,13 +58,7 @@ describe('n-ui', () => {
 				})
 		});
 		describe('preact', () => {
-			it('should not provide preact entry point by default', () => {
-				expect(aliases.react).not.to.exist;
-				expect(nUi[aliases.react]).not.to.exist;
-			})
-
-			it('should provide preact entry point on demand', () => {
-				const aliases = entry(true);
+			it('should provide preact entry point by default', () => {
 				expect(aliases.react).to.exist;
 				expect(nUi[aliases.react.replace('window.ftNextUi.', '')]).to.exist;
 				expect(aliases['react-dom']).to.exist;

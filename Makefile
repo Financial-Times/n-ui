@@ -65,7 +65,7 @@ test-server-coverage: ## test-server-coverage: Run the unit tests with code cove
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
 
 nightwatch:
-	nht nightwatch test/js-success.nightwatch.js
+	nht nightwatch browser/test/js-success.nightwatch.js
 
 pally-conf:
 	node .pa11yci.js

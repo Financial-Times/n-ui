@@ -57,7 +57,7 @@ const mainJs = nWebpack(Object.assign(clone(baseConfig), {
 	entry: modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js'))
 }))
 
-const nUiEntry = path.join(process.cwd(), 'bower_components/n-ui/_entry');
+const nUiEntry = path.join(process.cwd(), 'bower_components/n-ui/browser/js/webpack-entry');
 const nUiEntryPoints = require(nUiEntry)(baseConfig.nUiExcludes)
 mainJs.externals = Object.assign({}, mainJs.externals, nUiEntryPoints);
 mainJs.plugins.push(

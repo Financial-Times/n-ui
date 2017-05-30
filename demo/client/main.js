@@ -1,6 +1,3 @@
-import {bootstrap} from '../../main';
-const tracking = require('../../components/n-ui/tracking');
+import {bootstrap} from '../../browser/js/main';
 
-bootstrap({ preset: 'complete' }, () => {
-	tracking.scrollDepth.init('n-ui-test');
-});
+bootstrap({ preset: 'complete' }, () => {});
