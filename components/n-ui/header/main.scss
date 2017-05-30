@@ -47,7 +47,7 @@
 		color: getColor('white');
 
 		&:focus {
-			@include oEffectsShadowsElevation('high');
+			@include oVisualEffectsShadowsElevation('high');
 			left: 0;
 			color: getColor('white');
 		}
