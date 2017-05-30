@@ -25,6 +25,9 @@ watch:
 test-browser:
 	karma start karma.conf.js
 
+test-webpack:
+	mocha test/webpack.spec.js
+
 # test-browser-dev is only for development environments.
 test-browser-dev:
 	$(info *)
@@ -74,7 +77,7 @@ a11y: test-build pally-conf
 
 # Note: `run` executes `node demo/app`, which fires up express, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
-test: developer-note verify pally-conf test-server test-browser test-build run nightwatch a11y
+test: developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y
 
 developer-note:
 ifeq ($(NODE_ENV),) # Not production
@@ -86,7 +89,7 @@ endif
 endif
 
 # Test-dev is only for development environments.
-test-dev: verify test-browser-dev
+test-dev: verify test-browser-dev test-webpack
 
 deploy:
 	webpack --bail --config build/deploy/webpack.config.js
