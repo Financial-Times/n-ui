@@ -230,8 +230,8 @@ describe('simple app', function () {
 
 		it('should be possible to preload any file on any request', done => {
 			request(app)
-				.get('/non-html?preload=true')
-				.expect('Link', '</demo-app/it.js>; rel="preload"; as="script"; nopush, <https://place.com/it.js>; rel="preload"; as="script"; nopush', done)
+				.get('/with-layout?preload=true')
+				.expect('Link', /<\/demo-app\/it\.js>; rel="preload"; as="script"; nopush, <https:\/\/place\.com\/it\.js>; rel="preload"; as="script"; nopush/, done)
 		});
 
 	})
