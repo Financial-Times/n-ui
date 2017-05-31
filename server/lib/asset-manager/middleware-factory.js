@@ -36,8 +36,6 @@ module.exports = ({ linkHeaderHelper, nUiConfig, nUiUrlRoot, useLocalAppShell, a
 			const originalRender = res.render;
 
 			res.render = function (template, templateData) {
-				// supercharge the masthead image
-				res.linkResource('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-masthead?source=o-header&tint=%23333333,%23333333&format=svg', {as: 'image'});
 				// Add standard n-ui stylesheets
 				res.locals.stylesheets.inline.unshift('head-n-ui-core');
 				// For now keep building n-ui-core in the main app stylesheet
@@ -59,6 +57,8 @@ module.exports = ({ linkHeaderHelper, nUiConfig, nUiUrlRoot, useLocalAppShell, a
 					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
 					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
 				}
+				// supercharge the masthead image
+				res.linkResource('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-masthead?source=o-header&tint=%23333333,%23333333&format=svg', {as: 'image'});
 
 				return originalRender.apply(res, [].slice.call(arguments));
 			}
