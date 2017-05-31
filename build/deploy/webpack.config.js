@@ -1,52 +1,39 @@
-'use strict';
-const nWebpack = require('../webpack');
-const headCss = require('../lib/head-css')
+const nWebpack = require('../webpack/webpack.config.js');
+const ExtractCssBlockPlugin = require('extract-css-block-webpack-plugin');
 
-const coreConfig = {
-	output: {
-		filename: '[name]',
-		library: 'ftNextUi',
-		devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
-	},
-	include: [/.*/],
-	exclude: [/node_modules/]
-};
-
+// TODO: describe what these configs actually do and what they're for
 const configs = [
 	{
-		withBabelPolyfills: false,
-		env: 'dev',
-		entry: {
-			'./dist/assets/es5.js': './build/deploy/wrapper.js'
-		},
-		buildInDev: true
+		prod: false,
+		entry: { './dist/assets/es5.js': './build/deploy/wrapper.js' },
 	},
 	{
-		withBabelPolyfills: false,
-		env: 'prod',
-		entry: {
-			'./dist/assets/n-ui-core.css': './build/deploy/shared-head.scss'
-		},
+		prod: true,
 		withHeadCss: true,
-		buildInDev: true
+		entry: { './dist/assets/n-ui-core.css': './build/deploy/shared-head.scss' },
 	}
 ];
 
 if (!process.env.DEV_BUILD) {
 	configs.push({
-		withBabelPolyfills: false,
-		env: 'prod',
-		entry: {
-			'./dist/assets/es5.min.js': './build/deploy/wrapper.js'
-		}
+		prod: true,
+		entry: { './dist/assets/es5.min.js': './build/deploy/wrapper.js' }
 	})
 }
 
 module.exports = configs
-	.map(conf => {
-		const webpackConf = nWebpack(Object.assign({}, coreConfig, conf));
-		if (conf.withHeadCss) {
-			return headCss(webpackConf)
+	.map(config => {
+		const webpackConfig = nWebpack();
+		webpackConfig.entry = config.entry;
+		if (config.withHeadCss) {
+			// TODO: figure out what this is for and describe it
+			webpackConfig.plugins.push(new ExtractCssBlockPlugin());
 		}
-		return webpackConf
+		if (config.prod) {
+			const webpack = require('webpack');
+			// TODO: figure out what these are for and describe them
+			webpackConfig.plugins.push(new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } })) /* Only if production */
+			webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({ 'compress': { 'warnings': false } }))
+		}
+		return webpackConfig
 	})
