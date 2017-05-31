@@ -9,6 +9,10 @@ module.exports = ({ linkHeaderHelper, nUiConfig, nUiUrlRoot, useLocalAppShell, a
 	return (req, res, next) => {
 
 		// define a helper for adding a link header
+		res.locals.resourceHints = {
+			highest: [],
+			normal: []
+		};
 		res.linkResource = linkHeaderHelper;
 
 		if (req.accepts('text/html')) {
@@ -47,9 +51,9 @@ module.exports = ({ linkHeaderHelper, nUiConfig, nUiUrlRoot, useLocalAppShell, a
 				res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(getStylesheetPath);
 				res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(getStylesheetPath);
 
-				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style'}));
-				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style'}));
-				res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script'}));
+				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
+				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
+				res.locals.javascriptBundles.forEach(file => res.linkResource(file, { as: 'script' }, { priority: 'highest' }));
 
 				// TODO make this a setting on the app - template data feels like a messy place
 				if (templateData.withAssetPrecache) {
@@ -58,7 +62,14 @@ module.exports = ({ linkHeaderHelper, nUiConfig, nUiUrlRoot, useLocalAppShell, a
 					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
 				}
 				// supercharge the masthead image
-				res.linkResource('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-masthead?source=o-header&tint=%23333333,%23333333&format=svg', {as: 'image'});
+				res.linkResource(
+					'https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-masthead?source=o-header&tint=%23333333,%23333333&format=svg',
+					{ as: 'image' },
+					{ priority: 'highest' }
+				);
+
+				res.append('Link', this.locals.resourceHints.highest);
+				res.append('Link', this.locals.resourceHints.normal);
 
 				return originalRender.apply(res, [].slice.call(arguments));
 			}
