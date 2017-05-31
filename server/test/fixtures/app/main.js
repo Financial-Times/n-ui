@@ -52,6 +52,16 @@ app.get('/css-variants', function (req, res) {
 
 app.get('/with-layout', function (req, res) {
 	res.locals.__isProduction = req.query.prod || res.locals.__isProduction;
+	if (req.query.preload) {
+		res.linkResource('it.js', {
+			rel: 'preload',
+			as: 'script'
+		}, {hashed: true}),
+		res.linkResource('https://place.com/it.js', {
+			rel: 'preload',
+			as: 'script'
+		})
+	}
 	res.render('main', Object.assign({
 		layout: 'wrapper',
 		title: 'FT',
@@ -63,16 +73,7 @@ app.get('/with-layout', function (req, res) {
 
 app.get('/non-html', (req, res) => {
 	res.set('Content-Type', 'application/json')
-	if (req.query.preload) {
-		res.linkResource('it.js', {
-			rel: 'preload',
-			as: 'script'
-		}, {hashed: true}),
-		res.linkResource('https://place.com/it.js', {
-			rel: 'preload',
-			as: 'script'
-		})
-	}
+
 	res.sendStatus(200);
 });
 

@@ -101,6 +101,19 @@ When you release an n-ui tag 3 things happen
 - the npm package is published
 - during work hours (9am to 4pm), all user-facing apps are rebuilt to pick up the changes
 
+## APIs
+
+### Linked Resources (preload) `res.linkResource(url, meta, options)`
+Adds link headers to optimise requests for assets, defaulting to preload behaviour
+- `url` - absolute or relative path to the resource
+- `meta` - object defining additional properties to add to the header
+	- `rel` [default: 'preload'] - value of the `rel` property
+	- `as` - value of the `as` property e.g. 'stylesheet'
+- `options` - additional options when creating the header
+	- `priority` - a value of highest will add the link header _before_ all previously added resources that do not specify this (shodul not normally used by apps - used internally to ensure n-ui's resources are always loaded as wuickly as possible)
+	- `hashed` - if true the path to the asset will be resolved to the equivalent hashed aset path
+
+
 # Anything below here isn't necessarily 100% up to date - n-ui has changed a lot recently and updating the docs is ongoing
 
 
@@ -141,17 +154,6 @@ We hope to be able to a11y test all components before they are used in an app an
 If, for example, you want to use a beta of an origami component in a single app, or use React instead of preact
 In your app’s webpack.config.js, you can pass an `nUiExcludes` array as an option to nWebpack e.g. `nUiExcludes: [‘React’, ‘React-Dom’]`
 
-
-### Linked Resources (preload)
-Adds link headers to enable service workers to optimise requests for assets, defaulting to preload behaviour
-e.g:
-- res.linkResource('//path/to/file.css', {as: 'style'}) => adds a link header to `//path/to/file.css` with `as="style"` and `rel="preload"`
-- res.linkResource('//path/to/file.js', {rel: 'prefetch', as: 'script'}) => adds a link header to `//path/to/file.js` with `as="script"` and `rel="prefetch"`
-- res.linkResource('main.css', {as: 'style'}, {hashed: true}) => adds a link header to the hashed asset path generated for the app's `main.css` file
-
-Link headers for `main.css` and `main.js` are added by default to any `text/html` request.
-
-e.g `res.linkResource('comments.css', {as: 'style', rel: 'prefetch'})`
 
 
 ### Navigation
