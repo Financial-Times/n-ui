@@ -40,19 +40,13 @@ const popupTemplate = ({ discount, price, offerId, offerText}) => `
 				Pay just ${price} per week for annual Standard Digital access
 			</span>
 		</div>
-		<div class="subscription-prompt--info" data-o-grid-colspan="7">
+		<div class="subscription-prompt--info" data-o-grid-colspan="12">
 			<ul class="subscription-prompt--benefits">
 				<li class="subscription-prompt--benefit">Access FT.com on your desktop, mobile &amp; tablet</li>
 				<li class="subscription-prompt--benefit">5 year company financials archive</li>
 				<li class="subscription-prompt--benefit">Personalised email briefings and market moving news</li>
 			</ul>
 			<a href="https://www.ft.com/signup?offerId=${offerId}" class="subscription-prompt--subscribe-btn" data-trackable="subscribe">Save ${discount}% now</a>
-		</div>
-		<div class="subscription-prompt--aside" data-o-grid-colspan="5">
-			<figure class="subscription-prompt--figure">
-				<img src="https://www.ft.com/__origami/service/image/v2/images/raw/${encodeURIComponent('http://www.ft.com/__assets/creatives/people/lionel.png')}?source=test&amp;width=126" alt="Lionel Barber, Editor">
-				<figcaption class="subscription-prompt--figure-caption">Lionel Barber, Editor</span>
-			</figure>
 		</div>
 	</article>
 `;
