@@ -61,8 +61,16 @@ copy-stylesheet-partial:
 build-css-loader:
 	uglifyjs browser/layout/src/css-loader.js -o browser/layout/partials/css-loader.html
 
-build-webpack:
+build-bundle:
 	webpack --bail --config build/deploy/webpack.config.js
+
+deploy-s3:
+	node ./build/deploy/s3.js
+
+rebuild-user-facing-apps:
+	# only autodeploy all apps in office hours
+	HOUR=$$(date +%H); DAY=$$(date +%u); if [ $$HOUR -ge 8 ] && [ $$HOUR -lt 16 ] && [ $$DAY -ge 0 ] && [ $$DAY -lt 6 ]; then \
+	echo "REBUILDING ALL APPS" && sleep 20 && nht rebuild --all --serves user-page; fi
 
 test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
@@ -94,11 +102,4 @@ endif
 # Test-dev is only for development environments.
 test-dev: verify test-browser-dev test-webpack
 
-deploy:
-	make build-webpack
-	node ./build/deploy/s3.js
-	$(MAKE) build-css-loader
-	$(MAKE) npm-publish
-	# only autodeploy all apps in office hours
-	HOUR=$$(date +%H); DAY=$$(date +%u); if [ $$HOUR -ge 8 ] && [ $$HOUR -lt 16 ] && [ $$DAY -ge 0 ] && [ $$DAY -lt 6 ]; then \
-	echo "REBUILDING ALL APPS" && sleep 20 && nht rebuild --all --serves user-page; fi
+deploy: build-bundle deploy-s3 build-css-loader npm-publish rebuild-user-facing-apps
