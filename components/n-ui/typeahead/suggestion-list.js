@@ -106,7 +106,6 @@ export class SuggestionList extends React.Component {
 	}
 
 	render () {
-		console.log(this.state.suggestions);
 		const hasConcepts = this.state.suggestions.concepts && this.state.suggestions.concepts.length;
 		const hasEquities = this.state.suggestions.equities && this.state.suggestions.equities.length;
 		const hasSuggestions = hasConcepts || hasEquities;
