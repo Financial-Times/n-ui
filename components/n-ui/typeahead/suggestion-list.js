@@ -6,7 +6,7 @@ function regExpEscape (s) {
 }
 
 const headingMapping = {
-	tags: 'News',
+	concepts: 'News',
 	equities: 'Securities'
 }
 
@@ -21,7 +21,7 @@ export class SuggestionList extends React.Component {
 		super();
 		this.state = {
 			suggestions: {
-				tags: [],
+				concepts: [],
 				equities: []
 			}
 		}
@@ -106,19 +106,19 @@ export class SuggestionList extends React.Component {
 	}
 
 	render () {
-		const hasTags = this.state.suggestions.tags && this.state.suggestions.tags.length;
+		const hasConcepts = this.state.suggestions.concepts && this.state.suggestions.concepts.length;
 		const hasEquities = this.state.suggestions.equities && this.state.suggestions.equities.length;
-		const hasSuggestions = hasTags || hasEquities;
+		const hasSuggestions = hasConcepts || hasEquities;
 		const suggestions = [];
 		this.items = [];
-		if (this.props.categories.includes('tags')) {
+		if (this.props.categories.includes('concepts')) {
 			suggestions.push({
-				heading: headingMapping['tags'],
+				heading: headingMapping['concepts'],
 				linkClassName: 'n-typeahead__link--news',
 				trackable: 'news',
-				suggestions: this.state.suggestions.tags.slice(0, DISPLAY_ITEMS)
+				suggestions: this.state.suggestions.concepts.slice(0, DISPLAY_ITEMS)
 					.map(suggestion => ({
-						html: this.highlight(suggestion.name),
+						html: this.highlight(suggestion.prefLabel),
 						url: suggestion.url,
 						id: suggestion.id,
 						type: 'tag'

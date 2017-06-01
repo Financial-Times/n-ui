@@ -11,9 +11,9 @@ demo: run
 
 run: build-css-loader
 ifneq ($(CIRCLECI),)
-	node demo/app
+	export FT_GRAPHITE_KEY=dummy; node demo/app
 else
-	nodemon demo/app
+	export FT_GRAPHITE_KEY=dummy; nodemon demo/app
 endif
 
 build:
