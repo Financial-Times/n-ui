@@ -85,23 +85,3 @@
 		width: 140px;
 	}
 }
-
-.subscription-prompt--aside {
-	display: none;
-
-	@include oGridRespondTo(M) {
-		display: block;
-	}
-}
-
-.subscription-prompt--figure {
-	margin: 0;
-	position: absolute;
-	top: -4px;
-	right: 10px;
-}
-
-.subscription-prompt--figure-caption {
-	color: oColorsGetPaletteColor('grey-tint5');
-	font-size: 16px;
-}
