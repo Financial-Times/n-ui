@@ -19,6 +19,9 @@ endif
 build:
 	webpack --config demo/webpack.config.js --dev
 
+build-production:
+	build-bundle
+
 watch:
 	webpack --config demo/webpack.config.js --dev --watch
 
@@ -88,7 +91,7 @@ a11y: test-build pally-conf
 
 # Note: `run` executes `node demo/app`, which fires up express, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
-test: developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y build-webpack
+test: developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y
 
 developer-note:
 ifeq ($(NODE_ENV),) # Not production
