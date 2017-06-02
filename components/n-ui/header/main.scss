@@ -22,7 +22,7 @@
 
 	// add next opt-out buttons
 	.o-header__drawer-menu-button {
-		@include oButtons('medium', 'standout');
+		@include oButtons($theme: primary);
 		display: block;
 		margin: $_o-header-drawer-padding-x;
 	}

@@ -28,7 +28,7 @@
 	}
 
 	.n-header__marketing-promo__link {
-		@include oButtons($theme: standout, $size: small);
+		@include oButtons($theme: primary);
 		word-spacing: 1px;
 	}
 }
