@@ -71,9 +71,7 @@
 }
 
 .subscription-prompt .subscription-prompt--subscribe-btn {
-	@include oButtons(medium, standard);
-	@include oButtonsSize(small);
-	@include oButtonsTheme(standout);
+	@include oButtons($theme: primary);
 
 	font-size: 16px;
 	text-transform: none;
@@ -85,4 +83,3 @@
 		width: 140px;
 	}
 }
-
