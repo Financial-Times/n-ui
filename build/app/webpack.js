@@ -1,9 +1,9 @@
 const path = require('path');
-const nWebpack = require('../webpack');
+const nWebpack = require('../webpack/webpack.config.js');
 const fs = require('fs');
 const join = require('path').join;
 const Wrap = require('../lib/addons/wrap');
-const headCss = require('../lib/head-css')
+const ExtractCssBlockPlugin = require('extract-css-block-webpack-plugin');
 
 const gitignore = fs.readFileSync(join(process.cwd(), '.gitignore'), 'utf8')
 	.split('\n');
@@ -17,10 +17,6 @@ function noGitignoreWildcard () {
 			}
 		}
 	});
-}
-
-function clone (obj) {
-	return JSON.parse(JSON.stringify(obj));
 }
 
 function modifyEntryKeys (obj, rx, nameModifier) {
@@ -43,33 +39,48 @@ const baseConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
 
 noGitignoreWildcard();
 
-// we no longer build a main.js for the app when generating the standard asset variants
-const variants = [
-	// all entry points excluding main.js generated as normal
-	headCss(nWebpack(Object.assign({}, baseConfig, {
-		entry: filterEntryKeys(baseConfig.entry, /main\.js$/, true)
-	})))
-]
+const webpackConfigs = [];
 
-// new entry point for main.js declaring external n-ui
-const mainJs = nWebpack(Object.assign(clone(baseConfig), {
-	language: 'js',
-	entry: modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js'))
-}))
+/*
+We no longer build a main.js for the app when generating the standard asset variants
+so this config is for all entry points defined by an app *excluding* the main.js one
 
-const nUiEntry = path.join(process.cwd(), 'bower_components/n-ui/browser/js/webpack-entry');
-const nUiEntryPoints = require(nUiEntry)(baseConfig.nUiExcludes)
-mainJs.externals = Object.assign({}, mainJs.externals, nUiEntryPoints);
-mainJs.plugins.push(
+Mostly this config will only be for main.css.
+*/
+const nonMainJsWebpackConfig = nWebpack();
+nonMainJsWebpackConfig.entry = filterEntryKeys(baseConfig.entry, /main\.js$/, true);
+nonMainJsWebpackConfig.plugins.push(new ExtractCssBlockPlugin());
+webpackConfigs.push(nonMainJsWebpackConfig);
+
+
+
+/*
+This webpack config is for the main.js entry point. Because of reasons we rename
+build to a file called main-without-n-ui.js rather than main.js.
+
+During build it also wraps the main.js code to ensure it is only called once n-ui
+has been loaded.
+*/
+const nUiExternal = require('../../browser/js/webpack-entry');
+const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
+
+const mainJsWebpackConfig = nWebpack();
+mainJsWebpackConfig.entry = modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js'));
+mainJsWebpackConfig.externals = nUiExternalPoints;
+mainJsWebpackConfig.plugins.push(
 	new Wrap(
 		'(function(){function init(){\n',
 		'\n};window.ftNextnUiLoaded ? init() : document.addEventListener ? document.addEventListener(\'ftNextnUiLoaded\', init) : document.attachEvent(\'onftNextnUiLoaded\', init);})();',
 		{ match: /\.js$/ }
 	)
 );
+webpackConfigs.push(mainJsWebpackConfig);
 
-variants.push(mainJs);
 
+/*
+Setting the NEXT_APP_SHELL environment variable will ensure that during build it
+will build and use the local version of n-ui rather than the version hosted on S3
+*/
 if (process.env.NEXT_APP_SHELL === 'local') {
 	const nWebpackWarning = `
 /*********** n-webpack warning ************/
@@ -95,22 +106,11 @@ If you do not need this behaviour run
 		throw 'Add /public/n-ui/ to your .gitignore to start building a local app shell';
 	}
 
-	const appShellBuild = Object.assign(clone(baseConfig), {
-		language: 'js',
-		env: 'dev',
-		withBabelPolyfills: false,
-		output: {
-			filename: '[name]',
-			library: 'ftNextUi',
-			devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
-		},
-		entry: {
-			'./public/n-ui/es5.js': './bower_components/n-ui/build/deploy/wrapper.js'
-		},
-		exclude: [/node_modules/]
-	});
-
-	variants.push(nWebpack(appShellBuild));
+	const appShellWebpackConfig = nWebpack();
+	appShellWebpackConfig.entry = {
+		'./public/n-ui/es5.js': './bower_components/n-ui/build/deploy/wrapper.js'
+	};
+	webpackConfigs.push(appShellWebpackConfig)
 }
 
-module.exports = variants
+module.exports = webpackConfigs
