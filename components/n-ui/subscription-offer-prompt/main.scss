@@ -20,29 +20,29 @@
 }
 
 .subscription-prompt .subscription-prompt--heading {
-	@include oTypographySansBold(m);
+	@include oTypographySansBold($scale: 2);
 	color: oColorsGetPaletteColor('black-80');
 	margin: 0 0 4px;
 
 	@include oGridRespondTo(M) {
-		@include oTypographySansBold(l);
+		@include oTypographySansBold($scale: 4);
 	}
 }
 
 .subscription-prompt .subscription-prompt--subheading {
-	@include oTypographySansBold(s);
+	@include oTypographySansBold($scale: 0);
 	font-weight: 300;
 	color: oColorsGetPaletteColor('black-80');
 	display: inline-block;
 	margin-bottom: 20px;
 
 	@include oGridRespondTo(M) {
-		@include oTypographySans(m);
+		@include oTypographySans($scale: 2);
 	}
 }
 
 .subscription-prompt--benefits {
-	@include oTypographySansBold(s);
+	@include oTypographySansBold($scale: 0);
 	display: none;
 	list-style: none;
 	font-weight: normal;
