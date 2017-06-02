@@ -32,7 +32,7 @@
 
 	.n-typeahead__heading {
 
-		@include oTypographySans(l);
+		@include oTypographySans($scale: 4);
 
 		position: relative;
 		margin: 0;
