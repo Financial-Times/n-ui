@@ -9,7 +9,7 @@ $o-visual-effects-transition-slide: cubic-bezier(1, 0, 0.5, 1.275);
 		right: 0;
 		margin-left: auto;
 		margin-right: auto;
-		background-color: oColorsGetPaletteColor('cold-2');
+		background-color: getColor('black-80');
 		color: white;
 		text-align: center;
 		display: table;

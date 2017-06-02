@@ -21,7 +21,7 @@
 
 .subscription-prompt .subscription-prompt--heading {
 	@include oTypographySansBold($scale: 2);
-	color: oColorsGetPaletteColor('black-80');
+	color: getColor('black-80');
 	margin: 0 0 4px;
 
 	@include oGridRespondTo(M) {
@@ -32,7 +32,7 @@
 .subscription-prompt .subscription-prompt--subheading {
 	@include oTypographySansBold($scale: 0);
 	font-weight: 300;
-	color: oColorsGetPaletteColor('black-80');
+	color: getColor('black-80');
 	display: inline-block;
 	margin-bottom: 20px;
 
@@ -58,7 +58,7 @@
 	position: relative;
 	margin-left: 20px;
 	margin-bottom: 6px;
-	color: oColorsGetPaletteColor('black-80');
+	color: getColor('black-80');
 
 	&:before {
 		@include oIconsGetIcon('tick', #35bd14, 14, $iconset-version: 1);
