@@ -30,15 +30,16 @@
     "o-footer": "^6.0.0",
     "o-header": "^6.14.2",
     "o-tracking": "^1.1.8",
-    "n-ui-foundations": "^2.0.0-alpha",
+    "n-ui-foundations": "^2.0.0-beta",
     "o-expander": "^4.2.2",
     "next-session-client": "^2.3.1",
     "n-counter-ad-blocking": "^3.0.0-beta"
   },
   "resolutions": {
-    "o-typography": "^5.0.1",
     "o-colors": "^4.0.1",
+    "o-typography": "^5.0.1",
     "o-visual-effects": "^2.0.0",
+    "o-buttons": "^5.0.0",
     "o-fonts": "^3.0.0"
   }
 }
