@@ -17,10 +17,10 @@ else
 endif
 
 build:
-	webpack --config demo/webpack.config.js --dev
+	webpack --config demo/webpack.config.js
 
 watch:
-	webpack --config demo/webpack.config.js --dev --watch
+	webpack --config demo/webpack.config.js --watch
 
 test-browser:
 	karma start karma.conf.js
