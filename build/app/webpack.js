@@ -2,7 +2,7 @@ const path = require('path');
 const nWebpack = require('../webpack/webpack.config.js');
 const fs = require('fs');
 const join = require('path').join;
-const Wrap = require('../lib/addons/wrap');
+// const Wrap = require('../lib/addons/wrap');
 const ExtractCssBlockPlugin = require('extract-css-block-webpack-plugin');
 
 const gitignore = fs.readFileSync(join(process.cwd(), '.gitignore'), 'utf8')
@@ -49,6 +49,7 @@ Mostly this config will only be for main.css.
 */
 const nonMainJsWebpackConfig = nWebpack();
 nonMainJsWebpackConfig.entry = filterEntryKeys(baseConfig.entry, /main\.js$/, true);
+console.log('\x1b[36m', nonMainJsWebpackConfig.entry, '\x1b[0m')
 nonMainJsWebpackConfig.plugins.push(new ExtractCssBlockPlugin());
 webpackConfigs.push(nonMainJsWebpackConfig);
 
@@ -67,13 +68,13 @@ const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
 const mainJsWebpackConfig = nWebpack();
 mainJsWebpackConfig.entry = modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js'));
 mainJsWebpackConfig.externals = nUiExternalPoints;
-mainJsWebpackConfig.plugins.push(
-	new Wrap(
-		'(function(){function init(){\n',
-		'\n};window.ftNextnUiLoaded ? init() : document.addEventListener ? document.addEventListener(\'ftNextnUiLoaded\', init) : document.attachEvent(\'onftNextnUiLoaded\', init);})();',
-		{ match: /\.js$/ }
-	)
-);
+// mainJsWebpackConfig.plugins.push(
+// 	new Wrap(
+// 		'(function(){function init(){\n',
+// 		'\n};window.ftNextnUiLoaded ? init() : document.addEventListener ? document.addEventListener(\'ftNextnUiLoaded\', init) : document.attachEvent(\'onftNextnUiLoaded\', init);})();',
+// 		{ match: /\.js$/ }
+// 	)
+// );
 webpackConfigs.push(mainJsWebpackConfig);
 
 
