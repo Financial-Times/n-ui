@@ -4,7 +4,7 @@ const path = require('path');
 const webpackConfig = nWebpack();
 
 // HACK: adds path to the babel loader config
-webpackConfig.module.loaders[0].include.push(new RegExp(path.join(__dirname, '../')))
+webpackConfig.module.rules[0].include.push(new RegExp(path.join(__dirname, '../')))
 
 webpackConfig.plugins.push(new ExtractCssBlockPlugin());
 webpackConfig.entry = {

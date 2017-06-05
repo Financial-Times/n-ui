@@ -7,7 +7,7 @@ transforms. Would prefer to have a well commented file like Origami:
 
 const path =require('path');
 const glob = require('glob');
-const BowerWebpackPlugin = require('bower-webpack-plugin');
+// const BowerWebpackPlugin = require('bower-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
@@ -31,15 +31,70 @@ const handlebarsConfig = () => {
 	};
 };
 
+const extractOptions = [
+		{
+			loader: 'css-loader',
+			options: {
+				minimize: process.argv.includes('--dev') ? false : true,
+				sourceMap: true
+			}
+		},
+		{
+			loader: 'postcss-loader',
+			options: {
+				plugins: () => [
+						autoprefixer({
+							browsers: ['> 1%', 'last 2 versions', 'ie >= 9', 'ff ESR', 'bb >= 7', 'iOS >= 5'],
+							flexbox: 'no-2009'
+						})
+					]
+			}
+		},
+		{
+			loader: 'sass-loader',
+			options: {
+				sourcemap: true,
+				includePaths: [
+					path.resolve('./bower_components'),
+					path.resolve('./node_modules/@financial-times')
+				],
+				// NOTE: This line is important for preservation of comments needed by the css-extract-block plugin
+				outputStyle: 'expanded'
+			}
+		}
+	]
+
 module.exports = function () {
 	return {
 		devtool: 'source-map',
 
 		resolve: {
-			root: [
+			modules: [
 				path.resolve('./bower_components'),
-				path.resolve('./node_modules')
+				path.resolve('./node_modules'),
+				// 'bower_components',
+				// 'node_modules',
 			],
+			// These JSON files are read in directories
+			descriptionFiles: [ 'bower.json', 'package.json'],
+
+			// These fields in the description files are looked up when trying to resolve the package directory
+			mainFields: ['main', 'browser'],
+
+			// These files are tried when trying to resolve a directory
+			mainFiles: [
+				'index',
+				'main',
+				'src/main-client' /* HACK: this is becaause of n-image's entrypoin not being main.js or index.js */
+			],
+
+			// These fields in the description files offer aliasing in this package
+			// The content of these fields is an object where requests to a key are mapped to the corresponding value
+			aliasFields: ['browser'],
+
+			// These extensions are tried when resolving a file
+			extensions: ['.js', '.json'],
+
 			alias: Object.assign(require('babel-polyfill-silencer/aliases'), {
 				'react': 'preact-compat',
 				'react-dom': 'preact-compat'
@@ -47,7 +102,7 @@ module.exports = function () {
 		},
 
 		module: {
-			loaders: [
+			rules: [
 				//babel
 				{
 					test: /\.js$/,
@@ -107,7 +162,8 @@ module.exports = function () {
 				},
 				{
 					test: /\.html$/,
-					loader: 'handlebars?' + JSON.stringify(handlebarsConfig())
+					loader: 'handlebars',
+					options: handlebarsConfig()
 				},
 				// base-scss
 				// set 'this' scope to window
@@ -118,37 +174,35 @@ module.exports = function () {
 				},
 				{
 					test: /\.scss$/,
-					loader: ExtractTextPlugin.extract([
-						process.argv.includes('--dev') ? 'css?sourceMap' : 'css?minimize&-autoprefixer&sourceMap',
-						'postcss',
-						'sass'
-					])
+					loader: ExtractTextPlugin.extract({
+						use: extractOptions
+					})
 				}
 			]
 		},
 
-		sassLoader: {
-			sourcemap: true,
-			includePaths: [
-				path.resolve('./bower_components'),
-				path.resolve('./node_modules/@financial-times')
-			],
-			// NOTE: This line is important for preservation of comments needed by the css-extract-block plugin
-			outputStyle: 'expanded'
-		},
-
-		postcss: () => {
-			return [ autoprefixer({
-				browsers: ['> 1%', 'last 2 versions', 'ie >= 9', 'ff ESR', 'bb >= 7', 'iOS >= 5'],
-				flexbox: 'no-2009'
-			}) ];
-		},
+		// sassLoader: {
+		// 	sourcemap: true,
+		// 	includePaths: [
+		// 		path.resolve('./bower_components'),
+		// 		path.resolve('./node_modules/@financial-times')
+		// 	],
+		// 	// NOTE: This line is important for preservation of comments needed by the css-extract-block plugin
+		// 	outputStyle: 'expanded'
+		// },
+		//
+		// postcss: () => {
+		// 	return [ autoprefixer({
+		// 		browsers: ['> 1%', 'last 2 versions', 'ie >= 9', 'ff ESR', 'bb >= 7', 'iOS >= 5'],
+		// 		flexbox: 'no-2009'
+		// 	}) ];
+		// },
 
 		plugins: [
-			new BowerWebpackPlugin({
-				includes: /\.js$/,
-				modulesDirectories: path.resolve('./bower_components')
-			}),
+			// new BowerWebpackPlugin({
+			// 	includes: /\.js$/,
+			// 	modulesDirectories: path.resolve('./bower_components')
+			// }),
 			new ExtractTextPlugin('[name]'),
 
 
@@ -156,10 +210,10 @@ module.exports = function () {
 
 		resolveLoader: {
 			alias: {
-				raw: require.resolve('raw-loader'),
-				imports: require.resolve('imports-loader'),
-				postcss: require.resolve('postcss-loader'),
-				sass: require.resolve('sass-loader'),
+				raw: 'raw-loader',
+				imports: 'imports-loader',
+				postcss: 'postcss-loader',
+				sass: 'sass-loader',
 			}
 		},
 
