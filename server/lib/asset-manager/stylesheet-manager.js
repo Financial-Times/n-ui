@@ -33,15 +33,19 @@ module.exports = {
 			}, '');
 			concatenatedStylesSizeCache[hash] = calculateSize(concatenatedStylesCache[hash])
 		}
-
-		concatenatedStylesSizeCache[hash]
-			.then(({raw, gzip}) => {
-				metrics.histogram('head_css_size.raw', raw);
-				metrics.histogram(`head_css_size.raw.${hash}`, raw);
-				metrics.histogram('head_css_size.gzip', gzip);
-				metrics.histogram(`head_css_size.gzip.${hash}`, gzip);
-			})
-
+		// HACK: don't measure size when only head-n-ui-core is included as, almost certainly,
+		// it's just a html fragment, not a full page load, so no inline css will actually be output
+		// Todo - in next major version only do the asset linking (including inclusion of n-ui stylesheets)
+		// if the developer explicitly invokes it
+		if (stylesheetNames.length > 1 || stylesheetNames[0] !== 'head-n-ui-core') {
+			concatenatedStylesSizeCache[hash]
+				.then(({raw, gzip}) => {
+					metrics.histogram('head_css_size.raw', raw);
+					metrics.histogram(`head_css_size.raw.${hash}`, raw);
+					metrics.histogram('head_css_size.gzip', gzip);
+					metrics.histogram(`head_css_size.gzip.${hash}`, gzip);
+				})
+		}
 
 		return concatenatedStylesCache[hash];
 	},
