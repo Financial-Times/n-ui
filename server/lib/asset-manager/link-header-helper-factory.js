@@ -1,4 +1,5 @@
 module.exports = function linkHeaderFactory ({ assetHasher }) {
+
 	return function (file, meta, opts) {
 		meta = meta || {};
 		opts = opts || {};
@@ -13,6 +14,7 @@ module.exports = function linkHeaderFactory ({ assetHasher }) {
 		}
 
 		header.push('nopush');
-		this.append('Link', header.join('; '))
+
+		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '))
 	}
 }
