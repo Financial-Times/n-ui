@@ -56,9 +56,23 @@ module.exports = function (flags, appName, adOptions) {
 		return zone.join('/');
 	}
 
-	function getViewportMargin () {
+	function getViewportMargin (flags) {
 		const screen = oViewport.getSize(true);
-		let viewportMargin = (screen.width >= 760) ? '0%' : '50%';
+		let viewportMargin;
+
+		if (screen.width >= 760) { //Mobile
+			if (flags.get('adLazyloadForMobileFifty')) {
+				viewportMargin = '50%';
+			} else if (flags.get('adLazyloadForMobileHundred')) {
+				viewportMargin = '100%';
+			} else if (flags.get('adLazyloadForMobileHundredFifty')) {
+				viewportMargin = '150%';
+			} else {
+				viewportMargin = '0%';
+			}
+		} else {
+			viewportMargin = '0%';
+		}
 		return viewportMargin;
 	}
 
