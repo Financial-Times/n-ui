@@ -58,7 +58,7 @@ module.exports = function (flags, appName, adOptions) {
 
 	function getViewportMargin () {
 		const screen = oViewport.getSize(true);
-		let viewportMargin = (screen.width >= 760) ? "0%" : "50%";
+		let viewportMargin = (screen.width >= 760) ? '0%' : '50%';
 		return viewportMargin;
 	}
 
