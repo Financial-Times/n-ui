@@ -37,6 +37,8 @@
 		<meta name="msapplication-TileColor" content="#fff1e0">
 		<meta name="msapplication-TileImage" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/mstile-144x144.png">
 
+		<meta property="og:locale" content="en_GB">
+		<meta property="og:site_name" content="Financial Times">
 		{{#each openGraph}}
 		{{#each this}}
 		{{#if this}}
@@ -44,15 +46,13 @@
 		{{/if}}
 		{{/each}}
 		{{/each}}
-		<meta property="og:locale" content="en_GB">
-		<meta property="og:site_name" content="Financial Times">
 
+		<meta name="twitter:site" content="@FinancialTimes">
 		{{#each twitterCard}}
 		{{#if this}}
 		<meta name="twitter:{{@key}}" content="{{this}}">
 		{{/if}}
 		{{/each}}
-		<meta name="twitter:site" content="@FinancialTimes">
 		{{#unless openGraph.og.image}}
 		<meta name="twitter:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png">
 		{{/unless}}
