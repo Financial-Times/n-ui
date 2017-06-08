@@ -27,6 +27,7 @@ describe('Config', () => {
 	});
 
 	describe('third party', () => {
+
 		it('Should set gpt configuration value according to app name', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article', false);
@@ -106,29 +107,92 @@ describe('Config', () => {
 			expect(config.gpt.zone).to.equal('testDfpSite/testDfpZone');
 		});
 
-		context('lazyLoad viewportMargin', () => {
+	})
 
-				it('Should pass 0% when screen width is wider than 760px', () => {
-					const stubGetSize = () => { return { height: 'height', width: 760 } };
-					sandbox.stub(oViewport, 'getSize', stubGetSize);
-					const flags = { get: () => true };
-					const config = oAdsConfig(flags, 'article');
-					expect(config.lazyLoad.viewportMargin).to.equal('0%');
-				});
+	describe('lazyLoad viewportMargin', () => {
 
-				it('Should pass 50% when screen width is less than 760px', () => {
-					const stubGetSize = () => { return { height: 'height', width: 759 } };
-					sandbox.stub(oViewport, 'getSize', stubGetSize);
-					const flags = { get: () => {
-						return '50%';
-					}};
-					const config = oAdsConfig(flags, 'article');
-					expect(config.lazyLoad.viewportMargin).to.equal('50%');
-				});
+		it('Should pass 0% when screen width is wider than 760px', () => {
+			const stubGetSize = () => { return { height: 'height', width: 760 } };
+			sandbox.stub(oViewport, 'getSize', stubGetSize);
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimiseLazyLoadSmall':
+					return false;
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'article');
+			expect(config.lazyLoad.viewportMargin).to.equal('0%');
+		});
+
+		context('when screen width is less than 760px and adOptimiseLazyLoadSmall flag is defined', () => {
+
+			beforeEach(() => {
+				const stubGetSize = () => { return { height: 'height', width: 759 } };
+				sandbox.stub(oViewport, 'getSize', stubGetSize);
+			});
+
+			it('Should pass 50% when the flag\'s value is 50', () => {
+				const flags = { get: (flagName) => {
+					switch (flagName) {
+						case 'adOptimiseLazyLoadSmall':
+						return '50';
+						break;
+						default:
+						return true;
+					}
+				}};
+				const config = oAdsConfig(flags, 'article');
+				expect(config.lazyLoad.viewportMargin).to.equal('50%');
+			});
+
+			it('Should pass 100% when the flag\'s value is 100', () => {
+				const flags = { get: (flagName) => {
+					switch (flagName) {
+						case 'adOptimiseLazyLoadSmall':
+						return '100';
+						break;
+						default:
+						return true;
+					}
+				}};
+				const config = oAdsConfig(flags, 'article');
+				expect(config.lazyLoad.viewportMargin).to.equal('100%');
+			});
+
+			it('Should pass 150% when the flag\'s value is 150', () => {
+				const flags = { get: (flagName) => {
+					switch (flagName) {
+						case 'adOptimiseLazyLoadSmall':
+						return '150';
+						break;
+						default:
+						return true;
+					}
+				}};
+				const config = oAdsConfig(flags, 'article');
+				expect(config.lazyLoad.viewportMargin).to.equal('150%');
+			});
+
+			it('Should pass 150% when the flag\'s value is 150', () => {
+				const flags = { get: (flagName) => {
+					switch (flagName) {
+						case 'adOptimiseLazyLoadSmall':
+						return 'control';
+						break;
+						default:
+						return true;
+					}
+				}};
+				const config = oAdsConfig(flags, 'article');
+				expect(config.lazyLoad.viewportMargin).to.equal('0%');
+			});
 
 		});
 
-	})
+	});
 
 	describe('o-ads', () => {
 

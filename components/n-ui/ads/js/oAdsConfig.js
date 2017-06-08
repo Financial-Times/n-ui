@@ -58,7 +58,25 @@ module.exports = function (flags, appName, adOptions) {
 
 	function getViewportMargin () {
 		const screen = oViewport.getSize(true);
-		let viewportMargin = (screen.width >= 760) ? '0%' : '50%';
+		let viewportMargin;
+		if (flags.get('adOptimiseLazyLoadSmall') && screen.width < 760 ) {
+			const variant = flags.get('adOptimiseLazyLoadSmall');
+			switch (variant) {
+				case '50':
+					viewportMargin = '50%';
+					break;
+				case '100':
+					viewportMargin = '100%';
+					break;
+				case '150':
+					viewportMargin = '150%';
+					break;
+				default://'control'
+					viewportMargin = '0%';
+			}
+		} else {
+			viewportMargin = '0%';
+		}
 		return viewportMargin;
 	}
 
