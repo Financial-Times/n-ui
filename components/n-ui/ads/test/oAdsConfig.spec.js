@@ -4,11 +4,7 @@ const oAdsConfig = require('../js/oAdsConfig');
 const adsSandbox = require('../js/sandbox');
 const fakeArticleUuid = '123456';
 const fakeConceptUuid = '12345678';
-const stubGetSize = () => { return { height: 'height', width: 760 } };
-const proxyquire = require('proxyquire').noCallThru().noPreserveCache();
-const oViewport = proxyquire('o-viewport', {
-	getSize: stubGetSize
-}).oViewport;
+const oViewport = require('o-viewport');
 
 let sandbox;
 let targeting;
@@ -23,6 +19,7 @@ describe('Config', () => {
 		sandbox.stub(utils, 'getReferrer', () => null );
 		targeting = sandbox.stub(document.documentElement, 'getAttribute');
 		targeting.withArgs('data-content-id').returns(fakeArticleUuid);
+
 	});
 
 	afterEach(() => {
@@ -112,14 +109,22 @@ describe('Config', () => {
 		context('lazyLoad viewportMargin', () => {
 
 				it('Should pass 0% when screen width is wider than 760px', () => {
+					const stubGetSize = () => { return { height: 'height', width: 760 } };
+					sandbox.stub(oViewport, 'getSize', stubGetSize);
 					const flags = { get: () => true };
 					const config = oAdsConfig(flags, 'article');
 					expect(config.lazyLoad.viewportMargin).to.equal('0%');
 				});
 
-				// it('Should pass 50% when screen width is less than 760px', () => {
-				//
-				// });
+				it('Should pass 50% when screen width is less than 760px', () => {
+					const stubGetSize = () => { return { height: 'height', width: 759 } };
+					sandbox.stub(oViewport, 'getSize', stubGetSize);
+					const flags = { get: () => {
+						return '50%';
+					}};
+					const config = oAdsConfig(flags, 'article');
+					expect(config.lazyLoad.viewportMargin).to.equal('50%');
+				});
 
 		});
 
