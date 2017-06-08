@@ -114,15 +114,7 @@ describe('Config', () => {
 		it('Should pass 0% when screen width is wider than 760px', () => {
 			const stubGetSize = () => { return { height: 'height', width: 760 } };
 			sandbox.stub(oViewport, 'getSize', stubGetSize);
-			const flags = { get: (flagName) => {
-				switch (flagName) {
-					case 'adOptimizeLazyLoadSmall':
-					return false;
-					break;
-					default:
-					return true;
-				}
-			}};
+			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article');
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
@@ -133,7 +125,7 @@ describe('Config', () => {
 			const flags = { get: (flagName) => {
 				switch (flagName) {
 					case 'adOptimizeLazyLoadSmall':
-					return false;
+					return undefined;
 					break;
 					default:
 					return true;
