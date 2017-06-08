@@ -60,8 +60,8 @@ module.exports = function (flags, appName, adOptions) {
 		const screen = oViewport.getSize(true);
 		let viewportMargin;
 
-		if (flags.get('adOptimiseLazyLoadSmall') && screen.width < 760 ) {
-			const variant = flags.get('adOptimiseLazyLoadSmall');
+		if (flags.get('adOptimizeLazyLoadSmall') && screen.width < 760 ) {
+			const variant = flags.get('adOptimizeLazyLoadSmall');
 			switch (variant) {
 				case '50':
 					viewportMargin = '50%';

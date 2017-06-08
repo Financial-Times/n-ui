@@ -116,7 +116,7 @@ describe('Config', () => {
 			sandbox.stub(oViewport, 'getSize', stubGetSize);
 			const flags = { get: (flagName) => {
 				switch (flagName) {
-					case 'adOptimiseLazyLoadSmall':
+					case 'adOptimizeLazyLoadSmall':
 					return false;
 					break;
 					default:
@@ -127,12 +127,12 @@ describe('Config', () => {
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
 
-		it('Should pass 0% when screen width is less than 760px and adOptimiseLazyLoadSmall flag is undefined', () => {
+		it('Should pass 0% when screen width is less than 760px and adOptimizeLazyLoadSmall flag is undefined', () => {
 			const stubGetSize = () => { return { height: 'height', width: 759 } };
 			sandbox.stub(oViewport, 'getSize', stubGetSize);
 			const flags = { get: (flagName) => {
 				switch (flagName) {
-					case 'adOptimiseLazyLoadSmall':
+					case 'adOptimizeLazyLoadSmall':
 					return false;
 					break;
 					default:
@@ -143,7 +143,7 @@ describe('Config', () => {
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
 
-		context('when screen width is less than 760px and adOptimiseLazyLoadSmall flag is defined', () => {
+		context('when screen width is less than 760px and adOptimizeLazyLoadSmall flag is defined', () => {
 
 			beforeEach(() => {
 				const stubGetSize = () => { return { height: 'height', width: 759 } };
@@ -157,7 +157,7 @@ describe('Config', () => {
 			it('Should pass 50% when the flag\'s value is 50', () => {
 				const flags = { get: (flagName) => {
 					switch (flagName) {
-						case 'adOptimiseLazyLoadSmall':
+						case 'adOptimizeLazyLoadSmall':
 						return '50';
 						break;
 						default:
@@ -171,7 +171,7 @@ describe('Config', () => {
 			it('Should pass 100% when the flag\'s value is 100', () => {
 				const flags = { get: (flagName) => {
 					switch (flagName) {
-						case 'adOptimiseLazyLoadSmall':
+						case 'adOptimizeLazyLoadSmall':
 						return '100';
 						break;
 						default:
@@ -185,7 +185,7 @@ describe('Config', () => {
 			it('Should pass 150% when the flag\'s value is 150', () => {
 				const flags = { get: (flagName) => {
 					switch (flagName) {
-						case 'adOptimiseLazyLoadSmall':
+						case 'adOptimizeLazyLoadSmall':
 						return '150';
 						break;
 						default:
@@ -199,7 +199,7 @@ describe('Config', () => {
 			it('Should pass 0% when the flag\'s value is control', () => {
 				const flags = { get: (flagName) => {
 					switch (flagName) {
-						case 'adOptimiseLazyLoadSmall':
+						case 'adOptimizeLazyLoadSmall':
 						return 'control';
 						break;
 						default:
