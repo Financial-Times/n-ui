@@ -127,11 +127,31 @@ describe('Config', () => {
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
 
+		it('Should pass 0% when screen width is less than 760px and adOptimiseLazyLoadSmall flag is undefined', () => {
+			const stubGetSize = () => { return { height: 'height', width: 759 } };
+			sandbox.stub(oViewport, 'getSize', stubGetSize);
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimiseLazyLoadSmall':
+					return false;
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'article');
+			expect(config.lazyLoad.viewportMargin).to.equal('0%');
+		});
+
 		context('when screen width is less than 760px and adOptimiseLazyLoadSmall flag is defined', () => {
 
 			beforeEach(() => {
 				const stubGetSize = () => { return { height: 'height', width: 759 } };
 				sandbox.stub(oViewport, 'getSize', stubGetSize);
+			});
+
+			afterEach(() => {
+				sandbox.restore();
 			});
 
 			it('Should pass 50% when the flag\'s value is 50', () => {
@@ -176,7 +196,7 @@ describe('Config', () => {
 				expect(config.lazyLoad.viewportMargin).to.equal('150%');
 			});
 
-			it('Should pass 150% when the flag\'s value is 150', () => {
+			it('Should pass 0% when the flag\'s value is control', () => {
 				const flags = { get: (flagName) => {
 					switch (flagName) {
 						case 'adOptimiseLazyLoadSmall':
