@@ -4,7 +4,6 @@ const oAdsConfig = require('../js/oAdsConfig');
 const adsSandbox = require('../js/sandbox');
 const fakeArticleUuid = '123456';
 const fakeConceptUuid = '12345678';
-const oViewport = require('o-viewport');
 
 let sandbox;
 let targeting;
@@ -111,17 +110,23 @@ describe('Config', () => {
 
 	describe('lazyLoad viewportMargin', () => {
 
-		it('Should pass 0% when screen width is wider than 760px', () => {
-			const stubGetSize = () => { return { height: 'height', width: 760 } };
-			sandbox.stub(oViewport, 'getSize', stubGetSize);
-			const flags = { get: () => true };
+		it('Should pass 0% when window.innerWidth is wider than 760px and adOptimizeLazyLoadSmall flag is defined', () => {
+			global.innerWidth = 760;
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoadSmall':
+					return '50';
+					break;
+					default:
+					return true;
+				}
+			}};
 			const config = oAdsConfig(flags, 'article');
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
 
-		it('Should pass 0% when screen width is less than 760px and adOptimizeLazyLoadSmall flag is undefined', () => {
-			const stubGetSize = () => { return { height: 'height', width: 759 } };
-			sandbox.stub(oViewport, 'getSize', stubGetSize);
+		it('Should pass 0% when window.innerWidth is less than 760px and adOptimizeLazyLoadSmall flag is undefined', () => {
+			global.innerWidth = 759;
 			const flags = { get: (flagName) => {
 				switch (flagName) {
 					case 'adOptimizeLazyLoadSmall':
@@ -135,15 +140,14 @@ describe('Config', () => {
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
 
-		context('when screen width is less than 760px and adOptimizeLazyLoadSmall flag is defined', () => {
+		context('when window.innerWidth is less than 760px and adOptimizeLazyLoadSmall flag is defined', () => {
 
 			beforeEach(() => {
-				const stubGetSize = () => { return { height: 'height', width: 759 } };
-				sandbox.stub(oViewport, 'getSize', stubGetSize);
+				global.innerWidth = 759;
 			});
 
 			afterEach(() => {
-				sandbox.restore();
+				delete global.innerWidth;
 			});
 
 			it('Should pass 50% when the flag\'s value is 50', () => {

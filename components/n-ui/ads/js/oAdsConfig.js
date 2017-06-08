@@ -2,7 +2,6 @@ const utils = require('./utils');
 const sandbox = require('./sandbox');
 const extend = require('o-ads').utils.extend;
 const apiUrlRoot = 'https://ads-api.ft.com/v1/';
-const oViewport = require('o-viewport');
 
 module.exports = function (flags, appName, adOptions) {
 	adOptions = adOptions || {};
@@ -57,10 +56,10 @@ module.exports = function (flags, appName, adOptions) {
 	}
 
 	function getViewportMargin () {
-		const screen = oViewport.getSize(true);
+
 		let viewportMargin;
 
-		if (flags.get('adOptimizeLazyLoadSmall') && screen.width < 760 ) {
+		if (flags.get('adOptimizeLazyLoadSmall') && window.innerWidth < 760 ) {
 			const variant = flags.get('adOptimizeLazyLoadSmall');
 			switch (variant) {
 				case '50':
