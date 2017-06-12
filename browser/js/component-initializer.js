@@ -136,11 +136,6 @@ export class ComponentInitializer {
 				.then(cb)
 				.then(() => {
 					// TODO - lazy load this
-					if (config.features.ads && !this.initializedFeatures.ads) {
-						ads.init(flags, appInfo, config.features.ads);
-						this.initializedFeatures.ads = true
-					}
-
 					if (!this.initializedFeatures.lazyTracking) {
 						tracking.lazyInit(flags);
 						this.initializedFeatures.lazyTracking = true;
