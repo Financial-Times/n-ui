@@ -178,23 +178,6 @@ describe('Config', () => {
 
 			});
 
-			it('Should pass 0% when the flag\'s value is control', () => {
-				const flags = { get: (flagName) => {
-					switch (flagName) {
-						case 'adOptimizeLazyLoadSmall':
-						return 'control';
-						break;
-						case 'adOptimizeLazyLoadMedium':
-						return false;
-						break;
-						default:
-						return true;
-					}
-				}};
-				const config = oAdsConfig(flags, 'article');
-				expect(config.lazyLoad.viewportMargin).to.equal('0%');
-			});
-
 		});
 
 	// tests for adOptimizeLazyLoadMedium flag
@@ -281,23 +264,6 @@ describe('Config', () => {
 					expect(config.lazyLoad.viewportMargin).to.equal(`${margin}%`);
 				});
 
-			});
-
-			it('Should pass 0% when the flag\'s value is control', () => {
-				const flags = { get: (flagName) => {
-					switch (flagName) {
-						case 'adOptimizeLazyLoadSmall':
-						return false;
-						break;
-						case 'adOptimizeLazyLoadMedium':
-						return 'control';
-						break;
-						default:
-						return true;
-					}
-				}};
-				const config = oAdsConfig(flags, 'article');
-				expect(config.lazyLoad.viewportMargin).to.equal('0%');
 			});
 
 		});

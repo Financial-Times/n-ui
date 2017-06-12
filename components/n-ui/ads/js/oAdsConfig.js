@@ -66,7 +66,7 @@ module.exports = function (flags, appName, adOptions) {
 			case '150':
 				return '150%';
 				break;
-			default://'control'
+			default:
 				return '0%';
 		}
 	}
