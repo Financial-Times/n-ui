@@ -118,6 +118,10 @@ log.isOn = function () {
 	return location.search.indexOf('DEBUG=ADS') > -1;
 };
 
+function getScreenSize () {
+	return window.innerWidth;
+}
+
 module.exports = {
 	debounce: debounce,
 	getLayoutName: getLayoutName,
@@ -126,5 +130,6 @@ module.exports = {
 	getReferrer: getReferrer,
 	keyValueString: keyValueString,
 	isEmpty: isEmpty,
-	log: log
+	log: log,
+	getScreenSize: getScreenSize
 };
