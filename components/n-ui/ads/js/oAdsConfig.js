@@ -55,7 +55,7 @@ module.exports = function (flags, appName, adOptions) {
 		return zone.join('/');
 	}
 
-	function setViewpoerMarginBy (variant) {
+	function setViewportMarginBy (variant) {
 		switch (variant) {
 			case '50':
 				return'50%';
@@ -71,15 +71,23 @@ module.exports = function (flags, appName, adOptions) {
 		}
 	}
 
+	function isSmallSize () {
+		return utils.getScreenSize() < 760
+	}
+
+	function isMediumSize () {
+		return utils.getScreenSize() >= 760 && utils.getScreenSize() < 980;
+	}
+
 	function getViewportMargin () {
-
-		let viewportMargin;
-
-		if (flags.get('adOptimizeLazyLoadSmall') && utils.getScreenSize() < 760 ) {
+		let viewportMargin = '0%';
+		if (flags.get('adOptimizeLazyLoadSmall') && isSmallSize() ) {
 			const variant = flags.get('adOptimizeLazyLoadSmall');
-			viewportMargin = setViewpoerMarginBy(variant);
-		} else {
-			viewportMargin = '0%';
+			viewportMargin = setViewportMarginBy(variant);
+		}
+		if (flags.get('adOptimizeLazyLoadMedium') && isMediumSize() ) {
+			const variant = flags.get('adOptimizeLazyLoadMedium');
+			viewportMargin = setViewportMarginBy(variant);
 		}
 		return viewportMargin;
 	}
