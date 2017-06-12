@@ -55,25 +55,29 @@ module.exports = function (flags, appName, adOptions) {
 		return zone.join('/');
 	}
 
+	function setViewpoerMarginBy (variant) {
+		switch (variant) {
+			case '50':
+				return'50%';
+				break;
+			case '100':
+				return '100%';
+				break;
+			case '150':
+				return '150%';
+				break;
+			default://'control'
+				return '0%';
+		}
+	}
+
 	function getViewportMargin () {
 
 		let viewportMargin;
 
 		if (flags.get('adOptimizeLazyLoadSmall') && utils.getScreenSize() < 760 ) {
 			const variant = flags.get('adOptimizeLazyLoadSmall');
-			switch (variant) {
-				case '50':
-					viewportMargin = '50%';
-					break;
-				case '100':
-					viewportMargin = '100%';
-					break;
-				case '150':
-					viewportMargin = '150%';
-					break;
-				default://'control'
-					viewportMargin = '0%';
-			}
+			viewportMargin = setViewpoerMarginBy(variant);
 		} else {
 			viewportMargin = '0%';
 		}
