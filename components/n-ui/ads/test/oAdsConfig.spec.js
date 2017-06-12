@@ -216,6 +216,24 @@ describe('Config', () => {
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
 
+		it('Should pass 0% when screen size is less than 760px and adOptimizeLazyLoadMedium flag is defined', () => {
+			sandbox.stub(utils, 'getScreenSize', () => { return 759; });
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoadSmall':
+					return false;
+					break;
+					case 'adOptimizeLazyLoadMedium':
+					return '50';
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'article');
+			expect(config.lazyLoad.viewportMargin).to.equal('0%');
+		});
+
 		it('Should pass 0% when screen size is more than 760px, less than 980px and adOptimizeLazyLoadMedium flag is undefined', () => {
 			sandbox.stub(utils, 'getScreenSize', () => { return 800; });
 			const flags = { get: (flagName) => {
