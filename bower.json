@@ -24,7 +24,6 @@
     "n-service-worker": "^1.8.0",
     "n-sliding-popup": "^1.0.0",
     "n-syndication": "^1.0.1",
-	"n-marketing": "@financial-times/n-marketing#add-main",
     "o-ads": "^6.0.0",
     "o-cookie-message": "^2.0.0",
     "o-errors": "^3.5.1",
@@ -34,6 +33,7 @@
     "n-ui-foundations": "^1.0.0",
     "o-expander": "^4.2.2",
     "next-session-client": "^2.3.1",
-    "n-counter-ad-blocking": "^2.0.0"
+    "n-counter-ad-blocking": "^2.0.0",
+	"n-marketing": "^0.2.0"
   }
 }
