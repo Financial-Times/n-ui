@@ -49,7 +49,6 @@ Mostly this config will only be for main.css.
 */
 const nonMainJsWebpackConfig = nWebpack();
 nonMainJsWebpackConfig.entry = filterEntryKeys(baseConfig.entry, /main\.js$/, true);
-console.log('\x1b[36m', nonMainJsWebpackConfig.entry, '\x1b[0m')
 nonMainJsWebpackConfig.plugins.push(new ExtractCssBlockPlugin());
 webpackConfigs.push(nonMainJsWebpackConfig);
 

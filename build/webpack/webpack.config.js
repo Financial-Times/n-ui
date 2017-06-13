@@ -5,7 +5,7 @@ As well as just making it more accessible without having to dive around all the
 transforms. Would prefer to have a well commented file like Origami:
 */
 
-const path =require('path');
+const path = require('path');
 const glob = require('glob');
 // const BowerWebpackPlugin = require('bower-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');

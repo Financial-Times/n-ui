@@ -33,7 +33,7 @@ module.exports = configs
 			const webpack = require('webpack');
 			// TODO: figure out what these are for and describe them
 			webpackConfig.plugins.push(new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': '"production"' } })) /* Only if production */
-			webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({}))
+			webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin())
 		}
 		return webpackConfig
 	})
