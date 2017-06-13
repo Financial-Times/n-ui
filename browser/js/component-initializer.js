@@ -122,7 +122,7 @@ export class ComponentInitializer {
 					}
 
 					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
-						subscriptionOfferPrompt({flags, demoMode: true});
+						subscriptionOfferPrompt({flags});
 						this.initializedFeatures.subscriptionOfferPrompt = true;
 					}
 
