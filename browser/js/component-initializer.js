@@ -102,9 +102,11 @@ export class ComponentInitializer {
 				this.initializedFeatures.date = true
 			}
 
-			if (config.features.ads && !this.initializedFeatures.ads) {
-				ads.init(flags, appInfo, config.features.ads);
-				this.initializedFeatures.ads = true
+			if (flags.get('adInitEarlierNui')){
+				if (config.features.ads && !this.initializedFeatures.ads) {
+					ads.init(flags, appInfo, config.features.ads);
+					this.initializedFeatures.ads = true
+				}
 			}
 
 			if (config.features.lazyLoadImages && !this.initializedFeatures.lazyLoadImages) {
@@ -141,6 +143,12 @@ export class ComponentInitializer {
 				.then(cb)
 				.then(() => {
 					// TODO - lazy load this
+					if (!flags.get('adInitEarlierNui')){
+						if (config.features.ads && !this.initializedFeatures.ads) {
+							ads.init(flags, appInfo, config.features.ads);
+							this.initializedFeatures.ads = true
+						}
+					}
 
 					if (!this.initializedFeatures.lazyTracking) {
 						tracking.lazyInit(flags);
