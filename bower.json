@@ -24,6 +24,7 @@
     "n-service-worker": "^1.8.0",
     "n-sliding-popup": "^1.0.0",
     "n-syndication": "^1.0.1",
+	"n-marketing": "@financial-times/n-marketing#add-main",
     "o-ads": "^6.0.0",
     "o-cookie-message": "^2.0.0",
     "o-errors": "^3.5.1",
