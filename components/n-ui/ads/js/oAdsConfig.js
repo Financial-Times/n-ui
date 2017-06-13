@@ -55,27 +55,39 @@ module.exports = function (flags, appName, adOptions) {
 		return zone.join('/');
 	}
 
+	function setViewportMarginBy (variant) {
+		switch (variant) {
+			case '50':
+				return'50%';
+				break;
+			case '100':
+				return '100%';
+				break;
+			case '150':
+				return '150%';
+				break;
+			default:
+				return '0%';
+		}
+	}
+
+	function isSmallSize () {
+		return utils.getScreenSize() < 760
+	}
+
+	function isMediumSize () {
+		return utils.getScreenSize() >= 760 && utils.getScreenSize() < 980;
+	}
+
 	function getViewportMargin () {
-
-		let viewportMargin;
-
-		if (flags.get('adOptimizeLazyLoadSmall') && utils.getScreenSize() < 760 ) {
+		let viewportMargin = '0%';
+		if (flags.get('adOptimizeLazyLoadSmall') && isSmallSize() ) {
 			const variant = flags.get('adOptimizeLazyLoadSmall');
-			switch (variant) {
-				case '50':
-					viewportMargin = '50%';
-					break;
-				case '100':
-					viewportMargin = '100%';
-					break;
-				case '150':
-					viewportMargin = '150%';
-					break;
-				default://'control'
-					viewportMargin = '0%';
-			}
-		} else {
-			viewportMargin = '0%';
+			viewportMargin = setViewportMarginBy(variant);
+		}
+		if (flags.get('adOptimizeLazyLoadMedium') && isMediumSize() ) {
+			const variant = flags.get('adOptimizeLazyLoadMedium');
+			viewportMargin = setViewportMarginBy(variant);
 		}
 		return viewportMargin;
 	}
