@@ -4,7 +4,7 @@ import tracking from '../../components/n-ui/tracking';
 import date from 'o-date';
 import header from '../../components/n-ui/header';
 import oCookieMessage from 'o-cookie-message';
-import subscriptionOfferPrompt from '../../components/n-ui/subscription-offer-prompt';
+import subscriptionOfferPrompt from 'n-marketing';
 import footer from '../../components/n-ui/footer';
 import offlineToast from '../../components/n-ui/offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
@@ -129,7 +129,7 @@ export class ComponentInitializer {
 					}
 
 					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
-						subscriptionOfferPrompt(flags);
+						subscriptionOfferPrompt({flags});
 						this.initializedFeatures.subscriptionOfferPrompt = true;
 					}
 
