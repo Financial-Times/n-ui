@@ -31,8 +31,6 @@ const handlebarsConfig = () => {
 	};
 };
 
-console.log('\x1b[36m', JSON.stringify(handlebarsConfig(), null, 2), '\x1b[0m')
-
 const extractOptions = [{
 		loader: 'css-loader',
 		options: {
@@ -159,7 +157,7 @@ module.exports = {
 			},
 			{
 				test: /\.html$/,
-				loader: 'handlebars',
+				loader: 'handlebars-loader',
 				options: handlebarsConfig()
 			},
 			{

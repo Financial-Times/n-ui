@@ -15,7 +15,7 @@ Wrap.prototype.apply = function (compiler) {
 	compiler.plugin('compilation', function (compilation) {
 		compilation.plugin('optimize-chunk-assets', function (chunks, callback) {
 			chunks.forEach(function (chunk) {
-				if(!chunk.initial) return;
+				if(!chunk.isInitial()) return;
 				const files = chunk.files.filter(file => options.match ? options.match.test(file) : true);
 				files.forEach(function (file) {
 					compilation.assets[file] = new ConcatSource(before, '\n', compilation.assets[file], '\n', after);
