@@ -94,11 +94,12 @@
     "preact-compat": "^3.11.0",
     "promise-rat-race": "^1.5.1",
     "proptypes": "^0.14.3",
-    "raw-loader": "^0.5.1",
     "sass-loader": "^6.0.5",
     "semver": "^5.3.0",
     "shellpromise": "^1.4.0",
     "webpack": "^2.6.1",
+    "webpack-merge": "^4.1.0",
+    "webpack-sources": "^1.0.1",
     "webpack-stats-plugin": "^0.1.1"
   },
   "config": {
