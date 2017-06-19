@@ -119,6 +119,7 @@ app.listen(5005)
 				})
 		}
 		else {
-			// console.error(developerFeedback) //eslint-disable-line
+			const developerFeedback = '*\r\n* Developers note: _test-server/app only does anything if there\'s a `process.env.PA11Y` or a `process.env.CIRCLE_BUILD_NUM` environment variable. Basically, it\'s only meant to run in CircleCI. \r\n*';
+			console.error(developerFeedback) //eslint-disable-line
 		}
 	});
