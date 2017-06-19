@@ -1,6 +1,4 @@
 const path = require('path');
-// const nWebpack = require('../webpack/webpack.config.js');
-// const nWebpack = require('./webpack.app.config.js');
 const fs = require('fs');
 const join = require('path').join;
 const Wrap = require('../lib/addons/wrap');
@@ -53,29 +51,13 @@ const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.app.common.js');
 
 
-// const mainJsConfig = webpackMerge(commonConfig, {
-// 	entry: {
-// 		'./public/main-without-n-ui.js': './client/main.js'
-// 	},
-// 	plugins:[
-// 		new ExtractCssBlockPlugin()
-// 	]
-// })
-
 const nonMainJsWebpackConfig = webpackMerge(commonConfig, {
 	entry: filterEntryKeys(baseConfig.entry, /main\.js$/, true),
 	plugins:[
 		new ExtractCssBlockPlugin()
 	]
 })
-
-
-// const nonMainJsWebpackConfig = nWebpack();
-// console.log('\x1b[36m', filterEntryKeys(baseConfig.entry, /main\.js$/, true);, '\x1b[0m')
-// nonMainJsWebpackConfig.entry = filterEntryKeys(baseConfig.entry, /main\.js$/, true);
-// nonMainJsWebpackConfig.plugins.push(new ExtractCssBlockPlugin());
 webpackConfigs.push(nonMainJsWebpackConfig);
-
 
 
 /*
@@ -98,16 +80,6 @@ const mainJsWebpackConfig = webpackMerge(commonConfig, {
 		)
 	]
 })
-// const mainJsWebpackConfig = nWebpack();
-// mainJsWebpackConfig.entry = modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js'));
-// mainJsWebpackConfig.externals = nUiExternalPoints;
-// mainJsWebpackConfig.plugins.push(
-// 	new Wrap(
-// 		'(function(){function init(){\n',
-// 		'\n};window.ftNextnUiLoaded ? init() : document.addEventListener ? document.addEventListener(\'ftNextnUiLoaded\', init) : document.attachEvent(\'onftNextnUiLoaded\', init);})();',
-// 		{ match: /\.js$/ }
-// 	)
-// );
 webpackConfigs.push(mainJsWebpackConfig);
 
 
@@ -145,11 +117,6 @@ If you do not need this behaviour run
 			'./public/n-ui/es5.js': './bower_components/n-ui/build/deploy/wrapper.js'
 		}
 	})
-
-	// const appShellWebpackConfig = nWebpack();
-	// appShellWebpackConfig.entry = {
-	// 	'./public/n-ui/es5.js': './bower_components/n-ui/build/deploy/wrapper.js'
-	// };
 	webpackConfigs.push(appShellWebpackConfig)
 }
 

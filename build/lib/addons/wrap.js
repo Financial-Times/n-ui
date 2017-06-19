@@ -1,5 +1,5 @@
 // Slightly modified version of entry-wrap-webpack-plugin https://github.com/shakyShane/entry-wrap-webpack-plugin
-const ConcatSource = require('webpack/lib/ConcatSource');
+const { ConcatSource } = require('webpack-sources');
 
 function Wrap (before, after, options) {
 	this.options = options || {};

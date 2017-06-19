@@ -7,7 +7,6 @@ transforms. Would prefer to have a well commented file like Origami:
 
 const path = require('path');
 const glob = require('glob');
-// const BowerWebpackPlugin = require('bower-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
@@ -34,7 +33,7 @@ const handlebarsConfig = () => {
 const extractOptions = [{
 		loader: 'css-loader',
 		options: {
-			minimize: process.argv.includes('--dev') ? false : true,
+			minimize: true,
 			sourceMap: true
 		}
 	},
@@ -68,10 +67,8 @@ module.exports = {
 
 	resolve: {
 		modules: [
-			path.resolve('./bower_components'),
-			path.resolve('./node_modules'),
-			// 'bower_components',
-			// 'node_modules',
+			'bower_components',
+			'node_modules',
 		],
 		// These JSON files are read in directories
 		descriptionFiles: ['bower.json', 'package.json'],
@@ -90,13 +87,10 @@ module.exports = {
 		// The content of these fields is an object where requests to a key are mapped to the corresponding value
 		aliasFields: ['browser'],
 
-		// These extensions are tried when resolving a file
-		extensions: ['.js', '.json'],
-
-		alias: Object.assign(require('babel-polyfill-silencer/aliases'), {
+		alias: {
 			'react': 'preact-compat',
 			'react-dom': 'preact-compat'
-		}),
+		},
 	},
 
 	module: {
@@ -104,56 +98,34 @@ module.exports = {
 			//babel
 			{
 				test: /\.js$/,
-				loader: require.resolve('babel-loader'),
-				include: [
-					/bower_components/,
-					path.resolve('./node_modules/@financial-times/n-handlebars/src/helpers'),
-					path.resolve('./server/helpers'), // more handlebars helpers
-					path.resolve('./client'),
-					path.resolve('./config'),
-					path.resolve('./shared'),
-					/@financial-times\/n-card/,
-					/@financial-times\/n-email-article/,
-					/@financial-times\/n-image/,
-					/@financial-times\/n-myft-ui/,
-					/@financial-times\/n-notification/,
-					/@financial-times\/n-section/,
-					/@financial-times\/n-ui/,
-					/@financial-times\/n-teaser/,
-					/@financial-times\/n-counter-ad-blocking/,
-					/@financial-times\/n-native-ads/,
-					/@financial-times\/n-tourtip/,
-					/.*/
-				],
-				exclude: [
-					/node_modules/
-				],
+				loader: 'babel-loader',
 				query: {
 					babelrc: false, // ignore any .babelrc in project & dependencies
 					cacheDirectory: true,
 					plugins: [
-						require.resolve('babel-plugin-add-module-exports', true),
-						[
-							require.resolve('babel-plugin-transform-runtime'),
+						// converts `export default 'foo'` to `exports.default = 'foo'`
+						require.resolve('babel-plugin-add-module-exports'),
+
+						// ensures a module reqired multiple times is only transpiled once and
+						// is shared by all that use it rather than transpiling it each time
+						[ require.resolve('babel-plugin-transform-runtime'),
 							{
-								polyfill: false
+								helpers: false,
+								polyfill: false,
 							}
 						],
-						// require.resolve('babel-plugin-transform-es2015-modules-commonjs'), // not sure this was ever actually used??
-						[
-							require.resolve('babel-plugin-transform-es2015-classes'),
-							{
-								loose: true
-							}
-						]
-					],
-					presets: [
-						require.resolve('babel-preset-react'),
-						require.resolve('babel-preset-es2015')
-					]
-				},
-				// compact: process.argv.includes('--dev') ? false : true // not sure this was ever actually used??
 
+						// This is actually included in the 'es2015' preset but we need to override the
+						// `loose` option to be true
+						// TODO: stop transform-es2015-classes being loose. loose allows non-spec compliant classes.
+						[ require.resolve('babel-plugin-transform-es2015-classes'), { loose: true } ]
+
+						// converts import/export to commonjs, currently not used but
+						// will look to include it for browsers that can support modules
+						// require('babel-plugin-transform-es2015-modules-commonjs'),
+					],
+					presets: ['es2015', 'react']
+				}
 			},
 			{
 				test: /\.html$/,
@@ -169,37 +141,9 @@ module.exports = {
 		]
 	},
 
-	// sassLoader: {
-	// 	sourcemap: true,
-	// 	includePaths: [
-	// 		path.resolve('./bower_components'),
-	// 		path.resolve('./node_modules/@financial-times')
-	// 	],
-	// 	// NOTE: This line is important for preservation of comments needed by the css-extract-block plugin
-	// 	outputStyle: 'expanded'
-	// },
-	//
-	// postcss: () => {
-	// 	return [ autoprefixer({
-	// 		browsers: ['> 1%', 'last 2 versions', 'ie >= 9', 'ff ESR', 'bb >= 7', 'iOS >= 5'],
-	// 		flexbox: 'no-2009'
-	// 	}) ];
-	// },
-
 	plugins: [
 		new ExtractTextPlugin('[name]'),
-
-
 	],
-
-	// resolveLoader: {
-	// 	alias: {
-	// 		raw: 'raw-loader',
-	// 		imports: 'imports-loader',
-	// 		postcss: 'postcss-loader',
-	// 		sass: 'sass-loader',
-	// 	}
-	// },
 
 	output: {
 		filename: '[name]',
