@@ -31,38 +31,37 @@ const handlebarsConfig = () => {
 	};
 };
 
-const extractOptions = [
-		{
-			loader: 'css-loader',
-			options: {
-				minimize: process.argv.includes('--dev') ? false : true,
-				sourceMap: true
-			}
-		},
-		{
-			loader: 'postcss-loader',
-			options: {
-				plugins: () => [
-						autoprefixer({
-							browsers: ['> 1%', 'last 2 versions', 'ie >= 9', 'ff ESR', 'bb >= 7', 'iOS >= 5'],
-							flexbox: 'no-2009'
-						})
-					]
-			}
-		},
-		{
-			loader: 'sass-loader',
-			options: {
-				sourcemap: true,
-				includePaths: [
-					path.resolve('./bower_components'),
-					path.resolve('./node_modules/@financial-times')
-				],
-				// NOTE: This line is important for preservation of comments needed by the css-extract-block plugin
-				outputStyle: 'expanded'
-			}
+const extractOptions = [{
+		loader: 'css-loader',
+		options: {
+			minimize: process.argv.includes('--dev') ? false : true,
+			sourceMap: true
 		}
-	]
+	},
+	{
+		loader: 'postcss-loader',
+		options: {
+			plugins: () => [
+				autoprefixer({
+					browsers: ['> 1%', 'last 2 versions', 'ie >= 9', 'ff ESR', 'bb >= 7', 'iOS >= 5'],
+					flexbox: 'no-2009'
+				})
+			]
+		}
+	},
+	{
+		loader: 'sass-loader',
+		options: {
+			sourcemap: true,
+			includePaths: [
+				path.resolve('./bower_components'),
+				path.resolve('./node_modules/@financial-times')
+			],
+			// NOTE: This line is important for preservation of comments needed by the css-extract-block plugin
+			outputStyle: 'expanded'
+		}
+	}
+]
 
 module.exports = function () {
 	return {
@@ -76,7 +75,7 @@ module.exports = function () {
 				// 'node_modules',
 			],
 			// These JSON files are read in directories
-			descriptionFiles: [ 'bower.json', 'package.json'],
+			descriptionFiles: ['bower.json', 'package.json'],
 
 			// These fields in the description files are looked up when trying to resolve the package directory
 			mainFields: ['main', 'browser'],
@@ -137,12 +136,16 @@ module.exports = function () {
 							require.resolve('babel-plugin-add-module-exports', true),
 							[
 								require.resolve('babel-plugin-transform-runtime'),
-								{ polyfill: false }
+								{
+									polyfill: false
+								}
 							],
 							// require.resolve('babel-plugin-transform-es2015-modules-commonjs'), // not sure this was ever actually used??
 							[
 								require.resolve('babel-plugin-transform-es2015-classes'),
-								{ loose: true }
+								{
+									loose: true
+								}
 							]
 						],
 						presets: [
@@ -219,7 +222,7 @@ module.exports = function () {
 
 		output: {
 			filename: '[name]',
-			library: 'ftNextUi',
+			library: 'ftNextUi', // assigns to window.ftNextUi
 			devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
 		}
 	};
