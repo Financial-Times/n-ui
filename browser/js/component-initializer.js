@@ -4,7 +4,6 @@ import tracking from '../../components/n-ui/tracking';
 import date from 'o-date';
 import header from '../../components/n-ui/header';
 import oCookieMessage from 'o-cookie-message';
-import subscriptionOfferPrompt from 'n-marketing';
 import footer from '../../components/n-ui/footer';
 import offlineToast from '../../components/n-ui/offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
@@ -22,7 +21,6 @@ export const presets = {
 		footer: true,
 		date: true,
 		cookieMessage: true,
-		subscriptionOfferPrompt: true,
 		ads: true,
 		tooltip: true,
 		syndication: true
@@ -126,11 +124,6 @@ export class ComponentInitializer {
 					if (flags.get('cookieMessage') && config.features.cookieMessage && !this.initializedFeatures.cookieMessage) {
 						oCookieMessage.init();
 						this.initializedFeatures.cookieMessage = true;
-					}
-
-					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
-						subscriptionOfferPrompt({flags});
-						this.initializedFeatures.subscriptionOfferPrompt = true;
 					}
 
 					if (config.features.syndication && !this.initializedFeatures.syndication){
