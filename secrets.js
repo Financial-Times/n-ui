@@ -7,10 +7,6 @@ module.exports = {
 		'2111c0af-fc3a-446f-ab07-63aa74fbde8e', //file: components/n-ui/ads/js/krux.js.75
 		'05a3d326-9abe-5885-4ee2-8d58d9a9a4ea', //file: components/n-ui/header/js/promoHandler.js.59
 		'2ebf2cbe6b7508a03e0989ff57f1029e12c0506c', //file: components/n-ui/header/main.scss.10
-		'a9582121-87c2-09a7-0cc0-4caf594985d5', //file: components/n-ui/subscription-offer-prompt/index.js.9
-		'c1773439-53dc-df3d-9acc-20ce2ecde318', //file: components/n-ui/subscription-offer-prompt/index.js.10
-		'a9582121-87c2-09a7-0cc0-4caf594985d5', //file: components/n-ui/subscription-offer-prompt/lionel.js.170
-		'c1773439-53dc-df3d-9acc-20ce2ecde318', //file: components/n-ui/subscription-offer-prompt/lionel.js.172
 		'0bc92c56-3fa8-46aa-9f2f-11300332f79b', //file: components/n-ui/syndication/new-synders.js.2
 		'43d06a9a-5c72-4273-8738-b5cf26fa75b7', //file: components/n-ui/syndication/new-synders.js.3
 		'4998d861-8960-a8d1-3738-eae97bcd07a2', //file: components/n-ui/tracking/third-party/floodlight.js.20

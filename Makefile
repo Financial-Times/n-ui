@@ -11,13 +11,16 @@ demo: run
 
 run: build-css-loader
 ifneq ($(CIRCLECI),)
-	node demo/app
+	export FT_GRAPHITE_KEY=dummy; node demo/app
 else
-	nodemon demo/app
+	export FT_GRAPHITE_KEY=dummy; nodemon demo/app
 endif
 
 build:
 	webpack --config demo/webpack.config.js
+
+build-production:
+	build-bundle
 
 watch:
 	webpack --config demo/webpack.config.js --watch
@@ -41,6 +44,7 @@ test-build:
 test-server: export FT_NEXT_BACKEND_KEY=test-backend-key
 test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
 test-server: export FT_NEXT_BACKEND_KEY_OLDEST=test-backend-key-oldest
+test-server: export FT_GRAPHITE_KEY=test-graphite-key
 test-server: copy-stylesheet-partial
 ifneq ($(CIRCLECI),)
 ifeq ($(CIRCLE_TAG),)
@@ -60,6 +64,17 @@ copy-stylesheet-partial:
 
 build-css-loader:
 	uglifyjs browser/layout/src/css-loader.js -o browser/layout/partials/css-loader.html
+
+build-bundle:
+	webpack --bail --config build/deploy/webpack.deploy.config.js --define process.env.NODE_ENV="'production'"
+
+deploy-s3:
+	node ./build/deploy/s3.js
+
+rebuild-user-facing-apps:
+	# only autodeploy all apps in office hours
+	HOUR=$$(date +%H); DAY=$$(date +%u); if [ $$HOUR -ge 8 ] && [ $$HOUR -lt 16 ] && [ $$DAY -ge 0 ] && [ $$DAY -lt 6 ]; then \
+	echo "REBUILDING ALL APPS" && sleep 20 && nht rebuild --all --serves user-page; fi
 
 test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
@@ -91,11 +106,4 @@ endif
 # Test-dev is only for development environments.
 test-dev: verify test-browser-dev test-webpack
 
-deploy:
-	webpack --bail --config build/deploy/webpack.deploy.config.js --define process.env.NODE_ENV="'production'"
-	node ./build/deploy/s3.js
-	$(MAKE) build-css-loader
-	$(MAKE) npm-publish
-	# only autodeploy all apps in office hours
-	HOUR=$$(date +%H); DAY=$$(date +%u); if [ $$HOUR -ge 8 ] && [ $$HOUR -lt 16 ] && [ $$DAY -ge 0 ] && [ $$DAY -lt 6 ]; then \
-	echo "REBUILDING ALL APPS" && sleep 20 && nht rebuild --all --serves user-page; fi
+deploy: build-bundle deploy-s3 build-css-loader npm-publish rebuild-user-facing-apps

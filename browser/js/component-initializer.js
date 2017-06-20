@@ -4,7 +4,6 @@ import tracking from '../../components/n-ui/tracking';
 import date from 'o-date';
 import header from '../../components/n-ui/header';
 import oCookieMessage from 'o-cookie-message';
-import subscriptionOfferPrompt from '../../components/n-ui/subscription-offer-prompt';
 import footer from '../../components/n-ui/footer';
 import offlineToast from '../../components/n-ui/offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
@@ -22,7 +21,6 @@ export const presets = {
 		footer: true,
 		date: true,
 		cookieMessage: true,
-		subscriptionOfferPrompt: true,
 		ads: true,
 		tooltip: true,
 		syndication: true
@@ -102,6 +100,13 @@ export class ComponentInitializer {
 				this.initializedFeatures.date = true
 			}
 
+			if (flags.get('adInitEarlierNui')){
+				if (config.features.ads && !this.initializedFeatures.ads) {
+					ads.init(flags, appInfo, config.features.ads);
+					this.initializedFeatures.ads = true
+				}
+			}
+
 			if (config.features.lazyLoadImages && !this.initializedFeatures.lazyLoadImages) {
 				lazyLoadImages();
 				this.initializedFeatures.lazyLoadImages = true
@@ -121,11 +126,6 @@ export class ComponentInitializer {
 						this.initializedFeatures.cookieMessage = true;
 					}
 
-					if (config.features.subscriptionOfferPrompt && !this.initializedFeatures.subscriptionOfferPrompt) {
-						subscriptionOfferPrompt(flags);
-						this.initializedFeatures.subscriptionOfferPrompt = true;
-					}
-
 					if (config.features.syndication && !this.initializedFeatures.syndication){
 						syndication.init(flags);
 						this.initializedFeatures.syndication = true;
@@ -136,9 +136,11 @@ export class ComponentInitializer {
 				.then(cb)
 				.then(() => {
 					// TODO - lazy load this
-					if (config.features.ads && !this.initializedFeatures.ads) {
-						ads.init(flags, appInfo, config.features.ads);
-						this.initializedFeatures.ads = true
+					if (!flags.get('adInitEarlierNui')){
+						if (config.features.ads && !this.initializedFeatures.ads) {
+							ads.init(flags, appInfo, config.features.ads);
+							this.initializedFeatures.ads = true
+						}
 					}
 
 					if (!this.initializedFeatures.lazyTracking) {

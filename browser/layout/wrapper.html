@@ -36,25 +36,35 @@
 
 		<meta name="msapplication-TileColor" content="#fff1e0">
 		<meta name="msapplication-TileImage" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/mstile-144x144.png">
-		{{#if og}}
-		<meta property="og:title" content="{{ og.title }}">
-		<meta property="og:url" content="{{ og.url }}">
-		<meta property="og:description" content="{{ og.description }}">
-		{{#if og.image}}<meta property="og:image" content="{{ og.image }}">{{/if}}
-		<meta property="og:type" content="article">
-		<meta property="og:site_name" content="Financial Times">
-		{{/if}}
-		{{#if twitterCard}}
-		<meta property="twitter:card" content="{{ twitterCard.card }}">
-		<meta property="twitter:site" content="@FinancialTimes">
-		<meta property="twitter:title" content="{{ twitterCard.title }}">
-		<meta property="twitter:description" content="{{ twitterCard.description }}">
-		{{#if twitterCard.image}}
-		<meta property="twitter:image" content="{{ twitterCard.image }}">
+
+		{{#each openGraph}}
+		{{#each this}}
+		{{#if this}}
+		{{#ifTypeof this 'object'}}
+		{{#each this}}
+		<meta property="{{@../../key}}:{{@../key}}" content="{{this}}">
+		{{/each}}
 		{{else}}
-		<meta property="twitter:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png">
+		<meta property="{{@../key}}:{{@key}}" content="{{this}}">
+		{{/ifTypeof}}
 		{{/if}}
+		{{/each}}
+		{{/each}}
+		<meta property="og:locale" content="en_GB">
+		<meta property="og:site_name" content="Financial Times">
+		{{#unless openGraph.og.type}}
+		<meta property="og:type" content="website">
+		{{/unless}}
+
+		{{#each twitterCard}}
+		{{#if this}}
+		<meta name="twitter:{{@key}}" content="{{this}}">
 		{{/if}}
+		{{/each}}
+		<meta name="twitter:site" content="@FinancialTimes">
+		{{#unless openGraph.og.image}}
+		<meta name="twitter:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png">
+		{{/unless}}
 
 		{{#outputBlock 'head'}}{{/outputBlock}}
 

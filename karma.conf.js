@@ -5,7 +5,6 @@ const componentsToTest = [
 	'browser',
 	'components/n-ui/ads',
 	'components/n-ui/tracking',
-	'components/n-ui/subscription-offer-prompt'
 ];
 
 module.exports = function (karma) {

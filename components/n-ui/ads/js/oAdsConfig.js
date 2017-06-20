@@ -1,7 +1,7 @@
 const utils = require('./utils');
 const sandbox = require('./sandbox');
 const extend = require('o-ads').utils.extend;
-const apiUrlRoot = 'https://ads-api.ft.com/v1/'
+const apiUrlRoot = 'https://ads-api.ft.com/v1/';
 
 module.exports = function (flags, appName, adOptions) {
 	adOptions = adOptions || {};
@@ -55,6 +55,43 @@ module.exports = function (flags, appName, adOptions) {
 		return zone.join('/');
 	}
 
+	function setViewportMarginBy (variant) {
+		switch (variant) {
+			case '50':
+				return'50%';
+				break;
+			case '100':
+				return '100%';
+				break;
+			case '150':
+				return '150%';
+				break;
+			default:
+				return '0%';
+		}
+	}
+
+	function isSmallSize () {
+		return utils.getScreenSize() < 760
+	}
+
+	function isMediumSize () {
+		return utils.getScreenSize() >= 760 && utils.getScreenSize() < 980;
+	}
+
+	function getViewportMargin () {
+		let viewportMargin = '0%';
+		if (flags.get('adOptimizeLazyLoadSmall') && isSmallSize() ) {
+			const variant = flags.get('adOptimizeLazyLoadSmall');
+			viewportMargin = setViewportMarginBy(variant);
+		}
+		if (flags.get('adOptimizeLazyLoadMedium') && isMediumSize() ) {
+			const variant = flags.get('adOptimizeLazyLoadMedium');
+			viewportMargin = setViewportMarginBy(variant);
+		}
+		return viewportMargin;
+	}
+
 	return {
 		gpt: {
 			network: '5887',
@@ -75,7 +112,7 @@ module.exports = function (flags, appName, adOptions) {
 		krux: kruxConfig,
 		collapseEmpty: 'before',
 		dfp_targeting: utils.keyValueString(targeting),
-		lazyLoad: { viewportMargin: '0%' },
+		lazyLoad: { viewportMargin: getViewportMargin() },
 		targetingApi: adOptions.noTargeting ? null : {
 			user: `${apiUrlRoot}user`,
 			page: getContextualTargeting(appName),

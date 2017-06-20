@@ -18,6 +18,7 @@ describe('Config', () => {
 		sandbox.stub(utils, 'getReferrer', () => null );
 		targeting = sandbox.stub(document.documentElement, 'getAttribute');
 		targeting.withArgs('data-content-id').returns(fakeArticleUuid);
+
 	});
 
 	afterEach(() => {
@@ -25,6 +26,7 @@ describe('Config', () => {
 	});
 
 	describe('third party', () => {
+
 		it('Should set gpt configuration value according to app name', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article', false);
@@ -103,7 +105,170 @@ describe('Config', () => {
 			const config = oAdsConfig(flags, 'article');
 			expect(config.gpt.zone).to.equal('testDfpSite/testDfpZone');
 		});
+
 	})
+
+	describe('lazyLoad viewportMargin', () => {
+
+	// tests for adOptimizeLazyLoadSmall flag
+		it('Should pass 0% when screen size is wider than 760px and adOptimizeLazyLoadSmall flag is defined', () => {
+			sandbox.stub(utils, 'getScreenSize', () => { return 760; });
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoadSmall':
+					return '50';
+					break;
+					case 'adOptimizeLazyLoadMedium':
+					return false;
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'article');
+			expect(config.lazyLoad.viewportMargin).to.equal('0%');
+		});
+
+		it('Should pass 0% when screen size is less than 760px and adOptimizeLazyLoadSmall flag is undefined', () => {
+			sandbox.stub(utils, 'getScreenSize', () => { return 759; });
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoadSmall':
+					return undefined;
+					break;
+					case 'adOptimizeLazyLoadMedium':
+					return false;
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'article');
+			expect(config.lazyLoad.viewportMargin).to.equal('0%');
+		});
+
+		context('when screen size is less than 760px and adOptimizeLazyLoadSmall flag is defined', () => {
+
+			beforeEach(() => {
+				sandbox.stub(utils, 'getScreenSize', () => { return 759; });
+			});
+
+			afterEach(() => {
+				sandbox.restore();
+			});
+
+			['50', '100', '150'].forEach( margin => {
+
+				it(`Should pass ${margin}% when the flag\'s value is ${margin}`, () => {
+					const flags = { get: (flagName) => {
+						switch (flagName) {
+							case 'adOptimizeLazyLoadSmall':
+							return margin;
+							break;
+							case 'adOptimizeLazyLoadMedium':
+							return false;
+							break;
+							default:
+							return true;
+						}
+					}};
+					const config = oAdsConfig(flags, 'article');
+					expect(config.lazyLoad.viewportMargin).to.equal(`${margin}%`);
+				});
+
+			});
+
+		});
+
+	// tests for adOptimizeLazyLoadMedium flag
+		it('Should pass 0% when screen size is wider than 980px and adOptimizeLazyLoadMedium flag is defined', () => {
+			sandbox.stub(utils, 'getScreenSize', () => { return 980; });
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoadSmall':
+					return false;
+					break;
+					case 'adOptimizeLazyLoadMedium':
+					return '50';
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'article');
+			expect(config.lazyLoad.viewportMargin).to.equal('0%');
+		});
+
+		it('Should pass 0% when screen size is less than 760px and adOptimizeLazyLoadMedium flag is defined', () => {
+			sandbox.stub(utils, 'getScreenSize', () => { return 759; });
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoadSmall':
+					return false;
+					break;
+					case 'adOptimizeLazyLoadMedium':
+					return '50';
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'article');
+			expect(config.lazyLoad.viewportMargin).to.equal('0%');
+		});
+
+		it('Should pass 0% when screen size is more than 760px, less than 980px and adOptimizeLazyLoadMedium flag is undefined', () => {
+			sandbox.stub(utils, 'getScreenSize', () => { return 800; });
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoadSmall':
+					return false;
+					break;
+					case 'adOptimizeLazyLoadMedium':
+					return undefined;
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'article');
+			expect(config.lazyLoad.viewportMargin).to.equal('0%');
+		});
+
+		context('when screen size is more than 760px, less than 980px and adOptimizeLazyLoadMedium flag is defined', () => {
+
+			beforeEach(() => {
+				sandbox.stub(utils, 'getScreenSize', () => { return 800; });
+			});
+
+			afterEach(() => {
+				sandbox.restore();
+			});
+
+			['50', '100', '150'].forEach( margin => {
+
+				it(`Should pass ${margin}% when the flag\'s value is ${margin}`, () => {
+					const flags = { get: (flagName) => {
+						switch (flagName) {
+							case 'adOptimizeLazyLoadSmall':
+							return false;
+							break;
+							case 'adOptimizeLazyLoadMedium':
+							return margin;
+							break;
+							default:
+							return true;
+						}
+					}};
+					const config = oAdsConfig(flags, 'article');
+					expect(config.lazyLoad.viewportMargin).to.equal(`${margin}%`);
+				});
+
+			});
+
+		});
+
+	});
 
 	describe('o-ads', () => {
 
