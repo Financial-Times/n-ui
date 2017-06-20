@@ -50,7 +50,7 @@ program
 
 		devAdvice();
 
-		shellpipe(`webpack --bail --config ${webpackConfPath}`)
+		shellpipe(`webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}`)
 			.then(() => options.production && assetHashes())
 			.then(aboutJson)
 			.then(downloadAssets)
