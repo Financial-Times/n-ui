@@ -17,10 +17,10 @@ else
 endif
 
 build:
-	webpack --config demo/webpack.config.js --dev
+	webpack --config demo/webpack.config.js
 
 watch:
-	webpack --config demo/webpack.config.js --dev --watch
+	webpack --config demo/webpack.config.js --watch
 
 test-browser:
 	karma start karma.conf.js
@@ -92,7 +92,7 @@ endif
 test-dev: verify test-browser-dev test-webpack
 
 deploy:
-	webpack --bail --config build/deploy/webpack.config.js
+	webpack --bail --config build/deploy/webpack.deploy.config.js --define process.env.NODE_ENV="'production'"
 	node ./build/deploy/s3.js
 	$(MAKE) build-css-loader
 	$(MAKE) npm-publish

@@ -1,8 +1,6 @@
 // Karma configuration
 // Generated on Fri Apr 18 2014 18:19:03 GMT+0100 (BST)
 
-const path = require('path');
-const BowerWebpackPlugin = require('bower-webpack-plugin');
 const componentsToTest = [
 	'browser',
 	'components/n-ui/ads',
@@ -22,42 +20,7 @@ module.exports = function (karma) {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap']
 			return obj;
 		}, {}),
-		webpack: {
-			module: {
-				loaders: [
-					{
-						test: /\.js$/,
-						loader: 'babel',
-						exclude: [
-							path.resolve('./node_modules')
-						],
-						query: {
-							cacheDirectory: true,
-							presets: ['es2015', 'react'],
-							plugins: [['add-module-exports', {loose: true}], ['transform-es2015-classes', { loose: true }]]
-						}
-					},
-					// set 'this' scope to window
-					{
-						test: /cssrelpreload\.js$/,
-						loader: 'imports-loader?this=>window'
-					},
-				]
-			},
-			plugins: [
-				new BowerWebpackPlugin({ includes: /\.js$/ }),
-			],
-			resolve: {
-				alias: {
-					'react': 'preact-compat',
-					'react-dom': 'preact-compat'
-				},
-				root: [
-					path.join(__dirname, 'bower_components'),
-					path.join(__dirname, 'node_modules')
-				]
-			}
-		},
+		webpack: require('./build/deploy/webpack.deploy.config')(),
 		reporters: ['progress'],
 		port: 9876,
 		colors: true,

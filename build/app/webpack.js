@@ -1,5 +1,4 @@
 const path = require('path');
-const nWebpack = require('../webpack/webpack.config.js');
 const fs = require('fs');
 const join = require('path').join;
 const Wrap = require('../lib/addons/wrap');
@@ -47,11 +46,18 @@ so this config is for all entry points defined by an app *excluding* the main.js
 
 Mostly this config will only be for main.css.
 */
-const nonMainJsWebpackConfig = nWebpack();
-nonMainJsWebpackConfig.entry = filterEntryKeys(baseConfig.entry, /main\.js$/, true);
-nonMainJsWebpackConfig.plugins.push(new ExtractCssBlockPlugin());
-webpackConfigs.push(nonMainJsWebpackConfig);
 
+const webpackMerge = require('webpack-merge');
+const commonConfig = require('./webpack.app.common.js');
+
+
+const nonMainJsWebpackConfig = webpackMerge(commonConfig, {
+	entry: filterEntryKeys(baseConfig.entry, /main\.js$/, true),
+	plugins:[
+		new ExtractCssBlockPlugin()
+	]
+})
+webpackConfigs.push(nonMainJsWebpackConfig);
 
 
 /*
@@ -63,17 +69,17 @@ has been loaded.
 */
 const nUiExternal = require('../../browser/js/webpack-entry');
 const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
-
-const mainJsWebpackConfig = nWebpack();
-mainJsWebpackConfig.entry = modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js'));
-mainJsWebpackConfig.externals = nUiExternalPoints;
-mainJsWebpackConfig.plugins.push(
-	new Wrap(
-		'(function(){function init(){\n',
-		'\n};window.ftNextnUiLoaded ? init() : document.addEventListener ? document.addEventListener(\'ftNextnUiLoaded\', init) : document.attachEvent(\'onftNextnUiLoaded\', init);})();',
-		{ match: /\.js$/ }
-	)
-);
+const mainJsWebpackConfig = webpackMerge(commonConfig, {
+	entry: modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js')),
+	externals: nUiExternalPoints,
+	plugins:[
+		new Wrap(
+			'(function(){function init(){\n',
+			'\n};window.ftNextnUiLoaded ? init() : document.addEventListener ? document.addEventListener(\'ftNextnUiLoaded\', init) : document.attachEvent(\'onftNextnUiLoaded\', init);})();',
+			{ match: /\.js$/ }
+		)
+	]
+})
 webpackConfigs.push(mainJsWebpackConfig);
 
 
@@ -106,10 +112,11 @@ If you do not need this behaviour run
 		throw 'Add /public/n-ui/ to your .gitignore to start building a local app shell';
 	}
 
-	const appShellWebpackConfig = nWebpack();
-	appShellWebpackConfig.entry = {
-		'./public/n-ui/es5.js': './bower_components/n-ui/build/deploy/wrapper.js'
-	};
+	const appShellWebpackConfig = webpackMerge(commonConfig, {
+		entry: {
+			'./public/n-ui/es5.js': './bower_components/n-ui/build/deploy/wrapper.js'
+		}
+	})
 	webpackConfigs.push(appShellWebpackConfig)
 }
 

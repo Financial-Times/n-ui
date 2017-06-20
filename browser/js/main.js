@@ -1,5 +1,4 @@
 // to avoid race conditions relating to Symbol polyfills
-import 'babel-polyfill-silencer';
 
 import { ComponentInitializer } from './component-initializer';
 
