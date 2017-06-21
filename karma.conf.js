@@ -19,7 +19,7 @@ module.exports = function (karma) {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap']
 			return obj;
 		}, {}),
-		webpack: require('./build/deploy/webpack.deploy.config')(),
+		webpack: require('./build/deploy/webpack.deploy.config'),
 		reporters: ['progress'],
 		port: 9876,
 		colors: true,
