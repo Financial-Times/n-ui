@@ -48,10 +48,10 @@ Mostly this config will only be for main.css.
 */
 
 const webpackMerge = require('webpack-merge');
-const commonConfig = require('./webpack.app.common.js');
+const commonAppConfig = require('./webpack.app.common.js');
 
 
-const nonMainJsWebpackConfig = webpackMerge(commonConfig, {
+const nonMainJsWebpackConfig = webpackMerge(commonAppConfig, {
 	entry: filterEntryKeys(baseConfig.entry, /main\.js$/, true),
 	plugins:[
 		new ExtractCssBlockPlugin()
@@ -69,7 +69,7 @@ has been loaded.
 */
 const nUiExternal = require('../../browser/js/webpack-entry');
 const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
-const mainJsWebpackConfig = webpackMerge(commonConfig, {
+const mainJsWebpackConfig = webpackMerge(commonAppConfig, {
 	entry: modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js')),
 	externals: nUiExternalPoints,
 	plugins:[
@@ -112,7 +112,7 @@ If you do not need this behaviour run
 		throw 'Add /public/n-ui/ to your .gitignore to start building a local app shell';
 	}
 
-	const appShellWebpackConfig = webpackMerge(commonConfig, {
+	const appShellWebpackConfig = webpackMerge(commonAppConfig, {
 		entry: {
 			'./public/n-ui/es5.js': './bower_components/n-ui/build/deploy/wrapper.js'
 		}
