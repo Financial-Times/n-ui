@@ -1,11 +1,14 @@
 const polyfillIo = require('./polyfill-io');
 
-module.exports = ({ linkHeaderHelper, nUiConfig, nUiUrlRoot, useLocalAppShell, assetHasher, stylesheetManager}) => {
-	// helper to build stylesheet paths
-	const getStylesheetPath = stylesheetName => {
-		return /n-ui/.test(stylesheetName) ? `${nUiUrlRoot}${stylesheetName}.css` : assetHasher(`${stylesheetName}.css`)
+const stylesheetNameToObject = name => {
+	const result = {file: `${name}.css`}
+	if (/n-ui/.test(name)) {
+		result.isNUi = true;
 	}
+	return result;
+}
 
+module.exports = ({ linkHeaderHelper, nUiConfig, getAssetPath, useLocalAppShell, stylesheetManager}) => {
 	return (req, res, next) => {
 
 		// define a helper for adding a link header
@@ -30,17 +33,17 @@ module.exports = ({ linkHeaderHelper, nUiConfig, nUiUrlRoot, useLocalAppShell, a
 
 			res.locals.polyfillIo = polyfillIo(res.locals.flags);
 
-			res.locals.javascriptBundles.push(res.locals.polyfillIo.enhanced)
+			res.locals.javascriptBundles.push(
+				res.locals.polyfillIo.enhance,
+				getAssetPath({
+					file: `es5${(res.locals.flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
+					flags: res.locals.flags,
+					isNui: true
+				})
+				getAssetPath('main-without-n-ui.js')
+			)
 
-			const nUiJsFileName = `es5${(res.locals.flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`;
-
-			if (res.locals.flags.nUiHashedAssets) {
-				res.locals.javascriptBundles.push(assetHasher(nUiJsFileName, true))
-			} else {
-				res.locals.javascriptBundles.push(`${nUiUrlRoot}${nUiJsFileName}`)
-			}
-
-			res.locals.javascriptBundles.push(assetHasher('main-without-n-ui.js'))
+			res.locals.javascriptBundles.push()
 
 			// output the default link headers just before rendering
 			const originalRender = res.render;
@@ -54,8 +57,8 @@ module.exports = ({ linkHeaderHelper, nUiConfig, nUiUrlRoot, useLocalAppShell, a
 				res.locals.stylesheets.inline = stylesheetManager.concatenateStyles(res.locals.stylesheets.inline);
 
 				// TODO collect metrics on this similar to inline stylesheets
-				res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(getStylesheetPath);
-				res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(getStylesheetPath);
+				res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(stylesheetNameToObject).map(getAssetPath);
+				res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(stylesheetNameToObject).map(getAssetPath);
 
 				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
 				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));

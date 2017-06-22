@@ -7,6 +7,7 @@ const messages = require('../messages');
 const hashedAssets = require('./hashed-assets');
 const verifyExistence = require('./verify-existence');
 const middlewareFactory = require('./middleware-factory');
+const getAssetPath = require('./get-asset-path');
 
 function init (options, directory, app) {
 
@@ -42,6 +43,7 @@ function init (options, directory, app) {
 	} catch (e) {}
 	refs.nUiUrlRoot = nUiManager.getUrlRoot();
 
+	refs.getAssetPath = getAssetPath(nUiUrlRoot, assetHasher)
 	app.use(middlewareFactory(refs));
 }
 
