@@ -39,7 +39,7 @@ const generateAssetHashes = require('../lib/generate-asset-hashes')
 
 expectedAssets()
 	.then(brotlify)
-	.then(() => generateAssetHashes('dist/assets'))
+	.then(() => generateAssetHashes('dist/assets', true))
 	.then(() => process.exit(0))
 	.catch(err => {
 		console.log(err) //eslint-disable-line
