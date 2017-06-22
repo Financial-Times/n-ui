@@ -30,11 +30,17 @@ module.exports = ({ linkHeaderHelper, nUiConfig, nUiUrlRoot, useLocalAppShell, a
 
 			res.locals.polyfillIo = polyfillIo(res.locals.flags);
 
-			res.locals.javascriptBundles.push(
-				`${nUiUrlRoot}es5${(res.locals.flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
-				assetHasher('main-without-n-ui.js'),
-				res.locals.polyfillIo.enhanced
-			);
+			res.locals.javascriptBundles.push(res.locals.polyfillIo.enhanced)
+
+			const nUiJsFileName = `es5${(res.locals.flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`;
+
+			if (res.locals.flags.nUiHashedAssets) {
+				res.locals.javascriptBundles.push(assetHasher(nUiJsFileName, true))
+			} else {
+				res.locals.javascriptBundles.push(`${nUiUrlRoot}${nUiJsFileName}`)
+			}
+
+			res.locals.javascriptBundles.push(assetHasher('main-without-n-ui.js'))
 
 			// output the default link headers just before rendering
 			const originalRender = res.render;
