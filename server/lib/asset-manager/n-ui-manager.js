@@ -27,7 +27,7 @@ const getReleaseName = directory => {
 }
 
 
-module.exports.init = ({ directory, assetHasher }) => {
+module.exports.init = (directory, assetHasher) => {
 	const localAppShell = process.env.NEXT_APP_SHELL === 'local';
 	// Attempt to get information about which version of n-ui is installed
 	try {

@@ -8,7 +8,7 @@ const stylesheetNameToObject = name => {
 	return result;
 }
 
-module.exports = ({ linkHeaderHelper, nUiConfig, getAssetPath, useLocalAppShell, stylesheetManager}) => {
+module.exports = ({ linkHeaderHelper, getAssetPath, useLocalAppShell, stylesheetManager}) => {
 	return (req, res, next) => {
 
 		// define a helper for adding a link header
@@ -29,19 +29,17 @@ module.exports = ({ linkHeaderHelper, nUiConfig, getAssetPath, useLocalAppShell,
 			res.locals.stylesheets.inline = ['head']
 			res.locals.stylesheets.lazy = ['main']
 
-			res.locals.nUiConfig = nUiConfig;
-
 			res.locals.polyfillIo = polyfillIo(res.locals.flags);
 
 			res.locals.javascriptBundles.push(
-				res.locals.polyfillIo.enhance,
+				res.locals.polyfillIo.enhanced,
 				getAssetPath({
 					file: `es5${(res.locals.flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
 					flags: res.locals.flags,
-					isNui: true
-				})
+					isNUi: true
+				}),
 				getAssetPath('main-without-n-ui.js')
-			)
+			);
 
 			res.locals.javascriptBundles.push()
 
@@ -57,8 +55,10 @@ module.exports = ({ linkHeaderHelper, nUiConfig, getAssetPath, useLocalAppShell,
 				res.locals.stylesheets.inline = stylesheetManager.concatenateStyles(res.locals.stylesheets.inline);
 
 				// TODO collect metrics on this similar to inline stylesheets
-				res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(stylesheetNameToObject).map(getAssetPath);
-				res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(stylesheetNameToObject).map(getAssetPath);
+				res.locals.stylesheets.lazy = res.locals.stylesheets.lazy
+					.map(name => getAssetPath(stylesheetNameToObject(name)))
+				res.locals.stylesheets.blocking = res.locals.stylesheets.blocking
+					.map(name => getAssetPath(stylesheetNameToObject(name)))
 
 				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
 				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));

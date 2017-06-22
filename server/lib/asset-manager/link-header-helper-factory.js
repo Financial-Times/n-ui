@@ -1,4 +1,4 @@
-module.exports = function linkHeaderFactory ({ assetHasher }) {
+module.exports = function linkHeaderFactory (assetHasher) {
 
 	return function (file, meta, opts) {
 		meta = meta || {};
