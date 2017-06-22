@@ -57,7 +57,7 @@
 				{{#if @root.editions}}
 					{{#each @root.editions.others}}
 						<li class="o-header__drawer-menu-item" data-trackable="edition-switcher">
-							<a class="o-header__drawer-menu-link" href="/?edition={{id}}" data-trackable="{{id}}">Switch to {{name}} Edition</a>
+							<a class="o-header__drawer-menu-link" href="{{url}}?edition={{id}}" data-trackable="{{id}}">Switch to {{name}} Edition</a>
 						</li>
 					{{/each}}
 				{{/if}}
