@@ -2,12 +2,6 @@
 const shellpromise = require('shellpromise');
 const fetch = require('node-fetch');
 const deployStatic = require('@financial-times/n-heroku-tools').deployStatic.task;
-const denodeify = require('denodeify');
-const compress = denodeify(require('iltorb').compress);
-const path = require('path')
-const fs = require('fs');
-const readFile = denodeify(fs.readFile);
-const writeFile = denodeify(fs.writeFile);
 const getVersion = require('./get-version');
 const {version, isOfficialRelease} = getVersion();
 const semver = require('semver');

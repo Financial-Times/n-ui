@@ -68,7 +68,7 @@ build-css-loader:
 build-bundle:
 	webpack --bail --config build/deploy/webpack.deploy.config.js --define process.env.NODE_ENV="'production'"
 
-build-deploy-assets: build-bundle build-css-loader
+build-dist: build-bundle build-css-loader
 	node ./build/deploy/build-auxilliary-files.js
 
 deploy-s3:
@@ -103,7 +103,7 @@ a11y: test-build pally-conf
 
 # Note: `run` executes `node demo/app`, which fires up express, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
-test: developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y build-deploy-assets
+test: developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y build-dist
 
 developer-note:
 ifeq ($(NODE_ENV),) # Not production
