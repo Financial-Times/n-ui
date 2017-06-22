@@ -5,6 +5,7 @@ const deployStatic = require('@financial-times/n-heroku-tools').deployStatic.tas
 const getVersion = require('./get-version');
 const {version, isOfficialRelease} = getVersion();
 const semver = require('semver');
+const expectedBuiltFiles = require('./expected-built-files');
 
 function purgeOnce (path, message) {
 	return fetch(path, {
@@ -37,13 +38,6 @@ function getFileList (dir) {
 				.filter(f => !!f)
 		)
 }
-
-const expectedBuiltFiles = [
-	'es5.js',
-	'es5.min.js',
-	'head-n-ui-core.css',
-	'n-ui-core.css'
-]
 
 function noUnexpectedAssets (files) {
 	files

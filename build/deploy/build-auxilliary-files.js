@@ -5,12 +5,7 @@ const fs = require('fs');
 const readFile = denodeify(fs.readFile);
 const writeFile = denodeify(fs.writeFile);
 
-const expectedBuiltFiles = [
-	'es5.js',
-	'es5.min.js',
-	'head-n-ui-core.css',
-	'n-ui-core.css'
-]
+const expectedBuiltFiles = require('./expected-built-files');
 
 function expectedAssets () {
 	return Promise.resolve(
