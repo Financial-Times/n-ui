@@ -42,7 +42,7 @@ app.get('/components/n-ui/:component', (req, res) => {
 	} catch (e) {
 		// if no config it's probably a request for a sourcemap from an inlined stylesheet, which just causes a load of
 		// confusing errors
-		return res.sendStatus(404)
+		return res.sendStatus(404);
 	}
 	const handlebarsDataClone = JSON.parse(JSON.stringify(config.handlebarsData));
 	const model = Object.assign({
@@ -60,7 +60,7 @@ app.get('*', (req, res) => {
 	})
 		.then(response => {
 			response.body.pipe(res);
-		})
+		});
 });
 
 app.listen(5005)
@@ -78,7 +78,7 @@ app.listen(5005)
 			});
 
 			pa11y.on('close', (code) => {
-				process.exit(code)
+				process.exit(code);
 			});
 		}
 		// In CircleCI: Deploy a test static site to s3 (Amazon AWS) for testing.
@@ -116,7 +116,7 @@ app.listen(5005)
 				.catch(err => {
 					console.error(err) //eslint-disable-line
 					process.exit(2);
-				})
+				});
 		}
 		else {
 			const developerFeedback = '*\r\n* Developers note: _test-server/app only does anything if there\'s a `process.env.PA11Y` or a `process.env.CIRCLE_BUILD_NUM` environment variable. Basically, it\'s only meant to run in CircleCI. \r\n*';
