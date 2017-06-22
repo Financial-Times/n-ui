@@ -68,7 +68,11 @@ build-css-loader:
 build-bundle:
 	webpack --bail --config build/deploy/webpack.deploy.config.js --define process.env.NODE_ENV="'production'"
 
+build-deploy-assets: build-bundle build-css-loader
+	node ./build/deploy/build-auxilliary-files.js
+
 deploy-s3:
+	# deploy to urls using the real file name on s3
 	node ./build/deploy/s3.js
 
 rebuild-user-facing-apps:
@@ -97,7 +101,7 @@ a11y: test-build pally-conf
 
 # Note: `run` executes `node demo/app`, which fires up express, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
-test: developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y
+test: developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y build-deploy-assets
 
 developer-note:
 ifeq ($(NODE_ENV),) # Not production
@@ -111,4 +115,4 @@ endif
 # Test-dev is only for development environments.
 test-dev: verify test-browser-dev test-webpack
 
-deploy: build-bundle deploy-s3 build-css-loader npm-publish rebuild-user-facing-apps
+deploy: deploy-s3 npm-publish rebuild-user-facing-apps

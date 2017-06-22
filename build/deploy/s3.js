@@ -51,18 +51,6 @@ const expectedBuiltFiles = [
 	'n-ui-core.css'
 ]
 
-function expectedAssets () {
-	return Promise.resolve(
-		expectedBuiltFiles
-			.map(filename => {
-				if(!fs.existsSync(path.join(__dirname, '../../dist/assets/', filename))) {
-					throw new Error(`${filename} has not been built`);
-				}
-				return `./dist/assets/${filename}`
-			})
-	)
-}
-
 function noUnexpectedAssets (files) {
 	files
 		.filter(f => /\.(js|css)$/.test(f))
@@ -78,22 +66,8 @@ To avoid future regressions please add to the list (in build/deploy/s3.js)
 	return files;
 }
 
-
-function brotlify (files) {
-	return Promise.all(
-		files
-			.map(fileName =>
-				readFile(path.join(process.cwd(), fileName))
-					.then(compress)
-					.then(contents => writeFile(path.join(process.cwd(), fileName + '.br'), contents))
-			)
-	)
-}
-
 function staticAssets () {
-	return expectedAssets()
-		.then(brotlify)
-		.then(() => getFileList('assets'))
+	return getFileList('assets')
 		.then(noUnexpectedAssets)
 		.then(files =>
 			deployStatic({
