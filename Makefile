@@ -17,13 +17,13 @@ else
 endif
 
 build:
-	webpack --config demo/webpack.config.js --dev
+	webpack --config demo/webpack.config.js
 
 build-production:
 	build-bundle
 
 watch:
-	webpack --config demo/webpack.config.js --dev --watch
+	webpack --config demo/webpack.config.js --watch
 
 test-browser:
 	karma start karma.conf.js
@@ -66,7 +66,7 @@ build-css-loader:
 	uglifyjs browser/layout/src/css-loader.js -o browser/layout/partials/css-loader.html
 
 build-bundle:
-	webpack --bail --config build/deploy/webpack.config.js
+	webpack --bail --config build/deploy/webpack.deploy.config.js --define process.env.NODE_ENV="'production'"
 
 deploy-s3:
 	node ./build/deploy/s3.js

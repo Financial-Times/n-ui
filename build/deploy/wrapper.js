@@ -6,10 +6,6 @@ nUi.bootstrap(window.ftNextUiConfig || {
 	preload: true
 });
 
-// such a hack, but ensures this event fires after the above
-// has been assigned to a global variable by webpack
-setTimeout(function () {
-	ftNextFireCondition('nUiLoaded');
-}, 0);
+window.ftNextUi = nUi
 
-module.exports = nUi
+ftNextFireCondition('nUiLoaded');

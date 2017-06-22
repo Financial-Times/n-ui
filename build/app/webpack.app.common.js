@@ -1,6 +1,15 @@
-const BowerWebpackPlugin = require('bower-webpack-plugin');
+/*
+This is the webpack config that is shared amongst building an individual app's js & css.
+
+It uses webpack-merge to add this config to the common config.
+If you need to add any config which will be shared amongst an app build and an
+n-ui build please add it to the common config.
+*/
+
 const path = require('path');
 const glob = require('glob');
+const webpackMerge = require('webpack-merge');
+const commonConfig = require('../webpack.common.config.js');
 
 const handlebarsConfig = () => {
 	const extraHelperDirs = glob.sync('**/node_modules/@financial-times/**/handlebars-helpers')
@@ -21,24 +30,15 @@ const handlebarsConfig = () => {
 	};
 };
 
-module.exports = function (options, output) {
-	if (!options.language || options.language === 'js') {
-		output.module.loaders = output.module.loaders.concat([
-			// don't use requireText plugin (use the 'raw' plugin)
-			{
-				test: /follow-email\.js$/,
-				loader: require.resolve('imports-loader'),
-				query: 'requireText=>require'
-			},
+module.exports = webpackMerge(commonConfig, {
+	module: {
+		// These rules are added to the common ones rather than replacing them
+		rules: [
 			{
 				test: /\.html$/,
-				loader: 'handlebars?' + JSON.stringify(handlebarsConfig())
+				loader: 'handlebars-loader',
+				options: handlebarsConfig()
 			}
-		]);
-		output.plugins.push(
-			new BowerWebpackPlugin({ includes: /\.js$/, modulesDirectories: path.resolve('./bower_components') })
-		)
-		output.resolveLoader.alias.raw = require.resolve('raw-loader');
-		output.resolveLoader.alias.imports = require.resolve('imports-loader');
+		]
 	}
-}
+});

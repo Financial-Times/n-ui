@@ -16,7 +16,6 @@
   ],
   "main": "browser/js/main.js",
   "dependencies": {
-    "babel-polyfill-silencer": "^1.1.0",
     "fontfaceobserver": "^1.7.1",
     "ftdomdelegate": "^2.0.3",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",

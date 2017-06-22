@@ -1,18 +1,14 @@
-'use strict';
+const webpackMerge = require('webpack-merge');
+const commonConfig = require('../build/webpack.common.config.js');
+const ExtractCssBlockPlugin = require('extract-css-block-webpack-plugin');
 
-const nWebpack = require('../build/webpack');
-const headCss = require('../build/lib/head-css')
-const path = require('path');
-const webpackConfig = headCss(nWebpack({
-	withBabelPolyfills: false,
+module.exports = webpackMerge(commonConfig, {
 	entry: {
 		'./public/main-without-n-ui.js': './demo/client/main.js',
 		'./public/main.css': './demo/client/main.scss'
 	},
-	includes: [
-		path.join(__dirname, '../')
-	],
-	exclude: [/node_modules/]
-}));
-
-module.exports = webpackConfig;
+	plugins: [
+		// splits one stylesheet into multiple stylesheets based on nUiStylesheetStart/End comments
+		new ExtractCssBlockPlugin(),
+	]
+});
