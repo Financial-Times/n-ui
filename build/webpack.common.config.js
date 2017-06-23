@@ -40,7 +40,7 @@ const extractOptions = [{
 			outputStyle: 'expanded'
 		}
 	}
-]
+];
 
 module.exports = {
 	// Abort the compilation on first error
@@ -135,4 +135,4 @@ module.exports = {
 		devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
 	}
 
-}
+};
