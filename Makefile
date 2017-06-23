@@ -83,11 +83,11 @@ deploy-s3:
 rebuild-user-facing-apps:
 # Don't rebuild apps if a beta tag release
 ifneq (,$(findstring beta,$(CIRCLE_TAG)))
+	echo "This looks like a beta release so I won't rebuild any apps";
+else
 	# only autodeploy all apps in office hours
 	HOUR=$$(date +%H); DAY=$$(date +%u); if [ $$HOUR -ge 8 ] && [ $$HOUR -lt 16 ] && [ $$DAY -ge 0 ] && [ $$DAY -lt 6 ]; then \
 	echo "REBUILDING ALL APPS" && sleep 20 && nht rebuild --all --serves user-page; fi
-else
-	echo "This looks like a beta release so I won't rebuild any apps";
 endif
 
 test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
