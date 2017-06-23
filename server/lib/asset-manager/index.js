@@ -30,7 +30,7 @@ function init (options, directory, app) {
 	} catch (e) {}
 
 	// initialise logic to calculate paths to assets
-	Object.assign(refs, assetPathManager(app.locals, directory))
+	Object.assign(refs, assetPathManager(app.locals, directory, refs.useLocalAppShell))
 
 	//expose the asset hashing helper to apps (in case they buidl non-standard files)
 	app.getHashedAssetUrl = refs.assetHasher;

@@ -2,8 +2,8 @@ const nUiManager = require('./n-ui-manager');
 const linkHeaderHelperFactory = require('./link-header-helper-factory');
 const hashedAssets = require('./hashed-assets');
 
-module.exports = (locals, directory) => {
-	const assetHasher = hashedAssets.init(locals).get;
+module.exports = (locals, directory, useLocalAppShell) => {
+	const assetHasher = hashedAssets.init(locals, useLocalAppShell).get;
 
 	const linkHeaderHelper = linkHeaderHelperFactory(assetHasher);
 

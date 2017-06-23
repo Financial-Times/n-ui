@@ -1,6 +1,6 @@
 const logger = require('@financial-times/n-logger').default;
 
-module.exports.init = (locals) => {
+module.exports.init = (locals, useLocalAppShell) => {
 	let assetHashes = {};
 
 	try {
@@ -21,11 +21,13 @@ module.exports.init = (locals) => {
 
 	return {
 		get: (file, isNui) => {
-			const fallback = `/${locals.__name}/${file}`;
+
 			if (isNui) {
+				const fallback = `/${locals.__name}/n-ui/${file}`;
 				const hashPath = `n-ui/${nUiAssetHashes[file]}`;
-				return !hashPath ? fallback : `//www.ft.com/__assets/hashed/${hashPath}`;
+				return (useLocalAppShell || !hashPath) ? fallback : `//www.ft.com/__assets/hashed/${hashPath}`;
 			} else {
+				const fallback = `/${locals.__name}/${file}`;
 				const hashPath = `${locals.__name}/${assetHashes[file]}`;
 				return (!locals.__isProduction || !hashPath) ? fallback : `//www.ft.com/__assets/hashed/${hashPath}`;
 			}
