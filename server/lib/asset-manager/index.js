@@ -29,11 +29,11 @@ function init (options, directory, app) {
 		app.locals.nUiConfig = Object.assign({}, require(path.join(directory, 'client/n-ui-config')), {preload: true})
 	} catch (e) {}
 
-	// initialise logic to calculate paths to assets
+	// initialise helper for calculating paths to assets
 	Object.assign(refs, assetPathManager(app.locals, directory, refs.useLocalAppShell))
 
-	//expose the asset hashing helper to apps (in case they buidl non-standard files)
-	app.getHashedAssetUrl = refs.assetHasher;
+	//expose the asset hashing helper to apps (in case they build non-standard files)
+	app.getHashedAssetUrl = refs.getAssetPath;
 
 	// use all the above in middleware to be used on each request
 	app.use(middlewareFactory(refs));
