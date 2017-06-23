@@ -22,8 +22,13 @@ module.exports.init = (locals) => {
 	return {
 		get: (file, isNui) => {
 			const fallback = `/${locals.__name}/${file}`;
-			const hashPath = isNui ? `n-ui/${nUiAssetHashes[file]}` : `${locals.__name}/${assetHashes[file]}`;
-			return (!locals.__isProduction || !hashPath) ? fallback : `//www.ft.com/__assets/hashed/${hashPath}`;
+			if (isNui) {
+				const hashPath = `n-ui/${nUiAssetHashes[file]}`;
+				return !hashPath ? fallback : `//www.ft.com/__assets/hashed/${hashPath}`;
+			} else {
+				const hashPath = `${locals.__name}/${assetHashes[file]}`;
+				return (!locals.__isProduction || !hashPath) ? fallback : `//www.ft.com/__assets/hashed/${hashPath}`;
+			}
 		}
 	}
 }
