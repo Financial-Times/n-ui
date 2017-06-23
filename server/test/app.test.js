@@ -10,9 +10,9 @@ let app;
 describe('simple app', function () {
 
 	before(() => {
+
 		fetchMock
-			.mock(/next-flags\.ft\.com/, [{name: 'flaggy'}])
-			.mock('https://www.ft.com/__assets/n-ui/cached/v1.1.1/head-n-ui-core.css', 'head-n-ui-core-new')
+			.mock(/next-flags\.ft\.com|ft-next-feature-flags-prod/, [{name: 'flaggy'}])
 			.mock('http://ft-next-health-eu.herokuapp.com/failure-simulation-config', {failures: []})
 			.catch(200);
 
@@ -47,7 +47,8 @@ describe('simple app', function () {
 				.expect(200, done);
 		});
 
-		it('should have a static resource', function (done) {
+		// apps do not serve static resources in prod
+		it.skip('should have a static resource', function (done) {
 			request(app)
 				.get('/demo-app/test.html')
 				.expect(200, 'Static file\n', done);
@@ -176,7 +177,7 @@ describe('simple app', function () {
 			request(app)
 				.get('/with-layout?layout=wrapper')
 				// .expect(200, /<link data-is-next rel="preload" href="\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css" as="style" onload=/)
-				.expect(200, /<link data-is-next rel="preload" href="\/demo-app\/main\.css" as="style" onload=/, done);
+				.expect(200, /<link data-is-next rel="preload" href="\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/56f3a89e\/main\.css" as="style" onload=/, done);
 		})
 
 		it('should not preload anything by default on non text/html requests', done => {
@@ -193,9 +194,15 @@ describe('simple app', function () {
 				.get('/templated')
 				.expect('Link', /<https:\/\/www\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
-				// .expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css>; as="style"; rel="preload"; nopush/)
-				.expect('Link', /<\/demo-app\/main\.css>; as="style"; rel="preload"; nopush/)
-				.expect('Link', /<\/demo-app\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/56f3a89e\/main\.css>; as="style"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/6988e3b1\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
+		});
+
+		it.skip('should preload hashed n-ui when flag is on', done => {
+			request(app)
+				.get('/templated')
+				.set('Cookie', 'next-flags=nUiHashedAssets:on')
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/123456\/es5\.min\.js>; as="script"; rel="preload"; nopush/, done)
 		});
 
 		it('should have preload link header for masthead', done => {
