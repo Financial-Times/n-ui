@@ -43,7 +43,6 @@ module.exports = (locals, directory, useLocalAppShell) => {
 	}
 
 	return {
-		assetHasher: getAssetPath,
 		getAssetPath: getAssetPath,
 		linkHeaderHelper: linkHeaderHelperFactory(getAssetPath)
 	}
