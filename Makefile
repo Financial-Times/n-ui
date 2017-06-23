@@ -1,4 +1,9 @@
-include n.Makefile
+node_modules/@financial-times/n-gage/index.mk:
+	npm install --no-save @financial-times/n-gage
+	touch $@
+
+-include node_modules/@financial-times/n-gage/index.mk
+
 
 .PHONY: build
 
@@ -41,9 +46,8 @@ test-browser-dev:
 test-build:
 	webpack --config demo/webpack.config.js
 
-test-server: export FT_NEXT_BACKEND_KEY=test-backend-key
-test-server: export FT_NEXT_BACKEND_KEY_OLD=test-backend-key-old
-test-server: export FT_NEXT_BACKEND_KEY_OLDEST=test-backend-key-oldest
+test-server: export NODE_ENV=production
+test-server: export HOSTEDGRAPHITE_APIKEY=dummykey
 test-server: export FT_GRAPHITE_KEY=test-graphite-key
 test-server: copy-stylesheet-partial
 ifneq ($(CIRCLECI),)

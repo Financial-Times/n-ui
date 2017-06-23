@@ -1,4 +1,4 @@
-const nExpress = require('@financial-times/n-express')
+const nExpress = require('@financial-times/n-express');
 const nextJsonLd = require('@financial-times/next-json-ld');
 const path = require('path');
 const fs = require('fs');
@@ -26,7 +26,7 @@ module.exports = options => {
 		layoutsDir: path.join(__dirname, '../browser/layout'),
 	}, options || {});
 
-	const {app, meta, addInitPromise} = nExpress.getAppContainer(options)
+	const {app, meta, addInitPromise} = nExpress.getAppContainer(options);
 
 	app.locals.__name = meta.name;
 	app.locals.__environment = process.env.NODE_ENV || '';
@@ -106,7 +106,7 @@ module.exports = options => {
 	}
 
 	return app;
-}
+};
 
 module.exports.Router = nExpress.Router;
 module.exports.static = nExpress.static;
