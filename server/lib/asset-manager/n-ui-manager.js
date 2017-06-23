@@ -2,7 +2,6 @@ const semver = require('semver');
 const path = require('path');
 
 let nUiBowerJson = {};
-let nUiUrlRoot;
 
 const getReleaseName = directory => {
 	try {
@@ -10,6 +9,7 @@ const getReleaseName = directory => {
 	} catch (e) {}
 
 	const nUiRelease = nUiBowerJson._release;
+
 	if (!nUiRelease) {
 		return 'dummy-release';
 	} else if (!semver.valid(nUiRelease)) {
@@ -24,23 +24,9 @@ const getReleaseName = directory => {
 		// point at a minor/major version if expedient in future
 		return 'v' + nUiRelease
 	}
-}
+};
 
-
-module.exports.init = ({ directory, assetHasher }) => {
-	const localAppShell = process.env.NEXT_APP_SHELL === 'local';
-	// Attempt to get information about which version of n-ui is installed
-	try {
-		if (localAppShell) {
-			nUiUrlRoot = assetHasher('n-ui/');
-		} else {
-			nUiUrlRoot = `//www.ft.com/__assets/n-ui/cached/${getReleaseName(directory)}/`;
-		}
-
-	} catch (e) {}
-}
-
-module.exports.getUrlRoot = () => nUiUrlRoot;
+module.exports.getReleaseName = getReleaseName;
 
 module.exports.getReleaseRoots = () => {
 	const releaseName = getReleaseName();
