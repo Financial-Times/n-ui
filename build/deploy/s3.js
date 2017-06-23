@@ -2,15 +2,10 @@
 const shellpromise = require('shellpromise');
 const fetch = require('node-fetch');
 const deployStatic = require('@financial-times/n-heroku-tools').deployStatic.task;
-const denodeify = require('denodeify');
-const compress = denodeify(require('iltorb').compress);
-const path = require('path')
-const fs = require('fs');
-const readFile = denodeify(fs.readFile);
-const writeFile = denodeify(fs.writeFile);
 const getVersion = require('./get-version');
 const {version, isOfficialRelease} = getVersion();
 const semver = require('semver');
+const expectedBuiltFiles = require('./expected-built-files');
 
 function purgeOnce (path, message) {
 	return fetch(path, {
@@ -44,25 +39,6 @@ function getFileList (dir) {
 		)
 }
 
-const expectedBuiltFiles = [
-	'es5.js',
-	'es5.min.js',
-	'head-n-ui-core.css',
-	'n-ui-core.css'
-]
-
-function expectedAssets () {
-	return Promise.resolve(
-		expectedBuiltFiles
-			.map(filename => {
-				if(!fs.existsSync(path.join(__dirname, '../../dist/assets/', filename))) {
-					throw new Error(`${filename} has not been built`);
-				}
-				return `./dist/assets/${filename}`
-			})
-	)
-}
-
 function noUnexpectedAssets (files) {
 	files
 		.filter(f => /\.(js|css)$/.test(f))
@@ -78,22 +54,8 @@ To avoid future regressions please add to the list (in build/deploy/s3.js)
 	return files;
 }
 
-
-function brotlify (files) {
-	return Promise.all(
-		files
-			.map(fileName =>
-				readFile(path.join(process.cwd(), fileName))
-					.then(compress)
-					.then(contents => writeFile(path.join(process.cwd(), fileName + '.br'), contents))
-			)
-	)
-}
-
 function staticAssets () {
-	return expectedAssets()
-		.then(brotlify)
-		.then(() => getFileList('assets'))
+	return getFileList('assets')
 		.then(noUnexpectedAssets)
 		.then(files =>
 			deployStatic({

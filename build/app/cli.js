@@ -5,7 +5,7 @@ const path = require('path');
 const shellpromise = require('shellpromise');
 const shellpipe = require('./shellpipe');
 const downloadAssets = require('./download-assets');
-const assetHashes = require('./asset-hashes')
+const assetHashes = require('../lib/generate-asset-hashes')
 
 const exit = err => {
 	logger.error(err);
