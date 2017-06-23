@@ -1,11 +1,13 @@
 const availableEditions = [
 	{
 		id: 'uk',
-		name: 'UK'
+		name: 'UK',
+		url: '/'
 	},
 	{
 		id: 'international',
-		name: 'International'
+		name: 'International',
+		url: '/'
 	}
 ];
 
