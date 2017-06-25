@@ -4,39 +4,46 @@ const stylesheetManager = require('./stylesheet-manager');
 const messages = require('../messages');
 const verifyExistence = require('./verify-existence');
 const middlewareFactory = require('./middleware-factory');
-const assetPathManager = require('./asset-path-manager');
+const assetUrlGenerator = require('./asset-url-generator');
+const linkHeaderHelperFactory = require('./link-header-helper-factory');
 
 function init (options, directory, app) {
 
-	const refs = { locals: app.locals, app, directory, options }
-
 	// don't start unless all the expected assets are present
-	verifyExistence.verify(refs);
+	verifyExistence.verify(app.locals);
 
 	// discover stylesheets so they can be inlined and linked to later
-	stylesheetManager.init(refs);
-	refs.stylesheetManager = stylesheetManager;
+	stylesheetManager.init(directory);
 
 	// handle local development
-	refs.useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
+	const useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
 	/* istanbul ignore next */
-	if (refs.useLocalAppShell) {
+	if (useLocalAppShell) {
 		logger.warn(messages.APP_SHELL_WARNING);
 	}
 
 	// make n-ui config for the client side available globally
 	try {
 		app.locals.nUiConfig = Object.assign({}, require(path.join(directory, 'client/n-ui-config')), {preload: true})
-	} catch (e) {}
+	} catch (e) {
+		// TODO turn this on in the next major release
+		// throw new Error('error loading n-ui config');
+	}
 
 	// initialise helper for calculating paths to assets
-	Object.assign(refs, assetPathManager(app.locals, directory, refs.useLocalAppShell))
+	const getAssetUrl = assetUrlGenerator(app.locals, directory, useLocalAppShell);
 
 	//expose the asset hashing helper to apps (in case they build non-standard files)
-	app.getHashedAssetUrl = refs.getAssetPath;
+	// TODO deprecate this name in future release
+	app.getHashedAssetUrl = getAssetUrl;
 
 	// use all the above in middleware to be used on each request
-	app.use(middlewareFactory(refs));
+	app.use(middlewareFactory({
+		getAssetUrl,
+		useLocalAppShell,
+		stylesheetManager,
+		linkHeaderHelper: linkHeaderHelperFactory(getAssetUrl)
+	}));
 }
 
 module.exports = {

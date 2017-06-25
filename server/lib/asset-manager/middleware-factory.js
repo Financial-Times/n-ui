@@ -8,7 +8,15 @@ const stylesheetNameToObject = name => {
 	return result;
 }
 
-module.exports = ({ linkHeaderHelper, getAssetPath, useLocalAppShell, stylesheetManager}) => {
+module.exports = ({
+	getAssetUrl,
+	useLocalAppShell,
+	stylesheetManager,
+	linkHeaderHelper
+}) => {
+
+
+
 	return (req, res, next) => {
 
 		// define a helper for adding a link header
@@ -33,12 +41,12 @@ module.exports = ({ linkHeaderHelper, getAssetPath, useLocalAppShell, stylesheet
 
 			res.locals.javascriptBundles.push(
 				res.locals.polyfillIo.enhanced,
-				getAssetPath({
+				getAssetUrl({
 					file: `es5${(res.locals.flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
 					flags: res.locals.flags,
 					isNUi: true
 				}),
-				getAssetPath('main-without-n-ui.js')
+				getAssetUrl('main-without-n-ui.js')
 			);
 
 			res.locals.javascriptBundles.push()
@@ -56,9 +64,9 @@ module.exports = ({ linkHeaderHelper, getAssetPath, useLocalAppShell, stylesheet
 
 				// TODO collect metrics on this similar to inline stylesheets
 				res.locals.stylesheets.lazy = res.locals.stylesheets.lazy
-					.map(name => getAssetPath(stylesheetNameToObject(name)))
+					.map(name => getAssetUrl(stylesheetNameToObject(name)))
 				res.locals.stylesheets.blocking = res.locals.stylesheets.blocking
-					.map(name => getAssetPath(stylesheetNameToObject(name)))
+					.map(name => getAssetUrl(stylesheetNameToObject(name)))
 
 				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
 				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
