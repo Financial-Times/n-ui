@@ -1,21 +1,11 @@
 const polyfillIo = require('./polyfill-io');
 
-const stylesheetNameToObject = name => {
-	const result = {file: `${name}.css`}
-	if (/n-ui/.test(name)) {
-		result.isNUi = true;
-	}
-	return result;
-}
-
 module.exports = ({
 	getAssetUrl,
 	useLocalAppShell,
 	stylesheetManager,
 	linkHeaderHelper
 }) => {
-
-
 
 	return (req, res, next) => {
 
@@ -64,9 +54,9 @@ module.exports = ({
 
 				// TODO collect metrics on this similar to inline stylesheets
 				res.locals.stylesheets.lazy = res.locals.stylesheets.lazy
-					.map(name => getAssetUrl(stylesheetNameToObject(name)))
+					.map(name => getAssetUrl(stylesheetManager.nameToUrlConfig(name)))
 				res.locals.stylesheets.blocking = res.locals.stylesheets.blocking
-					.map(name => getAssetUrl(stylesheetNameToObject(name)))
+					.map(name => getAssetUrl(stylesheetManager.nameToUrlConfig(name)))
 
 				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
 				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));

@@ -35,7 +35,7 @@ module.exports = {
 		}
 		// HACK: don't measure size when only head-n-ui-core is included as, almost certainly,
 		// it's just a html fragment, not a full page load, so no inline css will actually be output
-		// Todo - in next major version only do the asset linking (including inclusion of n-ui stylesheets)
+		// TODO - in next major version only do the asset linking (including inclusion of n-ui stylesheets)
 		// if the developer explicitly invokes it
 		if (stylesheetNames.length > 1 || stylesheetNames[0] !== 'head-n-ui-core') {
 			concatenatedStylesSizeCache[hash]
@@ -48,6 +48,14 @@ module.exports = {
 		}
 
 		return concatenatedStylesCache[hash];
+	},
+
+	nameToUrlConfig: name => {
+		const result = {file: `${name}.css`}
+		if (/n-ui/.test(name)) {
+			result.isNUi = true;
+		}
+		return result;
 	},
 
 	init: directory => {
