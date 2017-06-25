@@ -2,7 +2,7 @@ const logger = require('@financial-times/n-logger').default;
 const nUiManager = require('./n-ui-manager');
 const linkHeaderHelperFactory = require('./link-header-helper-factory');
 
-const readJsonHash = path => {
+const loadAssetHashesJson = path => {
 	try {
 		return require(`${path}`);
 	} catch(err) {
@@ -14,8 +14,8 @@ const readJsonHash = path => {
 
 module.exports = (locals, directory, useLocalAppShell) => {
 
-	const assetHashes = readJsonHash(`${directory}/public/asset-hashes.json`);
-	const nUiAssetHashes = readJsonHash(`${directory}/public/n-ui-asset-hashes.json`);
+	const assetHashes = loadAssetHashesJson(`${directory}/public/asset-hashes.json`);
+	const nUiAssetHashes = loadAssetHashesJson(`${directory}/public/n-ui-asset-hashes.json`);
 	const nUiReleaseName = nUiManager.getReleaseName(directory);
 	const nUiUnhashedAssetsRoot = useLocalAppShell ? '/${locals.__name}/n-ui/' : `//www.ft.com/__assets/n-ui/cached/${nUiReleaseName}/`;
 
