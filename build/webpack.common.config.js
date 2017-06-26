@@ -68,7 +68,8 @@ module.exports = {
 		mainFiles: [
 			'index',
 			'main',
-			'src/main-client' /* HACK: this is becaause of n-image's entrypoin not being main.js or index.js */
+			'src/main-client', /* HACK: this is because of n-image's entrypoint not being main.js or index.js */
+			'dist/main' /* HACK: this is because of n-storylines entrypoint not being main.js or index.js */
 		],
 
 		// These fields in the description files offer aliasing in this package
