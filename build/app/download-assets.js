@@ -18,12 +18,12 @@ const downloadAsset = (s3Name, localName) => {
 						if (res.ok) {
 							return res.text();
 						}
-						throw new Error('Failed to download ${s3Name} from s3');
+						throw new Error(`Failed to download ${s3Name} from s3`);
 					})
 					.then(text => {
 						// if it's an empty string, something probably went wrong
 						if (!text.length) {
-							throw new Error('Fetched empty ${s3Name} from s3');
+							throw new Error(`Fetched empty ${s3Name} from s3`);
 						}
 						return text;
 					})
