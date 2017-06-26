@@ -4,7 +4,7 @@ const join = require('path').join;
 const logger = require('@financial-times/n-logger').default;
 
 module.exports = {
-	verify: ({ locals }) => {
+	verify: locals => {
 		const gitignore = fs.readFileSync(`${locals.__rootDirectory}/.gitignore`, 'utf8')
 			.split('\n');
 

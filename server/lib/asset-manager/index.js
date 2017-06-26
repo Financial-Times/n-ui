@@ -1,48 +1,54 @@
 const logger = require('@financial-times/n-logger').default;
 const path = require('path');
-const nUiManager = require('./n-ui-manager');
-const linkHeaderHelperFactory = require('./link-header-helper-factory');
 const stylesheetManager = require('./stylesheet-manager');
 const messages = require('../messages');
-const hashedAssets = require('./hashed-assets');
 const verifyExistence = require('./verify-existence');
 const middlewareFactory = require('./middleware-factory');
+const assetUrlGenerator = require('./asset-url-generator');
+const linkHeaderHelperFactory = require('./link-header-helper-factory');
 
 function init (options, directory, app) {
 
-	const refs = { locals: app.locals, app, directory, options }
-
 	// don't start unless all the expected assets are present
-	verifyExistence.verify(refs);
+	verifyExistence.verify(app.locals);
 
 	// discover stylesheets so they can be inlined and linked to later
-	stylesheetManager.init(refs);
-	refs.stylesheetManager = stylesheetManager;
-
-	// initialise asset hashing
-	const assetHasher = hashedAssets.init(refs).get;
-	app.getHashedAssetUrl = assetHasher;
-	refs.assetHasher = assetHasher
-
-	// create the link header helper
-	const linkHeaderHelper = linkHeaderHelperFactory(refs);
-	refs.linkHeaderHelper = linkHeaderHelper;
+	stylesheetManager.init(directory);
 
 	// handle local development
-	refs.useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
+	const useLocalAppShell = process.env.NEXT_APP_SHELL === 'local';
 	/* istanbul ignore next */
-	if (refs.useLocalAppShell) {
+	if (useLocalAppShell) {
 		logger.warn(messages.APP_SHELL_WARNING);
 	}
 
-	// Set up n-ui
-	nUiManager.init(refs);
+	// make n-ui config for the client side available globally
 	try {
-		refs.nUiConfig = Object.assign({}, require(path.join(directory, 'client/n-ui-config')), {preload: true})
-	} catch (e) {}
-	refs.nUiUrlRoot = nUiManager.getUrlRoot();
+		app.locals.nUiConfig = Object.assign({}, require(path.join(directory, 'client/n-ui-config')), {preload: true})
+	} catch (e) {
+		// TODO turn this on in the next major release
+		// throw new Error('error loading n-ui config');
+	}
 
-	app.use(middlewareFactory(refs));
+	// initialise helper for calculating paths to assets
+	const getAssetUrl = assetUrlGenerator({
+		appName: app.locals.__name,
+		isProduction: app.locals.__isProduction,
+		directory,
+		useLocalAppShell
+	});
+
+	//expose the asset hashing helper to apps (in case they build non-standard files)
+	// TODO deprecate this name in future release
+	app.getHashedAssetUrl = getAssetUrl;
+
+	// use all the above in middleware to be used on each request
+	app.use(middlewareFactory({
+		getAssetUrl,
+		useLocalAppShell,
+		stylesheetManager,
+		linkHeaderHelper: linkHeaderHelperFactory(getAssetUrl)
+	}));
 }
 
 module.exports = {
