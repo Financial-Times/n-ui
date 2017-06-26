@@ -11,7 +11,7 @@ const loadAssetHashesJson = path => {
 	}
 }
 
-module.exports = (appName, directory, useLocalAppShell) => {
+module.exports = ({ appName, isProduction, directory, useLocalAppShell }) => {
 
 	const assetHashes = loadAssetHashesJson(`${directory}/public/asset-hashes.json`);
 	const nUiAssetHashes = loadAssetHashesJson(`${directory}/public/n-ui-asset-hashes.json`);
@@ -36,7 +36,7 @@ module.exports = (appName, directory, useLocalAppShell) => {
 		} else {
 			const fallback = `/${appName}/${file}`;
 			const hash = assetHashes[file];
-			return (!locals.__isProduction || !hash) ? fallback : `//www.ft.com/__assets/hashed/${appName}/${hash}`;
+			return (!isProduction || !hash) ? fallback : `//www.ft.com/__assets/hashed/${appName}/${hash}`;
 		}
 	}
 

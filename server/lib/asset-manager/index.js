@@ -31,11 +31,12 @@ function init (options, directory, app) {
 	}
 
 	// initialise helper for calculating paths to assets
-	const getAssetUrl = assetUrlGenerator(
-		app.locals.__name,
+	const getAssetUrl = assetUrlGenerator({
+		appName: app.locals.__name,
+		isProduction: app.locals.__isProduction,
 		directory,
 		useLocalAppShell
-	);
+	});
 
 	//expose the asset hashing helper to apps (in case they build non-standard files)
 	// TODO deprecate this name in future release
