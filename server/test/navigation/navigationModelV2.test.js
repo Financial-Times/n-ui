@@ -23,7 +23,7 @@ describe('NavigationModelV2', () => {
 				{
 					name: 'Navigation Service V2'
 				}
-			)
+			);
 		});
 
 		afterEach(() => {
@@ -36,7 +36,7 @@ describe('NavigationModelV2', () => {
 			return navigation.init()
 				.then(() => {
 					expect(fetchMock.called('Navigation Service V2')).to.be.true;
-				})
+				});
 		});
 
 		it('Should expose middleware to set the various menus', (done) => {
@@ -55,7 +55,7 @@ describe('NavigationModelV2', () => {
 			const expectedMenus = ['drawer', 'footer', 'navbar-right', 'navbar-right-anon', 'navbar', 'user', 'anon'];
 			const next = () => {
 				expect(Object.keys(res.locals.navigation.menus)).to.deep.equal(expectedMenus);
-				done()
+				done();
 			};
 			navigation.init()
 				.then(() => {
@@ -66,7 +66,7 @@ describe('NavigationModelV2', () => {
 
 	describe('Fallback', () => {
 		beforeEach(() => {
-			fetchMock.mock('http://next-navigation.ft.com/v2/menus', 503)
+			fetchMock.mock('http://next-navigation.ft.com/v2/menus', 503);
 		});
 
 		afterEach(() => {
@@ -89,7 +89,7 @@ describe('NavigationModelV2', () => {
 			const expectedMenus = ['drawer', 'navbar-simple', 'navbar'];
 			const next = () => {
 				expect(Object.keys(res.locals.navigation.menus)).to.deep.equal(expectedMenus);
-				done()
+				done();
 			};
 			navigation.init()
 				.then(() => {
@@ -126,7 +126,7 @@ describe('NavigationModelV2', () => {
 			};
 			const next = () => {
 				expect(res.locals.navigation.hierarchy).to.deep.equal(navigationHierarchyFixture);
-				done()
+				done();
 			};
 			navigation.init()
 				.then(() => {

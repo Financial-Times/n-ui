@@ -27,6 +27,6 @@ const init = () => {
 		.forEach(component => {
 			observer.observe(component);
 		});
-}
+};
 
-export default { init }
+export default { init };

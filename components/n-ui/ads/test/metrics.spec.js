@@ -1,36 +1,36 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
-const sendMetrics = require('../js/metrics')
-const utils = require('n-ui-foundations')
+const sendMetrics = require('../js/metrics');
+const utils = require('n-ui-foundations');
 
-const broadcast = sinon.stub(utils, 'broadcast', () => {})
+const broadcast = sinon.stub(utils, 'broadcast', () => {});
 
 const timingsObject = {
 	firstAdLoaded: 1000,
 	adIframeLoaded: 1000
-}
+};
 
 describe('Metrics', () => {
-	let saveWindowPerformance
+	let saveWindowPerformance;
 
 	beforeEach(() => {
-		saveWindowPerformance = window.performance
-	})
+		saveWindowPerformance = window.performance;
+	});
 
 	afterEach(() => {
-		window.performance = saveWindowPerformance
-		broadcast.reset()
-	})
+		window.performance = saveWindowPerformance;
+		broadcast.reset();
+	});
 
 	it('should call broadcast with correct values', () => {
-		const getEntriesByNameStub = sinon.stub()
-		getEntriesByNameStub.withArgs('firstAdLoaded').returns([{ name: 'firstAdLoaded', startTime: 600 }])
-		getEntriesByNameStub.withArgs('adIframeLoaded').returns([{ name: 'adIframeLoaded', startTime: 500 }])
+		const getEntriesByNameStub = sinon.stub();
+		getEntriesByNameStub.withArgs('firstAdLoaded').returns([{ name: 'firstAdLoaded', startTime: 600 }]);
+		getEntriesByNameStub.withArgs('adIframeLoaded').returns([{ name: 'adIframeLoaded', startTime: 500 }]);
 
 		window.performance = {
 			mark: true,
 			timing: { domContentLoadedEventEnd: 100, loadEventEnd: 100, domInteractive: 100 },
 			getEntriesByName: getEntriesByNameStub
-		}
+		};
 		const expectedTrackingObject = {
 			category: 'ads',
 			action: 'first-load',
@@ -46,7 +46,7 @@ describe('Metrics', () => {
 				},
 				marks: { firstAdLoaded: 600, adIframeLoaded: 500 }
 			}
-		}
+		};
 
 		sendMetrics(timingsObject, {
 			gpt: {
@@ -55,18 +55,18 @@ describe('Metrics', () => {
 			},
 			container: { getAttribute: () => 'Billboard' }
 		});
-		expect(broadcast).to.have.been.calledWith('oTracking.event', expectedTrackingObject)
-	})
+		expect(broadcast).to.have.been.calledWith('oTracking.event', expectedTrackingObject);
+	});
 
 	it('should not broadcast if performance is undefined', () => {
-		window.performance = undefined
-		sendMetrics(timingsObject)
-		expect(broadcast).not.to.have.been.called
-	})
+		window.performance = undefined;
+		sendMetrics(timingsObject);
+		expect(broadcast).not.to.have.been.called;
+	});
 
 	it('should not broadcast if not passed an object', () => {
-		sendMetrics()
-		expect(broadcast).not.to.have.been.called
-	})
+		sendMetrics();
+		expect(broadcast).not.to.have.been.called;
+	});
 
-})
+});

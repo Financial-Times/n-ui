@@ -41,7 +41,7 @@ app.get('/css-variants', function (req, res) {
 		inline: req.query.inline ? req.query.inline.split(',') : [],
 		blocking: req.query.blocking ? req.query.blocking.split(',') : [],
 		lazy: req.query.lazy ? req.query.lazy.split(',') : []
-	}
+	};
 	res.render('main', {
 		layout: 'wrapper',
 		title: 'FT',
@@ -60,7 +60,7 @@ app.get('/with-layout', function (req, res) {
 		res.linkResource('https://place.com/it.js', {
 			rel: 'preload',
 			as: 'script'
-		})
+		});
 	}
 	res.render('main', Object.assign({
 		layout: 'wrapper',
@@ -72,7 +72,7 @@ app.get('/with-layout', function (req, res) {
 
 
 app.get('/non-html', (req, res) => {
-	res.set('Content-Type', 'application/json')
+	res.set('Content-Type', 'application/json');
 
 	res.sendStatus(200);
 });

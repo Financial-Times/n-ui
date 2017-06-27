@@ -8,7 +8,7 @@ const discount = {
 	L: 50,
 	S: 25,
 	S_5: 25
-}
+};
 
 function supportsCors () {
 	return ('withCredentials' in new XMLHttpRequest());
@@ -42,7 +42,7 @@ function isB2BProspect () {
 	const sessionStore = new Superstore('session', 'next.product-selector');
 	return sessionStore.get('barrier-messaging')
 		.then(barrier => barrier === 'B2B')
-		.catch(() => false)
+		.catch(() => false);
 }
 
 function showPromo (flags) {
@@ -120,7 +120,7 @@ export function init (flags) {
 							if (session.isForAnonymousUser || session.isForRegisteredUser || session.isForWeekendUser) {
 
 								if (showElectionsOffer(flags)) {
-									showElectionPromo()
+									showElectionPromo();
 								} else {
 									showPromo(flags);
 								}

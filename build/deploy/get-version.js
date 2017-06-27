@@ -15,7 +15,7 @@ module.exports = function () {
 		if (tag.charAt(0) !== 'v') {
 			tag = `v${tag}`;
 		}
-		version = tag
+		version = tag;
 	}
-	return {version, isOfficialRelease}
-}
+	return {version, isOfficialRelease};
+};

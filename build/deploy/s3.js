@@ -17,18 +17,18 @@ function purgeOnce (path, message) {
 		})
 		.then(res => {
 			if(!res.ok) {
-				throw new Error(`failed to purge ${path}: status ${res.status}`)
+				throw new Error(`failed to purge ${path}: status ${res.status}`);
 			} else {
 				console.log(`Purging ${path}: ${message}`) //eslint-disable-line
 			}
-		})
+		});
 }
 
 function purge (path) {
 	return purgeOnce(path, 'going once')
 		.then(() => purgeOnce(path, 'going twice'))
 		.then(() => purgeOnce(path, 'going three times'))
-		.then(() => purgeOnce(path, '...gone!'))
+		.then(() => purgeOnce(path, '...gone!'));
 }
 
 function getFileList (dir) {
@@ -36,7 +36,7 @@ function getFileList (dir) {
 		.then(files =>
 			files.split('\n')
 				.filter(f => !!f)
-		)
+		);
 }
 
 function noUnexpectedAssets (files) {
@@ -50,7 +50,7 @@ ${filename} has been built but is not in the expectedBuiltFiles list.
 To avoid future regressions please add to the list (in build/deploy/s3.js)
 `);
 			}
-		})
+		});
 	return files;
 }
 
@@ -75,15 +75,15 @@ function staticAssets () {
 					if (!semver.valid(version)) {
 						return Promise.all(
 							files.map(file => purge(`https://www.ft.com/__assets/n-ui/cached/${version}/${file.split('/').pop()}`))
-						)
+						);
 					}
 				})
-		)
+		);
 }
 
 staticAssets()
 	.then(() => process.exit(0))
 	.catch(err => {
 		console.log(err) //eslint-disable-line
-		process.exit(2)
-	})
+		process.exit(2);
+	});

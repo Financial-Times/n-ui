@@ -5,7 +5,7 @@ const path = require('path');
 const shellpromise = require('shellpromise');
 const shellpipe = require('./shellpipe');
 const downloadAssets = require('./download-assets');
-const assetHashes = require('../lib/generate-asset-hashes')
+const assetHashes = require('../lib/generate-asset-hashes');
 
 const exit = err => {
 	logger.error(err);
@@ -17,9 +17,9 @@ const exit = err => {
 
 const devAdvice = () => {
 	if (!process.env.CIRCLE_BRANCH && (!process.env.NEXT_APP_SHELL || process.env.NEXT_APP_SHELL !== 'local')) {
-		logger.info('Developers: If you want your app to point to n-ui locally, then `export NEXT_APP_SHELL=local`')
+		logger.info('Developers: If you want your app to point to n-ui locally, then `export NEXT_APP_SHELL=local`');
 	}
-}
+};
 const nUiVersion = require('../../package.json').version;
 
 const aboutJson = () => {
@@ -32,10 +32,10 @@ const aboutJson = () => {
 				appVersion: version,
 				buildCompletionTime: new Date().toISOString(),
 				nUiVersion
-			}
+			};
 		})
-		.then(about => fs.writeFileSync(path.join(process.cwd(), '/public/__about.json'), JSON.stringify(about, null, 2)))
-}
+		.then(about => fs.writeFileSync(path.join(process.cwd(), '/public/__about.json'), JSON.stringify(about, null, 2)));
+};
 
 
 program.version(nUiVersion);
@@ -59,7 +59,7 @@ program
 					return shellpipe('haikro build');
 				}
 			})
-			.catch(exit)
+			.catch(exit);
 	});
 
 program
@@ -71,7 +71,7 @@ program
 
 		downloadAssets()
 			.then(() => shellpipe(`webpack --watch --config ${webpackConfPath}`)	)
-			.catch(exit)
+			.catch(exit);
 	});
 
 program

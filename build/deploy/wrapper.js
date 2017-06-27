@@ -6,6 +6,6 @@ nUi.bootstrap(window.ftNextUiConfig || {
 	preload: true
 });
 
-window.ftNextUi = nUi
+window.ftNextUi = nUi;
 
 ftNextFireCondition('nUiLoaded');

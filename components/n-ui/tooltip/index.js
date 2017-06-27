@@ -59,7 +59,7 @@ export class NToolTip{
 				if(el.style[t] !== undefined){
 					this._transitionEndEvent = transitions[t];
 				}
-			})
+			});
 		}
 
 		return this._transitionEndEvent;

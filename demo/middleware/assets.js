@@ -3,7 +3,7 @@
 module.exports = (req, res, next) => {
 	res.locals.javascriptBundles = res.locals.javascriptBundles
 		.filter(bundle => {
-			return bundle.indexOf('undefined') === -1
+			return bundle.indexOf('undefined') === -1;
 		})
 		.map(bundle => {
 			if (bundle.indexOf('polyfill') > -1) {
@@ -15,4 +15,4 @@ module.exports = (req, res, next) => {
 	// no head.css generated in this demo app
 	res.locals.stylesheets.inline = [];
 	next();
-}
+};

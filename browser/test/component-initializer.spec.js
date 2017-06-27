@@ -23,8 +23,8 @@ describe('bootstrapping', () => {
 				},
 				appInfo: {},
 				allStylesLoaded: Promise.resolve()
-			})
-		})
+			});
+		});
 	});
 
 	afterEach(() => {
@@ -35,7 +35,7 @@ describe('bootstrapping', () => {
 		tracking.init.restore();
 		tracking.lazyInit.restore();
 		ads.init.restore();
-	})
+	});
 
 	it('binds bootstrap and configure to itself', () => {
 		const CI = new ComponentInitializer();
@@ -45,7 +45,7 @@ describe('bootstrapping', () => {
 		};
 		parasite.bootstrap();
 		expect(jsLoader.prototype.bootstrap.calledOnce).to.be.true;
-	})
+	});
 
 	it('always initialise tracking', () => {
 		const cb = sinon.stub();

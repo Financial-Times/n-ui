@@ -97,19 +97,19 @@ export class ComponentInitializer {
 
 			if (config.features.date && !this.initializedFeatures.date) {
 				date.init();
-				this.initializedFeatures.date = true
+				this.initializedFeatures.date = true;
 			}
 
 			if (flags.get('adInitEarlierNui')){
 				if (config.features.ads && !this.initializedFeatures.ads) {
 					ads.init(flags, appInfo, config.features.ads);
-					this.initializedFeatures.ads = true
+					this.initializedFeatures.ads = true;
 				}
 			}
 
 			if (config.features.lazyLoadImages && !this.initializedFeatures.lazyLoadImages) {
 				lazyLoadImages();
-				this.initializedFeatures.lazyLoadImages = true
+				this.initializedFeatures.lazyLoadImages = true;
 			}
 
 
@@ -139,7 +139,7 @@ export class ComponentInitializer {
 					if (!flags.get('adInitEarlierNui')){
 						if (config.features.ads && !this.initializedFeatures.ads) {
 							ads.init(flags, appInfo, config.features.ads);
-							this.initializedFeatures.ads = true
+							this.initializedFeatures.ads = true;
 						}
 					}
 
@@ -147,8 +147,8 @@ export class ComponentInitializer {
 						tracking.lazyInit(flags);
 						this.initializedFeatures.lazyTracking = true;
 					}
-					return {flags, allStylesLoaded, appInfo}
-				})
-		})
+					return {flags, allStylesLoaded, appInfo};
+				});
+		});
 	}
 }

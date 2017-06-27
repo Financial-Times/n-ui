@@ -53,7 +53,7 @@ Reporter.prototype.destroy = function () {
 	if(this.link) {
 		this.link.parentElement.removeChild(this.link);
 	}
-}
+};
 
 /**
 * Adds the link to the container

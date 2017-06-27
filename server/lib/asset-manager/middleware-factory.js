@@ -24,8 +24,8 @@ module.exports = ({
 				blocking: []
 			};
 
-			res.locals.stylesheets.inline = ['head']
-			res.locals.stylesheets.lazy = ['main']
+			res.locals.stylesheets.inline = ['head'];
+			res.locals.stylesheets.lazy = ['main'];
 
 			res.locals.polyfillIo = polyfillIo(res.locals.flags);
 
@@ -39,7 +39,7 @@ module.exports = ({
 				getAssetUrl('main-without-n-ui.js')
 			);
 
-			res.locals.javascriptBundles.push()
+			res.locals.javascriptBundles.push();
 
 			// output the default link headers just before rendering
 			const originalRender = res.render;
@@ -54,9 +54,9 @@ module.exports = ({
 
 				// TODO collect metrics on this similar to inline stylesheets
 				res.locals.stylesheets.lazy = res.locals.stylesheets.lazy
-					.map(name => getAssetUrl(stylesheetManager.nameToUrlConfig(name)))
+					.map(name => getAssetUrl(stylesheetManager.nameToUrlConfig(name)));
 				res.locals.stylesheets.blocking = res.locals.stylesheets.blocking
-					.map(name => getAssetUrl(stylesheetManager.nameToUrlConfig(name)))
+					.map(name => getAssetUrl(stylesheetManager.nameToUrlConfig(name)));
 
 				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
 				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
@@ -79,9 +79,9 @@ module.exports = ({
 				res.append('Link', this.locals.resourceHints.normal);
 
 				return originalRender.apply(res, [].slice.call(arguments));
-			}
+			};
 		}
 
 		next();
-	}
-}
+	};
+};

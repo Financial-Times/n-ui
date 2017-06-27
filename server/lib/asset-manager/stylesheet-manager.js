@@ -15,8 +15,8 @@ const calculateSize = content => {
 		.then(gzipped => ({
 			raw: Buffer.byteLength(content),
 			gzip: Buffer.byteLength(gzipped)
-		}))
-}
+		}));
+};
 
 module.exports = {
 
@@ -31,7 +31,7 @@ module.exports = {
 				// remove source maps from inlined css as browser will error
 				return str + stylesheets[name].replace(/\/\*# sourceMappingURL=.*\*\//, '');
 			}, '');
-			concatenatedStylesSizeCache[hash] = calculateSize(concatenatedStylesCache[hash])
+			concatenatedStylesSizeCache[hash] = calculateSize(concatenatedStylesCache[hash]);
 		}
 		// HACK: don't measure size when only head-n-ui-core is included as, almost certainly,
 		// it's just a html fragment, not a full page load, so no inline css will actually be output
@@ -44,14 +44,14 @@ module.exports = {
 					metrics.histogram(`head_css_size.raw.${hash}`, raw);
 					metrics.histogram('head_css_size.gzip', gzip);
 					metrics.histogram(`head_css_size.gzip.${hash}`, gzip);
-				})
+				});
 		}
 
 		return concatenatedStylesCache[hash];
 	},
 
 	nameToUrlConfig: name => {
-		const result = {file: `${name}.css`}
+		const result = {file: `${name}.css`};
 		if (/n-ui/.test(name)) {
 			result.isNUi = true;
 		}
@@ -86,4 +86,4 @@ module.exports = {
 				});
 		}
 	}
-}
+};

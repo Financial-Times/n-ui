@@ -1,7 +1,7 @@
 /*global it, describe*/
 const nUi = require('../index');
 const nExpress = require('@financial-times/n-express');
-const sinon = require('sinon')
+const sinon = require('sinon');
 const expect = require('chai').expect;
 
 describe('configuring n-express', () => {
@@ -19,7 +19,7 @@ describe('configuring n-express', () => {
 		expect(nExpressOpts.withServiceMetrics).to.be.true;
 		expect(nExpressOpts.withFlags).to.be.true;
 		nExpress.getAppContainer.restore();
-	})
+	});
 
 	it('should be possible to turn things off in n-express', () => {
 		sinon.stub(nExpress, 'getAppContainer', () => ({app: {
@@ -38,7 +38,7 @@ describe('configuring n-express', () => {
 		expect(nExpressOpts.withServiceMetrics).to.be.false;
 		expect(nExpressOpts.withFlags).to.be.false;
 		nExpress.getAppContainer.restore();
-	})
+	});
 
 	it('should pass healthchecks to n-express', () => {
 		sinon.stub(nExpress, 'getAppContainer', () => ({app: {
@@ -52,7 +52,7 @@ describe('configuring n-express', () => {
 			healthChecks: hc
 		});
 		const nExpressOpts = nExpress.getAppContainer.args[0][0];
-		expect(nExpressOpts.healthChecks).to.equal(hc)
+		expect(nExpressOpts.healthChecks).to.equal(hc);
 		nExpress.getAppContainer.restore();
-	})
-})
+	});
+});

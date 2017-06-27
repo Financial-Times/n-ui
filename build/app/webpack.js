@@ -19,19 +19,19 @@ function noGitignoreWildcard () {
 }
 
 function modifyEntryKeys (obj, rx, nameModifier) {
-	const keys = Object.keys(obj).filter(key => rx.test(key))
+	const keys = Object.keys(obj).filter(key => rx.test(key));
 	return keys.reduce((o, key) => {
-		o[nameModifier(key)] = obj[key]
+		o[nameModifier(key)] = obj[key];
 		return o;
-	}, {})
+	}, {});
 }
 
 function filterEntryKeys (obj, rx, negativeMatch) {
-	const keys = Object.keys(obj).filter(key => negativeMatch ? !rx.test(key) : rx.test(key))
+	const keys = Object.keys(obj).filter(key => negativeMatch ? !rx.test(key) : rx.test(key));
 	return keys.reduce((o, key) => {
-		o[key] = obj[key]
+		o[key] = obj[key];
 		return o;
-	}, {})
+	}, {});
 }
 
 const baseConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
@@ -56,7 +56,7 @@ const nonMainJsWebpackConfig = webpackMerge(commonAppConfig, {
 	plugins:[
 		new ExtractCssBlockPlugin()
 	]
-})
+});
 webpackConfigs.push(nonMainJsWebpackConfig);
 
 
@@ -79,7 +79,7 @@ const mainJsWebpackConfig = webpackMerge(commonAppConfig, {
 			{ match: /\.js$/ }
 		)
 	]
-})
+});
 webpackConfigs.push(mainJsWebpackConfig);
 
 
@@ -116,8 +116,8 @@ If you do not need this behaviour run
 		entry: {
 			'./public/n-ui/es5.js': './bower_components/n-ui/build/deploy/wrapper.js'
 		}
-	})
-	webpackConfigs.push(appShellWebpackConfig)
+	});
+	webpackConfigs.push(appShellWebpackConfig);
 }
 
-module.exports = webpackConfigs
+module.exports = webpackConfigs;
