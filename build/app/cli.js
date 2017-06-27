@@ -70,7 +70,7 @@ program
 		devAdvice();
 
 		downloadAssets()
-			.then(() => shellpipe(`webpack --watch --dev --config ${webpackConfPath}`)	)
+			.then(() => shellpipe(`webpack --watch --config ${webpackConfPath}`)	)
 			.catch(exit)
 	});
 
