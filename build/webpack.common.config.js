@@ -8,7 +8,7 @@ If something is required for both, please add it here.
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const path = require('path');
-
+const BowerResolvePlugin = require("bower-resolve-webpack-plugin");
 
 const extractOptions = [{
 		loader: 'css-loader',
@@ -50,6 +50,12 @@ module.exports = {
 	devtool: 'source-map',
 
 	resolve: {
+
+		plugins: [
+			// This will handle a bower.json's `main` property being an array.
+			new BowerResolvePlugin()
+		],
+
 		// In which folders the resolver look for modules relative paths are
 		// looked up in every parent folder (like node_modules) absolute
 		// paths are looked up directly the order is respected
@@ -67,9 +73,7 @@ module.exports = {
 		// These files are tried when trying to resolve a directory
 		mainFiles: [
 			'index',
-			'main',
-			'src/main-client', /* HACK: this is because of n-image's entrypoint not being main.js or index.js */
-			'dist/main' /* HACK: this is because of n-storylines entrypoint not being main.js or index.js */
+			'main'
 		],
 
 		// These fields in the description files offer aliasing in this package
