@@ -8,7 +8,7 @@ If something is required for both, please add it here.
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const path = require('path');
-const BowerResolvePlugin = require("bower-resolve-webpack-plugin");
+const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
 const extractOptions = [{
 		loader: 'css-loader',
