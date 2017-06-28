@@ -62,7 +62,7 @@ class Typeahead {
 			if (ev.which === 40 || ev.which === 38) {
 				ev.preventDefault();
 			}
-		})
+		});
 
 		this.searchEl.addEventListener('keyup', ev => {
 			switch(ev.which) {
@@ -184,7 +184,7 @@ class Typeahead {
 						this.hide();
 					}
 				});
-			})
+			});
 	}
 }
 

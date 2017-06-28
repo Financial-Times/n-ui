@@ -34,7 +34,7 @@ describe('Config', () => {
 				network: '5887',
 				site: 'ft.com',
 				zone: 'unclassified'
-			}
+			};
 
 			expect(config.gpt).to.deep.equal(gptAttributes);
 		});
@@ -47,7 +47,7 @@ describe('Config', () => {
 				network: '5887',
 				site: 'sandbox.next.ft',
 				zone: 'unclassified'
-			}
+			};
 			expect(config.gpt).to.deep.equal(gptAttributes);
 		});
 
@@ -106,7 +106,7 @@ describe('Config', () => {
 			expect(config.gpt.zone).to.equal('testDfpSite/testDfpZone');
 		});
 
-	})
+	});
 
 	describe('lazyLoad viewportMargin', () => {
 
@@ -275,29 +275,29 @@ describe('Config', () => {
 		it('Should pass the correct url to o-ads fetch', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article' );
-			const userUrl = 'https://ads-api.ft.com/v1/user'
-			const pageUrl = 'https://ads-api.ft.com/v1/content/'
+			const userUrl = 'https://ads-api.ft.com/v1/user';
+			const pageUrl = 'https://ads-api.ft.com/v1/content/';
 
 			expect(config.targetingApi.user).to.equal(userUrl);
 			expect(config.targetingApi.page).to.equal(pageUrl + fakeArticleUuid);
-		})
+		});
 
 		it('Should not request API targeting if app says not to', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article', { noTargeting: true });
 			expect(config.targetingApi).to.equal(null);
-		})
+		});
 
 		it('Should access v2 concept url to send to o-ads fetch if present', () => {
 			targeting.withArgs('data-concept-id').returns(fakeConceptUuid);
 
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'stream-page' );
-			const pageUrl = 'https://ads-api.ft.com/v1/concept/'
+			const pageUrl = 'https://ads-api.ft.com/v1/concept/';
 
 			expect(config.targetingApi.page).to.equal(pageUrl + fakeConceptUuid);
 		});
 
-	})
+	});
 
 });

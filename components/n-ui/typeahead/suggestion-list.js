@@ -8,13 +8,13 @@ function regExpEscape (s) {
 const headingMapping = {
 	concepts: 'News',
 	equities: 'Securities'
-}
+};
 
 const KEYS = {
 	ENTER: 13,
 	UP_ARROW: 38,
 	DOWN_ARROW: 40
-}
+};
 
 export class SuggestionList extends React.Component {
 	constructor () {
@@ -24,7 +24,7 @@ export class SuggestionList extends React.Component {
 				concepts: [],
 				equities: []
 			}
-		}
+		};
 	}
 
 	highlight (text) {
@@ -44,7 +44,7 @@ export class SuggestionList extends React.Component {
 			};
 
 			// eslint-disable-next-line react/no-unknown-property
-			return <a {...linkAttrs} ref={(c) => { this.items.push(c) }} tabindex="0">{group.tailLink.innerHtml}</a>
+			return <a {...linkAttrs} ref={(c) => { this.items.push(c); }} tabindex="0">{group.tailLink.innerHtml}</a>;
 		}
 	}
 
@@ -88,7 +88,7 @@ export class SuggestionList extends React.Component {
 				{ group.suggestions.map(suggestion => (
 					<li className="n-typeahead__item">
 						<a className={'n-typeahead__link ' + group.linkClassName}
-							ref={(c) => { this.items.push(c) }}
+							ref={(c) => { this.items.push(c); }}
 							href={suggestion.url}
 							// eslint-disable-next-line react/no-unknown-property
 							tabindex="0"
@@ -101,7 +101,7 @@ export class SuggestionList extends React.Component {
 				<li className="n-typeahead__item">
 					{this.renderTailLink(group)}
 				</li>
-			</ul>
+			</ul>;
 		}
 	}
 
@@ -165,6 +165,6 @@ export class SuggestionList extends React.Component {
 					{this.renderItems(group)}
 				</div>
 			)) }
-		</div>
+		</div>;
 	}
 }

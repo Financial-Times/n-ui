@@ -16,7 +16,7 @@ module.exports = function (karma) {
 			require('./server/lib/asset-manager/polyfill-io')({}).enhanced
 		].concat(componentsToTest.map(name => name + '/**/*.spec.js')),
 		preprocessors: componentsToTest.reduce((obj, name) => {
-			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap']
+			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap'];
 			return obj;
 		}, {}),
 		webpack: require('./build/deploy/webpack.deploy.config'),
@@ -62,14 +62,14 @@ module.exports = function (karma) {
 			}
 			browserList[`${browserName}_sauce`] = Object.assign({base: 'SauceLabs'}, nightwatchBrowsers[browserName].desiredCapabilities);
 			return browserList;
-		}, {})
+		}, {});
 		config.customLaunchers = sauceBrowsers;
 		config.sauceLabs = {
 			testName: 'n-ui unit tests',
 			username: process.env.SAUCE_USER,
 			accessKey: process.env.SAUCE_KEY,
 			recordScreenshots: true
-		}
+		};
 
 		config.browsers = Object.keys(sauceBrowsers);
 		config.reporters.push('saucelabs');

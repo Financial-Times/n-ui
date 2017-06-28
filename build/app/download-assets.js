@@ -1,6 +1,6 @@
 const ratRace = require('promise-rat-race');
 const nEagerFetch = require('n-eager-fetch');
-const nUiManager = require('../../server/lib/asset-manager/n-ui-manager')
+const nUiManager = require('../../server/lib/asset-manager/n-ui-manager');
 const logger = require('./logger');
 const fs = require('fs');
 const path = require('path');
@@ -32,10 +32,10 @@ const downloadAsset = (s3Name, localName) => {
 		.then(text => fs.writeFile(path.join(process.cwd(), `public/${localName || s3Name}`), text))
 		.then(() => logger.success(`${s3Name} successfully retrieved from s3`))
 		.catch(err => {
-			logger.warn(`failed to fetch ${s3Name} from s3`)
+			logger.warn(`failed to fetch ${s3Name} from s3`);
 			throw err;
-		})
-}
+		});
+};
 
 
 module.exports = () => {
@@ -50,8 +50,8 @@ module.exports = () => {
 If developing locally and you are having network problems, your app
 will be unable to download n-ui's assets. Try  \`export NEXT_APP_SHELL=local\`
 to force them to be built locally.
-`)
+`);
 			}
 			throw err;
-		})
-}
+		});
+};

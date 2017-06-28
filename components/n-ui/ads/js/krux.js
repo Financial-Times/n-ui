@@ -19,7 +19,7 @@ const frequencyCap = (name, limit, fn) => {
 			store.set(key, ++val).catch(() => {});
 		}
 	}).catch(() => {});
-}
+};
 
 exports.init = (flags) => {
 

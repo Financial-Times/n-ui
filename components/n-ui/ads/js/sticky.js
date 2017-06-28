@@ -23,7 +23,7 @@ Sticky.prototype.startLoop = function () {
 		this.calculate();
 		this.startLoop();
 	});
-}
+};
 
 Sticky.prototype.calculate = function () {
 	const scrollY = window.pageYOffset || window.scrollY;
@@ -42,30 +42,30 @@ Sticky.prototype.calculate = function () {
 	if ((!canBeFixed && !isAbsolute) || (!atBoundary && isAbsolute && !canBeFixed)) {
 		this.reset();
 	}
-}
+};
 
 Sticky.prototype.stick = function () {
 	this.fixed.style.position = 'fixed';
 	this.fixed.style.top = '0px';
 	this.sibling.style.marginTop = `${this.fixedHeight}px`;
-}
+};
 
 Sticky.prototype.unstick = function () {
 	this.fixed.style.position = 'absolute';
 	this.fixed.style.top = `${this.startScroll + this.boundaryBottom - this.fixedHeight}px`;
-}
+};
 
 
 Sticky.prototype.reset = function () {
 	this.fixed.style.position = 'absolute';
 	this.fixed.style.top = `${this.extraHeight}px`;
-}
+};
 
 Sticky.prototype.destroy = function (unsetCallbackFunctions) {
 	window.removeEventListener('scroll', this.eventdbScrollEnd);
 	window.removeEventListener('scroll', this.eventScrollStart);
 	window.removeEventListener('oAds.collapsed', this.collapsedCallback);
-	this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent)
+	this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent);
 	this.endLoop();
 	this.fixed.style.top = '';
 	this.fixed.style.position = 'relative';
@@ -78,14 +78,14 @@ Sticky.prototype.destroy = function (unsetCallbackFunctions) {
 		this.eventdbScrollEnd = undefined;
 		window.removeEventListener('resize', this.resizeCallback);
 	}
-}
+};
 Sticky.prototype.endLoop = function () {
 	window.cancelAnimationFrame(this.animationFrame);
-}
+};
 
 Sticky.prototype.scrollStart = function () {
 	window.removeEventListener('scroll', this.eventScrollStart);
-	window.addEventListener('scroll', this.eventdbScrollEnd)
+	window.addEventListener('scroll', this.eventdbScrollEnd);
 
 	// only do this work once
 	this.fixedHeight = this.fixed.offsetHeight;
@@ -97,13 +97,13 @@ Sticky.prototype.scrollStart = function () {
 	}
 
 	this.startLoop();
-}
+};
 
 Sticky.prototype.scrollEnd = function () {
 	this.endLoop();
 	window.removeEventListener('scroll', this.eventdbScrollEnd);
 	window.addEventListener('scroll', this.eventScrollStart);
-}
+};
 
 Sticky.prototype.setInitialValues = function () {
 	const fixedElementTopPosition = this.fixed.getBoundingClientRect().top;
@@ -118,7 +118,7 @@ Sticky.prototype.setInitialValues = function () {
 	} else {
 		this.fixed.style.position = 'fixed';
 	}
-}
+};
 
 Sticky.prototype.timeoutHandler = function () {
 	clearTimeout(this.timeout);
@@ -128,7 +128,7 @@ Sticky.prototype.timeoutHandler = function () {
 	} else {
 		setTimeout(this.timeoutHandler.bind(this), 1000);
 	}
-}
+};
 
 Sticky.prototype.init = function () {
 	// do not init if user already started scrolling or on iOS/Android devices as the stickiness behaves flaky on iOS/Android. Issue: ADS-1112
@@ -144,7 +144,7 @@ Sticky.prototype.init = function () {
 				this.extraHeight = 0;
 				this.reset();
 			}
-			this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent)
+			this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent);
 		}.bind(this));
 	}
 
@@ -171,6 +171,6 @@ Sticky.prototype.init = function () {
 	window.addEventListener('oAds.collapsed', this.collapsedCallback);
 
 	this.timeout = setTimeout(this.timeoutHandler.bind(this), 5000);
-}
+};
 
 module.exports = Sticky;

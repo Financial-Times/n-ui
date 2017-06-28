@@ -39,12 +39,12 @@ function initOAds (flags, appName, adOptions) {
 
 	document.addEventListener('oAds.complete', onAdsCompleteCallback);
 
-	const ads = Ads.init(initObj)
+	const ads = Ads.init(initObj);
 	ads.then(res => {
 		const containers = [].slice.call(document.querySelectorAll('.o-ads'));
 		slotCount = containers.length;
 		utils.log.info(slotCount + ' ad slots found on page');
-		containers.forEach(res.slots.initSlot.bind(res.slots))
+		containers.forEach(res.slots.initSlot.bind(res.slots));
 	});
 }
 
@@ -86,7 +86,7 @@ function onAdsComplete (flags, event) {
 							sendMetrics(customTimings, detail.slot);
 						}
 						document.body.removeEventListener('oAds.adIframeLoaded', iframeLoadedCallback);
-					}
+					};
 					document.body.addEventListener('oAds.adIframeLoaded', iframeLoadedCallback);
 			}
 		} else if (detail.slot.gpt && detail.slot.gpt.isEmpty === true) {
@@ -136,6 +136,6 @@ module.exports = {
 						});
 				}
 
-		})
+		});
 	}
-}
+};

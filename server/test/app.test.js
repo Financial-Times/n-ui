@@ -62,7 +62,7 @@ describe('simple app', function () {
 				.expect('FT-Backend-Authentication', /false/)
 				.expect(401, function () {
 					process.env.NODE_ENV = '';
-					done()
+					done();
 				});
 		});
 
@@ -165,20 +165,20 @@ describe('simple app', function () {
 		it('should expose hashed asset helper', () => {
 			expect(app.getHashedAssetUrl).to.exist;
 			expect(typeof app.getHashedAssetUrl).to.equal('function');
-		})
+		});
 
 		it('should inline head.css & head-n-ui-core.css', (done) => {
 			request(app)
 				.get('/with-layout?layout=wrapper')
-				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head\.css\s*<\/style>/, done)
-		})
+				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head\.css\s*<\/style>/, done);
+		});
 
 		it('should have preload link tags for main.css and n-ui-core.css', (done) => {
 			request(app)
 				.get('/with-layout?layout=wrapper')
 				// .expect(200, /<link data-is-next rel="preload" href="\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css" as="style" onload=/)
 				.expect(200, /<link data-is-next rel="preload" href="\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/56f3a89e\/main\.css" as="style" onload=/, done);
-		})
+		});
 
 		it('should not preload anything by default on non text/html requests', done => {
 			request(app)
@@ -186,7 +186,7 @@ describe('simple app', function () {
 				.end((err, res) => {
 					expect(res.headers.link).to.not.exist;
 					done();
-				})
+				});
 		});
 
 		it('should have preload link headers for css and js resources', done => {
@@ -195,28 +195,28 @@ describe('simple app', function () {
 				.expect('Link', /<https:\/\/www\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/56f3a89e\/main\.css>; as="style"; rel="preload"; nopush/)
-				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/6988e3b1\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/6988e3b1\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done);
 		});
 
 		it.skip('should preload hashed n-ui when flag is on', done => {
 			request(app)
 				.get('/templated')
 				.set('Cookie', 'next-flags=nUiHashedAssets:on')
-				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/123456\/es5\.min\.js>; as="script"; rel="preload"; nopush/, done)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/123456\/es5\.min\.js>; as="script"; rel="preload"; nopush/, done);
 		});
 
 		it('should have preload link header for masthead', done => {
 			request(app)
 				.get('/templated')
-				.expect('Link', /.*ftlogo\:brand-ft-masthead.*>; as="image"; rel="preload"; nopush/, done)
+				.expect('Link', /.*ftlogo\:brand-ft-masthead.*>; as="image"; rel="preload"; nopush/, done);
 		});
 
 		it('should inline different choice of head.css', (done) => {
 			request(app)
 				.get('/css-variants?inline=head-variant,style-variant2')
-				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head-variant\.css\s*style-variant2\.css\s*<\/style>/, done)
+				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head-variant\.css\s*style-variant2\.css\s*<\/style>/, done);
 
-		})
+		});
 
 		it('should load different choice of css files', done => {
 			request(app)
@@ -231,15 +231,15 @@ describe('simple app', function () {
 				.expect(res => {
 					expect(res.headers.link.indexOf('main.css')).to.equal(-1);
 				})
-				.end(done)
+				.end(done);
 
-		})
+		});
 
 		it('should be possible to preload any file on any request', done => {
 			request(app)
 				.get('/with-layout?preload=true')
-				.expect('Link', /<\/demo-app\/it\.js>; rel="preload"; as="script"; nopush, <https:\/\/place\.com\/it\.js>; rel="preload"; as="script"; nopush/, done)
+				.expect('Link', /<\/demo-app\/it\.js>; rel="preload"; as="script"; nopush, <https:\/\/place\.com\/it\.js>; rel="preload"; as="script"; nopush/, done);
 		});
 
-	})
+	});
 });

@@ -72,7 +72,7 @@ module.exports = function (flags, appName, adOptions) {
 	}
 
 	function isSmallSize () {
-		return utils.getScreenSize() < 760
+		return utils.getScreenSize() < 760;
 	}
 
 	function isMediumSize () {

@@ -4,7 +4,7 @@ const oViewport = require('o-viewport');
 const nextEvents = require('./next-events');
 
 
-import {broadcast, cookieStore} from 'n-ui-foundations'
+import {broadcast, cookieStore} from 'n-ui-foundations';
 
 
 function nodesToArray (nodelist) {
@@ -127,7 +127,7 @@ const oTrackingWrapper = {
 				const opportunity = {
 					type: (isProductSelector) ? 'products' : 'barrier',
 					subtype: barrierType.getAttribute('data-opportunity-subtype') || barrierType.getAttribute('data-barrier')
-				}
+				};
 
 				const offers = document.querySelectorAll('[data-offer-id]');
 				const acquisitionContext = document.querySelectorAll('[data-acquisition-context]');
@@ -142,7 +142,7 @@ const oTrackingWrapper = {
 					type: barrierType.getAttribute('data-barrier'),
 					acquisitionContext: nodesToArray(acquisitionContext).map(e => e.getAttribute('data-acquisition-context')),
 					offers: nodesToArray(offers).map(e => e.getAttribute('data-offer-id'))
-				}, context))
+				}, context));
 			}
 
 		} catch (err) {

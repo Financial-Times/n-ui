@@ -9,7 +9,7 @@ const loadAssetHashesJson = path => {
 		logger.warn(`${path} not found. Falling back to un-fingerprinted files.`);
 		return {};
 	}
-}
+};
 
 module.exports = ({ appName, isProduction, directory, useLocalAppShell }) => {
 
@@ -38,7 +38,7 @@ module.exports = ({ appName, isProduction, directory, useLocalAppShell }) => {
 			const hash = assetHashes[file];
 			return (!isProduction || !hash) ? fallback : `//www.ft.com/__assets/hashed/${appName}/${hash}`;
 		}
-	}
+	};
 
 	return getAssetUrl;
-}
+};

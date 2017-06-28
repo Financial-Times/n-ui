@@ -111,7 +111,7 @@ module.exports = class NavigationModelV2 {
 			}
 
 			if(menuData && menuData !== 'footer'){
-				NavigationModelV2.decorateSelected(menuData, currentUrl)
+				NavigationModelV2.decorateSelected(menuData, currentUrl);
 			}
 
 			res.locals.navigation.menus[menuName] = menuData;
@@ -137,7 +137,7 @@ module.exports = class NavigationModelV2 {
 				})
 				.catch(e => {
 					if(e.event){
-						log.error(e)
+						log.error(e);
 					}else{
 						log.error({event:'NAVIGATION_HIERARCHY_ERROR', error:e.message});
 					}
@@ -148,4 +148,4 @@ module.exports = class NavigationModelV2 {
 			next();
 		}
 	}
-}
+};
