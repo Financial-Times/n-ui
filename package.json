@@ -5,7 +5,9 @@
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "commit": "commit-wizard"
+    "commit": "commit-wizard",
+    "precommit": "node_modules/.bin/secret-squirrel",
+    "prepush": "make verify -j3"
   },
   "repository": {
     "type": "git",
@@ -101,16 +103,13 @@
     "webpack-sources": "^1.0.1",
     "webpack-stats-plugin": "^0.1.1"
   },
-  "config": {
-    "pre-git": {
-      "pre-commit": [
-        "node_modules/.bin/secret-squirrel"
-      ]
-    }
-  },
+  "config": {},
   "eslintConfig": {
     "rules": {
-      "semi": [2, "always"]
+      "semi": [
+        2,
+        "always"
+      ]
     }
   }
 }
