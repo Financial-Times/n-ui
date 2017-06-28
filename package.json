@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/Financial-Times/n-ui#readme",
   "devDependencies": {
-    "@financial-times/n-gage": "^1.7.0",
+    "@financial-times/n-gage": "^1.8.4",
     "@financial-times/n-heroku-tools": "^6.27.0",
     "bower": "^1.7.9",
     "chai": "^3.4.0",
