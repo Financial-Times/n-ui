@@ -21,7 +21,7 @@ module.exports = function (exclusions) {
 		'ftdomdelegate': 'window.ftNextUi._ftdomdelegate',
 		'superstore': 'window.ftNextUi._superstore',
 		'superstore-sync': 'window.ftNextUi._superstoreSync',
-	}
+	};
 
 	entry.react = 'window.ftNextUi._React';
 	entry['react-dom'] = 'window.ftNextUi._ReactDom';
@@ -31,4 +31,4 @@ module.exports = function (exclusions) {
 	}
 
 	return entry;
-}
+};

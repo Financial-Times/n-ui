@@ -21,7 +21,7 @@ describe('built asset expectations', () => {
 	beforeEach(() => Promise.all([
 		shellpromise(`touch ${appPath}/public/main.js`),
 		shellpromise(`touch ${appPath}/public/main.css`)
-	]))
+	]));
 
 	it('should fail to start if there is a missing asset', () => {
 		createGitignore('/public/main.js', '/public/main.css');
@@ -33,7 +33,7 @@ describe('built asset expectations', () => {
 			}, err => {
 				expect(err.toString()).to.contain('main.js');
 			});
-		})
+		});
 
 	});
 

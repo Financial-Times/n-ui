@@ -109,5 +109,10 @@
         "node_modules/.bin/secret-squirrel"
       ]
     }
+  },
+  "eslintConfig": {
+    "rules": {
+      "semi": [2, "always"]
+    }
   }
 }

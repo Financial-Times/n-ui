@@ -7,6 +7,6 @@ module.exports = {
 		});
 	},
 	waitForCondition: (conditionName, action) => {
-		window[`ftNext${conditionName}Loaded`] ? action() : document.addEventListener(`ftNext${conditionName}Loaded`, action)
+		window[`ftNext${conditionName}Loaded`] ? action() : document.addEventListener(`ftNext${conditionName}Loaded`, action);
 	}
-}
+};

@@ -24,8 +24,8 @@ describe('n-ui', () => {
 		.forEach(mod => {
 			it(`should export _${mod}`, () => {
 				expect(nUi['_' + mod]).to.exist;
-			})
-		})
+			});
+		});
 
 	describe('_entry', () => {
 		const aliases = entry();
@@ -33,8 +33,8 @@ describe('n-ui', () => {
 		Object.keys(aliases).filter(alias => alias !== 'n-ui').forEach(alias => {
 			it('should provide entry points for ' + alias, () => {
 				expect(nUi[aliases[alias].replace('window.ftNextUi.', '')]).to.exist;
-			})
-		})
+			});
+		});
 
 		describe('aliasing origami components', () => {
 			Object.keys(aliases)
@@ -44,7 +44,7 @@ describe('n-ui', () => {
 						if (aliases[oAlias]) {
 							it(`should provide ${oAlias} equivalent to ${alias}`, () => {
 								expect(aliases[alias]).to.equal(aliases[oAlias]);
-							})
+							});
 						} else {
 							it(`should not expect a ${oAlias} equivalent to ${alias}`, () => {
 								expect(nUi[aliases[alias].replace('window.ftNextUi.', '')].__wrapsOrigami).to.not.be.true;
@@ -55,7 +55,7 @@ describe('n-ui', () => {
 							expect(nUi[aliases[alias].replace('window.ftNextUi.', '')]).to.exist;
 						});
 					}
-				})
+				});
 		});
 		describe('preact', () => {
 			it('should provide preact entry point by default', () => {
@@ -63,9 +63,9 @@ describe('n-ui', () => {
 				expect(nUi[aliases.react.replace('window.ftNextUi.', '')]).to.exist;
 				expect(aliases['react-dom']).to.exist;
 				expect(nUi[aliases['react-dom'].replace('window.ftNextUi.', '')]).to.exist;
-			})
-		})
+			});
+		});
 
-	})
+	});
 
-})
+});

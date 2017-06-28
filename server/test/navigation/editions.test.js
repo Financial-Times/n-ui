@@ -54,7 +54,7 @@ describe('Editions', () => {
 			let editions = new Editions();
 			editions.middleware(req, res, next);
 			expect(res.locals.editions.current.id).to.equal('international');
-			sinon.assert.calledWith(res.cookie, 'next-edition', 'international', { domain: 'ft.com', maxAge: 1000 * 60 * 60 * 24 * 365 })
+			sinon.assert.calledWith(res.cookie, 'next-edition', 'international', { domain: 'ft.com', maxAge: 1000 * 60 * 60 * 24 * 365 });
 		});
 
 		it('Should vary request on edition', () => {
@@ -71,6 +71,6 @@ describe('Editions', () => {
 			expect(res.locals.editions.others.length).to.equal(1);
 			expect(res.locals.editions.others[0].id).to.equal('international');
 
-		})
-	})
+		});
+	});
 });

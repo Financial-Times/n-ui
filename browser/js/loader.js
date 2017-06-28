@@ -33,7 +33,7 @@ class JsSetup {
 
 	init () {
 
-		loadFonts(document.documentElement)
+		loadFonts(document.documentElement);
 
 		this.appInfo = {
 			isProduction: document.documentElement.hasAttribute('data-next-is-production'),

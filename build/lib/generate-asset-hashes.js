@@ -21,4 +21,4 @@ module.exports = (directory = 'public', withBrotli) => {
 			return previous;
 		}, {});
 	fs.writeFileSync(`./${directory}/asset-hashes.json`, JSON.stringify(hashes, null, 2), { encoding: 'UTF8' });
-}
+};

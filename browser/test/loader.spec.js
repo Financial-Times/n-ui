@@ -21,7 +21,7 @@ describe('js loader', function () {
 				expect(spy.args[0][0].enabled).to.be.falsy;
 				spy.restore();
 				done();
-			})
+			});
 		});
 
 
@@ -165,7 +165,7 @@ describe('js loader', function () {
 			});
 
 			it('should add js-success class if callback executes ok', function (done) {
-				const jsLoader = new JsLoader()
+				const jsLoader = new JsLoader();
 				jsLoader.bootstrap({}, function () {});
 				setTimeout(function () {
 					expect(document.querySelector('html').classList.contains('js-success')).to.be.true;
@@ -174,7 +174,7 @@ describe('js loader', function () {
 			});
 
 			it('should add js-success class if callback returns resolved promise', function (done) {
-				const jsLoader = new JsLoader()
+				const jsLoader = new JsLoader();
 				jsLoader.bootstrap({}, function () {
 					return Promise.resolve();
 				});
@@ -187,7 +187,7 @@ describe('js loader', function () {
 			});
 
 			it('should not carry out success actions if a preload', function (done) {
-				const jsLoader = new JsLoader()
+				const jsLoader = new JsLoader();
 				jsLoader.bootstrap({preload: true}, function () {});
 				setTimeout(function () {
 					expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
@@ -207,7 +207,7 @@ describe('js loader', function () {
 				});
 
 				it('should not add js-success class and log error if callback fails', function (done) {
-					const jsLoader = new JsLoader()
+					const jsLoader = new JsLoader();
 					jsLoader.bootstrap({}, function () {
 						throw 'error';
 					});
@@ -221,7 +221,7 @@ describe('js loader', function () {
 				});
 
 				it('should not add js-success class and log error if callback returns rejected promise', function (done) {
-					const jsLoader = new JsLoader()
+					const jsLoader = new JsLoader();
 					jsLoader.bootstrap({}, function () {
 						return Promise.reject();
 					});
@@ -235,7 +235,7 @@ describe('js loader', function () {
 				});
 
 				it('should not add js-success class if callback returns hanging promise', function (done) {
-					const jsLoader = new JsLoader()
+					const jsLoader = new JsLoader();
 					jsLoader.bootstrap({}, function () {
 						return new Promise(function (){});
 					});

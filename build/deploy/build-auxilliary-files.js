@@ -1,6 +1,6 @@
 const denodeify = require('denodeify');
 const compress = denodeify(require('iltorb').compress);
-const path = require('path')
+const path = require('path');
 const fs = require('fs');
 const readFile = denodeify(fs.readFile);
 const writeFile = denodeify(fs.writeFile);
@@ -14,9 +14,9 @@ function expectedAssets () {
 				if(!fs.existsSync(path.join(__dirname, '../../dist/assets/', filename))) {
 					throw new Error(`${filename} has not been built`);
 				}
-				return `./dist/assets/${filename}`
+				return `./dist/assets/${filename}`;
 			})
-	)
+	);
 }
 
 function brotlify (files) {
@@ -27,10 +27,10 @@ function brotlify (files) {
 					.then(compress)
 					.then(contents => writeFile(path.join(process.cwd(), fileName + '.br'), contents))
 			)
-	)
+	);
 }
 
-const generateAssetHashes = require('../lib/generate-asset-hashes')
+const generateAssetHashes = require('../lib/generate-asset-hashes');
 
 expectedAssets()
 	.then(brotlify)
@@ -38,5 +38,5 @@ expectedAssets()
 	.then(() => process.exit(0))
 	.catch(err => {
 		console.log(err) //eslint-disable-line
-		process.exit(2)
-	})
+		process.exit(2);
+	});

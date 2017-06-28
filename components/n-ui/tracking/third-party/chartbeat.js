@@ -21,7 +21,7 @@ const enableChartbeat = () => {
 		window._sf_async_config.path = '/home/' + (document.querySelector('[data-next-edition]').getAttribute('data-next-edition') || '');
 	}
 	loadScript('//static.chartbeat.com/js/chartbeat.js');
-}
+};
 
 // The chartbeat Heads-Up-Display (HUD) requires the chartbeat script to be loaded.
 // Editorial users who wish to use the HUD will need to toggle "chartbeatHud" on.
@@ -39,4 +39,4 @@ module.exports = flags => {
 			enableChartbeat();
 		}
 	}
-}
+};

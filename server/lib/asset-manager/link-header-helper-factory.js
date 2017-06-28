@@ -6,15 +6,15 @@ module.exports = function linkHeaderFactory (assetHasher) {
 		const header = [];
 		header.push(`<${opts.hashed ? assetHasher(file) : file }>`);
 		Object.keys(meta).forEach(key => {
-			header.push(`${key}="${meta[key]}"`)
+			header.push(`${key}="${meta[key]}"`);
 		});
 
 		if (!meta.rel) {
-			header.push('rel="preload"')
+			header.push('rel="preload"');
 		}
 
 		header.push('nopush');
 
-		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '))
-	}
-}
+		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '));
+	};
+};

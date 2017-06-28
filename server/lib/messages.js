@@ -14,4 +14,4 @@ If you do not need this behaviour run
 
 /*********** n-express warning ************/
 `
-}
+};
