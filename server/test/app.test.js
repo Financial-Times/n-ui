@@ -189,7 +189,7 @@ describe('simple app', function () {
 				});
 		});
 
-		it('should have preload link headers for css and js resources', done => {
+		it.skip('should have preload link headers for css and js resources', done => {
 			request(app)
 				.get('/templated')
 				.expect('Link', /<https:\/\/www\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
