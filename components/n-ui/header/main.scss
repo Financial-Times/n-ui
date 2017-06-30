@@ -22,7 +22,7 @@
 
 	// add next opt-out buttons
 	.o-header__drawer-menu-button {
-		@include oButtons('medium', 'standout');
+		@include oButtons($theme: primary);
 		display: block;
 		margin: $_o-header-drawer-padding-x;
 	}
@@ -43,11 +43,11 @@
 		top: 1em;
 		left: -9999px;
 		padding: 0.5em 1em;
-		background: getColor('purple-1');
+		background: getColor('velvet');
 		color: getColor('white');
 
 		&:focus {
-			@include oEffectsShadowsElevation('high');
+			@include oVisualEffectsShadowsElevation('high');
 			left: 0;
 			color: getColor('white');
 		}
@@ -119,9 +119,9 @@
 }
 
 .o-header__drawer-homepage {
-	border-top: 2px solid getColor('pink-tint2');
+	border-top: 2px solid getColor('black-10');
 }
 
 .o-header__drawer-search {
-	border-top: 2px solid getColor('pink-tint2');
+	border-top: 2px solid getColor('black-10');
 }

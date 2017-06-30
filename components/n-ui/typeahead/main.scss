@@ -32,7 +32,7 @@
 
 	.n-typeahead__heading {
 
-		@include oTypographySans(l);
+		@include oTypographySans($scale: 4);
 
 		position: relative;
 		margin: 0;
@@ -62,7 +62,7 @@
 
 	.n-typeahead__link {
 		cursor: pointer;
-		color: getColor('grey-tint5');
+		color: getColor('black-80');
 		border-bottom: 0;
 		box-sizing: border-box;
 		display: block;
@@ -88,7 +88,7 @@
 		&:before {
 			content: '';
 			display: block;
-			border-bottom: 1px solid getColor('grey-tint2');
+			border-bottom: 1px solid getColor('black-40');
 			position: absolute;
 			bottom: 0;
 			left: $spacing-unit;
@@ -98,7 +98,7 @@
 
 		&:hover,
 		&:focus {
-			background: getColor('teal-1');
+			background: getColor('teal-40');
 			color: getColor('white');
 		}
 
@@ -121,7 +121,7 @@
 	.n-typeahead__link--tail {
 
 		&:after {
-			@include oIconsGetIcon(arrow-right, getColor('grey-tint5'), 14);
+			@include oIconsGetIcon(arrow-right, getColor('black-80'), 14);
 			margin: 0 0 -2px 2px;
 			content: '';
 		}
@@ -132,7 +132,7 @@
 	}
 
 	.n-typeahead__link--news {
-		color: getColor('claret-1');
+		color: getColor('claret');
 	}
 
 	// for nice alignment of equity name and index

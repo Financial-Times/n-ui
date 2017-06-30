@@ -5,7 +5,9 @@
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "commit": "commit-wizard"
+    "commit": "commit-wizard",
+    "precommit": "node_modules/.bin/secret-squirrel",
+    "prepush": "make verify -j3"
   },
   "repository": {
     "type": "git",
@@ -21,7 +23,7 @@
   },
   "homepage": "https://github.com/Financial-Times/n-ui#readme",
   "devDependencies": {
-    "@financial-times/n-gage": "^1.7.0",
+    "@financial-times/n-gage": "^1.8.4",
     "@financial-times/n-heroku-tools": "^6.27.0",
     "bower": "^1.7.9",
     "chai": "^3.4.0",
@@ -53,7 +55,6 @@
     "nodemon": "^1.9.2",
     "npm-prepublish": "^1.2.1",
     "pa11y-ci": "^1.1.1",
-    "pre-git": "^3.14.0",
     "proxyquire": "^1.7.10",
     "semver": "^5.3.0",
     "sinon": "^1.17.7",
@@ -101,16 +102,13 @@
     "webpack-sources": "^1.0.1",
     "webpack-stats-plugin": "^0.1.1"
   },
-  "config": {
-    "pre-git": {
-      "pre-commit": [
-        "node_modules/.bin/secret-squirrel"
-      ]
-    }
-  },
+  "config": {},
   "eslintConfig": {
     "rules": {
-      "semi": [2, "always"]
+      "semi": [
+        2,
+        "always"
+      ]
     }
   }
 }

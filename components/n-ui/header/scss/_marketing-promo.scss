@@ -1,6 +1,6 @@
 @mixin nUiHeaderMarketingPromo {
 	.n-header__marketing-promo {
-		background-color: getColor('grey-tint5');
+		background-color: getColor('black-80');
 		color: getColor('white');
 		display: none;
 
@@ -18,7 +18,7 @@
 	}
 
 	.n-header__marketing-promo__box {
-		@include oTypographySansSize(s);
+		@include oTypographySize($scale: 0);
 		display: table-cell;
 		vertical-align: middle;
 		text-align: right;
@@ -28,7 +28,7 @@
 	}
 
 	.n-header__marketing-promo__link {
-		@include oButtons($theme: standout, $size: small);
+		@include oButtons($theme: primary);
 		word-spacing: 1px;
 	}
 }
