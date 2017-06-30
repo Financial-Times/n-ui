@@ -7,11 +7,9 @@ if (!window.console) {
 	}
 }
 
-import {load as loadFonts} from 'n-ui-foundations/typography/font-loader';
 import {loadScript, waitForCondition} from './utils';
 import {perfMark} from 'n-ui-foundations';
-import instrumentFetch from './instrument-fetch';
-const oErrors = require('o-errors');
+
 
 // Dispatch a custom `ftNextLoaded` event after the app executes.
 function dispatchLoadedEvent () {
@@ -33,8 +31,6 @@ class JsSetup {
 
 	init () {
 
-		loadFonts(document.documentElement);
-
 		this.appInfo = {
 			isProduction: document.documentElement.hasAttribute('data-next-is-production'),
 			version: document.documentElement.getAttribute('data-next-version'),
@@ -53,29 +49,6 @@ class JsSetup {
 			}
 		});
 
-		oErrors.init({
-			enabled: flags.get('clientErrorReporting') && this.appInfo.isProduction,
-			sentryEndpoint: 'https://edb56e86be2446eda092e69732d8654b@sentry.io/32594',
-			siteVersion: this.appInfo.version,
-			logLevel: flags.get('clientDetailedErrorReporting') ? 'contextonly' : 'off',
-			tags: { appName: this.appInfo.name },
-			errorBuffer: window.errorBuffer || []
-		});
-
-		instrumentFetch(flags, oErrors);
-
-		if (flags.get('clientAjaxErrorReporting')) {
-
-			const realFetch = window.fetch;
-
-			window.fetch = function (url, opts) {
-				return realFetch.call(this, url, opts)
-					.catch(function (err) {
-						oErrors.log(url + (opts ? JSON.stringify(opts) : '' ) + err);
-						throw err;
-					});
-			};
-		}
 		return Promise.resolve({
 			flags: flags,
 			appInfo: this.appInfo,

@@ -14,9 +14,11 @@ const commonConfig = require('../webpack.common.config.js');
 module.exports = webpackMerge(commonConfig, {
 
 	entry: {
-		'./dist/assets/es5.js': './build/deploy/wrapper.js',
-		'./dist/assets/es5.min.js': './build/deploy/wrapper.js',
-		'./dist/assets/n-ui-core.css': './build/deploy/shared-head.scss',
+		'./dist/assets/es5.js': './browser/bundles/main.js',
+		'./dist/assets/es5.min.js': './browser/bundles/main.js',
+		'./dist/assets/font-loader.min.js': './browser/bundles/font-loader.js',
+		'./dist/assets/o-errors.min.js': './browser/bundles/o-errors.js',
+		'./dist/assets/n-ui-core.css': './browser/bundles/shared-head.scss',
 	},
 
 	// These plugins are added to the common plugins rather than replacing them

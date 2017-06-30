@@ -1,5 +1,5 @@
 /*global ftNextFireCondition*/
-const nUi = require('../../browser/js/main');
+const nUi = require('../js/main');
 
 nUi.bootstrap(window.ftNextUiConfig || {
 	preset: 'discrete',
