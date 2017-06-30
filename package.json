@@ -5,7 +5,6 @@
   "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "commit": "commit-wizard",
     "precommit": "node_modules/.bin/secret-squirrel",
     "prepush": "make verify -j3"
   },
@@ -102,7 +101,6 @@
     "webpack-sources": "^1.0.1",
     "webpack-stats-plugin": "^0.1.1"
   },
-  "config": {},
   "eslintConfig": {
     "rules": {
       "semi": [

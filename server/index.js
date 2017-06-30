@@ -46,7 +46,7 @@ module.exports = options => {
 
 	// 100% public end points
 	if (!app.locals.__isProduction) {
-		app.use('/' + meta.name, nExpress.static(meta.directory + '/public', { redirect: false }));
+		app.use('/__dev/assets/' + meta.name, nExpress.static(meta.directory + '/public', { redirect: false }));
 	}
 
 	// set the edition so it can be added to the html tag and used for tracking
