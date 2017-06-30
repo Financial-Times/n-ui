@@ -35,7 +35,4 @@
 	};
 
 	window.ftNextPolyfillLoaded ? init() : document.addEventListener('ftNextPolyfillLoaded', init);
-})();
-
-
-
+}());
