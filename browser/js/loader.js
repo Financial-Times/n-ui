@@ -93,7 +93,8 @@ class JsSetup {
 							console.error(err); //eslint-disable-line
 						}
 					}
-					oErrors.error(err);
+					// TODO fire a custom event instead
+					// oErrors.error(err);
 				});
 		});
 	}

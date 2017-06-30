@@ -1,4 +1,4 @@
-(function(){
+(function (){
 	function init () {
 
 		const oErrors = require('o-errors');
@@ -10,12 +10,12 @@
 		};
 
 		oErrors.init({
-			enabled: window.nextFeatureFlags.clientErrorReporting && this.appInfo.isProduction,
+			enabled: window.nextFeatureFlags.clientErrorReporting && appInfo.isProduction,
 			sentryEndpoint: 'https://edb56e86be2446eda092e69732d8654b@sentry.io/32594',
-			siteVersion: this.appInfo.version,
+			siteVersion: appInfo.version,
 			logLevel: window.nextFeatureFlags.clientDetailedErrorReporting ? 'contextonly' : 'off',
 			tags: {
-				appName: this.appInfo.name
+				appName: appInfo.name
 			},
 			errorBuffer: window.errorBuffer || []
 		});

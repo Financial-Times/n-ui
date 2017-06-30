@@ -1,4 +1,4 @@
-(function(){
+(function (){
 
 	const loadFonts = require('n-ui-foundations/typography/font-loader').loadFonts;
 
