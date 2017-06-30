@@ -55,7 +55,6 @@
     "nodemon": "^1.9.2",
     "npm-prepublish": "^1.2.1",
     "pa11y-ci": "^1.1.1",
-    "pre-git": "^3.14.0",
     "proxyquire": "^1.7.10",
     "semver": "^5.3.0",
     "sinon": "^1.17.7",
