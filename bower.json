@@ -19,20 +19,20 @@
     "fontfaceobserver": "^2.0.9",
     "ftdomdelegate": "^2.0.3",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
-    "n-image": "^5.0.0-beta",
+    "n-image": "^5.0.0",
     "n-service-worker": "^1.8.0",
-    "n-sliding-popup": "^2.0.0-beta",
-    "n-syndication": "^2.0.0-beta",
-    "o-ads": "^7.0.0-beta",
+    "n-sliding-popup": "^2.0.0",
+    "n-syndication": "^2.0.0",
+    "o-ads": "^7.0.0",
     "o-cookie-message": "^3.0.0",
     "o-errors": "^3.5.1",
     "o-footer": "^6.0.0",
     "o-header": "^7.0.0",
     "o-tracking": "^1.1.8",
-    "n-ui-foundations": "^2.0.0-beta",
+    "n-ui-foundations": "^2.0.0",
     "o-expander": "^4.2.2",
     "next-session-client": "^2.3.1",
-    "n-counter-ad-blocking": "^3.0.0-beta",
-    "n-marketing": "^1.0.0-alpha"
+    "n-counter-ad-blocking": "^3.0.0",
+    "n-marketing": "^1.0.0"
   }
 }
