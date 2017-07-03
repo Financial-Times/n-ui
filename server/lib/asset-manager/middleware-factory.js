@@ -35,18 +35,15 @@ module.exports = ({
 					file: 'font-loader.js',
 					isNUi: true
 				}),
-
+				getAssetUrl({
+					file: 'o-errors.js',
+					isNUi: true
+				}),
 				getAssetUrl({
 					file: 'es5.js',
 					flags: res.locals.flags,
 					isNUi: true
 				}),
-
-				getAssetUrl({
-					file: 'o-errors.js',
-					isNUi: true
-				}),
-
 				getAssetUrl('main-without-n-ui.js')
 			);
 

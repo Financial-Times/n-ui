@@ -10,7 +10,6 @@ if (!window.console) {
 import { loadScript, waitForCondition } from './utils';
 import { perfMark, broadcast } from 'n-ui-foundations';
 
-
 // Dispatch a custom `ftNextLoaded` event after the app executes.
 function dispatchLoadedEvent () {
 	let ftNextLoaded = false;

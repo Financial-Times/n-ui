@@ -14,7 +14,7 @@ const webpackEntryPoints = require('../webpack-entry-points');
 
 module.exports = webpackMerge(commonConfig, {
 
-	entry: webpackEntryPoints.demo,
+	entry: webpackEntryPoints.deploy,
 
 	// These plugins are added to the common plugins rather than replacing them
 	plugins: [

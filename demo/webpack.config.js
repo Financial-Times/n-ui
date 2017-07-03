@@ -15,6 +15,6 @@ module.exports = [
 		]
 	}),
 	webpackMerge(commonConfig, {
-		entry: webpackEntryPoints.demoAppShell
+		entry: webpackEntryPoints.appShell
 	})
 ];

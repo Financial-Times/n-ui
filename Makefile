@@ -69,7 +69,7 @@ build-css-loader:
 	uglifyjs browser/layout/src/css-loader.js -o browser/layout/partials/css-loader.html
 
 build-bundle:
-	webpack --bail --config build/deploy/webpack.deploy.config.js --define process.env.NODE_ENV="'production'"
+	webpack -p --bail --config build/deploy/webpack.deploy.config.js --define process.env.NODE_ENV="'production'"
 
 build-dist: build-bundle build-css-loader
 	node ./build/deploy/build-auxilliary-files.js

@@ -1,22 +1,8 @@
-const path = require('path');
 const fs = require('fs');
-const join = require('path').join;
+const path = require('path');
 const ExtractCssBlockPlugin = require('extract-css-block-webpack-plugin');
 const webpackEntryPoints = require('../webpack-entry-points');
-
-const gitignore = fs.readFileSync(join(process.cwd(), '.gitignore'), 'utf8')
-	.split('\n');
-
-
-function noGitignoreWildcard () {
-	gitignore.forEach(pattern => {
-		if (/^\/?public\/(.*\/\*|\*|$)/.test(pattern)) {
-			if (pattern !== '/public/n-ui/') {
-				throw new Error('Wildcard pattern or entire directories (i.e. /public/) for built public assets not allowed in your .gitignore. Please specify a path for each file');
-			}
-		}
-	});
-}
+const verifyGitignore = require('./verify-gitignore');
 
 function filterEntryKeys (obj, rx, negativeMatch) {
 	const keys = Object.keys(obj).filter(key => negativeMatch ? !rx.test(key) : rx.test(key));
@@ -26,10 +12,9 @@ function filterEntryKeys (obj, rx, negativeMatch) {
 	}, {});
 }
 
+verifyGitignore();
+
 const baseConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
-
-noGitignoreWildcard();
-
 const webpackConfigs = [];
 
 /*

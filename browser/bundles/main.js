@@ -1,4 +1,3 @@
-/*global ftNextFireCondition*/
 const nUi = require('../js/main');
 
 nUi.bootstrap(window.ftNextUiConfig || {
@@ -7,5 +6,3 @@ nUi.bootstrap(window.ftNextUiConfig || {
 });
 
 window.ftNextUi = nUi;
-
-ftNextFireCondition('nUiLoaded');
