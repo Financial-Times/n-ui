@@ -11,7 +11,6 @@ function buildQueryString (qsConfig) {
 	return `?${qs.join('&')}`;
 }
 
-const callback = 'ftNextPolyfillServiceCallback';
 const queryStrings = {
 	enhanced: buildQueryString({
 		features: [
@@ -30,8 +29,7 @@ const queryStrings = {
 			'NodeList.prototype.@@iterator',
 			'Array.prototype.@@iterator'
 		],
-		flags: 'gated',
-		callback
+		flags: 'gated'
 	}),
 	core: buildQueryString({
 		features: [
@@ -47,7 +45,6 @@ module.exports = flags => {
 		'v2/polyfill.min.js';
 
 	return {
-		callback,
 		enhanced: polyfillRoot + queryStrings['enhanced'],
 		core: polyfillRoot + queryStrings['core']
 	};
