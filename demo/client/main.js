@@ -1,3 +1,3 @@
-import {bootstrap} from '../../browser/js/main';
+import {bootstrap} from 'n-ui';
 
 bootstrap({ preset: 'complete' }, () => {});
