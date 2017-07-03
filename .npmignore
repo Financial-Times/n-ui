@@ -1,4 +1,4 @@
-/.idea/
+*.env*
 /.sass-cache/
 /bower_components/
 /node_modules/
