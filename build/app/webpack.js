@@ -67,7 +67,7 @@ build to a file called main-without-n-ui.js rather than main.js.
 During build it also wraps the main.js code to ensure it is only called once n-ui
 has been loaded.
 */
-const nUiExternal = require('../../browser/js/webpack-entry');
+const nUiExternal = require('./webpack-entry');
 const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
 const mainJsWebpackConfig = webpackMerge(commonAppConfig, {
 	entry: modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js')),
