@@ -1,6 +1,6 @@
 module.exports = {
 	files: {
-		allow: [],
+		allow: ['.bowerignore'],
 		allowOverrides: []
 	},
 	strings: {

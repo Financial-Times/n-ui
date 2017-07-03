@@ -6,6 +6,7 @@ const shellpromise = require('shellpromise');
 const shellpipe = require('./shellpipe');
 const downloadAssets = require('./download-assets');
 const assetHashes = require('../lib/generate-asset-hashes');
+const sendBuildMetrics = require('../lib/send-build-metrics');
 
 const exit = err => {
 	logger.error(err);
@@ -22,11 +23,14 @@ const devAdvice = () => {
 };
 const nUiVersion = require('../../package.json').version;
 
+let appPackageJson;
 const aboutJson = () => {
+	appPackageJson = require(path.join(process.cwd(), '/package.json'));
+
 	return shellpromise('git rev-parse HEAD | xargs echo -n')
 		.then(version => {
 			return {
-				description: require(path.join(process.cwd(), '/package.json')).name,
+				description: appPackageJson.name,
 				support: 'next.team@ft.com',
 				supportStatus: 'active',
 				appVersion: version,
@@ -49,12 +53,21 @@ program
 	.action(options => {
 
 		devAdvice();
+		const buildStartTime = Date.now();
 
 		shellpipe(`webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}`)
 			.then(() => options.production && assetHashes())
 			.then(aboutJson)
 			.then(downloadAssets)
 			.then(() => {
+
+				const buildTime = Date.now() - buildStartTime;
+
+				// Don't send metrics from CircleCI builds
+				if (!process.env.CIRCLECI) {
+					sendBuildMetrics(appPackageJson.name, buildTime);
+				}
+
 				if (options.production && fs.existsSync(path.join(process.cwd(), 'Procfile'))) {
 					return shellpipe('haikro build');
 				}
@@ -70,7 +83,7 @@ program
 		devAdvice();
 
 		downloadAssets()
-			.then(() => shellpipe(`webpack --watch --config ${webpackConfPath}`)	)
+			.then(() => shellpipe(`webpack --watch --config ${webpackConfPath}`))
 			.catch(exit);
 	});
 

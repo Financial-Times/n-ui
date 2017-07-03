@@ -14,7 +14,7 @@ function expectedAssets () {
 				if(!fs.existsSync(path.join(__dirname, '../../dist/assets/', filename))) {
 					throw new Error(`${filename} has not been built`);
 				}
-				return `./dist/assets/${filename}`;
+				return `./n-ui/public/${filename}`;
 			})
 	);
 }

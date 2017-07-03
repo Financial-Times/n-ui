@@ -8,7 +8,7 @@
 .eslintrc.js
 .gitignore
 .scss-lint.yml
-bower.json
+package.json
 circle.yml
 karma.conf.js
 Makefile
@@ -16,7 +16,7 @@ Makefile
 /dist
 /browser/test
 /demo
-/server/test
 /test
 
-/browser/js
+/browser/layout
+/server
