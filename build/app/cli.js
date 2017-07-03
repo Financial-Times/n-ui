@@ -62,7 +62,11 @@ program
 			.then(() => {
 
 				const buildTime = Date.now() - buildStartTime;
-				sendBuildMetrics(appPackageJson.name, buildTime);
+
+				// Don't send metrics from CircleCI builds
+				if (!process.env.CIRCLECI) {
+					sendBuildMetrics(appPackageJson.name, buildTime);
+				}
 
 				if (options.production && fs.existsSync(path.join(process.cwd(), 'Procfile'))) {
 					return shellpipe('haikro build');
