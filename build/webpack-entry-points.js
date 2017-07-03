@@ -25,4 +25,4 @@ module.exports = {
 		'./public/n-ui/font-loader.js': './browser/bundles/font-loader.js',
 		'./public/n-ui/o-errors.js': './browser/bundles/o-errors.js'
 	}
-}
+};

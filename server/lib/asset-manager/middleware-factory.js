@@ -2,7 +2,6 @@ const polyfillIo = require('./polyfill-io');
 
 module.exports = ({
 	getAssetUrl,
-	useLocalAppShell,
 	stylesheetManager,
 	linkHeaderHelper
 }) => {
@@ -38,7 +37,7 @@ module.exports = ({
 				}),
 
 				getAssetUrl({
-					file: `es5.js`,
+					file: 'es5.js',
 					flags: res.locals.flags,
 					isNUi: true
 				}),

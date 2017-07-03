@@ -18,14 +18,6 @@ function noGitignoreWildcard () {
 	});
 }
 
-function modifyEntryKeys (obj, rx, nameModifier) {
-	const keys = Object.keys(obj).filter(key => rx.test(key));
-	return keys.reduce((o, key) => {
-		o[nameModifier(key)] = obj[key];
-		return o;
-	}, {});
-}
-
 function filterEntryKeys (obj, rx, negativeMatch) {
 	const keys = Object.keys(obj).filter(key => negativeMatch ? !rx.test(key) : rx.test(key));
 	return keys.reduce((o, key) => {
@@ -67,7 +59,7 @@ build to a file called main-without-n-ui.js rather than main.js.
 During build it also wraps the main.js code to ensure it is only called once n-ui
 has been loaded.
 */
-const nUiExternal = require('./webpack-externals');
+const nUiExternal = require('../webpack-externals');
 const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
 const mainJsWebpackConfig = webpackMerge(commonAppConfig, {
 	entry: webpackEntryPoints.appJs,

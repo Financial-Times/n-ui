@@ -98,7 +98,7 @@ class JsSetup {
 					info: {
 						lifecycle: 'app initialisation'
 					}
-				})
+				});
 			});
 	}
 

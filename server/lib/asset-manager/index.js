@@ -45,7 +45,6 @@ function init (options, directory, app) {
 	// use all the above in middleware to be used on each request
 	app.use(middlewareFactory({
 		getAssetUrl,
-		useLocalAppShell,
 		stylesheetManager,
 		linkHeaderHelper: linkHeaderHelperFactory(getAssetUrl)
 	}));
