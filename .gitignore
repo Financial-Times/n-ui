@@ -2,7 +2,6 @@
 /.sass-cache/
 /bower_components/
 /node_modules/
-/dist/
 /npm-debug.log*
 .DS_Store
 .editorconfig
@@ -15,6 +14,7 @@
 /public/main.css.map
 /public/main-without-n-ui.js
 /public/main-without-n-ui.js.map
+/public/n-ui
 key.pem
 key-cert.pem
 /test-page.html

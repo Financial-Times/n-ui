@@ -1,12 +1,14 @@
 module.exports = {
 	demo: {
 		'./public/main-without-n-ui.js': './demo/client/main.js',
-		'./public/n-ui/font-loader.js': './browser/bundles/font-loader.js',
-		'./public/n-ui/o-errors.js': './browser/bundles/o-errors.js',
 		'./public/main.css': './demo/client/main.scss'
 	},
-	deploy: {
+	demoAppShell: {
 		'./public/n-ui/es5.js': './browser/bundles/main.js',
+		'./public/n-ui/font-loader.js': './browser/bundles/font-loader.js',
+		'./public/n-ui/o-errors.js': './browser/bundles/o-errors.js',
+	},
+	deploy: {
 		'./public/n-ui/es5.js': './browser/bundles/main.js',
 		'./public/n-ui/font-loader.js': './browser/bundles/font-loader.js',
 		'./public/n-ui/o-errors.js': './browser/bundles/o-errors.js',
