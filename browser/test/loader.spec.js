@@ -126,27 +126,8 @@ describe('js loader', function () {
 		after(() => delete window.nextFeatureFlags);
 
 		describe('simple bootstrap', function () {
-			it('should wait for dependencies to load if not yet loaded', function (done) {
-				const callback = sinon.stub();
-				// can't assume promises exist to do async stuff
-				const p = window.Promise;
-				window.Promise = undefined;
-				new JsLoader().bootstrap({}, callback);
-				setTimeout(function () {
-					expect(callback.calledOnce).to.be.false;
-					// now we can assume Promise is polyfilled
-					window.Promise = p;
-					document.dispatchEvent(new Event('ftNextPolyfillLoaded'));
-					setTimeout(function () {
-						expect(callback.calledOnce).to.be.true;
-						expect(callback.calledWith(result)).to.be.true;
-						done();
-					}, 100);
-				}, 100);
 
-			});
-
-			it('should run a callback with result of init immediately if dependencies already loaded', function (done) {
+			it('should run a callback with result of init immediately', function (done) {
 				window.ftNextPolyfillLoaded = true;
 				const callback = sinon.stub();
 				new JsLoader().bootstrap({}, callback);
