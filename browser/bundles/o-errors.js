@@ -1,4 +1,3 @@
-console.log('errors start')
 const oErrors = require('o-errors');
 
 const appInfo = {
@@ -29,4 +28,3 @@ if (window.nextFeatureFlags.clientAjaxErrorReporting) {
 			});
 	};
 }
-console.log('errors end')

@@ -1,4 +1,3 @@
-console.log('nui start')
 const nUi = require('../js/main');
 
 nUi.bootstrap(window.ftNextUiConfig || {
@@ -7,4 +6,3 @@ nUi.bootstrap(window.ftNextUiConfig || {
 });
 
 window.ftNextUi = nUi;
-console.log('nui end')
