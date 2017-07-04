@@ -78,7 +78,7 @@ deploy-s3:
 	# deploy to urls using the real file name on s3
 	node ./build/deploy/s3.js
 	# deploy to hashed urls on s3
-	nht deploy-hashed-assets --directory dist/assets --monitor-assets
+	nht deploy-hashed-assets --directory public/n-ui --monitor-assets
 
 rebuild-user-facing-apps:
 # Don't rebuild apps if a beta tag release
