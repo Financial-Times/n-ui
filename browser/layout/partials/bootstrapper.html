@@ -8,7 +8,7 @@
 
 	window.ftNextLoadScript = function (src) {
 		var d = document, o = d.createElement('script');
-		o.defer = true;
+		o.async = o.defer = true;
 		o.src = src;
 		var s = d.getElementsByTagName('script')[0];
 		s.parentNode.insertBefore(o, s.nextSibling);
@@ -16,6 +16,10 @@
 	};
 
 	{{>layout/partials/css-loader}}
+
+	window.{{@root.polyfillIo.callback}} = function () {
+		window.ftNextFireCondition('PolyfillLoaded');
+	};
 
 	(function () {
 		if (cutsTheMustard) {

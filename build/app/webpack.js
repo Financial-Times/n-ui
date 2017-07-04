@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const join = require('path').join;
+const Wrap = require('../lib/addons/wrap');
 const ExtractCssBlockPlugin = require('extract-css-block-webpack-plugin');
 
 const gitignore = fs.readFileSync(join(process.cwd(), '.gitignore'), 'utf8')
@@ -70,7 +71,14 @@ const nUiExternal = require('./webpack-entry');
 const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
 const mainJsWebpackConfig = webpackMerge(commonAppConfig, {
 	entry: modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js')),
-	externals: nUiExternalPoints
+	externals: nUiExternalPoints,
+	plugins:[
+		new Wrap(
+			'(function(){function init(){\n',
+			'\n};window.ftNextnUiLoaded ? init() : document.addEventListener ? document.addEventListener(\'ftNextnUiLoaded\', init) : document.attachEvent(\'onftNextnUiLoaded\', init);})();',
+			{ match: /\.js$/ }
+		)
+	]
 });
 webpackConfigs.push(mainJsWebpackConfig);
 
