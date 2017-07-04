@@ -87,7 +87,7 @@ ifneq (,$(findstring beta,$(CIRCLE_TAG)))
 else
 	# only autodeploy all apps in office hours
 	HOUR=$$(date +%H); DAY=$$(date +%u); if [ $$HOUR -ge 8 ] && [ $$HOUR -lt 16 ] && [ $$DAY -ge 0 ] && [ $$DAY -lt 6 ]; then \
-	echo "REBUILDING ALL APPS" && sleep 20 && nht rebuild --all --serves user-page; fi
+	echo "REBUILDING ALL APPS" && nht rebuild --all --serves user-page; fi
 endif
 
 test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
