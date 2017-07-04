@@ -32,7 +32,7 @@
     "n-ui-foundations": "^2.0.0",
     "o-expander": "^4.2.2",
     "next-session-client": "^2.3.1",
-    "n-counter-ad-blocking": "^3.0.0",
+    "n-counter-ad-blocking": "^3.1.0",
     "n-marketing": "^1.0.0"
   }
 }
