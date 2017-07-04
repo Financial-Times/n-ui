@@ -92,37 +92,35 @@ class JsSetup {
 
 	bootstrap (opts, callback) {
 		opts = opts || {};
-		waitForCondition('Polyfill', () => {
-			this.initResult = this.initResult || this.init();
+		this.initResult = this.initResult || this.init();
 
-			this.bootstrapResult = this.initResult
-				.then(result => {
-					let promise = callback(result);
-					if (!(promise && typeof promise.then === 'function')) {
-						promise = Promise.resolve();
-					}
-					return promise
-						.then(() => {
-							if (opts.preload) {
-								perfMark('nUiJsExecuted');
-							} else {
-								document.documentElement.classList.add('js-success');
-								perfMark('appJsExecuted');
-								dispatchLoadedEvent();
-							}
-						});
-				})
-				.catch(err => {
-					if (!this.appInfo.isProduction){
-						if (typeof err === 'object' && err.stack) {
-							console.error(err.stack); //eslint-disable-line
+		this.bootstrapResult = this.initResult
+			.then(result => {
+				let promise = callback(result);
+				if (!(promise && typeof promise.then === 'function')) {
+					promise = Promise.resolve();
+				}
+				return promise
+					.then(() => {
+						if (opts.preload) {
+							perfMark('nUiJsExecuted');
 						} else {
-							console.error(err); //eslint-disable-line
+							document.documentElement.classList.add('js-success');
+							perfMark('appJsExecuted');
+							dispatchLoadedEvent();
 						}
+					});
+			})
+			.catch(err => {
+				if (!this.appInfo.isProduction){
+					if (typeof err === 'object' && err.stack) {
+						console.error(err.stack); //eslint-disable-line
+					} else {
+						console.error(err); //eslint-disable-line
 					}
-					oErrors.error(err);
-				});
-		});
+				}
+				oErrors.error(err);
+			});
 	}
 
 	loadScript (src) {
