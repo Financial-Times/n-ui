@@ -75,7 +75,10 @@ function staticAssets () {
 					if (!semver.valid(version)) {
 						return Promise.all(
 							files.map(file => purge(`https://www.ft.com/__assets/n-ui/cached/${version}/${file.split('/').pop()}`))
-						);
+						)
+							// failed to purge, but no biggie
+							// most of the time non semver releases are just for dev funsies
+							.catch(() => null);
 					}
 				})
 		);
