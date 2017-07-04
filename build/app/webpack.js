@@ -1,13 +1,21 @@
 const fs = require('fs');
 const path = require('path');
 const ExtractCssBlockPlugin = require('extract-css-block-webpack-plugin');
-const webpackEntryPoints = require('../webpack-entry-points');
+const appShellEntryPoints = require('../app-shell-entry-points');
 const verifyGitignore = require('./verify-gitignore');
 
 function filterEntryKeys (obj, rx, negativeMatch) {
 	const keys = Object.keys(obj).filter(key => negativeMatch ? !rx.test(key) : rx.test(key));
 	return keys.reduce((o, key) => {
 		o[key] = obj[key];
+		return o;
+	}, {});
+}
+
+function modifyEntryKeys (obj, rx, nameModifier) {
+	const keys = Object.keys(obj).filter(key => rx.test(key));
+	return keys.reduce((o, key) => {
+		o[nameModifier(key)] = obj[key];
 		return o;
 	}, {});
 }
@@ -29,7 +37,7 @@ const commonAppConfig = require('./webpack.app.common.js');
 
 
 const nonMainJsWebpackConfig = webpackMerge(commonAppConfig, {
-	entry: baseConfig.entry ? filterEntryKeys(baseConfig.entry, /main\.js$/, true) : webpackEntryPoints.appJs,
+	entry: filterEntryKeys(baseConfig.entry, /main\.js$/, true),
 	plugins:[
 		new ExtractCssBlockPlugin()
 	]
@@ -47,7 +55,7 @@ has been loaded.
 const nUiExternal = require('../webpack-externals');
 const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
 const mainJsWebpackConfig = webpackMerge(commonAppConfig, {
-	entry: webpackEntryPoints.appJs,
+	entry: modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js')),
 	externals: nUiExternalPoints
 });
 webpackConfigs.push(mainJsWebpackConfig);
@@ -83,7 +91,7 @@ If you do not need this behaviour run
 	}
 
 	const appShellWebpackConfig = webpackMerge(commonAppConfig, {
-		entry: webpackEntryPoints.appShell
+		entry: appShellEntryPoints
 	});
 	webpackConfigs.push(appShellWebpackConfig);
 }

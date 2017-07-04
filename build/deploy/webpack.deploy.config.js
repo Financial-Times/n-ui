@@ -10,11 +10,13 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const ExtractCssBlockPlugin = require('extract-css-block-webpack-plugin');
 const commonConfig = require('../webpack.common.config.js');
-const webpackEntryPoints = require('../webpack-entry-points');
+const appShellEntryPoints = require('../app-shell-entry-points');
 
 module.exports = webpackMerge(commonConfig, {
 
-	entry: webpackEntryPoints.deploy,
+	entry: Object.assign({}, appShellEntryPoints, {
+		'./public/n-ui/n-ui-core.css': './browser/bundles/main.scss'
+	}),
 
 	// These plugins are added to the common plugins rather than replacing them
 	plugins: [
