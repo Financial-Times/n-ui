@@ -11,10 +11,10 @@ function expectedAssets () {
 	return Promise.resolve(
 		expectedBuiltFiles
 			.map(filename => {
-				if(!fs.existsSync(path.join(__dirname, '../../dist/assets/', filename))) {
+				if(!fs.existsSync(path.join(process.cwd(), 'public/n-ui', filename))) {
 					throw new Error(`${filename} has not been built`);
 				}
-				return `./n-ui/public/${filename}`;
+				return `./public/n-ui/${filename}`;
 			})
 	);
 }
@@ -34,7 +34,7 @@ const generateAssetHashes = require('../lib/generate-asset-hashes');
 
 expectedAssets()
 	.then(brotlify)
-	.then(() => generateAssetHashes('dist/assets', true))
+	.then(() => generateAssetHashes('public/n-ui', true))
 	.then(() => process.exit(0))
 	.catch(err => {
 		console.log(err) //eslint-disable-line
