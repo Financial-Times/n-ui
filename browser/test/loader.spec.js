@@ -1,7 +1,7 @@
 /*global require,describe,afterEach,beforeEach,it,expect,sinon*/
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
 const JsLoader = require('../js/loader');
-// const oErrors = require('o-errors');
+const nUiFoundations = require('n-ui-foundations');
 
 describe('js loader', function () {
 
@@ -12,18 +12,6 @@ describe('js loader', function () {
 	describe('init with flags off', function () {
 		before(() => window.nextFeatureFlags = []);
 		after(() => delete window.nextFeatureFlags);
-
-		// it('should disable o-errors', function (done) {
-		// 	const spy = sinon.stub(oErrors, 'init');
-		// 	const promise = new JsLoader().init();
-		// 	promise.then(function () {
-		// 		expect(spy.calledOnce).to.be.true;
-		// 		expect(spy.args[0][0].enabled).to.be.falsy;
-		// 		spy.restore();
-		// 		done();
-		// 	});
-		// });
-
 
 		it('should return promise of useful things', function (done) {
 			document.documentElement.setAttribute('data-next-is-production', '');
@@ -58,41 +46,6 @@ describe('js loader', function () {
 
 		after(() => delete window.nextFeatureFlags);
 
-		// it('should configure o-errors for dev', function (done) {
-		// 	const spy = sinon.spy(oErrors, 'init');
-		// 	const Loader = new JsLoader();
-		// 	const promise = Loader.init();
-		// 	promise.then(function () {
-		// 		expect(spy.calledOnce).to.be.true;
-		// 		expect(spy.args[0][0].enabled).to.be.false;
-		// 		spy.restore();
-		// 		done();
-		// 	})
-		// 	.catch(done);
-		// });
-
-		// it('should configure o-errors for prod', function (done) {
-		// 	const spy = sinon.spy(oErrors, 'init');
-		// 	document.documentElement.setAttribute('data-next-is-production', '');
-		// 	document.documentElement.setAttribute('data-next-version', 'i-am-at-version-x');
-		// 	document.documentElement.setAttribute('data-next-app', 'i-am-an-app');
-		// 	const Loader = new JsLoader();
-		// 	const promise = Loader.init();
-		// 	promise.then(function () {
-		// 		expect(spy.calledOnce).to.be.true;
-		// 		expect(spy.args[0][0].enabled).to.be.true;
-		// 		expect(spy.args[0][0].sentryEndpoint).to.be.a('string');
-		// 		expect(spy.args[0][0].siteVersion).to.equal('i-am-at-version-x');
-		// 		expect(spy.args[0][0].tags.appName).to.equal('i-am-an-app');
-		// 		expect(spy.args[0][0].logLevel).to.equal('contextonly');
-		// 		document.documentElement.removeAttribute('data-next-is-production');
-		// 		document.documentElement.removeAttribute('data-next-version');
-		// 		document.documentElement.removeAttribute('data-next-app');
-		// 		spy.restore();
-		// 		done();
-		// 	});
-		// });
-
 		it('should return promise of flags', function (done) {
 			const promise = new JsLoader().init();
 			promise.then(function (result) {
@@ -106,7 +59,6 @@ describe('js loader', function () {
 	describe('bootstrap', function () {
 		const result = {};
 		before(() => window.nextFeatureFlags = []);
-
 
 		beforeEach(function () {
 			sinon.stub(JsLoader.prototype, 'init', function () {
@@ -180,11 +132,11 @@ describe('js loader', function () {
 			describe('Error handling', function () {
 
 				beforeEach(function () {
-					// sinon.stub(oErrors, 'error');
+					sinon.stub(nUiFoundations, 'broadcast');
 				});
 
 				afterEach(function () {
-					// oErrors.error.restore();
+					nUiFoundations.broadcast.restore();
 				});
 
 				it('should not add js-success class and log error if callback fails', function (done) {
@@ -195,7 +147,7 @@ describe('js loader', function () {
 					setTimeout(function () {
 						jsLoader.bootstrapResult.then(function () {
 							expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
-							// expect(oErrors.error.called).to.be.true;
+							expect(nUiFoundations.broadcast.calledWith('oErrors.log')).to.be.true;
 							done();
 						});
 					}, 100);
@@ -209,7 +161,7 @@ describe('js loader', function () {
 					setTimeout(function () {
 						jsLoader.bootstrapResult.then(function () {
 							expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
-							// expect(oErrors.error.called).to.be.true;
+							expect(nUiFoundations.broadcast.calledWith('oErrors.log')).to.be.true;
 							done();
 						});
 					}, 100);
@@ -223,7 +175,7 @@ describe('js loader', function () {
 					setTimeout(function () {
 						setTimeout(function () {
 							expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
-							// expect(oErrors.error.called).to.be.false;
+							expect(nUiFoundations.broadcast.calledWith('oErrors.log')).to.be.false;
 							done();
 						}, 100);
 					}, 100);

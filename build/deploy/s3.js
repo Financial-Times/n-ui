@@ -32,7 +32,7 @@ function purge (path) {
 }
 
 function getFileList (dir) {
-	return shellpromise(`find . -path "./public/${dir}/*"`)
+	return shellpromise(`find . -path "${dir}/*"`)
 		.then(files =>
 			files.split('\n')
 				.filter(f => !!f)
@@ -55,7 +55,7 @@ To avoid future regressions please add to the list (in build/deploy/s3.js)
 }
 
 function staticAssets () {
-	return getFileList('n-ui')
+	return getFileList('./public/n-ui')
 		.then(noUnexpectedAssets)
 		.then(files =>
 			deployStatic({
