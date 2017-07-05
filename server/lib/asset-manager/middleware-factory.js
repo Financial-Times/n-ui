@@ -2,9 +2,26 @@ const polyfillIo = require('./polyfill-io');
 
 module.exports = ({
 	getAssetUrl,
-	stylesheetManager,
-	linkHeaderHelper
+	stylesheetManager
 }) => {
+
+	const linkResource = function (file, meta, opts) {
+		meta = meta || {};
+		opts = opts || {};
+		const header = [];
+		header.push(`<${opts.hashed ? getAssetUrl(file) : file }>`);
+		Object.keys(meta).forEach(key => {
+			header.push(`${key}="${meta[key]}"`);
+		});
+
+		if (!meta.rel) {
+			header.push('rel="preload"');
+		}
+
+		header.push('nopush');
+
+		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '));
+	};
 
 	return (req, res, next) => {
 
@@ -13,7 +30,8 @@ module.exports = ({
 			highest: [],
 			normal: []
 		};
-		res.linkResource = linkHeaderHelper;
+
+		res.linkResource = linkResource;
 
 		if (req.accepts('text/html')) {
 			res.locals.javascriptBundles = [];
@@ -86,8 +104,7 @@ module.exports = ({
 					{ priority: 'highest' }
 				);
 
-				res.append('Link', this.locals.resourceHints.highest);
-				res.append('Link', this.locals.resourceHints.normal);
+				res.append('Link', this.locals.resourceHints.highest.concat(this.locals.resourceHints.normal));
 
 				return originalRender.apply(res, [].slice.call(arguments));
 			};
