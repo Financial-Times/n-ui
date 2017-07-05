@@ -106,7 +106,9 @@ a11y: test-build pally-conf
 
 # Note: `run` executes `node demo/app`, which fires up express, then deploys
 # a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
-test: developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y build-dist
+test:
+	make developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y build-dist
+	bundlesize
 
 developer-note:
 ifeq ($(NODE_ENV),) # Not production

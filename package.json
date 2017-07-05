@@ -25,6 +25,7 @@
     "@financial-times/n-gage": "^1.8.4",
     "@financial-times/n-heroku-tools": "^6.27.0",
     "bower": "^1.7.9",
+    "bundlesize": "^0.6.1",
     "chai": "^3.4.0",
     "chalk": "^1.1.3",
     "coveralls": "~2.11.16",
@@ -108,5 +109,11 @@
         "always"
       ]
     }
-  }
+  },
+  "bundlesize": [
+    {
+    "path": "./dist/assets/es5.min.js",
+    "threshold": "70 Kb"
+    }
+  ]
 }
