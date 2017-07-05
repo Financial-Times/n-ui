@@ -191,19 +191,14 @@ describe('simple app', function () {
 		it('should have preload link headers for css and js resources', done => {
 			request(app)
 				.get('/templated')
-				.set('Cookie', 'next-flags=nUiHashedAssets:on')
 				.expect('Link', /<https:\/\/www\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/123456\/es5\.js>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/1234567\/o-errors\.js>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/12345678\/font-loader\.js>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/56f3a89e\/main\.css>; as="style"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/6988e3b1\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done);
 		});
 
-		it('should preload unhashed n-ui when flag is off', done => {
-			request(app)
-				.get('/templated')
-				.set('Cookie', 'next-flags=nUiHashedAssets:off')
-				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.js>; as="script"; rel="preload"; nopush/, done);
-		});
 
 		it('should have preload link header for masthead', done => {
 			request(app)

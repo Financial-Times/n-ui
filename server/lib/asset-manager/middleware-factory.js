@@ -25,7 +25,6 @@ module.exports = ({
 
 	return (req, res, next) => {
 
-		// define a helper for adding a link header
 		res.locals.resourceHints = {
 			highest: [],
 			normal: []
@@ -51,17 +50,14 @@ module.exports = ({
 
 				getAssetUrl({
 					file: 'font-loader.js',
-					flags: res.locals.flags,
 					isNUi: true
 				}),
 				getAssetUrl({
 					file: 'o-errors.js',
-					flags: res.locals.flags,
 					isNUi: true
 				}),
 				getAssetUrl({
 					file: 'es5.js',
-					flags: res.locals.flags,
 					isNUi: true
 				}),
 				getAssetUrl('main-without-n-ui.js')
