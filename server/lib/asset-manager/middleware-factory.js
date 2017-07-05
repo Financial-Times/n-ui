@@ -33,10 +33,12 @@ module.exports = ({
 
 				getAssetUrl({
 					file: 'font-loader.js',
+					flags: res.locals.flags,
 					isNUi: true
 				}),
 				getAssetUrl({
 					file: 'o-errors.js',
+					flags: res.locals.flags,
 					isNUi: true
 				}),
 				getAssetUrl({
