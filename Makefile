@@ -15,9 +15,9 @@ demo: run
 
 run: build-css-loader
 ifneq ($(CIRCLECI),)
-	export FT_GRAPHITE_KEY=dummy; node demo/app
+	export NEXT_APP_SHELL=local; export FT_GRAPHITE_KEY=dummy; node demo/app
 else
-	export FT_GRAPHITE_KEY=dummy; nodemon demo/app
+	export NEXT_APP_SHELL=local; export FT_GRAPHITE_KEY=dummy; nodemon demo/app
 endif
 
 build:
@@ -69,7 +69,7 @@ build-css-loader:
 	uglifyjs browser/layout/src/css-loader.js -o browser/layout/partials/css-loader.html
 
 build-bundle:
-	webpack --bail --config build/deploy/webpack.deploy.config.js --define process.env.NODE_ENV="'production'"
+	webpack -p --bail --config build/deploy/webpack.deploy.config.js
 
 build-dist: build-bundle build-css-loader
 	node ./build/deploy/build-auxilliary-files.js
@@ -78,7 +78,7 @@ deploy-s3:
 	# deploy to urls using the real file name on s3
 	node ./build/deploy/s3.js
 	# deploy to hashed urls on s3
-	nht deploy-hashed-assets --directory dist/assets --monitor-assets
+	nht deploy-hashed-assets --directory public/n-ui --monitor-assets
 
 rebuild-user-facing-apps:
 # Don't rebuild apps if a beta tag release

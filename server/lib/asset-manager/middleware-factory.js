@@ -2,7 +2,6 @@ const polyfillIo = require('./polyfill-io');
 
 module.exports = ({
 	getAssetUrl,
-	useLocalAppShell,
 	stylesheetManager,
 	linkHeaderHelper
 }) => {
@@ -31,13 +30,25 @@ module.exports = ({
 
 			res.locals.javascriptBundles.push(
 				res.locals.polyfillIo.enhanced,
+
 				getAssetUrl({
-					file: `es5${(res.locals.flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
+					file: 'font-loader.js',
+					flags: res.locals.flags,
+					isNUi: true
+				}),
+				getAssetUrl({
+					file: 'o-errors.js',
+					flags: res.locals.flags,
+					isNUi: true
+				}),
+				getAssetUrl({
+					file: 'es5.js',
 					flags: res.locals.flags,
 					isNUi: true
 				}),
 				getAssetUrl('main-without-n-ui.js')
 			);
+
 
 			res.locals.javascriptBundles.push();
 

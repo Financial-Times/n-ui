@@ -1,7 +1,7 @@
 /*global require,describe,afterEach,beforeEach,it,expect*/
 window.nextFeatureFlags = [{name: 'aFlag', state: true}];
 const nUi = require('../js/main');
-const entry = require('../../build/app/webpack-entry');
+const entry = require('../../build/webpack-externals');
 
 describe('n-ui', () => {
 

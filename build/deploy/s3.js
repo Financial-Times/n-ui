@@ -32,7 +32,7 @@ function purge (path) {
 }
 
 function getFileList (dir) {
-	return shellpromise(`find . -path "./dist/${dir}/*"`)
+	return shellpromise(`find . -path "${dir}/*"`)
 		.then(files =>
 			files.split('\n')
 				.filter(f => !!f)
@@ -55,7 +55,7 @@ To avoid future regressions please add to the list (in build/deploy/s3.js)
 }
 
 function staticAssets () {
-	return getFileList('assets')
+	return getFileList('./public/n-ui')
 		.then(noUnexpectedAssets)
 		.then(files =>
 			deployStatic({
@@ -75,7 +75,10 @@ function staticAssets () {
 					if (!semver.valid(version)) {
 						return Promise.all(
 							files.map(file => purge(`https://www.ft.com/__assets/n-ui/cached/${version}/${file.split('/').pop()}`))
-						);
+						)
+							// failed to purge, but no biggie
+							// most of the time non semver releases are just for dev funsies
+							.catch(() => null);
 					}
 				})
 		);
