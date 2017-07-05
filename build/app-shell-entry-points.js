@@ -1,4 +1,4 @@
-const pathToNUi = require('../bower.json').name === 'n-ui' ? './' : './bower_components/n-ui/';
+const pathToNUi = require(`${process.cwd()}/bower.json`).name === 'n-ui' ? './' : './bower_components/n-ui/';
 
 module.exports = {
 	'./public/n-ui/es5.js': `${pathToNUi}browser/bundles/main.js`,
