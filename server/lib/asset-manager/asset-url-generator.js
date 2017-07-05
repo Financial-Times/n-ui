@@ -24,15 +24,12 @@ module.exports = ({ appName, isProduction, directory, useLocalAppShell }) => {
 			assetConfig = { file: assetConfig };
 		}
 
-		const {file, isNUi = false, flags = {}} = assetConfig;
+		const {file, isNUi = false} = assetConfig;
 
 		if (isNUi) {
-			if (flags.nUiHashedAssets) {
-				const fallback = `${nUiUnhashedAssetsRoot}${file}`;
-				const hash = nUiAssetHashes[file];
-				return (useLocalAppShell || !hash) ? fallback : `//www.ft.com/__assets/hashed/n-ui/${hash}`;
-			}
-			return `${nUiUnhashedAssetsRoot}${file}`;
+			const fallback = `${nUiUnhashedAssetsRoot}${file}`;
+			const hash = nUiAssetHashes[file];
+			return (useLocalAppShell || !hash) ? fallback : `//www.ft.com/__assets/hashed/n-ui/${hash}`;
 		} else {
 			const fallback = `/__dev/assets/${appName}/${file}`;
 			const hash = assetHashes[file];

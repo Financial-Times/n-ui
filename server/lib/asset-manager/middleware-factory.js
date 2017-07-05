@@ -2,19 +2,35 @@ const polyfillIo = require('./polyfill-io');
 
 module.exports = ({
 	getAssetUrl,
-	useLocalAppShell,
-	stylesheetManager,
-	linkHeaderHelper
+	stylesheetManager
 }) => {
+
+	const linkResource = function (file, meta, opts) {
+		meta = meta || {};
+		opts = opts || {};
+		const header = [];
+		header.push(`<${opts.hashed ? getAssetUrl(file) : file }>`);
+		Object.keys(meta).forEach(key => {
+			header.push(`${key}="${meta[key]}"`);
+		});
+
+		if (!meta.rel) {
+			header.push('rel="preload"');
+		}
+
+		header.push('nopush');
+
+		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '));
+	};
 
 	return (req, res, next) => {
 
-		// define a helper for adding a link header
 		res.locals.resourceHints = {
 			highest: [],
 			normal: []
 		};
-		res.linkResource = linkHeaderHelper;
+
+		res.linkResource = linkResource;
 
 		if (req.accepts('text/html')) {
 			res.locals.javascriptBundles = [];
@@ -31,13 +47,22 @@ module.exports = ({
 
 			res.locals.javascriptBundles.push(
 				res.locals.polyfillIo.enhanced,
+
 				getAssetUrl({
-					file: `es5${(res.locals.flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
-					flags: res.locals.flags,
+					file: 'font-loader.js',
+					isNUi: true
+				}),
+				getAssetUrl({
+					file: 'o-errors.js',
+					isNUi: true
+				}),
+				getAssetUrl({
+					file: 'es5.js',
 					isNUi: true
 				}),
 				getAssetUrl('main-without-n-ui.js')
 			);
+
 
 			res.locals.javascriptBundles.push();
 
@@ -75,8 +100,7 @@ module.exports = ({
 					{ priority: 'highest' }
 				);
 
-				res.append('Link', this.locals.resourceHints.highest);
-				res.append('Link', this.locals.resourceHints.normal);
+				res.append('Link', this.locals.resourceHints.highest.concat(this.locals.resourceHints.normal));
 
 				return originalRender.apply(res, [].slice.call(arguments));
 			};

@@ -1,5 +1,3 @@
-// to avoid race conditions relating to Symbol polyfills
-
 import { ComponentInitializer } from './component-initializer';
 
 export const { bootstrap } = new ComponentInitializer();

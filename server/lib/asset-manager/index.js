@@ -5,7 +5,6 @@ const messages = require('../messages');
 const verifyExistence = require('./verify-existence');
 const middlewareFactory = require('./middleware-factory');
 const assetUrlGenerator = require('./asset-url-generator');
-const linkHeaderHelperFactory = require('./link-header-helper-factory');
 
 function init (options, directory, app) {
 
@@ -45,9 +44,7 @@ function init (options, directory, app) {
 	// use all the above in middleware to be used on each request
 	app.use(middlewareFactory({
 		getAssetUrl,
-		useLocalAppShell,
-		stylesheetManager,
-		linkHeaderHelper: linkHeaderHelperFactory(getAssetUrl)
+		stylesheetManager
 	}));
 }
 

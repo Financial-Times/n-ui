@@ -1,3 +1,5 @@
 {
-  "es5.min.js": "123456/es5.min.js"
+  "es5.js": "123456/es5.js",
+  "o-errors.js": "1234567/o-errors.js",
+  "font-loader.js": "12345678/font-loader.js"
 }

@@ -1,20 +1,15 @@
-const path = require('path');
 const fs = require('fs');
-const join = require('path').join;
+const path = require('path');
 const ExtractCssBlockPlugin = require('extract-css-block-webpack-plugin');
+const appShellEntryPoints = require('../app-shell-entry-points');
+const verifyGitignore = require('./verify-gitignore');
 
-const gitignore = fs.readFileSync(join(process.cwd(), '.gitignore'), 'utf8')
-	.split('\n');
-
-
-function noGitignoreWildcard () {
-	gitignore.forEach(pattern => {
-		if (/^\/?public\/(.*\/\*|\*|$)/.test(pattern)) {
-			if (pattern !== '/public/n-ui/') {
-				throw new Error('Wildcard pattern or entire directories (i.e. /public/) for built public assets not allowed in your .gitignore. Please specify a path for each file');
-			}
-		}
-	});
+function filterEntryKeys (obj, rx, negativeMatch) {
+	const keys = Object.keys(obj).filter(key => negativeMatch ? !rx.test(key) : rx.test(key));
+	return keys.reduce((o, key) => {
+		o[key] = obj[key];
+		return o;
+	}, {});
 }
 
 function modifyEntryKeys (obj, rx, nameModifier) {
@@ -25,18 +20,9 @@ function modifyEntryKeys (obj, rx, nameModifier) {
 	}, {});
 }
 
-function filterEntryKeys (obj, rx, negativeMatch) {
-	const keys = Object.keys(obj).filter(key => negativeMatch ? !rx.test(key) : rx.test(key));
-	return keys.reduce((o, key) => {
-		o[key] = obj[key];
-		return o;
-	}, {});
-}
+verifyGitignore();
 
 const baseConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
-
-noGitignoreWildcard();
-
 const webpackConfigs = [];
 
 /*
@@ -66,7 +52,7 @@ build to a file called main-without-n-ui.js rather than main.js.
 During build it also wraps the main.js code to ensure it is only called once n-ui
 has been loaded.
 */
-const nUiExternal = require('./webpack-entry');
+const nUiExternal = require('../webpack-externals');
 const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
 const mainJsWebpackConfig = webpackMerge(commonAppConfig, {
 	entry: modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js')),
@@ -105,9 +91,7 @@ If you do not need this behaviour run
 	}
 
 	const appShellWebpackConfig = webpackMerge(commonAppConfig, {
-		entry: {
-			'./public/n-ui/es5.js': './bower_components/n-ui/build/deploy/wrapper.js'
-		}
+		entry: appShellEntryPoints
 	});
 	webpackConfigs.push(appShellWebpackConfig);
 }

@@ -1,6 +1,3 @@
-// Karma configuration
-// Generated on Fri Apr 18 2014 18:19:03 GMT+0100 (BST)
-
 const componentsToTest = [
 	'browser',
 	'components/n-ui/ads',
@@ -19,7 +16,7 @@ module.exports = function (karma) {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap'];
 			return obj;
 		}, {}),
-		webpack: require('./build/deploy/webpack.deploy.config'),
+		webpack: require('./build/webpack.common.config'),
 		reporters: ['progress'],
 		port: 9876,
 		colors: true,
