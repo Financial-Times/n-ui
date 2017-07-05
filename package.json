@@ -113,8 +113,24 @@
   },
   "bundlesize": [
     {
-    "path": "./dist/assets/es5.min.js",
-    "threshold": "70 Kb"
+      "path": "./public/n-ui/es5.js",
+      "threshold": "55 Kb"
+    },
+    {
+      "path": "./public/n-ui/font-loader.js",
+      "threshold": "3.5 Kb"
+    },
+    {
+      "path": "./public/n-ui/o-errors.js",
+      "threshold": "12.5 Kb"
+    },
+    {
+      "path": "./public/n-ui/head-n-ui-core.css",
+      "threshold": "5.5 Kb"
+    },
+    {
+      "path": "./public/n-ui/n-ui-core.css",
+      "threshold": "7 Kb"
     }
   ]
 }
