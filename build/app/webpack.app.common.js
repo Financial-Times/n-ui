@@ -38,6 +38,10 @@ module.exports = webpackMerge(commonConfig, {
 				test: /\.html$/,
 				loader: 'handlebars-loader',
 				options: handlebarsConfig()
+			},
+			{
+				test: /\.txt$/,
+				loader: 'raw-loader'
 			}
 		]
 	}
