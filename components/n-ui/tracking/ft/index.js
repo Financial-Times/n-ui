@@ -131,6 +131,7 @@ const oTrackingWrapper = {
 
 				const offers = document.querySelectorAll('[data-offer-id]');
 				const acquisitionContext = document.querySelectorAll('[data-acquisition-context]');
+				const messaging = barrierType.getAttribute('data-barrier-messaging');
 
 				const barrierReferrer = (/barrierReferrer=(\w+)/.exec(window.location.search) || [])[1];
 
@@ -140,6 +141,7 @@ const oTrackingWrapper = {
 					opportunity: opportunity,
 					barrierReferrer: barrierReferrer,
 					type: barrierType.getAttribute('data-barrier'),
+					commsType: messaging,
 					acquisitionContext: nodesToArray(acquisitionContext).map(e => e.getAttribute('data-acquisition-context')),
 					offers: nodesToArray(offers).map(e => e.getAttribute('data-offer-id'))
 				}, context));
