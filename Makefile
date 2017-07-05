@@ -11,7 +11,9 @@ node_modules/@financial-times/n-gage/index.mk:
 # Pa11y will still run locally and in CI
 IGNORE_A11Y = true
 
-demo: run
+#
+# Development tasks
+#
 
 run: build-css-loader
 ifneq ($(CIRCLECI),)
@@ -20,20 +22,13 @@ else
 	export NEXT_APP_SHELL=local; export FT_GRAPHITE_KEY=dummy; nodemon demo/app
 endif
 
+demo: run
+
 build:
 	webpack --config demo/webpack.config.js
 
-build-production:
-	build-bundle
-
 watch:
 	webpack --config demo/webpack.config.js --watch
-
-test-browser:
-	karma start karma.conf.js
-
-test-webpack:
-	mocha test/webpack.spec.js
 
 # test-browser-dev is only for development environments.
 test-browser-dev:
@@ -42,8 +37,8 @@ test-browser-dev:
 	$(info *)
 	karma start karma.conf.js --single-run false --auto-watch true
 
-test-build:
-	webpack --config demo/webpack.config.js
+# Test-dev is only for development environments.
+test-dev: verify test-server test-browser-dev
 
 test-server: export NODE_ENV=production
 test-server: export HOSTEDGRAPHITE_APIKEY=dummykey
@@ -62,11 +57,60 @@ endif
 test-server-plain:
 	mocha server/test/*.test.js server/test/**/*.test.js
 
+test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
+	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
+
+
+#
+# Utilities
+#
+
+# compiles the human readable css loader code to the minified one that gets inlined in the page
+build-css-loader:
+	uglifyjs browser/layout/src/css-loader.js -o browser/layout/partials/css-loader.html
+
+# HACK: in order to run the server tests the stylesheet oader partial needs copying into the test app... don't ask
 copy-stylesheet-partial:
 	cp browser/layout/partials/stylesheets.html server/test/fixtures/app/views/partials
 
-build-css-loader:
-	uglifyjs browser/layout/src/css-loader.js -o browser/layout/partials/css-loader.html
+developer-note:
+ifeq ($(NODE_ENV),) # Not production
+ifeq ($(CIRCLE_BRANCH),) # Not CircleCI
+	$(info *)
+	$(info * Developers note: `make test` is meant for CircleCI, not development. Instead, you should `make test-dev`.)
+	$(info *)
+endif
+endif
+
+
+#
+# CI TASKS
+#
+
+test-browser:
+	karma start karma.conf.js
+
+test-build:
+	webpack --config demo/webpack.config.js
+
+nightwatch:
+	nht nightwatch browser/test/js-success.nightwatch.js
+
+pally-conf:
+	node .pa11yci.js
+
+a11y: test-build pally-conf
+	rm -rf bower_components/n-ui
+	mkdir bower_components/n-ui
+	PA11Y=true node demo/app
+
+
+# Note: `run` executes `node demo/app`, which fires up express, then deploys
+# a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
+test: developer-note verify pally-conf test-server test-browser test-build run nightwatch a11y build-dist
+
+build-production:
+	build-bundle
 
 build-bundle:
 	webpack -p --bail --config build/deploy/webpack.deploy.config.js
@@ -80,6 +124,8 @@ deploy-s3:
 	# deploy to hashed urls on s3
 	nht deploy-hashed-assets --directory public/n-ui --monitor-assets
 
+deploy: deploy-s3 npm-publish rebuild-user-facing-apps
+
 rebuild-user-facing-apps:
 # Don't rebuild apps if a beta tag release
 ifneq (,$(findstring beta,$(CIRCLE_TAG)))
@@ -89,35 +135,3 @@ else
 	HOUR=$$(date +%H); DAY=$$(date +%u); if [ $$HOUR -ge 8 ] && [ $$HOUR -lt 16 ] && [ $$DAY -ge 0 ] && [ $$DAY -lt 6 ]; then \
 	echo "REBUILDING ALL APPS" && nht rebuild --all --serves user-page; fi
 endif
-
-test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
-	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
-
-nightwatch:
-	nht nightwatch browser/test/js-success.nightwatch.js
-
-pally-conf:
-	node .pa11yci.js
-
-a11y: test-build pally-conf
-	rm -rf bower_components/n-ui
-	mkdir bower_components/n-ui
-	PA11Y=true node demo/app
-
-# Note: `run` executes `node demo/app`, which fires up express, then deploys
-# a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
-test: developer-note verify pally-conf test-server test-browser test-build test-webpack run nightwatch a11y build-dist
-
-developer-note:
-ifeq ($(NODE_ENV),) # Not production
-ifeq ($(CIRCLE_BRANCH),) # Not CircleCI
-	$(info *)
-	$(info * Developers note: `make test` is meant for CircleCI, not development. Instead, you should `make test-dev`.)
-	$(info *)
-endif
-endif
-
-# Test-dev is only for development environments.
-test-dev: verify test-browser-dev test-webpack
-
-deploy: deploy-s3 npm-publish rebuild-user-facing-apps
