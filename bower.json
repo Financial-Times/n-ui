@@ -34,8 +34,5 @@
     "next-session-client": "^2.3.1",
     "n-counter-ad-blocking": "^3.1.0",
     "n-marketing": "^1.0.0"
-  },
-  "resolutions": {
-    "o-typography": "rhys/cookies"
   }
 }
