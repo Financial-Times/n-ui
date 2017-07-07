@@ -66,7 +66,11 @@ module.exports = class NavigationModelV2 {
 		const currentPathName = url.parse(currentUrl).pathname;
 		for(let item of navData.items){
 			if(typeof item.url === 'string' && item.url.includes('${currentPath}')){
-				item.url = item.url.replace('${currentPath}', currentUrl);
+				if(!currentPathName || /\/(products|barriers)/.test(currentPathName)) {
+					item.url = item.url.replace('${currentPath}', currentUrl);
+				} else {
+					item.url = item.url.replace('${currentPath}', '%2F');
+				}
 			}
 
 			if(item.url === currentPathName){
