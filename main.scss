@@ -8,7 +8,7 @@ $n-ui-foundations-applied: true;
 		@include oTypographySans();
 	}
 
-	html.o-typography--loading-sans {
+	.o-typography--loading-sans {
 		font-family: sans-serif;
 	}
 }
