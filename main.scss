@@ -17,3 +17,11 @@ $n-ui-foundations-applied: true;
 
 $o-cookie-message-is-silent: false;
 @import 'o-cookie-message/main';
+
+html {
+	@include oTypographySans();
+}
+
+html.o-typography--loading-sans {
+	font-family: sans-serif;
+}
