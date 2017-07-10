@@ -28,11 +28,11 @@ describe('built asset expectations', () => {
 		return shellpromise(`rm -rf ${appPath}/public/main.js`, { verbose: true })
 		.then(() => {
 			return appStart()
-			.then(() => {
-				throw new Error('app should not have successfully started');
-			}, err => {
-				expect(err.toString()).to.contain('main.js');
-			});
+				.then(() => {
+					throw new Error('app should not have successfully started');
+				}, err => {
+					expect(err.toString()).to.contain('main.js');
+				});
 		});
 
 	});
@@ -42,24 +42,4 @@ describe('built asset expectations', () => {
 		return shellpromise(`touch ${appPath}/public/about.json`)
 			.then(appStart);
 	});
-
-	it('should start if public directory in gitignore', () => {
-		createGitignore('/public/');
-		return shellpromise(`touch ${appPath}/public/about.json`)
-			.then(appStart);
-	});
-
-	it('should start if wildcarded public directory in gitignore', () => {
-		createGitignore('/public/*');
-		return shellpromise(`touch ${appPath}/public/about.json`)
-			.then(appStart);
-	});
-
-	it('should start if no mention of public in gitignore', () => {
-		createGitignore('cat', 'dog');
-		return shellpromise(`touch ${appPath}/public/about.json`)
-			.then(appStart);
-	});
-
-
 });
