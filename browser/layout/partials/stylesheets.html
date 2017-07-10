@@ -1,9 +1,3 @@
-{{#if @root.flags.metricFontHack}}
-<style>
-	html{font-family:MetricWeb,sans-serif}
-	html.o-typography--loading-sans{font-family:sans-serif}
-</style>
-{{/if}}
 {{#if @root.stylesheets.inline}}
 	<style class="n-layout-head-css">
 		{{{@root.stylesheets.inline}}}
@@ -19,3 +13,9 @@
 {{#each @root.stylesheets.blocking}}
 <link rel="stylesheet" href="{{this}}">
 {{/each}}
+{{#if @root.flags.metricFontHack}}
+<style>
+	html{font-family:MetricWeb,sans-serif}
+	html.o-typography--loading-sans{font-family:sans-serif}
+</style>
+{{/if}}
