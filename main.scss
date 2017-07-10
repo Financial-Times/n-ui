@@ -4,13 +4,6 @@ $n-ui-foundations-applied: true;
 
 @include nUiStylesheet('head-n-ui-core') {
 	@include nUiFoundations;
-	html {
-		@include oTypographySans();
-	}
-
-	.o-typography--loading-sans {
-		font-family: sans-serif;
-	}
 }
 
 @import 'browser/layout/main';
