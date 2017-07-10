@@ -1,9 +1,14 @@
+{{#if @root.flags.metricFontHack}}
+<style>
+	html{font-family:MetricWeb,sans-serif}
+	html.o-typography--loading-sans{font-family:sans-serif}
+</style>
+{{/if}}
 {{#if @root.stylesheets.inline}}
 	<style class="n-layout-head-css">
 		{{{@root.stylesheets.inline}}}
 	</style>
 {{/if}}
-
 {{#each @root.stylesheets.lazy}}
 <!--[if gte IE 9]><!-->
 <link data-is-next rel="preload" href="{{this}}" as="style" onload="this.rel='stylesheet';window.ftNextCssFileLoaded()">
