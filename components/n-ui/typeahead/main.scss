@@ -61,6 +61,7 @@
 	}
 
 	.n-typeahead__link {
+		@include oTypographySans(0);
 		cursor: pointer;
 		color: getColor('black-80');
 		border-bottom: 0;
