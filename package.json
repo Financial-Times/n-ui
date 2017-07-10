@@ -115,7 +115,7 @@
   "bundlesize": [
     {
       "path": "./public/n-ui/es5.js",
-      "threshold": "55 Kb"
+      "threshold": "55.5 Kb"
     },
     {
       "path": "./public/n-ui/font-loader.js",
@@ -131,7 +131,7 @@
     },
     {
       "path": "./public/n-ui/n-ui-core.css",
-      "threshold": "7 Kb"
+      "threshold": "7.5 Kb"
     }
   ]
 }
