@@ -71,22 +71,14 @@ module.exports = function (flags, appName, adOptions) {
 		}
 	}
 
-	function isSmallSize () {
-		return utils.getScreenSize() < 760;
-	}
-
-	function isMediumSize () {
-		return utils.getScreenSize() >= 760 && utils.getScreenSize() < 980;
+	function isTargetSize () {
+		return utils.getScreenSize() < 980;
 	}
 
 	function getViewportMargin () {
 		let viewportMargin = '0%';
-		if (flags.get('adOptimizeLazyLoadSmall') && isSmallSize() ) {
-			const variant = flags.get('adOptimizeLazyLoadSmall');
-			viewportMargin = setViewportMarginBy(variant);
-		}
-		if (flags.get('adOptimizeLazyLoadMedium') && isMediumSize() ) {
-			const variant = flags.get('adOptimizeLazyLoadMedium');
+		if (flags.get('adOptimizeLazyLoad') && isTargetSize() ) {
+			const variant = flags.get('adOptimizeLazyLoad');
 			viewportMargin = setViewportMarginBy(variant);
 		}
 		return viewportMargin;
