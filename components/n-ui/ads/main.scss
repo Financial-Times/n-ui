@@ -27,22 +27,6 @@ $ad-max-responsive-width: 1440px;
 	.advert {
 		position: relative;
 	}
-
-	.advert__report-link {
-		font-size: 12px;
-		line-height: 22px;
-		padding: 4px;
-		font-weight: bold;
-		position: absolute;
-		top: 0;
-
-		&:before,
-		&:after {
-			content: "";
-			display: block;
-			clear: both;
-		}
-	}
 }
 
 @include nUiStylesheetEnd('head-n-ui-core');
