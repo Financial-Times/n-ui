@@ -3,7 +3,6 @@ const Ads = window.oAds = require('o-ads');
 // TODO move to central shared utils
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
-const Reporter = require('./js/reporter');
 const sendMetrics = require('./js/metrics');
 const Sticky = require('./js/sticky');
 
@@ -64,13 +63,6 @@ function onAdsComplete (flags, event) {
 	/* istanbul ignore else  */
 	if (detail.type !== 'oop') {
 		/* istanbul ignore else  */
-
-		if(flags && flags.get('brokenAdReporter') && detail.slot && detail.slot.container) {
-			if(detail.slot.reporter) {
-				detail.slot.reporter.destroy();
-			}
-			detail.slot.reporter = new Reporter(detail.slot);
-		}
 
 		if (detail.slot.gpt && detail.slot.gpt.isEmpty === false) {
 			utils.log.info('Ad loaded in slot', event);
