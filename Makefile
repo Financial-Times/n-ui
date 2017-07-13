@@ -59,6 +59,8 @@ test-server-plain: unset FT_NEXT_BACKEND_KEY_OLD
 test-server-plain:
 	mocha server/test/*.test.js server/test/**/*.test.js
 
+test-server-coverage: unset FT_NEXT_BACKEND_KEY
+test-server-coverage: unset FT_NEXT_BACKEND_KEY_OLD
 test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
 
