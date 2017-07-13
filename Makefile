@@ -44,15 +44,16 @@ test-server: export NODE_ENV=production
 test-server: export HOSTEDGRAPHITE_APIKEY=dummykey
 test-server: export FT_GRAPHITE_KEY=test-graphite-key
 test-server: copy-stylesheet-partial
-ifneq ($(CIRCLECI),)
-ifeq ($(CIRCLE_TAG),)
-	make test-server-coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
-else
-	make test-server-plain
-endif
-else
-	make test-server-plain
-endif
+test-server: test-server-plain
+#ifneq ($(CIRCLECI),)
+#ifeq ($(CIRCLE_TAG),)
+#	make test-server-coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+#else
+#	make test-server-plain
+#endif
+#else
+#	make test-server-plain
+#endif
 
 test-server-plain:
 	mocha server/test/*.test.js server/test/**/*.test.js
