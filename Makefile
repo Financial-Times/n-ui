@@ -54,8 +54,6 @@ else
 	make test-server-plain
 endif
 
-test-server-plain: unset FT_NEXT_BACKEND_KEY
-test-server-plain: unset FT_NEXT_BACKEND_KEY_OLD
 test-server-plain:
 	mocha server/test/*.test.js server/test/**/*.test.js
 
