@@ -40,7 +40,7 @@ test-browser-dev:
 # Test-dev is only for development environments.
 test-dev: verify test-server test-browser-dev
 
-#test-server: export NODE_ENV=production
+test-server: export NODE_ENV=production
 test-server: export HOSTEDGRAPHITE_APIKEY=dummykey
 test-server: export FT_GRAPHITE_KEY=test-graphite-key
 test-server: copy-stylesheet-partial
