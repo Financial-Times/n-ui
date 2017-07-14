@@ -9,6 +9,9 @@
     "prepush": "make verify -j3",
     "commitmsg": "node_modules/.bin/secret-squirrel-commitmsg"
   },
+  "engines": {
+    "node": "^8.1.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Financial-Times/n-ui.git"
