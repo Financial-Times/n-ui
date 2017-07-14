@@ -32,7 +32,12 @@
 		<link rel="icon" type="image/png" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-32x32.png" sizes="32x32">
 		<link rel="icon" type="image/png" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png" sizes="194x194">
 		<link rel="apple-touch-icon" sizes="180x180" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/apple-touch-icon-180x180.png">
-		<link rel="manifest" href="/assets/manifest/manifest-v4.json">
+
+		{{#if @root.flags.disableAndroidSmartBanner}}
+		<link rel="manifest" href="/assets/manifest/manifest-v5.json">
+		{{else}}
+		<link rel="manifest" href="/assets/manifest/manifest-v5-app-banner.json">
+		{{/if}}
 
 		<meta name="msapplication-TileColor" content="#fff1e0">
 		<meta name="msapplication-TileImage" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/mstile-144x144.png">
