@@ -41,7 +41,7 @@ const oTrackingWrapper = {
 			}
 
 			const context = {
-				product: 'next',
+				product: appInfo && appInfo.product || 'next',
 				app: appInfo && appInfo.name,
 				appVersion: appInfo && appInfo.version
 			};
