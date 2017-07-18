@@ -24,6 +24,8 @@ verifyGitignore();
 
 const baseConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
 const webpackConfigs = [];
+const webpackMerge = require('webpack-merge');
+const commonAppConfig = require('./webpack.app.common.js');
 
 /*
 We no longer build a main.js for the app when generating the standard asset variants
@@ -32,17 +34,17 @@ so this config is for all entry points defined by an app *excluding* the main.js
 Mostly this config will only be for main.css.
 */
 
-const webpackMerge = require('webpack-merge');
-const commonAppConfig = require('./webpack.app.common.js');
+const nonMainJsEntryPoints = filterEntryKeys(baseConfig.entry, /main\.js$/, true);
 
-
-const nonMainJsWebpackConfig = webpackMerge(commonAppConfig, {
-	entry: filterEntryKeys(baseConfig.entry, /main\.js$/, true),
-	plugins:[
-		new ExtractCssBlockPlugin()
-	]
-});
-webpackConfigs.push(nonMainJsWebpackConfig);
+if (Object.keys(nonMainJsEntryPoints).length > 0) {
+	const nonMainJsWebpackConfig = webpackMerge(commonAppConfig, {
+		entry: nonMainJsEntryPoints,
+		plugins:[
+			new ExtractCssBlockPlugin()
+		]
+	});
+	webpackConfigs.push(nonMainJsWebpackConfig);
+}
 
 
 /*
@@ -52,13 +54,18 @@ build to a file called main-without-n-ui.js rather than main.js.
 During build it also wraps the main.js code to ensure it is only called once n-ui
 has been loaded.
 */
-const nUiExternal = require('../webpack-externals');
-const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
-const mainJsWebpackConfig = webpackMerge(commonAppConfig, {
-	entry: modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js')),
-	externals: nUiExternalPoints
-});
-webpackConfigs.push(mainJsWebpackConfig);
+
+const mainJsEntryPoints = modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js'));
+
+if (Object.keys(mainJsEntryPoints).length > 0) {
+	const nUiExternal = require('../webpack-externals');
+	const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
+	const mainJsWebpackConfig = webpackMerge(commonAppConfig, {
+		entry: mainJsEntryPoints,
+		externals: nUiExternalPoints
+	});
+	webpackConfigs.push(mainJsWebpackConfig);
+}
 
 
 /*
