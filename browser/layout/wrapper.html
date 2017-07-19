@@ -44,6 +44,13 @@
 
 		{{#if @root.flags.disableAndroidSmartBanner}}
 		<link rel="manifest" href="/assets/manifest/manifest-v5.json">
+		<script>
+			window.addEventListener('beforeinstallprompt', function (ev) {
+				// Don't show the web app install banner
+				ev.preventDefault();
+				return false;
+			});
+		</script>
 		{{/if}}
 
 		<meta name="msapplication-TileColor" content="#fff1e0">
