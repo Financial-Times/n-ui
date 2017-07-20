@@ -85,6 +85,7 @@
     "classnames": "^2.2.5",
     "clone": "^1.0.2",
     "commander": "^2.9.0",
+    "concurrently": "^3.5.0",
     "fs-extra": "^4.0.0",
     "ft-poller": "^2.9.0",
     "handlebars-loader": "^1.4.0",
