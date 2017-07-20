@@ -63,9 +63,6 @@ module.exports = ({
 				getAssetUrl('main-without-n-ui.js')
 			);
 
-
-			res.locals.javascriptBundles.push();
-
 			// output the default link headers just before rendering
 			const originalRender = res.render;
 

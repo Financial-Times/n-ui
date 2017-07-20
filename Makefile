@@ -69,7 +69,7 @@ test-server-coverage: ## test-server-coverage: Run the unit tests with code cove
 build-css-loader:
 	uglifyjs browser/layout/src/css-loader.js -o browser/layout/partials/css-loader.html
 
-# HACK: in order to run the server tests the stylesheet oader partial needs copying into the test app... don't ask
+# HACK: in order to run the server tests the stylesheet loader partial needs copying into the test app... don't ask
 copy-stylesheet-partial:
 	cp browser/layout/partials/stylesheets.html server/test/fixtures/app/views/partials
 
