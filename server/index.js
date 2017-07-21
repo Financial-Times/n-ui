@@ -63,6 +63,13 @@ module.exports = options => {
 		next();
 	});
 
+	// set whether or not to disable the app install banner.
+	app.use(function (req, res, next) {
+		app.locals.__disableAndroidBanner = (!res.locals.flags.subscriberCohort || res.locals.flags.disableAndroidSmartBanner);
+		app.locals.__disableIosSmartBanner = (!res.locals.flags.subscriberCohort || res.locals.flags.disableIosSmartBanner);
+
+		next();
+	});
 
 	if (options.withJsonLd) {
 		app.use(function (req, res, next) {
