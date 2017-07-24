@@ -8,7 +8,7 @@ const appInfo = {
 
 oErrors.init({
 	enabled: window.nextFeatureFlags.clientErrorReporting && appInfo.isProduction,
-	sentryEndpoint: 'https://edb56e86be2446eda092e69732d8654b@sentry.io/32594',
+	sentryEndpoint: 'https://62a990fd8dce4a27aafb006b58783f66@sentry.io/195030',
 	siteVersion: appInfo.version,
 	logLevel: window.nextFeatureFlags.clientDetailedErrorReporting ? 'contextonly' : 'off',
 	tags: {
