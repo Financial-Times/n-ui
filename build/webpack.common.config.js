@@ -108,6 +108,11 @@ module.exports = {
 							}
 						],
 
+						// This is actually included in the 'es2015' preset but we need to override the
+						// `loose` option to be true
+						// TODO: stop transform-es2015-classes being loose. loose allows non-spec compliant classes.
+						[ require.resolve('babel-plugin-transform-es2015-classes'), { loose: true } ]
+
 						// converts import/export to commonjs, currently not used but
 						// will look to include it for browsers that can support modules
 						// require('babel-plugin-transform-es2015-modules-commonjs'),
