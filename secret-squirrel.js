@@ -6,7 +6,7 @@ module.exports = {
 	strings: {
 		deny: [],
 		denyOverrides: [
-			'edb56e86be2446eda092e69732d8654b@sentry.io',
+			'62a990fd8dce4a27aafb006b58783f66@sentry.io',
 			'edb56e86be2446eda092e69732d8654b',
 			'2dd640a6-6ebd-4d4f-af30-af8baa441a0d',
 			'e4942ff0-4070-4896-a7ef-e6a5a30ce9f9',
