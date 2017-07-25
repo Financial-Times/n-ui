@@ -16,8 +16,6 @@ describe('n-ui', () => {
 		'ftdomdelegate',
 		'superstore',
 		'superstoreSync',
-		'React',
-		'ReactDom',
 		'grid',
 		'viewport'
 	]
@@ -56,14 +54,6 @@ describe('n-ui', () => {
 						});
 					}
 				});
-		});
-		describe('preact', () => {
-			it('should provide preact entry point by default', () => {
-				expect(aliases.react).to.exist;
-				expect(nUi[aliases.react.replace('window.ftNextUi.', '')]).to.exist;
-				expect(aliases['react-dom']).to.exist;
-				expect(nUi[aliases['react-dom'].replace('window.ftNextUi.', '')]).to.exist;
-			});
 		});
 
 	});
