@@ -118,7 +118,9 @@ build-production:
 	build-bundle
 
 build-bundle:
-	webpack -p --bail --config build/deploy/webpack.deploy.config.js
+	concurrently --kill-others-on-fail \
+		"webpack -p --bail --config build/deploy/webpack.deploy.config.js" \
+		"./scripts/build-sass.sh browser/bundles/main.scss public/n-ui/n-ui-core.css"
 
 build-dist: build-bundle build-css-loader
 	node ./build/deploy/build-auxilliary-files.js

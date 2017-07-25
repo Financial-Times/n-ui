@@ -95,7 +95,7 @@
     "ms": "^0.7.2",
     "node-sass": "^4.5.3",
     "postcss-cli": "^4.1.0",
-    "postcss-extract-css-block": "^0.0.3",
+    "postcss-extract-css-block": "^0.1.0",
     "postcss-loader": "^2.0.5",
     "preact": "^7.1.0",
     "preact-compat": "^3.11.0",
