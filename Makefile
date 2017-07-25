@@ -25,10 +25,14 @@ endif
 demo: run
 
 build:
-	webpack --config demo/webpack.config.js
+	concurrently --kill-others-on-fail \
+		"webpack --config demo/webpack.config.js" \
+		"./scripts/build-sass.sh demo/client/main.scss"
 
 watch:
-	webpack --config demo/webpack.config.js --watch
+	concurrently --kill-others-on-fail \
+		"webpack --config demo/webpack.config.js  --watch" \
+		"watch-run -ip 'main.scss,demo/client/**/*.scss' ./scripts/build-sass.sh demo/client/main.scss"
 
 # test-browser-dev is only for development environments.
 test-browser-dev:
@@ -90,8 +94,7 @@ endif
 test-browser:
 	karma start karma.conf.js
 
-test-build:
-	webpack --config demo/webpack.config.js
+test-build: build
 
 nightwatch:
 	nht nightwatch browser/test/js-success.nightwatch.js
