@@ -59,7 +59,16 @@ module.exports = {
 	},
 
 	init: directory => {
-		stylesheets = fs.readdirSync(`${directory}/public`)
+		let stylesheetList = fs.readdirSync(`${directory}/public`);
+		try {
+			fs.statSync(`${directory}/public/n-ui`);
+			stylesheetList = stylesheetList.concat(
+				fs.readdirSync(`${directory}/public/n-ui`)
+					.map(name => `n-ui/${name}`)
+			);
+		} catch (e) {}
+
+		stylesheets = stylesheetList
 			.filter(name => /\.css$/.test(name))
 			.map(name => ({name, contents: fs.readFileSync(`${directory}/public/${name}`, 'utf-8')}))
 			.reduce((map, {name, contents}) => {
