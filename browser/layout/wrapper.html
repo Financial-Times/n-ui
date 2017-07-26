@@ -131,11 +131,9 @@
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{>n-ui/footer/template}}
-				{{#if @root.flags.fancyDrawer}}
-					{{#unlessEquals nUi.header.variant 'logo-only'}}
-						{{>n-ui/header/partials/drawer/template}}
-					{{/unlessEquals}}
-				{{/if}}
+				{{#unlessEquals nUi.header.variant 'logo-only'}}
+					{{>n-ui/header/partials/drawer/template}}
+				{{/unlessEquals}}
 			</div>
 		</div>
 	{{>layout/partials/bootstrapper}}
