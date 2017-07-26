@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const shellpromise = require('shellpromise');
 const shellpipe = require('./shellpipe');
-const downloadAssets = require('./download-assets');
+const garbNUiAssets = require('./grab-n-ui-assets');
 const assetHashes = require('../lib/generate-asset-hashes');
 const sendBuildMetrics = require('../lib/send-build-metrics');
 
@@ -58,7 +58,7 @@ program
 		shellpipe(`webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}`)
 			.then(() => options.production && assetHashes())
 			.then(aboutJson)
-			.then(downloadAssets)
+			.then(garbNUiAssets)
 			.then(() => {
 
 				const buildTime = Date.now() - buildStartTime;
@@ -82,7 +82,7 @@ program
 
 		devAdvice();
 
-		downloadAssets()
+		garbNUiAssets()
 			.then(() => shellpipe(`webpack --watch --config ${webpackConfPath}`))
 			.catch(exit);
 	});

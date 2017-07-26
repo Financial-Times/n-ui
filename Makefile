@@ -111,8 +111,7 @@ test:
 	make developer-note verify pally-conf test-server test-browser test-build run nightwatch a11y build-dist
 	bundlesize
 
-build-production:
-	build-bundle
+build-production: build-bundle
 
 build-bundle:
 	webpack -p --bail --config build/deploy/webpack.deploy.config.js
