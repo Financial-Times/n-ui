@@ -9,9 +9,7 @@
 .scss-lint.yml
 /public/__about.json
 /public/head-n-ui-core.css
-/public/head-n-ui-core.css.map
 /public/main.css
-/public/main.css.map
 /public/main-without-n-ui.js
 /public/main-without-n-ui.js.map
 /public/n-ui
