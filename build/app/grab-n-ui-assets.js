@@ -1,16 +1,13 @@
-const shell = require('shellpromise');
+const denodeify = require('denodeify');
+const copy = denodeify(require('fs-extra').copy);
 
-const grabNUiAsset = (fileName) => {
+module.exports = () => {
 	if (process.env.NEXT_APP_SHELL === 'local') {
 		return Promise.resolve();
 	}
-	return shell(`cp node_modules/@financial-times/n-ui/${fileName} ${fileName}`);
-};
-
-
-module.exports = () => {
 	return Promise.all([
-		grabNUiAsset('public/n-ui/head-n-ui-core.css'),
-		grabNUiAsset('public/n-ui/asset-hashes.json'),
-	]);
+		'public/n-ui/head-n-ui-core.css',
+		'public/n-ui/asset-hashes.json',
+	]
+		.map(fileName => copy(`node_modules/@financial-times/n-ui/${fileName}`, fileName)));
 };

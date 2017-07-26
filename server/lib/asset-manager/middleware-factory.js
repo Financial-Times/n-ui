@@ -68,7 +68,7 @@ module.exports = ({
 
 			res.render = function (template, templateData) {
 				// Add standard n-ui stylesheets
-				res.locals.stylesheets.inline.unshift('head-n-ui-core');
+				res.locals.stylesheets.inline.unshift('n-ui/head-n-ui-core');
 				// For now keep building n-ui-core in the main app stylesheet
 				// res.locals.stylesheets.lazy.unshift('n-ui-core');
 

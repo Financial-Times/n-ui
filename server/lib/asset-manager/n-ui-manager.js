@@ -27,12 +27,3 @@ const getReleaseName = directory => {
 };
 
 module.exports.getReleaseName = getReleaseName;
-
-module.exports.getReleaseRoots = () => {
-	const releaseName = getReleaseName();
-	return [
-		`https://www.ft.com/__assets/n-ui/cached/${releaseName}/`,
-		`http://ft-next-n-ui-prod.s3-website-eu-west-1.amazonaws.com/__assets/n-ui/cached/${releaseName}/`,
-		`http://ft-next-n-ui-prod-us.s3-website-us-east-1.amazonaws.com/__assets/n-ui/cached/${releaseName}/`
-	];
-};
