@@ -111,7 +111,7 @@ app.listen(5005)
 							'public/main-without-n-ui.js.map'
 						],
 						destination: `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/`,
-						bucket: 'ft-next-n-ui-prod',
+						bucket: 'ft-next-test-artefacts',
 						cacheControl: 'no-cache, must-revalidate',
 					})
 						.catch(err => {
