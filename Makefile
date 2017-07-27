@@ -102,7 +102,7 @@ pally-conf:
 a11y: test-build pally-conf
 	rm -rf bower_components/n-ui
 	mkdir bower_components/n-ui
-	PA11Y=true node demo/app
+	PA11Y=true make run
 
 
 # Note: `run` executes `node demo/app`, which fires up express, then deploys
@@ -111,8 +111,7 @@ test:
 	make developer-note verify pally-conf test-server test-browser test-build run nightwatch a11y build-dist
 	bundlesize
 
-build-production:
-	build-bundle
+build-production: build-bundle
 
 build-bundle:
 	webpack -p --bail --config build/deploy/webpack.deploy.config.js
@@ -121,8 +120,6 @@ build-dist: build-bundle build-css-loader
 	node ./build/deploy/build-auxilliary-files.js
 
 deploy-s3:
-	# deploy to urls using the real file name on s3
-	node ./build/deploy/s3.js
 	# deploy to hashed urls on s3
 	nht deploy-hashed-assets --directory public/n-ui --monitor-assets
 
