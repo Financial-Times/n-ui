@@ -120,8 +120,6 @@ build-dist: build-bundle build-css-loader
 	node ./build/deploy/build-auxilliary-files.js
 
 deploy-s3:
-	# deploy to urls using the real file name on s3
-	node ./build/deploy/s3.js
 	# deploy to hashed urls on s3
 	nht deploy-hashed-assets --directory public/n-ui --monitor-assets
 
