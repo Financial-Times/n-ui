@@ -68,7 +68,11 @@
 		{{#unless openGraph.og.type}}
 		<meta property="og:type" content="website">
 		{{/unless}}
-
+		{{#unless openGraph.fb.pages}}
+		{{#if @root.flags.fbLinkPreviewTag}}
+		<meta property="fb:pages"content="8860325749" />
+		{{/if}}
+		{{/unless}}
 		{{#each twitterCard}}
 		{{#if this}}
 		<meta name="twitter:{{@key}}" content="{{this}}">
@@ -131,11 +135,9 @@
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{>n-ui/footer/template}}
-				{{#if @root.flags.fancyDrawer}}
-					{{#unlessEquals nUi.header.variant 'logo-only'}}
-						{{>n-ui/header/partials/drawer/template}}
-					{{/unlessEquals}}
-				{{/if}}
+				{{#unlessEquals nUi.header.variant 'logo-only'}}
+					{{>n-ui/header/partials/drawer/template}}
+				{{/unlessEquals}}
 			</div>
 		</div>
 	{{>layout/partials/bootstrapper}}
