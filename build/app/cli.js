@@ -55,7 +55,7 @@ program
 		devAdvice();
 		const buildStartTime = Date.now();
 
-		shellpipe(`webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}`)
+		shellpipe(`concurrently 'webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}' './node_modules/@financial-times/n-ui/scripts/build-sass.sh'`)
 			.then(() => options.production && assetHashes())
 			.then(aboutJson)
 			.then(grabNUiAssets)
@@ -83,7 +83,7 @@ program
 		devAdvice();
 
 		grabNUiAssets()
-			.then(() => shellpipe(`webpack --watch --config ${webpackConfPath}`))
+			.then(() => shellpipe(`concurrently 'webpack --watch --config ${webpackConfPath}' 'watch-run -ip 'client/**/*.scss' ./node_modules/@financial-times/n-ui/scripts/build-sass.sh'`))
 			.catch(exit);
 	});
 
