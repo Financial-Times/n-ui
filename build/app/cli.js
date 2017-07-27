@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const shellpromise = require('shellpromise');
 const shellpipe = require('./shellpipe');
-const downloadAssets = require('./download-assets');
+const grabNUiAssets = require('./grab-n-ui-assets');
 const assetHashes = require('../lib/generate-asset-hashes');
 const sendBuildMetrics = require('../lib/send-build-metrics');
 
@@ -58,7 +58,7 @@ program
 		shellpipe(`concurrently 'webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}' './node_modules/@financial-times/n-ui/scripts/build-sass.sh'`)
 			.then(() => options.production && assetHashes())
 			.then(aboutJson)
-			.then(downloadAssets)
+			.then(grabNUiAssets)
 			.then(() => {
 
 				const buildTime = Date.now() - buildStartTime;
@@ -82,7 +82,7 @@ program
 
 		devAdvice();
 
-		downloadAssets()
+		grabNUiAssets()
 			.then(() => shellpipe(`concurrently 'webpack --watch --config ${webpackConfPath}' 'watch-run -ip 'client/**/*.scss' ./node_modules/@financial-times/n-ui/scripts/build-sass.sh'`))
 			.catch(exit);
 	});

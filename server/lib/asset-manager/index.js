@@ -44,7 +44,8 @@ function init (options, directory, app) {
 	// use all the above in middleware to be used on each request
 	app.use(middlewareFactory({
 		getAssetUrl,
-		stylesheetManager
+		stylesheetManager,
+		useLocalAppShell
 	}));
 }
 
