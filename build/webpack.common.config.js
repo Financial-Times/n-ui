@@ -5,42 +5,8 @@ build.
 If something is required for both, please add it here.
 */
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
-const path = require('path');
 const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
-const extractOptions = [{
-		loader: 'css-loader',
-		options: {
-			minimize: true,
-			sourceMap: true
-		}
-	},
-	{
-		loader: 'postcss-loader',
-		options: {
-			plugins: () => [
-				autoprefixer({
-					browsers: ['> 1%', 'last 2 versions', 'ie >= 9', 'ff ESR', 'bb >= 7', 'iOS >= 5'],
-					flexbox: 'no-2009'
-				})
-			]
-		}
-	},
-	{
-		loader: 'sass-loader',
-		options: {
-			sourcemap: true,
-			includePaths: [
-				path.resolve('./bower_components'),
-				path.resolve('./node_modules/@financial-times')
-			],
-			// NOTE: This line is important for preservation of comments needed by the css-extract-block plugin
-			outputStyle: 'expanded'
-		}
-	}
-];
 
 module.exports = {
 	// Abort the compilation on first error
@@ -119,21 +85,9 @@ module.exports = {
 					],
 					presets: [require.resolve('babel-preset-es2015'), require.resolve('babel-preset-react')]
 				}
-			},
-			{
-				test: /\.scss$/,
-				loader: ExtractTextPlugin.extract({
-					use: extractOptions
-				})
 			}
 		]
 	},
-
-	plugins: [
-		// moves css out of JS into stylesheets
-		new ExtractTextPlugin('[name]'),
-	],
-
 
 	output: {
 		filename: '[name]',
