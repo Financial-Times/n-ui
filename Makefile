@@ -102,7 +102,7 @@ pally-conf:
 a11y: test-build pally-conf
 	rm -rf bower_components/n-ui
 	mkdir bower_components/n-ui
-	PA11Y=true node demo/app
+	PA11Y=true make run
 
 
 # Note: `run` executes `node demo/app`, which fires up express, then deploys
