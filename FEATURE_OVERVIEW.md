@@ -44,14 +44,13 @@ These are heavily interdependent - most of the complexity is in deciding which a
 ## N-ui build and deploy
 - Starts as quite an ordinary webpack build
 - Also builds 'auxilliary files', e.g. brotli-compressed versions, asset-hashes.json
-- All these files are deployed to the n-ui s3 bucket, and are available at either n-ui.ft.com, or ft.com/__assets/n-ui (TODO - if we bundle asset-hashes.json and built files in with the npm module we won't need this step any more)
-- These files are also deployed to the hashed assets s3 bucket, and are thus avilable at ft.com/__assets/hashed/n-ui/
-- Once the files are verified to have gone to s3 ok (built into `nht`) the component is published to npm and all user-facing apps are rebuilt without cache
+- These files are deployed to the hashed assets s3 bucket, and are thus avilable at ft.com/__assets/hashed/n-ui/
+- Once the files are verified to have gone to s3 ok (built into `nht`) the component is published to npm (including all built files) and all user-facing apps are rebuilt without cache
 
 ## App build & run
 
 ### Without app shell (normal)
-- Downloads asset-hashes.json from n-ui (saves as n-ui-hashed-assets.json) and n-ui-head-core.css (see above - these can just be bundled in the npm package)
+- Copies asset-hashes.json and n-ui-head-core.css from node_modules/@financial-times/n-ui to public/n-ui
 - JS - Uses the list of externals supplied by n-ui in the webpack config so e.g. `require('o-date')` gets replaced by `window.ftNextUi.__oDate` - smaller bundle size as a result
 - Sass - Builds all styles, including n-ui ones, so generates n-ui-head-core.css, and the rest of n-ui styles are included in its own main.css (TODO - this is _almost_ redundant - hopefully move to not building all n-ui soon)
 - When running all n-ui stuff (aside from inlined head.css) are linked to from the network
