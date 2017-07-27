@@ -107,6 +107,7 @@ app.listen(5005)
 							'public/n-ui/font-loader.js.map',
 							'public/n-ui/o-errors.js',
 							'public/n-ui/o-errors.js.map',
+							'public/n-ui/head-n-ui-core.css',
 							'public/main.css.map',
 							'public/main-without-n-ui.js.map'
 						],
