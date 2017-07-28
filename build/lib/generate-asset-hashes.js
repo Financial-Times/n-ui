@@ -5,7 +5,9 @@ const crypto = require('crypto');
 module.exports = (directory = 'public', withBrotli) => {
 	const hashes = fs.readdirSync(path.join(process.cwd(), directory))
 		// don't hash the jsons or variants that are based on the original file contents (sourcemaps and brotlified assets)
-		.filter(asset => !/(\.map|\.br|about\.json|asset-hashes\.json)$/.test(asset))
+		.filter(name => !/(\.map|\.br|about\.json|asset-hashes\.json)$/.test(name))
+		// don't try to hash subdirectories, e.g. /n-ui/
+		.filter(name => fs.statSync(path.join(process.cwd(), directory, name)).isFile())
 		.map(name => {
 			const file = fs.readFileSync(path.join(process.cwd(), directory, name), 'utf8');
 			const hash = crypto.createHash('sha1').update(file).digest('hex');
