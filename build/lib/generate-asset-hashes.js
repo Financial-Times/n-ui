@@ -14,10 +14,7 @@ module.exports = (directory = 'public', withBrotli) => {
 		})
 		.reduce((previous, current) => {
 			previous[current.name] = current.hashedName;
-			const isCssFile = path.extname(current.name) === '.css';
-			if (!isCssFile) {
-				previous[current.name + '.map'] = current.hashedName + '.map';
-			}
+			previous[current.name + '.map'] = current.hashedName + '.map';
 			if (withBrotli) {
 				previous[current.name + '.br'] = current.hashedName + '.br';
 			}

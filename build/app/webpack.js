@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const ExtractCssBlockPlugin = require('extract-css-block-webpack-plugin');
 const appShellEntryPoints = require('../app-shell-entry-points');
 const verifyGitignore = require('./verify-gitignore');
 
@@ -33,11 +34,14 @@ so this config is for all entry points defined by an app *excluding* the main.js
 Mostly this config will only be for main.css.
 */
 
-const nonMainJsEntryPoints = filterEntryKeys(baseConfig.entry, /main(\.js|\.css)$/, true);
+const nonMainJsEntryPoints = filterEntryKeys(baseConfig.entry, /main\.js$/, true);
 
 if (Object.keys(nonMainJsEntryPoints).length > 0) {
 	const nonMainJsWebpackConfig = webpackMerge(commonAppConfig, {
-		entry: nonMainJsEntryPoints
+		entry: nonMainJsEntryPoints,
+		plugins:[
+			new ExtractCssBlockPlugin()
+		]
 	});
 	webpackConfigs.push(nonMainJsWebpackConfig);
 }
