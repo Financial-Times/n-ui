@@ -70,7 +70,7 @@
     "@financial-times/n-express": "^19.0.0",
     "@financial-times/n-handlebars": "^1.15.0",
     "@financial-times/next-json-ld": "^0.1.0",
-    "autoprefixer": "^6.7.7",
+    "autoprefixer": "^7.0.0",
     "aws-sdk": "^2.7.21",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.0.0",
