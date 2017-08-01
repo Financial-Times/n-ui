@@ -23,7 +23,7 @@ module.exports = options => {
 		withFlags: true,
 		withBackendAuthentication: true,
 		withServiceMetrics: true,
-		product: 'kat',
+		product: '',
 		layoutsDir: path.join(__dirname, '../browser/layout'),
 	}, options || {});
 
