@@ -2,38 +2,25 @@ const fs = require('fs');
 const path = require('path');
 const appShellEntryPoints = require('../app-shell-entry-points');
 const verifyGitignore = require('./verify-gitignore');
-
-function filterEntryKeys (obj, rx, negativeMatch) {
-	const keys = Object.keys(obj).filter(key => negativeMatch ? !rx.test(key) : rx.test(key));
-	return keys.reduce((o, key) => {
-		o[key] = obj[key];
-		return o;
-	}, {});
-}
-
-function modifyEntryKeys (obj, rx, nameModifier) {
-	const keys = Object.keys(obj).filter(key => rx.test(key));
-	return keys.reduce((o, key) => {
-		o[nameModifier(key)] = obj[key];
-		return o;
-	}, {});
-}
+const webpackMerge = require('webpack-merge');
+const baseConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
+const commonAppConfig = require('./webpack.app.common.js');
+const webpackConfigs = [];
 
 verifyGitignore();
 
-const baseConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
-const webpackConfigs = [];
-const webpackMerge = require('webpack-merge');
-const commonAppConfig = require('./webpack.app.common.js');
-
 /*
 We no longer build a main.js for the app when generating the standard asset variants
-so this config is for all entry points defined by an app *excluding* the main.js one
-
-Mostly this config will only be for main.css.
+so this config is for any JS entry points defined by an app *excluding* the main.js one
 */
 
-const nonMainJsEntryPoints = filterEntryKeys(baseConfig.entry, /main(\.js|\.css)$/, true);
+const nonMainJsEntryPoints = Object.keys(baseConfig.entry)
+	.map(target => [target, baseConfig.entry[target]])
+	.filter(([target, entry]) => entry.includes('.js') && !entry.includes('main.js')) //eslint-disable-line no-unused-vars
+	.reduce((entryPoints, [target, entry]) => {
+		entryPoints[target] = entry;
+		return entryPoints;
+	}, {});
 
 if (Object.keys(nonMainJsEntryPoints).length > 0) {
 	const nonMainJsWebpackConfig = webpackMerge(commonAppConfig, {
@@ -51,7 +38,14 @@ During build it also wraps the main.js code to ensure it is only called once n-u
 has been loaded.
 */
 
-const mainJsEntryPoints = modifyEntryKeys(baseConfig.entry, /main\.js$/, name => name.replace(/\.js$/,'-without-n-ui.js'));
+const mainJsEntryPoints = Object.keys(baseConfig.entry)
+	.map(target => [target, baseConfig.entry[target]])
+	.filter(([target, entry]) => entry.includes('main.js')) //eslint-disable-line no-unused-vars
+	.reduce((entryPoints, [target, entry]) => {
+		const modifiedTargetName = target.replace(/\.js$/, '-without-n-ui.js');
+		entryPoints[modifiedTargetName] = entry;
+		return entryPoints;
+	}, {});
 
 if (Object.keys(mainJsEntryPoints).length > 0) {
 	const nUiExternal = require('../webpack-externals');
