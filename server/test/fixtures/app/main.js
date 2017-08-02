@@ -50,6 +50,17 @@ app.get('/css-variants', function (req, res) {
 	});
 });
 
+app.get('/route-specific-js', function (req, res) {
+	res.locals.javascriptBundles.push(req.app.getHashedAssetUrl('route-specific.js'));
+	res.render('main', {
+		layout: 'wrapper',
+		title: 'FT',
+		items: [1,2,3,4,5],
+		text : '<p>Paragraph 1</p><p>Paragraph 2</p><p>Paragraph 3</p>'
+	});
+});
+
+
 app.get('/with-layout', function (req, res) {
 	res.locals.__isProduction = req.query.prod || res.locals.__isProduction;
 	if (req.query.preload) {

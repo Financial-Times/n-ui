@@ -28,6 +28,7 @@ These are heavily interdependent - most of the complexity is in deciding which a
 		- registers a polyfill.io url, hashed urls for all the n-ui javascripts and the app's main.js as scripts to be loaded by the client side and added as link headers
 		- registers lists of inline, lazy and blocking stylesheets, defaulting to `['head-n-ui-core', 'head']` and `['main']`. These can be overwritten by the app, but 'head-n-ui-core' is always prepended. Similar to js, non-inline ones are added as link headers
 		- adds a link header to the financial times masthead
+		- exposes helper to `getHashedAssetUrl`, so javascript bundles can be loaded programatically
 
 ### Client side
 - Adds loads of classes and attributes to `<html>` including for font lazy-loading
