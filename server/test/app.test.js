@@ -167,6 +167,14 @@ describe('simple app', function () {
 			expect(typeof app.getHashedAssetUrl).to.equal('function');
 		});
 
+		it('should allow pushing route-specific JS files', (done) => {
+			request(app)
+				.get('/route-specific-js')
+				.expect(200, /<script src="\/\/www.ft.com\/__assets\/hashed\/demo-app\/123abc\/route-specific.js"/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/123abc\/route-specific\.js>; as="script"; rel="preload"; nopush/, done);
+
+		});
+
 		it('should inline head.css & head-n-ui-core.css', (done) => {
 			request(app)
 				.get('/with-layout?layout=wrapper')
