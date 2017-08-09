@@ -20,6 +20,7 @@ module.exports = function (flags) {
 	const isTrialConfirmation = /(4998d861-8960-a8d1-3738-eae97bcd07a2|41218b9e-c8ae-c934-43ad-71b13fcb4465)/.test(offer);
 
 	const spoor = (spoorId) ? spoorId[1] : '';
+	const ts = Date.now();
 
 	if (flags && (flags.get('floodlight') && isAnonymous && spoorId)) {
 
@@ -29,14 +30,14 @@ module.exports = function (flags) {
 		const iNewTest = new Image();
 
 		if (isSignUpForm) {
-			i.src = `${host};type=signu107;cat=ft-ne00;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=1`;
+			i.src = `${host};type=signu107;cat=ft-ne00;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`;
 		} else if (isSubscriptionConfirmation) {
-			i.src = `${host};type=trans658;cat=ft-ne0;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;`;
+			i.src = `${host};type=trans658;cat=ft-ne0;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`;
 		} else if (isTrialConfirmation) {
-			i.src = `${host};type=trans658;cat=ft-ne00;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;`;
+			i.src = `${host};type=trans658;cat=ft-ne00;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`;
 		} else {
-			i.src = `${host};type=homeo886;cat=ft-ne000;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=1;num=1`;
-			iNewTest.src = `${host};type=homeo886;cat=ft-ne003;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=1;num=1`;
+			i.src = `${host};type=homeo886;cat=ft-ne000;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts};num=1`;
+			iNewTest.src = `${host};type=homeo886;cat=ft-ne003;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts};num=1`;
 		}
 	}
 };
