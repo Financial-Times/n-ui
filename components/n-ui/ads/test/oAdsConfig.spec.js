@@ -14,8 +14,8 @@ describe('Config', () => {
 		sandbox = sinon.sandbox.create();
 		// global stubs
 
-		sandbox.stub(utils, 'getLayoutName', () => { return 'custom'; });
-		sandbox.stub(utils, 'getReferrer', () => null );
+		sandbox.stub(utils, 'getLayoutName').callsFake(() => 'custom');
+		sandbox.stub(utils, 'getReferrer').callsFake(() => null );
 		targeting = sandbox.stub(document.documentElement, 'getAttribute');
 		targeting.withArgs('data-content-id').returns(fakeArticleUuid);
 
@@ -41,7 +41,7 @@ describe('Config', () => {
 
 		it('Should set gpt configuration value according to app name and sandbox', () => {
 			const flags = { get: () => true };
-			sandbox.stub(adsSandbox, 'isActive', () => { return true; });
+			sandbox.stub(adsSandbox, 'isActive').callsFake(() => true);
 			const config = oAdsConfig(flags, 'article');
 			const gptAttributes = {
 				network: '5887',
@@ -90,7 +90,7 @@ describe('Config', () => {
 		});
 
 		it('Should use zone from metadata if present', () => {
-			sandbox.stub(utils, 'getMetaData', (param) => {
+			sandbox.stub(utils, 'getMetaData').callsFake((param) => {
 				switch (param) {
 					case 'dfp_site':
 							return 'testDfpSite';
@@ -112,7 +112,7 @@ describe('Config', () => {
 
 	// tests for adOptimizeLazyLoad flag
 		it('Should pass 0% when screen size is wider than 980px and adOptimizeLazyLoad flag is defined', () => {
-			sandbox.stub(utils, 'getScreenSize', () => { return 980; });
+			sandbox.stub(utils, 'getScreenSize').callsFake(() => 980);
 			const flags = { get: (flagName) => {
 				switch (flagName) {
 					case 'adOptimizeLazyLoad':
@@ -127,7 +127,7 @@ describe('Config', () => {
 		});
 
 		it('Should pass 0% when screen size is less than 980px and adOptimizeLazyLoad flag is undefined', () => {
-			sandbox.stub(utils, 'getScreenSize', () => { return 979; });
+			sandbox.stub(utils, 'getScreenSize').callsFake(() => 979);
 			const flags = { get: (flagName) => {
 				switch (flagName) {
 					case 'adOptimizeLazyLoad':
@@ -144,7 +144,7 @@ describe('Config', () => {
 		context('when screen size is less than 980px and adOptimizeLazyLoad flag is defined', () => {
 
 			beforeEach(() => {
-				sandbox.stub(utils, 'getScreenSize', () => { return 979; });
+				sandbox.stub(utils, 'getScreenSize').callsFake(() => 979);
 			});
 
 			afterEach(() => {

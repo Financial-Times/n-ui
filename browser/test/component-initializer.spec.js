@@ -16,15 +16,13 @@ describe('bootstrapping', () => {
 		sinon.stub(ads, 'init');
 		sinon.stub(tracking, 'init');
 		sinon.stub(tracking, 'lazyInit');
-		sinon.stub(jsLoader.prototype, 'bootstrap', (opts, cb) => {
-			return cb({
-				flags: {
-					get: () => true
-				},
-				appInfo: {},
-				allStylesLoaded: Promise.resolve()
-			});
-		});
+		sinon.stub(jsLoader.prototype, 'bootstrap').callsFake((opts, cb) => cb({
+			flags: {
+				get: () => true
+			},
+			appInfo: {},
+			allStylesLoaded: Promise.resolve()
+		}));
 	});
 
 	afterEach(() => {

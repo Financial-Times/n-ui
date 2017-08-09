@@ -85,8 +85,8 @@ export class SuggestionList extends React.Component {
 			return group.emptyHtml;
 		} else {
 			return <ul className="n-typeahead__item-list">
-				{ group.suggestions.map(suggestion => (
-					<li className="n-typeahead__item">
+				{ group.suggestions.map((suggestion, index) => (
+					<li className="n-typeahead__item" key={index}>
 						<a className={'n-typeahead__link ' + group.linkClassName}
 							ref={(c) => { this.items.push(c); }}
 							href={suggestion.url}
@@ -159,8 +159,8 @@ export class SuggestionList extends React.Component {
 			hidden={ !hasSuggestions }
 			data-trackable="typeahead"
 			onKeyDown={this.handleKeyDown.bind(this)}>
-			{ suggestions.map(group => (
-				<div className={'n-typeahead__group ' + group.className} data-trackable={group.trackable}>
+			{ suggestions.map((group, index) => (
+				<div key={index} className={'n-typeahead__group ' + group.className} data-trackable={group.trackable}>
 					{this.renderHeading(group)}
 					{this.renderItems(group)}
 				</div>

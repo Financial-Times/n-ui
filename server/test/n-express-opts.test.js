@@ -6,7 +6,7 @@ const expect = require('chai').expect;
 
 describe('configuring n-express', () => {
 	it('should turn things on by default in n-express', () => {
-		sinon.stub(nExpress, 'getAppContainer', () => ({app: {
+		sinon.stub(nExpress, 'getAppContainer').callsFake(() => ({app: {
 			locals: {},
 			use: () => null
 		}, meta: {}, addInitPromise: () => null}));
@@ -22,7 +22,7 @@ describe('configuring n-express', () => {
 	});
 
 	it('should be possible to turn things off in n-express', () => {
-		sinon.stub(nExpress, 'getAppContainer', () => ({app: {
+		sinon.stub(nExpress, 'getAppContainer').callsFake(() => ({app: {
 			locals: {},
 			use: () => null
 		}, meta: {}, addInitPromise: () => null}));
@@ -41,7 +41,7 @@ describe('configuring n-express', () => {
 	});
 
 	it('should pass healthchecks to n-express', () => {
-		sinon.stub(nExpress, 'getAppContainer', () => ({app: {
+		sinon.stub(nExpress, 'getAppContainer').callsFake(() => ({app: {
 			locals: {},
 			use: () => null
 		}, meta: {}, addInitPromise: () => null}));
