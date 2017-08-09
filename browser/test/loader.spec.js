@@ -61,7 +61,7 @@ describe('js loader', function () {
 		before(() => window.nextFeatureFlags = []);
 
 		beforeEach(function () {
-			sinon.stub(JsLoader.prototype, 'init', function () {
+			sinon.stub(JsLoader.prototype, 'init').callsFake(() => {
 				this.appInfo = {
 					isProduction: true
 				};

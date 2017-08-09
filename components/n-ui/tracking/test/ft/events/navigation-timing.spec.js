@@ -25,7 +25,7 @@ describe('Navigation timing', function () {
 		// add a mark
 		window.performance.mark('test');
 		document.cookie = 'spoor-id=01234';
-		load();  // simulate the window.load event
+		load(); // simulate the window.load event
 	});
 
 });
