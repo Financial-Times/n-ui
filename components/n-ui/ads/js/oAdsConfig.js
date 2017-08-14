@@ -57,14 +57,14 @@ module.exports = function (flags, appName, adOptions) {
 
 	function setViewportMarginBy (variant) {
 		switch (variant) {
-			case '50':
-				return'50%';
+			case '5':
+				return'5%';
 				break;
-			case '100':
-				return '100%';
+			case '10':
+				return '10%';
 				break;
-			case '150':
-				return '150%';
+			case '15':
+				return '15%';
 				break;
 			default:
 				return '0%';
