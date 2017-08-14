@@ -22,7 +22,7 @@ module.exports = function (flags) {
 	const spoor = (spoorId) ? spoorId[1] : '';
 	const ts = Date.now();
 
-	if (flags && (flags.get('floodlight') && isAnonymous && spoorId)) {
+	if (flags && (flags.get('floodlight') && spoorId)) {
 
 		const i = new Image();
 		// iNewTest is for a temporary tracking tag to test whether it's the tracking tag that's not working.
@@ -35,7 +35,7 @@ module.exports = function (flags) {
 			i.src = `${host};type=trans658;cat=ft-ne0;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`;
 		} else if (isTrialConfirmation) {
 			i.src = `${host};type=trans658;cat=ft-ne00;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`;
-		} else {
+		} else if (isAnonymous) {
 			i.src = `${host};type=homeo886;cat=ft-ne000;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts};num=1`;
 			iNewTest.src = `${host};type=homeo886;cat=ft-ne003;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts};num=1`;
 		}
