@@ -37,7 +37,7 @@ class JsSetup {
 			product: document.documentElement.getAttribute('data-next-product')
 		};
 
-		const flags = window.nextFeatureFlags.reduce((obj, flag) => {
+		const flags = window.nextFlags.reduce((obj, flag) => {
 			obj[flag.name] = flag.state;
 			return obj;
 		}, {

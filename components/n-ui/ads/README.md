@@ -78,7 +78,7 @@ Successful requests will be reviewed and merged in to the FT code base.
 
 ### Management
 
-- Each script MUST have an expiring [feature flag](https://github.com/Financial-Times/next-flags-api) to allow it to be toggled on and off.
+- Each script MUST have an expiring [flag](https://github.com/Financial-Times/next-flags-api) to allow it to be toggled on and off.
 - You MUST scope the loading of the tag to collect the minimally useful data set. _Eg, scope the script to a geographic region, individual URL, group of users, or use sampling techniques._
 - You MUST document what the tag does and its impact on performance, network etc. in the pull request and/or the code as a comment.
 - You MUST document the browser support.

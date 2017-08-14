@@ -1,5 +1,5 @@
 /*global require,describe,afterEach,beforeEach,it,expect,sinon*/
-window.nextFeatureFlags = [{name: 'aFlag', state: true}];
+window.nextFlags = [{name: 'aFlag', state: true}];
 const ComponentInitializer = require('../js/component-initializer').ComponentInitializer;
 const jsLoader = require('../js/loader');
 const header = require('../../components/n-ui/header');
