@@ -37,10 +37,9 @@ module.exports = function (flags) {
 			addPixel(`${host};type=trans658;cat=ft-ne00;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`);
 		} else if (isAnonymous) {
 			addPixel(`${host};type=homeo886;cat=ft-ne000;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts};num=1`);
-			// iNewTest is for a temporary tracking tag to test whether it's the tracking tag that's not working.
+			// temporary tracking tag to test whether it's the tracking tag that's not working.
 			// Should it be the original tag that was the problem, the current `cat=ft-ne000` should be replaced with `cat=ft-ne003`.
-			const iNewTest = new Image();
-			iNewTest.src = `${host};type=homeo886;cat=ft-ne003;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts};num=1`;
+			addPixel(`${host};type=homeo886;cat=ft-ne003;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts};num=1`);
 		}
 	}
 };
