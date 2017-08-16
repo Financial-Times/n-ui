@@ -1,6 +1,6 @@
 {{#if @root.flags.javascript}}
 <script>
-	window.nextFeatureFlags = {{{json @root.flagsArray}}};
+	window.nextFlags = {{{json @root.flagsArray}}};
 	{{#if @root.nUiConfig}}
 		window.ftNextUiConfig = {{{json @root.nUiConfig}}};
 	{{/if}}
