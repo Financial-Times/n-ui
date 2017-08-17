@@ -9,6 +9,7 @@ import offlineToast from '../../components/n-ui/offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 import * as syndication from 'n-syndication';
+import DesktopAppBanner from '@financial-times/n-desktop-app-banner';
 
 export const presets = {
 	discrete: {
@@ -109,6 +110,11 @@ export class ComponentInitializer {
 				lazyLoadImages();
 				this.initializedFeatures.lazyLoadImages = true;
 			}
+
+			// TODO: Figure out the way to do this correctly.
+			// if (!config.features.disableDesktopAppBanner) {
+			// 	new DesktopAppBanner();
+			// }
 
 
 			allStylesLoaded

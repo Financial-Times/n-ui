@@ -32,6 +32,7 @@
     "n-ui-foundations": "^2.2.1",
     "o-expander": "^4.2.2",
     "next-session-client": "^2.3.1",
-    "n-counter-ad-blocking": "^3.1.1"
+    "n-counter-ad-blocking": "^3.1.1",
+    "n-desktop-app-banner": "^1.0.0"
   }
 }
