@@ -56,6 +56,9 @@ module.exports = {
 			//babel
 			{
 				test: /\.js$/,
+				// Ignore underscore from node_modules due to the following issue:
+				// https://stackoverflow.com/questions/39301399/underscore-gives-error-when-bundling-with-webpack
+				exclude: /node_modules\/underscore/,
 				loader: 'babel-loader',
 				query: {
 					babelrc: false, // ignore any .babelrc in project & dependencies
