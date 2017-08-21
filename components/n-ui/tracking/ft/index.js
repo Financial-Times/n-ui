@@ -105,8 +105,8 @@ const oTrackingWrapper = {
 			});
 
 			//headline testing
-			const headlineTestingVariant = document.querySelector('[data-trackable-headline]') ? document.querySelector('[data-trackable-headline]').getAttribute('data-trackable-headline') : null;
-			context.headlineTesting = headlineTestingVariant;
+			const headlineTestingVariant = document.querySelector('[data-trackable-headline-variant]') ? document.querySelector('[data-trackable-headline-variant]').getAttribute('data-trackable-headline-variant') : null;
+			context['headline-variant'] = headlineTestingVariant;
 
 			// barriers
 			let barrierType = document.querySelector('[data-barrier]');
