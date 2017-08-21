@@ -124,7 +124,7 @@ export class SuggestionList extends React.Component {
 						type: 'tag'
 					})),
 				tailLink: this.props.includeViewAllLink && {
-					url: `/search?q=${this.state.searchTerm}`,
+					url: `/${window.nextFlags.newAdvancedSearch ? 'advanced-' : ''}search?q=${this.state.searchTerm}`,
 					innerHtml: <span>See all news matching <mark>{this.state.searchTerm}</mark></span>,
 					trackable: 'see-all'
 				}
