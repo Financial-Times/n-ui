@@ -67,6 +67,7 @@
     "uglifyjs": "^2.4.11"
   },
   "dependencies": {
+    "@financial-times/n-desktop-app-banner": "^1.0.1",
     "@financial-times/n-express": "^19.2.3",
     "@financial-times/n-handlebars": "^1.17.9",
     "@financial-times/next-json-ld": "^0.2.1",
@@ -134,7 +135,7 @@
     },
     {
       "path": "./public/n-ui/n-ui-core.css",
-      "threshold": "8 Kb"
+      "threshold": "8.4 Kb"
     }
   ]
 }

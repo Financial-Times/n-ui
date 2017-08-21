@@ -8,6 +8,7 @@ import footer from '../../components/n-ui/footer';
 import offlineToast from '../../components/n-ui/offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
+import DesktopAppBanner from 'n-desktop-app-banner';
 import * as syndication from 'n-syndication';
 
 export const presets = {
@@ -110,6 +111,9 @@ export class ComponentInitializer {
 				this.initializedFeatures.lazyLoadImages = true;
 			}
 
+			if (flags.get('subscriberCohort') && !flags.get('disableDesktopAppBanner')) {
+				new DesktopAppBanner();
+			}
 
 			allStylesLoaded
 				.then(() => {
