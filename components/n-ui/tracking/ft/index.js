@@ -104,6 +104,10 @@ const oTrackingWrapper = {
 				useSendBeacon: flags.get('sendBeacon')
 			});
 
+			//headline testing
+			const headlineTestingVariant = document.querySelector('[data-trackable-headline-variant]') ? document.querySelector('[data-trackable-headline-variant]').getAttribute('data-trackable-headline-variant') : null;
+			context['headline-variant'] = headlineTestingVariant;
+
 			// barriers
 			let barrierType = document.querySelector('[data-barrier]');
 			let productSelectorFlag = document.querySelector('[data-barrier-is-product-selector]');
