@@ -13,12 +13,12 @@ module.exports = function (flags) {
 
 	const country = (c) ? c.getAttribute('data-signup-country') : undefined;
 	const term = (t) ? c.getAttribute('data-signup-term') : undefined;
-	const offer = (o) ? c.getAttribute('data-signup-offer') === 'true' : undefined;
+	const offer = (o) ? c.getAttribute('data-signup-offer') : undefined;
 
 	// sign-up funnel flags
 	const isSignUpForm = /^\/signup/.test(location.pathname);
 	const isSubscriptionConfirmation = /^\/thank-you/.test(location.pathname);
-	const isTrialConfirmation = (l) ? l.getAttribute('data-signup-is-trial') : undefined;
+	const isTrialConfirmation = (l) ? l.getAttribute('data-signup-is-trial') === 'true' : undefined;
 
 	const spoor = (spoorId) ? spoorId[1] : '';
 	const ts = Date.now();
