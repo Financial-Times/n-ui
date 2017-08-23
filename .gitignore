@@ -22,3 +22,4 @@ server/test/fixtures/bad-assets/.gitignore
 /browser/layout/partials/css-loader.html
 /pa11y_screenCapture/*
 package-lock.json
+.idea*
