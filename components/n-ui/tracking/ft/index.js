@@ -69,8 +69,10 @@ const oTrackingWrapper = {
 				context.errorStatus = pageViewConf.context.errorStatus = errorStatus;
 			}
 
-			const edition = document.querySelector('[data-next-edition]') ? document.querySelector('[data-next-edition]').getAttribute('data-next-edition') : null;
-			context.edition = edition;
+			const edition = document.querySelector('[data-next-edition]');
+			if (edition) {
+				context.edition = edition.getAttribute('data-next-edition');
+			}
 
 			const segmentId = findInQueryString('segmentId');
 			if (segmentId) {
@@ -105,8 +107,10 @@ const oTrackingWrapper = {
 			});
 
 			//headline testing
-			const headlineTestingVariant = document.querySelector('[data-trackable-headline-variant]') ? document.querySelector('[data-trackable-headline-variant]').getAttribute('data-trackable-headline-variant') : null;
-			context['headline-variant'] = headlineTestingVariant;
+			const headlineTesting = document.querySelector('[data-trackable-headline-variant]');
+			if (headlineTesting) {
+				pageViewConf.context['headline-variant'] = headlineTesting.getAttribute('data-trackable-headline-variant');
+			}
 
 			// barriers
 			let barrierType = document.querySelector('[data-barrier]');
