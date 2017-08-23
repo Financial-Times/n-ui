@@ -82,7 +82,7 @@ module.exports = {
 						// will look to include it for browsers that can support modules
 						// require('babel-plugin-transform-es2015-modules-commonjs'),
 					],
-					presets: [require.resolve('babel-preset-es2015'), require.resolve('babel-preset-react')]
+					presets: [require.resolve('babel-preset-es2015'), require.resolve('babel-preset-es2016'), require.resolve('babel-preset-es2017'), require.resolve('babel-preset-react')]
 				}
 			}
 		]
