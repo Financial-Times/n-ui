@@ -13,7 +13,7 @@ module.exports = function (flags) {
 
 	const country = (c) ? c.getAttribute('data-signup-country') : undefined;
 	const term = (t) ? c.getAttribute('data-signup-term') : undefined;
-	const offer = (o) ? c.getAttribute('data-signup-offer') : undefined;
+	const offer = (o) ? c.getAttribute('data-signup-offer') === 'true' : undefined;
 
 	// sign-up funnel flags
 	const isSignUpForm = /^\/signup/.test(location.pathname);
