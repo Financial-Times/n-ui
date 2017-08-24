@@ -111,7 +111,7 @@ export class ComponentInitializer {
 				this.initializedFeatures.lazyLoadImages = true;
 			}
 
-			if (flags.get('subscriberCohort') && !flags.get('disableDesktopAppBanner')) {
+			if (flags.get('subscriberCohort') && flags.get('onboardingMessaging') === 'appPromotingBanner') {
 				new DesktopAppBanner();
 			}
 
