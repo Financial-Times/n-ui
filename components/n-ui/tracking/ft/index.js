@@ -106,10 +106,16 @@ const oTrackingWrapper = {
 				useSendBeacon: flags.get('sendBeacon')
 			});
 
-			//headline testing
-			const headlineTesting = document.querySelector('[data-trackable-headline-variant]');
-			if (headlineTesting) {
-				pageViewConf.context['headline-variant'] = headlineTesting.getAttribute('data-trackable-headline-variant');
+			//headline testing, add variant to the page view event as long as there is only one article under test
+			if (location.pathname === '/') {
+				const alternativeHeadlines = document.querySelectorAll('[data-trackable-headline-variant]');
+				let hrefs = [];
+				alternativeHeadlines.forEach(headline => hrefs.push(headline.getAttribute('href')));
+
+				const isOnlyOneArticle = hrefs.length ? !!hrefs.reduce((a, b) => a === b ? a : NaN) : false;
+				if (isOnlyOneArticle) {
+					pageViewConf.context['headline-variant'] = alternativeHeadlines[0].getAttribute('data-trackable-headline-variant');
+				}
 			}
 
 			// barriers
