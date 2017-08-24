@@ -126,9 +126,9 @@
 				{{{body}}}
 			</div>
 
-			{{#unless __disableDesktopAppBanner}}
+			{{#if __enableDesktopAppBanner}}
 				{{>n-desktop-app-banner/templates/banner}}
-			{{/unless}}
+			{{/if}}
 
 			{{#if @root.flags.offlineToastMessage}}
 				{{>n-ui/offline-toast/template}}
