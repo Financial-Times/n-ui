@@ -64,11 +64,11 @@ This is also the 'tag manager' for ads on Next. It's to be used to house all thi
 
 ## Background
 
-ft.com has an eglalitarian means of adding JavaScript to the web page.
+The old ft.com had an eglalitarian means of adding JavaScript to the web page.
 
-This causes problems for web page performance, technical support, and managing overall coherance of the product.
+This caused problems for web page performance, technical support, and managing overall coherance of the product.
 
-This project is a stab at centralising our third-party code to give everyone more oversight about what's being added to ft.com.
+On the new ft.com we aim to centralise our third-party code to give everyone more oversight about what's being added to ft.com.
 
 ## Ground rules
 
