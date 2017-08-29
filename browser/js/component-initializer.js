@@ -5,7 +5,6 @@ import date from 'o-date';
 import header from '../../components/n-ui/header';
 import oCookieMessage from 'o-cookie-message';
 import footer from '../../components/n-ui/footer';
-import offlineToast from '../../components/n-ui/offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 import DesktopAppBanner from 'n-desktop-app-banner';
@@ -75,10 +74,6 @@ export class ComponentInitializer {
 				// FT and next tracking
 				tracking.init(flags, appInfo);
 				this.initializedFeatures.tracking = true;
-			}
-
-			if (navigator.serviceWorker && flags.get('offlineToastMessage')) {
-				offlineToast.init();
 			}
 
 			if (flags.get('serviceWorker')) {
