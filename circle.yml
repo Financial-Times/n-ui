@@ -7,3 +7,6 @@ deployment:
     owner: Financial-Times
     commands:
       - make deploy
+notify:
+  webhooks:
+    - url: https://ft-next-webhooks.herokuapp.com/circleci
