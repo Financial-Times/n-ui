@@ -69,8 +69,10 @@ const oTrackingWrapper = {
 				context.errorStatus = pageViewConf.context.errorStatus = errorStatus;
 			}
 
-			const edition = document.querySelector('[data-next-edition]') ? document.querySelector('[data-next-edition]').getAttribute('data-next-edition') : null;
-			context.edition = edition;
+			const edition = document.querySelector('[data-next-edition]');
+			if (edition) {
+				context.edition = edition.getAttribute('data-next-edition');
+			}
 
 			const segmentId = findInQueryString('segmentId');
 			if (segmentId) {
@@ -104,9 +106,14 @@ const oTrackingWrapper = {
 				useSendBeacon: flags.get('sendBeacon')
 			});
 
-			//headline testing
-			const headlineTestingVariant = document.querySelector('[data-trackable-headline-variant]') ? document.querySelector('[data-trackable-headline-variant]').getAttribute('data-trackable-headline-variant') : null;
-			context['headline-variant'] = headlineTestingVariant;
+			//headline testing, add variant to the page view event as long as there is only one article under test
+			if (location.pathname === '/') {
+				const alternativeHeadlines = [].slice.call(document.querySelectorAll('[data-trackable-headline-variant]'));
+				const isOnlyOneArticle = alternativeHeadlines.every((element, index, array) => element.getAttribute('href') === array[0].getAttribute('href'));
+				if (alternativeHeadlines.length && isOnlyOneArticle) {
+					pageViewConf.context['headline-variant'] = alternativeHeadlines[0].getAttribute('data-trackable-headline-variant');
+				}
+			}
 
 			// barriers
 			let barrierType = document.querySelector('[data-barrier]');
