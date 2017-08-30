@@ -106,8 +106,10 @@ export class ComponentInitializer {
 				this.initializedFeatures.lazyLoadImages = true;
 			}
 
-			if (flags.get('subscriberCohort') && flags.get('onboardingMessaging') === 'appPromotingBanner') {
+			if (!this.initializedFeatures.desktopAppBanner && flags.get('subscriberCohort') && flags.get('onboardingMessaging') === 'appPromotingBanner') {
 				new DesktopAppBanner();
+
+				this.initializedFeatures.desktopAppBanner = true;
 			}
 
 			allStylesLoaded
