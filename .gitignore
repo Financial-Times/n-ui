@@ -9,9 +9,7 @@
 .scss-lint.yml
 /public/__about.json
 /public/head-n-ui-core.css
-/public/head-n-ui-core.css.map
 /public/main.css
-/public/main.css.map
 /public/main-without-n-ui.js
 /public/main-without-n-ui.js.map
 /public/n-ui
@@ -24,3 +22,4 @@ server/test/fixtures/bad-assets/.gitignore
 /browser/layout/partials/css-loader.html
 /pa11y_screenCapture/*
 package-lock.json
+.idea*

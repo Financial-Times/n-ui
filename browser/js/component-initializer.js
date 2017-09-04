@@ -5,9 +5,9 @@ import date from 'o-date';
 import header from '../../components/n-ui/header';
 import oCookieMessage from 'o-cookie-message';
 import footer from '../../components/n-ui/footer';
-import offlineToast from '../../components/n-ui/offline-toast';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
+import DesktopAppBanner from 'n-desktop-app-banner';
 import * as syndication from 'n-syndication';
 
 export const presets = {
@@ -76,10 +76,6 @@ export class ComponentInitializer {
 				this.initializedFeatures.tracking = true;
 			}
 
-			if (navigator.serviceWorker && flags.get('offlineToastMessage')) {
-				offlineToast.init();
-			}
-
 			if (flags.get('serviceWorker')) {
 				serviceWorker
 					.register(flags)
@@ -100,11 +96,9 @@ export class ComponentInitializer {
 				this.initializedFeatures.date = true;
 			}
 
-			if (flags.get('adInitEarlierNui')){
-				if (config.features.ads && !this.initializedFeatures.ads) {
-					ads.init(flags, appInfo, config.features.ads);
-					this.initializedFeatures.ads = true;
-				}
+			if (config.features.ads && !this.initializedFeatures.ads) {
+				ads.init(flags, appInfo, config.features.ads);
+				this.initializedFeatures.ads = true;
 			}
 
 			if (config.features.lazyLoadImages && !this.initializedFeatures.lazyLoadImages) {
@@ -112,6 +106,11 @@ export class ComponentInitializer {
 				this.initializedFeatures.lazyLoadImages = true;
 			}
 
+			if (!this.initializedFeatures.desktopAppBanner && flags.get('subscriberCohort') && flags.get('onboardingMessaging') === 'appPromotingBanner') {
+				new DesktopAppBanner();
+
+				this.initializedFeatures.desktopAppBanner = true;
+			}
 
 			allStylesLoaded
 				.then(() => {
@@ -136,12 +135,6 @@ export class ComponentInitializer {
 				.then(cb)
 				.then(() => {
 					// TODO - lazy load this
-					if (!flags.get('adInitEarlierNui')){
-						if (config.features.ads && !this.initializedFeatures.ads) {
-							ads.init(flags, appInfo, config.features.ads);
-							this.initializedFeatures.ads = true;
-						}
-					}
 
 					if (!this.initializedFeatures.lazyTracking) {
 						tracking.lazyInit(flags);

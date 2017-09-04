@@ -1,9 +1,12 @@
 machine:
   node:
-    version: 8.1.4
+    version: 8.2.1
 deployment:
   release:
     tag: /.*/
     owner: Financial-Times
     commands:
       - make deploy
+notify:
+  webhooks:
+    - url: https://ft-next-webhooks.herokuapp.com/circleci

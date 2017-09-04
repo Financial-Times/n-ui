@@ -14,7 +14,7 @@ const loadAssetHashesJson = path => {
 module.exports = ({ appName, isProduction, directory, useLocalAppShell }) => {
 
 	const assetHashes = loadAssetHashesJson(`${directory}/public/asset-hashes.json`);
-	const nUiAssetHashes = loadAssetHashesJson(`${directory}/public/n-ui-asset-hashes.json`);
+	const nUiAssetHashes = loadAssetHashesJson(`${directory}/public/n-ui/asset-hashes.json`);
 	const nUiReleaseName = nUiManager.getReleaseName(directory);
 	const nUiUnhashedAssetsRoot = useLocalAppShell ? `/__dev/assets/${appName}/n-ui/` : `//www.ft.com/__assets/n-ui/cached/${nUiReleaseName}/`;
 

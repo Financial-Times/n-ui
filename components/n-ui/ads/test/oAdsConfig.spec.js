@@ -151,7 +151,7 @@ describe('Config', () => {
 				sandbox.restore();
 			});
 
-			['50', '100', '150'].forEach( margin => {
+			['5', '10', '15'].forEach( margin => {
 
 				it(`Should pass ${margin}% when the flag\'s value is ${margin}`, () => {
 					const flags = { get: (flagName) => {

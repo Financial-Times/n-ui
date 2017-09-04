@@ -6,9 +6,10 @@ module.exports = function (flags) {
 	const host = 'https://4235225.fls.doubleclick.net/activityi;src=4235225';
 
 	// sign-up attributes
-	const c = document.querySelector(['data-signup-country']);
-	const t = document.querySelector(['data-signup-term']);
-	const o = document.querySelector(['data-signup-offer']);
+	const c = document.querySelector('[data-signup-country]');
+	const t = document.querySelector('[data-signup-term]');
+	const o = document.querySelector('[data-signup-offer]');
+	const l = document.querySelector('[data-signup-is-trial]');
 
 	const country = (c) ? c.getAttribute('data-signup-country') : undefined;
 	const term = (t) ? c.getAttribute('data-signup-term') : undefined;
@@ -17,26 +18,26 @@ module.exports = function (flags) {
 	// sign-up funnel flags
 	const isSignUpForm = /^\/signup/.test(location.pathname);
 	const isSubscriptionConfirmation = /^\/thank-you/.test(location.pathname);
-	const isTrialConfirmation = /(4998d861-8960-a8d1-3738-eae97bcd07a2|41218b9e-c8ae-c934-43ad-71b13fcb4465)/.test(offer);
+	const isTrialConfirmation = (l) ? l.getAttribute('data-signup-is-trial') === 'true' : undefined;
 
 	const spoor = (spoorId) ? spoorId[1] : '';
+	const ts = Date.now();
 
-	if (flags && (flags.get('floodlight') && isAnonymous && spoorId)) {
-
+	const addPixel = (src) => {
 		const i = new Image();
-		// iNewTest is for a temporary tracking tag to test whether it's the tracking tag that's not working.
-		// Should it be the original tag that was the problem, the current `cat=ft-ne000` should be replaced with `cat=ft-ne003`.
-		const iNewTest = new Image();
+		i.src = src;
+	};
+
+	if (flags && (flags.get('floodlight') && spoorId)) {
 
 		if (isSignUpForm) {
-			i.src = `${host};type=signu107;cat=ft-ne00;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=1`;
-		} else if (isSubscriptionConfirmation) {
-			i.src = `${host};type=trans658;cat=ft-ne0;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;`;
+			addPixel(`${host};type=signu107;cat=ft-ne00;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`);
 		} else if (isTrialConfirmation) {
-			i.src = `${host};type=trans658;cat=ft-ne00;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;`;
-		} else {
-			i.src = `${host};type=homeo886;cat=ft-ne000;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=1;num=1`;
-			iNewTest.src = `${host};type=homeo886;cat=ft-ne003;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=1;num=1`;
+ 			addPixel(`${host};type=trans658;cat=ft-ne00;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`);
+		} else if (isSubscriptionConfirmation) {
+			addPixel(`${host};type=trans658;cat=ft-ne0;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`);
+		} else if (isAnonymous) {
+			addPixel(`${host};type=homeo886;cat=ft-ne000;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts};num=1`);
 		}
 	}
 };

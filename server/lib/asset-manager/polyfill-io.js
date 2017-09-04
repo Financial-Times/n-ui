@@ -27,7 +27,8 @@ const queryStrings = {
 			'Map',
 			'Array.from',
 			'NodeList.prototype.@@iterator',
-			'Array.prototype.@@iterator'
+			'Array.prototype.@@iterator',
+			'EventSource'
 		],
 		flags: 'gated'
 	}),

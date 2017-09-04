@@ -12,8 +12,8 @@ $n-ui-foundations-applied: true;
 @import 'components/n-ui/header/main';
 @import 'components/n-ui/footer/main';
 
-@import 'components/n-ui/offline-toast/main';
 @import 'n-syndication/main';
+@import 'n-desktop-app-banner/main';
 
 $o-cookie-message-is-silent: false;
 @import 'o-cookie-message/main';

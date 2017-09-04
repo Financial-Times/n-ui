@@ -4,5 +4,6 @@
   "jam.css": "123abc/jam.css",
   "marmalade.css": "456def/marmalade.css",
   "peanut.css": "789ghi/peanut.css",
-  "it.js": "012345/it.js"
+  "it.js": "012345/it.js",
+  "route-specific.js": "123abc/route-specific.js"
 }

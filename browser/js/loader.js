@@ -33,10 +33,11 @@ class JsSetup {
 		this.appInfo = {
 			isProduction: document.documentElement.hasAttribute('data-next-is-production'),
 			version: document.documentElement.getAttribute('data-next-version'),
-			name: document.documentElement.getAttribute('data-next-app')
+			name: document.documentElement.getAttribute('data-next-app'),
+			product: document.documentElement.getAttribute('data-next-product')
 		};
 
-		const flags = window.nextFeatureFlags.reduce((obj, flag) => {
+		const flags = window.nextFlags.reduce((obj, flag) => {
 			obj[flag.name] = flag.state;
 			return obj;
 		}, {

@@ -23,12 +23,14 @@ module.exports = options => {
 		withFlags: true,
 		withBackendAuthentication: true,
 		withServiceMetrics: true,
+		product: '',
 		layoutsDir: path.join(__dirname, '../browser/layout'),
 	}, options || {});
 
 	const {app, meta, addInitPromise} = nExpress.getAppContainer(options);
 
 	app.locals.__name = meta.name;
+	app.locals.__product = options.product;
 	app.locals.__environment = process.env.NODE_ENV || '';
 	app.locals.__isProduction = app.locals.__environment.toUpperCase() === 'PRODUCTION';
 	app.locals.__rootDirectory = meta.directory;
@@ -67,6 +69,7 @@ module.exports = options => {
 	app.use(function (req, res, next) {
 		app.locals.__disableAndroidBanner = (!res.locals.flags.subscriberCohort || res.locals.flags.disableAndroidSmartBanner);
 		app.locals.__disableIosSmartBanner = (!res.locals.flags.subscriberCohort || res.locals.flags.disableIosSmartBanner);
+		app.locals.__enableDesktopAppBanner = res.locals.flags.subscriberCohort && res.locals.flags.onboardingMessaging === 'appPromotingBanner';
 
 		next();
 	});

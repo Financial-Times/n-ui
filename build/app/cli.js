@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const shellpromise = require('shellpromise');
 const shellpipe = require('./shellpipe');
-const downloadAssets = require('./download-assets');
+const grabNUiAssets = require('./grab-n-ui-assets');
 const assetHashes = require('../lib/generate-asset-hashes');
 const sendBuildMetrics = require('../lib/send-build-metrics');
 
@@ -41,6 +41,10 @@ const aboutJson = () => {
 		.then(about => fs.writeFileSync(path.join(process.cwd(), '/public/__about.json'), JSON.stringify(about, null, 2)));
 };
 
+const buildConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
+const cssEntryPoints = Object.keys(buildConfig.entry)
+	.map(target => [target, buildConfig.entry[target]])
+	.filter(([target]) => target.includes('.css'));
 
 program.version(nUiVersion);
 
@@ -54,11 +58,15 @@ program
 
 		devAdvice();
 		const buildStartTime = Date.now();
+		const cssBuildCommands = cssEntryPoints.map(([target, entry]) => {
+			const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
+			return `'${script} ${entry} ${target}'`;
+		}).join(' ');
 
-		shellpipe(`webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}`)
+		shellpipe(`concurrently 'webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}' ${cssBuildCommands}`)
 			.then(() => options.production && assetHashes())
 			.then(aboutJson)
-			.then(downloadAssets)
+			.then(grabNUiAssets)
 			.then(() => {
 
 				const buildTime = Date.now() - buildStartTime;
@@ -81,9 +89,15 @@ program
 	.action(() => {
 
 		devAdvice();
+		const cssBuildWatchCommands = cssEntryPoints.map(([target, entry]) => {
+			const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
+			const entryDirectory = path.dirname(entry);
+			const command = `${script} ${entry} ${target}`;
+			return `"watch-run -ip '${entryDirectory}/**/*.scss' ${command}"`;
+		}).join(' ');
 
-		downloadAssets()
-			.then(() => shellpipe(`webpack --watch --config ${webpackConfPath}`))
+		grabNUiAssets()
+			.then(() => shellpipe(`concurrently "webpack --watch --config ${webpackConfPath}" ${cssBuildWatchCommands}`))
 			.catch(exit);
 	});
 

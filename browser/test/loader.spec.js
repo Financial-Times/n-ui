@@ -1,5 +1,5 @@
 /*global require,describe,afterEach,beforeEach,it,expect,sinon*/
-window.nextFeatureFlags = [{name: 'aFlag', state: true}];
+window.nextFlags = [{name: 'aFlag', state: true}];
 const JsLoader = require('../js/loader');
 const nUiFoundations = require('n-ui-foundations');
 
@@ -10,8 +10,8 @@ describe('js loader', function () {
 	});
 
 	describe('init with flags off', function () {
-		before(() => window.nextFeatureFlags = []);
-		after(() => delete window.nextFeatureFlags);
+		before(() => window.nextFlags = []);
+		after(() => delete window.nextFlags);
 
 		it('should return promise of useful things', function (done) {
 			document.documentElement.setAttribute('data-next-is-production', '');
@@ -35,7 +35,7 @@ describe('js loader', function () {
 
 	describe('init with flags on', function () {
 
-		before(() => window.nextFeatureFlags = [
+		before(() => window.nextFlags = [
 			'clientErrorReporting',
 			'clientDetailedErrorReporting',
 			'clientAjaxErrorReporting',
@@ -44,7 +44,7 @@ describe('js loader', function () {
 			return {name: f, state: true};
 		}));
 
-		after(() => delete window.nextFeatureFlags);
+		after(() => delete window.nextFlags);
 
 		it('should return promise of flags', function (done) {
 			const promise = new JsLoader().init();
@@ -58,7 +58,7 @@ describe('js loader', function () {
 
 	describe('bootstrap', function () {
 		const result = {};
-		before(() => window.nextFeatureFlags = []);
+		before(() => window.nextFlags = []);
 
 		beforeEach(function () {
 			sinon.stub(JsLoader.prototype, 'init', function () {
@@ -75,7 +75,7 @@ describe('js loader', function () {
 			JsLoader.prototype.init.restore();
 		});
 
-		after(() => delete window.nextFeatureFlags);
+		after(() => delete window.nextFlags);
 
 		describe('simple bootstrap', function () {
 

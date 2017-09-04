@@ -37,7 +37,7 @@ module.exports = {
 		// it's just a html fragment, not a full page load, so no inline css will actually be output
 		// TODO - in next major version only do the asset linking (including inclusion of n-ui stylesheets)
 		// if the developer explicitly invokes it
-		if (stylesheetNames.length > 1 || stylesheetNames[0] !== 'head-n-ui-core') {
+		if (stylesheetNames.length > 1 || stylesheetNames[0] !== 'n-ui/head-n-ui-core') {
 			concatenatedStylesSizeCache[hash]
 				.then(({raw, gzip}) => {
 					metrics.histogram('head_css_size.raw', raw);
@@ -59,7 +59,16 @@ module.exports = {
 	},
 
 	init: directory => {
-		stylesheets = fs.readdirSync(`${directory}/public`)
+		let stylesheetList = fs.readdirSync(`${directory}/public`);
+		try {
+			fs.statSync(`${directory}/public/n-ui`);
+			stylesheetList = stylesheetList.concat(
+				fs.readdirSync(`${directory}/public/n-ui`)
+					.map(name => `n-ui/${name}`)
+			);
+		} catch (e) {}
+
+		stylesheets = stylesheetList
 			.filter(name => /\.css$/.test(name))
 			.map(name => ({name, contents: fs.readFileSync(`${directory}/public/${name}`, 'utf-8')}))
 			.reduce((map, {name, contents}) => {

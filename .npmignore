@@ -13,6 +13,7 @@ circle.yml
 karma.conf.js
 Makefile
 /public
+!/public/n-ui
 /dist
 /browser/test
 /demo
