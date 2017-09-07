@@ -105,7 +105,7 @@
     "semver": "^5.4.1",
     "shellpromise": "^1.4.0",
     "watch-run": "^1.2.5",
-    "webpack": "^2.6.1",
+    "webpack": "^3.5.5",
     "webpack-merge": "^4.1.0",
     "webpack-sources": "^1.0.1",
     "webpack-stats-plugin": "^0.1.5"
