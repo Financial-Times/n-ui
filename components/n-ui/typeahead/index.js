@@ -4,6 +4,7 @@ import { SuggestionList } from './suggestion-list';
 
 const React = require('react');
 const ReactDom = require('react-dom');
+const host = /local(?:host)?\.ft\.com/.test(window.location.host) ? window.location.host : 'www.ft.com';
 
 function getNonMatcher (container) {
 	if (typeof container === 'string') {
@@ -32,7 +33,7 @@ class Typeahead {
 		this.container = containerEl;
 		this.listComponent = listComponent || SuggestionList;
 		this.searchEl = this.container.querySelector('[data-typeahead-input]');
-		this.dataSrc = `//${window.location.host}/search-api/suggestions?partial=`;
+		this.dataSrc = `//${host}/search-api/suggestions?partial=`;
 		this.categories = (this.container.getAttribute('data-typeahead-categories') || 'tags').split(',');
 		this.itemTag = this.container.getAttribute('data-typeahead-item-tag') || 'a';
 		this.includeViewAllLink = this.container.hasAttribute('data-typeahead-view-all');
