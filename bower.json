@@ -28,12 +28,12 @@
     "o-errors": "^3.5.1",
     "o-footer": "^6.0.0",
     "o-header": "^7.0.0",
-    "o-tracking": "^1.1.8",
+    "o-tracking": "^1.2.5",
     "n-ui-foundations": "^2.2.1",
     "o-expander": "^4.2.2",
     "next-session-client": "^2.3.1",
-    "n-counter-ad-blocking": "^3.1.0",
+    "n-counter-ad-blocking": "^3.1.1",
     "n-topic-search": "^1.0.0",
-    "n-desktop-app-banner": "^1.0.1"
+    "n-desktop-app-banner": "^1.0.6"
   }
 }
