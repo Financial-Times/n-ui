@@ -1,6 +1,6 @@
 const OHeader = require('o-header');
 const promoHandler = require('./js/promoHandler');
-const Typeahead = require('../typeahead');
+const TopicSearch = require('n-topic-search');
 
 function init (flags) {
 	promoHandler.init(flags);
@@ -10,12 +10,12 @@ function init (flags) {
 	// initialise separate sticky header
 	new OHeader(document.querySelector('[data-o-header--sticky]'));
 
-	const typeaheadElements = document.querySelectorAll('.o-header [data-typeahead], .o-header__drawer [data-typeahead]');
+	const topicSearchElements = document.querySelectorAll('.o-header [data-n-topic-search], .o-header__drawer [data-n-topic-search]');
 
-	if (flags.get('searchMultiTypeahead') && typeaheadElements.length) {
-		for (let i = 0; i < typeaheadElements.length; i++) {
-			const form = typeaheadElements[i];
-			new Typeahead(form);
+	if (topicSearchElements.length) {
+		for (let i = 0; i < topicSearchElements.length; i++) {
+			const form = topicSearchElements[i];
+			new TopicSearch(form);
 		}
 	}
 }

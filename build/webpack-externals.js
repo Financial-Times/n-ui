@@ -6,10 +6,8 @@ module.exports = function (exclusions) {
 		'n-ui': 'window.ftNextUi',
 		'n-ui/ads': 'window.ftNextUi._ads',
 		'n-ui/tracking': 'window.ftNextUi._tracking',
-		'n-ui/typeahead': 'window.ftNextUi._typeahead',
 		'n-ui/components/n-ui/ads': 'window.ftNextUi._ads',
 		'n-ui/components/n-ui/tracking': 'window.ftNextUi._tracking',
-		'n-ui/components/n-ui/typeahead': 'window.ftNextUi._typeahead',
 		'n-ui-foundations': 'window.ftNextUi._foundations',
 		// wrapped origami components
 		'o-date': 'window.ftNextUi._date',
@@ -22,9 +20,6 @@ module.exports = function (exclusions) {
 		'superstore': 'window.ftNextUi._superstore',
 		'superstore-sync': 'window.ftNextUi._superstoreSync',
 	};
-
-	entry.react = 'window.ftNextUi._React';
-	entry['react-dom'] = 'window.ftNextUi._ReactDom';
 
 	if (exclusions) {
 		exclusions.forEach(exc => delete entry[exc]);
