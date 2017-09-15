@@ -2,6 +2,8 @@
 
 Server, build and client side bootstrapping for next's user-facing applications.
 
+**PLEASE DON'T USE THIS OUTSIDE OF USER-FACING FT.COM APPLICATIONS. If you need a good express server with handlebars, metrics etc available consider using [n-internal-tool](https://github.com/Financial-Times/n-internal-tool), [n-express](https://github.com/Financial-Times/n-express) or copying what you need from n-ui**
+
 ## Quickstart
 
 n-ui has three parts - a server, a client side 'app shell' (js, css & handlebars layout), and a build. **Expect things to break if you don't use all 3.**
