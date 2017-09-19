@@ -108,10 +108,10 @@ const oTrackingWrapper = {
 
 			//headline testing, add variant to the page view event as long as there is only one article under test
 			if (location.pathname === '/') {
-				const alternativeHeadlines = [].slice.call(document.querySelectorAll('[data-trackable-headline-variant]'));
+				const alternativeHeadlines = [].slice.call(document.querySelectorAll('[data-trackable-context-headline-variant]'));
 				const isOnlyOneArticle = alternativeHeadlines.every((element, index, array) => element.getAttribute('href') === array[0].getAttribute('href'));
 				if (alternativeHeadlines.length && isOnlyOneArticle) {
-					pageViewConf.context['headline-variant'] = alternativeHeadlines[0].getAttribute('data-trackable-headline-variant');
+					pageViewConf.context['headline-variant'] = alternativeHeadlines[0].getAttribute('data-trackable-context-headline-variant');
 				}
 			}
 
