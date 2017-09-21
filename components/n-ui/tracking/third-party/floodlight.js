@@ -28,8 +28,11 @@ module.exports = function (flags) {
 		i.src = src;
 		let event = new CustomEvent('oTracking.event', {
 			detail: {
-				category: '--',
-				action: '--'
+				category: 'marketing-floodlight',
+				action: 'fired',
+				data: {
+					source: src
+				}
 			},
 			bubbles: true
 		});
