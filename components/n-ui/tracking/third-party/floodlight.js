@@ -26,6 +26,14 @@ module.exports = function (flags) {
 	const addPixel = (src) => {
 		const i = new Image();
 		i.src = src;
+		let event = new CustomEvent('oTracking.event', {
+			detail: {
+				category: '--',
+				action: '--'
+			},
+			bubbles: true
+		});
+		document.body.dispatchEvent(event);
 	};
 
 	if (flags && (flags.get('floodlight') && spoorId)) {
