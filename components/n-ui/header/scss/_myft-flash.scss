@@ -1,0 +1,54 @@
+@mixin nUiHMyftFlash {
+
+	@-webkit-keyframes myft-flash {
+		25% { opacity: 1; }
+		50% { opacity: 1; }
+	}
+
+	@keyframes myft-flash {
+		25% { opacity: 1; }
+		50% { opacity: 1; }
+	}
+
+	@-webkit-keyframes myfy-flash-white {
+		10% { -webkit-filter: brightness(0) invert(1); }
+		75% { -webkit-filter: brightness(0) invert(1); }
+	}
+
+	@keyframes myft-flash-white {
+		10% { filter: brightness(0) invert(1); }
+		75% { filter: brightness(0) invert(1); }
+	}
+
+	.experimental-myft-flash {
+		.o-header__top-column--right:before {
+			content: ' ';
+			position: absolute;
+			display: block;
+			background-color: getColor('teal');
+			top: 0;
+			right: 0;
+			height: 100%;
+			opacity: 0;
+
+			width: 58px;
+
+			@include oGridRespondTo('M') {
+				width: 88px;
+			}
+
+			@include oGridRespondTo('L') {
+				width: 100px;
+			}
+
+			-webkit-animation: myft-flash linear 1.2s;
+			animation: myft-flash linear 1.2s;
+		}
+
+		.o-header__top-link--myft:before {
+			-webkit-animation: myft-flash-white linear 1.2s;
+			animation: myft-flash-white linear 1.2s;
+		}
+	}
+
+}

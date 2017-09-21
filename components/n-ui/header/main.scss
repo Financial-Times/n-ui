@@ -1,5 +1,6 @@
 @import 'o-header/main';
 @import 'scss/marketing-promo';
+@import 'scss/myft-flash';
 @import 'n-topic-search/main';
 
 
@@ -67,6 +68,7 @@
 @include oHeaderDrawer;
 @include oHeaderSticky;
 @include nTopicSearch;
+@include nUiHMyftFlash;
 // fix up z-indexes
 .o-header__drawer {
 	@include nUiZIndexFor('drawer');
