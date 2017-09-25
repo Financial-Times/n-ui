@@ -56,6 +56,11 @@ module.exports = function (flags, appName, adOptions) {
 	}
 
 	function setViewportMarginBy (variant) {
+
+		if (appName.toLowerCase().substr(0, 3) === fro && res=small) return '15%';
+		// (pagetype === fro && res=med) return '5%';
+		// (pagetype === str && res=small) return '5%';
+		// (pagetype) === str && res=med) return '15%';
 		switch (variant) {
 			case '5':
 				return'5%';
@@ -95,7 +100,7 @@ module.exports = function (flags, appName, adOptions) {
 				sizes: 'fluid'
 			}
 		},
-		responsive: {
+		ponsive: {
 			extra: [1025, 0], //Reasonable width to show a Billboard (desktop)
 			large: [980, 0], //reasonable width to show SuperLeaderboard (tablet landscape)
 			medium: [760, 0], //reasonable width to show a leaderboard (tablet portrait)
