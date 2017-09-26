@@ -55,25 +55,21 @@ module.exports = function (flags, appName, adOptions) {
 		return zone.join('/');
 	}
 
-	function setViewportMarginBy (variant) {
-
-		if (appName.toLowerCase().substr(0, 3) === fro && res=small) return '15%';
-		// (pagetype === fro && res=med) return '5%';
-		// (pagetype === str && res=small) return '5%';
-		// (pagetype) === str && res=med) return '15%';
-		switch (variant) {
-			case '5':
-				return'5%';
-				break;
-			case '10':
-				return '10%';
-				break;
-			case '15':
-				return '15%';
-				break;
-			default:
-				return '0%';
+	function setViewportMarginBy () {
+		let pt = appName;
+		pt = pt.toLowerCase().substr(0, 3);
+		let scrnSize = utils.getScreenSize();
+		if (pt === 'fro') {
+			if (scrnSize < 760) {return '15%';}
+			else {
+				if (pt === 'fro' && scrnSize < 980) {return '5%';}
+			}
 		}
+		if (pt === 'str'){
+			if (scrnSize < 760) {return '5%';}
+			else if (scrnSize < 980) {return '15%';}
+		}
+		return '0%';
 	}
 
 	function isTargetSize () {
@@ -83,8 +79,7 @@ module.exports = function (flags, appName, adOptions) {
 	function getViewportMargin () {
 		let viewportMargin = '0%';
 		if (flags.get('adOptimizeLazyLoad') && isTargetSize() ) {
-			const variant = flags.get('adOptimizeLazyLoad');
-			viewportMargin = setViewportMarginBy(variant);
+			viewportMargin = setViewportMarginBy();
 		}
 		return viewportMargin;
 	}
@@ -100,7 +95,7 @@ module.exports = function (flags, appName, adOptions) {
 				sizes: 'fluid'
 			}
 		},
-		ponsive: {
+		responsive: {
 			extra: [1025, 0], //Reasonable width to show a Billboard (desktop)
 			large: [980, 0], //reasonable width to show SuperLeaderboard (tablet landscape)
 			medium: [760, 0], //reasonable width to show a leaderboard (tablet portrait)
