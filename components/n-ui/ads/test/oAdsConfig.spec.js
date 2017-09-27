@@ -215,42 +215,6 @@ describe('Config', () => {
 			const config = oAdsConfig(flags, 'article');
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
-
-
-
-		//
-		// // context('when screen size is less than 980px and adOptimizeLazyLoad flag is defined', () => {
-		// //
-		// // 	beforeEach(() => {
-		// // 		sandbox.stub(utils, 'getScreenSize', () => { return 979; });
-		// // 	});
-		// //
-		// // 	afterEach(() => {
-		// // 		sandbox.restore();
-		// // 	});
-		// //
-		// // 	['5', '10', '15'].forEach( margin => {
-		// //
-		// // 		it(`Should pass ${margin}% when the flag\'s value is ${margin}`, () => {
-		// // 			const flags = { get: (flagName) => {
-		// // 				switch (flagName) {
-		// // 					case 'adOptimizeLazyLoad':
-		// // 					return margin;
-		// // 					break;
-		// // 					default:
-		// // 					return true;
-		// // 				}
-		// // 			}};
-		// // 			const config = oAdsConfig(flags, 'article');
-		// // 			expect(config.lazyLoad.viewportMargin).to.equal(`${margin}%`);
-		// // 		});
-		// //
-		// // 	});
-		// //
-		// // });
-		//
-		// // tests for adOptimizeLazyLoad flag
-
 	});
 
 	describe('o-ads', () => {
