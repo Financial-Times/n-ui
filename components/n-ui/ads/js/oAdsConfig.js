@@ -67,6 +67,7 @@ module.exports = function (flags, appName, adOptions) {
 			if (pt === 'stream'){
 				if (scrnSize < 760) {viewportMargin ='5%';}
 				else {viewportMargin = '15%';}
+			}
 		}
 		return viewportMargin;
 	}
