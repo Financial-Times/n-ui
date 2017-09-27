@@ -55,31 +55,19 @@ module.exports = function (flags, appName, adOptions) {
 		return zone.join('/');
 	}
 
-	function setViewportMarginBy (variant) {
-		switch (variant) {
-			case '5':
-				return'5%';
-				break;
-			case '10':
-				return '10%';
-				break;
-			case '15':
-				return '15%';
-				break;
-			default:
-				return '0%';
-		}
-	}
-
-	function isTargetSize () {
-		return utils.getScreenSize() < 980;
-	}
-
 	function getViewportMargin () {
 		let viewportMargin = '0%';
-		if (flags.get('adOptimizeLazyLoad') && isTargetSize() ) {
-			const variant = flags.get('adOptimizeLazyLoad');
-			viewportMargin = setViewportMarginBy(variant);
+		let pt = appName;
+		let scrnSize = utils.getScreenSize();
+		if (scrnSize < 980 && pt !=='article' ) {
+			if (pt === 'front') {
+				if (scrnSize < 760) {viewportMargin = '15%';}
+				else {viewportMargin ='5%';}
+			}
+			if (pt === 'stream'){
+				if (scrnSize < 760) {viewportMargin ='5%';}
+				else {viewportMargin = '15%';}
+			}
 		}
 		return viewportMargin;
 	}
