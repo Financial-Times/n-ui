@@ -55,31 +55,22 @@ module.exports = function (flags, appName, adOptions) {
 		return zone.join('/');
 	}
 
-	function setViewportMarginBy () {
-		let pt = appName;
-		pt = pt.toLowerCase().substr(0, 3);
-		let scrnSize = utils.getScreenSize();
-		if (pt === 'fro') {
-			if (scrnSize < 760) {return '15%';}
-			else {
-				if (pt === 'fro' && scrnSize < 980) {return '5%';}
-			}
-		}
-		if (pt === 'str'){
-			if (scrnSize < 760) {return '5%';}
-			else if (scrnSize < 980) {return '15%';}
-		}
-		return '0%';
-	}
-
-	function isTargetSize () {
-		return utils.getScreenSize() < 980;
-	}
-
 	function getViewportMargin () {
 		let viewportMargin = '0%';
-		if (flags.get('adOptimizeLazyLoad') && isTargetSize() ) {
-			viewportMargin = setViewportMarginBy();
+		let pt = appName;
+		let scrnSize = utils.getScreenSize();
+		pt = pt.toLowerCase().substr(0, 3);
+		if (scrnSize < 980 && pt !=='art' ) {
+			if (pt === 'fro') {
+				if (scrnSize < 760) {viewportMargin = '15%';}
+				else {
+					if (pt === 'fro' && scrnSize < 980) {viewportMargin ='5%';}
+				}
+			}
+			if (pt === 'str'){
+				if (scrnSize < 760) {viewportMargin ='5%';}
+				else if (scrnSize < 980) {viewportMargin = '15%';}
+			}
 		}
 		return viewportMargin;
 	}

@@ -111,107 +111,44 @@ describe('Config', () => {
 	describe('lazyLoad viewportMargin', () => {
 
 	// tests for adOptimizeLazyLoad flag
-		it('Should pass 0% when screen size is wider than 980px and adOptimizeLazyLoad flag is defined', () => {
+		it('Should pass 0% when screen size is wider than 980px', () => {
 			sandbox.stub(utils, 'getScreenSize', () => { return 980; });
-			const flags = { get: (flagName) => {
-				switch (flagName) {
-					case 'adOptimizeLazyLoad':
-					return '50';
-					break;
-					default:
-					return true;
-				}
-			}};
+			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article');
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
 
-		it('Should pass 0% when screen size is less than 980px and adOptimizeLazyLoad flag is undefined', () => {
-			sandbox.stub(utils, 'getScreenSize', () => { return 979; });
-			const flags = { get: (flagName) => {
-				switch (flagName) {
-					case 'adOptimizeLazyLoad':
-					return undefined;
-					break;
-					default:
-					return true;
-				}
-			}};
-			const config = oAdsConfig(flags, 'article');
-			expect(config.lazyLoad.viewportMargin).to.equal('0%');
-		});
-
-		it('Should pass 15% when screen size is narrower than 760px and adOptimizeLazyLoad flag is defined and appName is fro', () => {
+		it('Should pass 15% when screen size is narrower than 760px and appName is fro', () => {
 			sandbox.stub(utils, 'getScreenSize', () => { return 750; });
-			const flags = { get: (flagName) => {
-				switch (flagName) {
-					case 'adOptimizeLazyLoad':
-					return '50';
-					break;
-					default:
-					return true;
-				}
-			}};
+			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'front');
 			expect(config.lazyLoad.viewportMargin).to.equal('15%');
 		});
 
-		it('Should pass 5% when screen size is narrower than 980px and wider than 759px and adOptimizeLazyLoad flag is defined and appName is fro', () => {
+		it('Should pass 5% when screen size is narrower than 980px and wider than 759px and appName is fro', () => {
 			sandbox.stub(utils, 'getScreenSize', () => { return 970; });
-			const flags = { get: (flagName) => {
-				switch (flagName) {
-					case 'adOptimizeLazyLoad':
-					return '50';
-					break;
-					default:
-					return true;
-				}
-			}};
+			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'front');
 			expect(config.lazyLoad.viewportMargin).to.equal('5%');
 		});
 
-		it('Should pass 5% when screen size is narrower than 760px and adOptimizeLazyLoad flag is defined and appName is stream', () => {
+		it('Should pass 5% when screen size is narrower than 760px and appName is stream', () => {
 			sandbox.stub(utils, 'getScreenSize', () => { return 750; });
-			const flags = { get: (flagName) => {
-				switch (flagName) {
-					case 'adOptimizeLazyLoad':
-					return '50';
-					break;
-					default:
-					return true;
-				}
-			}};
+			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'stream');
 			expect(config.lazyLoad.viewportMargin).to.equal('5%');
 		});
 
-		it('Should pass 15% when screen size is narrower than 980px and wider than 759px and adOptimizeLazyLoad flag is defined and appName is stream', () => {
+		it('Should pass 15% when screen size is narrower than 980px and wider than 759px and appName is stream', () => {
 			sandbox.stub(utils, 'getScreenSize', () => { return 970; });
-			const flags = { get: (flagName) => {
-				switch (flagName) {
-					case 'adOptimizeLazyLoad':
-					return '50';
-					break;
-					default:
-					return true;
-				}
-			}};
+			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'stream');
 			expect(config.lazyLoad.viewportMargin).to.equal('15%');
 		});
 
-		it('Should pass 0% when adOptimizeLazyLoad flag is defined and appName is article', () => {
+		it('Should pass 0% when appName is article', () => {
 			sandbox.stub(utils, 'getScreenSize', () => { return 970; });
-			const flags = { get: (flagName) => {
-				switch (flagName) {
-					case 'adOptimizeLazyLoad':
-					return '50';
-					break;
-					default:
-					return true;
-				}
-			}};
+			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article');
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
