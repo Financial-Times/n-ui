@@ -141,35 +141,115 @@ describe('Config', () => {
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
 
-		context('when screen size is less than 980px and adOptimizeLazyLoad flag is defined', () => {
-
-			beforeEach(() => {
-				sandbox.stub(utils, 'getScreenSize', () => { return 979; });
-			});
-
-			afterEach(() => {
-				sandbox.restore();
-			});
-
-			['5', '10', '15'].forEach( margin => {
-
-				it(`Should pass ${margin}% when the flag\'s value is ${margin}`, () => {
-					const flags = { get: (flagName) => {
-						switch (flagName) {
-							case 'adOptimizeLazyLoad':
-							return margin;
-							break;
-							default:
-							return true;
-						}
-					}};
-					const config = oAdsConfig(flags, 'article');
-					expect(config.lazyLoad.viewportMargin).to.equal(`${margin}%`);
-				});
-
-			});
-
+		it('Should pass 15% when screen size is narrower than 760px and adOptimizeLazyLoad flag is defined and appName is fro', () => {
+			sandbox.stub(utils, 'getScreenSize', () => { return 750; });
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoad':
+					return '50';
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'front');
+			expect(config.lazyLoad.viewportMargin).to.equal('15%');
 		});
+
+		it('Should pass 5% when screen size is narrower than 980px and wider than 759px and adOptimizeLazyLoad flag is defined and appName is fro', () => {
+			sandbox.stub(utils, 'getScreenSize', () => { return 970; });
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoad':
+					return '50';
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'front');
+			expect(config.lazyLoad.viewportMargin).to.equal('5%');
+		});
+
+		it('Should pass 5% when screen size is narrower than 760px and adOptimizeLazyLoad flag is defined and appName is stream', () => {
+			sandbox.stub(utils, 'getScreenSize', () => { return 750; });
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoad':
+					return '50';
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'stream');
+			expect(config.lazyLoad.viewportMargin).to.equal('5%');
+		});
+
+		it('Should pass 15% when screen size is narrower than 980px and wider than 759px and adOptimizeLazyLoad flag is defined and appName is stream', () => {
+			sandbox.stub(utils, 'getScreenSize', () => { return 970; });
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoad':
+					return '50';
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'stream');
+			expect(config.lazyLoad.viewportMargin).to.equal('15%');
+		});
+
+		it('Should pass 0% when adOptimizeLazyLoad flag is defined and appName is article', () => {
+			sandbox.stub(utils, 'getScreenSize', () => { return 970; });
+			const flags = { get: (flagName) => {
+				switch (flagName) {
+					case 'adOptimizeLazyLoad':
+					return '50';
+					break;
+					default:
+					return true;
+				}
+			}};
+			const config = oAdsConfig(flags, 'article');
+			expect(config.lazyLoad.viewportMargin).to.equal('0%');
+		});
+
+
+
+		//
+		// // context('when screen size is less than 980px and adOptimizeLazyLoad flag is defined', () => {
+		// //
+		// // 	beforeEach(() => {
+		// // 		sandbox.stub(utils, 'getScreenSize', () => { return 979; });
+		// // 	});
+		// //
+		// // 	afterEach(() => {
+		// // 		sandbox.restore();
+		// // 	});
+		// //
+		// // 	['5', '10', '15'].forEach( margin => {
+		// //
+		// // 		it(`Should pass ${margin}% when the flag\'s value is ${margin}`, () => {
+		// // 			const flags = { get: (flagName) => {
+		// // 				switch (flagName) {
+		// // 					case 'adOptimizeLazyLoad':
+		// // 					return margin;
+		// // 					break;
+		// // 					default:
+		// // 					return true;
+		// // 				}
+		// // 			}};
+		// // 			const config = oAdsConfig(flags, 'article');
+		// // 			expect(config.lazyLoad.viewportMargin).to.equal(`${margin}%`);
+		// // 		});
+		// //
+		// // 	});
+		// //
+		// // });
+		//
+		// // tests for adOptimizeLazyLoad flag
 
 	});
 
