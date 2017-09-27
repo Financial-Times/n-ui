@@ -84,6 +84,39 @@ program
 	});
 
 program
+	.command('build-sass')
+	.description('Builds n-ui css, ready to be deployed to your favourite s3 bucket or heroku host')
+	.option('--production', 'Builds with production settings')
+	.action(options => {
+
+		devAdvice();
+		const buildStartTime = Date.now();
+		const cssBuildCommands = cssEntryPoints.map(([target, entry]) => {
+			const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
+			return `'${script} ${entry} ${target}'`;
+		}).join(' ');
+
+		shellpipe(`concurrently ${cssBuildCommands}`)
+			.then(() => options.production && assetHashes())
+			.then(aboutJson)
+			.then(grabNUiAssets)
+			.then(() => {
+
+				const buildTime = Date.now() - buildStartTime;
+
+				// Don't send metrics from CircleCI builds
+				if (!process.env.CIRCLECI) {
+					sendBuildMetrics(appPackageJson.name, buildTime);
+				}
+
+				if (options.production && fs.existsSync(path.join(process.cwd(), 'Procfile'))) {
+					return shellpipe('haikro build');
+				}
+			})
+			.catch(exit);
+	});
+
+program
 	.command('watch')
 	.description('Builds and watches front end of n-ui apps')
 	.action(() => {
