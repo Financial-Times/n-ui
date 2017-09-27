@@ -59,18 +59,14 @@ module.exports = function (flags, appName, adOptions) {
 		let viewportMargin = '0%';
 		let pt = appName;
 		let scrnSize = utils.getScreenSize();
-		pt = pt.toLowerCase().substr(0, 3);
-		if (scrnSize < 980 && pt !=='art' ) {
-			if (pt === 'fro') {
+		if (scrnSize < 980 && pt !=='article' ) {
+			if (pt === 'front') {
 				if (scrnSize < 760) {viewportMargin = '15%';}
-				else {
-					if (pt === 'fro' && scrnSize < 980) {viewportMargin ='5%';}
-				}
+				else {viewportMargin ='5%';}
 			}
-			if (pt === 'str'){
+			if (pt === 'stream'){
 				if (scrnSize < 760) {viewportMargin ='5%';}
-				else if (scrnSize < 980) {viewportMargin = '15%';}
-			}
+				else {viewportMargin = '15%';}
 		}
 		return viewportMargin;
 	}
