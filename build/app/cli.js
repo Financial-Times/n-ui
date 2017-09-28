@@ -54,49 +54,29 @@ program
 	.command('build')
 	.description('Builds n-ui apps, ready to be deployed to your favourite s3 bucket or heroku host')
 	.option('--production', 'Builds with production settings')
+	.option('--sass-only', 'Builds Sass only')
+	.option('--js-only', 'Builds JavaScript only')
 	.action(options => {
 
 		devAdvice();
 		const buildStartTime = Date.now();
-		const cssBuildCommands = cssEntryPoints.map(([target, entry]) => {
-			const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
-			return `'${script} ${entry} ${target}'`;
-		}).join(' ');
+		let concurrentComands = [];
 
-		shellpipe(`concurrently 'webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}' ${cssBuildCommands}`)
-			.then(() => options.production && assetHashes())
-			.then(aboutJson)
-			.then(grabNUiAssets)
-			.then(() => {
+		const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
+		const commands = {
+			'js-only': `'webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}'`,
+			'sass-only': cssEntryPoints.map(([target, entry]) => `'${script} ${entry} ${target}'`).join(' ')
+		};
 
-				const buildTime = Date.now() - buildStartTime;
+		for(let key in commands) {
+			if(!!options[key]) {
+				concurrentComands.push(commands[key]);
+			}
+		}
 
-				// Don't send metrics from CircleCI builds
-				if (!process.env.CIRCLECI) {
-					sendBuildMetrics(appPackageJson.name, buildTime);
-				}
+		concurrentComands = concurrentComands.length ? concurrentComands : Object.values(commands);
 
-				if (options.production && fs.existsSync(path.join(process.cwd(), 'Procfile'))) {
-					return shellpipe('haikro build');
-				}
-			})
-			.catch(exit);
-	});
-
-program
-	.command('build-sass')
-	.description('Builds n-ui css, ready to be deployed to your favourite s3 bucket or heroku host')
-	.option('--production', 'Builds with production settings')
-	.action(options => {
-
-		devAdvice();
-		const buildStartTime = Date.now();
-		const cssBuildCommands = cssEntryPoints.map(([target, entry]) => {
-			const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
-			return `'${script} ${entry} ${target}'`;
-		}).join(' ');
-
-		shellpipe(`concurrently ${cssBuildCommands}`)
+		shellpipe(`concurrently ${concurrentComands.join(' ')}`)
 			.then(() => options.production && assetHashes())
 			.then(aboutJson)
 			.then(grabNUiAssets)
