@@ -60,7 +60,7 @@ program
 
 		devAdvice();
 		const buildStartTime = Date.now();
-		let concurrentComands = [];
+		let concurrentCommands = [];
 
 		const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
 		const commands = {
@@ -70,13 +70,13 @@ program
 
 		for(let key in commands) {
 			if(!!options[key]) {
-				concurrentComands.push(commands[key]);
+				concurrentCommands.push(commands[key]);
 			}
 		}
 
-		concurrentComands = concurrentComands.length ? concurrentComands : Object.values(commands);
+		concurrentCommands = concurrentCommands.length ? concurrentCommands : Object.values(commands);
 
-		shellpipe(`concurrently ${concurrentComands.join(' ')}`)
+		shellpipe(`concurrently ${concurrentCommands.join(' ')}`)
 			.then(() => options.production && assetHashes())
 			.then(aboutJson)
 			.then(grabNUiAssets)
