@@ -27,7 +27,7 @@ module.exports = {
 		gitignore.filter(pattern => {
 			if (/^\/?public.*(css|js)$/.test(pattern)) {
 				if (!exists(join(locals.__rootDirectory, pattern))) {
-					throw new Error(`${pattern} must exist otherwise this locals will not be allowed to start`);
+					throw new Error(`${pattern} must exist otherwise this locals will not be allowed to start - perhaps you need to call make build?`);
 				}
 				logger.info({ event: 'ASSERTED_EXISTS', file: pattern });
 				return pattern;
