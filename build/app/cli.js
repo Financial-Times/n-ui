@@ -74,8 +74,8 @@ program
 			}
 		}
 
-		concurrentCommands = concurrentCommands.length 
-			? concurrentCommands 
+		concurrentCommands = concurrentCommands.length
+			? concurrentCommands
 			: Object.keys(commands).map(c => command[c]);
 
 		shellpipe(`concurrently ${concurrentCommands.join(' ')}`)
@@ -87,7 +87,7 @@ program
 				const buildTime = Date.now() - buildStartTime;
 
 				// Don't send metrics from CircleCI builds
-				if (!process.env.CIRCLECI) {
+				if (!process.env.CIRCLECI && !options['js-only'] && !options['sass-only']) {
 					sendBuildMetrics(appPackageJson.name, buildTime);
 				}
 
