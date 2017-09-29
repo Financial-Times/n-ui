@@ -76,7 +76,7 @@ program
 
 		concurrentCommands = concurrentCommands.length
 			? concurrentCommands
-			: Object.keys(commands).map(c => command[c]);
+			: Object.keys(commands).map(c => commands[c]);
 
 		shellpipe(`concurrently ${concurrentCommands.join(' ')}`)
 			.then(() => options.production && assetHashes())
