@@ -74,7 +74,9 @@ program
 			}
 		}
 
-		concurrentCommands = concurrentCommands.length ? concurrentCommands : Object.values(commands);
+		concurrentCommands = concurrentCommands.length 
+			? concurrentCommands 
+			: Object.keys(commands).map(c => command[c]);
 
 		shellpipe(`concurrently ${concurrentCommands.join(' ')}`)
 			.then(() => options.production && assetHashes())
