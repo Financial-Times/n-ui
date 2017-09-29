@@ -54,16 +54,31 @@ program
 	.command('build')
 	.description('Builds n-ui apps, ready to be deployed to your favourite s3 bucket or heroku host')
 	.option('--production', 'Builds with production settings')
+	.option('--sass-only', 'Builds Sass only')
+	.option('--js-only', 'Builds JavaScript only')
 	.action(options => {
 
 		devAdvice();
 		const buildStartTime = Date.now();
-		const cssBuildCommands = cssEntryPoints.map(([target, entry]) => {
-			const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
-			return `'${script} ${entry} ${target}'`;
-		}).join(' ');
+		let concurrentCommands = [];
 
-		shellpipe(`concurrently 'webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}' ${cssBuildCommands}`)
+		const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
+		const commands = {
+			'js-only': `'webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}'`,
+			'sass-only': cssEntryPoints.map(([target, entry]) => `'${script} ${entry} ${target}'`).join(' ')
+		};
+
+		for(let key in commands) {
+			if(!!options[key]) {
+				concurrentCommands.push(commands[key]);
+			}
+		}
+
+		concurrentCommands = concurrentCommands.length
+			? concurrentCommands
+			: Object.keys(commands).map(c => commands[c]);
+
+		shellpipe(`concurrently ${concurrentCommands.join(' ')}`)
 			.then(() => options.production && assetHashes())
 			.then(aboutJson)
 			.then(grabNUiAssets)
@@ -72,7 +87,7 @@ program
 				const buildTime = Date.now() - buildStartTime;
 
 				// Don't send metrics from CircleCI builds
-				if (!process.env.CIRCLECI) {
+				if (!process.env.CIRCLECI && !options['js-only'] && !options['sass-only']) {
 					sendBuildMetrics(appPackageJson.name, buildTime);
 				}
 
