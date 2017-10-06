@@ -92,8 +92,16 @@ This will, when using the n-ui build tool, split n-ui's styles into head-n-ui-co
 You should be able to work in n-ui as if it's an app - `make watch` and `make run` should work and serve a demo app on `local.ft.com:5005`
 
 #### Testing in an app
-`export NEXT_APP_SHELL=local` then use all your usual make tasks. Your app will build and serve n-ui from your locally installed bower components. You can do this whether you're bower/npm linking n-ui or not
+In local n-ui:
+- `make install`
+- `npm link`
+- `bower link`
 
+In the app (e.g. next-article):
+- `export NEXT_APP_SHELL=local`
+- `bower link n-ui`
+- `npm link @financial-times/n-ui`
+- `make run`
 
 ### Releasing n-ui
 
