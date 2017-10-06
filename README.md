@@ -94,6 +94,7 @@ You should be able to work in n-ui as if it's an app - `make watch` and `make ru
 #### Testing in an app
 In local n-ui:
 - `make install`
+- `make build-css-loader`
 - `npm link`
 - `bower link`
 
