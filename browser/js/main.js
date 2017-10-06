@@ -25,3 +25,6 @@ import superstore from 'superstore';
 export const _superstore = superstore;
 import superstoreSync from 'superstore-sync';
 export const _superstoreSync = superstoreSync;
+
+// Needed by some third party scripts, otherwise they error
+window.FT = window.FT || {};
