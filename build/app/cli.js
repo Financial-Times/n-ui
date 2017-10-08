@@ -7,6 +7,7 @@ const shellpipe = require('./shellpipe');
 const grabNUiAssets = require('./grab-n-ui-assets');
 const assetHashes = require('../lib/generate-asset-hashes');
 const sendBuildMetrics = require('../lib/send-build-metrics');
+const generateCompressedAssets = require('../lib/generate-compressed-assets');
 
 const exit = err => {
 	logger.error(err);
@@ -113,6 +114,18 @@ program
 
 		grabNUiAssets()
 			.then(() => shellpipe(`concurrently "webpack --watch --config ${webpackConfPath}" ${cssBuildWatchCommands}`))
+			.catch(exit);
+	});
+
+program
+	.command('compress')
+	.description('Generate compressed copies of any assets (css, js, map, json etc) in the /public directory.')
+	.action(() => {
+		const assetPath = `${process.cwd()}/public/`;
+		generateCompressedAssets(assetPath)
+			.then(() => {
+				exit(`✓ Successfully generated compressed copies of all assets in ${assetPath}`);
+			})
 			.catch(exit);
 	});
 
