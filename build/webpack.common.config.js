@@ -66,23 +66,22 @@ module.exports = {
 
 						// ensures a module reqired multiple times is only transpiled once and
 						// is shared by all that use it rather than transpiling it each time
-						[ require.resolve('babel-plugin-transform-runtime'),
-							{
-								helpers: false,
-								polyfill: false,
+						[require.resolve('babel-plugin-transform-runtime'),
+						{
+							helpers: false,
+							polyfill: false,
+						}
+						],
+					],
+					presets: [
+						[
+							require.resolve('babel-preset-env'), {
+								include: ['transform-es2015-classes'],
+								loose: true // turns on loose for all plugins that support it
 							}
 						],
-
-						// This is actually included in the 'es2015' preset but we need to override the
-						// `loose` option to be true
-						// TODO: stop transform-es2015-classes being loose. loose allows non-spec compliant classes.
-						[ require.resolve('babel-plugin-transform-es2015-classes'), { loose: true } ]
-
-						// converts import/export to commonjs, currently not used but
-						// will look to include it for browsers that can support modules
-						// require('babel-plugin-transform-es2015-modules-commonjs'),
-					],
-					presets: [require.resolve('babel-preset-env'), require.resolve('babel-preset-react')]
+						require.resolve('babel-preset-react')
+					]
 				}
 			}
 		]
