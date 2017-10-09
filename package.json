@@ -57,7 +57,6 @@
     "nightwatch": "^0.9.16",
     "node-fetch": "^1.7.3",
     "nodemon": "^1.12.1",
-    "npm-prepublish": "^1.2.3",
     "pa11y-ci": "^1.2.0",
     "proxyquire": "^1.8.0",
     "semver": "^5.4.1",

@@ -128,7 +128,11 @@ deploy-s3:
 	# deploy to hashed urls on s3
 	nht deploy-hashed-assets --directory public/n-ui --monitor-assets
 
-deploy: deploy-s3 npm-publish rebuild-user-facing-apps
+publish-npm:
+	npm version --no-git-tag-version ${CIRCLE_TAG}
+	npm publish --access public
+
+deploy: deploy-s3 publish-npm rebuild-user-facing-apps
 
 rebuild-user-facing-apps:
 # Don't rebuild apps if a beta tag release
