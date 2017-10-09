@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "@financial-times/n-desktop-app-banner": "^1.0.1",
-    "@financial-times/n-express": "^19.2.3",
+    "@financial-times/n-express": "^19.3.0-beta.3",
     "@financial-times/n-handlebars": "^1.17.9",
     "@financial-times/next-json-ld": "^0.2.1",
     "autoprefixer": "^7.1.2",
