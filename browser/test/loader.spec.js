@@ -61,7 +61,7 @@ describe('js loader', function () {
 		before(() => window.nextFlags = []);
 
 		beforeEach(function () {
-			sinon.stub(JsLoader.prototype, 'init', function () {
+			sinon.stub(JsLoader.prototype, 'init').callsFake(() => {
 				this.appInfo = {
 					isProduction: true
 				};
@@ -145,7 +145,7 @@ describe('js loader', function () {
 						throw 'error';
 					});
 					setTimeout(function () {
-						jsLoader.bootstrapResult.then(function () {
+						jsLoader.bootstrapResult.catch(function () {
 							expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
 							expect(nUiFoundations.broadcast.calledWith('oErrors.log')).to.be.true;
 							done();
@@ -159,7 +159,7 @@ describe('js loader', function () {
 						return Promise.reject();
 					});
 					setTimeout(function () {
-						jsLoader.bootstrapResult.then(function () {
+						jsLoader.bootstrapResult.catch(function () {
 							expect(document.querySelector('html').classList.contains('js-success')).to.be.false;
 							expect(nUiFoundations.broadcast.calledWith('oErrors.log')).to.be.true;
 							done();

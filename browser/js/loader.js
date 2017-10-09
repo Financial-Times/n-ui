@@ -85,6 +85,13 @@ class JsSetup {
 					});
 			})
 			.catch(err => {
+				broadcast('oErrors.log', {
+					error: err,
+					info: {
+						lifecycle: 'app initialisation'
+					}
+				});
+
 				if (!this.appInfo.isProduction){
 					if (typeof err === 'object' && err.stack) {
 						console.error(err.stack); //eslint-disable-line
@@ -92,13 +99,6 @@ class JsSetup {
 						console.error(err); //eslint-disable-line
 					}
 				}
-
-				broadcast('oErrors.log', {
-					error: err,
-					info: {
-						lifecycle: 'app initialisation'
-					}
-				});
 			});
 	}
 

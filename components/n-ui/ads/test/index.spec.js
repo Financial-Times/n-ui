@@ -27,7 +27,7 @@ describe('Main', () => {
 
 	it('Should init if flag is set to true and appname given', () => {
 		const flags = { get: () => true };
-		const initSpy = sandbox.stub(ads, 'init', () => Promise.resolve({ slots: { initSlot: sinon.stub()}, config: sinon.stub() }));
+		const initSpy = sandbox.stub(ads, 'init').callsFake(() => Promise.resolve({ slots: { initSlot: sinon.stub()}, config: sinon.stub() }));
 		return main.init(flags, { name: 'article' }).then(() => {
 			expect(initSpy).to.have.been.called;
 		});
@@ -35,7 +35,7 @@ describe('Main', () => {
 
 	it('Should not init if an app name is flag is set to false', () => {
 		const flags = { get: () => false };
-		const initSpy = sandbox.stub(ads, 'init', () => ({ slots: { initSlot: sinon.stub() }}));
+		const initSpy = sandbox.stub(ads, 'init').callsFake(() => ({ slots: { initSlot: sinon.stub() }}));
 		sandbox.stub(ads.slots, 'initSlot');
 		return main.init(flags, {}).then(() => {
 			expect(initSpy).not.to.have.been.called;
@@ -45,7 +45,7 @@ describe('Main', () => {
 	it('Should bind the adverts found on page to o-ads library', () => {
 		const flags = { get: () => true };
 		const adInit = sandbox.stub(ads.slots, 'initSlot');
-		sandbox.stub(ads, 'init', () => Promise.resolve({
+		sandbox.stub(ads, 'init').callsFake(() => Promise.resolve({
 			targeting : {
 				get : function (){return 'abc';}
 			},
@@ -61,7 +61,7 @@ describe('Main', () => {
 		if(!window.performance) {
 			window.performance = { mark: () => {}};
 		};
-		const perfMark = sandbox.stub(window.performance, 'mark', () => true );
+		const perfMark = sandbox.stub(window.performance, 'mark').callsFake(() => true );
 		const info = sandbox.stub(utils.log, 'info');
 		main.init(flags, { name: 'earle' })
 			.then(() =>{

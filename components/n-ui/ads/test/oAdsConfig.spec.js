@@ -14,8 +14,8 @@ describe('Config', () => {
 		sandbox = sinon.sandbox.create();
 		// global stubs
 
-		sandbox.stub(utils, 'getLayoutName', () => { return 'custom'; });
-		sandbox.stub(utils, 'getReferrer', () => null );
+		sandbox.stub(utils, 'getLayoutName').callsFake(() => { return 'custom'; });
+		sandbox.stub(utils, 'getReferrer').callsFake(() => null );
 		targeting = sandbox.stub(document.documentElement, 'getAttribute');
 		targeting.withArgs('data-content-id').returns(fakeArticleUuid);
 
@@ -41,7 +41,7 @@ describe('Config', () => {
 
 		it('Should set gpt configuration value according to app name and sandbox', () => {
 			const flags = { get: () => true };
-			sandbox.stub(adsSandbox, 'isActive', () => { return true; });
+			sandbox.stub(adsSandbox, 'isActive').callsFake(() => { return true; });
 			const config = oAdsConfig(flags, 'article');
 			const gptAttributes = {
 				network: '5887',
@@ -90,7 +90,7 @@ describe('Config', () => {
 		});
 
 		it('Should use zone from metadata if present', () => {
-			sandbox.stub(utils, 'getMetaData', (param) => {
+			sandbox.stub(utils, 'getMetaData').callsFake((param) => {
 				switch (param) {
 					case 'dfp_site':
 							return 'testDfpSite';
@@ -112,42 +112,42 @@ describe('Config', () => {
 
 	// tests for adOptimizeLazyLoad flag
 		it('Should pass 0% when screen size is wider than 980px', () => {
-			sandbox.stub(utils, 'getScreenSize', () => { return 980; });
+			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 980; });
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article');
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
 
 		it('Should pass 15% when screen size is narrower than 760px and appName is fro', () => {
-			sandbox.stub(utils, 'getScreenSize', () => { return 750; });
+			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 750; });
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'front');
 			expect(config.lazyLoad.viewportMargin).to.equal('15%');
 		});
 
 		it('Should pass 5% when screen size is narrower than 980px and wider than 759px and appName is fro', () => {
-			sandbox.stub(utils, 'getScreenSize', () => { return 970; });
+			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 970; });
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'front');
 			expect(config.lazyLoad.viewportMargin).to.equal('5%');
 		});
 
 		it('Should pass 5% when screen size is narrower than 760px and appName is stream', () => {
-			sandbox.stub(utils, 'getScreenSize', () => { return 750; });
+			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 750; });
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'stream');
 			expect(config.lazyLoad.viewportMargin).to.equal('5%');
 		});
 
 		it('Should pass 15% when screen size is narrower than 980px and wider than 759px and appName is stream', () => {
-			sandbox.stub(utils, 'getScreenSize', () => { return 970; });
+			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 970; });
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'stream');
 			expect(config.lazyLoad.viewportMargin).to.equal('15%');
 		});
 
 		it('Should pass 0% when appName is article', () => {
-			sandbox.stub(utils, 'getScreenSize', () => { return 970; });
+			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 970; });
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article');
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');

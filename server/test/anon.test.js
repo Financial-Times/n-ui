@@ -20,7 +20,7 @@ describe('Anonymous Middleware', function () {
 		request(app)
 			.get('/')
 			.expect(function () {
-				expect(locals.anon).to.be.defined;
+				expect(locals).to.have.own.property('anon');
 			})
 			.end(done);
 	});
