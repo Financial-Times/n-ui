@@ -17,6 +17,12 @@ n-ui is a wrapper around n-express which adds templating and asset loading featu
 ```
 const app = require('@financial-times/n-ui')(opts)
 
+app.locals.nUiConfig = {
+	preset: 'complete',
+	features: {
+		ads: false
+	}
+}
 ```
 
 Where opts is an object supporting all `n-express`'s options, but with many set to `true` by default (see `/server/index.js` for details). Additioanl options include
