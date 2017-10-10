@@ -10,7 +10,8 @@ describe('n-ui', () => {
 		'tracking',
 		'flags',
 		'appInfo',
-		'allStylesLoaded'
+		'allStylesLoaded',
+		'onAppInitialized'
 	]
 		.forEach(mod => {
 			it(`should export ${mod}`, () => {

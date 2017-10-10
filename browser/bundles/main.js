@@ -15,14 +15,16 @@ import ftdomdelegate from 'ftdomdelegate';
 import superstore from 'superstore';
 import superstoreSync from 'superstore-sync';
 
-import { AppInitializer } from './app-initializer';
+import { AppInitializer } from '../js/app-initializer';
 
 // returns {flags, allStylesLoaded, appInfo}
-const nUiEnv = new AppInitializer().bootstrap(window.FT.nUiConfig || {
+const app = new AppInitializer();
+app.bootstrap(window.FT.nUiConfig || {
 	preset: 'discrete'
 });
 
-window.FT.nUi = Object.assign(nUiEnv, {
+window.FT.nUi = Object.assign(app.env, {
+	onAppInitialized: app.onAppInitialized,
 	ads: ads,
 	tracking: tracking,
 	_hiddenComponents: {

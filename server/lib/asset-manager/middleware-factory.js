@@ -69,8 +69,8 @@ module.exports = ({
 
 			res.render = function (template, templateData) {
 				// Add standard n-ui stylesheets
-				res.locals.stylesheets.inline.unshift(`${useLocalAppShell ? '' : 'n-ui/'}head`);
-				res.locals.stylesheets.lazy.unshift(`${useLocalAppShell ? '' : 'n-ui/'}main`);
+				res.locals.stylesheets.inline.unshift('n-ui/head');
+				res.locals.stylesheets.lazy.unshift('n-ui/main');
 
 				res.locals.stylesheets.inline = stylesheetManager.concatenateStyles(res.locals.stylesheets.inline);
 
