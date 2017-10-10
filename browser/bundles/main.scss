@@ -1,6 +1,6 @@
-@include nUiStylesheetStart('head-n-ui-core');
+@include nUiStylesheetStart('head');
 @import 'n-ui-foundations/main';
-@include nUiStylesheetEnd('head-n-ui-core');
+@include nUiStylesheetEnd('head');
 
 @import './layout/main';
 @import '../components/n-ui/ads/main';

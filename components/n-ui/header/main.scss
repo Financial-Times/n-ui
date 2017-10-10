@@ -3,7 +3,7 @@
 @import 'n-topic-search/main';
 
 
-@include nUiStylesheetStart('head-n-ui-core');
+@include nUiStylesheetStart('head');
 
 	@include oHeader(('search', 'nav', 'anon', 'megamenu', 'simple'));
 	// force display of search row
@@ -54,7 +54,7 @@
 		display: none;
 	}
 
-@include nUiStylesheetEnd('head-n-ui-core');
+@include nUiStylesheetEnd('head');
 
 @include oHeaderDrawer;
 @include oHeaderSticky;

@@ -2,7 +2,7 @@
 // reserve space on the page are critical to avod content moving
 // around too much later
 
-@include nUiStylesheetStart('head-n-ui-core');
+@include nUiStylesheetStart('head');
 
 $o-ads-is-silent: false !default;
 
@@ -29,6 +29,6 @@ $ad-max-responsive-width: 1440px;
 	}
 }
 
-@include nUiStylesheetEnd('head-n-ui-core');
+@include nUiStylesheetEnd('head');
 
 @import 'n-counter-ad-blocking/main';
