@@ -76,8 +76,7 @@ module.exports = {
 					presets: [
 						[
 							require.resolve('babel-preset-env'), {
-								include: ['transform-es2015-classes'],
-								loose: true // turns on loose for all plugins that support it
+								include: ['transform-es2015-classes']
 							}
 						],
 						require.resolve('babel-preset-react')
