@@ -1,5 +1,4 @@
 const logger = require('@financial-times/n-logger').default;
-const path = require('path');
 const stylesheetManager = require('./stylesheet-manager');
 const messages = require('../messages');
 const verifyExistence = require('./verify-existence');

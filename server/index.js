@@ -15,6 +15,10 @@ const assetManager = require('./lib/asset-manager');
 module.exports = options => {
 
 	options = Object.assign({}, {
+		// hack: shouldn't be able to turn off, but it makes writing tests SOOO much easier
+		withAssets: true,
+		withHandlebars: true,
+
 		withJsonLd: false,
 		withBackendAuthentication: true,
 		withServiceMetrics: true,
@@ -22,10 +26,8 @@ module.exports = options => {
 		layoutsDir: path.join(__dirname, '../browser/layout'),
 	}, options || {}, {
 		// the options below are forced to be on
-		withHandlebars: true,
 		withNavigation: true,
 		withAnonMiddleware: true,
-		withAssets: true,
 		withFlags: true
 	});
 

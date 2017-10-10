@@ -15,7 +15,6 @@ describe('Anonymous Middleware', function () {
 		});
 	});
 
-
 	it('Should set the res.locals.anon property', function (done) {
 		request(app)
 			.get('/')

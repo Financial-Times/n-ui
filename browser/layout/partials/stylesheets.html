@@ -5,7 +5,7 @@
 {{/if}}
 {{#each @root.stylesheets.lazy}}
 <!--[if gte IE 9]><!-->
-<link data-is-next rel="preload" href="{{this}}" as="style" onload="this.rel='stylesheet';window.ftNextCssFileLoaded()">
+<link data-is-next rel="preload" href="{{this}}" as="style" onload="this.rel='stylesheet';window.FT.cssFileLoaded()">
 <noscript><link rel="stylesheet" href="{{this}}"></noscript>
 <!--<![endif]-->
 {{!ie8 fallback}}<!--[if lt IE 9]><link rel="stylesheet" href="{{this}}"><![endif]-->

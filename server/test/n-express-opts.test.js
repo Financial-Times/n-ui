@@ -30,13 +30,11 @@ describe('configuring n-express', () => {
 			withAssets: false,
 			withHandlebars: false,
 			withBackendAuthentication: false,
-			withServiceMetrics: false,
-			withFlags: false
+			withServiceMetrics: false
 		});
 		const nExpressOpts = nExpress.getAppContainer.args[0][0];
 		expect(nExpressOpts.withBackendAuthentication).to.be.false;
 		expect(nExpressOpts.withServiceMetrics).to.be.false;
-		expect(nExpressOpts.withFlags).to.be.false;
 		nExpress.getAppContainer.restore();
 	});
 
