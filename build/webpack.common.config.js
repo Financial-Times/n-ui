@@ -78,7 +78,7 @@ module.exports = {
 							require.resolve('babel-preset-env'), {
 								include: ['transform-es2015-classes'],
 								targets: {
-									browsers: ["last 2 versions", "ie >= 7"]
+									browsers: ['last 2 versions', 'ie >= 11']
 								}
 							}
 						],
