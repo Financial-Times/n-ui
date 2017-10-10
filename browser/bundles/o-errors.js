@@ -1,3 +1,12 @@
+// for safety polyfill window.console
+if (!window.console) {
+	window.console = {};
+	const methods = ['info', 'log', 'warn', 'error'];
+	for (let i = 0; i < methods.length; i++) {
+		window.console[methods[i]] = function () {};
+	}
+}
+
 const oErrors = require('o-errors');
 
 const appInfo = {
