@@ -1,11 +1,10 @@
 // for safety polyfill window.console
-if (!window.console) {
-	window.console = {};
-	const methods = ['info', 'log', 'warn', 'error'];
-	for (let i = 0; i < methods.length; i++) {
-		window.console[methods[i]] = function () {};
-	}
-}
+window.console = window.console || {
+	log: function () { },
+	info: function () { },
+	warn: function () { },
+	error: function () { },
+};
 
 const oErrors = require('o-errors');
 
