@@ -101,7 +101,7 @@ app.listen(5005)
 					return deployStatic({
 						files: [
 							'test-page.html',
-							'public/main.css',
+							'public/n-ui/main.css',
 							'public/main.js',
 							'public/main.js.map',
 							'public/n-ui/es5.js',

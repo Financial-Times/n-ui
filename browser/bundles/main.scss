@@ -2,7 +2,7 @@
 $n-ui-foundations-applied: true;
 @import 'n-ui-foundations/main';
 
-@include nUiStylesheet('head') {
+@include nUiStylesheet('n-ui/head') {
 	@include nUiFoundations;
 }
 
