@@ -76,7 +76,10 @@ module.exports = {
 					presets: [
 						[
 							require.resolve('babel-preset-env'), {
-								include: ['transform-es2015-classes']
+								include: ['transform-es2015-classes'],
+								targets: {
+									browsers: ["last 2 versions", "ie >= 7"]
+								}
 							}
 						],
 						require.resolve('babel-preset-react')
