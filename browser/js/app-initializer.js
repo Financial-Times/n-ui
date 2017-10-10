@@ -47,11 +47,8 @@ const dispatchLoadedEvent = () => {
 };
 
 export class AppInitializer {
-	constrctor () {
+	constructor () {
 		this.onAppInitialized = this.onAppInitialized.bind(this);
-	}
-
-	initEnv () {
 
 		this.appInfo = {
 			isProduction: document.documentElement.hasAttribute('data-next-is-production'),
@@ -72,9 +69,7 @@ export class AppInitializer {
 			}
 		});
 
-		this.flags = flags;
-
-		return {
+		this.env = {
 			flags: flags,
 			appInfo: this.appInfo,
 			allStylesLoaded: new Promise(res => {
@@ -89,14 +84,13 @@ export class AppInitializer {
 	}
 
 	bootstrap (config) {
-		this.config = config || {};
+		config = config || {};
 
-		this.config.features = Object.assign({}, presets[this.config.preset], this.config.features);
+		this.enabledFeatures = Object.assign({}, presets[config.preset], config.features);
 
 		try {
-			const initResult = this.initEnv();
-			this.initializeComponents(initResult);
-			return initResult;
+			this.initializeComponents();
+			return this.env;
 		} catch (err) {
 			if (!this.appInfo.isProduction){
 				if (typeof err === 'object' && err.stack) {
@@ -115,8 +109,8 @@ export class AppInitializer {
 		}
 	}
 
-	initializeComponents ({ flags, allStylesLoaded, appInfo }) { // eslint-disable-line
-
+	initializeComponents () {
+		const { flags, allStylesLoaded, appInfo } = this.env;
 		// FT and next tracking
 		tracking.init(flags, appInfo);
 
@@ -130,22 +124,23 @@ export class AppInitializer {
 			serviceWorker.unregister();
 		}
 
-		if (this.config.features.header) {
+		if (this.enabledFeatures.header) {
 			header.init(flags);
 		}
 
-		if (this.config.features.date) {
+		if (this.enabledFeatures.date) {
 			date.init();
 		}
 
-		if (this.config.features.ads) {
-			ads.init(flags, appInfo, this.config.features.ads);
+		if (this.enabledFeatures.ads) {
+			ads.init(flags, appInfo, this.enabledFeatures.ads);
 		}
 
-		if (this.config.features.lazyLoadImages) {
+		if (this.enabledFeatures.lazyLoadImages) {
 			lazyLoadImages();
 		}
 
+		// TODO - shouldn't it be possible to turn this off via the usual API?
 		if (flags.get('subscriberCohort') && flags.get('onboardingMessaging') === 'appPromotingBanner') {
 			new DesktopAppBanner();
 		}
@@ -153,25 +148,26 @@ export class AppInitializer {
 		allStylesLoaded
 			.then(() => {
 
-				if (this.config.features.footer) {
+				if (this.enabledFeatures.footer) {
 					footer.init();
 				}
 
-				if (flags.get('cookieMessage') && this.config.features.cookieMessage) {
+				if (this.enabledFeatures.cookieMessage && flags.get('cookieMessage')) {
 					oCookieMessage.init();
 				}
 
-				if (this.config.features.syndication) {
+				if (this.enabledFeatures.syndication) {
 					syndication.init(flags);
 				}
 			});
+
 		perfMark('nUiJsExecuted');
 	}
 
 	onAppInitialiased () {
 		perfMark('appJsExecuted');
 		dispatchLoadedEvent();
-		tracking.lazyInit(this.flags);
+		tracking.lazyInit(this.env.flags);
 		document.documentElement.classList.add('js-success');
 	}
 }
