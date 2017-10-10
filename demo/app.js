@@ -23,7 +23,8 @@ const app = module.exports = express({
 	],
 	directory: process.cwd()
 });
-app.locals.nUiConfig = { preset: 'complete' }
+
+app.locals.nUiConfig = { preset: 'complete' };
 
 app.use(require('./middleware/assets'));
 

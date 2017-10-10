@@ -1,16 +1,14 @@
-import Loader from './loader';
 import ads from '../../components/n-ui/ads';
 import tracking from '../../components/n-ui/tracking';
 import date from 'o-date';
 import header from '../../components/n-ui/header';
 import oCookieMessage from 'o-cookie-message';
-import footer from '../../components/n-ui/footer';
+import footer from 'o-footer';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 import DesktopAppBanner from 'n-desktop-app-banner';
 import * as syndication from 'n-syndication';
 import { perfMark, broadcast } from 'n-ui-foundations';
-import { waitForCondition } from './utils';
 
 export const presets = {
 	discrete: {
@@ -28,8 +26,12 @@ export const presets = {
 	}
 };
 
+const waitForCondition = (conditionName, action) => {
+	window.FT.conditions[`${conditionName}Loaded`] ? action() : document.addEventListener(`ftNext${conditionName}Loaded`, action);
+};
+
 // Dispatch a custom `ftNextLoaded` event after the app executes.
-function dispatchLoadedEvent () {
+const dispatchLoadedEvent = () => {
 	let ftNextLoaded = false;
 	const ftNextLoadedTrigger = () => {
 		if (document.readyState === 'complete' && ftNextLoaded === false) {
@@ -42,9 +44,12 @@ function dispatchLoadedEvent () {
 		window.addEventListener('load', ftNextLoadedTrigger);
 		document.onreadystatechange = ftNextLoadedTrigger;
 	}
-}
+};
 
 export class AppInitializer {
+	constrctor () {
+		this.onAppInitialized = this.onAppInitialized.bind(this);
+	}
 
 	initEnv () {
 
@@ -67,6 +72,8 @@ export class AppInitializer {
 			}
 		});
 
+		this.flags = flags;
+
 		return {
 			flags: flags,
 			appInfo: this.appInfo,
@@ -77,8 +84,8 @@ export class AppInitializer {
 				} else {
 					res();
 				}
-			}
-		});
+			})
+		};
 	}
 
 	bootstrap (config) {
@@ -147,7 +154,7 @@ export class AppInitializer {
 			.then(() => {
 
 				if (this.config.features.footer) {
-					footer.init(flags);
+					footer.init();
 				}
 
 				if (flags.get('cookieMessage') && this.config.features.cookieMessage) {
@@ -161,10 +168,10 @@ export class AppInitializer {
 		perfMark('nUiJsExecuted');
 	}
 
-	onAppInitialiased: () => {
+	onAppInitialiased () {
 		perfMark('appJsExecuted');
 		dispatchLoadedEvent();
-		tracking.lazyInit(flags);
+		tracking.lazyInit(this.flags);
 		document.documentElement.classList.add('js-success');
 	}
 }

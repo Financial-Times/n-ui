@@ -1,8 +1,7 @@
 // we can use n-ui as a dependency even within n-ui as this is built using the
-// externals definition which maps n-ui to window.ftNextUi.
+// externals definition which maps n-ui to window.FT.nUi
 import {flags, onAppInitialized} from 'n-ui';
 
-console.log(flags);
-
+console.log(flags); //eslint-disable-line
 
 onAppInitialized();

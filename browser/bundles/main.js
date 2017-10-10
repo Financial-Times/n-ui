@@ -7,7 +7,7 @@ import tracking from '../../components/n-ui/tracking';
 import oDate from 'o-date';
 import nUiFoundations from 'n-ui-foundations';
 import oGrid from 'o-grid';
-import viewport from 'o-viewport';
+import oViewport from 'o-viewport';
 import * as nImage from 'n-image';
 
 // Export some third party components we're unlikely to remove in a hurry
@@ -17,23 +17,22 @@ import superstoreSync from 'superstore-sync';
 
 import { AppInitializer } from './app-initializer';
 
-const { bootstrap } = new AppInitializer();
-
 // returns {flags, allStylesLoaded, appInfo}
-const nUiEnv = bootstrap(window.FT.nUiConfig || {
+const nUiEnv = new AppInitializer().bootstrap(window.FT.nUiConfig || {
 	preset: 'discrete'
-}
+});
+
 window.FT.nUi = Object.assign(nUiEnv, {
 	ads: ads,
 	tracking: tracking,
 	_hiddenComponents: {
 		oDate,
 		oViewport,
-		nUifoundations,
+		nUiFoundations,
 		oGrid,
 		nImage,
 		ftdomdelegate,
 		superstore,
 		superstoreSync
 	}
-})
+});
