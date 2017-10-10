@@ -1,1 +1,15 @@
-@import "../../main";
+@include nUiStylesheetStart('head-n-ui-core');
+@import 'n-ui-foundations/main';
+@include nUiStylesheetEnd('head-n-ui-core');
+
+@import './layout/main';
+@import '../components/n-ui/ads/main';
+// TODO: header has to come first, as footer indirectly depends on a mixin in it. Need to decouple
+@import '../components/n-ui/header/main';
+@import '../components/n-ui/footer/main';
+
+@import 'n-syndication/main';
+@import 'n-desktop-app-banner/main';
+
+$o-cookie-message-is-silent: false;
+@import 'o-cookie-message/main';
