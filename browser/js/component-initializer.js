@@ -22,7 +22,6 @@ export const presets = {
 		date: true,
 		cookieMessage: true,
 		ads: true,
-		tooltip: true,
 		syndication: true
 	}
 };
