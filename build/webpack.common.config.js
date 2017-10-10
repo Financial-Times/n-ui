@@ -4,7 +4,7 @@ build.
 
 If something is required for both, please add it here.
 */
-
+const webpack = require('webpack');
 const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
 module.exports = {
@@ -17,6 +17,8 @@ module.exports = {
 	resolve: {
 
 		plugins: [
+			// Scope hoisting
+			new webpack.optimize.ModuleConcatenationPlugin(),
 			// This will handle a bower.json's `main` property being an array.
 			new BowerResolvePlugin()
 		],
