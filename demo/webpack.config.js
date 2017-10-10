@@ -6,7 +6,7 @@ const nUiExternal = require('../build/webpack-externals');
 module.exports = [
 	webpackMerge(commonConfig, {
 		entry: {
-			'./public/main-without-n-ui.js': './demo/client/main.js'
+			'./public/main.js': './demo/client/main.js'
 		},
 		externals: nUiExternal()
 	}),

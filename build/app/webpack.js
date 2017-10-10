@@ -31,8 +31,7 @@ if (Object.keys(nonMainJsEntryPoints).length > 0) {
 
 
 /*
-This webpack config is for the main.js entry point. Because of reasons we rename
-build to a file called main-without-n-ui.js rather than main.js.
+This webpack config is for the main.js entry point.
 
 During build it also wraps the main.js code to ensure it is only called once n-ui
 has been loaded.
@@ -42,8 +41,7 @@ const mainJsEntryPoints = Object.keys(baseConfig.entry)
 	.map(target => [target, baseConfig.entry[target]])
 	.filter(([target, entry]) => entry.includes('main.js')) //eslint-disable-line no-unused-vars
 	.reduce((entryPoints, [target, entry]) => {
-		const modifiedTargetName = target.replace(/\.js$/, '-without-n-ui.js');
-		entryPoints[modifiedTargetName] = entry;
+		entryPoints[target] = entry;
 		return entryPoints;
 	}, {});
 

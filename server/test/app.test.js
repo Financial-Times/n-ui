@@ -204,7 +204,7 @@ describe('simple app', function () {
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/1234567\/o-errors\.js>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/12345678\/font-loader\.js>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/56f3a89e\/main\.css>; as="style"; rel="preload"; nopush/)
-				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/6988e3b1\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done);
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/6988e3b1\/main\.js>; as="script"; rel="preload"; nopush/, done);
 		});
 
 

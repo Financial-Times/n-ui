@@ -61,7 +61,7 @@ module.exports = ({
 					file: 'es5.js',
 					isNUi: true
 				}),
-				getAssetUrl('main-without-n-ui.js')
+				getAssetUrl('main.js')
 			);
 
 			// output the default link headers just before rendering

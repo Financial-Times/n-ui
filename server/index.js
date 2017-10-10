@@ -15,17 +15,19 @@ const assetManager = require('./lib/asset-manager');
 module.exports = options => {
 
 	options = Object.assign({}, {
-		withHandlebars: true,
-		withNavigation: true,
-		withAnonMiddleware: true,
-		withAssets: true,
 		withJsonLd: false,
-		withFlags: true,
 		withBackendAuthentication: true,
 		withServiceMetrics: true,
 		product: '',
 		layoutsDir: path.join(__dirname, '../browser/layout'),
-	}, options || {});
+	}, options || {}, {
+		// the options below are forced to be on
+		withHandlebars: true,
+		withNavigation: true,
+		withAnonMiddleware: true,
+		withAssets: true,
+		withFlags: true
+	});
 
 	const {app, meta, addInitPromise} = nExpress.getAppContainer(options);
 
@@ -76,7 +78,7 @@ module.exports = options => {
 
 	if (options.withJsonLd) {
 		app.use(function (req, res, next) {
-			if (res.locals.flags && res.locals.flags.newSchema) {
+			if (res.locals.flags.newSchema) {
 				res.locals.jsonLd = [nextJsonLd.webPage()];
 			}
 			next();
