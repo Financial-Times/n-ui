@@ -6,7 +6,15 @@ Eventually this will be replaced by FT's in-house "lantern" application, utilisi
 */
 
 import {cookieStore} from 'n-ui-foundations';
-import {loadScript} from '../../../../browser/js/utils';
+
+const loadScript = src => {
+	const d = document;
+	const o = d.createElement('script');
+	o.src = src;
+	const s = d.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(o, s.nextSibling);
+	return o;
+};
 
 const enableChartbeat = () => {
 	window._sf_async_config = {

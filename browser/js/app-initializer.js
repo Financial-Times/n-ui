@@ -27,7 +27,7 @@ export const presets = {
 };
 
 const waitForCondition = (conditionName, action) => {
-	window.FT.conditions[`${conditionName}Loaded`] ? action() : document.addEventListener(`ftNext${conditionName}Loaded`, action);
+	window.FT.conditions[conditionName] ? action() : document.addEventListener(`FT.${conditionName}`, action);
 };
 
 // Dispatch a custom `ftNextLoaded` event after the app executes.
@@ -50,7 +50,7 @@ export class AppInitializer {
 	constructor () {
 		this.onAppInitialized = this.onAppInitialized.bind(this);
 
-		this.appInfo = {
+		const appInfo = {
 			isProduction: document.documentElement.hasAttribute('data-next-is-production'),
 			version: document.documentElement.getAttribute('data-next-version'),
 			name: document.documentElement.getAttribute('data-next-app'),
@@ -70,12 +70,12 @@ export class AppInitializer {
 		});
 
 		this.env = {
-			flags: flags,
-			appInfo: this.appInfo,
+			flags,
+			appInfo,
 			allStylesLoaded: new Promise(res => {
 				// if this element exists it means the page is setup to deliver critical/main css
 				if (document.querySelector('style.n-layout-head-css')) {
-					waitForCondition('AllStyles', res);
+					waitForCondition('allStylesLoaded', res);
 				} else {
 					res();
 				}
@@ -85,32 +85,15 @@ export class AppInitializer {
 
 	bootstrap (config) {
 		config = config || {};
-
 		this.enabledFeatures = Object.assign({}, presets[config.preset], config.features);
-
-		try {
-			this.initializeComponents();
-			return this.env;
-		} catch (err) {
-			if (!this.appInfo.isProduction){
-				if (typeof err === 'object' && err.stack) {
-					console.error(err.stack); //eslint-disable-line
-				} else {
-					console.error(err); //eslint-disable-line
-				}
-			}
-
-			broadcast('oErrors.log', {
-				error: err,
-				info: {
-					lifecycle: 'app initialisation'
-				}
-			});
-		}
+		this.initializeComponents();
+		perfMark('nUiJsExecuted');
+		return this.env;
 	}
 
 	initializeComponents () {
 		const { flags, allStylesLoaded, appInfo } = this.env;
+
 		// FT and next tracking
 		tracking.init(flags, appInfo);
 
@@ -160,11 +143,9 @@ export class AppInitializer {
 					syndication.init(flags);
 				}
 			});
-
-		perfMark('nUiJsExecuted');
 	}
 
-	onAppInitialiased () {
+	onAppInitialized () {
 		perfMark('appJsExecuted');
 		dispatchLoadedEvent();
 		tracking.lazyInit(this.env.flags);

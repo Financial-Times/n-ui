@@ -8,7 +8,7 @@
 	{{#if anon}}window.FT.isAnonymous = {{anon.userIsAnonymous}};{{/if}}
 
 	(function () {
-		loadScript = function (src) {
+		const loadScript = function (src) {
 			var d = document, o = d.createElement('script');
 			{{! For dynamically created scripts this has the same effect as adding the defer
 				attribute to inline scripts, i.e. load asynchronously, execute in order}}

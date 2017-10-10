@@ -2,7 +2,7 @@
 window.FT = window.FT || {};
 window.FT.conditions = {};
 window.FT.fireCondition = function (condition) {
-	var evName = 'ftNext' + condition;
+	var evName = 'FT.' + condition;
 	if (!window.FT.conditions[condition]) {
 		var ev;
 		try {
@@ -18,7 +18,7 @@ window.FT.fireCondition = function (condition) {
 };
 window.FT.cssFileLoaded = function () {
 	if (!document.querySelector('link[data-is-next][rel="preload"][as="style"]')) {
-		window.FT.fireCondition('AllStylesLoaded')
+		window.FT.fireCondition('allStylesLoaded')
 	}
 }
 </script>
