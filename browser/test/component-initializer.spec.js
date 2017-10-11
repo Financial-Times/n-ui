@@ -16,7 +16,7 @@ describe('bootstrapping', () => {
 		sinon.stub(ads, 'init');
 		sinon.stub(tracking, 'init');
 		sinon.stub(tracking, 'lazyInit');
-		sinon.stub(jsLoader.prototype, 'bootstrap', (opts, cb) => {
+		sinon.stub(jsLoader.prototype, 'bootstrap').callsFake((opts, cb) => {
 			return cb({
 				flags: {
 					get: () => true

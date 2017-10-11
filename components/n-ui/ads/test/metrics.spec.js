@@ -2,7 +2,7 @@
 const sendMetrics = require('../js/metrics');
 const utils = require('n-ui-foundations');
 
-const broadcast = sinon.stub(utils, 'broadcast', () => {});
+const broadcast = sinon.stub(utils, 'broadcast').callsFake(() => {});
 
 const timingsObject = {
 	firstAdLoaded: 1000,
