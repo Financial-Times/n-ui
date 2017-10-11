@@ -112,6 +112,8 @@ const oTrackingWrapper = {
 				const isOnlyOneArticle = alternativeHeadlines.every((element, index, array) => element.getAttribute('href') === array[0].getAttribute('href'));
 				if (alternativeHeadlines.length && isOnlyOneArticle) {
 					pageViewConf.context['headline-variant'] = alternativeHeadlines[0].getAttribute('data-trackable-context-headline-variant');
+					const articleUuid = alternativeHeadlines[0].getAttribute('href').replace('/content/', '');
+					pageViewConf.context['article-uuid'] = articleUuid;
 				}
 			}
 
