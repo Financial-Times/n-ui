@@ -51,13 +51,11 @@ module.exports = {
 	},
 
 	nameToUrlConfig: name => {
+		const result = {file: `${name}.css`};
 		if (/n-ui/.test(name)) {
-			return {
-				isNUi: true,
-				file: `${name.replace('n-ui/', '')}.css`
-			}
+			result.isNUi = true;
 		}
-		return {file: `${name}.css`};
+		return result
 	},
 
 	init: directory => {

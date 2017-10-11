@@ -27,7 +27,7 @@ demo: run
 build:
 	concurrently --kill-others-on-fail \
 		"webpack --config demo/webpack.config.js" \
-		"./scripts/build-sass.sh demo/client/main.scss public/n-ui/main.css"
+		"./scripts/build-sass.sh demo/client/main.scss"
 
 watch:
 	concurrently --kill-others-on-fail \
