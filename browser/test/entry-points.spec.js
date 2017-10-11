@@ -1,9 +1,14 @@
 /*global require,describe,afterEach,beforeEach,it,expect*/
-window.nextFlags = [{name: 'aFlag', state: true}];
+window.FT = {flags: [{name: 'aFlag', state: true}]};
+import { AppInitializer } from '../js/app-initializer';
+sinon.stub(AppInitializer.prototype, 'initializeComponents');
 const nUi = require('../bundles/main');
 const entry = require('../../build/webpack-externals');
 
 describe('n-ui', () => {
+	it('should initialize components', () => {
+		expect(AppInitializer.prototype.initializeComponents.called).to.be.true;
+	});
 
 	[
 		'ads',
@@ -29,7 +34,7 @@ describe('n-ui', () => {
 	]
 		.forEach(mod => {
 			it(`should export _hiddenComponents.${mod}`, () => {
-				expect(nUi._hiddenComponents[mod]).to.exist;
+				expect(nUi._vendor[mod]).to.exist;
 			});
 		});
 

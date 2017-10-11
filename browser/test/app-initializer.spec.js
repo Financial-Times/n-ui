@@ -1,11 +1,13 @@
-const AppInitializer = require('../js/app-app').AppInitializer;
+const AppInitializer = require('../js/app-initializer').AppInitializer;
 const header = require('../../components/n-ui/header');
 const footer = require('o-footer');
 const date = require('o-date');
+const cookieMessage = require('o-cookie-message');
 const ads = require('../../components/n-ui/ads');
 const tracking = require('../../components/n-ui/tracking');
 const sw = require('n-service-worker');
-import nImage from 'n-image';
+const nImage = require('n-image');
+const syndication = require('n-syndication')
 
 describe.only('AppInitializer', () => {
 	before(() => {
@@ -21,12 +23,14 @@ describe.only('AppInitializer', () => {
 		sinon.stub(footer, 'init');
 		sinon.stub(date, 'init');
 		sinon.stub(ads, 'init');
+		sinon.stub(cookieMessage, 'init');
 		sinon.stub(tracking, 'init');
 		sinon.stub(tracking, 'lazyInit');
 		sinon.stub(sw, 'register');
 		sinon.stub(sw, 'message');
 		sinon.stub(sw, 'unregister');
-		sinon.stub(nImage, 'lazyLoad')
+		sinon.stub(nImage, 'lazyLoad');
+		sinon.stub(syndication, 'init');
 	})
 
 	afterEach(() => {
@@ -34,12 +38,14 @@ describe.only('AppInitializer', () => {
 		footer.init.restore();
 		date.init.restore();
 		ads.init.restore();
+		cookieMessage.init.restore();
 		tracking.init.restore();
 		tracking.lazyInit.restore();
 		sw.register.restore();
 		sw.message.restore();
 		sw.unregister.restore();
 		nImage.lazyLoad.restore();
+		syndication.init.restore();
 	})
 
 	describe('constructor', () => {
@@ -156,11 +162,17 @@ describe.only('AppInitializer', () => {
 
 	describe('initializeComponents', () => {
 
-		function initApp(features, flags) {
-			const app = AppInitializer();
-			if (flags) {
-				app.env.flags = flags;
+		function initApp(features, flags, loadStyles) {
+			const app = new AppInitializer();
+
+			app.env.flags = Object.assign(flags || {}, {
+				get: function (name) { return this[name] }
+			});
+
+			if (loadStyles) {
+				app.env.allStylesLoaded = Promise.resolve();
 			}
+
 			app.enabledFeatures = features;
 			app.initializeComponents();
 			return app;
@@ -224,27 +236,48 @@ describe.only('AppInitializer', () => {
 
 		describe('after allStylesLoaded', () => {
 			it('initializes footer if feature is enabled', () => {
-
+				const app = initApp({footer: true}, null, true);
+				expect(footer.init.called).to.be.false
+				return app.env.allStylesLoaded
+					.then(() => expect(footer.init.called).to.be.true);
 			});
 
 			it('does not initialize footer if feature is disabled', () => {
-
+				const app = initApp({}, null, true);
+				return app.env.allStylesLoaded
+					.then(() => expect(footer.init.called).to.be.false);
 			});
 
 			it('initializes cookie message if feature is enabled and flag is on', () => {
-
+				const app = initApp({cookieMessage: true}, {cookieMessage: true}, true);
+				expect(cookieMessage.init.called).to.be.false
+				return app.env.allStylesLoaded
+					.then(() => expect(cookieMessage.init.called).to.be.true);
 			});
 
 			it('does not initialize cookie message if feature is disabled', () => {
-
+				const app = initApp({}, {cookieMessage: true}, true);
+				return app.env.allStylesLoaded
+					.then(() => expect(cookieMessage.init.called).to.be.false);
 			});
 
 			it('does not initialize cookie message if flag is off', () => {
+				const app = initApp({cookieMessage: true}, null, true);
+				return app.env.allStylesLoaded
+					.then(() => expect(cookieMessage.init.called).to.be.false);
+			});
 
+			it('initializes syndication if feature is enabled', () => {
+				const app = initApp({syndication: true}, null, true);
+				expect(syndication.init.called).to.be.false
+				return app.env.allStylesLoaded
+					.then(() => expect(syndication.init.calledWith(app.env.flags)).to.be.true);
 			});
 
 			it('does not initialize syndication if feature is disabled', () => {
-
+				const app = initApp({}, null, true);
+				return app.env.allStylesLoaded
+					.then(() => expect(syndication.init.called).to.be.false);
 			});
 		});
 	});
