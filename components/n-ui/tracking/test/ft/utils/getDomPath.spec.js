@@ -4,7 +4,17 @@ const getDomPath = require('../../../ft/utils/getDomPath');
 
 describe('getDomPath', function () {
 
-	const rootEl = document.body;
+	let p;
+	let rootEl;
+
+	before(() => {
+		rootEl = document.createElement('div');
+		document.body.appendChild(rootEl);
+	});
+
+	after(function () {
+		rootEl.parentNode.removeChild(rootEl);
+	});
 
 	beforeEach(function () {
 		rootEl.innerHTML = null;

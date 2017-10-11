@@ -1,7 +1,7 @@
 const componentsToTest = [
 	'browser',
 	'components/n-ui/ads',
-	'components/n-ui/tracking',
+	'components/n-ui/tracking'
 ];
 
 module.exports = function (karma) {

@@ -4,7 +4,16 @@ const getHref = require('../../../ft/utils/getHref');
 
 describe('getHref', function () {
 
-	const rootEl = document.body;
+	let rootEl;
+
+	before(() => {
+		rootEl = document.createElement('div');
+		document.body.appendChild(rootEl);
+	});
+
+	after(function () {
+		rootEl.parentNode.removeChild(rootEl);
+	});
 
 	beforeEach(function () {
 		rootEl.innerHTML = null;

@@ -133,5 +133,6 @@
       "path": "./public/n-ui/n-ui-core.css",
       "threshold": "8.4 Kb"
     }
-  ]
+  ],
+  "false": {}
 }

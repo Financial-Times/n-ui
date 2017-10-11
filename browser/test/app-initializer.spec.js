@@ -9,7 +9,7 @@ const sw = require('n-service-worker');
 const nImage = require('n-image');
 const syndication = require('n-syndication')
 
-describe.only('AppInitializer', () => {
+describe('AppInitializer', () => {
 	before(() => {
 		window.FT = {
 			flags: [{name: 'aFlag', state: 'cohort'}],
@@ -26,7 +26,7 @@ describe.only('AppInitializer', () => {
 		sinon.stub(cookieMessage, 'init');
 		sinon.stub(tracking, 'init');
 		sinon.stub(tracking, 'lazyInit');
-		sinon.stub(sw, 'register');
+		sinon.stub(sw, 'register').callsFake(() => Promise.resolve());
 		sinon.stub(sw, 'message');
 		sinon.stub(sw, 'unregister');
 		sinon.stub(nImage, 'lazyLoad');
@@ -34,6 +34,7 @@ describe.only('AppInitializer', () => {
 	})
 
 	afterEach(() => {
+		delete window.LUX;
 		header.init.restore();
 		footer.init.restore();
 		date.init.restore();

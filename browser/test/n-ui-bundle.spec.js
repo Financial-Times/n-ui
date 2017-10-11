@@ -1,11 +1,21 @@
 /*global require,describe,afterEach,beforeEach,it,expect*/
 window.FT = {flags: [{name: 'aFlag', state: true}]};
 import { AppInitializer } from '../js/app-initializer';
-sinon.stub(AppInitializer.prototype, 'initializeComponents');
-const nUi = require('../bundles/main');
+
 const entry = require('../../build/webpack-externals');
 
-describe('n-ui', () => {
+describe('n-ui bundle', () => {
+	let nUi;
+
+	before(() => {
+		sinon.stub(AppInitializer.prototype, 'initializeComponents');
+		require('../bundles/main');
+	});
+
+	after(() => {
+		AppInitializer.prototype.initializeComponents.restore();
+	});
+
 	it('should initialize components', () => {
 		expect(AppInitializer.prototype.initializeComponents.called).to.be.true;
 	});
@@ -20,7 +30,7 @@ describe('n-ui', () => {
 	]
 		.forEach(mod => {
 			it(`should export ${mod}`, () => {
-				expect(nUi[mod]).to.exist;
+				expect(window.FT.nUi[mod]).to.exist;
 			});
 		});
 
@@ -34,16 +44,27 @@ describe('n-ui', () => {
 	]
 		.forEach(mod => {
 			it(`should export _hiddenComponents.${mod}`, () => {
-				expect(nUi._vendor[mod]).to.exist;
+				expect(window.FT.nUi._hiddenComponents[mod]).to.exist;
 			});
 		});
 
 	describe('_entry', () => {
 		const aliases = entry();
 
+		const getProp = str => {
+			const nest = str.split('.');
+			nest.shift(); // ignore window
+			let res = window;
+			let prop;
+			while(prop = nest.shift()) {
+				res = res[prop];
+			}
+			return res;
+		}
+
 		Object.keys(aliases).filter(alias => alias !== 'n-ui').forEach(alias => {
-			it('should provide entry points for ' + alias, () => {
-				expect(nUi[aliases[alias].replace('window.FT.nUi.', '')]).to.exist;
+			it('should provide entry point for ' + alias, () => {
+				expect(getProp(aliases[alias])).to.exist;
 			});
 		});
 	});
