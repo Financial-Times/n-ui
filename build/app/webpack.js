@@ -10,51 +10,27 @@ const webpackConfigs = [];
 verifyGitignore();
 
 /*
-We no longer build a main.js for the app when generating the standard asset variants
-so this config is for any JS entry points defined by an app *excluding* the main.js one
+This config is for any JS entry points defined by an app
+It excludes anythnig that is already bundled in n-ui
 */
 
-const nonMainJsEntryPoints = Object.keys(baseConfig.entry)
+const jsEntryPoints = Object.keys(baseConfig.entry)
 	.map(target => [target, baseConfig.entry[target]])
-	.filter(([target, entry]) => entry.includes('.js') && !entry.includes('main.js')) //eslint-disable-line no-unused-vars
+	.filter(([target, entry]) => entry.includes('.js')) //eslint-disable-line no-unused-vars
 	.reduce((entryPoints, [target, entry]) => {
 		entryPoints[target] = entry;
 		return entryPoints;
 	}, {});
 
-if (Object.keys(nonMainJsEntryPoints).length > 0) {
-	const nonMainJsWebpackConfig = webpackMerge(commonAppConfig, {
-		entry: nonMainJsEntryPoints
-	});
-	webpackConfigs.push(nonMainJsWebpackConfig);
-}
-
-
-/*
-This webpack config is for the main.js entry point.
-
-During build it also wraps the main.js code to ensure it is only called once n-ui
-has been loaded.
-*/
-
-const mainJsEntryPoints = Object.keys(baseConfig.entry)
-	.map(target => [target, baseConfig.entry[target]])
-	.filter(([target, entry]) => entry.includes('main.js')) //eslint-disable-line no-unused-vars
-	.reduce((entryPoints, [target, entry]) => {
-		entryPoints[target] = entry;
-		return entryPoints;
-	}, {});
-
-if (Object.keys(mainJsEntryPoints).length > 0) {
+if (Object.keys(jsEntryPoints).length > 0) {
 	const nUiExternal = require('../webpack-externals');
 	const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
-	const mainJsWebpackConfig = webpackMerge(commonAppConfig, {
-		entry: mainJsEntryPoints,
+	const jsWebpackConfig = webpackMerge(commonAppConfig, {
+		entry: jsEntryPoints,
 		externals: nUiExternalPoints
 	});
-	webpackConfigs.push(mainJsWebpackConfig);
+	webpackConfigs.push(jsWebpackConfig);
 }
-
 
 /*
 Setting the NEXT_APP_SHELL environment variable will ensure that during build it
