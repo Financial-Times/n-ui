@@ -4,7 +4,6 @@ const getDomPath = require('../../../ft/utils/getDomPath');
 
 describe('getDomPath', function () {
 
-	let p;
 	let rootEl;
 
 	before(() => {

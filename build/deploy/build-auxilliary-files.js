@@ -1,8 +1,5 @@
-const denodeify = require('denodeify');
 const path = require('path');
 const fs = require('fs');
-const readFile = denodeify(fs.readFile);
-const writeFile = denodeify(fs.writeFile);
 
 const expectedBuiltFiles = require('./expected-built-files');
 

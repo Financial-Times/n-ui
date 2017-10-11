@@ -55,7 +55,7 @@ module.exports = {
 		if (/n-ui/.test(name)) {
 			result.isNUi = true;
 		}
-		return result
+		return result;
 	},
 
 	init: directory => {

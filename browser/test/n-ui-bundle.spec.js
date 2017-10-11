@@ -1,11 +1,10 @@
-/*global require,describe,afterEach,beforeEach,it,expect*/
+/*global require,describe,afterEach,beforeEach,it,expect,sinon*/
 window.FT = {flags: [{name: 'aFlag', state: true}]};
 import { AppInitializer } from '../js/app-initializer';
 
 const entry = require('../../build/webpack-externals');
 
 describe('n-ui bundle', () => {
-	let nUi;
 
 	before(() => {
 		sinon.stub(AppInitializer.prototype, 'initializeComponents');
@@ -60,7 +59,7 @@ describe('n-ui bundle', () => {
 				res = res[prop];
 			}
 			return res;
-		}
+		};
 
 		Object.keys(aliases).filter(alias => alias !== 'n-ui').forEach(alias => {
 			it('should provide entry point for ' + alias, () => {

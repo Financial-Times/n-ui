@@ -8,7 +8,7 @@ import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 import DesktopAppBanner from 'n-desktop-app-banner';
 import * as syndication from 'n-syndication';
-import { perfMark, broadcast } from 'n-ui-foundations';
+import { perfMark } from 'n-ui-foundations';
 
 export const presets = {
 	discrete: {
