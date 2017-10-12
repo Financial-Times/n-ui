@@ -6,7 +6,7 @@ module.exports = function (exclusions) {
 		'n-ui': 'window.FT.nUi',
 		'n-ui-foundations': 'window.FT.nUi._hiddenComponents.nUiFoundations',
 		// wrapped origami components
-		'o-date': 'window.FT.nUi.._hiddenComponents.oDate',
+		'o-date': 'window.FT.nUi._hiddenComponents.oDate',
 		'o-grid': 'window.FT.nUi._hiddenComponents.oGrid',
 		'o-viewport': 'window.FT.nUi._hiddenComponents.oViewport',
 		'n-image': 'window.FT.nUi._hiddenComponents.nImage',
