@@ -13,7 +13,7 @@ const syndication = require('n-syndication');
 describe('AppInitializer', () => {
 	before(() => {
 		window.FT = {
-			flags: [{name: 'aFlag', state: 'cohort'}],
+			flags: {aFlag: 'cohort'},
 			conditions: {}
 		};
 	});

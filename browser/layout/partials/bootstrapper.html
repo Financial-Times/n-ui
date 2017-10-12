@@ -1,7 +1,7 @@
 {{#if @root.flags.javascript}}
 <script>
 	{{>layout/partials/css-loader}}
-	window.FT.flags = {{{json @root.flagsArray}}};
+	window.FT.flags = {{{json @root.flags}}};
 	{{#if @root.nUiConfig}}
 		window.FT.nUiConfig = {{{json @root.nUiConfig}}};
 	{{/if}}

@@ -57,10 +57,7 @@ export class AppInitializer {
 			product: document.documentElement.getAttribute('data-next-product')
 		};
 
-		const flags = window.FT.flags.reduce((obj, flag) => {
-			obj[flag.name] = flag.state;
-			return obj;
-		}, {
+		const flags = Object.assign(window.FT.flags, {
 			get: function (name) {
 				return this[name];
 			},

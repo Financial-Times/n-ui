@@ -1,5 +1,5 @@
 /*global require,describe,afterEach,beforeEach,it,expect,sinon*/
-window.FT = {flags: [{name: 'aFlag', state: true}]};
+window.FT = {flags: {aFlag: 'cohort'}};
 import { AppInitializer } from '../js/app-initializer';
 
 const entry = require('../../build/webpack-externals');

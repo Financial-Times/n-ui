@@ -1,6 +1,3 @@
-// Needed by some third party scripts, otherwise they error
-window.FT = window.FT || {};
-
 // Expose entry points to shared bundle
 import ads from '../../components/n-ui/ads';
 import tracking from '../../components/n-ui/tracking';
