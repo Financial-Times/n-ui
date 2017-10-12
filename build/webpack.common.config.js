@@ -87,8 +87,6 @@ module.exports = {
 	},
 
 	output: {
-		filename: '[name]',
-		devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
+		filename: '[name]'
 	}
-
 };

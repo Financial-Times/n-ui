@@ -11,5 +11,9 @@ const commonConfig = require('../webpack.common.config.js');
 const appShellEntryPoints = require('../app-shell-entry-points');
 
 module.exports = webpackMerge(commonConfig, {
-	entry: appShellEntryPoints
+	entry: appShellEntryPoints,
+	output: {
+		filename: '[name]',
+		devtoolModuleFilenameTemplate: 'webpack//n-ui/[resource-path]'
+	}
 });
