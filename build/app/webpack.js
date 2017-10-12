@@ -16,7 +16,7 @@ It excludes anythnig that is already bundled in n-ui
 
 const jsEntryPoints = Object.keys(baseConfig.entry)
 	.map(target => [target, baseConfig.entry[target]])
-	.filter(([target, entry]) => entry.includes('.js')) //eslint-disable-line no-unused-vars
+	.filter(([target, entry]) => /\.js$/.test(entry)) //eslint-disable-line no-unused-vars
 	.reduce((entryPoints, [target, entry]) => {
 		entryPoints[target] = entry;
 		return entryPoints;

@@ -18,7 +18,7 @@ function expectedAssets () {
 const generateAssetHashes = require('../lib/generate-asset-hashes');
 
 expectedAssets()
-	.then(() => generateAssetHashes('public/n-ui', true))
+	.then(() => generateAssetHashes('public/n-ui'))
 	.then(() => process.exit(0))
 	.catch(err => {
 		console.log(err) //eslint-disable-line
