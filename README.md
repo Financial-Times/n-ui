@@ -53,12 +53,12 @@ To define entry points for your assets use a `n-ui-build.config.js` file in the 
 #### App bootstrapping
 
 n-ui takes care of loading polyfills etc, in order. n-ui exports 4 things you'll want to use
-- `flags` - the feature flags object
+- `flags` - the feature/development/maintenance/MVT flags object
 - `appInfo` - metadata about the app that's serving the page
 - `allStylesLoaded` - a promise that resolves once all the lazy-loaded styles are in place
 - `onAppInitialized` [required] - a function to call once the app js has successfully executed. This tells integration tests when the page is 'complete' among other things
 
-Simply import one or more of the above from n-ui in your application code, which no longer needs to be wrapped in a function
+`import` one or more of the above from n-ui in your application code, which no longer needs to be wrapped in a function
 
 e.g.
 
