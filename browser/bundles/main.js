@@ -17,7 +17,7 @@ import { AppInitializer } from '../js/app-initializer';
 // returns {flags, allStylesLoaded, appInfo}
 const app = new AppInitializer();
 
-window.FT.nUi = Object.assign(app.env, {
+window.FT.nUi = Object.assign({}, app.env, {
 	onAppInitialized: app.onAppInitialized,
 	ads: ads,
 	tracking: tracking,
