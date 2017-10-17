@@ -16,7 +16,6 @@ const queryStrings = {
 		features: [
 			'default',
 			'requestAnimationFrame',
-			'Promise',
 			'matchMedia',
 			'HTMLPictureElement',
 			'fetch',

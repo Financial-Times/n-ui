@@ -28,6 +28,7 @@
   "devDependencies": {
     "@financial-times/n-gage": "^1.10.0",
     "@financial-times/n-heroku-tools": "^6.30.0",
+    "babel-plugin-es6-promise": "^1.1.1",
     "bower": "^1.8.2",
     "bundlesize": "^0.15.2",
     "chai": "^4.1.2",
@@ -100,7 +101,7 @@
     "semver": "^5.4.1",
     "shellpromise": "^1.4.0",
     "watch-run": "^1.2.5",
-    "webpack": "^3.6.0",
+    "webpack": "^3.8.0",
     "webpack-merge": "^4.1.0",
     "webpack-sources": "^1.0.1",
     "webpack-stats-plugin": "^0.1.5"

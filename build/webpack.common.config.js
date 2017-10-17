@@ -65,7 +65,8 @@ module.exports = {
 					plugins: [
 						// converts `export default 'foo'` to `exports.default = 'foo'`
 						require.resolve('babel-plugin-add-module-exports'),
-
+						// rewrites Promise references to es6-promise, but only if necessary
+						require.resolve('babel-plugin-es6-promise'),
 						// ensures a module reqired multiple times is only transpiled once and
 						// is shared by all that use it rather than transpiling it each time
 						[require.resolve('babel-plugin-transform-runtime'),
