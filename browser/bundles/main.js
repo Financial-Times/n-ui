@@ -16,11 +16,8 @@ import { AppInitializer } from '../js/app-initializer';
 
 // returns {flags, allStylesLoaded, appInfo}
 const app = new AppInitializer();
-app.bootstrap(window.FT.nUiConfig || {
-	preset: 'discrete'
-});
 
-window.FT.nUi = Object.assign(app.env, {
+window.FT.nUi = Object.assign({}, app.env, {
 	onAppInitialized: app.onAppInitialized,
 	ads: ads,
 	tracking: tracking,
@@ -34,4 +31,11 @@ window.FT.nUi = Object.assign(app.env, {
 		superstore,
 		superstoreSync
 	}
+});
+
+// must be after the definition of window.ft.Nui as some subcomponents will
+// depend on it
+// TODO - see if webpack 3's dynamic imports can replace the above hack
+app.bootstrap(window.FT.nUiConfig || {
+	preset: 'discrete'
 });
