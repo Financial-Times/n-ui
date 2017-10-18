@@ -39,7 +39,9 @@ describe('n-ui bundle', () => {
 		'superstore',
 		'superstoreSync',
 		'oGrid',
-		'oViewport'
+		'oViewport',
+		'oAds',
+		'oTracking'
 	]
 		.forEach(mod => {
 			it(`should export _hiddenComponents.${mod}`, () => {
