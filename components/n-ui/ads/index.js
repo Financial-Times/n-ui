@@ -1,6 +1,6 @@
 const krux = require('./js/krux');
 const Ads = window.oAds = require('o-ads');
-// TODO move to central shared utils
+//TODO move to central shared utils
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
 const sendMetrics = require('./js/metrics');
@@ -113,7 +113,7 @@ module.exports = {
 					return Promise.resolve()
 						.then(() => {
 							// slotsRendered = 0; // Note - this is a global var for this module
-							// TODO get appName from appInfo
+							//TODO get appName from appInfo
 							const appName = appInfo.name;
 							if (flags && flags.get('ads') && appName) {
 								initOAds(flags, appName, adOptions);
