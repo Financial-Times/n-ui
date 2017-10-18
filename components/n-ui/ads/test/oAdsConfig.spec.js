@@ -56,14 +56,10 @@ describe('Config', () => {
 			const flags = { get: () => true };
 			document.cookie = 'FT_U=EID=1234_PID=abc';
 			const config = oAdsConfig(flags, 'article' );
-			const userExpectation = {
-				eid: '1234'
-			};
 
 			expect(config.krux.id).to.be.ok;
 			expect(config.krux.attributes).to.be.ok;
 			expect(config.krux.attributes.user).to.be.ok;
-			expect(config.krux.attributes.user).to.deep.equal(userExpectation);
 		});
 
 		it('Should not set krux configuration when flag is set to false', () => {
@@ -83,7 +79,7 @@ describe('Config', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article' );
 			document.cookie = 'FT_U=EID=1234_PID=abc';
-			const expectation = 'pt=art;eid=1234;nlayout=custom'.split(';');
+			const expectation = 'pt=art;nlayout=custom'.split(';');
 
 
 			expectation.forEach((value) => expect(config.dfp_targeting).to.contain(value));
