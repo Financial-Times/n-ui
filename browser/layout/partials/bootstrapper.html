@@ -6,9 +6,10 @@
 		window.FT.nUiConfig = {{{json @root.nUiConfig}}};
 	{{/if}}
 	{{#if anon}}window.FT.isAnonymous = {{anon.userIsAnonymous}};{{/if}}
-
+	window.FT.javascriptExecutionPaused = false;
 	(function () {
 		const loadError = function (e) {
+			window.FT.javascriptExecutionPaused = true;
 			throw new URIError('Failed to load ' + e.target.src + ': falling back to core experience.');
 		};
 
@@ -19,7 +20,10 @@
 			o.async = false;
 			o.src = src;
 			if(stopsExecutionOnLoadError) {
-				o.onerror = loadError;
+				window.FT.javascriptExecutionPaused = true;
+				if('onerror' in document.createElement('link')) {
+					o.onerror = loadError;
+				}
 			}
 			var s = d.getElementsByTagName('script')[0];
 			s.parentNode.insertBefore(o, s.nextSibling);
