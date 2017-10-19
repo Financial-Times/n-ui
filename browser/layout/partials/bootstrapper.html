@@ -7,51 +7,26 @@
 	{{/if}}
 	{{#if anon}}window.FT.isAnonymous = {{anon.userIsAnonymous}};{{/if}}
 	(function () {
-		const onerrorSupported = 'onerror' in document.createElement('link');
-		const onloadSupported = 'onload' in document.createElement('link');
-
 		const loadError = function (e) {
 			throw new URIError('Failed to load ' + e.target.src + ': falling back to core experience.');
 		};
 
-		const loadDependentScripts = function (queuePosition) {
-			for(i = 0; i < window.FT.scriptQueue[queuePosition].length; i++) {
-				runScript(window.FT.scriptQueue[queuePosition][i]);
-			}
-		};
-
-		const runScript = function(o) {
-			var d = document, s = d.getElementsByTagName('script')[0];
-			s.parentNode.insertBefore(o, s.nextSibling);
-		};
-
-		const loadScript = function (src, stopsExecutionOnLoadError, queuePosition) {
+		const loadScript = function (src, stopsExecutionOnLoadError) {
 			var d = document, o = d.createElement('script');
 			{{! For dynamically created scripts this has the same effect as adding the defer
 				attribute to inline scripts, i.e. load asynchronously, execute in order}}
 			o.async = false;
 			o.src = src;
 			if(stopsExecutionOnLoadError) {
-				if(onerrorSupported) {
-					o.onerror = loadError;
-				} else if(onloadSupported) {
-					if(!window.FT.scriptQueue) {
-						window.FT.scriptQueue = [];
-					}
-					window.FT.scriptQueue.push([]);
-					o.onload = loadDependentScripts(window.FT.scriptQueue.length);
-				}
+				o.onerror = loadError;
 			}
-			if(!onerrorSupported && onloadSupported) {
-				window.FT.scriptQueue[window.FT.scriptQueue.length].push(o);
-			} else {
-				runScript(o);
-			}
+			var s = d.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(o, s.nextSibling);
 			return o;
 		};
 		if (cutsTheMustard) {
 			{{#each @root.javascriptBundles}}
-				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}}, {{@index}});
+				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}});
 			{{/each}}
 		} else {
 			loadScript('{{{@root.polyfillIo.core}}}');
