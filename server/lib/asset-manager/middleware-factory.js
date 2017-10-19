@@ -24,6 +24,11 @@ module.exports = ({
 		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '));
 	};
 
+	const getBundleConfig = ({ file, url, isNUi, stopsExecutionOnLoadError = false }) => ({
+		file: url || getAssetUrl({ file, isNUi }),
+		stopsExecutionOnLoadError
+	});
+
 	return (req, res, next) => {
 
 		res.locals.resourceHints = {
@@ -47,21 +52,27 @@ module.exports = ({
 			res.locals.polyfillIo = polyfillIo(res.locals.flags);
 
 			res.locals.javascriptBundles.push(
-				res.locals.polyfillIo.enhanced,
-
-				getAssetUrl({
+				getBundleConfig({
+					url: res.locals.polyfillIo.enhanced,
+					stopsExecutionOnLoadError: true
+				}),
+				getBundleConfig({
 					file: 'font-loader.js',
 					isNUi: true
 				}),
-				getAssetUrl({
+				getBundleConfig({
 					file: 'o-errors.js',
 					isNUi: true
 				}),
-				getAssetUrl({
+				getBundleConfig({
 					file: 'es5.js',
-					isNUi: true
+					isNUi: true,
+					stopsExecutionOnLoadError: true
 				}),
-				getAssetUrl('main.js')
+				getBundleConfig({
+					file: 'main.js',
+					stopsExecutionOnLoadError: true
+				})
 			);
 
 			// output the default link headers just before rendering
@@ -83,13 +94,19 @@ module.exports = ({
 
 				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
 				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
-				res.locals.javascriptBundles.forEach(file => res.linkResource(file, { as: 'script' }, { priority: 'highest' }));
+				res.locals.javascriptBundles.map(({ file, stopsExecutionOnLoadError }) => ({
+					file: res.linkResource(file, { as: 'script' }, { priority: 'highest' }),
+					stopsExecutionOnLoadError
+				}));
 
 				// TODO make this a setting on the app - template data feels like a messy place
 				if (templateData.withAssetPrecache) {
 					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
 					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
-					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
+					res.locals.javascriptBundles.map(({ file, stopsExecutionOnLoadError }) => ({
+						file: res.linkResource(file, {as: 'script', rel: 'precache'}),
+						stopsExecutionOnLoadError
+					}));
 				}
 
 				// supercharge the masthead image

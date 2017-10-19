@@ -51,7 +51,7 @@ app.get('/css-variants', function (req, res) {
 });
 
 app.get('/route-specific-js', function (req, res) {
-	res.locals.javascriptBundles.push(req.app.getHashedAssetUrl('route-specific.js'));
+	res.locals.javascriptBundles.push({ file: req.app.getHashedAssetUrl('route-specific.js') });
 	res.render('main', {
 		layout: 'wrapper',
 		title: 'FT',
