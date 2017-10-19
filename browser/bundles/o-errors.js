@@ -22,6 +22,9 @@ oErrors.init({
 	tags: {
 		appName: appInfo.name
 	},
+	filterError: function () {
+		return !window.FT.disableOErrors;
+	},
 	errorBuffer: window.errorBuffer || []
 });
 

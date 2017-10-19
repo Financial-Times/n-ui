@@ -8,6 +8,7 @@
 	{{#if anon}}window.FT.isAnonymous = {{anon.userIsAnonymous}};{{/if}}
 	(function () {
 		const loadError = function (e) {
+			window.FT.disableOErrors = true;
 			throw new URIError('Failed to load ' + e.target.src + ': falling back to core experience.');
 		};
 
