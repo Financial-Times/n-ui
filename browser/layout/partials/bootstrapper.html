@@ -8,6 +8,8 @@
 	{{#if anon}}window.FT.isAnonymous = {{anon.userIsAnonymous}};{{/if}}
 	(function () {
 		const loadError = function (e) {
+			{{! If a script fails to load we'll get loads of errors which we can't prevent - not helpful to send them to sentry }}
+			window.FT.disableOErrors = true;
 			throw new URIError('Failed to load ' + e.target.src + ': falling back to core experience.');
 		};
 

@@ -1,11 +1,3 @@
-// for safety polyfill window.console
-window.console = window.console || {
-	log: function () { },
-	info: function () { },
-	warn: function () { },
-	error: function () { },
-};
-
 const oErrors = require('o-errors');
 
 const appInfo = {
@@ -21,6 +13,9 @@ oErrors.init({
 	logLevel: window.FT.flags.clientDetailedErrorReporting ? 'contextonly' : 'off',
 	tags: {
 		appName: appInfo.name
+	},
+	filterError: function () {
+		return !window.FT.disableOErrors;
 	},
 	errorBuffer: window.errorBuffer || []
 });
