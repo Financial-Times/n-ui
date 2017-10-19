@@ -94,7 +94,7 @@ module.exports = ({
 
 				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
 				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
-				res.locals.javascriptBundles.map(({ file, isFatal }) => ({ 
+				res.locals.javascriptBundles.map(({ file, isFatal }) => ({
 					file: res.linkResource(file, { as: 'script' }, { priority: 'highest' }),
 					isFatal
 				}));
@@ -103,7 +103,7 @@ module.exports = ({
 				if (templateData.withAssetPrecache) {
 					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
 					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
-					res.locals.javascriptBundles.map(({ file, isFatal }) => ({ 
+					res.locals.javascriptBundles.map(({ file, isFatal }) => ({
 						file: res.linkResource(file, {as: 'script', rel: 'precache'}),
 						isFatal
 					}));
