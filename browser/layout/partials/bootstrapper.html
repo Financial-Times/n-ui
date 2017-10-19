@@ -10,6 +10,9 @@
 		const loadError = function (e) {
 			{{! If a script fails to load we'll get loads of errors which we can't prevent - not helpful to send them to sentry }}
 			window.FT.disableOErrors = true;
+			{{! log load failure to spoor }}
+			var img = new Image();
+			img.src = 'https://spoor-api.ft.com/px.gif?data=%7B%22category%22%3A%22javascript%22%2C%22action%22%3A%22load-error%22%2C%22system%22%3A%7B%22source%22%3A%22non-ctm%22%7D%2C%22user%22%3A%7B%7D%2C%22context%22%3A%7B%22product%22%3A%22next%22%2C%22script%22%3A%22' + this.src + '%22%7D%7D';
 			throw new URIError('Failed to load ' + e.target.src + ': falling back to core experience.');
 		};
 
