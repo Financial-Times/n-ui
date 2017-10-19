@@ -5,27 +5,22 @@ const apiUrlRoot = 'https://ads-api.ft.com/v1/';
 
 module.exports = function (flags, appName, adOptions) {
 	adOptions = adOptions || {};
-	const eidMatch = document.cookie.match(/EID=(\d+)/);
-
-	//Temporarily get EID from FT_U cookie until all ad systems stop using it
-	const userCookieMetadata = {
-		eid: eidMatch && eidMatch.length > 1 ? eidMatch[1] : null
-	};
 
 	const targeting = extend({
 		pt: appName.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName(),
 		mvt: utils.getABTestState()
-	}, userCookieMetadata);
+	});
 
 
 	const kruxConfig = (flags.get('krux')) && !adOptions.noTargeting && {
 		id: 'KHUSeE3x',
 		attributes: {
-			user: userCookieMetadata,
+			user: {},
 			page: {}
 		}
 	};
+
 
 	function getContextualTargeting (appName) {
 		let uuid;
@@ -45,7 +40,8 @@ module.exports = function (flags, appName, adOptions) {
 		}
 
 		return url;
-	};
+	}
+
 
 	function getZone () {
 		let zone = [ utils.getMetaData('dfp_site'), utils.getMetaData('dfp_zone') ].filter( a => a );
@@ -54,6 +50,7 @@ module.exports = function (flags, appName, adOptions) {
 		}
 		return zone.join('/');
 	}
+
 
 	function getViewportMargin () {
 		let viewportMargin = '0%';
