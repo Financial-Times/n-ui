@@ -24,7 +24,7 @@ module.exports = ({
 		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '));
 	};
 
-	const getBundleConfig = ({ file, url, isNUi, stopsExecutionOnLoadError }) => ({
+	const getBundleConfig = ({ file, url, isNUi, stopsExecutionOnLoadError = false }) => ({
 		file: url || getAssetUrl({ file, isNUi }),
 		stopsExecutionOnLoadError
 	});

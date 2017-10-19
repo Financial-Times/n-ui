@@ -17,9 +17,9 @@
 				attribute to inline scripts, i.e. load asynchronously, execute in order}}
 			o.async = false;
 			o.src = src;
-			// if(stopsExecutionOnLoadError) {
-			// 	o.onerror = loadError;
-			// }
+			if(stopsExecutionOnLoadError) {
+				o.onerror = loadError;
+			}
 			var s = d.getElementsByTagName('script')[0];
 			s.parentNode.insertBefore(o, s.nextSibling);
 			return o;
