@@ -7,7 +7,8 @@
 	{{/if}}
 	{{#if anon}}window.FT.isAnonymous = {{anon.userIsAnonymous}};{{/if}}
 	(function () {
-		const loadError = function (e) {
+
+		function loadError (e) {
 			{{! If a script fails to load we'll get loads of errors which we can't prevent - not helpful to send them to sentry }}
 			window.FT.disableOErrors = true;
 			{{! log load failure to spoor }}
@@ -16,7 +17,7 @@
 			throw new URIError('Failed to load ' + e.target.src + ': falling back to core experience.');
 		};
 
-		const loadScript = function (src, stopsExecutionOnLoadError) {
+		function loadScript (src, stopsExecutionOnLoadError) {
 			var d = document, o = d.createElement('script');
 			{{! For dynamically created scripts this has the same effect as adding the defer
 				attribute to inline scripts, i.e. load asynchronously, execute in order}}
@@ -29,6 +30,7 @@
 			s.parentNode.insertBefore(o, s.nextSibling);
 			return o;
 		};
+
 		if (cutsTheMustard) {
 			{{#each @root.javascriptBundles}}
 				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}});
