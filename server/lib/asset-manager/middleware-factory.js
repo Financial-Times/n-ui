@@ -24,9 +24,9 @@ module.exports = ({
 		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '));
 	};
 
-	const getBundleConfig = ({ file, url, isNUi, isFatal }) => ({
+	const getBundleConfig = ({ file, url, isNUi, stopsExecutionOnLoadError }) => ({
 		file: url || getAssetUrl({ file, isNUi }),
-		isFatal
+		stopsExecutionOnLoadError
 	});
 
 	return (req, res, next) => {
@@ -54,7 +54,7 @@ module.exports = ({
 			res.locals.javascriptBundles.push(
 				getBundleConfig({
 					url: res.locals.polyfillIo.enhanced,
-					isFatal: true
+					stopsExecutionOnLoadError: true
 				}),
 				getBundleConfig({
 					file: 'font-loader.js',
@@ -67,11 +67,11 @@ module.exports = ({
 				getBundleConfig({
 					file: 'es5.js',
 					isNUi: true,
-					isFatal: true
+					stopsExecutionOnLoadError: true
 				}),
 				getBundleConfig({
 					file: 'main.js',
-					isFatal: true
+					stopsExecutionOnLoadError: true
 				})
 			);
 
@@ -94,18 +94,18 @@ module.exports = ({
 
 				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
 				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
-				res.locals.javascriptBundles.map(({ file, isFatal }) => ({
+				res.locals.javascriptBundles.map(({ file, stopsExecutionOnLoadError }) => ({
 					file: res.linkResource(file, { as: 'script' }, { priority: 'highest' }),
-					isFatal
+					stopsExecutionOnLoadError
 				}));
 
 				// TODO make this a setting on the app - template data feels like a messy place
 				if (templateData.withAssetPrecache) {
 					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
 					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
-					res.locals.javascriptBundles.map(({ file, isFatal }) => ({
+					res.locals.javascriptBundles.map(({ file, stopsExecutionOnLoadError }) => ({
 						file: res.linkResource(file, {as: 'script', rel: 'precache'}),
-						isFatal
+						stopsExecutionOnLoadError
 					}));
 				}
 
