@@ -6,21 +6,27 @@
 		window.FT.nUiConfig = {{{json @root.nUiConfig}}};
 	{{/if}}
 	{{#if anon}}window.FT.isAnonymous = {{anon.userIsAnonymous}};{{/if}}
-
 	(function () {
-		const loadScript = function (src) {
+		const loadError = function (e) {
+			throw new URIError('Failed to load ' + e.target.src + ': falling back to core experience.');
+		};
+
+		const loadScript = function (src, stopsExecutionOnLoadError) {
 			var d = document, o = d.createElement('script');
 			{{! For dynamically created scripts this has the same effect as adding the defer
 				attribute to inline scripts, i.e. load asynchronously, execute in order}}
 			o.async = false;
 			o.src = src;
+			if(stopsExecutionOnLoadError) {
+				o.onerror = loadError;
+			}
 			var s = d.getElementsByTagName('script')[0];
 			s.parentNode.insertBefore(o, s.nextSibling);
 			return o;
 		};
 		if (cutsTheMustard) {
 			{{#each @root.javascriptBundles}}
-				loadScript('{{{this}}}');
+				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}});
 			{{/each}}
 		} else {
 			loadScript('{{{@root.polyfillIo.core}}}');
