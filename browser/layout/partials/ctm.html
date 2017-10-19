@@ -2,19 +2,20 @@
 var classes = document.documentElement.className; {{!note: once we ditch support for ie9 we can just use classlist}}
 classes = classes.replace(/\bno-js\b/, 'js'); {{!note: needed for JS that's run out of the scope of the bootstrap (inline onclicks, etc)}}
 
-var supportsBlobConstructor;
+var supportsBlobConstructor = false;
 try {
 	new Blob;
 	supportsBlobConstructor = true;
-} catch (e) {
-	supportsBlobConstructor = false;
-}
+} catch (e) {}
+var script = document.createElement('script');
+var supportsDeferredScripts = "defer" in script && "async" in script;
 
 window.cutsTheMustard = (
 	typeof Function.prototype.bind !== 'undefined'
 	&& typeof document.documentElement.dataset === 'object'
 	&& ('withCredentials' in new XMLHttpRequest())
 	&& supportsBlobConstructor
+	&& supportsDeferredScripts
 	);
 if (window.cutsTheMustard) {
 	classes = classes.replace(/\bcore\b/, 'enhanced');
