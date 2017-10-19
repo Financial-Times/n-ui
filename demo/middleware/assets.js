@@ -10,6 +10,7 @@ module.exports = (req, res, next) => {
 				bundle.file = bundle.file.replace('polyfill.min', 'polyfill')
 					.split('&excludes')[0];
 			}
+			return bundle;
 		});
 	// no head.css generated in this demo app
 	res.locals.stylesheets.inline = [];

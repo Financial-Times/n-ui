@@ -25,7 +25,7 @@ module.exports = ({
 	};
 
 	const getBundleConfig = ({ file, url, isNUi, isFatal }) => ({
-		file: ( file ? getAssetUrl({ file, isNUi }) : url ),
+		file: url || getAssetUrl({ file, isNUi }),
 		isFatal
 	});
 
@@ -94,13 +94,19 @@ module.exports = ({
 
 				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
 				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
-				res.locals.javascriptBundles.map(bundle => { bundle.file = res.linkResource(bundle.file, { as: 'script' }, { priority: 'highest' }); });
+				res.locals.javascriptBundles.map(({ file, isFatal }) => ({ 
+					file: res.linkResource(file, { as: 'script' }, { priority: 'highest' }),
+					isFatal
+				}));
 
 				// TODO make this a setting on the app - template data feels like a messy place
 				if (templateData.withAssetPrecache) {
 					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
 					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
-					res.locals.javascriptBundles.map(bundle => { bundle.file = res.linkResource(bundle.file, {as: 'script', rel: 'precache'}); });
+					res.locals.javascriptBundles.map(({ file, isFatal }) => ({ 
+						file: res.linkResource(file, {as: 'script', rel: 'precache'}),
+						isFatal
+					}));
 				}
 
 				// supercharge the masthead image

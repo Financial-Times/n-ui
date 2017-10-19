@@ -31,7 +31,7 @@
 		if (cutsTheMustard) {
 			window.FT.core = false;
 			{{#each @root.javascriptBundles}}
-				loadScript('{{{this.file}}}', {{this.isFatal}});
+				loadScript('{{{file}}}', {{isFatal}});
 			{{/each}}
 		} else {
 			loadScript('{{{@root.polyfillIo.core}}}');
