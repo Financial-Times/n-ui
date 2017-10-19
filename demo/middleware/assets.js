@@ -3,7 +3,7 @@
 module.exports = (req, res, next) => {
 	res.locals.javascriptBundles = res.locals.javascriptBundles
 		.filter(bundle => {
-			return bundle.file.indexOf('undefined') === -1;
+			return bundle && bundle.file.indexOf('undefined') === -1;
 		})
 		.map(bundle => {
 			if (bundle.file.indexOf('polyfill') > -1) {
