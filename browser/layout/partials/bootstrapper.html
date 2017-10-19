@@ -26,9 +26,7 @@
 			if (stopsExecutionOnLoadError) {
 				script.onerror = loadError;
 			}
-			var firstScript = document.getElementsByTagName('script')[0];
-			firstScript.parentNode.insertBefore(script, firstScript.nextSibling);
-			return script;
+			document.head.appendChild(script);
 		};
 
 		if (cutsTheMustard) {
