@@ -8,27 +8,27 @@
 	{{#if anon}}window.FT.isAnonymous = {{anon.userIsAnonymous}};{{/if}}
 	(function () {
 
-		function loadError (e) {
+		function loadError (err) {
 			{{! If a script fails to load we'll get loads of errors which we can't prevent - not helpful to send them to sentry }}
 			window.FT.disableOErrors = true;
 			{{! log load failure to spoor }}
 			var img = new Image();
-			img.src = 'https://spoor-api.ft.com/px.gif?data=%7B%22category%22%3A%22javascript%22%2C%22action%22%3A%22load-error%22%2C%22system%22%3A%7B%22source%22%3A%22non-ctm%22%7D%2C%22user%22%3A%7B%7D%2C%22context%22%3A%7B%22product%22%3A%22next%22%2C%22script%22%3A%22' + this.src + '%22%7D%7D';
-			throw new URIError('Failed to load ' + e.target.src + ': falling back to core experience.');
+			img.src = 'https://spoor-api.ft.com/px.gif?data=%7B%22category%22%3A%22javascript%22%2C%22action%22%3A%22load-error%22%2C%22system%22%3A%7B%22source%22%3A%22non-ctm%22%7D%2C%22user%22%3A%7B%7D%2C%22context%22%3A%7B%22product%22%3A%22next%22%2C%22script%22%3A%22' + encodeURIComponent(err.target.src) + '%22%7D%7D';
+			throw new URIError('Failed to load ' + err.target.src + ': falling back to core experience.');
 		};
 
 		function loadScript (src, stopsExecutionOnLoadError) {
-			var d = document, o = d.createElement('script');
+			var script = document.createElement('script');
 			{{! For dynamically created scripts this has the same effect as adding the defer
 				attribute to inline scripts, i.e. load asynchronously, execute in order}}
-			o.async = false;
-			o.src = src;
-			if(stopsExecutionOnLoadError) {
-				o.onerror = loadError;
+			script.async = false;
+			script.src = src;
+			if (stopsExecutionOnLoadError) {
+				script.onerror = loadError;
 			}
-			var s = d.getElementsByTagName('script')[0];
-			s.parentNode.insertBefore(o, s.nextSibling);
-			return o;
+			var firstScript = document.getElementsByTagName('script')[0];
+			firstScript.parentNode.insertBefore(script, firstScript.nextSibling);
+			return script;
 		};
 
 		if (cutsTheMustard) {
