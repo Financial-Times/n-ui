@@ -111,7 +111,7 @@ When you release an n-ui tag 3 things happen
 - the npm package is published
 - during work hours (9am to 4pm), all user-facing apps are rebuilt to pick up the changes
 
-## APIs
+## Server side APIs
 
 ### Linked Resources (preload) `res.linkResource(url, meta, options)`
 Adds link headers to optimise requests for assets, defaulting to preload behaviour
@@ -122,9 +122,6 @@ Adds link headers to optimise requests for assets, defaulting to preload behavio
 - `options` - additional options when creating the header
 	- `priority` - a value of highest will add the link header _before_ all previously added resources that do not specify this (shodul not normally used by apps - used internally to ensure n-ui's resources are always loaded as wuickly as possible)
 	- `hashed` - if true the path to the asset will be resolved to the equivalent hashed aset path
-
-
-# Anything below here isn't necessarily 100% up to date - n-ui has changed a lot recently and updating the docs is ongoing
 
 ### Navigation
 If you pass `withNavigation:true` in the init options, you will have navigation data available in `res.locals.navigation`.  this data comes from polling the [navigation API](https://github.com/Financial-Times/next-navigation-api).  This data is used to populate the various menus and navigation items on the apps.  The following data is available
