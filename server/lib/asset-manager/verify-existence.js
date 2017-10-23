@@ -22,7 +22,6 @@ module.exports = {
 		})) {
 			return;
 		}
-
 		// check each ignored /public file has been built
 		gitignore.filter(pattern => {
 			if (/^\/?public.*(css|js)$/.test(pattern)) {

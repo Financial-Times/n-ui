@@ -1,0 +1,24 @@
+<script>
+window.FT = window.FT || {};
+window.FT.conditions = {};
+window.FT.fireCondition = function (condition) {
+	var evName = 'FT.' + condition;
+	if (!window.FT.conditions[condition]) {
+		var ev;
+		try {
+			ev = new CustomEvent(evName);
+			// really annoying, but the CSSLoading might occur before polyfilling CustomEvent
+		} catch (e) {
+			ev = document.createEvent('CustomEvent')
+			ev.initCustomEvent(evName, false, false, null);
+		}
+		document.dispatchEvent(ev);
+		window.FT.conditions[condition] = 1;
+	}
+};
+window.FT.cssFileLoaded = function () {
+	if (!document.querySelector('link[data-is-next][rel="preload"][as="style"]')) {
+		window.FT.fireCondition('allStylesLoaded')
+	}
+}
+</script>

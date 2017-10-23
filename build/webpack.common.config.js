@@ -45,12 +45,7 @@ module.exports = {
 
 		// These fields in the description files offer aliasing in this package
 		// The content of these fields is an object where requests to a key are mapped to the corresponding value
-		aliasFields: ['browser'],
-
-		alias: {
-			'react': 'preact-compat',
-			'react-dom': 'preact-compat'
-		},
+		aliasFields: ['browser']
 	},
 
 	module: {
@@ -92,8 +87,6 @@ module.exports = {
 	},
 
 	output: {
-		filename: '[name]',
-		devtoolModuleFilenameTemplate: 'n-ui//[resource-path]?[loaders]'
+		filename: '[name]'
 	}
-
 };

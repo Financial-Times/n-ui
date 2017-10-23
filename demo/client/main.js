@@ -1,5 +1,8 @@
-// we can use n-ui as a dependency even within n-ui as this is built using the
-// externals definition which maps n-ui to window.ftNextUi.
-import {bootstrap} from 'n-ui';
+import {flags, onAppInitialized, tracking} from 'n-ui';
 
-bootstrap({ preset: 'complete' }, () => {});
+console.log(flags); //eslint-disable-line
+
+tracking.scrollDepth.init('n-ui test');
+
+
+onAppInitialized();

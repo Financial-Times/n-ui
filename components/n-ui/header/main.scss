@@ -5,19 +5,11 @@
 
 @include nUiStylesheetStart('head-n-ui-core');
 
-	@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu', 'simple'));
+	@include oHeader(('search', 'nav', 'anon', 'megamenu', 'simple'));
 	// force display of search row
 	// <https://github.com/Financial-Times/o-header/blob/2ebf2cbe6b7508a03e0989ff57f1029e12c0506c/src/scss/rows/_search.scss#L13-L15>
 	.core [data-o-header-search] {
 		display: block;
-	}
-
-	// inelegant gymnastics to fix focus outline of the first breadcrumb link
-	.o-header__subnav-wrap-outside {
-		margin-left: -2px;
-	}
-	.o-header__subnav-list--breadcrumb .o-header__subnav-item:first-child .o-header__subnav-link {
-		margin-left: 2px;
 	}
 
 	// add next opt-out buttons

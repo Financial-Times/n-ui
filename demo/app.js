@@ -24,6 +24,8 @@ const app = module.exports = express({
 	directory: process.cwd()
 });
 
+app.locals.nUiConfig = { preset: 'complete' };
+
 app.use(require('./middleware/assets'));
 
 app.get('/', (req, res) => {
@@ -100,14 +102,15 @@ app.listen(5005)
 						files: [
 							'test-page.html',
 							'public/main.css',
-							'public/main-without-n-ui.js',
+							'public/main.js',
+							'public/main.js.map',
 							'public/n-ui/es5.js',
 							'public/n-ui/es5.js.map',
 							'public/n-ui/font-loader.js',
 							'public/n-ui/font-loader.js.map',
 							'public/n-ui/o-errors.js',
-							'public/n-ui/o-errors.js.map',
-							'public/main-without-n-ui.js.map'
+							'public/n-ui/o-errors.js.map'
+
 						],
 						destination: `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/`,
 						bucket: 'ft-next-test-artefacts',

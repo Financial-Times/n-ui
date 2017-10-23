@@ -3,22 +3,20 @@
 module.exports = function (exclusions) {
 	const entry = {
 		// n-ui components
-		'n-ui': 'window.ftNextUi',
-		'n-ui/ads': 'window.ftNextUi._ads',
-		'n-ui/tracking': 'window.ftNextUi._tracking',
-		'n-ui/components/n-ui/ads': 'window.ftNextUi._ads',
-		'n-ui/components/n-ui/tracking': 'window.ftNextUi._tracking',
-		'n-ui-foundations': 'window.ftNextUi._foundations',
+		'n-ui': 'window.FT.nUi',
+		'n-ui-foundations': 'window.FT.nUi._hiddenComponents.nUiFoundations',
 		// wrapped origami components
-		'o-date': 'window.ftNextUi._date',
-		'o-grid': 'window.ftNextUi._grid',
-		'o-viewport': 'window.ftNextUi._viewport',
-		'n-image': 'window.ftNextUi._image',
+		'o-date': 'window.FT.nUi._hiddenComponents.oDate',
+		'o-ads': 'window.FT.nUi._hiddenComponents.oAds',
+		'o-tracking': 'window.FT.nUi._hiddenComponents.oTracking',
+		'o-grid': 'window.FT.nUi._hiddenComponents.oGrid',
+		'o-viewport': 'window.FT.nUi._hiddenComponents.oViewport',
+		'n-image': 'window.FT.nUi._hiddenComponents.nImage',
 
 		// other components
-		'ftdomdelegate': 'window.ftNextUi._ftdomdelegate',
-		'superstore': 'window.ftNextUi._superstore',
-		'superstore-sync': 'window.ftNextUi._superstoreSync',
+		'ftdomdelegate': 'window.FT.nUi._hiddenComponents.ftdomdelegate',
+		'superstore': 'window.FT.nUi._hiddenComponents.superstore',
+		'superstore-sync': 'window.FT.nUi._hiddenComponents.superstoreSync',
 	};
 
 	if (exclusions) {

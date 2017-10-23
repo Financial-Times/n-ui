@@ -17,6 +17,12 @@ n-ui is a wrapper around n-express which adds templating and asset loading featu
 ```
 const app = require('@financial-times/n-ui')(opts)
 
+app.locals.nUiConfig = {
+	preset: 'complete', // 'discrete' will turn off ads & various popups
+	features: {
+		lazyLoadImages: true // turns individual features on/off. Check `/browser/bootstrap/js/component-initializer.js` for an up to date feature list
+	}
+}
 ```
 
 Where opts is an object supporting all `n-express`'s options, but with many set to `true` by default (see `/server/index.js` for details). Additioanl options include
@@ -44,37 +50,30 @@ To define entry points for your assets use a `n-ui-build.config.js` file in the 
 
 ### JS
 
-#### Config
-This should live in a `/client/n-ui-config.js` file
-
-```javascript
-module.exports = {
-	preset: 'complete', // 'discrete' will turn off ads & various popups
-	features: {
-		lazyLoadImages: true // turns individual features on/off. Check `/browser/bootstrap/js/component-initializer.js` for an upto date feature list
-	}
-}
-```
-
 #### App bootstrapping
 
-n-ui takes care of loading polyfills etc, and your application code shoudl be wrapped in the bootstrap method
+n-ui takes care of loading polyfills etc, in order. n-ui exports 4 things you'll want to use
+- `flags` - the feature/development/maintenance/MVT flags object
+- `appInfo` - metadata about the app that's serving the page
+- `allStylesLoaded` - a promise that resolves once all the lazy-loaded styles are in place
+- `onAppInitialized` [required] - a function to call once the app js has successfully executed. This tells integration tests when the page is 'complete' among other things
+
+`import` one or more of the above from n-ui in your application code, which no longer needs to be wrapped in a function
 
 e.g.
 
 ```javascript
-import { bootstrap } from 'n-ui';
+import { flags , allStylesLoaded, onAppInitialized } from 'n-ui';
 
-bootstrap(({ flags , appInfo, allStylesLoaded }) => {
-    if (flags.get('feature')) {
-        component.init();
-    }
+if (flags.get('feature')) {
+    component.init();
+}
 
-    allStylesLoaded
-	    .then(() => {
-	        lazyComponent.init();
-	    });
-});
+allStylesLoaded
+    .then(() => {
+        lazyComponent.init();
+        onAppInitialized(); // it's up to you to define when your app is 'ready'
+    });
 ```
 
 ### Sass
@@ -112,7 +111,7 @@ When you release an n-ui tag 3 things happen
 - the npm package is published
 - during work hours (9am to 4pm), all user-facing apps are rebuilt to pick up the changes
 
-## APIs
+## Server side APIs
 
 ### Linked Resources (preload) `res.linkResource(url, meta, options)`
 Adds link headers to optimise requests for assets, defaulting to preload behaviour
@@ -123,49 +122,6 @@ Adds link headers to optimise requests for assets, defaulting to preload behavio
 - `options` - additional options when creating the header
 	- `priority` - a value of highest will add the link header _before_ all previously added resources that do not specify this (shodul not normally used by apps - used internally to ensure n-ui's resources are always loaded as wuickly as possible)
 	- `hashed` - if true the path to the asset will be resolved to the equivalent hashed aset path
-
-
-# Anything below here isn't necessarily 100% up to date - n-ui has changed a lot recently and updating the docs is ongoing
-
-
-
-### Dev workflow
-
-[Overview of how the n-ui js bundle is delivered](https://docs.google.com/presentation/d/1UyeVsxE8GqGe-jVZDB5ppMLeRk2Ad49OuBBO8xDvyxs/edit#slide=id.p)
-
-#### Standalone development
-
-* `make build run` will
-	- start a server on `localhost:5005` which serves a demo page of most of the core n-ui components. *Note: Any changes to templates require restarting the server*
-	- build an n-ui bundle that will bootstrap the js and css for the page
-* `make test-unit-dev` will run unit tests in Chrome using karma. To add tests for a new subcomponents, or to only run tests for a single subcomponent, modify the `componentsToTest` list in karma.config.js. In CI these tests are run in more browsers using saucelabs
-
-#### Bower linking
-
-To work with n-ui when it's bower linked into an app you will need to `export NEXT_APP_SHELL=local` in your app and then proceed exactly as you would for any other component
-
-## A11y testing
-
-We hope to be able to a11y test all components before they are used in an app and end up causing lots of applications to fail builds. For now we are testing components in CI using pa11y and this requires some additional set up when creating a new component. Any directory in the root is considered to be a component and will require this additional set up.
-
-* Inside a component directory there must be a `pa11y-config.js` that must return JSON
-* The must have an `entry` property and and may contain a `data` property if required
-	* The `entry` value should point to the main template for the component without any file extension and relative to the component root.
-	* The `data` can be used if you need to pass any fixture data to the component for testing.
-
-
-## Adding subcomponents
-
-**Don't** - n-ui is no longer a place to dump all next components. If you need to create a new shared component create a new repo for it and use the `n-ui-foundations` component to access primitive styles as used in next.
-
-## JS usage
-
-### Opting out of using a component provided by n-ui
-
-If, for example, you want to use a beta of an origami component in a single app, or use React instead of preact
-In your app’s webpack.config.js, you can pass an `nUiExcludes` array as an option to nWebpack e.g. `nUiExcludes: [‘React’, ‘React-Dom’]`
-
-
 
 ### Navigation
 If you pass `withNavigation:true` in the init options, you will have navigation data available in `res.locals.navigation`.  this data comes from polling the [navigation API](https://github.com/Financial-Times/next-navigation-api).  This data is used to populate the various menus and navigation items on the apps.  The following data is available

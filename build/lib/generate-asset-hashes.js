@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 
-module.exports = (directory = 'public', withBrotli) => {
+module.exports = (directory = 'public') => {
 	const hashes = fs.readdirSync(path.join(process.cwd(), directory))
 		// don't hash the jsons or variants that are based on the original file contents (sourcemaps and brotlified assets)
 		.filter(name => !/(\.map|\.br|about\.json|asset-hashes\.json)$/.test(name))
@@ -19,9 +19,6 @@ module.exports = (directory = 'public', withBrotli) => {
 			const isCssFile = path.extname(current.name) === '.css';
 			if (!isCssFile) {
 				previous[current.name + '.map'] = current.hashedName + '.map';
-			}
-			if (withBrotli) {
-				previous[current.name + '.br'] = current.hashedName + '.br';
 			}
 			return previous;
 		}, {});

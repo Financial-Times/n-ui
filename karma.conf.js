@@ -1,7 +1,7 @@
 const componentsToTest = [
 	'browser',
 	'components/n-ui/ads',
-	'components/n-ui/tracking',
+	'components/n-ui/tracking'
 ];
 
 module.exports = function (karma) {
@@ -16,7 +16,9 @@ module.exports = function (karma) {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap'];
 			return obj;
 		}, {}),
-		webpack: require('./build/webpack.common.config'),
+		webpack: Object.assign({}, require('./build/webpack.common.config'), {
+			devtool: 'inline-source-map'
+		}),
 		reporters: ['progress'],
 		port: 9876,
 		colors: true,

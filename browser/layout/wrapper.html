@@ -26,7 +26,7 @@
 		{{#each preconnect}}
 		<link rel="preconnect" href="{{host}}"{{#if crossorigin}} crossorigin="{{crossorigin}}"{{/if}}>
 		{{/each}}
-		{{>layout/partials/fire-condition}}
+		{{>layout/partials/env-setup}}
 		{{>layout/partials/stylesheets}}
 
 		<link rel="icon" type="image/png" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-32x32.png" sizes="32x32">
@@ -38,11 +38,8 @@
 		{{/unless}}
 		{{#if __disableAndroidBanner}}
 		<script>
-			window.addEventListener('beforeinstallprompt', function (ev) {
-				// Don't show the Android install banner
-				ev.preventDefault();
-				return false;
-			});
+			// Don't show the Android install banner
+			window.addEventListener('beforeinstallprompt', function (ev) { ev.preventDefault(); return false; });
 		</script>
 		{{/if}}
 		<link rel="manifest" href="/assets/manifest/manifest-v6.json">
