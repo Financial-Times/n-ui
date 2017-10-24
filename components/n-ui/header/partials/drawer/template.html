@@ -61,22 +61,6 @@
 						</li>
 					{{/each}}
 				{{/if}}
-
-				{{#unless @root.anon.userIsAnonymous}}
-				{{#if @root.flags.compactView}}
-					{{#ifEquals @root.__name "front-page"}}
-						{{#ifEquals @root.viewStyle "compact"}}
-							<li class="o-header__drawer-menu-item" data-trackable="viewtoggle">
-								<a class="o-header__drawer-menu-link" href="viewtoggle/standard" data-trackable="standard">Turn off compact homepage</a>
-							</li>
-						{{else}}
-							<li class="o-header__drawer-menu-item">
-								<a class="o-header__drawer-menu-link" href="/viewtoggle/compact" data-trackable="compact">Turn on compact homepage</a>
-							</li>
-						{{/ifEquals}}
-					{{/ifEquals}}
-				{{/if}}
-				{{/unless}}
 			</ul>
 
 			<ul class="o-header__drawer-menu-list">
