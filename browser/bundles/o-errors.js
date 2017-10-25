@@ -28,7 +28,7 @@ oErrors.init({
 		return realFetch.call(this, url, opts)
 			.catch(function (err) {
 				if (err.message === 'Failed to fetch') {
-					throw new TypeError(`Cors error when calling ${url}`);
+					throw new TypeError(`Cors error when fetching ${url}`);
 				}
 				throw err;
 			});
