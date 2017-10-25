@@ -1,7 +1,8 @@
-// Expose entry points to shared bundle
-import oAds from 'o-ads';
 import ads from '../../components/n-ui/ads';
 import tracking from '../../components/n-ui/tracking';
+
+// Expose entry points to shared bundle
+import oAds from 'o-ads';
 import oTracking from 'o-tracking';
 import oDate from 'o-date';
 import nUiFoundations from 'n-ui-foundations';
@@ -16,11 +17,12 @@ import superstoreSync from 'superstore-sync';
 
 import { AppInitializer } from '../js/app-initializer';
 
-// returns {flags, allStylesLoaded, appInfo}
+// returns {flags, tracking, allStylesLoaded, appInfo, onAppInitialized, ads if enabled}
 const app = new AppInitializer();
 
-window.FT.nUi = Object.assign({}, app.env, {
-	onAppInitialized: app.onAppInitialized,
+window.FT.nUi = app.env;
+
+window.FT.nUi = Object.assign(window.FT.nUi, {
 	ads: ads,
 	tracking: tracking,
 	_hiddenComponents: {

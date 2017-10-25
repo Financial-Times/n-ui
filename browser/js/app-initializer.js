@@ -1,13 +1,29 @@
-import ads from '../../components/n-ui/ads';
+const lazyImports = {
+	header: import(/* webpackChunkName: './public/n-ui/lazy/header' */ '../../components/n-ui/header'), // eslint-disable-line
+	footer: import(/* webpackChunkName: './public/n-ui/lazy/footer' */ 'o-footer'),// eslint-disable-line
+	date: import(/* webpackChunkName: './public/n-ui/lazy/date' */ 'o-date'),// eslint-disable-line
+	cookieMessage: import(/* webpackChunkName: './public/n-ui/lazy/cookie-message' */ 'o-cookie-message'),// eslint-disable-line
+	ads: import(/* webpackChunkName: './public/n-ui/lazy/ads' */ '../../components/n-ui/ads'),// eslint-disable-line
+	syndication: import(/* webpackChunkName: './public/n-ui/lazy/syndication' */ 'n-syndication'),// eslint-disable-line
+	desktopAppBanner: import(/* webpackChunkName: './public/n-ui/lazy/desktop-app-banner' */ 'n-desktop-app-banner'),// eslint-disable-line
+	nImage: import(/* webpackChunkName: './public/n-ui/lazy/n-image' */ 'n-image')// eslint-disable-line
+};
+
+const lazyImport = async (componentKey) => await lazyImports[componentKey];
+
+// import ads from '../../components/n-ui/ads';
+// import tracking from '../../components/n-ui/tracking';
+// import date from 'o-date';
+// import header from '../../components/n-ui/header';
+// import oCookieMessage from 'o-cookie-message';
+// import footer from 'o-footer';
+// import * as serviceWorker from 'n-service-worker';
+// import DesktopAppBanner from 'n-desktop-app-banner';
+// import * as syndication from 'n-syndication';
+
+
 import tracking from '../../components/n-ui/tracking';
-import date from 'o-date';
-import header from '../../components/n-ui/header';
-import oCookieMessage from 'o-cookie-message';
-import footer from 'o-footer';
-import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
-import DesktopAppBanner from 'n-desktop-app-banner';
-import * as syndication from 'n-syndication';
 import { perfMark } from 'n-ui-foundations';
 
 export const presets = {
@@ -69,6 +85,8 @@ export class AppInitializer {
 		this.env = {
 			flags,
 			appInfo,
+			tracking,
+			onAppInitialized: this.onAppInitialized,
 			allStylesLoaded: new Promise(res => {
 				// if this element exists it means the page is setup to deliver critical/main css
 				if (document.querySelector('style.n-layout-head-css')) {
@@ -93,51 +111,56 @@ export class AppInitializer {
 
 		// FT and next tracking
 		tracking.init(flags, appInfo);
+		// this.env.tracking = tracking;
 
 		if (flags.get('serviceWorker')) {
 			serviceWorker
 				.register(flags)
 				.catch(() => { });
 
-			serviceWorker.message({ type: 'updateCache', data: {}});
+			serviceWorker.message({ type: 'updateCache', data: {} });
 		} else {
 			serviceWorker.unregister();
 		}
 
 		if (this.enabledFeatures.header) {
-			header.init(flags);
+			lazyImport('header').then(header => header.init(flags));
 		}
 
 		if (this.enabledFeatures.date) {
-			date.init();
+			lazyImport('date').then(date => date.init());
 		}
 
 		if (this.enabledFeatures.ads) {
-			ads.init(flags, appInfo, this.enabledFeatures.ads);
+			lazyImport('ads').then(ads => {
+				this.env.ads = ads;
+				ads.init(flags, appInfo, true);
+			});
 		}
 
 		if (this.enabledFeatures.lazyLoadImages) {
-			lazyLoadImages();
+			lazyImport('nImage').then(({ lazyLoad: lazyLoadImages }) => lazyLoadImages());
 		}
 
-		// TODO - shouldn't it be possible to turn this off via the usual API?
+		// shouldn't it be possible to turn this off via the usual API?
+		// No - this is controlled by the Brain (behavioural data from VoltDB)
 		if (flags.get('subscriberCohort') && flags.get('onboardingMessaging') === 'appPromotingBanner') {
-			new DesktopAppBanner();
+			lazyImport('desktopAppBanner').then(DesktopAppBanner => new DesktopAppBanner());
 		}
 
 		allStylesLoaded
 			.then(() => {
 
 				if (this.enabledFeatures.footer) {
-					footer.init();
+					lazyImport('footer').then(footer => footer.init());
 				}
 
 				if (this.enabledFeatures.cookieMessage && flags.get('cookieMessage')) {
-					oCookieMessage.init();
+					lazyImport('cookieMessage').then(cookieMessage => cookieMessage.init());
 				}
 
 				if (this.enabledFeatures.syndication) {
-					syndication.init(flags);
+					lazyImport('syndication').then(syndication => syndication.init(flags));
 				}
 			});
 	}

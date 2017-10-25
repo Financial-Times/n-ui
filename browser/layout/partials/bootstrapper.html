@@ -9,7 +9,7 @@
 	(function () {
 
 		function loadError (err) {
-			{{! If a script fails to load we'll get loads of errors which we can't prevent - not helpful to send them to sentry }}
+			{{! If a script fails to load we will get lots of unpreventable errors - unhelpful to send these to Sentry }}
 			window.FT.disableOErrors = true;
 			{{! log load failure to spoor }}
 			var img = new Image();

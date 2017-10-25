@@ -61,6 +61,9 @@ module.exports = {
 						// converts `export default 'foo'` to `exports.default = 'foo'`
 						require.resolve('babel-plugin-add-module-exports'),
 
+						// supports webpack's dynamic import syntax
+						require.resolve('babel-plugin-syntax-dynamic-import'),
+
 						// ensures a module reqired multiple times is only transpiled once and
 						// is shared by all that use it rather than transpiling it each time
 						[require.resolve('babel-plugin-transform-runtime'),
@@ -87,6 +90,7 @@ module.exports = {
 	},
 
 	output: {
-		filename: '[name]'
+		filename: '[name]',
+		chunkFilename: '[name].lazy.js',
 	}
 };

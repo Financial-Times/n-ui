@@ -52,7 +52,7 @@ These are heavily interdependent - most of the complexity is in deciding which a
 
 ### Without app shell (normal)
 - Copies asset-hashes.json and n-ui-head-core.css from node_modules/@financial-times/n-ui to public/n-ui
-- JS - Uses the list of externals supplied by n-ui in the webpack config so e.g. `require('o-date')` gets replaced by `window.ftNextUi.__oDate` - smaller bundle size as a result
+- JS - Uses the list of externals supplied by n-ui in the webpack config so e.g. `require('o-date')` gets replaced by `window.FT.nUi.__oDate` - smaller bundle size as a result
 - Sass - Builds all styles, including n-ui ones, so generates n-ui-head-core.css, and the rest of n-ui styles are included in its own main.css (TODO - this is _almost_ redundant - hopefully move to not building all n-ui soon)
 - When running all n-ui stuff (aside from inlined head.css) are linked to from the network
 
