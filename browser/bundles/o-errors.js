@@ -20,14 +20,31 @@ oErrors.init({
 	errorBuffer: window.errorBuffer || []
 });
 
-// turn on more detailed error reporting of ajax calls
-if (window.FT.flags.clientAjaxErrorReporting) {
+
+(function () {
+	// Cors errors are so uninformative. This forces them to be a bit more informative
 	const realFetch = window.fetch;
 	window.fetch = function (url, opts) {
 		return realFetch.call(this, url, opts)
 			.catch(function (err) {
-				oErrors.log(url + (opts ? JSON.stringify(opts) : '' ) + err);
+				if (err.message === 'Failed to fetch') {
+					throw new TypeError(`Cors error when fetching ${url}`);
+				}
 				throw err;
 			});
 	};
+}());
+
+// turn on more detailed error reporting of ajax calls
+if (window.FT.flags.clientAjaxErrorReporting) {
+	(function () {
+		const realFetch = window.fetch;
+		window.fetch = function (url, opts) {
+			return realFetch.call(this, url, opts)
+				.catch(function (err) {
+					oErrors.log(url + (opts ? JSON.stringify(opts) : '' ) + err);
+					throw err;
+				});
+		};
+	}());
 }
