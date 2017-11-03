@@ -49,7 +49,7 @@ module.exports = ({
 			res.locals.stylesheets.inline = ['head'];
 			res.locals.stylesheets.lazy = ['main'];
 
-			res.locals.polyfillIo = polyfillIo(res.locals.flags);
+			res.locals.polyfillIo = polyfillIo;
 
 			res.locals.javascriptBundles.push(
 				getBundleConfig({

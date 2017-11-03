@@ -1,3 +1,4 @@
+const polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
 function buildQueryString (qsConfig) {
 	const qs = [];
 
@@ -39,14 +40,7 @@ const queryStrings = {
 	})
 };
 
-module.exports = flags => {
-	/* istanbul ignore if */
-	const polyfillRoot = 'https://' +
-		(flags.polyfillQA ? 'qa.polyfill.io/' : 'www.ft.com/__origami/service/polyfill/') +
-		'v2/polyfill.min.js';
-
-	return {
-		enhanced: polyfillRoot + queryStrings['enhanced'],
-		core: polyfillRoot + queryStrings['core']
-	};
+module.exports = {
+	enhanced: polyfillRoot + queryStrings['enhanced'],
+	core: polyfillRoot + queryStrings['core']
 };
