@@ -58,5 +58,6 @@ These are heavily interdependent - most of the complexity is in deciding which a
 
 ### With app shell (dev build)
 Same as above except
- - Additional entry points for all n-ui JS files added to webpack config
- - paths are adjusted so these locally built assets are used in the page
+
+- Additional entry points for all n-ui JS files added to webpack config
+- Paths are adjusted so these locally built assets are used in the page

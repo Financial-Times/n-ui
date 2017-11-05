@@ -66,14 +66,14 @@ e.g.
 import { flags , allStylesLoaded, onAppInitialized } from 'n-ui';
 
 if (flags.get('feature')) {
-    component.init();
+	component.init();
 }
 
 allStylesLoaded
-    .then(() => {
-        lazyComponent.init();
-        onAppInitialized(); // it's up to you to define when your app is 'ready'
-    });
+	.then(() => {
+		lazyComponent.init();
+		onAppInitialized(); // it's up to you to define when your app is 'ready'
+	});
 ```
 
 ### Sass
@@ -129,7 +129,7 @@ If you pass `withNavigation:true` in the init options, you will have navigation 
 	res.locals.navigation = {
 		lists: {
 			navbar_desktop: // data for the main nav in the header (only on large screens)
- 			navbar_mobile: //data for the white strip that appears on the homepage and fastFT pages only on small screens
+			navbar_mobile: //data for the white strip that appears on the homepage and fastFT pages only on small screens
 			drawer: //data for the slide-out menu
 			footer: // data for the footer
 		}
@@ -138,9 +138,9 @@ If you pass `withNavigation:true` in the init options, you will have navigation 
 ### Navigation Hierarchy
 If you also pass `withNavigationHierarchy: true` in the init options you get some additonal properties detailing the current page's position in the hierarchy.  This is only currently useful on stream pages.  The following properties are added:
 
- 	res.locals.navigation.currentItem // the current item
- 	res.locals.navigation.children //an array of the direct decendents of the current page
- 	res.locals.navigation.ancestors // an array of the parent items of the current page (top level first)
+	res.locals.navigation.currentItem // the current item
+	res.locals.navigation.children //an array of the direct decendents of the current page
+	res.locals.navigation.ancestors // an array of the parent items of the current page (top level first)
 
 ### Editions
 The navigation model also controls the edition switching logic.  The following properties are added
