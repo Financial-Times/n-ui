@@ -8,8 +8,8 @@ Subnavigation may be implemented by the consuming application using the followin
 
 ```js
 res.locals.subnav = {
-    breadcrumb: [ ...ancestors, currentPage ],
-    subsections: [ ...links ]
+	breadcrumb: [ ...ancestors, currentPage ],
+	subsections: [ ...links ]
 };
 ```
 
@@ -17,9 +17,9 @@ Optional locals can be set to change the display of the header
 
 ```
 nUi: {
-    header: {
-        disableSticky: false, // turns off the sticky header
-        userNav: false, // turns off the log-in/log-out/subscribe/etc links in the header
-        variant: 'logo-only' // currently the only variant, only displays the Financial Times logo in the header
-    }
+	header: {
+		disableSticky: false, // turns off the sticky header
+		userNav: false, // turns off the log-in/log-out/subscribe/etc links in the header
+		variant: 'logo-only' // currently the only variant, only displays the Financial Times logo in the header
+	}
 }

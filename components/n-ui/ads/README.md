@@ -5,18 +5,18 @@ This component is responsible for initialising o-ads with the correct config for
 To include an ad slot, place an HTML element where the ad is supposed to go, as below:
 ```
 <div
-  class="o-ads my-advert-class
-  o-ads__label-left"
-  data-o-ads-name="mpu"
-  data-o-ads-center="true"
-  data-o-ads-label="true"
-  data-o-ads-targeting="pos=mpu;"
-  data-o-ads-formats-default="MediumRectangle,Responsive"
-  data-o-ads-formats-small="MediumRectangle,Responsive"
-  data-o-ads-formats-medium="MediumRectangle,Responsive"
-  data-o-ads-formats-large="false"
-  data-o-ads-formats-extra="false"
-  aria-hidden="true"></div>
+	class="o-ads my-advert-class
+	o-ads__label-left"
+	data-o-ads-name="mpu"
+	data-o-ads-center="true"
+	data-o-ads-label="true"
+	data-o-ads-targeting="pos=mpu;"
+	data-o-ads-formats-default="MediumRectangle,Responsive"
+	data-o-ads-formats-small="MediumRectangle,Responsive"
+	data-o-ads-formats-medium="MediumRectangle,Responsive"
+	data-o-ads-formats-large="false"
+	data-o-ads-formats-extra="false"
+	aria-hidden="true"></div>
 ```
 
 See the documentation for [<o-ads>](http://registry.origami.ft.com/components/o-ads) for more.
@@ -52,9 +52,9 @@ e.g.
 
 ```
 {{#if @root.flags.advertsLayoutTest}}
-    <div class="o-ads" data-o-ads-formats-large="Billboard,Responsive"...>
+	<div class="o-ads" data-o-ads-formats-large="Billboard,Responsive"...>
 {{#else}}
-    <div class="o-ads" data-o-ads-formats-large="Leaderboard,Responsive"...>
+	<div class="o-ads" data-o-ads-formats-large="Leaderboard,Responsive"...>
 {{#endif}}
 ```
 
