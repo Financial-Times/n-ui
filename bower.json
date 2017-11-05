@@ -34,9 +34,6 @@
     "next-session-client": "^2.3.1",
     "n-counter-ad-blocking": "^3.1.2",
     "n-topic-search": "^1.0.0",
-    "n-desktop-app-banner": "^1.0.6"
-  },
-  "resolutions": {
-    "n-ui-foundations": "^2.4.3"
+    "n-desktop-app-banner": "^2.0.0"
   }
 }
