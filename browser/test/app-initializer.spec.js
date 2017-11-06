@@ -133,7 +133,8 @@ describe('AppInitializer', () => {
 				date: true,
 				cookieMessage: true,
 				ads: true,
-				syndication: true
+				syndication: true,
+				roe: true
 			});
 		});
 
