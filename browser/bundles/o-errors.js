@@ -14,8 +14,8 @@ oErrors.init({
 	tags: {
 		appName: appInfo.name
 	},
-	filterError: function () {
-		return !window.FT.disableOErrors;
+	filterError: function (reportedObject) {
+		return !(window.FT.disableOErrors || reportedObject.error.toString().search('window.FT') > 0);
 	},
 	errorBuffer: window.errorBuffer || []
 });
