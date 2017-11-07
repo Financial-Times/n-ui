@@ -1,6 +1,6 @@
 # n-ui [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-ui/badge.svg)](https://coveralls.io/github/Financial-Times/n-ui)
 
-Server, build and client side bootstrapping for next's user-facing applications.
+Server, build and client side bootstrapping for ft.com’s user-facing applications.
 
 **PLEASE DON'T USE THIS OUTSIDE OF USER-FACING FT.COM APPLICATIONS. If you need a good express server with handlebars, metrics etc available consider using [n-internal-tool](https://github.com/Financial-Times/n-internal-tool), [n-express](https://github.com/Financial-Times/n-express) or copying what you need from n-ui**
 
