@@ -2,6 +2,7 @@ import ads from '../../components/n-ui/ads';
 import tracking from '../../components/n-ui/tracking';
 import date from 'o-date';
 import header from '../../components/n-ui/header';
+import roe from '../../components/n-ui/roe';
 import oCookieMessage from 'o-cookie-message';
 import footer from 'o-footer';
 import { lazyLoad as lazyLoadImages } from 'n-image';
@@ -22,7 +23,8 @@ export const presets = {
 		date: true,
 		cookieMessage: true,
 		ads: true,
-		syndication: true
+		syndication: true,
+		roe: true
 	}
 };
 
@@ -138,6 +140,10 @@ export class AppInitializer {
 
 				if (this.enabledFeatures.syndication) {
 					syndication.init(flags);
+				}
+
+				if (this.enabledFeatures.roe) {
+					roe.init(flags);
 				}
 			});
 	}
