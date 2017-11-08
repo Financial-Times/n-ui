@@ -2,6 +2,7 @@
 import oAds from 'o-ads';
 import ads from '../../components/n-ui/ads';
 import tracking from '../../components/n-ui/tracking';
+import roe from '../../components/n-ui/roe';
 import oTracking from 'o-tracking';
 import oDate from 'o-date';
 import nUiFoundations from 'n-ui-foundations';
@@ -32,6 +33,7 @@ window.FT.nUi = Object.assign({}, app.env, {
 		oGrid,
 		nImage,
 		ftdomdelegate,
+		roe,
 		superstore,
 		superstoreSync
 	}

@@ -99,7 +99,8 @@
     "webpack": "^3.8.0",
     "webpack-merge": "^4.1.0",
     "webpack-sources": "^1.0.1",
-    "webpack-stats-plugin": "^0.1.5"
+    "webpack-stats-plugin": "^0.1.5",
+    "word-listener": "^1.0.0"
   },
   "eslintConfig": {
     "rules": {
