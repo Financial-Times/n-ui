@@ -15,7 +15,9 @@ oErrors.init({
 		appName: appInfo.name
 	},
 	filterError: function (reportedObject) {
-		return !(window.FT.disableOErrors || reportedObject.error.toString().search('window.FT') > 0);
+		const e = reportedObject.error.toString();
+		const windowFtError = e.search('window.FT') >= 0 && e.search('undefined') >= 0;
+		return !(window.FT.disableOErrors || windowFtError);
 	},
 	errorBuffer: window.errorBuffer || []
 });
