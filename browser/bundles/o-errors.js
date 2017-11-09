@@ -15,8 +15,9 @@ oErrors.init({
 		appName: appInfo.name
 	},
 	filterError: function (reportedObject) {
+		// Supress errors if they contain an "Undefined not a.... evaluating window.FT.flags | .nUi | .ftNextUi type error"
 		const e = reportedObject.error.toString();
-		const windowFtError = !e.match(/^(?=.*\bundefined\b)(?=.*(\bwindow.FT.flags\b|\bwindow.FT.nUi\b|\bwindow.FT.ftNextUi\b)).*$/gi)
+		const windowFtError = !!e.match(/^(?=.*\bundefined\b)(?=.*(\bwindow.FT.flags\b|\bwindow.FT.nUi\b|\bwindow.FT.ftNextUi\b)).*$/gi);
 		return !(window.FT.disableOErrors || windowFtError);
 	},
 	errorBuffer: window.errorBuffer || []
