@@ -16,7 +16,7 @@ oErrors.init({
 	},
 	filterError: function (reportedObject) {
 		const e = reportedObject.error.toString();
-		const windowFtError = e.search('window.FT') >= 0 && e.search('undefined') >= 0;
+		const windowFtError = !e.match(/^(?=.*\bundefined\b)(?=.*(\bwindow.FT.flags\b|\bwindow.FT.nUi\b|\bwindow.FT.ftNextUi\b)).*$/gi)
 		return !(window.FT.disableOErrors || windowFtError);
 	},
 	errorBuffer: window.errorBuffer || []
