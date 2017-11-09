@@ -5,13 +5,15 @@ const track = (componentId, componentPos) =>
 
 const intersectionCallback = (observer, changes) =>
 	changes.forEach(change => {
-		const component = change.target;
-		const componentId = component.id || component.getAttribute('data-trackable');
-		// get the component's position
-		const componentPos = [...document.querySelectorAll('.js-track-scroll-event')]
-			.findIndex(component => (component.id || component.getAttribute('data-trackable')) === componentId);
-		track(componentId, componentPos + 1);
-		observer.unobserve(component);
+		if(change.isIntersecting || change.intersectionRatio > 0) {
+			const component = change.target;
+			const componentId = component.id || component.getAttribute('data-trackable');
+			// get the component's position
+			const componentPos = [...document.querySelectorAll('.js-track-scroll-event')]
+				.findIndex(component => (component.id || component.getAttribute('data-trackable')) === componentId);
+			track(componentId, componentPos + 1);
+			observer.unobserve(component);
+		}
 	});
 
 const init = () => {
