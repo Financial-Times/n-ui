@@ -51,6 +51,18 @@ module.exports = function (flags, appName, adOptions) {
 		return zone.join('/');
 	}
 
+	function getLazyLoadConfig () {
+		// AD-OPS requested disabling lazy-loading on front page only for Q4 2017.
+		// Remove this logic to enable lazy-loading again.
+		if(/^front/.test(appName)) {
+			return false;
+		}
+		else {
+			return {
+				viewportMargin: getViewportMargin()
+			};
+		}
+	}
 
 	function getViewportMargin () {
 		let viewportMargin = '0%';
@@ -89,7 +101,7 @@ module.exports = function (flags, appName, adOptions) {
 		krux: kruxConfig,
 		collapseEmpty: 'before',
 		dfp_targeting: utils.keyValueString(targeting),
-		lazyLoad: { viewportMargin: getViewportMargin() },
+		lazyLoad: getLazyLoadConfig(),
 		targetingApi: adOptions.noTargeting ? null : {
 			user: `${apiUrlRoot}user`,
 			page: getContextualTargeting(appName),
