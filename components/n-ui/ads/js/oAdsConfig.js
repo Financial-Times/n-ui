@@ -52,9 +52,9 @@ module.exports = function (flags, appName, adOptions) {
 	}
 
 	function getLazyLoadConfig () {
-		// AD-OPS requested disabling lazy-loading on front page only for Q4 2017.
-		// Remove this logic to enable lazy-loading again.
-		if(/^front/.test(appName)) {
+		// The `threeAdProposition` flag is used fin Q4 to boost ad revenue.
+		// This is the same reason for switching lazy loading off, so using same flag
+		if(/^front/.test(appName) && flags.get('threeAdProposition')) {
 			return false;
 		}
 		else {

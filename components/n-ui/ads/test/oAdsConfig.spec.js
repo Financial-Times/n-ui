@@ -120,20 +120,19 @@ describe('Config', () => {
 			expect(config.lazyLoad).to.equal(false);
 		});
 
-		// UNCOMMENT 2 TESTS BELOW AND DELETE TEST ABOVE WHEN TURNING LAZY LOADING BACK ON FRONT-PAGE
-		// it('Should pass 15% when screen size is narrower than 760px and appName is fro', () => {
-		// 	sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 750; });
-		// 	const flags = { get: () => true };
-		// 	const config = oAdsConfig(flags, 'front');
-		// 	expect(config.lazyLoad.viewportMargin).to.equal('15%');
-		// });
+		it('Should pass 15% when screen size is narrower than 760px and appName is fro', () => {
+			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 750; });
+			const flags = { get: (param) => param !== 'threeAdProposition' };
+			const config = oAdsConfig(flags, 'front');
+			expect(config.lazyLoad.viewportMargin).to.equal('15%');
+		});
 
-		// it('Should pass 5% when screen size is narrower than 980px and wider than 759px and appName is fro', () => {
-		// 	sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 970; });
-		// 	const flags = { get: () => true };
-		// 	const config = oAdsConfig(flags, 'front');
-		// 	expect(config.lazyLoad.viewportMargin).to.equal('5%');
-		// });
+		it('Should pass 5% when screen size is narrower than 980px and wider than 759px and appName is fro', () => {
+			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 970; });
+			const flags = { get: (param) => param !== 'threeAdProposition' };
+			const config = oAdsConfig(flags, 'front');
+			expect(config.lazyLoad.viewportMargin).to.equal('5%');
+		});
 
 		it('Should pass 5% when screen size is narrower than 760px and appName is stream', () => {
 			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 750; });
