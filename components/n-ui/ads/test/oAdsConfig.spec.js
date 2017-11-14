@@ -114,16 +114,22 @@ describe('Config', () => {
 			expect(config.lazyLoad.viewportMargin).to.equal('0%');
 		});
 
+		it('Should return false when appName is fro', () => {
+			const flags = { get: () => true };
+			const config = oAdsConfig(flags, 'front');
+			expect(config.lazyLoad).to.equal(false);
+		});
+
 		it('Should pass 15% when screen size is narrower than 760px and appName is fro', () => {
 			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 750; });
-			const flags = { get: () => true };
+			const flags = { get: (param) => param !== 'noLazyLoadingFrontPage' };
 			const config = oAdsConfig(flags, 'front');
 			expect(config.lazyLoad.viewportMargin).to.equal('15%');
 		});
 
 		it('Should pass 5% when screen size is narrower than 980px and wider than 759px and appName is fro', () => {
 			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 970; });
-			const flags = { get: () => true };
+			const flags = { get: (param) => param !== 'noLazyLoadingFrontPage' };
 			const config = oAdsConfig(flags, 'front');
 			expect(config.lazyLoad.viewportMargin).to.equal('5%');
 		});
