@@ -10,7 +10,7 @@ module.exports = function (karma) {
 		basePath: '',
 		frameworks: ['mocha', 'chai', 'sinon', 'sinon-chai'],
 		files: [
-			require('./server/lib/asset-manager/polyfill-io')({}).enhanced
+			require('./server/lib/asset-manager/polyfill-io').enhanced
 		].concat(componentsToTest.map(name => name + '/**/*.spec.js')),
 		preprocessors: componentsToTest.reduce((obj, name) => {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap'];
