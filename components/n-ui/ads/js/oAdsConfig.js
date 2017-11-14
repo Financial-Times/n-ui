@@ -52,9 +52,8 @@ module.exports = function (flags, appName, adOptions) {
 	}
 
 	function getLazyLoadConfig () {
-		// The `threeAdProposition` flag is used fin Q4 to boost ad revenue.
-		// This is the same reason for switching lazy loading off, so using same flag
-		if(/^front/.test(appName) && flags.get('threeAdProposition')) {
+		// Switch off lazy loading in Q4.
+		if(/^front/.test(appName) && flags.get('noLazyLoadingFrontPage')) {
 			return false;
 		}
 		else {
