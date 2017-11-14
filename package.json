@@ -65,7 +65,7 @@
     "uglifyjs": "^2.4.11"
   },
   "dependencies": {
-    "@financial-times/n-desktop-app-banner": "^1.0.9",
+    "@financial-times/n-desktop-app-banner": "^2.0.0",
     "@financial-times/n-express": "^19.3.0",
     "@financial-times/n-handlebars": "^1.17.9",
     "@financial-times/next-json-ld": "^0.2.1",
@@ -99,7 +99,8 @@
     "webpack": "^3.8.0",
     "webpack-merge": "^4.1.0",
     "webpack-sources": "^1.0.1",
-    "webpack-stats-plugin": "^0.1.5"
+    "webpack-stats-plugin": "^0.1.5",
+    "word-listener": "^1.0.0"
   },
   "eslintConfig": {
     "rules": {

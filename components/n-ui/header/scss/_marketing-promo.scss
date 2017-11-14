@@ -1,6 +1,27 @@
+//This is a 'double hack' - it is a copy of how o-banner does it's 'marketing' button
+//https://github.com/Financial-Times/o-banner/blob/master/src/scss/_banner.scss#L119
+//to be pragmatic I am copy pasting, but in the longer term it should probably use a default o-button as
+//and when that becomes available
+
+@include oColorsSetUseCase(nUiHeaderMarketingPromo-button, background, 'teal-90');
+@include oColorsSetUseCase(nUiHeaderMarketingPromo-button, text, 'black');
+@include oColorsSetUseCase(nUiHeaderMarketingPromo-button-active, text, 'white');
+
+@mixin nUiHeaderMarketingPromoButton {
+	@include oButtons($size: default);
+	@include oButtonsCustomTheme(oColorsGetUseCase(nUiHeaderMarketingPromo-button, background), oColorsGetUseCase(nUiHeaderMarketingPromo-button, text), primary);
+	// This is a hack around the fact that custom buttons do not
+	// support buttons with three colours. TODO: add this to o-buttons
+	// https://github.com/Financial-Times/o-buttons/issues/128
+	&,
+	&:not([disabled]):active {
+		@include oColorsFor(nUiHeaderMarketingPromo-button-active, text);
+	}
+}
+
 @mixin nUiHeaderMarketingPromo {
 	.n-header__marketing-promo {
-		background-color: getColor('black-80');
+		background-color: getColor('teal-80');
 		color: getColor('white');
 		display: none;
 
@@ -14,7 +35,7 @@
 
 	.n-header__marketing-promo__container {
 		display: table;
-		height: 50px;
+		height: 56px;
 	}
 
 	.n-header__marketing-promo__box {
@@ -22,13 +43,16 @@
 		display: table-cell;
 		vertical-align: middle;
 		text-align: right;
-		padding-right: 120px;
-		background: url('https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fwww.ft.com%2F__assets%2Fcreatives%2Fproduct%2Fpack-shot-next-2.png?source=next&height=100') right top no-repeat;
-		background-size: auto 50px;
+		padding-right: 310px;
+		background: url('https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fwww.ft.com%2F__assets%2Fcreatives%2Fproduct%2FPrintPackshot-2017-09-07.png?source=next&height=48') right bottom no-repeat;
+		background-size: auto 48px;
+		//am not entirely sure why I need to do this, but something is putting in a default underline for the anchor
+		//and I couldn't figure out where / why
+		border-bottom: 0;
 	}
 
 	.n-header__marketing-promo__link {
-		@include oButtons($theme: primary);
+		@include nUiHeaderMarketingPromoButton;
 		word-spacing: 1px;
 	}
 }

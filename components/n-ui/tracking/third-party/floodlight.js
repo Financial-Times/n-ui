@@ -44,7 +44,7 @@ module.exports = function (flags) {
 		if (isSignUpForm) {
 			addPixel(`${host};type=signu107;cat=ft-ne00;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`);
 		} else if (isTrialConfirmation) {
- 			addPixel(`${host};type=trans658;cat=ft-ne00;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`);
+			addPixel(`${host};type=trans658;cat=ft-ne00;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`);
 		} else if (isSubscriptionConfirmation) {
 			addPixel(`${host};type=trans658;cat=ft-ne0;qty=1;u5=${offer};u7=${country};u8=${term};u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts}`);
 		} else if (isAnonymous) {

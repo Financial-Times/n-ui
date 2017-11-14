@@ -26,12 +26,14 @@ const scrollDepth = {
 
 		const intersectionCallback = (observer, changes) => {
 			changes.forEach(change => {
-				const scrollDepthMarkerEl = change.target;
-				fireBeacon(contextSource, scrollDepthMarkerEl.getAttribute('data-percentage'));
-				if (scrollDepthMarkerEl.parentNode) {
-					scrollDepthMarkerEl.parentNode.removeChild(scrollDepthMarkerEl);
+				if(change.isIntersecting || change.intersectionRatio > 0) {
+					const scrollDepthMarkerEl = change.target;
+					fireBeacon(contextSource, scrollDepthMarkerEl.getAttribute('data-percentage'));
+					if (scrollDepthMarkerEl.parentNode) {
+						scrollDepthMarkerEl.parentNode.removeChild(scrollDepthMarkerEl);
+					}
+					observer.unobserve(scrollDepthMarkerEl);
 				}
-				observer.unobserve(scrollDepthMarkerEl);
 			});
 		};
 
