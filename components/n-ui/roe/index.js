@@ -1,11 +1,11 @@
 import WordListener from 'word-listener';
 import { createToggler } from 'n-ui-foundations';
-import invertBody from './invert-body';
+import bodyInversion from './body-inversion';
 
 function init () {
 	new WordListener({
-		word: 'invert',
-		callback: createToggler({ callback: invertBody })
+		word: '\x69\x6e\x76\x65\x72\x74',
+		callback: createToggler({ callback: bodyInversion })
 	});
 }
 

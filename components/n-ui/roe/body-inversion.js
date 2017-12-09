@@ -1,5 +1,7 @@
-const invertBody = ({ flag }) => {
-	const body = document && document.body.style;
+const obfuscatedFilter = '\x69\x6e\x76\x65\x72\x74';
+
+const bodyInversion = ({ flag }) => {
+	const body = document.body.style;
 
 	if (!body) { return; }
 
@@ -8,4 +10,4 @@ const invertBody = ({ flag }) => {
 	body.filter = flag ? 'invert(100%)' : 'invert(0)';
 };
 
-export default invertBody;
+export default bodyInversion;
