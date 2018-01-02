@@ -6,7 +6,7 @@
 .DS_Store
 .editorconfig
 .eslintrc.js
-.scss-lint.yml
+.stylelintrc
 /public/__about.json
 /public/head-n-ui-core.css
 /public/main.css

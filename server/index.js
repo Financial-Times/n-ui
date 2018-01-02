@@ -7,6 +7,7 @@ const fs = require('fs');
 const navigation = require('./models/navigation/');
 const EditionsModel = require('./models/navigation/editionsModel');
 const anon = require('./models/anon');
+const currentYearModelMiddleware = require('./models/current-year');
 
 // templating and assets
 const handlebars = require('./lib/handlebars');
@@ -28,6 +29,7 @@ module.exports = options => {
 		// the options below are forced to be on
 		withNavigation: true,
 		withAnonMiddleware: true,
+		withCurrentYearMiddleware: true,
 		withFlags: true
 	});
 
@@ -97,6 +99,10 @@ module.exports = options => {
 
 	if (options.withAnonMiddleware) {
 		app.use(anon.middleware);
+	}
+
+	if (options.withCurrentYearMiddleware) {
+		app.use(currentYearModelMiddleware);
 	}
 
 	// Handle the akamai -> fastly -> akamai etc. circular redirect bug
