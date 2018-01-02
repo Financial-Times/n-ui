@@ -9,6 +9,7 @@ const tracking = require('../../components/n-ui/tracking');
 const sw = require('n-service-worker');
 const nImage = require('n-image');
 const syndication = require('n-syndication');
+const { nMessagingClient } = require('n-messaging-client');
 
 describe('AppInitializer', () => {
 	before(() => {
@@ -32,6 +33,7 @@ describe('AppInitializer', () => {
 		sinon.stub(sw, 'unregister');
 		sinon.stub(nImage, 'lazyLoad');
 		sinon.stub(syndication, 'init');
+		sinon.stub(nMessagingClient, 'init');
 	});
 
 	afterEach(() => {
@@ -48,6 +50,7 @@ describe('AppInitializer', () => {
 		sw.unregister.restore();
 		nImage.lazyLoad.restore();
 		syndication.init.restore();
+		nMessagingClient.init.restore();
 	});
 
 	describe('constructor', () => {
@@ -134,7 +137,8 @@ describe('AppInitializer', () => {
 				cookieMessage: true,
 				ads: true,
 				syndication: true,
-				roe: true
+				roe: true,
+				messaging: false
 			});
 		});
 
@@ -235,6 +239,16 @@ describe('AppInitializer', () => {
 		it('does not initialize lazy loaded images if feature is disabled', () => {
 			initApp({});
 			expect(nImage.lazyLoad.called).to.be.false;
+		});
+
+		it('initializes messaging if feature is enabled', () => {
+			initApp({messaging: true});
+			expect(nMessagingClient.init.called).to.be.true;
+		});
+
+		it('does not initialize messaging if feature is disabled', () => {
+			initApp({});
+			expect(nMessagingClient.init.called).to.be.false;
 		});
 
 		describe('after allStylesLoaded', () => {

@@ -8,6 +8,7 @@ import footer from 'o-footer';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 import DesktopAppBanner from 'n-desktop-app-banner';
+import { nMessagingClient } from 'n-messaging-client';
 import * as syndication from 'n-syndication';
 import { perfMark } from 'n-ui-foundations';
 
@@ -24,7 +25,8 @@ export const presets = {
 		cookieMessage: true,
 		ads: true,
 		syndication: true,
-		roe: true
+		roe: true,
+		messaging: false // todo: default off until tested
 	}
 };
 
@@ -120,6 +122,10 @@ export class AppInitializer {
 
 		if (this.enabledFeatures.lazyLoadImages) {
 			lazyLoadImages();
+		}
+
+		if (this.enabledFeatures.messaging) {
+			nMessagingClient.init();
 		}
 
 		// TODO - shouldn't it be possible to turn this off via the usual API?

@@ -123,6 +123,9 @@
 			<div class="n-layout__row n-layout__row--header">
 				{{#outputBlock 'above-header'}}{{/outputBlock}}
 				{{>n-ui/header/template content=header}}
+				{{#if @root.__withMessaging}}
+					{{>n-messaging-client/templates/slot type='top'}}
+				{{/if}}
 			</div>
 			<div class="n-layout__row n-layout__row--content">
 				{{{body}}}
@@ -130,6 +133,10 @@
 
 			{{#if __enableDesktopAppBanner}}
 				{{>n-desktop-app-banner/templates/banner}}
+			{{/if}}
+
+			{{#if @root.__withMessaging}}
+				{{>n-messaging-client/templates/slot type='bottom'}}
 			{{/if}}
 
 			<div class="n-layout__row n-layout__row--footer">
