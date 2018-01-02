@@ -50,6 +50,8 @@ program.version(nUiVersion);
 
 const webpackConfPath = path.join(__dirname, 'webpack.js');
 
+const webpackES6ConfPath = path.join(__dirname, 'webpack.es6.js');
+
 program
 	.command('build')
 	.description('Builds n-ui apps, ready to be deployed to your favourite s3 bucket or heroku host')
@@ -64,7 +66,7 @@ program
 
 		const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
 		const commands = {
-			'js-only': `'webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}'`,
+			'js-only': `'webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''} && webpack --bail --config ${webpackES6ConfPath} ${options.production ? '-p' : ''}'`,
 			'sass-only': cssEntryPoints.map(([target, entry]) => `'${script} ${entry} ${target}'`).join(' ')
 		};
 
