@@ -8,7 +8,8 @@ describe('current year middleware', () => {
 
 	before(() => {
 		app = nextExpress({
-			systemCode: 'server unit tests' // mandatory option
+			systemCode: 'server unit tests', // mandatory option
+			withAssets: false // else test server won't start
 		});
 		app.get('/', function (req, res) {
 			locals = res.locals;
