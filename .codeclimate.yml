@@ -1,0 +1,2 @@
+exclude_patterns:
+- "components/n-ui/tracking/third-party/speedcurve-lux/inline-code.js"
