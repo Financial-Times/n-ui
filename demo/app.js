@@ -12,6 +12,7 @@ const app = module.exports = express({
 	systemCode: 'n-ui-test',
 	withFlags: true,
 	withHandlebars: true,
+	withMessaging: true,
 	withNavigation: true,
 	withAnonMiddleware: true,
 	withLayoutPolling: false,
@@ -24,7 +25,12 @@ const app = module.exports = express({
 	directory: process.cwd()
 });
 
-app.locals.nUiConfig = { preset: 'complete' };
+app.locals.nUiConfig = {
+	preset: 'complete',
+	features: {
+		messaging: true // todo: enable by default
+	}
+};
 
 app.use(require('./middleware/assets'));
 

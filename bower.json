@@ -23,6 +23,7 @@
     "n-desktop-app-banner": "^2.0.0",
     "n-image": "^5.0.0",
     "n-service-worker": "^1.8.0",
+    "n-messaging-client": "0.1.0-beta.4",
     "n-sliding-popup": "^2.0.0",
     "n-syndication": "^3.5.0",
     "n-topic-search": "^1.0.0",

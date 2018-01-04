@@ -1,5 +1,6 @@
 const nExpress = require('@financial-times/n-express');
 const nextJsonLd = require('@financial-times/next-json-ld');
+const nMessagingPresenter= require('@financial-times/n-messaging-client').presenter;
 const path = require('path');
 const fs = require('fs');
 
@@ -19,7 +20,7 @@ module.exports = options => {
 		// hack: shouldn't be able to turn off, but it makes writing tests SOOO much easier
 		withAssets: true,
 		withHandlebars: true,
-
+		withMessaging: false,
 		withJsonLd: false,
 		withBackendAuthentication: true,
 		withServiceMetrics: true,
@@ -114,6 +115,16 @@ module.exports = options => {
 
 	if (options.withAssets) {
 		assetManager.init(options, meta.directory, app);
+	}
+
+	if (options.withMessaging) {
+		// add n-messaging-client presenter
+		options.helpers = options.helpers || {};
+		options.helpers.nMessagingPresenter = nMessagingPresenter;
+		app.use(function (req, res, next) {
+			res.locals.__withMessaging = true;
+			next();
+		});
 	}
 
 	if (options.withHandlebars) {
