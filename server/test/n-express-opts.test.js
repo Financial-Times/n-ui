@@ -53,4 +53,35 @@ describe('configuring n-express', () => {
 		expect(nExpressOpts.healthChecks).to.equal(hc);
 		nExpress.getAppContainer.restore();
 	});
+
+	describe('n-messaging-client integration', () => {
+		it('should have messaging off by default in n-express', () => {
+			sinon.stub(nExpress, 'getAppContainer').callsFake(() => ({app: {
+				locals: {},
+				use: () => null
+			}, meta: {}, addInitPromise: () => null}));
+			nUi({
+				withAssets: false,
+				withHandlebars: false
+			});
+			const nExpressOpts = nExpress.getAppContainer.args[0][0];
+			expect(nExpressOpts.withMessaging).to.be.false;
+			nExpress.getAppContainer.restore();
+		});
+		it('should be able to over ride withMessaging boolean in n-express', () => {
+			sinon.stub(nExpress, 'getAppContainer').callsFake(() => ({app: {
+				locals: {},
+				use: () => null
+			}, meta: {}, addInitPromise: () => null}));
+			nUi({
+				withAssets: false,
+				withHandlebars: false,
+				withMessaging: true
+			});
+			const nExpressOpts = nExpress.getAppContainer.args[0][0];
+			expect(nExpressOpts.withMessaging).to.be.true;
+			nExpress.getAppContainer.restore();
+		});
+	});
+
 });
