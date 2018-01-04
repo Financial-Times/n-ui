@@ -7,7 +7,7 @@ describe('n-messaging-client Middleware', function () {
 	let app;
 	let locals;
 
-	context('enabled (via config)', function() {
+	context('enabled (via config)', function () {
 		before(function () {
 			app = nextExpress({ withFlags:true, withHandlebars:false, withAssets: false, withMessaging: true, systemCode: 'n-messaging-client'});
 			app.get('/', function (req, res) {
@@ -27,7 +27,7 @@ describe('n-messaging-client Middleware', function () {
 		});
 	});
 
-	context('default (disabled)', function() {
+	context('default (disabled)', function () {
 
 		before(function () {
 			app = nextExpress({ withFlags:true, withHandlebars:false, withAssets: false, systemCode: 'n-messaging-client'});
