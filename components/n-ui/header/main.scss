@@ -50,6 +50,7 @@
 	}
 
 	@include nUiHeaderMarketingPromo;
+
 	.n-typeahead {
 		display: none;
 	}
@@ -62,13 +63,11 @@
 // fix up z-indexes
 .o-header__drawer {
 	@include nUiZIndexFor('drawer');
-}
-.o-header--sticky {
-	@include nUiZIndexFor('sticky-header');
+	display: block;
 }
 
-.o-header__drawer,
 .o-header--sticky {
+	@include nUiZIndexFor('sticky-header');
 	display: block;
 }
 
