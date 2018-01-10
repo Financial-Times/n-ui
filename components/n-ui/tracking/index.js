@@ -4,6 +4,7 @@ module.exports = {
 	},
 	lazyInit: function (flags) {
 		window.addEventListener('ftNextLoaded', function () {
+			require('./third-party/speedcurve-lux')(flags);
 			require('./third-party/floodlight')(flags);
 			require('./third-party/chartbeat')(flags);
 		});
