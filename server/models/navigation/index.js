@@ -11,7 +11,7 @@ module.exports = {
 		return navigationModelV2.init();
 	},
 	middleware : (req, res, next) => {
-		log.info({event:'NAVIGATION_MIDDLEWARE', source:'Origami'});
+		log.debug({event:'NAVIGATION_MIDDLEWARE', source:'Origami'});
 		return navigationModelV2.middleware(req, res, next);
 	}
 };
