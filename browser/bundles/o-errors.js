@@ -20,7 +20,7 @@ oErrors.init({
 		let windowFtError;
 		if ('error' in reportedObject) {
 				try {
-						windowFtError = String(reportedObject.error).match(/^(?=.*\bundefined\b)(?=.*(\bwindow.FT.flags\b|\bwindow.FT.nUi\b|\bwindow.FT.ftNextUi\b)).*$/gi);
+					windowFtError = String(reportedObject.error).match(/^.*\bundefined\b.*(\bwindow.FT.flags\b|\bwindow.FT.nUi\b|\bwindow.FT.ftNextUi\b).*$/i);
 				} catch (err) {
 					// could not stringify the error
 				}
