@@ -10,7 +10,7 @@
     "commitmsg": "node_modules/.bin/secret-squirrel-commitmsg"
   },
   "engines": {
-    "node": "^8.9.3"
+    "node": "^8.9.4"
   },
   "repository": {
     "type": "git",
