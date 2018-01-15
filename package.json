@@ -62,6 +62,7 @@
     "sinon": "^4.0.1",
     "sinon-chai": "^2.14.0",
     "supertest": "^3.0.0",
+    "ts-loader": "^3.2.0",
     "uglifyjs": "^2.4.11"
   },
   "dependencies": {

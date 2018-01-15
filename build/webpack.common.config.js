@@ -50,6 +50,13 @@ module.exports = {
 
 	module: {
 		rules: [
+			// typescript
+			{
+				test: /\.ts?$/, // Another convention is to use the .es6 filetype, but you then
+				// have to supply that explicitly in import statements, which isn't cool.
+				exclude: [/(node_modules|bower_components)/],
+				loader: 'ts-loader'
+			},
 			//babel
 			{
 				test: /\.js$/,
