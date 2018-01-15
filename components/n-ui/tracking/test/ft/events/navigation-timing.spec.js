@@ -1,8 +1,7 @@
 /*global describe, it, expect*/
 const Timing = require('../../../ft/events/navigation-timing');
 
-// Simulate a click on a given DOM element
-const load = function () {
+const load = function () { // Simulate a click on a given DOM element
 	return window.dispatchEvent(new Event('load', { 'view': window, 'bubbles': true, 'cancelable': true }));
 };
 
