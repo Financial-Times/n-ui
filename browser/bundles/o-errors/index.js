@@ -1,5 +1,7 @@
 const oErrors = require('o-errors');
 
+const filterError = require('./filter-error');
+
 const appInfo = {
 	isProduction: document.documentElement.hasAttribute('data-next-is-production'),
 	version: document.documentElement.getAttribute('data-next-version'),
@@ -14,21 +16,7 @@ oErrors.init({
 	tags: {
 		appName: appInfo.name
 	},
-	filterError: function (reportedObject) {
-		// does the error contain an "undefined" followed by one of the below?
-		// "window.FT.flags", "window.FT.nUi" or "window.FT.ftNextUi"
-		let windowFtError;
-		if ('error' in reportedObject) {
-				try {
-					windowFtError = String(reportedObject.error).match(/^.*\bundefined\b.*(\bwindow.FT.flags\b|\bwindow.FT.nUi\b|\bwindow.FT.ftNextUi\b).*$/i);
-				} catch (err) {
-					// could not stringify the error
-				}
-		}
-		// ignore if yes, or if o-errors is disabled
-		const ignore = windowFtError || window.FT.disableOErrors;
-		return !ignore;
-	},
+	filterError: filterError,
 	errorBuffer: window.errorBuffer || []
 });
 
