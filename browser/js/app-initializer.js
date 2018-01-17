@@ -10,6 +10,7 @@ import * as serviceWorker from 'n-service-worker';
 import DesktopAppBanner from 'n-desktop-app-banner';
 import * as syndication from 'n-syndication';
 import { perfMark } from 'n-ui-foundations';
+import speedcurveLux from '../../components/n-ui/speedcurve-lux';
 
 export const presets = {
 	discrete: {
@@ -125,6 +126,10 @@ export class AppInitializer {
 		// TODO - shouldn't it be possible to turn this off via the usual API?
 		if (flags.get('subscriberCohort') && flags.get('onboardingMessaging') === 'appPromotingBanner') {
 			new DesktopAppBanner();
+		}
+
+		if (flags.get('speedcurveLuxFlagsSupport')) {
+			speedcurveLux.addFlags(flags);
 		}
 
 		allStylesLoaded
