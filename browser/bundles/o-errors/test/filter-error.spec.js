@@ -13,9 +13,9 @@ describe('filter error', () => {
 		'window.FT.ftNextUi is undefined',
 		'window.FT.nUi is undefined',
 		'window.FT.flags is undefined'
-	].map((filterError) => it(`should filter ${filterError}`, () => {
-		const result = filterError({ error: new Error(filterError) });
-		expect(result).to.equal(false);
+	].map(err => it(`should filter ${err}`, () => {
+			const result = filterError({ error: new Error(err) });
+			expect(result).to.equal(false);
 	}));
 
 });
