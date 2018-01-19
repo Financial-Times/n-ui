@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Note: ${1##*/} <-- returns the file name from a path
 # E.g. ./client/comments.scss returns comments.scss
