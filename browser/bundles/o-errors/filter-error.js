@@ -1,5 +1,7 @@
 module.exports = (reportedObject) => {
-	// FIXME: explain why it's okay to fitler these errors out
+	// we want to filter out errors that only occur
+	// when critical scripts fail to load - in that case
+	// the execution of JS is halted and we fall back to core
 	const errorFilter = /\bwindow\.FT\.(flags|nUi|ftNextUi) is undefined/i;
 	let windowFtError;
 	if ('error' in reportedObject) {
