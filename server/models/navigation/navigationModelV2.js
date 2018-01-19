@@ -101,8 +101,6 @@ module.exports = class NavigationModelV2 {
 			return;
 		}
 
-		log.info({event:'NAVIGATION_MIDDLEWARE', datasource:'origami', menus:Object.keys(data).join(',')});
-
 		for(let [menuName, menuSource] of menuNameMap){
 			let menuData = typeof menuSource === 'object' ? data[menuSource[currentEdition]] : data[menuSource];
 			if(!menuData){
