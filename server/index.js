@@ -6,7 +6,6 @@ const fs = require('fs');
 // Models
 const navigation = require('./models/navigation/');
 const EditionsModel = require('./models/navigation/editionsModel');
-const anon = require('./models/anon');
 const currentYearModelMiddleware = require('./models/current-year');
 
 // templating and assets
@@ -95,10 +94,6 @@ module.exports = options => {
 		addInitPromise(navigation.init({withNavigationHierarchy:options.withNavigationHierarchy}));
 		app.use(editions.middleware.bind(editions));
 		app.use(navigation.middleware);
-	}
-
-	if (options.withAnonMiddleware) {
-		app.use(anon.middleware);
 	}
 
 	if (options.withCurrentYearMiddleware) {
