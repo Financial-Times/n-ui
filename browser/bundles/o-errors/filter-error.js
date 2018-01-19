@@ -1,8 +1,6 @@
-const errorFilter = /^(?=.*\bundefined\b)(?=.*(\bwindow.FT.flags\b|\bwindow.FT.nUi\b|\bwindow.FT.ftNextUi\b)).*$/gi;
-
 module.exports = (reportedObject) => {
-	// does the error contain an "undefined" followed by one of the below?
-	// "window.FT.flags", "window.FT.nUi" or "window.FT.ftNextUi"
+	// FIXME: explain why it's okay to fitler these errors out
+	const errorFilter = /\bwindow\.FT\.(flags|nUi|ftNextUi) is undefined/i;
 	let windowFtError;
 	if ('error' in reportedObject) {
 			try {
