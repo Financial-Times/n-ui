@@ -1,15 +1,16 @@
 module.exports = (reportedObject) => {
-	// does the error contain an "undefined" followed by one of the below?
-	// "window.FT.flags", "window.FT.nUi" or "window.FT.ftNextUi"
+	// we want to filter out errors that only occur
+	// when critical scripts fail to load - in that case
+	// the execution of JS is halted and we fall back to core
+	const errorFilter = /\bwindow\.FT\.(flags|nUi|ftNextUi) is undefined/i;
 	let windowFtError;
 	if ('error' in reportedObject) {
 			try {
-				windowFtError = String(reportedObject.error).match(/^.*\bundefined\b.*(\bwindow.FT.flags\b|\bwindow.FT.nUi\b|\bwindow.FT.ftNextUi\b).*$/i);
+				windowFtError = !!String(reportedObject.error).match(errorFilter);
 			} catch (err) {
 				// could not stringify the error
 			}
 	}
-	// ignore if yes, or if o-errors is disabled
-	const ignore = windowFtError || window.FT.disableOErrors;
-	return !ignore;
+	// filter if yes, or if o-errors disabled
+	return !(windowFtError || window.FT.disableOErrors);
 };

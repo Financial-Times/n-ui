@@ -9,9 +9,13 @@ describe('filter error', () => {
 		expect(result).to.equal(true);
 	});
 
-	it('should filter undefined window.FT.ftNextUi error', () => {
-		const result = filterError({ error: new Error('undefined window.FT.ftNextUi') });
-		expect(result).to.equal(false);
-	});
+	[
+		'window.FT.ftNextUi is undefined',
+		'window.FT.nUi is undefined',
+		'window.FT.flags is undefined'
+	].map(err => it(`should filter ${err}`, () => {
+			const result = filterError({ error: new Error(err) });
+			expect(result).to.equal(false);
+	}));
 
 });
