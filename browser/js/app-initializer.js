@@ -129,7 +129,7 @@ export class AppInitializer {
 		}
 
 		if (flags.get('speedcurveLuxFlagsSupport')) {
-			speedcurveLux.addFlags(flags);
+			speedcurveLux.addFlags();
 		}
 
 		allStylesLoaded

@@ -1,16 +1,23 @@
-function addFlags (flags) {
+// tell LUX what flag variants this user has
+function addAbStateDataToLux () {
+	const dataAbState = document.documentElement.getAttribute('data-ab-state');
+	if (dataAbState && dataAbState !== '-') {
+		dataAbState.split(/\s*,\s*/)
+			.map(test => test.split(/\s*:\s*/))
+			.map(test => ({ flagName: test[0], variant: test[1] }))
+			.forEach(test => window.LUX.addData(test.flagName, test.variant));
+	}
+}
+
+function addFlags () {
 	// is LUX ready?
 	if (!window.LUX || !window.LUX.addData) {
 		// wait for when it is ready
 		const script = document.querySelector('[data-next-speedcurve-lux-script]');
-		script.addEventListener('load', () => addFlags(flags));
+		script.addEventListener('load', () => addFlags());
 	} else {
-		// LUX is indeed ready...
-
-		// we're going to test this idea with just one flag
-		// if it goes well, we may consider adding all flags :) :)
-		const flagName = 'swAdsCaching';
-		window.LUX.addData(flagName, flags.get(flagName));
+		// LUX is indeed ready
+		addAbStateDataToLux();
 	}
 }
 
