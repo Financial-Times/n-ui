@@ -120,7 +120,6 @@ module.exports = class NavigationModelV2 {
 		}
 
 		if(this.options.withNavigationHierarchy){
-			log.info({event:'NAVIGATION_HIERARCHY_ENABLED'});
 			res.locals.navigation.idMap = this.idMapPoller.getData() || {};
 			let hierarcyApiUrl = this.apiHierarcyUrl + currentUrl;
 			fetch(hierarcyApiUrl)
@@ -146,7 +145,6 @@ module.exports = class NavigationModelV2 {
 				})
 				.then(next);
 		}else{
-			log.info({event:'NAVIGATION_HIERARCHY_DISABLED'});
 			next();
 		}
 	}
