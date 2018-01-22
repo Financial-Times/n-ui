@@ -3,7 +3,7 @@ function addFlags () {
 	if (!window.LUX || !window.LUX.addData) {
 		// wait for when it is ready
 		const script = document.querySelector('[data-next-speedcurve-lux-script]');
-		script.addEventListener('load', () => addFlags(flags));
+		script.addEventListener('load', () => addFlags());
 	} else {
 		// LUX is indeed ready...
 
