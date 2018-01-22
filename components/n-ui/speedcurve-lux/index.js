@@ -1,4 +1,4 @@
-function addFlags (flags) {
+function addFlags () {
 	// is LUX ready?
 	if (!window.LUX || !window.LUX.addData) {
 		// wait for when it is ready
@@ -7,10 +7,14 @@ function addFlags (flags) {
 	} else {
 		// LUX is indeed ready...
 
-		// we're going to test this idea with just one flag
-		// if it goes well, we may consider adding all flags :) :)
-		const flagName = 'swAdsCaching';
-		window.LUX.addData(flagName, flags.get(flagName));
+		// tell LUX what flag variants this user has
+		const dataAbState = document.documentElement.getAttribute('data-ab-state');
+		if (dataAbState && dataAbState !== '-') {
+			dataAbState.split(/\s*,\s*/)
+				.map(test => test.split(/\s*:\s*/))
+				.map(test => ({ flagName: test[0], variant: test[1] }))
+				.forEach(test => window.LUX.addData(test.flagName, test.variant));
+		}
 	}
 }
 

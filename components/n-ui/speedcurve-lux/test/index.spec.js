@@ -10,12 +10,9 @@ describe('Speedcurve LUX', () => {
 			window.LUX = {
 				addData: sinon.spy()
 			};
-			const flags = {
-				get: sinon.stub()
-			};
-			flags.get.withArgs('swAdsCaching').returns('control');
+			document.documentElement.setAttribute('data-ab-state', 'headlineTesting:variant2,swAdsCaching:control,onsiteMessagingTest:on');
 
-			speedcurveLux.addFlags(flags);
+			speedcurveLux.addFlags();
 
 			expect(window.LUX.addData).to.have.been.calledWith('swAdsCaching', 'control');
 		});
