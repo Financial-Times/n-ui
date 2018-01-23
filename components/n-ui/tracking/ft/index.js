@@ -59,14 +59,19 @@ const oTrackingWrapper = {
 			}
 
 			const errorStatus = (/nextErrorStatus=(\d{3})/.exec(window.location.search) || [])[1];
+			const errorReason = (/nextErrorReason=(\w+)/.exec(window.location.search) || [])[1];
 			const pageViewConf = {context: {}};
 
 			if (errorStatus) {
 				// TODO after https://github.com/Financial-Times/o-tracking/issues/122#issuecomment-194970465
-				// this should be redundant as context woudl propagate down to each event in its entirety
+				// this should be redundant as context would propagate down to each event in its entirety
 				context.url = pageViewConf.context.url = window.parent.location.toString();
 				context.referrer = pageViewConf.context.referrer = window.parent.document.referrer;
 				context.errorStatus = pageViewConf.context.errorStatus = errorStatus;
+
+				if (errorReason) {
+					context.errorReason = pageViewConf.context.errorReason = errorReason;
+				}
 			}
 
 			const edition = document.querySelector('[data-next-edition]');
