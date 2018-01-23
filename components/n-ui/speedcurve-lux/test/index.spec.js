@@ -14,7 +14,7 @@ describe('Speedcurve LUX', () => {
 
 			speedcurveLux.addFlags();
 
-			expect(window.LUX.addData).to.have.been.calledWith('swAdsCaching', 'control');
+			expect(window.LUX.addData).to.have.been.calledWith('headlineTesting', 'variant2');
 		});
 
 		it('should add flags after LUX script loads', () => {
