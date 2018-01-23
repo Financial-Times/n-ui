@@ -4,8 +4,10 @@ function addAbStateDataToLux () {
 	if (dataAbState && dataAbState !== '-') {
 		dataAbState.split(/\s*,\s*/)
 			.map(test => test.split(/\s*:\s*/))
-			.map(test => ({ flagName: test[0], variant: test[1] }))
-			.forEach(test => window.LUX.addData(test.flagName, test.variant));
+			.map(([flagName, variant]) => ({ flagName, variant }))
+			// only include sw flags if sw is supported
+			.filter(({flagName}) => !/^sw[A-Z]/.test(flagName) || navigator.serviceWorker)
+			.forEach(({ flagName, variant }) => window.LUX.addData(flagName, variant));
 	}
 }
 
