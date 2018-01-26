@@ -98,12 +98,6 @@ const oTrackingWrapper = {
 				}
 			}
 
-			// if we're on the homepage add viewStyle = ("compact"|"standard") to allow people to differentiate
-			if(location.pathname === '/'){
-				const mode = cookieStore.get('ft-homepage-view') || 'standard';
-				pageViewConf.context.mode = mode;
-			}
-
 			oTracking.init({
 				server: 'https://spoor-api.ft.com/ingest',
 				context: context,
