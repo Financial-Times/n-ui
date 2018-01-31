@@ -7,7 +7,6 @@ import oCookieMessage from 'o-cookie-message';
 import footer from 'o-footer';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
-import DesktopAppBanner from 'n-desktop-app-banner';
 import * as syndication from 'n-syndication';
 import { perfMark } from 'n-ui-foundations';
 import speedcurveLux from '../../components/n-ui/speedcurve-lux';
@@ -121,11 +120,6 @@ export class AppInitializer {
 
 		if (this.enabledFeatures.lazyLoadImages) {
 			lazyLoadImages();
-		}
-
-		// TODO - shouldn't it be possible to turn this off via the usual API?
-		if (flags.get('subscriberCohort') && flags.get('onboardingMessaging') === 'appPromotingBanner') {
-			new DesktopAppBanner();
 		}
 
 		if (flags.get('speedcurveLuxFlagsSupport')) {
