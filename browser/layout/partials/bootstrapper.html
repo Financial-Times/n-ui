@@ -23,6 +23,7 @@
 				attribute to inline scripts, i.e. load asynchronously, execute in order}}
 			script.async = false;
 			script.src = src;
+			script.type = 'module';
 			if (stopsExecutionOnLoadError) {
 				script.onerror = loadError;
 			}
