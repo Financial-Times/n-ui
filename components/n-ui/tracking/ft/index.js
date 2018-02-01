@@ -4,7 +4,7 @@ const oViewport = require('o-viewport');
 const nextEvents = require('./next-events');
 
 
-import {broadcast, cookieStore} from 'n-ui-foundations';
+import {broadcast} from 'n-ui-foundations';
 
 
 function nodesToArray (nodelist) {
