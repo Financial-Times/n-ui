@@ -8,14 +8,14 @@ module.exports = {
 	strings: {
 		deny: [],
 		denyOverrides: [
-			'62a990fd8dce4a27aafb006b58783f66@sentry.io', // browser/bundles/o-errors.js:11
-			'62a990fd8dce4a27aafb006b58783f66', // browser/bundles/o-errors.js:11|11
+			'/circleci/project/github/RedSparr0w/node', // README.md:1
+			'62a990fd8dce4a27aafb006b58783f66@sentry\\.io', // browser/bundles/o-errors/index.js:13
+			'62a990fd8dce4a27aafb006b58783f66', // browser/bundles/o-errors/index.js:13|13
 			'2dd640a6-6ebd-4d4f-af30-af8baa441a0d', // components/n-ui/ads/js/krux.js:55
 			'e4942ff0-4070-4896-a7ef-e6a5a30ce9f9', // components/n-ui/ads/js/krux.js:68
 			'2111c0af-fc3a-446f-ab07-63aa74fbde8e', // components/n-ui/ads/js/krux.js:75
 			'05a3d326-9abe-5885-4ee2-8d58d9a9a4ea', // components/n-ui/header/js/promoHandler.js:70
 			'27e66825-bc4f-ba59-a3cd-1a8f08579bfe', // components/n-ui/header/partials/marketing-promo/template.html:4
-			'676c655f-9b47-27a8-97db-ab3a6a6dbc54', // server/models/anon.js:14
 			'190b4443-dc03-bd53-e79b-b4b6fbd04e64', // server/test/fixtures/navigationLists.json:13|3037, server/test/stubs/navigationListData.json:13|4922
 			'navigationModelV2Stub', // server/test/navigation/navigation.test.js:7|15|20|29
 			'NavigationModelV2Stub', // server/test/navigation/navigation.test.js:10|11
