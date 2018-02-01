@@ -4,7 +4,7 @@ const oViewport = require('o-viewport');
 const nextEvents = require('./next-events');
 
 
-import {broadcast, cookieStore} from 'n-ui-foundations';
+import {broadcast} from 'n-ui-foundations';
 
 
 function nodesToArray (nodelist) {
@@ -96,12 +96,6 @@ const oTrackingWrapper = {
 						context[key] = pageMeta[key];
 					}
 				}
-			}
-
-			// if we're on the homepage add viewStyle = ("compact"|"standard") to allow people to differentiate
-			if(location.pathname === '/'){
-				const mode = cookieStore.get('ft-homepage-view') || 'standard';
-				pageViewConf.context.mode = mode;
 			}
 
 			oTracking.init({
