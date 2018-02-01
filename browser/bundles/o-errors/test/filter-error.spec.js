@@ -12,7 +12,9 @@ describe('filter error', () => {
 	[
 		'window.FT.ftNextUi is undefined',
 		'window.FT.nUi is undefined',
-		'window.FT.flags is undefined'
+		'window.FT.flags is undefined',
+		'undefined is not an object (evaluating \'window.FT.nUi._hiddenComponents\')',
+		'undefined is not a function (evaluating \'Object.assign(window.FT.flags'
 	].map(err => it(`should filter ${err}`, () => {
 			const result = filterError({ error: new Error(err) });
 			expect(result).to.equal(false);
