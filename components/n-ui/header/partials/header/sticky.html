@@ -36,6 +36,7 @@
 					{{#unlessEquals nUi.header.userNav false}}
 						<div class="o-header__nav">
 							<ul class="o-header__nav-list o-header__nav-list--right" data-trackable="user-nav">
+								{{#outputBlock 'mobile-sticky-header'}}{{/outputBlock}}
 								{{#each @root.navigation.menus.navbar-right-anon.items}}
 									<li class="o-header__nav-item {{#ifEquals label 'Subscribe'}}o-header__nav-item--expanded{{/ifEquals}}">
 										<a
@@ -54,6 +55,7 @@
 				{{/if}}
 
 				{{#if @root.anon.userIsLoggedIn}}
+					{{#outputBlock 'mobile-sticky-header'}}{{/outputBlock}}
 					<a class="o-header__top-link o-header__top-link--myft" href="/myft" data-trackable="my-ft" tabindex="-1">
 						<span class="o-header__visually-hidden">myFT</span>
 					</a>

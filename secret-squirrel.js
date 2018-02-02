@@ -81,7 +81,8 @@ module.exports = {
 			'40cae4c8-d7fa-11e6-944b-e7eb37a6aa8e', // server/test/stubs/navigationv2Data.json:3910|5587
 			'0fee75c6-dd73-11e6-9d7c-be108f1c1dce', // server/test/stubs/navigationv2Data.json:3914|5591
 			'c225ddde-d85b-11e4-ba53-00144feab7de', // server/test/stubs/navigationv2Data.json:3918|5595
-			'0f3e15c2-dc07-11e6-86ac-f253db7791c6' // server/test/stubs/navigationv2Data.json:3922|5599
+			'0f3e15c2-dc07-11e6-86ac-f253db7791c6', // server/test/stubs/navigationv2Data.json:3922|5599
+			'/circleci/project/github/RedSparr0w/node' // README.md:1
 		]
 	}
 };
