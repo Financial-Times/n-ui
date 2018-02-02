@@ -63,7 +63,6 @@
     "uglifyjs": "^2.4.11"
   },
   "dependencies": {
-    "@financial-times/n-desktop-app-banner": "^2.0.0",
     "@financial-times/n-express": "^19.8.0",
     "@financial-times/n-handlebars": "^1.17.9",
     "@financial-times/next-json-ld": "^0.2.1",

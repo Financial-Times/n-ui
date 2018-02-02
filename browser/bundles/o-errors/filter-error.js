@@ -2,7 +2,7 @@ module.exports = (reportedObject) => {
 	// we want to filter out errors that only occur
 	// when critical scripts fail to load - in that case
 	// the execution of JS is halted and we fall back to core
-	const errorFilter = /\bwindow\.FT\.(flags|nUi|ftNextUi) is undefined/i;
+	const errorFilter = /\bwindow\.FT\.(flags|nUi|ftNextUi) is undefined|\bundefined\b.*window\.FT\.(flags|nUi)/i;
 	let windowFtError;
 	if ('error' in reportedObject) {
 			try {

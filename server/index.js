@@ -74,8 +74,6 @@ module.exports = options => {
 	app.use(function (req, res, next) {
 		app.locals.__disableAndroidBanner = (!res.locals.flags.subscriberCohort || res.locals.flags.disableAndroidSmartBanner);
 		app.locals.__disableIosSmartBanner = (!res.locals.flags.subscriberCohort || res.locals.flags.disableIosSmartBanner);
-		app.locals.__enableDesktopAppBanner = res.locals.flags.subscriberCohort && res.locals.flags.onboardingMessaging === 'appPromotingBanner';
-
 		next();
 	});
 
