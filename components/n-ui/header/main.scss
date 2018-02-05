@@ -1,5 +1,4 @@
 @import 'o-header/main';
-@import 'scss/marketing-promo';
 @import 'n-topic-search/main';
 
 
@@ -48,8 +47,6 @@
 	.o-header__search-close {
 		margin-bottom: -3px;
 	}
-
-	@include nUiHeaderMarketingPromo;
 
 	.n-typeahead {
 		display: none;
