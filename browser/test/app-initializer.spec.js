@@ -198,7 +198,7 @@ describe('AppInitializer', () => {
 		});
 
 		it('initializes header if feature is enabled', () => {
-			const app = initApp({header: true});
+			initApp({header: true});
 			expect(header.init.called).to.be.true;
 		});
 
