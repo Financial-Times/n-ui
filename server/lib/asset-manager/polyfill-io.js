@@ -29,7 +29,8 @@ const queryStrings = {
 			'Array.from',
 			'NodeList.prototype.@@iterator',
 			'Array.prototype.@@iterator',
-			'EventSource'
+			'EventSource',
+			'Number.isInteger'
 		],
 		flags: 'gated'
 	}),
