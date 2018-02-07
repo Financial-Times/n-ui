@@ -4,23 +4,23 @@ build.
 
 If something is required for both, please add it here.
 */
-const webpack = require("webpack");
-const BowerResolvePlugin = require("bower-resolve-webpack-plugin");
+const webpack = require('webpack');
+const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
 // Common babel config
 const babelLoaderConfig = {
-	loader: "babel-loader",
+	loader: 'babel-loader',
 	options: {
 		babelrc: false, // ignore any .babelrc in project & dependencies
 		cacheDirectory: true,
 		plugins: [
 			// converts `export default 'foo'` to `exports.default = 'foo'`
-			require.resolve("babel-plugin-add-module-exports"),
+			require.resolve('babel-plugin-add-module-exports'),
 
 			// ensures a module reqired multiple times is only transpiled once and
 			// is shared by all that use it rather than transpiling it each time
 			[
-				require.resolve("babel-plugin-transform-runtime"),
+				require.resolve('babel-plugin-transform-runtime'),
 				{
 					helpers: false,
 					polyfill: false
@@ -29,15 +29,15 @@ const babelLoaderConfig = {
 		],
 		presets: [
 			[
-				require.resolve("babel-preset-env"),
+				require.resolve('babel-preset-env'),
 				{
-					include: ["transform-es2015-classes"],
+					include: ['transform-es2015-classes'],
 					targets: {
-						browsers: ["last 2 versions", "ie >= 11"]
+						browsers: ['last 2 versions', 'ie >= 11']
 					}
 				}
 			],
-			require.resolve("babel-preset-react")
+			require.resolve('babel-preset-react')
 		]
 	}
 };
@@ -47,7 +47,7 @@ module.exports = {
 	bail: true,
 
 	// Generate source maps
-	devtool: "source-map",
+	devtool: 'source-map',
 
 	resolve: {
 		plugins: [
@@ -60,20 +60,20 @@ module.exports = {
 		// In which folders the resolver look for modules relative paths are
 		// looked up in every parent folder (like node_modules) absolute
 		// paths are looked up directly the order is respected
-		modules: ["bower_components", "node_modules"],
+		modules: ['bower_components', 'node_modules'],
 
 		// These JSON files are read in directories
-		descriptionFiles: ["bower.json", "package.json"],
+		descriptionFiles: ['bower.json', 'package.json'],
 
 		// These fields in the description files are looked up when trying to resolve the package directory
-		mainFields: ["main", "browser"],
+		mainFields: ['main', 'browser'],
 
 		// These files are tried when trying to resolve a directory
-		mainFiles: ["index", "main"],
+		mainFiles: ['index', 'main'],
 
 		// These fields in the description files offer aliasing in this package
 		// The content of these fields is an object where requests to a key are mapped to the corresponding value
-		aliasFields: ["browser"]
+		aliasFields: ['browser']
 	},
 
 	module: {
@@ -100,6 +100,6 @@ module.exports = {
 	},
 
 	output: {
-		filename: "[name]"
+		filename: '[name]'
 	}
 };
