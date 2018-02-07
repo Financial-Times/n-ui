@@ -82,9 +82,9 @@ module.exports = {
 			{
 				test: /\.ts?$/,
 				exclude: [/(node_modules|bower_components)/],
-				use: [ 
+				use: [
 					babelLoaderConfig,
-					{ 
+					{
 						loader: 'ts-loader'
 					}
 				]
@@ -92,7 +92,7 @@ module.exports = {
 			//babel
 			{
 				test: /\.js$/,
-				use: [ 
+				use: [
 					babelLoaderConfig
 				]
 			}
