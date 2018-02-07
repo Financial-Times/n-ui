@@ -99,12 +99,17 @@ const oTrackingWrapper = {
 			}
 
 			const abState = getRootData('ab-state');
-			if (abState && abState !== '-') {
-				const ammitAllocations = {};
-				abState.split(',').map(flag => {
-					const [name, value] = flag.split(':');
-					ammitAllocations[name] = value;
-				});
+			if (abState) {
+				let ammitAllocations = abState;
+
+				if (abState !== '-') {
+					ammitAllocations = {};
+					abState.split(',').map(flag => {
+						const [name, value] = flag.split(':');
+						ammitAllocations[name] = value;
+					});
+				}
+
 				context['active_ammit_flags'] = ammitAllocations;
 			}
 
