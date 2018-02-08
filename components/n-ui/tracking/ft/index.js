@@ -98,6 +98,21 @@ const oTrackingWrapper = {
 				}
 			}
 
+			const abState = getRootData('ab-state');
+			if (abState) {
+				let ammitAllocations = abState;
+
+				if (abState !== '-') {
+					ammitAllocations = {};
+					abState.split(',').map(flag => {
+						const [name, value] = flag.split(':');
+						ammitAllocations[name] = value;
+					});
+				}
+
+				context['active_ammit_flags'] = ammitAllocations;
+			}
+
 			oTracking.init({
 				server: 'https://spoor-api.ft.com/ingest',
 				context: context,
