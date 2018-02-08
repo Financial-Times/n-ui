@@ -1,10 +1,7 @@
 const OHeader = require('o-header');
-const promoHandler = require('./js/promoHandler');
 const TopicSearch = require('n-topic-search');
 
-function init (flags) {
-	promoHandler.init(flags);
-
+function init () {
 	new OHeader();
 
 	// initialise separate sticky header
