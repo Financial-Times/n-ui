@@ -7,6 +7,41 @@ If something is required for both, please add it here.
 const webpack = require('webpack');
 const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
+// Common babel config
+const babelLoaderConfig = {
+	loader: 'babel-loader',
+	options: {
+		babelrc: false, // ignore any .babelrc in project & dependencies
+		cacheDirectory: true,
+		plugins: [
+			// converts `export default 'foo'` to `exports.default = 'foo'`
+			require.resolve('babel-plugin-add-module-exports'),
+
+			// ensures a module reqired multiple times is only transpiled once and
+			// is shared by all that use it rather than transpiling it each time
+			[
+				require.resolve('babel-plugin-transform-runtime'),
+				{
+					helpers: false,
+					polyfill: false
+				}
+			]
+		],
+		presets: [
+			[
+				require.resolve('babel-preset-env'),
+				{
+					include: ['transform-es2015-classes'],
+					targets: {
+						browsers: ['last 2 versions', 'ie >= 11']
+					}
+				}
+			],
+			require.resolve('babel-preset-react')
+		]
+	}
+};
+
 module.exports = {
 	// Abort the compilation on first error
 	bail: true,
@@ -15,7 +50,6 @@ module.exports = {
 	devtool: 'source-map',
 
 	resolve: {
-
 		plugins: [
 			// Scope hoisting
 			new webpack.optimize.ModuleConcatenationPlugin(),
@@ -26,10 +60,7 @@ module.exports = {
 		// In which folders the resolver look for modules relative paths are
 		// looked up in every parent folder (like node_modules) absolute
 		// paths are looked up directly the order is respected
-		modules: [
-			'bower_components',
-			'node_modules',
-		],
+		modules: ['bower_components', 'node_modules'],
 
 		// These JSON files are read in directories
 		descriptionFiles: ['bower.json', 'package.json'],
@@ -38,10 +69,7 @@ module.exports = {
 		mainFields: ['main', 'browser'],
 
 		// These files are tried when trying to resolve a directory
-		mainFiles: [
-			'index',
-			'main'
-		],
+		mainFiles: ['index', 'main'],
 
 		// These fields in the description files offer aliasing in this package
 		// The content of these fields is an object where requests to a key are mapped to the corresponding value
@@ -52,43 +80,21 @@ module.exports = {
 		rules: [
 			// typescript
 			{
-				test: /\.ts?$/, // Another convention is to use the .es6 filetype, but you then
-				// have to supply that explicitly in import statements, which isn't cool.
+				test: /\.ts?$/,
 				exclude: [/(node_modules|bower_components)/],
-				loader: 'ts-loader'
+				use: [
+					babelLoaderConfig,
+					{
+						loader: 'ts-loader'
+					}
+				]
 			},
 			//babel
 			{
 				test: /\.js$/,
-				loader: 'babel-loader',
-				query: {
-					babelrc: false, // ignore any .babelrc in project & dependencies
-					cacheDirectory: true,
-					plugins: [
-						// converts `export default 'foo'` to `exports.default = 'foo'`
-						require.resolve('babel-plugin-add-module-exports'),
-
-						// ensures a module reqired multiple times is only transpiled once and
-						// is shared by all that use it rather than transpiling it each time
-						[require.resolve('babel-plugin-transform-runtime'),
-						{
-							helpers: false,
-							polyfill: false,
-						}
-						],
-					],
-					presets: [
-						[
-							require.resolve('babel-preset-env'), {
-								include: ['transform-es2015-classes'],
-								targets: {
-									browsers: ['last 2 versions', 'ie >= 11']
-								}
-							}
-						],
-						require.resolve('babel-preset-react')
-					]
-				}
+				use: [
+					babelLoaderConfig
+				]
 			}
 		]
 	},
