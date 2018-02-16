@@ -33,11 +33,6 @@ exports.init = (flags) => {
 
 		if(kuid && typeof kuid !== 'undefined') {
 
-			// Rubicon handles programmatic advertising. This matches up the user ID formats so Krux can send segment populations to them.
-			if(flags.get('kruxRubiconIntegration')) {
-				frequencyCap('rubicon', 2, () => { addPixel(`https://tap.rubiconproject.com/oz/feeds/krux/tokens?afu=${kuid}`); });
-			}
-
 			// DoubleClick handles display advertising. This matches up the user ID formats so Krux can send segment populations to them.
 			if(flags.get('kruxGoogleIntegration')) {
 			frequencyCap('doubleclick', 2, () => { addPixel('https://usermatch.krxd.net/um/v2?partner=google'); });
