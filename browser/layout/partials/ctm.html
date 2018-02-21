@@ -2,11 +2,7 @@
 var classes = document.documentElement.className; {{!note: once we ditch support for ie9 we can just use classlist}}
 classes = classes.replace(/\bno-js\b/, 'js'); {{!note: needed for JS that's run out of the scope of the bootstrap (inline onclicks, etc)}}
 
-var supportsBlobConstructor = false;
-try {
-	new Blob;
-	supportsBlobConstructor = true;
-} catch (e) {}
+var supportsBlobConstructor = typeof Blob === 'function';
 var script = document.createElement('script');
 var supportsDeferredScripts = "defer" in script && "async" in script;
 
