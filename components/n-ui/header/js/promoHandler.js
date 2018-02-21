@@ -34,6 +34,10 @@ function isSignupForm () {
 		|| window.location.pathname === '/thank-you';
 }
 
+function isMyAccount () {
+	return document.documentElement.dataset && document.documentElement.dataset.nextApp === 'control-centre';
+}
+
 function isBarrier () {
 	return !!document.querySelector('.barrier');
 }
@@ -106,12 +110,13 @@ function showElectionsOffer (flags) {
  * We want to hide the marketing promo from:
  * - Signup form
  * - Barriers
+ * - My Account
  * - B2B prospects
  */
 export function init (flags) {
 
-	// If it's the signup form or a barrier, just stop
-	if (!isSignupForm() && !isBarrier()) {
+	// If it's the signup form, a barrier, or My account, just stop
+	if (!isSignupForm() && !isBarrier() && !isMyAccount()) {
 		// If the last barrier shown was B2B, just stop
 		isB2BProspect(flags).then(isB2B => {
 			if(!isB2B){
