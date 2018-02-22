@@ -59,7 +59,7 @@ else
 endif
 
 test-server-plain:
-	mocha server/test/*.test.js server/test/**/*.test.js --exit
+	mocha server/test/*.test.js server/test/**/*.test.js
 
 test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
 	istanbul cover node_modules/.bin/_mocha --exit --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
