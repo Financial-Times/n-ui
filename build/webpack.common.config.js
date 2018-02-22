@@ -57,9 +57,9 @@ module.exports = {
 			new BowerResolvePlugin()
 		],
 
-		// In which folders the resolver look for modules relative paths are
-		// looked up in every parent folder (like node_modules) absolute
-		// paths are looked up directly the order is respected
+		// In which folders the resolver looks for modules:
+		//  • Relative paths are looked up in every parent folder (like node_modules).
+		//  • Absolute paths are looked up directly (the order is respected).
 		modules: ['bower_components', 'node_modules'],
 
 		// These JSON files are read in directories
