@@ -6,7 +6,6 @@ const oAdsConfig = require('./js/oAdsConfig');
 const sendMetrics = require('./js/metrics');
 const Sticky = require('./js/sticky');
 
-import nCounterAdBlocking from 'n-counter-ad-blocking';
 import { perfMark } from 'n-ui-foundations';
 
 let slotCount;
@@ -96,10 +95,6 @@ function onAdsComplete (flags, event) {
 
 module.exports = {
 	init: (flags, appInfo, opts) => {
-
-		window.addEventListener('ftNextLoaded', function () {
-			nCounterAdBlocking.init(flags);
-		});
 
 		const adOptions = typeof opts === 'object' ? opts : {};
 
