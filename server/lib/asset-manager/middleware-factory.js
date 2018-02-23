@@ -56,10 +56,18 @@ module.exports = ({
 					url: res.locals.polyfillIo.enhanced,
 					stopsExecutionOnLoadError: true
 				}),
-				getBundleConfig({
-					file: 'font-loader.js',
-					isNUi: true
-				}),
+			);
+
+			if (res.locals.flags.webfonts && !req.cookies['o-typography-fonts-loaded']) {
+				res.locals.javascriptBundles.push(
+					getBundleConfig({
+						file: 'font-loader.js',
+						isNUi: true
+					})
+				);
+			}
+
+			res.locals.javascriptBundles.push(
 				getBundleConfig({
 					file: 'o-errors.js',
 					isNUi: true
