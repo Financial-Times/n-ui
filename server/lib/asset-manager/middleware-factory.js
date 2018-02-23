@@ -58,7 +58,7 @@ module.exports = ({
 				}),
 			);
 
-			if (res.locals.flags.webfonts && !req.cookies['o-typography-fonts-loaded']) {
+			if (res.locals.flags.webfonts && !(req.cookies && req.cookies['o-typography-fonts-loaded'])) {
 				res.locals.javascriptBundles.push(
 					getBundleConfig({
 						file: 'font-loader.js',
