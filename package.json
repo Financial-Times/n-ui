@@ -91,7 +91,7 @@
     "promise-rat-race": "^1.5.1",
     "raw-loader": "^0.5.1",
     "shellpromise": "^1.4.0",
-    "ts-loader": "^3.4.0",
+    "ts-loader": "^3.5.0",
     "watch-run": "^1.2.5",
     "webpack": "^3.11.0",
     "webpack-merge": "^4.1.1",
