@@ -52,7 +52,7 @@ module.exports = {
 	resolve: {
 		plugins: [
 			// Scope hoisting
-			new webpack.optimize.ModuleConcatenationPlugin(),
+			new webpack.optimization.concatenateModules(),
 			// This will handle a bower.json's `main` property being an array.
 			new BowerResolvePlugin()
 		],
