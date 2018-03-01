@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "@financial-times/n-express": "^19.8.0",
-    "@financial-times/n-handlebars": "^1.19.3",
+    "@financial-times/n-handlebars": "^1.19.4",
     "@financial-times/next-json-ld": "^0.2.2",
     "autoprefixer": "^7.2.5",
     "aws-sdk": "^2.190.0",
