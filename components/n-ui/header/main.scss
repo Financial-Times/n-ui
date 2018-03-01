@@ -12,6 +12,11 @@
 		display: block;
 	}
 
+	// performance test: don't render background image if it's inlined
+	.o-header__top-logo.o-header__top-logo--inlined {
+		background-image: none;
+	}
+
 	// add next opt-out buttons
 	.o-header__drawer-menu-button {
 		@include oButtons($theme: primary);
