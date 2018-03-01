@@ -33,6 +33,7 @@
     "o-expander": "^4.2.2",
     "o-footer": "^6.0.0",
     "o-header": "^7.1.0",
-    "o-tracking": "^1.3.5"
+    "o-tracking": "^1.3.5",
+    "logo-images": "^1.5.2"
   }
 }
