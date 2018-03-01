@@ -2,7 +2,6 @@
 @import 'scss/marketing-promo';
 @import 'n-topic-search/main';
 
-
 @include nUiStylesheetStart('head-n-ui-core');
 
 	@include oHeader(('search', 'nav', 'anon', 'megamenu', 'simple'));
@@ -12,9 +11,55 @@
 		display: block;
 	}
 
-	// performance test: don't render background image if it's inlined
+	// inlined logo
 	.o-header__top-logo.o-header__top-logo--inlined {
 		background-image: none;
+
+		// tinted
+		* {
+			fill: getColor('black-80');
+		}
+	}
+
+	// inlined icons (menu, search & myFT)
+	.o-header__top-link.o-header__top-link--inlined {
+		width: 40px;
+		height: 40px;
+
+		&:before {
+			content: none;
+		}
+
+		// myFT needs some special handling
+		&.o-header__top-link--myft {
+			width: 35px;
+
+			@include oGridRespondTo($from: M) {
+				width: 44px;
+			}
+
+			@include oGridRespondTo($from: L) {
+				width: 52px;
+			}
+
+			svg {
+				width: 35px;
+				height: 40px;
+
+				@include oGridRespondTo($from: M) {
+					width: 44px;
+				}
+
+				@include oGridRespondTo($from: L) {
+					width: 52px;
+				}
+			}
+		}
+
+		// tinted
+		* {
+			fill: getColor('black-80'); // tint for the inlined SVG
+		}
 	}
 
 	// add next opt-out buttons
