@@ -9,7 +9,7 @@ module.exports = {
 			hideElements: '.n-skip-link, [href="#o-header-drawer"]',
 			page: {
 				headers: {
-					'FT-Flags': 'ads:off,sourcepoint:off,javascript:on'
+					'FT-Flags': 'ads:off,javascript:on'
 				}
 			}
 		},
@@ -30,7 +30,7 @@ module.exports = {
 			page: {
 				headers: {
 					'FT-Anonymous-User': true,
-					'FT-Flags': 'ads:off,sourcepoint:off,javascript:on'
+					'FT-Flags': 'ads:off,javascript:on'
 				}
 			}
 		},
