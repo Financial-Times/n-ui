@@ -4,6 +4,7 @@ const appShellEntryPoints = require('../app-shell-entry-points');
 const verifyGitignore = require('./verify-gitignore');
 const webpackMerge = require('webpack-merge');
 const baseConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
+const webpackExternals = require('../webpack-externals');
 const commonAppConfig = require('./webpack.app.common.js');
 const webpackConfigs = [];
 
@@ -23,11 +24,9 @@ const jsEntryPoints = Object.keys(baseConfig.entry)
 	}, {});
 
 if (Object.keys(jsEntryPoints).length > 0) {
-	const nUiExternal = require('../webpack-externals');
-	const nUiExternalPoints = nUiExternal(baseConfig.nUiExcludes);
 	const jsWebpackConfig = webpackMerge(commonAppConfig, {
 		entry: jsEntryPoints,
-		externals: nUiExternalPoints
+		externals: webpackExternals
 	});
 	webpackConfigs.push(jsWebpackConfig);
 }

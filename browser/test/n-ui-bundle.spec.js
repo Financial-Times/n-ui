@@ -50,7 +50,7 @@ describe('n-ui bundle', () => {
 		});
 
 	describe('_entry', () => {
-		const aliases = entry();
+		const aliases = entry;
 
 		const getProp = str => {
 			const nest = str.split('.');
