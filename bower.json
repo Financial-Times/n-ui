@@ -19,7 +19,7 @@
     "fontfaceobserver": "^2.0.9",
     "ftdomdelegate": "^2.0.3",
     "loadcss": "filamentgroup/loadCSS#^1.2.0",
-    "n-counter-ad-blocking": "^3.1.2",
+    "n-counter-ad-blocking": "^3.1.6",
     "n-image": "^5.0.0",
     "n-service-worker": "^1.9.0",
     "n-sliding-popup": "^2.0.0",
