@@ -5,7 +5,7 @@ const filterError = require('../filter-error');
 describe('filter error', () => {
 
 	it('should not filter Trump error', () => {
-		const result = filterError({ error: new Error('Trump') });
+		const result = filterError({ exception: new Error('Trump') });
 		expect(result).to.equal(true);
 	});
 
@@ -16,7 +16,7 @@ describe('filter error', () => {
 		'undefined is not an object (evaluating \'window.FT.nUi._hiddenComponents\')',
 		'undefined is not a function (evaluating \'Object.assign(window.FT.flags'
 	].map(err => it(`should filter ${err}`, () => {
-			const result = filterError({ error: new Error(err) });
+			const result = filterError({ exception: new Error(err) });
 			expect(result).to.equal(false);
 	}));
 
