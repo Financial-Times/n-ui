@@ -140,6 +140,9 @@
 				{{/unlessEquals}}
 			</div>
 		</div>
+	{{#if flags.gdprReconsent}}
+	{{>n-marketing-consent/templates/overlay}}
+	{{/if}}
 	{{>layout/partials/bootstrapper}}
 	{{>n-ui/tracking/templates/core-analytics}}
 	{{>n-service-worker/appcache/iframe}}

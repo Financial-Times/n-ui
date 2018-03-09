@@ -10,6 +10,7 @@ import * as serviceWorker from 'n-service-worker';
 import * as syndication from 'n-syndication';
 import { perfMark } from 'n-ui-foundations';
 import speedcurveLux from '../../components/n-ui/speedcurve-lux';
+import Reconsent from 'n-marketing-consent';
 
 export const presets = {
 	discrete: {
@@ -143,6 +144,9 @@ export class AppInitializer {
 
 				if (this.enabledFeatures.roe) {
 					roe.init(flags);
+				}
+				if (flags.gdprReconsent) {
+					new Reconsent({ flag: flags.gdprReconsent });
 				}
 			});
 	}
