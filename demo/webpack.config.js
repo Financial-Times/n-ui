@@ -25,7 +25,7 @@ module.exports = [
 	}),
 	webpackMerge(commonConfig.es6, {
 		entry: {
-			'./public/main.js': './demo/client/main.js'
+			'./public/main.es6.js': './demo/client/main.js'
 		},
 		externals: nUiExternal
 	}),
