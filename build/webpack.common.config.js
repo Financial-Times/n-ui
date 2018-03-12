@@ -5,6 +5,7 @@ build.
 If something is required for both, please add it here.
 */
 const webpack = require('webpack');
+const webpackMerge = require('webpack-merge');
 const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
 // Common babel config
@@ -42,7 +43,8 @@ const babelLoaderConfig = {
 	}
 };
 
-module.exports = {
+const baseConfiguration = {
+
 	// Abort the compilation on first error
 	bail: true,
 
@@ -75,7 +77,12 @@ module.exports = {
 		// The content of these fields is an object where requests to a key are mapped to the corresponding value
 		aliasFields: ['browser']
 	},
+	output: {
+		filename: '[name]'
+	}
+};
 
+const es5Configuration = webpackMerge(baseConfiguration, {
 	module: {
 		rules: [
 			// typescript
@@ -97,9 +104,27 @@ module.exports = {
 				]
 			}
 		]
-	},
-
-	output: {
-		filename: '[name]'
 	}
+});
+
+const es6Configuration = webpackMerge(baseConfiguration, {
+	module: {
+		rules: [
+			// typescript
+			{
+				test: /\.ts?$/,
+				exclude: [/(node_modules|bower_components)/],
+				use: [
+					{
+						loader: 'ts-loader'
+					}
+				]
+			}
+		]
+	}
+});
+
+module.exports = {
+	es5: es5Configuration,
+	es6: es6Configuration
 };

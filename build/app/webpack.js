@@ -15,6 +15,16 @@ This config is for any JS entry points defined by an app
 It excludes anythnig that is already bundled in n-ui
 */
 
+// Automagically generate ES6 equivalents for each ES5 endpoint.
+const getES6EntryPoints = entryPoints => {
+	const entryPointsES6 = {};
+	Object.keys(entryPoints).forEach(key => {
+		const newKey = key.replace('.js', '.es6.js');
+		entryPointsES6[newKey] = entryPoints[key];
+	});
+	return entryPointsES6;
+};
+
 const jsEntryPoints = Object.keys(baseConfig.entry)
 	.map(target => [target, baseConfig.entry[target]])
 	.filter(([target, entry]) => /\.(js|ts)$/.test(entry)) //eslint-disable-line no-unused-vars
@@ -24,11 +34,17 @@ const jsEntryPoints = Object.keys(baseConfig.entry)
 	}, {});
 
 if (Object.keys(jsEntryPoints).length > 0) {
-	const jsWebpackConfig = webpackMerge(commonAppConfig, {
+	const jsWebpackConfigES5 = webpackMerge(commonAppConfig.es5, {
 		entry: jsEntryPoints,
 		externals: webpackExternals
 	});
-	webpackConfigs.push(jsWebpackConfig);
+	webpackConfigs.push(jsWebpackConfigES5);
+
+	const jsWebpackConfigES6 = webpackMerge(commonAppConfig.es6, {
+		entry: getES6EntryPoints(jsEntryPoints),
+		externals: webpackExternals
+	});
+	webpackConfigs.push(jsWebpackConfigES6);
 }
 
 /*
@@ -60,10 +76,15 @@ If you do not need this behaviour run
 		throw 'Add /public/n-ui/ to your .gitignore to start building a local app shell';
 	}
 
-	const appShellWebpackConfig = webpackMerge(commonAppConfig, {
+	const appShellWebpackConfigES5 = webpackMerge(commonAppConfig.es5, {
 		entry: appShellEntryPoints
 	});
-	webpackConfigs.push(appShellWebpackConfig);
+	webpackConfigs.push(appShellWebpackConfigES5);
+
+	const appShellWebpackConfigEs6 = webpackMerge(commonAppConfig.es6, {
+		entry: getES6EntryPoints(appShellEntryPoints)
+	});
+	webpackConfigs.push(appShellWebpackConfigEs6);
 }
 
 module.exports = webpackConfigs;

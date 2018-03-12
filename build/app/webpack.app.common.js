@@ -30,7 +30,7 @@ const handlebarsConfig = () => {
 	};
 };
 
-module.exports = webpackMerge(commonConfig, {
+const appCommonConfiguration = {
 	module: {
 		// These rules are added to the common ones rather than replacing them
 		rules: [
@@ -45,4 +45,9 @@ module.exports = webpackMerge(commonConfig, {
 			}
 		]
 	}
-});
+};
+
+module.exports = {
+	es5: webpackMerge(commonConfig.es5, appCommonConfiguration),
+	es6: webpackMerge(commonConfig.es6, appCommonConfiguration)
+};
