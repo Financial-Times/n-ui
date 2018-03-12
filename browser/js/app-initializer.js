@@ -11,6 +11,9 @@ import * as syndication from 'n-syndication';
 import { perfMark } from 'n-ui-foundations';
 import speedcurveLux from '../../components/n-ui/speedcurve-lux';
 
+//Polyfill for :focus-visible https://github.com/WICG/focus-visible
+import 'focus-visible';
+
 export const presets = {
 	discrete: {
 		header: true,

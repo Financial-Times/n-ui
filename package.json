@@ -80,6 +80,7 @@
     "colors": "^1.1.2",
     "commander": "^2.14.1",
     "concurrently": "^3.5.1",
+    "focus-visible": "^4.1.0",
     "fs-extra": "^5.0.0",
     "ft-poller": "^2.9.4",
     "handlebars-loader": "^1.6.0",
