@@ -1,4 +1,4 @@
-module.exports = ({ error }) => {
+module.exports = ({ exception }) => {
 	// we want to filter out errors that only occur
 	// when critical scripts fail to load - in that case
 	// the execution of JS is halted and we fall back to core
@@ -7,15 +7,14 @@ module.exports = ({ error }) => {
 		/undefined is|is undefined/i
 	];
 	let windowFtError;
-	if(error) {
+	if(exception) {
 		try {
-			let errorString = String(error);
+			let errorString = String(exception);
 			windowFtError = errorFilters.every(rx => rx.test(errorString));
 		} catch (err) {
-			// could not stringify the error
+			// could not stringify the exception
 		}
 	}
-
 	// filter if yes, or if o-errors disabled
 	return !(windowFtError || window.FT.disableOErrors);
 };
