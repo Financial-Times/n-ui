@@ -24,11 +24,6 @@ module.exports = ({
 		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '));
 	};
 
-	const getBundleConfig = ({ file, url, isNUi, stopsExecutionOnLoadError = false }) => ({
-		file: url || getAssetUrl({ file, isNUi }),
-		stopsExecutionOnLoadError
-	});
-
 	return (req, res, next) => {
 
 		res.locals.resourceHints = {
@@ -52,27 +47,30 @@ module.exports = ({
 			res.locals.polyfillIo = polyfillIo;
 
 			res.locals.javascriptBundles.push(
-				getBundleConfig({
-					url: res.locals.polyfillIo.enhanced,
+				{
+					file: res.locals.polyfillIo.enhanced,
 					stopsExecutionOnLoadError: true
-				}),
-				getBundleConfig({
-					file: 'font-loader.js',
-					isNUi: true
-				}),
-				getBundleConfig({
-					file: 'o-errors.js',
-					isNUi: true
-				}),
-				getBundleConfig({
-					file: 'es5.js',
-					isNUi: true,
+				},
+				{
+					file: getAssetUrl({ file: 'font-loader.js', isNUi: true }),
+					fileEs6: getAssetUrl({ file: 'font-loader.es6.js', isNUi: true }),
+					stopsExecutionOnLoadError: false
+				},
+				{
+					file: getAssetUrl({ file: 'o-errors.js', isNUi: true }),
+					fileEs6: getAssetUrl({ file: 'o-errors.es6.js', isNUi: true }),
+					stopsExecutionOnLoadError: false
+				},
+				{
+					file: getAssetUrl({ file: 'es5.js', isNUi: true }),
+					fileEs6: getAssetUrl({ file: 'es5.es6.js', isNUi: true }),
 					stopsExecutionOnLoadError: true
-				}),
-				getBundleConfig({
-					file: 'main.js',
+				},
+				{
+					file: getAssetUrl({ file: 'main.js', isNUi: false }),
+					fileEs6: getAssetUrl({ file: 'main.es6.js', isNUi: false }),
 					stopsExecutionOnLoadError: true
-				})
+				}
 			);
 
 			// output the default link headers just before rendering

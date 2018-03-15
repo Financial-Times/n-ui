@@ -17,21 +17,45 @@
 			throw new URIError('Failed to load ' + err.target.src + ': falling back to core experience.');
 		};
 
-		function loadScript (src, stopsExecutionOnLoadError) {
+		/**
+		 * For Javascript bundles that have ES6 versions,
+		 * load <script type="module"> for ES6 browsers and <script nomodule> for ES5 browsers.
+		 *
+		 * For Javascript bundles that don't have ES6 versions, just load ES5 <script>s.
+		 */
+		function loadScript(bundle) {
 			var script = document.createElement('script');
-			{{! For dynamically created scripts this has the same effect as adding the defer
-				attribute to inline scripts, i.e. load asynchronously, execute in order}}
+
+			// For dynamically created scripts, this has the same effect as adding the 'defer' attribute to inline scripts;
+			// that is, it tells it to load asynchronously and execute in order.
 			script.async = false;
-			script.src = src;
-			if (stopsExecutionOnLoadError) {
+
+			if (bundle.stopsExecutionOnLoadError) {
 				script.onerror = loadError;
+			}
+			if (bundle.fileEs6) {
+
+				// Append the ES5 <script nomodule> version
+				var nomoduleScript = script;
+				nomoduleScript.noModule = true
+				nomoduleScript.src = bundle.file;
+				document.head.appendChild(nomoduleScript);
+
+				// Set properties for the ES6 <script type="module"> version
+				script.type = 'module';
+				script.src = bundle.fileEs6;
+			}
+			else {
+
+				// Set properties for the ES5 <script> version
+				script.src = bundle.file;
 			}
 			document.head.appendChild(script);
 		};
 
 		if (cutsTheMustard) {
 			{{#each @root.javascriptBundles}}
-				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}});
+				loadScript({{{json this }}});
 			{{/each}}
 		} else {
 			loadScript('{{{@root.polyfillIo.core}}}');
