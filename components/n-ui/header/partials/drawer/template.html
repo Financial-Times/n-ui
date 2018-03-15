@@ -1,6 +1,6 @@
 {{#*inline "DrawerParentItem"}}
 	<div class="o-header__drawer-menu-toggle-wrapper">
-		<a class="o-header__drawer-menu-link o-header__drawer-menu-link--parent o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
+		<a class="o-header__drawer-menu-link o-header__drawer-menu-link--parent o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#if selected}}aria-label="Current page" aria-current="true"{{/if}} data-trackable="{{label}}">{{label}}</a>
 		<button class="o-header__drawer-menu-toggle o-header__drawer-menu-toggle--{{#if selected}}selected{{else}}unselected{{/if}}" aria-controls="o-header-drawer-child-{{@index}}" data-trackable="sub-level-toggle | {{label}}">
 			Show more {{label}} links
 		</button>
@@ -8,18 +8,18 @@
 	<ul class="o-header__drawer-menu-list o-header__drawer-menu-list--child" id="o-header-drawer-child-{{@index}}" data-trackable="sub-level">
 		{{#each submenu.items}}
 		<li class="o-header__drawer-menu-item">
-			<a class="o-header__drawer-menu-link o-header__drawer-menu-link--child o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
+			<a class="o-header__drawer-menu-link o-header__drawer-menu-link--child o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#if selected}}aria-label="Current page" aria-current="true"{{/if}} data-trackable="{{label}}">{{label}}</a>
 		</li>
 		{{/each}}
 	</ul>
 {{/inline}}
 
 {{#*inline "DrawerSingleItem"}}
-	<a class="o-header__drawer-menu-link o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
+	<a class="o-header__drawer-menu-link o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#if selected}}aria-label="Current page" aria-current="true"{{/if}} data-trackable="{{label}}">{{label}}</a>
 {{/inline}}
 
 {{#*inline "DrawerSpecialItem"}}
-	<a class="o-header__drawer-menu-link o-header__drawer-menu-link--secondary o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
+	<a class="o-header__drawer-menu-link o-header__drawer-menu-link--secondary o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#if selected}}aria-label="Current page" aria-current="true"{{/if}} data-trackable="{{label}}">{{label}}</a>
 {{/inline}}
 
 <div class="o-header__drawer" id="o-header-drawer" role="navigation" aria-label="Drawer menu" data-o-header-drawer data-o-header-drawer--no-js data-trackable="drawer" data-trackable-terminate>
