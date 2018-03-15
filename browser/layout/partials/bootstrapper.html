@@ -36,7 +36,7 @@
 			if (bundle.fileEs6) {
 
 				// Append the ES5 <script nomodule> version
-				var nomoduleScript = script;
+				var nomoduleScript = script.cloneNode();
 				nomoduleScript.noModule = true
 				nomoduleScript.src = bundle.file;
 				document.head.appendChild(nomoduleScript);
