@@ -107,6 +107,24 @@ const es5Configuration = webpackMerge(baseConfiguration, {
 	}
 });
 
+const optionsEs6 = {
+	presets: [
+		['env', {
+			modules: false,
+			useBuiltIns: true,
+			targets: {
+				browsers: [
+				'Chrome >= 60',
+				'Safari >= 10.1',
+				'iOS >= 10.3',
+				'Firefox >= 54',
+				'Edge >= 15',
+				],
+			},
+		}],
+	],
+};
+
 const es6Configuration = webpackMerge(baseConfiguration, {
 	module: {
 		rules: [
@@ -114,11 +132,17 @@ const es6Configuration = webpackMerge(baseConfiguration, {
 			{
 				test: /\.ts?$/,
 				exclude: [/(node_modules|bower_components)/],
-				use: [
-					{
-						loader: 'ts-loader'
-					}
-				]
+				use: {
+					loader: 'ts-loader',
+					options: optionsEs6
+				},
+			},
+			{
+				test: /\.js$/,
+				use: {
+					loader: 'babel-loader',
+					options: optionsEs6
+				},
 			}
 		]
 	}
