@@ -9,7 +9,7 @@ module.exports = ({ exception }) => {
 	let windowFtError;
 	if(exception) {
 		try {
-			let errorString = String(exception);
+			let errorString = JSON.stringify(exception);
 			windowFtError = errorFilters.every(rx => rx.test(errorString));
 		} catch (err) {
 			// could not stringify the exception
