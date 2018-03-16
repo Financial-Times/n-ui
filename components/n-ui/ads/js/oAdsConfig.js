@@ -21,6 +21,7 @@ module.exports = function (flags, appName, adOptions) {
 		}
 	};
 
+	const validateAdsTrafficApi = (flags.get('validateAdsTraffic')) ? `${apiUrlRoot}validate-traffic` : null;
 
 	function getContextualTargeting (appName) {
 		let uuid;
@@ -105,7 +106,8 @@ module.exports = function (flags, appName, adOptions) {
 			user: `${apiUrlRoot}user`,
 			page: getContextualTargeting(appName),
 			usePageZone: true
-		}
+		},
+		validateAdsTrafficApi
 	};
 
 };
