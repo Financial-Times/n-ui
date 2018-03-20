@@ -99,17 +99,19 @@ const es5Configuration = webpackMerge(baseConfiguration, {
 });
 
 const optionsEs6 = {
+	babelrc: false, // ignore any .babelrc in project & dependencies
+	cacheDirectory: true,
 	presets: [
 		['env', {
 			modules: false,
 			useBuiltIns: true,
 			targets: {
 				browsers: [
-				'Chrome >= 60',
-				'Safari >= 10.1',
-				'iOS >= 10.3',
-				'Firefox >= 54',
-				'Edge >= 15',
+					'Chrome >= 60',
+					'Safari >= 10.1',
+					'iOS >= 10.3',
+					'Firefox >= 54',
+					'Edge >= 15',
 				],
 			},
 		}],
