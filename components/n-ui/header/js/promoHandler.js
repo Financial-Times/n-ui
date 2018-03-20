@@ -1,7 +1,7 @@
 // MAKE ANY DISCOUNT CHANGES HERE
 // Update flags and next-product selector accordingly
 
-import { products } from 'next-session-client';
+import nextSessionClient from 'next-session-client';
 import Superstore from 'superstore';
 
 const discount = {
@@ -15,7 +15,7 @@ function supportsCors () {
 }
 
 function getUserProducts (){
-	return products()
+	return nextSessionClient.products()
 		.catch(() => {
 			return {};
 		});
