@@ -104,7 +104,13 @@ export class AppInitializer {
 				.register(flags)
 				.catch(() => { });
 
-			serviceWorker.message({ type: 'updateCache', data: {}});
+			serviceWorker
+				.message({ type: 'updateCache', data: {}})
+				.catch((err) => {
+					if (err.toLowerCase() !== 'service worker unavailable') {
+						return Promise.reject(err);
+					}
+				});
 		} else {
 			serviceWorker.unregister();
 		}
