@@ -3,6 +3,14 @@ const sandbox = require('./sandbox');
 const extend = require('o-ads').utils.extend;
 const apiUrlRoot = 'https://ads-api.ft.com/v1/';
 
+// if (flags.get('adOptimizeLazyLoad') && isTargetSize() ) {
+// const variant = flags.get('adOptimizeLazyLoad');
+// viewportMargin = setViewportMarginBy(variant);
+
+
+const validateAdsTrafficApi = ((flags.get('validateAdsTraffic') && flags.get('adOptimizeLazyLoad')==="variant")) ? `${apiUrlRoot}validate-traffic` : null;
+
+
 module.exports = function (flags, appName, adOptions) {
 	adOptions = adOptions || {};
 
