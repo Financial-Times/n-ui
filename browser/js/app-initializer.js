@@ -108,7 +108,7 @@ export class AppInitializer {
 				.message({ type: 'updateCache', data: {}})
 				.catch((err) => {
 					if (err.toLowerCase() !== 'service worker unavailable') {
-						return Promise.reject(err);
+						throw err;
 					}
 				});
 		} else {
