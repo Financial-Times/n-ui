@@ -28,7 +28,7 @@ describe('AppInitializer', () => {
 		sinon.stub(tracking, 'init');
 		sinon.stub(tracking, 'lazyInit');
 		sinon.stub(sw, 'register').callsFake(() => Promise.resolve());
-		sinon.stub(sw, 'message');
+		sinon.stub(sw, 'message').callsFake(() => Promise.resolve());
 		sinon.stub(sw, 'unregister');
 		sinon.stub(nImage, 'lazyLoad');
 		sinon.stub(syndication, 'init');
