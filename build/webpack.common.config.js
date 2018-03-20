@@ -40,65 +40,59 @@ const baseConfiguration = {
 	}
 };
 
-const babelLoaderConfig = {
-	loader: 'babel-loader',
-	options: {
-		babelrc: false, // ignore any .babelrc in project & dependencies
-		cacheDirectory: true,
-		plugins: [
-			// converts `export default 'foo'` to `exports.default = 'foo'`
-			require.resolve('babel-plugin-add-module-exports'),
+const optionsEs5 = {
+	babelrc: false, // ignore any .babelrc in project & dependencies
+	cacheDirectory: true,
+	plugins: [
+		// converts `export default 'foo'` to `exports.default = 'foo'`
+		require.resolve('babel-plugin-add-module-exports'),
 
-			// ensures a module reqired multiple times is only transpiled once and
-			// is shared by all that use it rather than transpiling it each time
-			[
-				require.resolve('babel-plugin-transform-runtime'),
-				{
-					helpers: false,
-					polyfill: false
-				}
-			]
-		],
-		presets: [
-			[
-				require.resolve('babel-preset-env'),
-				{
-					include: [
-						'transform-es2015-classes'
-					],
-					targets: {
-						browsers: [
-							'last 2 versions',
-							'ie >= 11'
-						]
-					}
-				}
-			],
-			require.resolve('babel-preset-react')
+		// ensures a module reqired multiple times is only transpiled once and
+		// is shared by all that use it rather than transpiling it each time
+		[
+			require.resolve('babel-plugin-transform-runtime'),
+			{
+				helpers: false,
+				polyfill: false
+			}
 		]
-	}
+	],
+	presets: [
+		[
+			require.resolve('babel-preset-env'),
+			{
+				include: [
+					'transform-es2015-classes'
+				],
+				targets: {
+					browsers: [
+						'last 2 versions',
+						'ie >= 11'
+					]
+				}
+			}
+		],
+		require.resolve('babel-preset-react')
+	]
 };
 
 const es5Configuration = webpackMerge(baseConfiguration, {
 	module: {
 		rules: [
-			// typescript
 			{
 				test: /\.ts?$/,
 				exclude: [/(node_modules|bower_components)/],
-				use: [
-					babelLoaderConfig,
-					{
-						loader: 'ts-loader'
-					}
-				]
+				use: {
+					loader: 'ts-loader',
+					options: optionsEs5
+				},
 			},
-			//babel
 			{
 				test: /\.js$/,
-				use: [
-					babelLoaderConfig
-				]
+				use: {
+					loader: 'babel-loader',
+					options: optionsEs5
+				},
 			}
 		]
 	}
@@ -125,7 +119,6 @@ const optionsEs6 = {
 const es6Configuration = webpackMerge(baseConfiguration, {
 	module: {
 		rules: [
-			// typescript
 			{
 				test: /\.ts?$/,
 				exclude: [/(node_modules|bower_components)/],
