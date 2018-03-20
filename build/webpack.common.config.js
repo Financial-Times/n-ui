@@ -8,7 +8,38 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
-// Common babel config
+const baseConfiguration = {
+	bail: true, // Abort the compilation on first error
+	devtool: 'source-map', // Generate source maps
+	resolve: {
+		plugins: [
+			new webpack.optimize.ModuleConcatenationPlugin(), // Scope hoisting
+			new BowerResolvePlugin() // This will handle a bower.json's `main` property being an array.
+		],
+
+		// In which folders the resolver looks for modules:
+		//  • Relative paths are looked up in every parent folder (like node_modules).
+		//  • Absolute paths are looked up directly (the order is respected).
+		modules: ['bower_components', 'node_modules'],
+
+		// These JSON files are read in directories
+		descriptionFiles: ['bower.json', 'package.json'],
+
+		// These fields in the description files are looked up when trying to resolve the package directory
+		mainFields: ['main', 'browser'],
+
+		// These files are tried when trying to resolve a directory
+		mainFiles: ['index', 'main'],
+
+		// These fields in the description files offer aliasing in this package
+		// The content of these fields is an object where requests to a key are mapped to the corresponding value
+		aliasFields: ['browser']
+	},
+	output: {
+		filename: '[name]'
+	}
+};
+
 const babelLoaderConfig = {
 	loader: 'babel-loader',
 	options: {
@@ -32,53 +63,19 @@ const babelLoaderConfig = {
 			[
 				require.resolve('babel-preset-env'),
 				{
-					include: ['transform-es2015-classes'],
+					include: [
+						'transform-es2015-classes'
+					],
 					targets: {
-						browsers: ['last 2 versions', 'ie >= 11']
+						browsers: [
+							'last 2 versions',
+							'ie >= 11'
+						]
 					}
 				}
 			],
 			require.resolve('babel-preset-react')
 		]
-	}
-};
-
-const baseConfiguration = {
-
-	// Abort the compilation on first error
-	bail: true,
-
-	// Generate source maps
-	devtool: 'source-map',
-
-	resolve: {
-		plugins: [
-			// Scope hoisting
-			new webpack.optimize.ModuleConcatenationPlugin(),
-			// This will handle a bower.json's `main` property being an array.
-			new BowerResolvePlugin()
-		],
-
-		// In which folders the resolver looks for modules:
-		//  • Relative paths are looked up in every parent folder (like node_modules).
-		//  • Absolute paths are looked up directly (the order is respected).
-		modules: ['bower_components', 'node_modules'],
-
-		// These JSON files are read in directories
-		descriptionFiles: ['bower.json', 'package.json'],
-
-		// These fields in the description files are looked up when trying to resolve the package directory
-		mainFields: ['main', 'browser'],
-
-		// These files are tried when trying to resolve a directory
-		mainFiles: ['index', 'main'],
-
-		// These fields in the description files offer aliasing in this package
-		// The content of these fields is an object where requests to a key are mapped to the corresponding value
-		aliasFields: ['browser']
-	},
-	output: {
-		filename: '[name]'
 	}
 };
 
