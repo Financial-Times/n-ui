@@ -4,6 +4,7 @@ const extend = require('o-ads').utils.extend;
 const apiUrlRoot = 'https://ads-api.ft.com/v1/';
 
 module.exports = function (flags, appName, adOptions) {
+
 	adOptions = adOptions || {};
 
 	const targeting = extend({
@@ -21,6 +22,7 @@ module.exports = function (flags, appName, adOptions) {
 		}
 	};
 
+	const validateAdsTrafficApi = ((flags.get('validateAdsTraffic') && flags.get('validateAdsTraffic')==='variant')) ? `${apiUrlRoot}validate-traffic` : null;
 
 	function getContextualTargeting (appName) {
 		let uuid;
@@ -105,7 +107,8 @@ module.exports = function (flags, appName, adOptions) {
 			user: `${apiUrlRoot}user`,
 			page: getContextualTargeting(appName),
 			usePageZone: true
-		}
+		},
+		validateAdsTrafficApi : validateAdsTrafficApi
 	};
 
 };
