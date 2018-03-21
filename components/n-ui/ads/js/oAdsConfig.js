@@ -108,7 +108,7 @@ module.exports = function (flags, appName, adOptions) {
 			page: getContextualTargeting(appName),
 			usePageZone: true
 		},
-		validateAdsTrafficAp : validateAdsTrafficApi
+		validateAdsTrafficApi : validateAdsTrafficApi
 	};
 
 };
