@@ -65,8 +65,8 @@ program
 		const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
 		const commands = {
 			jsOnly: `'webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}'`,
-			sassOnly: `export CSS_SOURCE_MAPS=${!options.production} && ${cssEntryPoints
-				.map(([target, entry]) => `'${script} ${entry} ${target}'`)
+			sassOnly: `${cssEntryPoints
+				.map(([target, entry]) => `'export CSS_SOURCE_MAPS=${!options.production} && ${script} ${entry} ${target}'`)
 				.join(' ')}`
 		};
 
