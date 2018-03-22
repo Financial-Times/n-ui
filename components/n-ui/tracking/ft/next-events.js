@@ -3,7 +3,6 @@ const Timing = require('./events/navigation-timing');
 const Copy = require('./events/copy');
 const Attention = require('./events/page-attention');
 const Positional = require('./events/positional');
-const timeOnPage = require('./events/time-on-page');
 
 const NextEvents = function () {};
 
@@ -21,9 +20,6 @@ NextEvents.prototype.init = function () {
 
 	this.positional = new Positional();
 	this.positional.init(document);
-
-	// track time spent on page at set thresholds
-	timeOnPage.init();
 
 	// Nav timing - https://developer.mozilla.org/en-US/docs/Navigation_timing
 	new Timing().track();
