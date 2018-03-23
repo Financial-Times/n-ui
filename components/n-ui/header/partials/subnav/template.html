@@ -30,6 +30,11 @@
 							</ul>
 						{{/if}}
 
+						{{#if @root.navigation.showSignOut}}
+						<div class="o-header__subnav-right-align">
+							<a class="o-header__subnav-link" href="/logout" data-trackable="Sign Out">Sign out</a>
+						</div>
+						{{/if}}
 					</div>
 				</div>
 				<button class="o-header__subnav-button o-header__subnav-button--left" title="scroll left" aria-label="scroll left" aria-hidden="true" disabled></button>
