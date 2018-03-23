@@ -25,14 +25,7 @@ endif
 demo: run
 
 build:
-	concurrently --kill-others-on-fail \
-		"webpack --config demo/webpack.config.js" \
-		"./scripts/build-sass.sh demo/client/main.scss"
-
-watch:
-	concurrently --kill-others-on-fail \
-		"webpack --config demo/webpack.config.js  --watch" \
-		"watch-run -ip 'main.scss,demo/client/**/*.scss' ./scripts/build-sass.sh demo/client/main.scss"
+	nui build
 
 # test-browser-dev is only for development environments.
 test-browser-dev:

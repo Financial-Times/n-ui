@@ -11,8 +11,8 @@ const webpackConfigs = [];
 verifyGitignore();
 
 /*
-This config is for any JS entry points defined by an app
-It excludes anythnig that is already bundled in n-ui
+This config is for any JS entry points defined by an application.
+It excludes anything that is already bundled in n-ui, unless NEXT_APP_SHELL is set to 'local'.
 */
 
 // Automagically generate ES6 equivalents for each ES5 endpoint.
@@ -40,15 +40,20 @@ if (Object.keys(jsEntryPoints).length > 0) {
 	});
 	webpackConfigs.push(jsWebpackConfigES5);
 
-	const jsWebpackConfigES6 = webpackMerge(commonAppConfig.es6, {
-		entry: getES6EntryPoints(jsEntryPoints),
-		externals: webpackExternals
-	});
-	webpackConfigs.push(jsWebpackConfigES6);
+	// TODO: Once ES6 modules are working for n-ui bundle files,
+	// then move on to ES6 modules for applications' JS files.
+	const buildAppES6 = false;
+	if (buildAppES6) {
+		const jsWebpackConfigES6 = webpackMerge(commonAppConfig.es6, {
+			entry: getES6EntryPoints(jsEntryPoints),
+			externals: webpackExternals
+		});
+		webpackConfigs.push(jsWebpackConfigES6);
+	}
 }
 
 /*
-Setting the NEXT_APP_SHELL environment variable will ensure that during build it
+Setting the NEXT_APP_SHELL environment variable to 'local' will ensure that it
 will build and use the local version of n-ui rather than the version hosted on S3
 */
 if (process.env.NEXT_APP_SHELL === 'local') {

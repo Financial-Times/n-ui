@@ -68,7 +68,10 @@ module.exports = ({
 				},
 				{
 					file: getAssetUrl({ file: 'main.js', isNUi: false }),
-					fileEs6: getAssetUrl({ file: 'main.es6.js', isNUi: false }),
+
+					// TODO: Once ES6 modules are working for n-ui bundle files,
+					// then move on to ES6 modules for applications' JS files.
+					// fileEs6: getAssetUrl({ file: 'main.es6.js', isNUi: false }),
 					stopsExecutionOnLoadError: true
 				}
 			);
