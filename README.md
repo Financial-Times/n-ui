@@ -137,6 +137,41 @@ If you pass `withNavigation:true` in the init options, you will have navigation 
 	};
 ```
 
+#### Subnavigation
+
+See the [MyFT page](https://www.ft.com/myft/following) for a rendered copy of this config.
+
+```javascript
+res.locals.navigation = {
+    // other settings here...
+    
+    showSubNav: true,
+    // this populates the breadcrumb section at the left of the subnav
+    breadcrumb: [
+        {
+            id: 'my-ft',
+            label: 'My FT',
+            url: '/myft/following'
+        }
+    ],
+    // this populates the current level of subnav
+    subsections: [
+        {
+            id: 'feed',
+            label: 'myFT Feed',
+            url: '/myft/following'
+        },
+        {
+            id: 'alerts',
+            label: 'Emails & Alerts',
+            url: '/myft/alerts'
+        }
+    ],
+    // optionally, add a 'Sign out' link to the right of the subnav (default is off)
+    showSignOut: true
+}
+```
+
 ### Navigation Hierarchy
 If you also pass `withNavigationHierarchy: true` in the init options you get some additonal properties detailing the current page’s position in the hierarchy. This is only currently useful on stream pages. The following properties are added:
 
