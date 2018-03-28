@@ -21,7 +21,7 @@
 						{{#if @root.navigation.subsections}}
 							<ul class="o-header__subnav-list o-header__subnav-list--subsections" aria-label="Subsections" data-trackable="subsections">
 								{{#each @root.navigation.subsections}}
-								<li class="o-header__subnav-item">
+								<li class="o-header__subnav-item"{{#if id}} data-id="subnav-{{id}}"{{/if}}>
 									<a class="o-header__subnav-link {{#if selected}}o-header__subnav-link--highlight{{/if}}" href="{{url}}" {{#if selected}}aria-current="true"{{/if}} data-trackable="{{label}}">
 										{{label}}
 									</a>
