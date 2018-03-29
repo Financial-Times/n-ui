@@ -91,7 +91,7 @@ app.listen(5005)
 				}
 			})
 				.then(res => res.text())
-				// hack to make sure the demo page deployed to s3 for nightwatch testing
+				// hack to make sure the demo page deployed to s3 for browser testing
 				// includes the css and js properly (unlike the real local app we can't
 				// map /public to any path we like on s3)
 				.then(text => text.replace(/__dev\/assets\//g, ''))

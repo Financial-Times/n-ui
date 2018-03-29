@@ -111,9 +111,9 @@ a11y: test-build pally-conf
 
 
 # Note: `run` executes `node demo/app`, which fires up express, then deploys
-# a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
+# a test static site to s3, then exits, freeing the process to execute `smoke a11y`.
 test:
-	make developer-note verify pally-conf test-server test-browser test-build run nightwatch a11y build-dist
+	make developer-note verify pally-conf test-server test-browser test-build run smoke a11y build-dist
 	bundlesize
 
 build-production: build-bundle
