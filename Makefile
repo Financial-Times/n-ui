@@ -96,8 +96,10 @@ test-browser:
 
 test-build: build
 
-nightwatch:
-	nht nightwatch browser/test/js-success.nightwatch.js
+smoke:
+ifneq ($(CIRCLE_BRANCH),) # Not CircleCI
+	n-test smoke -H https://ft-next-test-artefacts.s3-eu-west-1.amazonaws.com/n-ui/test-page/${process.env.CIRCLE_BUILD_NUM} -c browser/test/smoke.js
+endif
 
 pally-conf:
 	node .pa11yci.js
