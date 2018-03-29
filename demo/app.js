@@ -28,7 +28,7 @@ app.locals.nUiConfig = { preset: 'complete' };
 
 app.use(require('./middleware/assets'));
 
-app.get('/', (req, res) => {
+app.get(/^\/(test-page.html)?$/, (req, res) => {
 	res.render('default', {
 		isFrontPage: true,
 		title: 'Test App',
