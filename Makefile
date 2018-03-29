@@ -97,8 +97,8 @@ test-browser:
 test-build: build
 
 smoke:
-ifneq ($(CIRCLE_BRANCH),) # Not CircleCI
-	n-test smoke -H https://ft-next-test-artefacts.s3-eu-west-1.amazonaws.com/n-ui/test-page/${process.env.CIRCLE_BUILD_NUM} -c browser/test/smoke.js
+ifneq ($(CIRCLE_BRANCH),) # CircleCI only
+	n-test smoke -H https://ft-next-test-artefacts.s3-eu-west-1.amazonaws.com/n-ui/test-page/$(CIRCLE_BUILD_NUM) -c browser/test/smoke.js
 endif
 
 pally-conf:
