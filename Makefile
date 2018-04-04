@@ -97,7 +97,7 @@ test-browser:
 test-build: build
 
 smoke:
-ifeq ($(CIRCLE_BRANCH),) # not CircleCI
+ifeq ($(CIRCLE_BUILD_NUM),) # not CircleCI
 	n-test smoke -H http://local.ft.com:5005 -c browser/test/smoke.js
 else
 	n-test smoke -H https://ft-next-test-artefacts.s3-eu-west-1.amazonaws.com/n-ui/test-page/$(CIRCLE_BUILD_NUM) -c browser/test/smoke.js
