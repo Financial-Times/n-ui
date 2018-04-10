@@ -172,7 +172,7 @@ res.locals.navigation = {
 }
 ```
 
-### Navigation Hierarchy
+#### Navigation Hierarchy
 If you also pass `withNavigationHierarchy: true` in the init options you get some additonal properties detailing the current page’s position in the hierarchy. This is only currently useful on stream pages. The following properties are added:
 
 ```javascript
@@ -181,12 +181,28 @@ If you also pass `withNavigationHierarchy: true` in the init options you get som
 	res.locals.navigation.ancestors // an array of the parent items of the current page (top-level first)
 ```
 
-### Editions
+#### Editions
 The navigation model also controls the edition switching logic. The following properties are added:
 
 ```javascript
 	res.locals.editions.current // the currently selected edition
 	res.locals.editions.others //  and array of other possible editions
+```
+
+#### Hiding all navigation
+In same cases you might need to show only the FT logo in the header, and hide all other navigation. This pattern is used in several conversion apps.
+By default, the logo will be a link to ft.com homepage. If you want to have the logo without it being a link, add the flag 'logoLink: false'. An example use case for this is if your page will be linked to from the iOS app, and no outbound navigation from it is allowed.
+This should all be passed as part of the object that is the second argument of res.render. 
+
+```javascript
+{
+    nUi: {
+        header: {
+            variant: 'logo-only',
+            logoLink: false
+        }
+    }
+}
 ```
 
 ### Other enhancements
