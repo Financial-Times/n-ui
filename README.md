@@ -200,6 +200,9 @@ This should all be passed as part of the object that is the second argument of r
         header: {
             variant: 'logo-only',
             logoLink: false
+        },
+        footer: {
+        	hide: true
         }
     }
 }
