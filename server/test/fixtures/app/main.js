@@ -6,7 +6,8 @@ const app = module.exports = express({
 	systemCode: 'n-ui-test',
 	directory: __dirname,
 	helpers: { yell: yell },
-	layoutsDir: __dirname + '/views/'
+	layoutsDir: __dirname + '/views/',
+	withBackendAuthentication: false
 });
 
 app.get('/', function (req, res) {
