@@ -86,6 +86,9 @@
 		<meta name="og:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v3/open-graph.png">
 		<meta name="twitter:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v3/open-graph.png">
 		{{/unless}}
+		{{#if @root.flags.googleSiteVerificationMeta}}
+		<meta name="google-site-verification" content="4-t8sFaPvpO5FH_Gnw1dkM28CQepjzo8UjjAkdDflTw" />
+		{{/if}}
 
 		{{#outputBlock 'head'}}{{/outputBlock}}
 
