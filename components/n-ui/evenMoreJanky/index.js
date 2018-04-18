@@ -3,11 +3,7 @@
 // Then over time, allow them to resume their intended hight, thus creating a "janky" effect;
 // That is, the content "stutters" up/down the web page as the page layout updates.
 
-function init (flags) {
-	if (!flags || !flags.get('evenMoreJanky')) {
-		return;
-	}
-
+const addStyles = () => {
 	const styleNode = document.createElement('style');
 	styleNode.type = 'text/css';
 	const styleText = document.createTextNode(`
@@ -18,7 +14,9 @@ function init (flags) {
 	`);
 	styleNode.appendChild(styleText);
 	document.getElementsByTagName('head')[0].appendChild(styleNode);
+};
 
+const crankThatJank = () => {
 	[
 		'#o-cookie-message',
 		'#top-gpt',
@@ -31,15 +29,25 @@ function init (flags) {
 		'.article__content',
 		'.article-info',
 	]
-	.forEach(selector => {
-		document.querySelectorAll(selector).forEach(element => {
-			element.className += ' janky';
-			setTimeout(() => {
-				element.className = element.className.replace(new RegExp(/ janky/, 'g'), '');
-			},
+		.forEach(selector => {
+			document.querySelectorAll(selector).forEach(element => {
+				element.className += ' janky';
+				setTimeout(() => {
+					element.className = element.className.replace(new RegExp(/ janky/, 'g'), '');
+				},
 				Math.floor(Math.random() * 4000) + 1000);
+			});
 		});
-	});
+};
+
+function init (flags) {
+	if (!flags || !flags.get('evenMoreJanky')) {
+		return;
+	}
+	else {
+		addStyles();
+		crankThatJank();
+	}
 }
 
 module.exports = { init };
