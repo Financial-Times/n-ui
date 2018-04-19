@@ -134,7 +134,8 @@ describe('AppInitializer', () => {
 				cookieMessage: true,
 				ads: true,
 				syndication: true,
-				roe: true
+				roe: true,
+				evenMoreJanky: true
 			});
 		});
 
