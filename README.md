@@ -189,24 +189,22 @@ The navigation model also controls the edition switching logic. The following pr
 	res.locals.editions.others //  and array of other possible editions
 ```
 
-#### Hiding all navigation
+#### Header with clickable logo
 In same cases you might need to show only the FT logo in the header, and hide all other navigation. This pattern is used in several conversion apps.
-By default, the logo will be a link to ft.com homepage. If you want to have the logo without it being a link, add the flag 'logoLink: false'. An example use case for this is if your page will be linked to from the iOS app, and no outbound navigation from it is allowed.
-This should all be passed as part of the object that is the second argument of res.render. 
 
 ```javascript
 {
     nUi: {
         header: {
-            variant: 'logo-only',
-            logoLink: false
-        },
-        footer: {
-        	hide: true
+            variant: 'logo-only'
         }
     }
 }
 ```
+
+#### Header with not-clickable logo, and hide footer
+If your page will be linked to from the iOS app, and no outbound navigation from it is allowed, then the flag 'hideOutboundLinks' will be set to true for you.
+This will render the header logo without it being a link, and hide the page footer.
 
 ### Other enhancements
 - Our [Handlebars](http://handlebarsjs.com/) engine loads partials from `bower_components` and has a number of [additional helpers](https://github.com/Financial-Times/n-handlebars). It also points to [n-layout](https://github.com/Financial-Times/n-layout) to provide a vanilla and “wrapper” layout
