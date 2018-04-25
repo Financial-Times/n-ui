@@ -135,7 +135,7 @@
 				{{{body}}}
 			</div>
 
-			{{#unlessEquals nUi.footer.hide true}}
+			{{#unless @root.flags.hideOutboundLinks}}
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{>n-ui/footer/template}}
@@ -143,7 +143,7 @@
 					{{>n-ui/header/partials/drawer/template}}
 				{{/unlessEquals}}
 			</div>
-			{{/unlessEquals}}
+			{{/unless}}
 		</div>
 	{{>layout/partials/bootstrapper}}
 	{{>n-ui/tracking/templates/core-analytics}}

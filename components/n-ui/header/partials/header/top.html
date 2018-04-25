@@ -18,21 +18,21 @@
 				</div>
 			{{/unlessEquals}}
 			<div class="o-header__top-column o-header__top-column--center">
-				{{#unlessEquals nUi.header.logoLink false}}
-				<a class="o-header__top-logo {{#if @root.flags.perfJanky}}o-header__top-logo--inlined{{/if}}" data-trackable="logo" href="/" title="Go to Financial Times homepage">
-					{{#if @root.flags.perfJanky}}
-						{{#inline file='logo-images/src/brand-ft-masthead.svg'}}{{/inline}}
-					{{/if}}
-					<span class="o-header__visually-hidden">Financial Times</span>
-				</a>
-				{{else}}
+				{{#if @root.flags.hideOutboundLinks}}
 				<div class="o-header__top-logo {{#if @root.flags.perfJanky}}o-header__top-logo--inlined{{/if}}">
 					{{#if @root.flags.perfJanky}}
-						{{#inline file='logo-images/src/brand-ft-masthead.svg'}}{{/inline}}
+					{{#inline file='logo-images/src/brand-ft-masthead.svg'}}{{/inline}}
 					{{/if}}
 					<span class="o-header__visually-hidden">Financial Times</span>
 				</div>
-				{{/unlessEquals}}
+				{{else}}
+				<a class="o-header__top-logo {{#if @root.flags.perfJanky}}o-header__top-logo--inlined{{/if}}" data-trackable="logo" href="/" title="Go to Financial Times homepage">
+					{{#if @root.flags.perfJanky}}
+					{{#inline file='logo-images/src/brand-ft-masthead.svg'}}{{/inline}}
+					{{/if}}
+					<span class="o-header__visually-hidden">Financial Times</span>
+				</a>
+				{{/if}}
 			</div>
 			{{#unlessEquals nUi.header.variant 'logo-only'}}
 				<div class="o-header__top-column o-header__top-column--right">
