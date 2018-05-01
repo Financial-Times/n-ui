@@ -6,7 +6,7 @@ let loggerSandbox;
 beforeEach(() => {
 	loggerSandbox = sinon.sandbox.create();
 	[ 'info', 'warn', 'error' ].map(logLevel => {
-		loggerSandbox.stub(logger, logLevel);
+		loggerSandbox.stub(logger, logLevel).callsFake(console[logLevel]); // eslint-disable-line
 	});
 });
 
