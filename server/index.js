@@ -29,7 +29,8 @@ module.exports = options => {
 		withNavigation: true,
 		withAnonMiddleware: true,
 		withCurrentYearMiddleware: true,
-		withFlags: true
+		withFlags: true,
+		withConsent: true
 	});
 
 	const {app, meta, addInitPromise} = nExpress.getAppContainer(options);
