@@ -34,7 +34,7 @@ module.exports = function (karma) {
 			require('karma-sourcemap-loader'),
 			require('karma-webpack'),
 			require('karma-chrome-launcher'),
-			require('karma-sauce-launcher'),
+			require('karma-browserstack-launcher'),
 			require('karma-html-reporter')
 		],
 		client: {
@@ -51,27 +51,27 @@ module.exports = function (karma) {
 
 
 	if (process.env.CI) {
-		const nightwatchBrowsers = require('@financial-times/n-heroku-tools/config/nightwatch').test_settings;
-		const unstableBrowsers = (process.env.SAUCELABS_UNSTABLE_BROWSERS_JS || '').split(',')
-			.concat((process.env.SAUCELABS_UNSTABLE_BROWSERS || '').split(','));
-		const whitelistedBrowsers = process.env.SAUCELABS_BROWSERS.split(',');
-		const sauceBrowsers = Object.keys(nightwatchBrowsers).reduce((browserList, browserName) => {
-			if (browserName === 'default' || unstableBrowsers.indexOf(browserName) > -1 || whitelistedBrowsers.indexOf(browserName) === -1) {
-				return browserList;
-			}
-			browserList[`${browserName}_sauce`] = Object.assign({base: 'SauceLabs'}, nightwatchBrowsers[browserName].desiredCapabilities);
-			return browserList;
-		}, {});
-		config.customLaunchers = sauceBrowsers;
-		config.sauceLabs = {
-			testName: 'n-ui unit tests',
-			username: process.env.SAUCE_USER,
-			accessKey: process.env.SAUCE_KEY,
-			recordScreenshots: true
+		config.browserStack = {
+			username: process.env.BROWSERSTACK_USER,
+			key: process.env.BROWSERSTACK_KEY
 		};
 
-		config.browsers = Object.keys(sauceBrowsers);
-		config.reporters.push('saucelabs');
+		config.customLaunchers = {
+			firefoxLatest: {
+				base: 'BrowserStack',
+				browser: 'firefox',
+				browser_version: 'latest',
+				os: 'Windows',
+				os_version: '10'
+			}
+
+		};
+
+		config.browsers = Object.keys(config.customLaunchers);
+
+		config.reporters.push('browserstack');
+
+
 	}
 
 	karma.set(config);
