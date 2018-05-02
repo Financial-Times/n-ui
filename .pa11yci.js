@@ -1,10 +1,8 @@
 const config = {
 	defaults: {
 		timeout: 10000,
-		page: {
-			headers: {
-				Cookie: 'next-flags=ads:off,sourcepoint:off,cookieMessage:off;secure=true'
-			}
+		headers: {
+			Cookie: 'next-flags=ads:off,sourcepoint:off,cookieMessage:off;secure=true'
 		}
 	},
 	urls: [
