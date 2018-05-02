@@ -62,7 +62,7 @@ test-server-plain:
 	mocha --exit --file server/test/setup.js server/test/*.test.js server/test/**/*.test.js
 
 test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
-	nyc mocha --file server/test/setup.js --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js --exit
+	nyc mocha --exit --file server/test/setup.js --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
 
 
 #
