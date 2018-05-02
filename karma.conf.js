@@ -79,9 +79,10 @@ module.exports = function (karma) {
 				os_version: '7'
 			},
 			iPhone: {
-				'os_version' : '10.3',
-				'device' : 'iPhone 7',
-				'real_mobile' : 'true',
+				base: 'BrowserStack',
+				os_version : '10.3',
+				device : 'iPhone 7',
+				real_mobile : 'true'
 			}
 		};
 
