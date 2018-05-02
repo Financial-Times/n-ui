@@ -53,7 +53,7 @@ module.exports = function (karma) {
 	if (process.env.CI) {
 		config.browserStack = {
 			username: process.env.BROWSERSTACK_USER,
-			key: process.env.BROWSERSTACK_KEY
+			accessKey: process.env.BROWSERSTACK_KEY
 		};
 
 		config.customLaunchers = {
@@ -69,9 +69,7 @@ module.exports = function (karma) {
 
 		config.browsers = Object.keys(config.customLaunchers);
 
-		config.reporters.push('browserstack');
-
-
+		config.reporters.push('BrowserStack');
 	}
 
 	karma.set(config);
