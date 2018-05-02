@@ -57,14 +57,32 @@ module.exports = function (karma) {
 		};
 
 		config.customLaunchers = {
+			chromeLatest: {
+				base: 'BrowserStack',
+				browser: 'chrome',
+				browser_version: 'latest',
+				os: 'Windows',
+				os_version: '10'
+			},
 			firefoxLatest: {
 				base: 'BrowserStack',
 				browser: 'firefox',
 				browser_version: 'latest',
 				os: 'Windows',
 				os_version: '10'
+			},
+			ie11: {
+				base: 'BrowserStack',
+				browser: 'IE',
+				browser_version: '11',
+				os: 'Windows',
+				os_version: '7'
+			},
+			iPhone: {
+				'os_version' : '10.3',
+				'device' : 'iPhone 7',
+				'real_mobile' : 'true',
 			}
-
 		};
 
 		config.browsers = Object.keys(config.customLaunchers);
