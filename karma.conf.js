@@ -78,12 +78,12 @@ module.exports = function (karma) {
 				os: 'Windows',
 				os_version: '7'
 			},
-			iPhone: {
+			safari: {
 				base: 'BrowserStack',
-				os: 'ios',
-				os_version : '10.3',
-				device : 'iPhone 7',
-				real_mobile : 'true'
+				os: 'OS X',
+				os_version : 'High Sierra',
+				browser: 'Safari',
+				browser_version: '11.0'
 			}
 		};
 
