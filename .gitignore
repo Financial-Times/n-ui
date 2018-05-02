@@ -19,6 +19,7 @@ key-cert.pem
 server/test/fixtures/app/views/partials/stylesheets.html
 server/test/fixtures/bad-assets/.gitignore
 /coverage/
+.nyc_output/
 /browser/layout/partials/css-loader.html
 /pa11y_screenCapture/*
 package-lock.json
