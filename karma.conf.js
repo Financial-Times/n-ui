@@ -80,6 +80,7 @@ module.exports = function (karma) {
 			},
 			iPhone: {
 				base: 'BrowserStack',
+				os: 'ios',
 				os_version : '10.3',
 				device : 'iPhone 7',
 				real_mobile : 'true'
