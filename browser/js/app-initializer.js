@@ -9,7 +9,7 @@ import footer from 'o-footer';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 import * as syndication from 'n-syndication';
-import { perfMark } from 'n-ui-foundations';
+import { perfMark, cookieStore } from 'n-ui-foundations';
 import speedcurveLux from '../../components/n-ui/speedcurve-lux';
 
 //Polyfill for :focus-visible https://github.com/WICG/focus-visible
@@ -145,7 +145,10 @@ export class AppInitializer {
 				}
 				const bottomSlot = flags.get('messageSlotBottom');
 				const hasConsentBannerAtBottom = (bottomSlot === 'cookieConsent' || bottomSlot === 'cookieConsentA' || bottomSlot === 'cookieConsentB');
-				if (this.enabledFeatures.cookieMessage && flags.get('cookieMessage') && !hasConsentBannerAtBottom) {
+				const hasDismissedConsentBanner = (cookieStore.get('FTCookieConsentGDPR') === 'true');
+				if (this.enabledFeatures.cookieMessage && flags.get('cookieMessage')
+					&& !hasConsentBannerAtBottom
+					&& !hasDismissedConsentBanner) {
 					oCookieMessage.init();
 				}
 
