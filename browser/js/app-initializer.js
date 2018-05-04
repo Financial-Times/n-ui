@@ -143,8 +143,9 @@ export class AppInitializer {
 				if (this.enabledFeatures.footer) {
 					footer.init();
 				}
-
-				if (this.enabledFeatures.cookieMessage && flags.get('cookieMessage')) {
+				const bottomSlot = flags.get('messageSlotBottom');
+				const hasConsentBannerAtBottom = (bottomSlot === 'cookieConsent' || bottomSlot === 'cookieConsentA' || bottomSlot === 'cookieConsentB');
+				if (this.enabledFeatures.cookieMessage && flags.get('cookieMessage') && !hasConsentBannerAtBottom) {
 					oCookieMessage.init();
 				}
 
