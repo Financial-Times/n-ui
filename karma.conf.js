@@ -83,7 +83,7 @@ module.exports = function (karma) {
 				os: 'OS X',
 				os_version : 'High Sierra',
 				browser: 'Safari',
-				browser_version: '11.0'
+				browser_version: 'latest'
 			}
 		};
 
