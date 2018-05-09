@@ -37,18 +37,11 @@
 					</li>
 					{{/with}}
 				{{else}}
-					{{#with @root.navigation.menus.navbar-right.items.[0]}}
+					{{#each @root.navigation.menus.navbar-right.items}}
 						<li class="o-header__nav-item">
 							<a class="o-header__nav-link" href="{{url}}" data-trackable="{{label}}">{{label}}</a>
 						</li>
-					{{/with}}
-					{{#unless @root.flags.myFtNavigationV2}}
-						{{#with @root.navigation.menus.navbar-right.items.[1]}}
-						<li class="o-header__nav-item">
-							<a class="o-header__nav-link" href="{{url}}" data-trackable="{{label}}">{{label}}</a>
-						</li>
-						{{/with}}
-					{{/unless}}
+					{{/each}}
 				{{/if}}
 			</ul>
 		{{/unlessEquals}}
