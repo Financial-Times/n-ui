@@ -53,7 +53,9 @@ module.exports = function (karma) {
 	if (process.env.CI) {
 		config.browserStack = {
 			username: process.env.BROWSERSTACK_USER,
-			accessKey: process.env.BROWSERSTACK_KEY
+			accessKey: process.env.BROWSERSTACK_KEY,
+			project: 'n-ui',
+			name: 'Unit Tests'
 		};
 
 		config.customLaunchers = {
@@ -83,7 +85,7 @@ module.exports = function (karma) {
 				os: 'OS X',
 				os_version : 'High Sierra',
 				browser: 'Safari',
-				browser_version: '11.0'
+				browser_version: 'latest'
 			}
 		};
 
