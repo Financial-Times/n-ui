@@ -2,25 +2,49 @@ const utils = require('./utils');
 const sandbox = require('./sandbox');
 const extend = require('o-ads').utils.extend;
 const apiUrlRoot = 'https://ads-api.ft.com/v1/';
+const cookieStore = require('n-ui-foundations').cookieStore;
+
 
 module.exports = function (flags, appName, adOptions) {
 
-	adOptions = adOptions || {};
+	adOptions = adOptions || {
+		programmatic : 'n'
+	};
+
+	//Derive Consent options from cookie banner cookie
+	//WIP - Stubbing out ft-cookie-consent cookie
+	cookieStore.set('ft-cookie-consent', 'behaviouraladsOnsite:on,marketingBypost:on,programmaticAdsOnsite:off');
+
+	let consentString = cookieStore.get('ft-cookie-consent');
+
+	const consents = consentString.split(',').reduce((acc, consentExpression) => {
+		const [flag, state] = consentExpression.split(':');
+		if (flag && state) {
+			acc[flag] = state === 'on';
+		}
+		return acc;
+	}, {});
+
+	if (consents){
+		adOptions.behavioral = consents.behaviouraladsOnsite;
+		adOptions.programmatic = consents.programmaticAdsOnsite ? 'y' : 'n';
+	};
 
 	const targeting = extend({
 		pt: appName.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName(),
-		mvt: utils.getABTestState()
+		mvt: utils.getABTestState(),
+		cc : adOptions.programmatic
 	});
 
 
-	const kruxConfig = (flags.get('krux')) && !adOptions.noTargeting && {
-		id: 'KHUSeE3x',
-		attributes: {
-			user: {},
-			page: {}
-		}
-	};
+const kruxConfig = (flags.get('krux')) && (!adOptions.noTargeting && adOptions.behavioral) && {
+	id: 'KHUSeE3x',
+	attributes: {
+		user: {},
+		page: {}
+	}
+};
 
 	const validateAdsTrafficApi = ((flags.get('validateAdsTraffic') && flags.get('validateAdsTraffic')==='variant')) ? `${apiUrlRoot}validate-traffic` : null;
 
