@@ -7,28 +7,24 @@ const cookieStore = require('n-ui-foundations').cookieStore;
 
 module.exports = function (flags, appName, adOptions) {
 
-	adOptions = adOptions || {
-		programmatic : 'n'
-	};
+	adOptions = adOptions || {};
+	adOptions.programmatic = 'n';
 
 	//Derive Consent options from cookie banner cookie
-	//WIP - Stubbing out ft-cookie-consent cookie
-	cookieStore.set('ft-cookie-consent', 'behaviouraladsOnsite:on,marketingBypost:on,programmaticAdsOnsite:off');
-
 	let consentString = cookieStore.get('ft-cookie-consent');
-
-	const consents = consentString.split(',').reduce((acc, consentExpression) => {
-		const [flag, state] = consentExpression.split(':');
-		if (flag && state) {
-			acc[flag] = state === 'on';
-		}
-		return acc;
-	}, {});
-
+	if (consentString) {
+		const consents = consentString.split(',').reduce((acc, consentExpression) => {
+			const [flag, state] = consentExpression.split(':');
+			if (flag && state) {
+				acc[flag] = state === 'on';
+			}
+			return acc;
+		}, {});
 	if (consents){
 		adOptions.behavioral = consents.behaviouraladsOnsite;
 		adOptions.programmatic = consents.programmaticAdsOnsite ? 'y' : 'n';
 	};
+}
 
 	const targeting = extend({
 		pt: appName.toLowerCase().substr(0, 3),
@@ -45,6 +41,12 @@ const kruxConfig = (flags.get('krux')) && (!adOptions.noTargeting && adOptions.b
 		page: {}
 	}
 };
+
+console.log(adOptions);
+
+console.log(kruxConfig);
+
+console.log(targeting);
 
 	const validateAdsTrafficApi = ((flags.get('validateAdsTraffic') && flags.get('validateAdsTraffic')==='variant')) ? `${apiUrlRoot}validate-traffic` : null;
 
