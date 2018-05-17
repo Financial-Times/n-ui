@@ -42,11 +42,6 @@ const kruxConfig = (flags.get('krux')) && (!adOptions.noTargeting && adOptions.b
 	}
 };
 
-console.log(adOptions);
-
-console.log(kruxConfig);
-
-console.log(targeting);
 
 	const validateAdsTrafficApi = ((flags.get('validateAdsTraffic') && flags.get('validateAdsTraffic')==='variant')) ? `${apiUrlRoot}validate-traffic` : null;
 
