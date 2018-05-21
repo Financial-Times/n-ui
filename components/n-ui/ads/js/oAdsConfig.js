@@ -10,22 +10,23 @@ module.exports = function (flags, appName, adOptions) {
 	adOptions = adOptions || {};
 
 	function setCookieConsentOpts (){
-		//Derive Consent options from cookie banner cookie
-		let consentString = cookieStore.get('ft-cookie-consent');
-		if (consentString) {
-			const consents = consentString.split(',').reduce((acc, consentExpression) => {
-				const [flag, state] = consentExpression.split(':');
-				if (flag && state) {
-					acc[flag] = state === 'on';
-				}
-				return acc;
-			}, {});
-		if (consents){
-			adOptions.behavioral = consents.behaviouraladsOnsite;
-			adOptions.programmatic = consents.programmaticAdsOnsite ? 'y' : 'n';
-		};
-	}
-
+			adOptions.programmatic = 'n';
+			adOptions.behavioral = false;
+			//Derive Consent options from cookie banner cookie
+			let consentString = cookieStore.get('ft-cookie-consent');
+			if (consentString) {
+				const consents = consentString.split(',').reduce((acc, consentExpression) => {
+					const [flag, state] = consentExpression.split(':');
+					if (flag && state) {
+						acc[flag] = state === 'on';
+					}
+					return acc;
+				}, {});
+			if (consents){
+				adOptions.behavioral = consents.behaviouraladsOnsite;
+				adOptions.programmatic = consents.programmaticAdsOnsite ? 'y' : 'n';
+			};
+		}
 	}
 
 	if (flags.get('manageAdsCookies')) {
@@ -34,8 +35,6 @@ module.exports = function (flags, appName, adOptions) {
 			adOptions.programmatic = 'y';
 			adOptions.behavioral = true;
 	}
-
-
 
 	const targeting = extend({
 		pt: appName.toLowerCase().substr(0, 3),
@@ -52,7 +51,6 @@ const kruxConfig = (flags.get('krux')) && (!adOptions.noTargeting && adOptions.b
 		page: {}
 	}
 };
-
 
 	const validateAdsTrafficApi = ((flags.get('validateAdsTraffic') && flags.get('validateAdsTraffic')==='variant')) ? `${apiUrlRoot}validate-traffic` : null;
 
