@@ -22,7 +22,7 @@ module.exports = function (flags, appName, adOptions) {
 		}
 	};
 
-	const validateAdsTrafficApi = ((flags.get('validateAdsTraffic') && flags.get('validateAdsTraffic')==='variant')) ? `${apiUrlRoot}validate-traffic` : null;
+	const validateAdsTrafficApi = ((flags.get('validateAdsTraffic') && flags.get('validateAdsTraffic') === 'variant')) ? `${apiUrlRoot}validate-traffic` : null;
 
 	function getContextualTargeting (appName) {
 		let uuid;
@@ -108,7 +108,8 @@ module.exports = function (flags, appName, adOptions) {
 			page: getContextualTargeting(appName),
 			usePageZone: true
 		},
-		validateAdsTrafficApi : validateAdsTrafficApi
+		validateAdsTrafficApi: validateAdsTrafficApi,
+		disableConsentCookie: flags.get('adsDisableCookieConsent') ? true : false
 	};
 
 };
