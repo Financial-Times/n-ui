@@ -109,7 +109,7 @@ module.exports = function (flags, appName, adOptions) {
 			usePageZone: true
 		},
 		validateAdsTrafficApi : validateAdsTrafficApi,
-		disableConsentCookie : (flags.get('adsConsentCookieCheck')) ? false : true
+		disableConsentCookie : (flags.get('adsDisableCookieConsent')) ? true : false
 	};
 
 };
