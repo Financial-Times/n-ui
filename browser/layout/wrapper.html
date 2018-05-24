@@ -102,6 +102,13 @@
 				{{{json this}}}
 			</script>
 		{{/each}}
+		<script async id="moat-ivt" src="https://sejs.moatads.com/financialtimesprebidheader859796398452/yi.js"></script>
+		<script>
+			document.getElementById('moat-ivt').onload = function() {
+				console.log('moat-ivt loaded');
+				console.log(window.moatPrebidApi);
+			};
+		</script>
 	</head>
 	<body data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
 		{{#if withGcs}}
