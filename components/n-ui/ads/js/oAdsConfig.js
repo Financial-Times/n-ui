@@ -2,25 +2,55 @@ const utils = require('./utils');
 const sandbox = require('./sandbox');
 const extend = require('o-ads').utils.extend;
 const apiUrlRoot = 'https://ads-api.ft.com/v1/';
+const cookieStore = require('n-ui-foundations').cookieStore;
+
 
 module.exports = function (flags, appName, adOptions) {
 
 	adOptions = adOptions || {};
 
+	function setCookieConsentOpts (){
+			adOptions.programmatic = 'n';
+			adOptions.behavioral = false;
+			//Derive Consent options from cookie banner cookie
+			let consentString = cookieStore.get('ft-cookie-consent');
+			if (consentString) {
+				const consents = consentString.split(',').reduce((acc, consentExpression) => {
+					const [flag, state] = consentExpression.split(':');
+					if (flag && state) {
+						acc[flag] = state === 'on';
+					}
+					return acc;
+				}, {});
+			if (consents){
+				adOptions.behavioral = consents.behaviouraladsOnsite;
+				adOptions.programmatic = consents.programmaticAdsOnsite ? 'y' : 'n';
+			};
+		}
+	}
+
+	if (flags.get('manageAdsCookies')) {
+		setCookieConsentOpts();
+	} else {
+			adOptions.programmatic = 'y';
+			adOptions.behavioral = true;
+	}
+
 	const targeting = extend({
 		pt: appName.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName(),
-		mvt: utils.getABTestState()
+		mvt: utils.getABTestState(),
+		cc : adOptions.programmatic
 	});
 
 
-	const kruxConfig = (flags.get('krux')) && !adOptions.noTargeting && {
-		id: 'KHUSeE3x',
-		attributes: {
-			user: {},
-			page: {}
-		}
-	};
+const kruxConfig = (flags.get('krux')) && (!adOptions.noTargeting && adOptions.behavioral) && {
+	id: 'KHUSeE3x',
+	attributes: {
+		user: {},
+		page: {}
+	}
+};
 
 	const validateAdsTrafficApi = ((flags.get('validateAdsTraffic') && flags.get('validateAdsTraffic') === 'variant')) ? `${apiUrlRoot}validate-traffic` : null;
 
@@ -43,7 +73,6 @@ module.exports = function (flags, appName, adOptions) {
 
 		return url;
 	}
-
 
 	function getZone () {
 		let zone = [ utils.getMetaData('dfp_site'), utils.getMetaData('dfp_zone') ].filter( a => a );
