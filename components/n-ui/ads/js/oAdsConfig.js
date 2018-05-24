@@ -106,6 +106,7 @@ module.exports = function (flags, appName, adOptions) {
 			page: getContextualTargeting(appName),
 			usePageZone: true
 		},
+		disableConsentCookie: flags.get('adsDisableCookieConsent'),
 		validateAdsTraffic: flags.get('validateAdsTraffic')
 	};
 
