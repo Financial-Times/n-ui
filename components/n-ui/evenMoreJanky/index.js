@@ -18,7 +18,6 @@ const addStyles = () => {
 
 const crankThatJank = () => {
 	[
-		'#o-cookie-message',
 		'#top-gpt',
 		'.js-markets-data',
 		'#site-navigation',

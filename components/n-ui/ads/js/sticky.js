@@ -6,7 +6,6 @@ function Sticky (el, sibling, boundary) {
 	this.sibling = sibling;
 	this.eventdbScrollEnd = debounce(this.scrollEnd.bind(this), 300);
 	this.eventScrollStart = this.scrollStart.bind(this);
-	this.cookieCloseButton = document.querySelector('.o-cookie-message__close-btn');
 	this.extraHeight = 0;
 	this.animationFrame;
 	this.startScroll;
@@ -65,7 +64,6 @@ Sticky.prototype.destroy = function (unsetCallbackFunctions) {
 	window.removeEventListener('scroll', this.eventdbScrollEnd);
 	window.removeEventListener('scroll', this.eventScrollStart);
 	window.removeEventListener('oAds.collapsed', this.collapsedCallback);
-	this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent);
 	this.endLoop();
 	this.fixed.style.top = '';
 	this.fixed.style.position = 'relative';
@@ -137,16 +135,6 @@ Sticky.prototype.init = function () {
 	};
 	this.windowWidth = window.innerWidth;
 	this.setInitialValues();
-
-	if (this.cookieCloseButton) {
-		this.cookieCloseEvent = this.cookieCloseButton.addEventListener('click', function () {
-			if(!this.finished){
-				this.extraHeight = 0;
-				this.reset();
-			}
-			this.cookieCloseButton.removeEventListener('click', this.cookieCloseEvent);
-		}.bind(this));
-	}
 
 	window.addEventListener('scroll', this.eventScrollStart);
 
