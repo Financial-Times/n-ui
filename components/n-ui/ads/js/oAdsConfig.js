@@ -107,7 +107,7 @@ module.exports = function (flags, appName, adOptions) {
 			usePageZone: true
 		},
 		disableConsentCookie: flags.get('adsDisableCookieConsent'),
-		validateAdsTraffic: flags.get('validateAdsTraffic')
+		validateAdsTraffic: flags.get('moatAdsTraffic')
 	};
 
 };
