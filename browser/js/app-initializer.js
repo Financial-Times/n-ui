@@ -4,7 +4,6 @@ import date from 'o-date';
 import header from '../../components/n-ui/header';
 import roe from '../../components/n-ui/roe';
 import evenMoreJanky from '../../components/n-ui/evenMoreJanky';
-import oCookieMessage from 'o-cookie-message';
 import footer from 'o-footer';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
@@ -25,7 +24,6 @@ export const presets = {
 		header: true,
 		footer: true,
 		date: true,
-		cookieMessage: true,
 		ads: true,
 		syndication: true,
 		roe: true,
@@ -142,11 +140,6 @@ export class AppInitializer {
 
 				if (this.enabledFeatures.footer) {
 					footer.init();
-				}
-				const bottomSlot = flags.get('messageSlotBottom');
-				const hasConsentBannerAtBottom = (bottomSlot === 'cookieConsent' || bottomSlot === 'cookieConsentA' || bottomSlot === 'cookieConsentB');
-				if (this.enabledFeatures.cookieMessage && flags.get('cookieMessage') && !hasConsentBannerAtBottom) {
-					oCookieMessage.init();
 				}
 
 				if (this.enabledFeatures.syndication) {
