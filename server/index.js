@@ -105,6 +105,11 @@ module.exports = options => {
 		next();
 	});
 
+	app.use(function (req, res, next) {
+		res.locals.realUrl = req.get('ft-real-url');
+		next();
+	});
+
 	if (options.withAssets) {
 		assetManager.init(options, meta.directory, app);
 	}
