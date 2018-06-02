@@ -7,7 +7,7 @@ let sandbox;
 describe('Utils', () => {
 
 	beforeEach(() => {
-		sandbox = sinon.sandbox.create();
+		sandbox = sinon.createSandbox();
 		markup.setupContainer();
 		windowConsole = window.console;
 	});

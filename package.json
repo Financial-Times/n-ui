@@ -34,7 +34,6 @@
     "chai": "^4.1.2",
     "chalk": "^2.4.1",
     "coveralls": "^3.0.1",
-    "denodeify": "^1.2.1",
     "fetch-mock": "^6.4.3",
     "handlebars": "^4.0.11",
     "karma": "^2.0.2",
