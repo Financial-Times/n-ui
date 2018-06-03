@@ -1,16 +1,11 @@
 const polyfillIo = require('./polyfill-io');
 
-module.exports = ({
-	getAssetUrl,
-	stylesheetManager,
-	useLocalAppShell
-}) => {
-
+module.exports = ({ getAssetUrl, stylesheetManager, useLocalAppShell }) => {
 	const linkResource = function (file, meta, opts) {
 		meta = meta || {};
 		opts = opts || {};
 		const header = [];
-		header.push(`<${opts.hashed ? getAssetUrl(file) : file }>`);
+		header.push(`<${opts.hashed ? getAssetUrl(file) : file}>`);
 		Object.keys(meta).forEach(key => {
 			header.push(`${key}="${meta[key]}"`);
 		});
@@ -21,16 +16,22 @@ module.exports = ({
 
 		header.push('nopush');
 
-		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '));
+		this.locals.resourceHints[opts.priority || 'normal'].push(
+			header.join('; ')
+		);
 	};
 
-	const getBundleConfig = ({ file, url, isNUi, stopsExecutionOnLoadError = false }) => ({
+	const getBundleConfig = ({
+		file,
+		url,
+		isNUi,
+		stopsExecutionOnLoadError = false
+	}) => ({
 		file: url || getAssetUrl({ file, isNUi }),
 		stopsExecutionOnLoadError
 	});
 
 	return (req, res, next) => {
-
 		res.locals.resourceHints = {
 			highest: [],
 			normal: []
@@ -41,14 +42,10 @@ module.exports = ({
 		if (req.accepts('text/html')) {
 			res.locals.javascriptBundles = [];
 			res.locals.stylesheets = {
-				inline: [],
-				lazy: [],
+				inline: ['head'],
+				lazy: ['main'],
 				blocking: []
 			};
-
-			res.locals.stylesheets.inline = ['head'];
-			res.locals.stylesheets.lazy = ['main'];
-
 			res.locals.polyfillIo = polyfillIo;
 
 			res.locals.javascriptBundles.push(
@@ -80,33 +77,55 @@ module.exports = ({
 
 			res.render = function (template, templateData) {
 				// Add standard n-ui stylesheets
-				res.locals.stylesheets.inline.unshift(`${useLocalAppShell ? '' : 'n-ui/'}head-n-ui-core`);
+				res.locals.stylesheets.inline.unshift(
+					`${useLocalAppShell ? '' : 'n-ui/'}head-n-ui-core`
+				);
 				// For now keep building n-ui-core in the main app stylesheet
 				// res.locals.stylesheets.lazy.unshift('n-ui-core');
 
-				res.locals.stylesheets.inline = stylesheetManager.concatenateStyles(res.locals.stylesheets.inline);
+				res.locals.stylesheets.inline = stylesheetManager.concatenateStyles(
+					res.locals.stylesheets.inline
+				);
 
 				// TODO collect metrics on this similar to inline stylesheets
-				res.locals.stylesheets.lazy = res.locals.stylesheets.lazy
-					.map(name => getAssetUrl(stylesheetManager.nameToUrlConfig(name)));
-				res.locals.stylesheets.blocking = res.locals.stylesheets.blocking
-					.map(name => getAssetUrl(stylesheetManager.nameToUrlConfig(name)));
+				res.locals.stylesheets.lazy = res.locals.stylesheets.lazy.map(name =>
+					getAssetUrl(stylesheetManager.nameToUrlConfig(name))
+				);
+				res.locals.stylesheets.blocking = res.locals.stylesheets.blocking.map(
+					name => getAssetUrl(stylesheetManager.nameToUrlConfig(name))
+				);
 
-				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
-				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
-				res.locals.javascriptBundles.map(({ file, stopsExecutionOnLoadError }) => ({
-					file: res.linkResource(file, { as: 'script' }, { priority: 'highest' }),
-					stopsExecutionOnLoadError
-				}));
+				res.locals.stylesheets.lazy.forEach(file =>
+					res.linkResource(file, { as: 'style' }, { priority: 'highest' })
+				);
+				res.locals.stylesheets.blocking.forEach(file =>
+					res.linkResource(file, { as: 'style' }, { priority: 'highest' })
+				);
+				res.locals.javascriptBundles.map(
+					({ file, stopsExecutionOnLoadError }) => ({
+						file: res.linkResource(
+							file,
+							{ as: 'script' },
+							{ priority: 'highest' }
+						),
+						stopsExecutionOnLoadError
+					})
+				);
 
 				// TODO make this a setting on the app - template data feels like a messy place
 				if (templateData.withAssetPrecache) {
-					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
-					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
-					res.locals.javascriptBundles.map(({ file, stopsExecutionOnLoadError }) => ({
-						file: res.linkResource(file, {as: 'script', rel: 'precache'}),
-						stopsExecutionOnLoadError
-					}));
+					res.locals.stylesheets.lazy.forEach(file =>
+						res.linkResource(file, { as: 'style', rel: 'precache' })
+					);
+					res.locals.stylesheets.blocking.forEach(file =>
+						res.linkResource(file, { as: 'style', rel: 'precache' })
+					);
+					res.locals.javascriptBundles.map(
+						({ file, stopsExecutionOnLoadError }) => ({
+							file: res.linkResource(file, { as: 'script', rel: 'precache' }),
+							stopsExecutionOnLoadError
+						})
+					);
 				}
 
 				// supercharge the masthead image
@@ -116,7 +135,12 @@ module.exports = ({
 					{ priority: 'highest' }
 				);
 
-				res.append('Link', this.locals.resourceHints.highest.concat(this.locals.resourceHints.normal));
+				res.append(
+					'Link',
+					this.locals.resourceHints.highest.concat(
+						this.locals.resourceHints.normal
+					)
+				);
 
 				return originalRender.apply(res, [].slice.call(arguments));
 			};

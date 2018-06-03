@@ -1,13 +1,16 @@
-const denodeify = require('denodeify');
-const copy = denodeify(require('fs-extra').copy);
+const { promisify } = require('uril');
+const fsx = require('fs-extra');
+const copy = promisify(fsx.copy);
 
-module.exports = () => {
+module.exports = async () => {
 	if (process.env.NEXT_APP_SHELL === 'local') {
-		return Promise.resolve();
+		return;
 	}
-	return Promise.all([
+	return await Promise.all([
 		'public/n-ui/head-n-ui-core.css',
-		'public/n-ui/asset-hashes.json',
-	]
-		.map(fileName => copy(`node_modules/@financial-times/n-ui/${fileName}`, fileName)));
+		'public/n-ui/asset-hashes.json'
+	].map(
+			fileName => copy(`node_modules/@financial-times/n-ui/${fileName}`, fileName)
+		)
+	);
 };

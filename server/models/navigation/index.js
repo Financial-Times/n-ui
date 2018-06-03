@@ -2,13 +2,15 @@ const NavigationModelV2 = require('./navigationModelV2');
 
 let navigationModelV2;
 
-module.exports = {
-	init: options => {
-		navigationModelV2 = new NavigationModelV2(options);
+const init = options => {
+	navigationModelV2 = new NavigationModelV2(options);
+	return navigationModelV2.init();
+};
 
-		return navigationModelV2.init();
-	},
-	middleware : (req, res, next) => {
-		return navigationModelV2.middleware(req, res, next);
-	}
+const middleware = (req, res, next) =>
+	navigationModelV2.middleware(req, res, next);
+
+module.exports = {
+	init,
+	middleware
 };

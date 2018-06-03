@@ -160,7 +160,7 @@ describe('simple app', function () {
 		});
 	});
 
-	describe('asset and preloading', () => {
+	describe.only('asset and preloading', () => {
 
 		it('should expose hashed asset helper', () => {
 			expect(app.getHashedAssetUrl).to.exist;

@@ -1,12 +1,11 @@
-const logger = require('@financial-times/n-logger').default;
+const { default: logger } = require('@financial-times/n-logger');
 const stylesheetManager = require('./stylesheet-manager');
 const messages = require('../messages');
 const verifyExistence = require('./verify-existence');
 const middlewareFactory = require('./middleware-factory');
 const assetUrlGenerator = require('./asset-url-generator');
 
-function init (options, directory, app) {
-
+const init = (options, directory, app) => {
 	// don't start unless all the expected assets are present
 	verifyExistence.verify(app.locals);
 
@@ -33,12 +32,14 @@ function init (options, directory, app) {
 	app.getHashedAssetUrl = getAssetUrl;
 
 	// use all the above in middleware to be used on each request
-	app.use(middlewareFactory({
-		getAssetUrl,
-		stylesheetManager,
-		useLocalAppShell
-	}));
-}
+	app.use(
+		middlewareFactory({
+			getAssetUrl,
+			stylesheetManager,
+			useLocalAppShell
+		})
+	);
+};
 
 module.exports = {
 	init

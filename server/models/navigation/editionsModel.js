@@ -11,8 +11,7 @@ const availableEditions = [
 	}
 ];
 
-module.exports = class EditionsModel {
-
+class EditionsModel {
 	get available () {
 		return availableEditions;
 	}
@@ -29,7 +28,10 @@ module.exports = class EditionsModel {
 		if (selectedEdition && this.ids.indexOf(selectedEdition) > -1) {
 			currentEdition = selectedEdition;
 			// set cookie for a year
-			res.cookie('next-edition', currentEdition, { domain: 'ft.com', maxAge: 1000 * 60 * 60 * 24 * 365 });
+			res.cookie('next-edition', currentEdition, {
+				domain: 'ft.com',
+				maxAge: 1000 * 60 * 60 * 24 * 365
+			});
 		}
 
 		res.locals.editions = {
@@ -42,3 +44,5 @@ module.exports = class EditionsModel {
 		next();
 	}
 };
+
+module.exports = EditionsModel;

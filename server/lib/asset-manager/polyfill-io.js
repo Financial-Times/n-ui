@@ -1,5 +1,6 @@
 const polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
-function buildQueryString (qsConfig) {
+
+const buildQueryString = (qsConfig) => {
 	const qs = [];
 
 	Object.keys(qsConfig).forEach(key => {
@@ -10,7 +11,7 @@ function buildQueryString (qsConfig) {
 	qs.push('source=next', 'unknown=polyfill');
 
 	return `?${qs.join('&')}`;
-}
+};
 
 const queryStrings = {
 	enhanced: buildQueryString({
@@ -42,6 +43,6 @@ const queryStrings = {
 };
 
 module.exports = {
-	enhanced: polyfillRoot + queryStrings['enhanced'],
-	core: polyfillRoot + queryStrings['core']
+	enhanced: `${polyfillRoot}${queryStrings['enhanced']}`,
+	core: `${polyfillRoot}${queryStrings['core']}`
 };
