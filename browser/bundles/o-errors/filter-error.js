@@ -4,7 +4,7 @@ module.exports = ({ exception }) => {
 	// the execution of JS is halted and we fall back to core
 	const errorFilters = [
 		/window\.FT\.(flags|nUi|ftNextUi)/i,
-		/undefined is|is undefined/i
+		/'undefined' is|undefined is|is undefined/i
 	];
 	let windowFtError;
 	if(exception) {

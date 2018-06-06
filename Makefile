@@ -59,10 +59,10 @@ else
 endif
 
 test-server-plain:
-	mocha server/test/*.test.js server/test/**/*.test.js
+	mocha --exit --file server/test/setup.js server/test/*.test.js server/test/**/*.test.js
 
 test-server-coverage: ## test-server-coverage: Run the unit tests with code coverage enabled.
-	istanbul cover node_modules/.bin/_mocha --report=$(if $(CIRCLECI),lcovonly,lcov) server/test/*.test.js server/test/**/*.test.js
+	nyc --reporter=$(if $(CIRCLECI),lcovonly,lcov) mocha --exit --file server/test/setup.js server/test/*.test.js server/test/**/*.test.js
 
 
 #
@@ -96,8 +96,12 @@ test-browser:
 
 test-build: build
 
-nightwatch:
-	nht nightwatch browser/test/js-success.nightwatch.js
+smoke:
+ifeq ($(CIRCLE_BUILD_NUM),) # not CircleCI
+	n-test smoke -H http://local.ft.com:5005 -c browser/test/smoke.js
+else
+	n-test smoke -H https://ft-next-test-artefacts.s3-eu-west-1.amazonaws.com/n-ui/test-page/$(CIRCLE_BUILD_NUM) -c browser/test/smoke.js
+endif
 
 pally-conf:
 	node .pa11yci.js
@@ -109,9 +113,9 @@ a11y: test-build pally-conf
 
 
 # Note: `run` executes `node demo/app`, which fires up express, then deploys
-# a test static site to s3, then exits, freeing the process to execute `nightwatch a11y`.
+# a test static site to s3, then exits, freeing the process to execute `smoke a11y`.
 test:
-	make developer-note verify pally-conf test-server test-browser test-build run nightwatch a11y build-dist
+	make developer-note verify pally-conf test-server test-browser test-build run smoke a11y build-dist
 	bundlesize
 
 build-production: build-bundle

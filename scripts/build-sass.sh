@@ -4,6 +4,7 @@
 # E.g. ./client/comments.scss returns comments.scss
 
 node-sass ${1:-client/main.scss} \
+${CSS_SOURCE_MAPS:+--source-map true} \
 --output-style compressed \
 --include-path bower_components \
 --include-path node_modules/@financial-times \

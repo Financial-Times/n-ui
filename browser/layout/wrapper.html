@@ -41,10 +41,10 @@
 		<link rel="icon" type="image/png" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=update-logos&width=194&height=194&format=png" sizes="194x194">
 		<link rel="apple-touch-icon" sizes="180x180" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=update-logos&width=180&height=180&format=png">
 
-		{{#unless __disableIosSmartBanner}}
+		{{#unless __disableMobilePhoneBanner}}
 		<meta name="apple-itunes-app" content="app-id=1200842933, affiliate-data=ct=smart-banner&pt=246269, app-argument={{#if canonicalUrl}}{{canonicalUrl}}{{else}}https://www.ft.com{{/if}}">
 		{{/unless}}
-		{{#if __disableAndroidBanner}}
+		{{#if __disableMobilePhoneBanner}}
 		<script>
 			// Don't show the Android install banner
 			window.addEventListener('beforeinstallprompt', function (ev) { ev.preventDefault(); return false; });
@@ -86,6 +86,9 @@
 		<meta name="og:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v3/open-graph.png">
 		<meta name="twitter:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v3/open-graph.png">
 		{{/unless}}
+		{{#if @root.flags.googleSiteVerificationMeta}}
+		<meta name="google-site-verification" content="4-t8sFaPvpO5FH_Gnw1dkM28CQepjzo8UjjAkdDflTw" />
+		{{/if}}
 
 		{{#outputBlock 'head'}}{{/outputBlock}}
 
@@ -117,7 +120,6 @@
 				})();
 			</script>
 		{{/if}}
-		<div class="o-cookie-message o-cookie-message--banner-centric" data-o-component="o-cookie-message"></div>
 
 		{{#if @root.flags.stickyHeaderAd}}
 			{{#outputBlock 'sticky-advert'}}{{/outputBlock}}
@@ -132,6 +134,7 @@
 				{{{body}}}
 			</div>
 
+			{{#unless @root.flags.hideOutboundLinks}}
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{>n-ui/footer/template}}
@@ -139,9 +142,16 @@
 					{{>n-ui/header/partials/drawer/template}}
 				{{/unlessEquals}}
 			</div>
+			{{/unless}}
 		</div>
 	{{>layout/partials/bootstrapper}}
 	{{>n-ui/tracking/templates/core-analytics}}
 	{{>n-service-worker/appcache/iframe}}
+	{{#if @root.flags.qualtrics}}
+		{{>layout/partials/qualtrics-tag}}
+	{{/if}}
+	{{#if @root.flags.fastlyInsights}}
+		{{>layout/partials/fastly-insights}}
+	{{/if}}
 	</body>
 </html>

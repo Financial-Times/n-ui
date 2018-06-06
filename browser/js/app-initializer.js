@@ -3,7 +3,7 @@ import tracking from '../../components/n-ui/tracking';
 import date from 'o-date';
 import header from '../../components/n-ui/header';
 import roe from '../../components/n-ui/roe';
-import oCookieMessage from 'o-cookie-message';
+import evenMoreJanky from '../../components/n-ui/evenMoreJanky';
 import footer from 'o-footer';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
@@ -24,10 +24,10 @@ export const presets = {
 		header: true,
 		footer: true,
 		date: true,
-		cookieMessage: true,
 		ads: true,
 		syndication: true,
-		roe: true
+		roe: true,
+		evenMoreJanky: true
 	}
 };
 
@@ -142,10 +142,6 @@ export class AppInitializer {
 					footer.init();
 				}
 
-				if (this.enabledFeatures.cookieMessage && flags.get('cookieMessage')) {
-					oCookieMessage.init();
-				}
-
 				if (this.enabledFeatures.syndication) {
 					syndication.init(flags);
 				}
@@ -153,6 +149,11 @@ export class AppInitializer {
 				if (this.enabledFeatures.roe) {
 					roe.init(flags);
 				}
+
+				if (this.enabledFeatures.evenMoreJanky) {
+					evenMoreJanky.init(flags);
+				}
+
 			});
 	}
 

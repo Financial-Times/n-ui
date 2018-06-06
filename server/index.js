@@ -29,7 +29,8 @@ module.exports = options => {
 		withNavigation: true,
 		withAnonMiddleware: true,
 		withCurrentYearMiddleware: true,
-		withFlags: true
+		withFlags: true,
+		withConsent: true
 	});
 
 	const {app, meta, addInitPromise} = nExpress.getAppContainer(options);
@@ -72,8 +73,7 @@ module.exports = options => {
 
 	// set whether or not to disable the app install banner.
 	app.use(function (req, res, next) {
-		app.locals.__disableAndroidBanner = (!res.locals.flags.subscriberCohort || res.locals.flags.disableAndroidSmartBanner);
-		app.locals.__disableIosSmartBanner = (!res.locals.flags.subscriberCohort || res.locals.flags.disableIosSmartBanner);
+		app.locals.__disableMobilePhoneBanner = !res.locals.flags.subscriberCohort;
 		next();
 	});
 
@@ -102,6 +102,11 @@ module.exports = options => {
 	app.use(function (req, res, next) {
 		res.locals.forceOptInDevice = req.get('FT-Force-Opt-In-Device') === 'true';
 		res.vary('FT-Force-Opt-In-Device');
+		next();
+	});
+
+	app.use(function (req, res, next) {
+		res.locals.realUrl = req.get('ft-real-url');
 		next();
 	});
 

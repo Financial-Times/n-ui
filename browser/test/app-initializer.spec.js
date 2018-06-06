@@ -3,7 +3,6 @@ const AppInitializer = require('../js/app-initializer').AppInitializer;
 const header = require('../../components/n-ui/header');
 const footer = require('o-footer');
 const date = require('o-date');
-const cookieMessage = require('o-cookie-message');
 const ads = require('../../components/n-ui/ads');
 const tracking = require('../../components/n-ui/tracking');
 const sw = require('n-service-worker');
@@ -24,7 +23,6 @@ describe('AppInitializer', () => {
 		sinon.stub(footer, 'init');
 		sinon.stub(date, 'init');
 		sinon.stub(ads, 'init');
-		sinon.stub(cookieMessage, 'init');
 		sinon.stub(tracking, 'init');
 		sinon.stub(tracking, 'lazyInit');
 		sinon.stub(sw, 'register').callsFake(() => Promise.resolve());
@@ -40,7 +38,6 @@ describe('AppInitializer', () => {
 		footer.init.restore();
 		date.init.restore();
 		ads.init.restore();
-		cookieMessage.init.restore();
 		tracking.init.restore();
 		tracking.lazyInit.restore();
 		sw.register.restore();
@@ -131,10 +128,10 @@ describe('AppInitializer', () => {
 				header: true,
 				footer: true,
 				date: true,
-				cookieMessage: true,
 				ads: true,
 				syndication: true,
-				roe: true
+				roe: true,
+				evenMoreJanky: true
 			});
 		});
 
@@ -249,25 +246,6 @@ describe('AppInitializer', () => {
 				const app = initApp({}, null, true);
 				return app.env.allStylesLoaded
 					.then(() => expect(footer.init.called).to.be.false);
-			});
-
-			it('initializes cookie message if feature is enabled and flag is on', () => {
-				const app = initApp({cookieMessage: true}, {cookieMessage: true}, true);
-				expect(cookieMessage.init.called).to.be.false;
-				return app.env.allStylesLoaded
-					.then(() => expect(cookieMessage.init.called).to.be.true);
-			});
-
-			it('does not initialize cookie message if feature is disabled', () => {
-				const app = initApp({}, {cookieMessage: true}, true);
-				return app.env.allStylesLoaded
-					.then(() => expect(cookieMessage.init.called).to.be.false);
-			});
-
-			it('does not initialize cookie message if flag is off', () => {
-				const app = initApp({cookieMessage: true}, null, true);
-				return app.env.allStylesLoaded
-					.then(() => expect(cookieMessage.init.called).to.be.false);
 			});
 
 			it('initializes syndication if feature is enabled', () => {

@@ -137,7 +137,42 @@ If you pass `withNavigation:true` in the init options, you will have navigation 
 	};
 ```
 
-### Navigation Hierarchy
+#### Subnavigation
+
+See the [MyFT page](https://www.ft.com/myft/following) for a rendered copy of this config.
+
+```javascript
+res.locals.navigation = {
+    // other settings here...
+    
+    showSubNav: true,
+    // this populates the breadcrumb section at the left of the subnav
+    breadcrumb: [
+        {
+            id: 'my-ft',
+            label: 'My FT',
+            url: '/myft/following'
+        }
+    ],
+    // this populates the current level of subnav
+    subsections: [
+        {
+            id: 'feed',
+            label: 'myFT Feed',
+            url: '/myft/following'
+        },
+        {
+            id: 'alerts',
+            label: 'Emails & Alerts',
+            url: '/myft/alerts'
+        }
+    ],
+    // optionally, add a 'Sign out' link to the right of the subnav (default is off)
+    showSignOut: true
+}
+```
+
+#### Navigation Hierarchy
 If you also pass `withNavigationHierarchy: true` in the init options you get some additonal properties detailing the current page’s position in the hierarchy. This is only currently useful on stream pages. The following properties are added:
 
 ```javascript
@@ -146,13 +181,30 @@ If you also pass `withNavigationHierarchy: true` in the init options you get som
 	res.locals.navigation.ancestors // an array of the parent items of the current page (top-level first)
 ```
 
-### Editions
+#### Editions
 The navigation model also controls the edition switching logic. The following properties are added:
 
 ```javascript
 	res.locals.editions.current // the currently selected edition
 	res.locals.editions.others //  and array of other possible editions
 ```
+
+#### Header with clickable logo
+In same cases you might need to show only the FT logo in the header, and hide all other navigation. This pattern is used in several conversion apps.
+
+```javascript
+{
+    nUi: {
+        header: {
+            variant: 'logo-only'
+        }
+    }
+}
+```
+
+#### Header with not-clickable logo, and hide footer
+If your page will be linked to from the iOS app, and no outbound navigation from it is allowed, then the flag 'hideOutboundLinks' will be set to true for you.
+This will render the header logo without it being a link, and hide the page footer.
 
 ### Other enhancements
 - Our [Handlebars](http://handlebarsjs.com/) engine loads partials from `bower_components` and has a number of [additional helpers](https://github.com/Financial-Times/n-handlebars). It also points to [n-layout](https://github.com/Financial-Times/n-layout) to provide a vanilla and “wrapper” layout
