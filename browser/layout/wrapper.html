@@ -102,7 +102,9 @@
 				{{{json this}}}
 			</script>
 		{{/each}}
-		<script async id="moat-ivt" src="https://sejs.moatads.com/financialtimesprebidheader859796398452/yi.js"></script>
+		{{#if @root.flags.moatAdsTraffic}}
+			<script async id="moat-ivt" src="https://sejs.moatads.com/financialtimesprebidheader859796398452/yi.js"></script>
+		{{/if}}
 	</head>
 	<body data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
 		{{#if withGcs}}
