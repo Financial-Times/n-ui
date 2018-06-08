@@ -22,6 +22,7 @@ const app = new AppInitializer();
 
 window.FT.nUi = Object.assign({}, app.env, {
 	onAppInitialized: app.onAppInitialized,
+	setSentryEndpoint: app.setSentryEndpoint,
 	ads: ads,
 	tracking: tracking,
 	_hiddenComponents: {
