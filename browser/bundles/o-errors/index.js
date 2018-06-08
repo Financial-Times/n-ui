@@ -10,7 +10,7 @@ const appInfo = {
 
 oErrors.init({
 	enabled: window.FT.flags.clientErrorReporting && appInfo.isProduction,
-	sentryEndpoint: 'https://62a990fd8dce4a27aafb006b58783f66@sentry.io/195030',
+	sentryEndpoint: appInfo.sentryEndpoint || 'https://62a990fd8dce4a27aafb006b58783f66@sentry.io/195030',
 	siteVersion: appInfo.version,
 	logLevel: window.FT.flags.clientDetailedErrorReporting ? 'contextonly' : 'off',
 	tags: {
