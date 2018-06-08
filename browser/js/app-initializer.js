@@ -62,10 +62,6 @@ export class AppInitializer {
 			product: document.documentElement.getAttribute('data-next-product')
 		};
 
-		this.setSentryEndpoint = (sentryEndpoint) => {
-			appInfo.sentryEndpoint = sentryEndpoint;
-		};
-
 		const flags = Object.assign(window.FT.flags, {
 			get: function (name) {
 				return this[name];

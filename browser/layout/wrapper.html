@@ -93,6 +93,8 @@
 		{{#outputBlock 'head'}}{{/outputBlock}}
 
 		<script>
+			window.FT = Object.assign({}, window.FT, {sentryEndpoint: "{{@root.__sentryEndpoint}}" });
+
 			{{>layout/partials/ctm}}
 			{{>layout/partials/enhance-fonts}}
 		</script>

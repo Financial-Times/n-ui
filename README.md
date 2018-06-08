@@ -57,7 +57,6 @@ n-ui takes care of loading polyfills etc, in order. n-ui exports 4 things you’
 - `appInfo` – metadata about the app that's serving the page
 - `allStylesLoaded` – a promise that resolves once all the lazy-loaded styles are in place
 - `onAppInitialized` [required] – a function to call once the app js has successfully executed. This tells integration tests when the page is “complete” among other things
-- `setSentryEndpoint` - a function to call that will set a custom sentry endpoint for logging errors.
 
 `import` one or more of the above from n-ui in your application code, which no longer needs to be wrapped in a function.
 
@@ -84,7 +83,6 @@ Nothing fancy going on here anymore 😄. No mixins (though the n-ui-foundations
 @import "n-ui/main";
 ```
 This will, when using the n-ui build tool, split n-ui’s styles into head-n-ui-core.css and n-ui-core.css files, and the server will inline/link to these appropriately.
-
 
 ### Local development
 
