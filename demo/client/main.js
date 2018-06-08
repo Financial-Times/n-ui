@@ -1,8 +1,5 @@
-import {flags, onAppInitialized, tracking} from 'n-ui';
-
-console.log(flags); //eslint-disable-line
+import { onAppInitialized, tracking } from 'n-ui';
 
 tracking.scrollDepth.init('n-ui test');
-
 
 onAppInitialized();
