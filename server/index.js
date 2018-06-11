@@ -40,6 +40,7 @@ module.exports = options => {
 	app.locals.__environment = process.env.NODE_ENV || '';
 	app.locals.__isProduction = app.locals.__environment.toUpperCase() === 'PRODUCTION';
 	app.locals.__rootDirectory = meta.directory;
+	app.locals.__sentryEndpoint = process.env.RAVEN_URL;
 
 	try {
 		// expose app version to the client side
