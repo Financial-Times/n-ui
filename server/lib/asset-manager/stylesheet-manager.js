@@ -83,7 +83,6 @@ const init = directory => {
 		}))
 		.reduce((map, { name, contents }) => {
 			map[name.replace('.css', '')] = contents;
-			console.log("EEK", name, "EK", contents);
 			return map;
 		}, {});
 
