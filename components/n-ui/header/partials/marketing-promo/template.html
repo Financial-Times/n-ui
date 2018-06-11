@@ -6,7 +6,11 @@
 				{{#if @root.flags.priceFlashSale}}
 					<span>Limited time offer, subscribe &amp; save 25% </span>
 				{{else}}
+					{{#ifAll @root.flags.usaSale @root.isUsa }}
+					<span><b>Special US offers through July 31 -</b> Print delivery <b>$1.90</b> per week | Standard Digital <b>$2.77</b> per week</span>
+					{{else}}
 					<span aria-label="Subscribe to the Financial Times">Subscribe to the FT</span>
+					{{/ifAll}}
 				{{/if}}
 				</div>
 			</a>
