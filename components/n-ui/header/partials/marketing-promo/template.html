@@ -1,12 +1,16 @@
 {{#if @root.flags.headerMarketingPromo}}
 	<div class="n-header__marketing-promo" data-trackable="marketing-promo:header">
 		<div class="n-header__marketing-promo__container o-header__container">
+			{{#ifAll @root.flags.usaPrintSale @root.isUsa }}
+			<a href="http://subs.ft.com/spa3_bc9?utm_uk=WWAFL&utm_eu=WWAFM&utm_as=FFIBAX&utm_us=JJIBAF&segmentId=27e66825-bc4f-ba59-a3cd-1a8f08579bfe" class="n-header__marketing-promo__box" data-trackable="marketing-promo:box">
+			{{else}}
 			<a href="https://sub.ft.com/spa2_14/?segmentId=27e66825-bc4f-ba59-a3cd-1a8f08579bfe&utm_uk=WWAFL&utm_eu=WWAFM&utm_us=JJIBAF&utm_as=FFIBAX" class="n-header__marketing-promo__box" data-trackable="marketing-promo:box">
+			{{/ifAll}}
 				<div class="n-header__marketing-promo__link" data-trackable="marketing-promo:link">
 				{{#if @root.flags.priceFlashSale}}
 					<span>Limited time offer, subscribe &amp; save 25% </span>
 				{{else}}
-					{{#ifAll @root.flags.usaSale @root.isUsa }}
+					{{#ifAll @root.flags.usaPrintSale @root.isUsa }}
 					<span><b>Special US offers through July 31 -</b> Print delivery <b>$1.90</b> per week | Standard Digital <b>$2.77</b> per week</span>
 					{{else}}
 					<span aria-label="Subscribe to the Financial Times">Subscribe to the FT</span>
