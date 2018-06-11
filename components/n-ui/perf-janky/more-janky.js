@@ -40,10 +40,7 @@ const crankThatJank = () => {
 };
 
 function init (flags) {
-	if (!flags || !flags.get('evenMoreJanky')) {
-		return;
-	}
-	else {
+	if (flags && flags.get('perfJanky') === 'more-janky') {
 		addStyles();
 		crankThatJank();
 	}

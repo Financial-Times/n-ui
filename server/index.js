@@ -44,6 +44,7 @@ module.exports = options => {
 	app.locals.__environment = process.env.NODE_ENV || '';
 	app.locals.__isProduction = app.locals.__environment.toUpperCase() === 'PRODUCTION';
 	app.locals.__rootDirectory = meta.directory;
+	app.locals.__sentryEndpoint = process.env.RAVEN_URL;
 
 	try {
 		// expose app version to the client side
@@ -110,6 +111,21 @@ module.exports = options => {
 		app.use(currentYearModelMiddleware);
 	}
 
+<<<<<<< HEAD
+=======
+	// Handle the akamai -> fastly -> akamai etc. circular redirect bug
+	app.use(function (req, res, next) {
+		res.locals.forceOptInDevice = req.get('FT-Force-Opt-In-Device') === 'true';
+		res.vary('FT-Force-Opt-In-Device');
+		next();
+	});
+
+	app.use(function (req, res, next) {
+		res.locals.realUrl = req.get('ft-real-url');
+		next();
+	});
+
+>>>>>>> 0379aad2e0f976c2c58acfd331ec87fab6ebd8ee
 	if (options.withAssets) {
 		assetManager.init(options, meta.directory, app);
 	}

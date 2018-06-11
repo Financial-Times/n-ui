@@ -147,9 +147,7 @@
 	{{>layout/partials/bootstrapper}}
 	{{>n-ui/tracking/templates/core-analytics}}
 	{{>n-service-worker/appcache/iframe}}
-	{{#if @root.flags.qualtrics}}
-		{{>layout/partials/qualtrics-tag}}
-	{{/if}}
+
 	{{#if @root.flags.fastlyInsights}}
 		{{>layout/partials/fastly-insights}}
 	{{/if}}

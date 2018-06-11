@@ -84,7 +84,6 @@ Nothing fancy going on here anymore 😄. No mixins (though the n-ui-foundations
 ```
 This will, when using the n-ui build tool, split n-ui’s styles into head-n-ui-core.css and n-ui-core.css files, and the server will inline/link to these appropriately.
 
-
 ### Local development
 
 #### Working in n-ui

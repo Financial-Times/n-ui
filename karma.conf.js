@@ -46,6 +46,8 @@ module.exports = function (karma) {
 		},
 		captureTimeout: (1000 * 60),
 		singleRun: true,
+		browserNoActivityTimeout: 50000,
+		browserDisconnectTolerance: 3,
 		autoWatch: false
 	};
 
