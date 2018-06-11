@@ -36,6 +36,7 @@
     "coveralls": "^3.0.1",
     "fetch-mock": "^6.4.3",
     "handlebars": "^4.0.11",
+    "jest": "^23.1.0",
     "karma": "^2.0.2",
     "karma-browserstack-launcher": "^1.3.0",
     "karma-chai": "^0.1.0",
