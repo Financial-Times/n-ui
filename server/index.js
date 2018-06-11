@@ -40,7 +40,8 @@ module.exports = options => {
 	app.locals.__environment = process.env.NODE_ENV || '';
 	app.locals.__isProduction = app.locals.__environment.toUpperCase() === 'PRODUCTION';
 	app.locals.__rootDirectory = meta.directory;
-	app.locals.__sentryEndpoint = process.env.RAVEN_URL;
+	// Strip out the private key portion of the Sentry DSN (data source name).
+	app.locals.__sentryEndpoint = process.env.RAVEN_URL && process.env.RAVEN_URL.replace(/(https?:\/\/[a-z0-9]+)(:[^@]+)@/, '$1');
 
 	try {
 		// expose app version to the client side
