@@ -111,21 +111,6 @@ module.exports = options => {
 		app.use(currentYearModelMiddleware);
 	}
 
-<<<<<<< HEAD
-=======
-	// Handle the akamai -> fastly -> akamai etc. circular redirect bug
-	app.use(function (req, res, next) {
-		res.locals.forceOptInDevice = req.get('FT-Force-Opt-In-Device') === 'true';
-		res.vary('FT-Force-Opt-In-Device');
-		next();
-	});
-
-	app.use(function (req, res, next) {
-		res.locals.realUrl = req.get('ft-real-url');
-		next();
-	});
-
->>>>>>> 0379aad2e0f976c2c58acfd331ec87fab6ebd8ee
 	if (options.withAssets) {
 		assetManager.init(options, meta.directory, app);
 	}
