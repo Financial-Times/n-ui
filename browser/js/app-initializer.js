@@ -8,6 +8,7 @@ import footer from 'o-footer';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 import * as syndication from 'n-syndication';
+import feedback from 'n-feedback';
 import { perfMark } from 'n-ui-foundations';
 import speedcurveLux from '../../components/n-ui/speedcurve-lux';
 
@@ -27,6 +28,7 @@ export const presets = {
 		ads: true,
 		syndication: true,
 		roe: true,
+		feedback: true,
 		evenMoreJanky: true
 	}
 };
@@ -144,6 +146,10 @@ export class AppInitializer {
 
 				if (this.enabledFeatures.syndication) {
 					syndication.init(flags);
+				}
+
+				if (this.enabledFeatures.feedback) {
+					feedback.init();
 				}
 
 				if (this.enabledFeatures.roe) {
