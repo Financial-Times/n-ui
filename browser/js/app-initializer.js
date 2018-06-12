@@ -156,7 +156,7 @@ export class AppInitializer {
 					roe.init(flags);
 				}
 
-				if (this.enabledFeatures.evenMoreJanky) {
+				if (this.enabledFeatures.evenMoreJanky && flags.get('qualtrics')) {
 					evenMoreJanky.init(flags);
 				}
 
