@@ -148,7 +148,7 @@ export class AppInitializer {
 					syndication.init(flags);
 				}
 
-				if (this.enabledFeatures.feedback) {
+				if (this.enabledFeatures.feedback && flags.get('qualtrics')) {
 					feedback.init();
 				}
 
@@ -156,7 +156,7 @@ export class AppInitializer {
 					roe.init(flags);
 				}
 
-				if (this.enabledFeatures.evenMoreJanky && flags.get('qualtrics')) {
+				if (this.enabledFeatures.evenMoreJanky) {
 					evenMoreJanky.init(flags);
 				}
 
