@@ -137,7 +137,9 @@
 				{{{body}}}
 			</div>
 
-			<div class="n-feedback__container"></div>
+			{{#if @root.flags.qualtrics}}
+				<div class="n-feedback__container"></div>
+			{{/if}}
 
 			{{#unless @root.flags.hideOutboundLinks}}
 
