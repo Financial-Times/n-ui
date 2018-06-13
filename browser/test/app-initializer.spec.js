@@ -269,7 +269,7 @@ describe('AppInitializer', () => {
 				const app = initApp({feedback: true}, {qualtrics: true}, true);
 				expect(feedback.init.called).to.be.false;
 				return app.env.allStylesLoaded
-					.then(() => expect(feedback.init.calledWith(app.env.appInfo)).to.be.true);
+					.then(() => expect(feedback.init.called).to.be.true);
 			});
 
 			it('does not initialize feedback if feature is disabled', () => {

@@ -149,7 +149,7 @@ export class AppInitializer {
 				}
 
 				if (this.enabledFeatures.feedback && flags.get('qualtrics')) {
-					feedback.init(appInfo);
+					feedback.init();
 				}
 
 				if (this.enabledFeatures.roe) {
