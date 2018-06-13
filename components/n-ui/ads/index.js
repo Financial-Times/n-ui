@@ -4,7 +4,6 @@ const Ads = window.oAds = require('o-ads');
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
 const sendMetrics = require('./js/metrics');
-const Sticky = require('./js/sticky');
 
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 import { perfMark } from 'n-ui-foundations';
@@ -47,17 +46,6 @@ function initOAds (flags, appName, adOptions) {
 	});
 }
 
-function initStickyHeaderAdvert (flags) {
-	if(flags && flags.get('stickyHeaderAd')) {
-		const stickyAd = new Sticky(
-			document.querySelector('[data-sticky-ad]'),
-			document.querySelector('.n-layout'),
-			document.querySelector('.o-header__row.o-header__top')
-		);
-		stickyAd.init();
-	}
-}
-
 function onAdsComplete (flags, event) {
 	const detail = event.detail;
 	/* istanbul ignore else  */
@@ -71,7 +59,6 @@ function onAdsComplete (flags, event) {
 
 					customTimings.firstAdLoaded = new Date().getTime();
 					const iframeLoadedCallback = () => {
-						initStickyHeaderAdvert(flags);
 						if (/spoor-id=3/.test(document.cookie)) {
 							customTimings.adIframeLoaded = new Date().getTime();
 							perfMark('adIframeLoaded');
