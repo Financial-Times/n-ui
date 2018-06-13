@@ -137,7 +137,10 @@
 				{{{body}}}
 			</div>
 
+			{{>n-feedback/templates/feedback-container}}
+
 			{{#unless @root.flags.hideOutboundLinks}}
+
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{>n-ui/footer/template}}

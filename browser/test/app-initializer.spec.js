@@ -8,6 +8,7 @@ const tracking = require('../../components/n-ui/tracking');
 const sw = require('n-service-worker');
 const nImage = require('n-image');
 const syndication = require('n-syndication');
+const feedback = require('n-feedback');
 
 describe('AppInitializer', () => {
 	before(() => {
@@ -30,6 +31,7 @@ describe('AppInitializer', () => {
 		sinon.stub(sw, 'unregister');
 		sinon.stub(nImage, 'lazyLoad');
 		sinon.stub(syndication, 'init');
+		sinon.stub(feedback, 'init');
 	});
 
 	afterEach(() => {
@@ -45,6 +47,7 @@ describe('AppInitializer', () => {
 		sw.unregister.restore();
 		nImage.lazyLoad.restore();
 		syndication.init.restore();
+		feedback.init.restore();
 	});
 
 	describe('constructor', () => {
@@ -131,6 +134,7 @@ describe('AppInitializer', () => {
 				ads: true,
 				syndication: true,
 				roe: true,
+				feedback: false,
 				evenMoreJanky: true
 			});
 		});
@@ -259,6 +263,19 @@ describe('AppInitializer', () => {
 				const app = initApp({}, null, true);
 				return app.env.allStylesLoaded
 					.then(() => expect(syndication.init.called).to.be.false);
+			});
+
+			it('initializes feedback if feature is enabled', () => {
+				const app = initApp({feedback: true}, {qualtrics: true}, true);
+				expect(feedback.init.called).to.be.false;
+				return app.env.allStylesLoaded
+					.then(() => expect(feedback.init.called).to.be.true);
+			});
+
+			it('does not initialize feedback if feature is disabled', () => {
+				const app = initApp({}, {qualtrics: true}, true);
+				return app.env.allStylesLoaded
+					.then(() => expect(feedback.init.called).to.be.false);
 			});
 		});
 	});
