@@ -143,7 +143,7 @@ See the [MyFT page](https://www.ft.com/myft/following) for a rendered copy of th
 ```javascript
 res.locals.navigation = {
     // other settings here...
-    
+
     showSubNav: true,
     // this populates the breadcrumb section at the left of the subnav
     breadcrumb: [
