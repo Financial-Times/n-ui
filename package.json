@@ -50,6 +50,7 @@
     "karma-webpack": "^2.0.9",
     "mocha": "^5.1.1",
     "mockery": "^2.1.0",
+    "next-metrics": "^1.49.8",
     "node-fetch": "^2.0.0",
     "nodemon": "^1.14.12",
     "nyc": "^11.7.1",
