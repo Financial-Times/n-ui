@@ -2,13 +2,13 @@ const expect = require('chai').expect;
 
 const filterError = require('../filter-error');
 
-function buildExceptionObject (errorString) {
+function buildExceptionObject (errorString, stacktrace = {}) {
 	return {
 		values: [
 			{
 				type: 'Error',
 				value: errorString,
-				stacktrace: {}
+				stacktrace
 			}
 		]
 	};
@@ -32,4 +32,14 @@ describe('filter error', () => {
 			expect(result).to.equal(false);
 	}));
 
+
+	it('should filter sourcepoint errors', () => {
+		const exception = buildExceptionObject('Some random ref', {
+			frames: [
+				{ filename: '(/__assets/creatives/ad-blocking/sourcepoint-script-09-05-2018.js' }
+			]
+		});
+		const result = filterError({ exception });
+		expect(result).to.equal(false);
+	});
 });
