@@ -7,14 +7,16 @@ module.exports = ({ exception }) => {
 		/'undefined' is|undefined is|is undefined/i
 	];
 	let windowFtError;
+	let sourcepointError;
 	if(exception) {
 		try {
 			let errorString = JSON.stringify(exception);
 			windowFtError = errorFilters.every(rx => rx.test(errorString));
+			sourcepointError = /sourcepoint/.test(errorString);
 		} catch (err) {
 			// could not stringify the exception
 		}
 	}
-	// filter if yes, or if o-errors disabled
-	return !(windowFtError || window.FT.disableOErrors);
+	// filter if window.FT error, sourcepoint error, or if o-errors disabled
+	return !(windowFtError || sourcepointError || window.FT.disableOErrors);
 };
