@@ -50,7 +50,7 @@ If you do not need this behaviour run
 
 /*********** webpack warning ************/
 `;
-	console.warn(wbpackWarning); // eslint-disable-line no-console
+	console.warn(webpackWarning); // eslint-disable-line no-console
 
 	const ignoresNUi = fs.readFileSync(path.join(process.cwd(), '.gitignore'), 'utf8')
 		.split('\n')
