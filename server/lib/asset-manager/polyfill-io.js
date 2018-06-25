@@ -30,7 +30,8 @@ const queryStrings = {
 			'NodeList.prototype.@@iterator',
 			'Array.prototype.@@iterator',
 			'EventSource',
-			'Number.isInteger'
+			'Number.isInteger',
+			'Object.entries'
 		],
 		flags: 'gated'
 	}),
