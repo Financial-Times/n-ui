@@ -1,5 +1,5 @@
-const denodeify = require('denodeify');
-const copy = denodeify(require('fs-extra').copy);
+const { promisify } = require('util');
+const copy = promisify(require('fs-extra').copy);
 
 module.exports = () => {
 	if (process.env.NEXT_APP_SHELL === 'local') {

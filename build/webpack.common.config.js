@@ -46,13 +46,20 @@ module.exports = {
 	// Abort the compilation on first error
 	bail: true,
 
+	// Do not use production mode as default
+	// TODO: Question whether this should default to production
+	mode: 'none',
+
 	// Generate source maps
 	devtool: 'source-map',
 
+	optimization: {
+		noEmitOnErrors: true, // NoEmitOnErrorsPlugin
+		concatenateModules: true //ModuleConcatenationPlugin (Scope hoisting)
+	},
+
 	resolve: {
 		plugins: [
-			// Scope hoisting
-			new webpack.optimize.ModuleConcatenationPlugin(),
 			// This will handle a bower.json's `main` property being an array.
 			new BowerResolvePlugin()
 		],

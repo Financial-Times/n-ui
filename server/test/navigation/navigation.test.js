@@ -1,18 +1,17 @@
 const sinon = require('sinon');
-const proxyquire = require('proxyquire').noCallThru().noPreserveCache();
+const proxyquire = require('proxyquire')
+	.noCallThru()
+	.noPreserveCache();
 
 describe('Navigation middleware', () => {
-
 	let navigation;
-	let navigationModelV2Stub = {init:sinon.spy(), middleware:sinon.spy()};
+	let navigationModelV2Stub = { init: sinon.spy(), middleware: sinon.spy() };
 
-	before(() => {
+	beforeEach(() => {
 		const NavigationModelV2Stub = sinon.stub().returns(navigationModelV2Stub);
-		navigation = proxyquire('../../models/navigation/index', {'./navigationModelV2':NavigationModelV2Stub});
-	});
-
-	afterEach(() => {
-		navigationModelV2Stub.middleware.reset();
+		navigation = proxyquire('../../models/navigation/index', {
+			'./navigationModelV2': NavigationModelV2Stub
+		});
 	});
 
 	it('Should call init() on navigation model', () => {
@@ -22,7 +21,7 @@ describe('Navigation middleware', () => {
 
 	it('Should use the V2 Model', () => {
 		const req = {};
-		const res = {locals:{flags:{}}};
+		const res = { locals: { flags: {} } };
 		const next = () => {};
 		navigation.init();
 		navigation.middleware(req, res, next);
