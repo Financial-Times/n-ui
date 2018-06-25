@@ -12,7 +12,7 @@ verifyGitignore();
 
 /*
 This config is for any JS entry points defined by an app
-It excludes anythnig that is already bundled in n-ui
+It excludes anything that is already bundled in n-ui
 */
 
 const jsEntryPoints = Object.keys(baseConfig.entry)
@@ -36,8 +36,8 @@ Setting the NEXT_APP_SHELL environment variable will ensure that during build it
 will build and use the local version of n-ui rather than the version hosted on S3
 */
 if (process.env.NEXT_APP_SHELL === 'local') {
-	const nWebpackWarning = `
-/*********** n-webpack warning ************/
+	const webpackWarning = `
+/*********** webpack warning ************/
 
 You have set the environment variable NEXT_APP_SHELL=local
 This should only be used if you are actively developing
@@ -48,9 +48,9 @@ If you do not need this behaviour run
 
 	unset NEXT_APP_SHELL
 
-/*********** n-webpack warning ************/
+/*********** webpack warning ************/
 `;
-	console.warn(nWebpackWarning); // eslint-disable-line no-console
+	console.warn(wbpackWarning); // eslint-disable-line no-console
 
 	const ignoresNUi = fs.readFileSync(path.join(process.cwd(), '.gitignore'), 'utf8')
 		.split('\n')

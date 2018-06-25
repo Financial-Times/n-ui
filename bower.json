@@ -18,7 +18,6 @@
   "dependencies": {
     "fontfaceobserver": "^2.0.9",
     "ftdomdelegate": "^2.1.0",
-    "loadcss": "filamentgroup/loadCSS#v2.0.1",
     "n-counter-ad-blocking": "^3.1.7",
     "n-image": "^5.0.3",
     "n-service-worker": "^1.9.0",
