@@ -58,7 +58,7 @@ module.exports = {
 			},
 			// javascript
 			{
-				test: /\.js$/,
+				test: /.+(?<!\.spec|\.test)\.js$/, // match JS but not tests
 				use: [babelLoaderConfig()]
 			}
 		]
