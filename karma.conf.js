@@ -20,15 +20,10 @@ module.exports = function (karma) {
 			return obj;
 		}, {}),
 		webpack: webpackMerge(commonConfig(['commonOptions', 'es5']), {
-			devtool: 'inline-source-map',
-			// work around webpack 4 compatibility issues:
-			// https://github.com/webpack-contrib/karma-webpack/issues/322
-			// by including the webpack runtime multiple times
-			optimization: {
-				runtimeChunk: false
-			}
+			devtool: 'inline-source-map'
 		}),
 		webpackMiddleware: {
+			stats: 'errors-only',
 			noInfo: true
 		},
 		reporters: ['progress'],
