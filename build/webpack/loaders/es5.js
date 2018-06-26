@@ -8,30 +8,29 @@
 const babelLoaderConfig = () => ({
 	loader: 'babel-loader',
 	options: {
-		babelrc: false, // ignore any .babelrc in project & dependencies
+		// ignore any .babelrc in project & dependencies
+		babelrc: false,
 		cacheDirectory: true,
 		plugins: [
-			// converts `export default 'foo'` to `exports.default = 'foo'`
-			require.resolve('babel-plugin-add-module-exports'),
-
-			// ensures a module reqired multiple times is only transpiled once and
-			// is shared by all that use it rather than transpiling it each time
 			[
-				require.resolve('babel-plugin-transform-runtime'),
+				// use fast-async and nodent instead of Babel's regenerator
+				// https://github.com/MatAtBread/fast-async
+				// it's 3-4x faster in a browser (up to 10x on mobile)
+				'fast-async',
 				{
-					helpers: false,
-					polyfill: false
-					// removes support for generators
-					// async functions are handled through nodent / fast-async
-					// regenerator: false
+					// place nodent runtime in vendor.js and vendor.es6.js
+					'runtimePattern': 'vendor((\\.es6)?)\\.js'
 				}
-			]
+			],
+			// converts `export default 'foo'` to `exports.default = 'foo'`
+			require.resolve('babel-plugin-add-module-exports')
 		],
 		presets: [
 			[
 				require.resolve('babel-preset-env'),
 				{
 					include: ['transform-es2015-classes'],
+					exclude: ['transform-regenerator', 'transform-async-to-generator'],
 					targets: {
 						browsers: ['last 2 versions', 'ie >= 11']
 					}
@@ -64,7 +63,7 @@ module.exports = {
 				use: [
 					babelLoaderConfig()
 				]
-			}
+			},
 		]
 	}
 };
