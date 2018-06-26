@@ -6,16 +6,16 @@ If you need to add any config which will be shared amongst an n-ui build and an
 app build please add it to the common config.
 */
 const webpackMerge = require('webpack-merge');
-const commonConfig = require('../webpack.common.config.js');
+const commonConfig = require('../webpack/webpack.common.config.js');
 
 module.exports = webpackMerge(
-	commonConfig(
+	commonConfig([
 		'commonOptions',
 		'es5',
 		'templates',
 		'text',
 		'appShell'
-	),
+	]),
 	{
 		output: {
 			devtoolModuleFilenameTemplate: 'webpack://n-ui/[resource-path]'
