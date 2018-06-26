@@ -8,34 +8,27 @@ const componentsToTest = [
 	'components/n-ui/speedcurve-lux'
 ];
 
-module.exports = function (karma) {
-
+module.exports = function(karma) {
 	const config = {
 		basePath: '',
 		frameworks: ['mocha', 'chai', 'sinon', 'sinon-chai'],
-		files: [
-			require('./server/lib/asset-manager/polyfill-io').enhanced
-		].concat(componentsToTest.map(name => name + '/**/*.spec.js')),
+		files: [require('./server/lib/asset-manager/polyfill-io').enhanced].concat(
+			componentsToTest.map(name => name + '/**/*.spec.js')
+		),
 		preprocessors: componentsToTest.reduce((obj, name) => {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap'];
 			return obj;
 		}, {}),
-		webpack: webpackMerge(
-			commonConfig([
-				'commonOptions',
-				'es5'
-			]),
-			{
-				devtool: 'inline-source-map',
-				// Work around webpack 4 compatibility issues:
-				// https://github.com/webpack-contrib/karma-webpack/issues/322
-				optimization: {
-					noEmitOnErrors: false,
-					concatenateModules: false,
-					runtimeChunk: false
-				}
+		webpack: webpackMerge(commonConfig(['commonOptions', 'es5']), {
+			devtool: 'inline-source-map',
+			// Work around webpack 4 compatibility issues:
+			// https://github.com/webpack-contrib/karma-webpack/issues/322
+			optimization: {
+				noEmitOnErrors: false,
+				concatenateModules: false,
+				runtimeChunk: false
 			}
-		),
+		}),
 		// Object.assign({}, require('./build/webpack/webpack.common.config'), {
 		// 	devtool: 'inline-source-map'
 		// }),
@@ -57,19 +50,18 @@ module.exports = function (karma) {
 			require('karma-html-reporter')
 		],
 		client: {
-				mocha: {
-						reporter: 'html',
-						ui: 'bdd',
-						timeout: 0
-				}
+			mocha: {
+				reporter: 'html',
+				ui: 'bdd',
+				timeout: 0
+			}
 		},
-		captureTimeout: (1000 * 60),
+		captureTimeout: 1000 * 60,
 		singleRun: true,
 		browserNoActivityTimeout: 50000,
 		browserDisconnectTolerance: 3,
 		autoWatch: false
 	};
-
 
 	if (process.env.CI) {
 		config.browserStack = {
@@ -104,7 +96,7 @@ module.exports = function (karma) {
 			safari: {
 				base: 'BrowserStack',
 				os: 'OS X',
-				os_version : 'High Sierra',
+				os_version: 'High Sierra',
 				browser: 'Safari',
 				browser_version: 'latest'
 			}
