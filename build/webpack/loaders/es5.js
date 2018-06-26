@@ -18,7 +18,7 @@ const babelLoaderConfig = () => ({
 				// it's 3-4x faster in a browser (up to 10x on mobile)
 				'fast-async',
 				{
-					// place nodent runtime in app shell bundles 
+					// place nodent runtime in app shell bundles
 					// where 'use runtime-nodent'; is specified
 					// if async/await is present
 					'runtimePattern': 'directive'
