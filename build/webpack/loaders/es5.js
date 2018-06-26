@@ -20,7 +20,7 @@ const babelLoaderConfig = () => ({
 				require.resolve('babel-plugin-transform-runtime'),
 				{
 					helpers: false,
-					polyfill: false,
+					polyfill: false
 					// removes support for generators
 					// async functions are handled through nodent / fast-async
 					// regenerator: false
@@ -60,9 +60,7 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: [/(node_modules|bower_components)/],
-				use: [
-					babelLoaderConfig()
-				]
+				use: [babelLoaderConfig()]
 			}
 		]
 	}

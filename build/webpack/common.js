@@ -25,9 +25,9 @@ module.exports = {
 	// https://webpack.js.org/configuration/optimization/
 	optimization: {
 		// do not emit assets when there are compilation errors
-		noEmitOnErrors: true, 
+		noEmitOnErrors: true,
 		// scope hoisting
-		concatenateModules: true,
+		concatenateModules: true
 		// load the webpack runtime only once,
 		// in the vendor (n-ui) chunk
 		// runtimeChunk: {
@@ -60,6 +60,6 @@ module.exports = {
 		aliasFields: ['browser'],
 
 		// file names for directory resolution
-		mainFiles: ['index', 'main'],
+		mainFiles: ['index', 'main']
 	}
 };
