@@ -8,7 +8,8 @@
 const babelLoaderConfig = () => ({
 	loader: 'babel-loader',
 	options: {
-		babelrc: false, // ignore any .babelrc in project & dependencies
+		// ignore any .babelrc in project & dependencies
+		babelrc: false,
 		cacheDirectory: true,
 		plugins: [
 			[
