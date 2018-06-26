@@ -27,12 +27,7 @@ module.exports = {
 		// do not emit assets when there are compilation errors
 		noEmitOnErrors: true,
 		// scope hoisting
-		concatenateModules: true,
-		// load the webpack runtime only once,
-		// in the vendor (n-ui) chunk
-		runtimeChunk: {
-			name: './public/n-ui/vendor.js'
-		}
+		concatenateModules: true
 	},
 
 	// https://webpack.js.org/configuration/resolve/
