@@ -49,9 +49,7 @@ module.exports = {
 			{
 				test: /\.ts$/,
 				exclude: [
-					/(node_modules|bower_components)/,
-					/__test__/,
-					/(\.spec\.ts|\.test\.ts)$/
+					/(node_modules|bower_components)/
 				],
 				use: [
 					babelLoaderConfig(),
@@ -63,10 +61,6 @@ module.exports = {
 			// javascript
 			{
 				test: /\.js$/,
-				exclude: [
-					/__test__/,
-					/(\.spec\.js|\.test\.js)$/
-				],
 				use: [
 					babelLoaderConfig()
 				]
