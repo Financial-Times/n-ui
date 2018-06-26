@@ -12,25 +12,23 @@ const babelLoaderConfig = () => ({
 		babelrc: false,
 		cacheDirectory: true,
 		plugins: [
-			[
-				// use fast-async and nodent instead of Babel's regenerator
-				// https://github.com/MatAtBread/fast-async
-				// it's 3-4x faster in a browser (up to 10x on mobile)
-				'fast-async',
-				{
-					// place nodent runtime in vendor.js and vendor.es6.js
-					'runtimePattern': 'vendor((\\.es6)?)\\.js'
-				}
-			],
 			// converts `export default 'foo'` to `exports.default = 'foo'`
-			require.resolve('babel-plugin-add-module-exports')
+			require.resolve('babel-plugin-add-module-exports'),
+			// includes Babel's regenerator	runtime (once only)
+			// for client-side async/await support
+			[
+				require.resolve('babel-plugin-transform-runtime'),
+				{
+					helpers: false,
+					polyfill: false
+				}
+			]
 		],
 		presets: [
 			[
 				require.resolve('babel-preset-env'),
 				{
 					include: ['transform-es2015-classes'],
-					exclude: ['transform-regenerator', 'transform-async-to-generator'],
 					targets: {
 						browsers: ['last 2 versions', 'ie >= 11']
 					}
@@ -47,9 +45,7 @@ module.exports = {
 			// typescript
 			{
 				test: /\.ts$/,
-				exclude: [
-					/(node_modules|bower_components)/
-				],
+				exclude: [/(node_modules|bower_components)/],
 				use: [
 					babelLoaderConfig(),
 					{
@@ -60,10 +56,8 @@ module.exports = {
 			// javascript
 			{
 				test: /\.js$/,
-				use: [
-					babelLoaderConfig()
-				]
-			},
+				use: [babelLoaderConfig()]
+			}
 		]
 	}
 };
