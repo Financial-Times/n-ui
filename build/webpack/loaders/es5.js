@@ -48,7 +48,11 @@ module.exports = {
 			// typescript
 			{
 				test: /\.ts$/,
-				exclude: [/(node_modules|bower_components)/],
+				exclude: [
+					/(node_modules|bower_components)/,
+					/__test__/,
+					/(\.spec\.ts|\.test\.ts)$/
+				],
 				use: [
 					babelLoaderConfig(),
 					{
@@ -59,7 +63,13 @@ module.exports = {
 			// javascript
 			{
 				test: /\.js$/,
-				use: [babelLoaderConfig()]
+				exclude: [
+					/__test__/,
+					/(\.spec\.js|\.test\.js)$/
+				],
+				use: [
+					babelLoaderConfig()
+				]
 			}
 		]
 	}
