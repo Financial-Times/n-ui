@@ -26,7 +26,14 @@ module.exports = function (karma) {
 				'es5'
 			]),
 			{
-				devtool: 'inline-source-map'
+				devtool: 'inline-source-map',
+				// Work around webpack 4 compatibility issues:
+				// https://github.com/webpack-contrib/karma-webpack/issues/322
+				optimization: {
+					noEmitOnErrors: false,
+					concatenateModules: false,
+					runtimeChunk: false
+				}
 			}
 		),
 		// Object.assign({}, require('./build/webpack/webpack.common.config'), {
