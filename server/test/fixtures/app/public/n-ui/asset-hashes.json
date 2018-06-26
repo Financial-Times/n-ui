@@ -1,5 +1,5 @@
 {
-  "es5.js": "123456/es5.js",
+  "vendor.js": "123456/vendor.js",
   "o-errors.js": "1234567/o-errors.js",
   "font-loader.js": "12345678/font-loader.js"
 }

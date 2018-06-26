@@ -1,10 +1,10 @@
 const logger = require('@financial-times/n-logger').default;
-const denodeify = require('denodeify');
+const { promisify } = require('util');
 const fs = require('fs');
-const readFile = denodeify(fs.readFile);
+const readFile = promisify(fs.readFile);
 const chokidar = require('chokidar');
 const metrics = require('next-metrics');
-const gzip = denodeify(require('zlib').gzip);
+const gzip = promisify(require('zlib').gzip);
 
 const concatenatedStylesCache = {};
 const concatenatedStylesSizeCache = {};
