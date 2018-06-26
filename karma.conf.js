@@ -21,15 +21,13 @@ module.exports = function (karma) {
 		}, {}),
 		webpack: webpackMerge(commonConfig(['commonOptions', 'es5']), {
 			devtool: 'inline-source-map',
-			// Work around webpack 4 compatibility issues:
+			// work around webpack 4 compatibility issues:
 			// https://github.com/webpack-contrib/karma-webpack/issues/322
+			// by including the webpack runtime multiple times
 			optimization: {
 				runtimeChunk: false
 			}
 		}),
-		// Object.assign({}, require('./build/webpack/webpack.common.config'), {
-		// 	devtool: 'inline-source-map'
-		// }),
 		reporters: ['progress'],
 		port: 9876,
 		colors: true,
