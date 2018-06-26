@@ -1,3 +1,6 @@
+// support for nodent-runtime and fast async
+'use runtime-nodent';
+
 // Expose entry points to shared bundle
 import oAds from 'o-ads';
 import ads from '../../components/n-ui/ads';
