@@ -48,7 +48,7 @@ const cssEntryPoints = Object.keys(buildConfig.entry)
 
 program.version(nUiVersion);
 
-const webpackConfPath = path.join(__dirname, 'webpack.js');
+const webpackConfPath = path.join(__dirname, 'webpack.config.js');
 
 program
 	.command('build')

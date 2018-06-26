@@ -9,14 +9,10 @@
     "circle.yml",
     "karma.conf.js",
     "Makefile",
-    "n.Makefile",
-    "package.json",
-    "webpack.config.js",
-    "webpack.config.demo.js"
+    "package.json"
   ],
   "main": "browser/js/main.js",
   "dependencies": {
-    "fontfaceobserver": "^2.0.9",
     "ftdomdelegate": "^2.1.0",
     "n-counter-ad-blocking": "^3.1.7",
     "n-image": "^5.0.3",

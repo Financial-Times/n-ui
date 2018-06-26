@@ -17,7 +17,7 @@ module.exports = function (karma) {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap'];
 			return obj;
 		}, {}),
-		webpack: Object.assign({}, require('./build/webpack.common.config'), {
+		webpack: Object.assign({}, require('./build/webpack/webpack.common.config'), {
 			devtool: 'inline-source-map'
 		}),
 		reporters: ['progress'],
