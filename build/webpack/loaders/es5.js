@@ -19,7 +19,7 @@ const babelLoaderConfig = () => ({
 				'fast-async',
 				{
 					// place nodent runtime in vendor.js and vendor.es6.js
-					'runtimePattern': 'vendor((\\.es6)?)\\.js' 
+					'runtimePattern': 'vendor((\\.es6)?)\\.js'
 				}
 			],
 			// converts `export default 'foo'` to `exports.default = 'foo'`
