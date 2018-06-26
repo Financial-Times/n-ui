@@ -1,4 +1,4 @@
-/* 
+/*
 	n-ui webpack config
 	externals configuration -
 	creates a vendor bundle with common modules
