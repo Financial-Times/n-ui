@@ -1,3 +1,6 @@
+const webpackMerge = require('webpack-merge');
+const commonConfig = require('./build/webpack/webpack.common.config.js');
+
 const componentsToTest = [
 	'browser',
 	'components/n-ui/ads',
@@ -17,9 +20,18 @@ module.exports = function (karma) {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap'];
 			return obj;
 		}, {}),
-		webpack: Object.assign({}, require('./build/webpack/webpack.common.config'), {
-			devtool: 'inline-source-map'
-		}),
+		webpack: webpackMerge(
+			commonConfig([
+				'commonOptions',
+				'es5'
+			]),
+			{
+				devtool: 'inline-source-map'
+			}
+		),
+		// Object.assign({}, require('./build/webpack/webpack.common.config'), {
+		// 	devtool: 'inline-source-map'
+		// }),
 		reporters: ['progress'],
 		port: 9876,
 		colors: true,

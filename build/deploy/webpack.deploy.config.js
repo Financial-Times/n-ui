@@ -9,7 +9,13 @@ const webpackMerge = require('webpack-merge');
 const commonConfig = require('../webpack.common.config.js');
 
 module.exports = webpackMerge(
-	commonConfig('commonOptions', 'es5', 'templates', 'text', 'appShell'),
+	commonConfig(
+		'commonOptions',
+		'es5',
+		'templates',
+		'text',
+		'appShell'
+	),
 	{
 		output: {
 			devtoolModuleFilenameTemplate: 'webpack//n-ui/[resource-path]'
