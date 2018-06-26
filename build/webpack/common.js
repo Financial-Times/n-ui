@@ -30,9 +30,9 @@ module.exports = {
 		concatenateModules: true,
 		// load the webpack runtime only once,
 		// in the vendor (n-ui) chunk
-		runtimeChunk: {
-			name: './public/n-ui/vendor.js'
-		}
+		// runtimeChunk: {
+		// 	name: './public/n-ui/vendor.js'
+		// }
 	},
 
 	// https://webpack.js.org/configuration/resolve/
