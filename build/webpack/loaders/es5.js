@@ -15,8 +15,7 @@ const babelLoaderConfig = () => ({
 			[
 				// use fast-async and nodent instead of Babel's regenerator
 				// https://github.com/MatAtBread/fast-async
-				// it's 3-4 times faster in a browser
-				// and as much as 10 times faster on a mobile browsers
+				// it's 3-4x faster in a browser (up to 10x on mobile)
 				'fast-async',
 				{
 					// place nodent runtime in vendor.js and vendor.es6.js
