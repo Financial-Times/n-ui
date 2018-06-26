@@ -18,7 +18,7 @@ module.exports = webpackMerge(
 	),
 	{
 		output: {
-			devtoolModuleFilenameTemplate: 'webpack//n-ui/[resource-path]'
+			devtoolModuleFilenameTemplate: 'webpack://n-ui/[resource-path]'
 		}
 	}
 );
