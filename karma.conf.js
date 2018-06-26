@@ -28,6 +28,9 @@ module.exports = function (karma) {
 				runtimeChunk: false
 			}
 		}),
+		webpackMiddleware: {
+			noInfo: true
+		},
 		reporters: ['progress'],
 		port: 9876,
 		colors: true,
