@@ -31,7 +31,7 @@ module.exports = function (karma) {
 		colors: true,
 		// possible values: karma.LOG_DISABLE || karma.LOG_ERROR || karma.LOG_WARN || karma.LOG_INFO || karma.LOG_DEBUG
 		logLevel: karma.LOG_INFO,
-		browsers: ['Chrome'],
+		browsers: ['ChromeHeadless'],
 		plugins: [
 			require('karma-mocha'),
 			require('karma-chai'),
