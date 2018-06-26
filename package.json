@@ -103,7 +103,7 @@
   },
   "bundlesize": [
     {
-      "path": "./public/n-ui/es5.js",
+      "path": "./public/n-ui/vendor.js",
       "threshold": "52.0 Kb"
     },
     {

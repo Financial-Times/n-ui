@@ -65,7 +65,7 @@ module.exports = ({
 					isNUi: true
 				}),
 				getBundleConfig({
-					file: 'es5.js',
+					file: 'vendor.js',
 					isNUi: true,
 					stopsExecutionOnLoadError: true
 				}),

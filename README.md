@@ -45,7 +45,7 @@ watch:
 	nui watch
 ```
 
-To define entry points for your assets, use a `n-ui-build.config.js` file in the root of your project, which can export any object compatible with n-webpack.
+To define entry points for your assets, use a `n-ui-build.config.js` file in the root of your project, which can export any object compatible with webpack.
 
 
 ### JS
