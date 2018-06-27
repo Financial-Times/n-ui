@@ -109,8 +109,8 @@ app.listen(5005)
 						'font-loader'
 					].forEach(bundle => {
 						files.push(
-							`${bundle}.js`,
-							`${bundle}.js.es6.js`
+							`public/n-ui/${bundle}.js`,
+							`public/n-ui/${bundle}.js.es6.js`
 						);
 					});
 					return deployStatic({
