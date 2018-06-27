@@ -100,10 +100,11 @@ app.listen(5005)
 				.then(() => {
 					const files = [
 						'test-page.html',
-						'public/main.css'
+						'public/main.css',
+						'public/main.js',
+						'public/main.js.es6.js'
 					];
 					[
-						'main',
 						'o-errors',
 						'vendor',
 						'font-loader'
