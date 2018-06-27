@@ -6,8 +6,7 @@
 		window.FT.nUiConfig = {{{json @root.nUiConfig}}};
 	{{/if}}
 	{{#if anon}}window.FT.isAnonymous = {{anon.userIsAnonymous}};{{/if}}
-	(function () {
-		function loadError (err) {
+	function loadError (err) {
 			{{! If a script fails to load we'll get loads of errors which we can't prevent - not helpful to send them to sentry }}
 			window.FT.disableOErrors = true;
 			{{! log load failure to spoor }}
@@ -15,32 +14,39 @@
 			img.src = 'https://spoor-api.ft.com/px.gif?data=%7B%22category%22%3A%22javascript%22%2C%22action%22%3A%22load-error%22%2C%22system%22%3A%7B%22source%22%3A%22non-ctm%22%7D%2C%22user%22%3A%7B%7D%2C%22context%22%3A%7B%22product%22%3A%22next%22%2C%22script%22%3A%22' + encodeURIComponent(err.target.src) + '%22%7D%7D';
 			throw new URIError('Failed to load ' + err.target.src + ': falling back to core experience.');
 		};
-
-		function loadScript (src, stopsExecutionOnLoadError, scriptIndex) {
-			var script = document.createElement('script');
-			{{! For dynamically created scripts this has the same effect as adding the defer
-				attribute to inline scripts, i.e. load asynchronously, execute in order}}
-			script.async = false;
-			{{! ES6 mustard cut }}
-			if ('noModule' in script && scriptIndex > 0) {
-				script.src = src + '.es6.js';
-			} else {
-				script.src = src;
-			}
-			if (stopsExecutionOnLoadError) {
-				script.onerror = loadError;
-			}
-			document.head.appendChild(script);
-		};
-
+	function loadScript (src, stopsExecutionOnLoadError) {
+		var script = document.createElement('script');
+		{{! For dynamically created scripts this has the same effect as adding the defer
+			attribute to inline scripts, i.e. load asynchronously, execute in order}}
+		script.async = false;
+		script.src = src;
+		if (stopsExecutionOnLoadError) {
+			script.onerror = loadError;
+		}
+		document.head.appendChild(script);
+	};
+</script>
+<script type="module">
+	(function () {
 		if (cutsTheMustard) {
 			{{#each @root.javascriptBundles}}
-				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}}, {{@index}});
+				loadScript({{#if isPolyfill}}'{{{file}}}'{{else}}'{{{file}}}.es6.js'{{/if}}, {{stopsExecutionOnLoadError}});
 			{{/each}}
 		} else {
 			loadScript('{{{@root.polyfillIo.core}}}');
 		}
-	})()
+	})();
+</script>
+<script nomodule>
+	(function () {
+		if (cutsTheMustard) {
+			{{#each @root.javascriptBundles}}
+				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}});
+			{{/each}}
+		} else {
+			loadScript('{{{@root.polyfillIo.core}}}');
+		}
+	})();
 </script>
 {{else}}
 	{{! always load the picturefill polyfill }}

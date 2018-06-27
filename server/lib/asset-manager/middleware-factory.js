@@ -24,9 +24,10 @@ module.exports = ({
 		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '));
 	};
 
-	const getBundleConfig = ({ file, url, isNUi, stopsExecutionOnLoadError = false }) => ({
+	const getBundleConfig = ({ file, url, isNUi, stopsExecutionOnLoadError = false, isPolyfill = false }) => ({
 		file: url || getAssetUrl({ file, isNUi }),
-		stopsExecutionOnLoadError
+		stopsExecutionOnLoadError,
+		isPolyfill
 	});
 
 	return (req, res, next) => {
@@ -54,7 +55,8 @@ module.exports = ({
 			res.locals.javascriptBundles.push(
 				getBundleConfig({
 					url: res.locals.polyfillIo.enhanced,
-					stopsExecutionOnLoadError: true
+					stopsExecutionOnLoadError: true,
+					isPolyfill: true
 				}),
 				getBundleConfig({
 					file: 'font-loader.js',
