@@ -1,9 +1,9 @@
 // support for nodent-runtime and fast async
 'use runtime-nodent';
 
-const oErrors = require('o-errors');
+import oErrors from 'o-errors';
 
-const filterError = require('./filter-error');
+import filterError from './filter-error';
 
 const appInfo = {
 	isProduction: document.documentElement.hasAttribute('data-next-is-production'),

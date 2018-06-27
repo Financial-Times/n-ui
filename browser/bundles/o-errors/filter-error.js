@@ -1,4 +1,4 @@
-module.exports = ({ exception }) => {
+export default function ({ exception }) {
 	// we want to filter out errors that only occur
 	// when critical scripts fail to load - in that case
 	// the execution of JS is halted and we fall back to core

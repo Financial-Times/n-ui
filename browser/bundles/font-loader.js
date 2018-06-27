@@ -2,7 +2,7 @@
 'use runtime-nodent';
 
 import oTypography from 'o-typography';
-const perfMark = require('n-ui-foundations/js/perf-mark');
+import perfMark from 'n-ui-foundations/js/perf-mark';
 
 new oTypography(document.documentElement)
 	.loadFonts()
