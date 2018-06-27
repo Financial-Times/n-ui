@@ -17,10 +17,15 @@
 			throw new URIError('Failed to load ' + err.target.src + ': falling back to core experience.');
 		};
 
-		function loadScript (src, stopsExecutionOnLoadError) {
+		function loadScript (src, stopsExecutionOnLoadError, isModule = true) {
 			var script = document.createElement('script');
 			{{! For dynamically created scripts this has the same effect as adding the defer
 				attribute to inline scripts, i.e. load asynchronously, execute in order}}
+			if (isModule) {
+				script.type = 'module';
+			} else {
+				script.nomodule = true;
+			}
 			script.async = false;
 			script.src = src;
 			if (stopsExecutionOnLoadError) {
@@ -31,7 +36,8 @@
 
 		if (cutsTheMustard) {
 			{{#each @root.javascriptBundles}}
-				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}});
+				loadScript('es6.{{{file}}}', {{stopsExecutionOnLoadError}}, true); // es6 with type="module"
+				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}}); // es5 with nomodule attribute
 			{{/each}}
 		} else {
 			loadScript('{{{@root.polyfillIo.core}}}');
