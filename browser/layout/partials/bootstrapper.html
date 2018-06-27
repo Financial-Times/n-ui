@@ -21,8 +21,8 @@
 			{{! For dynamically created scripts this has the same effect as adding the defer
 				attribute to inline scripts, i.e. load asynchronously, execute in order}}
 			script.async = false;
-			{{! ES6 support detection }}
-			if ('noModule' in script && scriptIndex > 0) { 
+			{{! ES6 mustard cut }}
+			if ('noModule' in script && scriptIndex > 0) {
 				script.src = src + '.es6.js';
 			} else {
 				script.src = src;
