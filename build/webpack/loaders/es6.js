@@ -34,6 +34,9 @@ const babelLoaderConfig = () => ({
 });
 
 module.exports = {
+	output: {
+		filename: '[name].es6.js'
+	},
 	module: {
 		rules: [
 			// typescript
