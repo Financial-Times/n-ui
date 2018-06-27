@@ -98,20 +98,23 @@ app.listen(5005)
 				.then(text => fs.writeFileSync(path.join(process.cwd(), 'test-page.html'), text))
 				.then(() => app.close())
 				.then(() => {
+					const files = [
+						'test-page.html',
+						'public/main.css'
+					];
+					[
+						'main',
+						'o-errors',
+						'vendor',
+						'font-loader'
+					].forEach(bundle => {
+						files.push(
+							`${bundle}.js`,
+							`${bundle}.js.es6.js`
+						);
+					});
 					return deployStatic({
-						files: [
-							'test-page.html',
-							'public/main.css',
-							'public/main.js',
-							'public/main.js.map',
-							'public/n-ui/vendor.js',
-							'public/n-ui/vendor.js.map',
-							'public/n-ui/font-loader.js',
-							'public/n-ui/font-loader.js.map',
-							'public/n-ui/o-errors.js',
-							'public/n-ui/o-errors.js.map'
-
-						],
+						files,
 						destination: `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/`,
 						bucket: 'ft-next-test-artefacts',
 						cacheControl: 'no-cache, must-revalidate',
