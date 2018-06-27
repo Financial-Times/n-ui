@@ -81,7 +81,7 @@ function onAdsComplete (flags, event) {
 	}
 }
 
-module.exports = {
+export default {
 	init: (flags, appInfo, opts) => {
 
 		window.addEventListener('ftNextLoaded', function () {

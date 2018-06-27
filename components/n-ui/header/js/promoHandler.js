@@ -1,8 +1,10 @@
 // MAKE ANY DISCOUNT CHANGES HERE
 // Update flags and next-product selector accordingly
 
-import { products } from 'next-session-client';
+import nSessionClient from 'next-session-client';
 import Superstore from 'superstore';
+
+const { products } = nSessionClient;
 
 const discount = {
 	L: 50,
