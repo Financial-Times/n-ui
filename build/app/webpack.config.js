@@ -3,7 +3,7 @@ const path = require('path');
 const verifyGitignore = require('./verify-gitignore');
 
 const webpackMerge = require('webpack-merge');
-const commonConfig = require('../webpack/webpack.common.config.js');
+const { webpackConfigFormula } = require('../webpack/webpack.common.config.js');
 
 const baseConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
 
@@ -25,19 +25,19 @@ const jsEntryPoints = Object.keys(baseConfig.entry)
 	}, {});
 
 if (Object.keys(jsEntryPoints).length) {
-	const jsWebpackConfig = webpackMerge(
-		commonConfig([
-			'commonOptions',
-			'es5',
-			'templates',
-			'text',
-			'externals'
-		]),
-		{
-			entry: jsEntryPoints
-		}
+	const entrypoints = {
+		entry: jsEntryPoints
+	};
+	webpackConfigs.push(
+		webpackMerge(
+			webpackConfigFormula({ includeExternals: true }),
+			entrypoints
+		),
+		webpackMerge(
+			webpackConfigFormula({ includeExternals: true, jsLoader: 'es6' }),
+			entrypoints
+		)
 	);
-	webpackConfigs.push(jsWebpackConfig);
 }
 
 /*
@@ -70,14 +70,10 @@ If you do not need this behaviour run
 		throw 'Add /public/n-ui/ to your .gitignore to start building a local app shell';
 	}
 
-	const appShellWebpackConfig = commonConfig([
-		'commonOptions',
-		'es5',
-		'templates',
-		'text',
-		'appShell'
-	]);
-	webpackConfigs.push(appShellWebpackConfig);
+	webpackConfigs.push(
+		webpackConfigFormula({ includeAppShell: true }),
+		webpackConfigFormula({ includeAppShell: true, jsLoader: 'es6' })
+	);
 }
 
 module.exports = webpackConfigs;

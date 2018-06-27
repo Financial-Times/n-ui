@@ -15,7 +15,10 @@ const babelLoaderConfig = () => ({
 			[
 				require.resolve('babel-preset-env'),
 				{
-					modules: false,
+					// TODO: support ESM (es-modules)
+					// after migrating to babel 7, which is currently in beta
+					// use https://www.npmjs.com/package/babel-esm-plugin
+					// modules: false,
 					useBuiltIns: true,
 					targets: {
 						browsers: [

@@ -10,5 +10,31 @@ const config = {
 	text: require('./loaders/text')
 };
 
-module.exports = (configKeys = []) =>
+const webpackConfig = (configKeys = []) =>
 	webpackMerge(...configKeys.map(key => config[key]));
+
+function webpackConfigFormula ({
+	includeExternals = false,
+	includeAppShell = false,
+	jsLoader = 'es5'
+}) {
+	const configKeys = [
+		'commonOptions',
+		jsLoader,
+		'templates',
+		'text'
+	];
+	if (includeExternals) {
+		configKeys.push('externals');
+	}
+	if (includeAppShell) {
+		configKeys.push('appShell');
+	}
+	return webpackConfig(configKeys);
+}
+
+
+module.exports = {
+	webpackConfig,
+	webpackConfigFormula
+};

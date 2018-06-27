@@ -16,7 +16,8 @@ module.exports = {
 
 	output: {
 		filename: '[name]',
-		path: path.resolve(__dirname, '../../')
+		path: path.resolve(__dirname, '../../'),
+		devtoolModuleFilenameTemplate: 'webpack://n-ui/[resource-path]'
 	},
 
 	// generate source maps

@@ -7,7 +7,6 @@
 	{{/if}}
 	{{#if anon}}window.FT.isAnonymous = {{anon.userIsAnonymous}};{{/if}}
 	(function () {
-
 		function loadError (err) {
 			{{! If a script fails to load we'll get loads of errors which we can't prevent - not helpful to send them to sentry }}
 			window.FT.disableOErrors = true;
@@ -17,17 +16,17 @@
 			throw new URIError('Failed to load ' + err.target.src + ': falling back to core experience.');
 		};
 
-		function loadScript (src, stopsExecutionOnLoadError, isModule = true) {
+		function loadScript (src, stopsExecutionOnLoadError, scriptIndex) {
 			var script = document.createElement('script');
 			{{! For dynamically created scripts this has the same effect as adding the defer
 				attribute to inline scripts, i.e. load asynchronously, execute in order}}
-			if (isModule) {
-				script.type = 'module';
-			} else {
-				script.nomodule = true;
-			}
 			script.async = false;
-			script.src = src;
+			{{! ES6 support detection }}
+			if ('noModule' in script && scriptIndex > 0) { 
+				script.src = src + '.es6.js';
+			} else {
+				script.src = src;
+			}
 			if (stopsExecutionOnLoadError) {
 				script.onerror = loadError;
 			}
@@ -36,8 +35,7 @@
 
 		if (cutsTheMustard) {
 			{{#each @root.javascriptBundles}}
-				loadScript('{{{file}}}.es6.js', {{stopsExecutionOnLoadError}}, true); // es6 with type="module"
-				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}}); // es5 with nomodule attribute
+				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}}, {{@index}});
 			{{/each}}
 		} else {
 			loadScript('{{{@root.polyfillIo.core}}}');
