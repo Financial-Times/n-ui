@@ -5,6 +5,7 @@ const config = {
 	externals: require('./externals'),
 	appShell: require('./app-shell-entry-points'),
 	es5: require('./loaders/es5'),
+	es6: require('./loaders/es6'),
 	templates: require('./loaders/templates'),
 	text: require('./loaders/text')
 };
