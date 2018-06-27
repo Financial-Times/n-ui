@@ -11,7 +11,7 @@ function addAbStateDataToLux () {
 	}
 }
 
-function addFlags () {
+export function addFlags () {
 	// is LUX ready?
 	if (!window.LUX || !window.LUX.addData) {
 		// wait for when it is ready
@@ -22,5 +22,3 @@ function addFlags () {
 		addAbStateDataToLux();
 	}
 }
-
-module.exports = { addFlags };

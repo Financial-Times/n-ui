@@ -1,8 +1,8 @@
-const OHeader = require('o-header');
-const promoHandler = require('./js/promoHandler');
-const TopicSearch = require('n-topic-search');
+import OHeader from 'o-header';
+import * as promoHandler from './js/promoHandler';
+import TopicSearch from 'n-topic-search';
 
-function init (flags) {
+export function init (flags) {
 	promoHandler.init(flags);
 
 	new OHeader();
@@ -20,4 +20,3 @@ function init (flags) {
 	}
 }
 
-module.exports = { init };

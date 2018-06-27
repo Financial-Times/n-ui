@@ -39,11 +39,9 @@ const crankThatJank = () => {
 		});
 };
 
-function init (flags) {
+export function init (flags) {
 	if (flags && flags.get('perfJanky') === 'more-janky') {
 		addStyles();
 		crankThatJank();
 	}
 }
-
-module.exports = { init };

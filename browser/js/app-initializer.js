@@ -1,16 +1,16 @@
-import ads from '../../components/n-ui/ads';
-import tracking from '../../components/n-ui/tracking';
 import date from 'o-date';
-import header from '../../components/n-ui/header';
-import roe from '../../components/n-ui/roe';
-import evenMoreJanky from '../../components/n-ui/perf-janky/more-janky';
 import footer from 'o-footer';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
 import * as syndication from 'n-syndication';
 import feedback from 'n-feedback';
 import { perfMark } from 'n-ui-foundations';
-import speedcurveLux from '../../components/n-ui/speedcurve-lux';
+import * as ads from '../../components/n-ui/ads';
+import * as header from '../../components/n-ui/header';
+import * as roe from '../../components/n-ui/roe';
+import * as evenMoreJanky from '../../components/n-ui/perf-janky/more-janky';
+import * as speedcurveLux from '../../components/n-ui/speedcurve-lux';
+import tracking from '../../components/n-ui/tracking';
 
 //Polyfill for :focus-visible https://github.com/WICG/focus-visible
 import 'focus-visible';

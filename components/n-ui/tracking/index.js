@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 	init: function (flags, appInfo) {
 		require('./ft').init(flags, appInfo);
 	},
@@ -10,5 +10,4 @@ module.exports = {
 	},
 	scrollDepthComponents: require('./ft/events/scroll-depth-components'),
 	scrollDepth: require('./ft/events/scroll-depth')
-
 };

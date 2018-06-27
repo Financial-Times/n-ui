@@ -81,40 +81,38 @@ function onAdsComplete (flags, event) {
 	}
 }
 
-export default {
-	init: (flags, appInfo, opts) => {
+export function init (flags, appInfo, opts) {
 
-		window.addEventListener('ftNextLoaded', function () {
-			nCounterAdBlocking.init(flags);
-		});
+	window.addEventListener('ftNextLoaded', function () {
+		nCounterAdBlocking.init(flags);
+	});
 
-		const adOptions = typeof opts === 'object' ? opts : {};
+	const adOptions = typeof opts === 'object' ? opts : {};
 
-		return Promise.resolve()
-			.then(() => {
-				if (flags && flags.get('ads')) {
-					if (/(BlackBerry|BBOS|PlayBook|BB10)/.test(navigator.userAgent)) {
-						return;
-					}
-
-					return Promise.resolve()
-						.then(() => {
-							// slotsRendered = 0; // Note - this is a global var for this module
-							//TODO get appName from appInfo
-							const appName = appInfo.name;
-							if (flags && flags.get('ads') && appName) {
-								initOAds(flags, appName, adOptions);
-							}
-						})
-						.then(() => {
-							if(flags && flags.get('krux') && !adOptions.noTargeting) {
-								//Though krux is activated through nextAdsComponent, we also need to load all the additional user matching scripts
-								//that would have been loaded via their tag manager
-								krux.init(flags);
-							}
-						});
+	return Promise.resolve()
+		.then(() => {
+			if (flags && flags.get('ads')) {
+				if (/(BlackBerry|BBOS|PlayBook|BB10)/.test(navigator.userAgent)) {
+					return;
 				}
 
-		});
-	}
+				return Promise.resolve()
+					.then(() => {
+						// slotsRendered = 0; // Note - this is a global var for this module
+						//TODO get appName from appInfo
+						const appName = appInfo.name;
+						if (flags && flags.get('ads') && appName) {
+							initOAds(flags, appName, adOptions);
+						}
+					})
+					.then(() => {
+						if(flags && flags.get('krux') && !adOptions.noTargeting) {
+							//Though krux is activated through nextAdsComponent, we also need to load all the additional user matching scripts
+							//that would have been loaded via their tag manager
+							krux.init(flags);
+						}
+					});
+			}
+
+	});
 };
