@@ -3,16 +3,14 @@ const fs = require('fs');
 
 const expectedBuiltFiles = require('./expected-built-files');
 
-function expectedAssets () {
-	return Promise.resolve(
-		expectedBuiltFiles
-			.map(filename => {
-				if(!fs.existsSync(path.join(process.cwd(), 'public/n-ui', filename))) {
-					throw new Error(`${filename} has not been built`);
-				}
-				return `./public/n-ui/${filename}`;
-			})
-	);
+async function expectedAssets () {
+	return expectedBuiltFiles
+		.map(filename => {
+			if(!fs.existsSync(path.join(process.cwd(), 'public/n-ui', filename))) {
+				throw new Error(`${filename} has not been built`);
+			}
+			return `./public/n-ui/${filename}`;
+		});
 }
 
 const generateAssetHashes = require('../lib/generate-asset-hashes');

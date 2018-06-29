@@ -11,7 +11,7 @@ let targeting;
 describe('Config', () => {
 
 	beforeEach(() => {
-		sandbox = sinon.sandbox.create();
+		sandbox = sinon.createSandbox();
 		// global stubs
 
 		sandbox.stub(utils, 'getLayoutName').callsFake(() => { return 'custom'; });

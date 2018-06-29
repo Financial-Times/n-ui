@@ -26,12 +26,12 @@ demo: run
 
 build:
 	concurrently --kill-others-on-fail \
-		"webpack --config demo/webpack.config.js" \
+		"webpack --config demo/webpack.demo.config.js" \
 		"./scripts/build-sass.sh demo/client/main.scss"
 
 watch:
 	concurrently --kill-others-on-fail \
-		"webpack --config demo/webpack.config.js  --watch" \
+		"webpack --config demo/webpack.demo.config.js  --watch" \
 		"watch-run -ip 'main.scss,demo/client/**/*.scss' ./scripts/build-sass.sh demo/client/main.scss"
 
 # test-browser-dev is only for development environments.
@@ -122,7 +122,7 @@ build-production: build-bundle
 
 build-bundle:
 	concurrently --kill-others-on-fail \
-		"webpack -p --bail --config build/deploy/webpack.deploy.config.js" \
+		"webpack --mode=production --config build/deploy/webpack.deploy.config.js" \
 		"./scripts/build-sass.sh browser/bundles/main.scss public/n-ui/n-ui-core.css"
 
 build-dist: build-bundle build-css-loader

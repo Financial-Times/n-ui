@@ -1,7 +1,6 @@
 const semver = require('semver');
 
 module.exports = function () {
-
 	let tag = process.env.CIRCLE_TAG;
 	let version;
 	let isOfficialRelease = false;
@@ -17,5 +16,5 @@ module.exports = function () {
 		}
 		version = tag;
 	}
-	return {version, isOfficialRelease};
+	return { version, isOfficialRelease };
 };

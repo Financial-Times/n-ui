@@ -1,5 +1,5 @@
 module.exports = [
-	'es5.js',
+	'appshell.js',
 	'font-loader.js',
 	'o-errors.js',
 	'head-n-ui-core.css',

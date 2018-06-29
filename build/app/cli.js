@@ -48,7 +48,7 @@ const cssEntryPoints = Object.keys(buildConfig.entry)
 
 program.version(nUiVersion);
 
-const webpackConfPath = path.join(__dirname, 'webpack.js');
+const webpackConfPath = path.join(__dirname, 'webpack.config.js');
 
 program
 	.command('build')
@@ -64,7 +64,7 @@ program
 
 		const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
 		const commands = {
-			jsOnly: `'webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}'`,
+			jsOnly: `'webpack ${options.production ? '--mode=production' : ''} --config ${webpackConfPath}'`,
 			sassOnly: `${cssEntryPoints
 				.map(([target, entry]) => `'export CSS_SOURCE_MAPS=${!options.production} && ${script} ${entry} ${target}'`)
 				.join(' ')}`

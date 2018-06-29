@@ -200,7 +200,7 @@ describe('simple app', function () {
 			request(app)
 				.get('/templated')
 				.expect('Link', /<https:\/\/www\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
-				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/123456\/es5\.js>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/123456\/appshell\.js>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/1234567\/o-errors\.js>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/12345678\/font-loader\.js>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/56f3a89e\/main\.css>; as="style"; rel="preload"; nopush/)

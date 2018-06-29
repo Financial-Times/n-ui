@@ -12,7 +12,7 @@ let targeting;
 describe('Main', () => {
 
 	beforeEach(() => {
-		sandbox = sinon.sandbox.create();
+		sandbox = sinon.createSandbox();
 		markup.setupContainer();
 		markup.set('<div class="o-ads"></div>');
 		targeting = sandbox.stub(document, 'querySelector');

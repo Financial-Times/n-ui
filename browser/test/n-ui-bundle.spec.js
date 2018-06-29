@@ -2,7 +2,7 @@
 window.FT = {flags: {aFlag: 'cohort'}};
 import { AppInitializer } from '../js/app-initializer';
 
-const entry = require('../../build/webpack-externals');
+const { externals: entry } = require('../../build/webpack/externals');
 
 describe('n-ui bundle', () => {
 
