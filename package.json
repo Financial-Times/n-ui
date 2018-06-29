@@ -103,7 +103,7 @@
   },
   "bundlesize": [
     {
-      "path": "./public/n-ui/vendor.js",
+      "path": "./public/n-ui/appshell.js",
       "threshold": "52.0 Kb"
     },
     {
