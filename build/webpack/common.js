@@ -3,7 +3,6 @@
 	common plugins and optimisation
 */
 
-const path = require('path');
 const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
 module.exports = {
@@ -16,7 +15,7 @@ module.exports = {
 
 	output: {
 		filename: '[name]',
-		path: path.resolve(__dirname, '../../')
+		path: process.cwd()
 	},
 
 	// generate source maps
