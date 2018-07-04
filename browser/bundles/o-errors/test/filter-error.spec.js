@@ -27,9 +27,8 @@ describe('filter error', () => {
 		'window.FT.flags is undefined',
 		'\'undefined\' is not an object (evaluating \'window.FT.nUi._hiddenComponents\')',
 		'undefined is not a function (evaluating \'Object.assign(window.FT.flags',
-		'The installing service worker became redundant.',
-		'InvalidStateError: InvalidStateError'
-	].map(err => it(`should filter ${err}`, () => {
+		'The installing service worker became redundant.'
+	].map(err => it(`should filter "${err}"`, () => {
 			const result = filterError({ exception: buildExceptionObject(err) });
 			expect(result).to.equal(false);
 	}));
