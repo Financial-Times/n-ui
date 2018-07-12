@@ -1,7 +1,7 @@
 const OHeader = require('o-header');
 const TopicSearch = require('n-topic-search');
 
-function init (flags) {
+function init () {
 
 	new OHeader();
 
