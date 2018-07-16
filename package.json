@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@financial-times/n-express": "^19.13.3",
-    "@financial-times/n-handlebars": "^1.19.6",
+    "@financial-times/n-handlebars": "^1.21.0",
     "@financial-times/next-json-ld": "^0.4.0",
     "autoprefixer": "8.6.4",
     "babel-core": "^6.26.3",
