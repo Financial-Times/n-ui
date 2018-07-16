@@ -118,7 +118,7 @@ export class AppInitializer {
 		}
 
 		if (this.enabledFeatures.header) {
-			header.init(flags);
+			header.init();
 		}
 
 		if (this.enabledFeatures.date) {

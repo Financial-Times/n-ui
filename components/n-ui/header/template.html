@@ -6,9 +6,6 @@
 {{#if content.before}}
 	<div class="o-header-before">{{{content.before}}}</div>
 {{/if}}
-{{#unlessEquals nUi.header.variant 'logo-only'}}
-	{{> n-ui/header/partials/marketing-promo/template}}
-{{/unlessEquals}}
 
 {{#ifEquals @root.viewStyle 'compact'}}
 	<header id="site-navigation" class="o-header o-header--simple" data-o-component="o-header" data-o-header--no-js tabindex="-1">
