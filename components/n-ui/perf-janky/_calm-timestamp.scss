@@ -1,6 +1,7 @@
 @include nUiStylesheetStart('head-n-ui-core');
 
-	.enhanced[data-perf-janky="calm"] {
+	.enhanced[data-perf-janky="calm"],
+	.enhanced[data-perf-janky="calm-middle"] {
 
 		// we start with enough of space for relative time, and keep it blank
 		// until we get the relative time
