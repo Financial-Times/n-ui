@@ -53,9 +53,9 @@ module.exports = {
 					}
 				]
 			},
-			// javascript
+			// javascript and jsx
 			{
-				test: /\.js$/,
+				test: /\.jsx?$/,
 				use: [babelLoaderConfig()]
 			}
 		]
