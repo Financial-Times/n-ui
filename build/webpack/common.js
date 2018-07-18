@@ -2,6 +2,7 @@
 	n-ui webpack config
 	common plugins and optimisation
 */
+const path = require('path');
 const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
 module.exports = {
