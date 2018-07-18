@@ -1,6 +1,3 @@
-// support for nodent-runtime and fast async
-'use runtime-nodent';
-
 const oErrors = require('o-errors');
 
 const filterError = require('./filter-error');
