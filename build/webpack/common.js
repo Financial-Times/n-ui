@@ -45,7 +45,7 @@ module.exports = {
 
 		// package.json / bower.json
 		// fields for package resolution
-		mainFields: ['main', 'browser'],
+		mainFields: ['browser', 'main'],
 
 		// package.json / bower.json
 		// fields for aliasing
