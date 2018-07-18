@@ -89,6 +89,9 @@ module.exports = function (flags, appName, adOptions) {
 		formats: {
 			PaidPost: {
 				sizes: 'fluid'
+			},
+			Q4AdsTest: {
+				sizes: [1,1]
 			}
 		},
 		responsive: {

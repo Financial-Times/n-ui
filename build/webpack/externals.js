@@ -1,10 +1,10 @@
 /*
 	n-ui webpack config
 	externals configuration -
-	creates a vendor bundle with common modules
+	creates a appshell bundle with common modules
 	across all apps, version-controlled by n-ui
 
-	webpack looks for components in the vendor (n-ui) bundle,
+	webpack looks for components in the appshell (n-ui) bundle,
 	under n-ui/componentName
 */
 
