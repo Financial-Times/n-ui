@@ -1,5 +1,5 @@
 module.exports = [
-	'vendor.js',
+	'appshell.js',
 	'font-loader.js',
 	'o-errors.js',
 	'vendor.js.es6.js',

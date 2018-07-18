@@ -1,6 +1,3 @@
-// support for nodent-runtime and fast async
-'use runtime-nodent';
-
 import oErrors from 'o-errors';
 
 import filterError from './filter-error';

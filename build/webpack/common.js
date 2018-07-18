@@ -2,8 +2,6 @@
 	n-ui webpack config
 	common plugins and optimisation
 */
-
-const path = require('path');
 const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
 module.exports = {
@@ -48,7 +46,7 @@ module.exports = {
 
 		// package.json / bower.json
 		// fields for package resolution
-		mainFields: ['main', 'browser'],
+		mainFields: ['browser', 'main'],
 
 		// package.json / bower.json
 		// fields for aliasing

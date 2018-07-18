@@ -67,7 +67,7 @@ module.exports = ({
 					isNUi: true
 				}),
 				getBundleConfig({
-					file: 'vendor.js',
+					file: 'appshell.js',
 					isNUi: true,
 					stopsExecutionOnLoadError: true
 				}),

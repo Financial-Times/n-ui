@@ -46,7 +46,7 @@ will build and use the local version of n-ui rather than the version hosted on S
 */
 if (process.env.NEXT_APP_SHELL === 'local') {
 	const webpackWarning = `
-/*********** webpack warning ************/
+/*********** n-ui build warning ************/
 
 You have set the environment variable NEXT_APP_SHELL=local
 This should only be used if you are actively developing
@@ -57,7 +57,7 @@ If you do not need this behaviour run
 
 	unset NEXT_APP_SHELL
 
-/*********** webpack warning ************/
+/*********** n-ui build warning ************/
 `;
 	console.warn(webpackWarning); // eslint-disable-line no-console
 

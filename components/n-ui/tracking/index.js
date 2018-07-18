@@ -5,7 +5,6 @@ export default {
 	lazyInit: function (flags) {
 		window.addEventListener('ftNextLoaded', function () {
 			require('./third-party/floodlight')(flags);
-			require('./third-party/chartbeat')(flags);
 		});
 	},
 	scrollDepthComponents: require('./ft/events/scroll-depth-components'),

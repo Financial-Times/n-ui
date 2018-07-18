@@ -1,9 +1,7 @@
 import OHeader from 'o-header';
-import * as promoHandler from './js/promoHandler';
 import TopicSearch from 'n-topic-search';
 
-export function init (flags) {
-	promoHandler.init(flags);
+export function init () {
 
 	new OHeader();
 

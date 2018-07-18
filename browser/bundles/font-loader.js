@@ -1,6 +1,3 @@
-// support for nodent-runtime and fast async
-'use runtime-nodent';
-
 import oTypography from 'o-typography';
 import perfMark from 'n-ui-foundations/js/perf-mark';
 

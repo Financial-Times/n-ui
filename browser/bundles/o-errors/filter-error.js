@@ -4,19 +4,19 @@ export default function ({ exception }) {
 	// the execution of JS is halted and we fall back to core
 	const errorFilters = [
 		/window\.FT\.(flags|nUi|ftNextUi)/i,
-		/'undefined' is|undefined is|is undefined/i
+		/'undefined' is|undefined is|is undefined/i,
+		/service worker became redundant/i,
+		/sourcepoint/i
 	];
 	let windowFtError;
-	let sourcepointError;
 	if(exception) {
 		try {
 			let errorString = JSON.stringify(exception);
-			windowFtError = errorFilters.every(rx => rx.test(errorString));
-			sourcepointError = /sourcepoint/.test(errorString);
+			windowFtError = errorFilters.some(rx => rx.test(errorString));
 		} catch (err) {
 			// could not stringify the exception
 		}
 	}
-	// filter if window.FT error, sourcepoint error, or if o-errors disabled
-	return !(windowFtError || sourcepointError || window.FT.disableOErrors);
+	// filter if window.FT error or if o-errors disabled
+	return !(windowFtError || window.FT.disableOErrors);
 };

@@ -12,18 +12,12 @@ const babelLoaderConfig = () => ({
 		babelrc: false,
 		cacheDirectory: true,
 		plugins: [
-			[
-				// use fast-async and nodent instead of Babel's regenerator
-				// https://github.com/MatAtBread/fast-async
-				// it's 3-4x faster in a browser (up to 10x on mobile)
-				'fast-async',
-				{
-					// place nodent runtime in app shell bundles
-					// where 'use runtime-nodent'; is specified
-					// if async/await is present
-					'runtimePattern': 'directive'
-				}
-			],
+			// allow parsing of async functions
+			require.resolve('babel-plugin-syntax-async-functions'),
+			// use fast-async and nodent instead of Babel's regenerator
+			// https://github.com/MatAtBread/fast-async
+			// it's 3-4x faster in a browser (up to 10x on mobile)
+			'fast-async',
 			// converts `export default 'foo'` to `exports.default = 'foo'`
 			require.resolve('babel-plugin-add-module-exports')
 		],
@@ -57,9 +51,9 @@ module.exports = {
 					}
 				]
 			},
-			// javascript
+			// javascript and jsx
 			{
-				test: /\.js$/,
+				test: /\.jsx?$/,
 				use: [babelLoaderConfig()]
 			}
 		]

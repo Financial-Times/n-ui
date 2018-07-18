@@ -23,23 +23,20 @@ describe('built asset expectations', () => {
 		shellpromise(`touch ${appPath}/public/main.css`)
 	]));
 
-	it('should fail to start if there is a missing asset', () => {
+	it('should fail to start if there is a missing asset', async () => {
 		createGitignore('/public/main.js', '/public/main.css');
-		return shellpromise(`rm -rf ${appPath}/public/main.js`, { verbose: true })
-		.then(() => {
-			return appStart()
-				.then(() => {
-					throw new Error('app should not have successfully started');
-				}, err => {
-					expect(err.toString()).to.contain('main.js');
-				});
-		});
-
+		await shellpromise(`rm -rf ${appPath}/public/main.js`, { verbose: true });
+		try {
+			await appStart();
+			throw new Error('app should not have successfully started');
+		} catch (err) {
+			expect(err.toString()).to.contain('main.js');
+		}
 	});
 
-	it('should start if assets and gitignore match', () => {
+	it('should start if assets and gitignore match', async () => {
 		createGitignore('/public/main.js', '/public/main.css', '/public/about.json');
-		return shellpromise(`touch ${appPath}/public/about.json`)
-			.then(appStart);
+		await shellpromise(`touch ${appPath}/public/about.json`);
+		await appStart();
 	});
 });
