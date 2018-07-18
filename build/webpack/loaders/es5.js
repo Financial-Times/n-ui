@@ -12,8 +12,6 @@ const babelLoaderConfig = () => ({
 		babelrc: false,
 		cacheDirectory: true,
 		plugins: [
-			// allow parsing of async functions
-			require.resolve('babel-plugin-syntax-async-functions'),
 			// use fast-async and nodent instead of Babel's regenerator
 			// https://github.com/MatAtBread/fast-async
 			// it's 3-4x faster in a browser (up to 10x on mobile)
