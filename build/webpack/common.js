@@ -2,7 +2,7 @@
 	n-ui webpack config
 	common plugins and optimisation
 */
-
+const { Plugin: ShakePlugin } = require('webpack-common-shake');
 const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
 module.exports = {
@@ -33,7 +33,10 @@ module.exports = {
 	resolve: {
 		plugins: [
 			// This will handle a bower.json's `main` property being an array
-			new BowerResolvePlugin()
+			new BowerResolvePlugin(),
+			// This will handle CommonJS tree-shaking by removing unused exports
+			// see https://github.com/indutny/webpack-common-shake
+			new ShakePlugin()
 		],
 
 		// In which folders the resolver look for modules relative paths are
