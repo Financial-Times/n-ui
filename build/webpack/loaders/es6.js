@@ -11,27 +11,22 @@ const babelLoaderConfig = () => ({
 		// ignore any .babelrc in project & dependencies
 		babelrc: false,
 		cacheDirectory: true,
+		plugins: [
+			// transform commonjs to import/export syntax
+			//'transform-commonjs-es2015-modules'
+		],
 		presets: [
 			[
-				require.resolve('babel-preset-env'),
+				'@babel/env',
 				{
-					// TODO: support ESM (es-modules)
-					// after migrating to babel 7, which is currently in beta
-					// use https://www.npmjs.com/package/babel-esm-plugin
-					// modules: false,
-					useBuiltIns: true,
+					// support ESM (es-modules)
+					useBuiltIns: false,
 					targets: {
-						browsers: [
-							'Chrome >= 60',
-							'Safari >= 10.1',
-							'iOS >= 10.3',
-							'Firefox >= 54',
-							'Edge >= 15'
-						]
+						esmodules: true
 					}
 				}
 			],
-			require.resolve('babel-preset-react')
+			'@babel/react',
 		]
 	}
 });
