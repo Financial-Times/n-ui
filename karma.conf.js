@@ -1,5 +1,5 @@
 const webpackMerge = require('webpack-merge');
-const commonConfig = require('./build/webpack/webpack.common.config.js');
+const { webpackConfig } = require('./build/webpack/webpack.common.config.js');
 
 const componentsToTest = [
 	'browser',
@@ -19,7 +19,7 @@ module.exports = function (karma) {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap'];
 			return obj;
 		}, {}),
-		webpack: webpackMerge(commonConfig(['commonOptions', 'es5']), {
+		webpack: webpackMerge(webpackConfig(['commonOptions', 'es5']), {
 			devtool: 'inline-source-map'
 		}),
 		webpackMiddleware: {

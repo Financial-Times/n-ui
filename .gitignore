@@ -7,12 +7,7 @@
 .editorconfig
 .eslintrc.js
 .stylelintrc
-/public/__about.json
-/public/head-n-ui-core.css
-/public/main.css
-/public/main.js
-/public/main.js.map
-/public/n-ui
+/public
 key.pem
 key-cert.pem
 /test-page.html

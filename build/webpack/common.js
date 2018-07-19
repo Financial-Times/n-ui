@@ -2,6 +2,7 @@
 	n-ui webpack config
 	common plugins and optimisation
 */
+const path = require('path');
 const BowerResolvePlugin = require('bower-resolve-webpack-plugin');
 
 module.exports = {
@@ -14,7 +15,8 @@ module.exports = {
 
 	output: {
 		filename: '[name]',
-		path: process.cwd()
+		path: path.resolve(__dirname, '../../'),
+		devtoolModuleFilenameTemplate: 'webpack://n-ui/[resource-path]'
 	},
 
 	// generate source maps

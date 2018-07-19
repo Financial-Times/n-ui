@@ -12,27 +12,25 @@ const babelLoaderConfig = () => ({
 		babelrc: false,
 		cacheDirectory: true,
 		plugins: [
-			// allow parsing of async functions
-			require.resolve('babel-plugin-syntax-async-functions'),
 			// use fast-async and nodent instead of Babel's regenerator
 			// https://github.com/MatAtBread/fast-async
 			// it's 3-4x faster in a browser (up to 10x on mobile)
-			'fast-async',
+			'module:fast-async',
 			// converts `export default 'foo'` to `exports.default = 'foo'`
-			require.resolve('babel-plugin-add-module-exports')
+			'babel-plugin-add-module-exports',
 		],
 		presets: [
 			[
-				require.resolve('babel-preset-env'),
+				'@babel/env',
 				{
-					include: ['transform-es2015-classes'],
+					include: ['transform-classes'],
 					exclude: ['transform-regenerator', 'transform-async-to-generator'],
 					targets: {
 						browsers: ['last 2 versions', 'ie >= 11']
 					}
 				}
 			],
-			require.resolve('babel-preset-react')
+			'@babel/react'
 		]
 	}
 });

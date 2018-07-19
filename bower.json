@@ -16,7 +16,7 @@
     "ftdomdelegate": "^2.1.0",
     "n-counter-ad-blocking": "^3.1.7",
     "n-image": "^5.0.3",
-    "n-service-worker": "^1.9.0",
+    "n-service-worker": "^1.10.1",
     "n-sliding-popup": "^2.0.0",
     "n-syndication": "^3.16.2",
     "n-topic-search": "^1.0.3",
