@@ -15,9 +15,16 @@ const babelLoaderConfig = () => ({
 			// use fast-async and nodent instead of Babel's regenerator
 			// https://github.com/MatAtBread/fast-async
 			// it's 3-4x faster in a browser (up to 10x on mobile)
-			'module:fast-async',
+			[
+				'module:fast-async',
+				{
+					compiler: {
+						spec: true
+					}
+				}
+			],
 			// converts `export default 'foo'` to `exports.default = 'foo'`
-			'babel-plugin-add-module-exports',
+			'babel-plugin-add-module-exports'
 		],
 		presets: [
 			[
