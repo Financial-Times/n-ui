@@ -28,12 +28,16 @@ if (Object.keys(jsEntryPoints).length) {
 	const jsWebpackConfig = webpackMerge(
 		commonConfig([
 			'commonOptions',
-			'es5',
+			[
+				'es5',
+				{pragma: baseConfig.pragma}
+			],
 			'templates',
 			'text',
 			'externals'
 		]),
 		{
+			plugins: baseConfig.plugins,
 			entry: jsEntryPoints
 		}
 	);
