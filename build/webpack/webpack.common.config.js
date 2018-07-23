@@ -1,6 +1,6 @@
 const webpackMerge = require('webpack-merge');
 
-const config = {
+const configs = {
 	commonOptions: require('./common'),
 	externals: require('./externals'),
 	appShell: require('./app-shell-entry-points'),
@@ -9,5 +9,8 @@ const config = {
 	text: require('./loaders/text')
 };
 
-module.exports = (configKeys = []) =>
-	webpackMerge(...configKeys.map(key => config[key]));
+module.exports = (configKeys = []) => webpackMerge(...configKeys.map(config => {
+	if (!Array.isArray(config)) config = [config];
+	const [key, opts = {}] = config;
+	return typeof configs[key] === 'function' ? configs[key](opts) : configs[key];
+}));
