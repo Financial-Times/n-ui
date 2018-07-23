@@ -1,0 +1,11 @@
+:root[data-perf-janky="calm"],
+:root[data-perf-janky="calm-middle"] {
+	.above-header-advert {
+		&.o-ads--empty,
+		&[data-o-ads-loaded="false"] {
+			visibility: visible;
+			height: auto;
+			width: auto;
+		}
+	}
+}
