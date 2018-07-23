@@ -4,8 +4,8 @@
 		&.o-ads--empty,
 		&[data-o-ads-loaded="false"] {
 			visibility: visible;
-			height: auto;
-			width: auto;
+			height: inherit;
+			width: inherit;
 		}
 	}
 }
