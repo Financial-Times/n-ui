@@ -102,6 +102,7 @@ In the app (e.g. next-article):
 - `export NEXT_APP_SHELL=local`
 - `bower link n-ui`
 - `npm link @financial-times/n-ui`
+- `make build` - !! need to do this for each change in either n-ui or front facing app.
 - `make run`
 
 ### Releasing n-ui
