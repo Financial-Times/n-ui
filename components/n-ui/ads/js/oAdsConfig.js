@@ -10,7 +10,8 @@ module.exports = function (flags, appName, adOptions) {
 	const targeting = extend({
 		pt: appName.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName(),
-		mvt: utils.getABTestState()
+		mvt: utils.getABTestState(),
+		testads: flags.get('adsEnableTestCreatives')
 	});
 
 
