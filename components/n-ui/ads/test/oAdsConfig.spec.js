@@ -75,12 +75,12 @@ describe('Config', () => {
 
 			expect(config.krux).to.be.false;
 		});
+
 		it('Should set dfp_targeting config', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article' );
 			document.cookie = 'FT_U=EID=1234_PID=abc';
-			const expectation = 'pt=art;nlayout=custom'.split(';');
-
+			const expectation = 'pt=art;nlayout=custom;testads=true'.split(';');
 
 			expectation.forEach((value) => expect(config.dfp_targeting).to.contain(value));
 		});
