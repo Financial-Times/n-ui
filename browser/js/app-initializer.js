@@ -125,7 +125,7 @@ export class AppInitializer {
 			date.init();
 		}
 
-		if (this.enabledFeatures.ads) {
+		if (this.enabledFeatures.ads && !flags.get('oAdsSplitBundle')) {
 			ads.init(flags, appInfo, this.enabledFeatures.ads);
 		}
 
