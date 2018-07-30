@@ -111,7 +111,7 @@ app.listen(5005)
 							'public/n-ui/o-errors.js',
 							'public/n-ui/o-errors.js.map',
 							'public/n-ui/o-ads.js',
-							'public/n-ui/o-ads.map.js',
+							'public/n-ui/o-ads.js.map',
 
 						],
 						destination: `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/`,
