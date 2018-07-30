@@ -93,6 +93,9 @@ module.exports = function (flags, appName, adOptions) {
 			},
 			Q4AdsTest: {
 				sizes: [1,1]
+			},
+			Outstream: {
+				sizes: [1,1]
 			}
 		},
 		responsive: {
