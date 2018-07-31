@@ -1,6 +1,4 @@
 // Expose entry points to shared bundle
-import oAds from 'o-ads';
-import ads from '../../components/n-ui/ads';
 import tracking from '../../components/n-ui/tracking';
 import roe from '../../components/n-ui/roe';
 import oTracking from 'o-tracking';
@@ -22,10 +20,8 @@ const app = new AppInitializer();
 
 window.FT.nUi = Object.assign({}, app.env, {
 	onAppInitialized: app.onAppInitialized,
-	ads: ads,
 	tracking: tracking,
 	_hiddenComponents: {
-		oAds,
 		oTracking,
 		oDate,
 		oViewport,
