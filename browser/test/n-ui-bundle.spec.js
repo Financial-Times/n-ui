@@ -9,6 +9,7 @@ describe('n-ui bundle', () => {
 	before(() => {
 		sinon.stub(AppInitializer.prototype, 'initializeComponents');
 		require('../bundles/main');
+		require('../bundles/o-ads');
 	});
 
 	after(() => {

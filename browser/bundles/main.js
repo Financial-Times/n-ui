@@ -12,13 +12,15 @@ import * as nImage from 'n-image';
 import ftdomdelegate from 'ftdomdelegate';
 import superstore from 'superstore';
 import superstoreSync from 'superstore-sync';
+import merge from 'lodash.merge';
 
 import { AppInitializer } from '../js/app-initializer';
 
 // returns {flags, allStylesLoaded, appInfo}
 const app = new AppInitializer();
+window.FT.nUi = window.FT.nUi || {};
 
-window.FT.nUi = Object.assign({}, app.env, {
+merge(window.FT.nUi, app.env, {
 	onAppInitialized: app.onAppInitialized,
 	tracking: tracking,
 	_hiddenComponents: {
