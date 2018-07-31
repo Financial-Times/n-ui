@@ -91,9 +91,6 @@ module.exports = function (flags, appName, adOptions) {
 			PaidPost: {
 				sizes: 'fluid'
 			},
-			Q4AdsTest: {
-				sizes: [1,1]
-			},
 			Outstream: {
 				sizes: [1,1]
 			}
