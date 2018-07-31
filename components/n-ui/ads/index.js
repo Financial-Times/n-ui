@@ -24,6 +24,7 @@ function initOAds (flags, appName, adOptions) {
 	document.addEventListener('oAds.ready', function (){
 		if (!oadsReadyCalled) {
 			customTimings.firstAdRequested = new Date().getTime();
+			perfMark('firstAdRequested');
 			oadsReadyCalled = true;
 		}
 	});

@@ -2,9 +2,13 @@
 
 [![CircleCI](https://circleci.com/gh/Financial-Times/n-ui.svg?style=svg)](https://circleci.com/gh/Financial-Times/n-ui) [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-ui/badge.svg)](https://coveralls.io/github/Financial-Times/n-ui)
 
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSf5InA7UJK9yNBCzidFKI_WNkfbl6of1eRlIACRspGXUcBx8A/viewform?usp=pp_url&entry.78759464=n-ui" target="_blank"><img src="https://i.imgur.com/UmScdZ4.png" alt="Yak button" border="0" align="right" width="150" title="Report a yak shaving incident for this repository"></a>
+
 Server, build and client side bootstrapping for ft.com’s user-facing applications.
 
 **PLEASE DON’T USE THIS OUTSIDE OF USER-FACING FT.COM APPLICATIONS. If you need a good Express server with Handlebars, metrics etc available consider using [n-internal-tool](https://github.com/Financial-Times/n-internal-tool), [n-express](https://github.com/Financial-Times/n-express) or copying what you need from n-ui**
+
+<br clear="right">
 
 ## Quickstart
 
@@ -102,6 +106,7 @@ In the app (e.g. next-article):
 - `export NEXT_APP_SHELL=local`
 - `bower link n-ui`
 - `npm link @financial-times/n-ui`
+- `make build` - !! need to do this for each change in either n-ui or front facing app.
 - `make run`
 
 ### Releasing n-ui
