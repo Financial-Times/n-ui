@@ -84,6 +84,7 @@
     "postcss-discard-duplicates": "^2.1.0",
     "postcss-extract-css-block": "^0.1.0",
     "raw-loader": "^0.5.1",
+    "rewiremock": "^3.7.7",
     "semver": "^5.5.0",
     "shellpromise": "^1.4.0",
     "ts-loader": "^4.4.1",

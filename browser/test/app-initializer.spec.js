@@ -218,11 +218,6 @@ describe('AppInitializer', () => {
 			expect(date.init.called).to.be.false;
 		});
 
-		// it('initializes ads if feature is enabled', () => {
-		// 	const app = initApp({ads: {adsConfig: true}});
-		// 	expect(ads.init.calledWith(app.env.flags, app.env.appInfo, app.enabledFeatures.ads)).to.be.true;
-		// });
-
 		it('does not initialize ads if feature is disabled', () => {
 			initApp({});
 			expect(ads.init.called).to.be.false;

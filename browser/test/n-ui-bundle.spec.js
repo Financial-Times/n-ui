@@ -2,6 +2,8 @@
 window.FT = {flags: {aFlag: 'cohort'}};
 import { AppInitializer } from '../js/app-initializer';
 
+// import rewiremock from 'rewiremock';
+
 const { externals: entry } = require('../../build/webpack/externals');
 
 describe('n-ui bundle', () => {
@@ -70,5 +72,4 @@ describe('n-ui bundle', () => {
 			});
 		});
 	});
-
 });
