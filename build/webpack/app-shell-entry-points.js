@@ -11,7 +11,6 @@ module.exports = {
 	entry: {
 		'./public/n-ui/appshell.js': `${nUiPath}browser/bundles/main.js`,
 		'./public/n-ui/font-loader.js': `${nUiPath}browser/bundles/font-loader.js`,
-		'./public/n-ui/o-errors.js': `${nUiPath}browser/bundles/o-errors/index.js`,
-		'./public/n-ui/o-ads.js': `${nUiPath}browser/bundles/o-ads.js`
+		'./public/n-ui/o-errors.js': `${nUiPath}browser/bundles/o-errors/index.js`
 	}
 };

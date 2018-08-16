@@ -1,3 +1,4 @@
+import ads from '../../components/n-ui/ads';
 import tracking from '../../components/n-ui/tracking';
 import date from 'o-date';
 import header from '../../components/n-ui/header';
@@ -122,6 +123,10 @@ export class AppInitializer {
 
 		if (this.enabledFeatures.date) {
 			date.init();
+		}
+
+		if (this.enabledFeatures.ads) {
+			ads.init(flags, appInfo, this.enabledFeatures.ads);
 		}
 
 		if (this.enabledFeatures.lazyLoadImages) {
