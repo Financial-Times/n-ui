@@ -80,7 +80,7 @@ describe('Config', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article' );
 			document.cookie = 'FT_U=EID=1234_PID=abc';
-			const expectation = 'pt=art;nlayout=custom;testads=true'.split(';');
+			const expectation = 'pt=art;nlayout=custom;testads=true;gpt-beta=hzwxrfqd'.split(';');
 
 			expectation.forEach((value) => expect(config.dfp_targeting).to.contain(value));
 		});
