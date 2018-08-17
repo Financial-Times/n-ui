@@ -65,10 +65,6 @@ module.exports = ({
 					isNUi: true
 				}),
 				getBundleConfig({
-					file: 'o-ads.js',
-					isNUi: true
-				}),
-				getBundleConfig({
 					file: 'appshell.js',
 					isNUi: true,
 					stopsExecutionOnLoadError: true
