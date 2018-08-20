@@ -6,8 +6,8 @@ const chokidar = require('chokidar');
 const metrics = require('next-metrics');
 const gzip = promisify(require('zlib').gzip);
 
-const concatenatedStylesCache = {};
 const concatenatedStylesSizeCache = {};
+let concatenatedStylesCache = {};
 let stylesheets;
 
 const calculateSize = content => {
