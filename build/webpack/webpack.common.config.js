@@ -11,31 +11,23 @@ const configs = {
 };
 
 const webpackConfig = (configKeys = []) =>
-	webpackMerge(...configKeys.map(key => config[key]));
+	webpackMerge(...configKeys.map(key => configs[key]));
 
 function webpackConfigFormula ({
 	includeExternals = false,
 	includeAppShell = false,
-  jsLoader = 'es5',
-  options
+	jsLoader = 'es5',
+	options
 }) {
-	const configKeys = [
-		'commonOptions',
-		'templates',
-		'text'
-	];
+	const configKeys = ['commonOptions', 'templates', 'text'];
 	if (includeExternals) {
 		configKeys.push('externals');
 	}
 	if (includeAppShell) {
 		configKeys.push('appShell');
 	}
-	return webpackMerge(
-    webpackConfig(configKeys),
-    configs[jsLoader](options)
-  );
+	return webpackMerge(webpackConfig(configKeys), configs[jsLoader](options));
 }
-
 
 module.exports = {
 	webpackConfig,
