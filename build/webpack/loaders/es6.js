@@ -5,38 +5,7 @@
 	with Babel
 */
 
-const babelLoaderConfig = () => ({
-	loader: 'babel-loader',
-	options: {
-		// ignore any .babelrc in project & dependencies
-		babelrc: false,
-		cacheDirectory: true,
-		presets: [
-			[
-				require.resolve('babel-preset-env'),
-				{
-					// TODO: support ESM (es-modules)
-					// after migrating to babel 7, which is currently in beta
-					// use https://www.npmjs.com/package/babel-esm-plugin
-					// modules: false,
-					useBuiltIns: true,
-					targets: {
-						browsers: [
-							'Chrome >= 60',
-							'Safari >= 10.1',
-							'iOS >= 10.3',
-							'Firefox >= 54',
-							'Edge >= 15'
-						]
-					}
-				}
-			],
-			require.resolve('babel-preset-react')
-		]
-	}
-});
-
-module.exports = {
+module.exports = opts => ({
 	output: {
 		filename: '[name].es6.js'
 	},
@@ -47,17 +16,55 @@ module.exports = {
 				test: /\.ts$/,
 				exclude: [/(node_modules|bower_components)/],
 				use: [
-					babelLoaderConfig(),
+					babelLoaderConfig(opts),
 					{
 						loader: 'ts-loader'
 					}
 				]
 			},
-			// javascript
+			// javascript and jsx
 			{
-				test: /\.js$/,
-				use: [babelLoaderConfig()]
+				test: /\.jsx?$/,
+				use: [babelLoaderConfig(opts)]
 			}
 		]
 	}
-};
+});
+
+function babelLoaderConfig (opts) {
+	return {
+		loader: 'babel-loader',
+		options: {
+			// ignore any .babelrc in project & dependencies
+			babelrc: false,
+			cacheDirectory: true,
+			plugins: [
+				require.resolve('babel-plugin-transform-react-jsx'),
+				{
+					pragma: opts.pragma
+				}
+			],
+			presets: [
+				[
+					require.resolve('babel-preset-env'),
+					{
+						// TODO: support ESM (es-modules)
+						// after migrating to babel 7, which is currently in beta
+						// use https://www.npmjs.com/package/babel-esm-plugin
+						// modules: false,
+						useBuiltIns: true,
+						targets: {
+							browsers: [
+								'Chrome >= 60',
+								'Safari >= 10.1',
+								'iOS >= 10.3',
+								'Firefox >= 54',
+								'Edge >= 15'
+							]
+						}
+					}
+				]
+			]
+		}
+	};
+}

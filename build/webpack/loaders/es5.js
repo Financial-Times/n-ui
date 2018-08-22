@@ -5,55 +5,73 @@
 	with Babel
 */
 
-const babelLoaderConfig = () => ({
-	loader: 'babel-loader',
-	options: {
-		// ignore any .babelrc in project & dependencies
-		babelrc: false,
-		cacheDirectory: true,
-		plugins: [
-			// use fast-async and nodent instead of Babel's regenerator
-			// https://github.com/MatAtBread/fast-async
-			// it's 3-4x faster in a browser (up to 10x on mobile)
-			'fast-async',
-			// converts `export default 'foo'` to `exports.default = 'foo'`
-			require.resolve('babel-plugin-add-module-exports')
-		],
-		presets: [
-			[
-				require.resolve('babel-preset-env'),
+module.exports = opts => {
+	const loaderConfig = babelLoaderConfig(opts);
+	return {
+		module: {
+			rules: [
+				// typescript
 				{
-					include: ['transform-es2015-classes'],
-					exclude: ['transform-regenerator', 'transform-async-to-generator'],
-					targets: {
-						browsers: ['last 2 versions', 'ie >= 11']
-					}
+					test: /\.ts$/,
+					exclude: [/(node_modules|bower_components)/],
+					use: [
+						loaderConfig,
+						{
+							loader: 'ts-loader'
+						}
+					]
+				},
+				// javascript and jsx
+				{
+					test: /\.jsx?$/,
+					use: [loaderConfig]
 				}
-			],
-			require.resolve('babel-preset-react')
-		]
-	}
-});
+			]
+		}
+	};
+};
 
-module.exports = {
-	module: {
-		rules: [
-			// typescript
-			{
-				test: /\.ts$/,
-				exclude: [/(node_modules|bower_components)/],
-				use: [
-					babelLoaderConfig(),
+function babelLoaderConfig (opts) {
+	return {
+		loader: 'babel-loader',
+		options: {
+			// ignore any .babelrc in project & dependencies
+			babelrc: false,
+			cacheDirectory: true,
+			plugins: loaderPluginsConfig(opts),
+			presets: [
+				[
+					require.resolve('babel-preset-env'),
 					{
-						loader: 'ts-loader'
+						include: ['transform-es2015-classes'],
+						targets: {
+							browsers: ['last 2 versions', 'ie >= 11']
+						}
 					}
 				]
-			},
-			// javascript and jsx
+			]
+		}
+	};
+}
+
+function loaderPluginsConfig (opts) {
+	return [
+		// converts `export default 'foo'` to `exports.default = 'foo'`
+		require.resolve('babel-plugin-add-module-exports'),
+		// includes Babel's regenerator	runtime (once only)
+		// for client-side async/await support
+		[
+			require.resolve('babel-plugin-transform-runtime'),
 			{
-				test: /\.jsx?$/,
-				use: [babelLoaderConfig()]
+				helpers: false,
+				polyfill: false
+			}
+		],
+		[
+			require.resolve('babel-plugin-transform-react-jsx'),
+			{
+				pragma: opts.pragma
 			}
 		]
-	}
-};
+	];
+}

@@ -1,6 +1,6 @@
 const webpackMerge = require('webpack-merge');
 
-const config = {
+const configs = {
 	commonOptions: require('./common'),
 	externals: require('./externals'),
 	appShell: require('./app-shell-entry-points'),
@@ -16,11 +16,11 @@ const webpackConfig = (configKeys = []) =>
 function webpackConfigFormula ({
 	includeExternals = false,
 	includeAppShell = false,
-	jsLoader = 'es5'
+  jsLoader = 'es5',
+  options
 }) {
 	const configKeys = [
 		'commonOptions',
-		jsLoader,
 		'templates',
 		'text'
 	];
@@ -30,7 +30,10 @@ function webpackConfigFormula ({
 	if (includeAppShell) {
 		configKeys.push('appShell');
 	}
-	return webpackConfig(configKeys);
+	return webpackMerge(
+    webpackConfig(configKeys),
+    configs[jsLoader](options)
+  );
 }
 
 

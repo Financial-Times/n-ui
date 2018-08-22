@@ -7,12 +7,18 @@ module.exports = function (flags, appName, adOptions) {
 
 	adOptions = adOptions || {};
 
-	const targeting = extend({
+	let targeting = extend({
 		pt: appName.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName(),
-		mvt: utils.getABTestState()
+		mvt: utils.getABTestState(),
+		testads: flags.get('adsEnableTestCreatives')
 	});
 
+	// This is a beta feature from google to enable long lived pageview data.
+	// This is needed for master companion ads when there could be ads out of view further down the page
+	if (appName === 'article') {
+		targeting['gpt-beta'] = 'hzwxrfqd';
+	}
 
 	const kruxConfig = (flags.get('krux')) && !adOptions.noTargeting && {
 		id: 'KHUSeE3x',
@@ -90,7 +96,7 @@ module.exports = function (flags, appName, adOptions) {
 			PaidPost: {
 				sizes: 'fluid'
 			},
-			Q4AdsTest: {
+			Outstream: {
 				sizes: [1,1]
 			}
 		},

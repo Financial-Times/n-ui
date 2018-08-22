@@ -25,17 +25,20 @@ const jsEntryPoints = Object.keys(baseConfig.entry)
 	}, {});
 
 if (Object.keys(jsEntryPoints).length) {
-	const entrypoints = {
-		entry: jsEntryPoints
-	};
+  const { pragma, plugins } = baseConfig;
+	const common = {
+    entry: jsEntryPoints,
+    plugins
+  };
+  const options = { pragma };
 	webpackConfigs.push(
 		webpackMerge(
-			webpackConfigFormula({ includeExternals: true }),
-			entrypoints
+			webpackConfigFormula({ includeExternals: true, options }),
+      common
 		),
 		webpackMerge(
-			webpackConfigFormula({ includeExternals: true, jsLoader: 'es6' }),
-			entrypoints
+			webpackConfigFormula({ includeExternals: true, jsLoader: 'es6', options }),
+			common
 		)
 	);
 }
