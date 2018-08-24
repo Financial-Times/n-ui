@@ -7,12 +7,18 @@ module.exports = function (flags, appName, adOptions) {
 
 	adOptions = adOptions || {};
 
-	let targeting = extend({
+	const targetingOptions = {
 		pt: appName.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName(),
-		mvt: utils.getABTestState(),
-		testads: flags.get('adsEnableTestCreatives')
-	});
+		mvt: utils.getABTestState()
+	};
+
+	if (flags.get('adsEnableTestCreatives')) {
+		targetingOptions.testads = true;
+	}
+
+	// TO-DO: Check if we can get rid of this 'extend' and pass an object literal
+	let targeting = extend(targetingOptions);
 
 	// This is a beta feature from google to enable long lived pageview data.
 	// This is needed for master companion ads when there could be ads out of view further down the page
@@ -95,6 +101,9 @@ module.exports = function (flags, appName, adOptions) {
 		formats: {
 			PaidPost: {
 				sizes: 'fluid'
+			},
+			OneByOne: {
+				sizes: [1,1]
 			},
 			Outstream: {
 				sizes: [1,1]
