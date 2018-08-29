@@ -80,6 +80,9 @@ jobs:
           name: Run the project build task
           command: make build
       - run:
+          name: Run the project build-production task
+          command: make build-production
+      - run:
           name: shared-helper / generate-build-state-artifacts
           command: .circleci/shared-helpers/helper-generate-build-state-artifacts
           when: always
