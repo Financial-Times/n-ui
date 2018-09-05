@@ -80,7 +80,7 @@
     "next-metrics": "^1.49.18",
     "node-fetch": "^2.1.2",
     "node-sass": "^4.9.0",
-    "postcss-cli": "^5.0.1",
+    "postcss-cli": "^6.0.0",
     "postcss-discard-duplicates": "^2.1.0",
     "postcss-extract-css-block": "^0.1.0",
     "raw-loader": "^0.5.1",
