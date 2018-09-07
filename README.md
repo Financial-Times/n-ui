@@ -51,6 +51,13 @@ watch:
 	nui watch
 ```
 
+#### Custom build config
+It is possible to use a add custom webpack-style configuration file to your project. Simply add a `n-ui-build.config.js` file in the root of your project.
+This supports the following properties:
+- `entry` - defines entry points for your assets as documented in the [webpack entrypoints documentation](https://webpack.js.org/concepts/entry-points/)
+- `plugins` - defines custom plugins as documented in the [webpack plugins documentation](https://webpack.js.org/concepts/plugins/)
+- `pragma` - configures the `pragma` used by [babel-transform-react-jsx](https://www.npmjs.com/package/babel-plugin-transform-react-jsx#usage) (_defaults to `React.createElement`_).
+
 To define entry points for your assets, use a `n-ui-build.config.js` file in the root of your project, which can export any object compatible with webpack.
 
 
