@@ -90,6 +90,10 @@ allStylesLoaded
 ```
 
 ### Sass
+
+`bower install n-ui`
+
+
 Nothing fancy going on here anymore 😄. No mixins (though the n-ui-foundations module has a few you will want to use), no tricky critical path CSS stuff.
 
 ```sass
