@@ -6,7 +6,6 @@ const shellpromise = require('shellpromise');
 const shellpipe = require('./shellpipe');
 const grabNUiAssets = require('./grab-n-ui-assets');
 const assetHashes = require('../lib/generate-asset-hashes');
-const sendBuildMetrics = require('../lib/send-build-metrics');
 
 const exit = err => {
 	logger.error(err);
@@ -59,7 +58,6 @@ program
 	.action(options => {
 
 		devAdvice();
-		const buildStartTime = Date.now();
 		let concurrentCommands = [];
 
 		const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
@@ -85,14 +83,6 @@ program
 			.then(aboutJson)
 			.then(grabNUiAssets)
 			.then(() => {
-
-				const buildTime = Date.now() - buildStartTime;
-
-				// Don't send metrics from CircleCI builds
-				if (!process.env.CIRCLECI && !options['js-only'] && !options['sass-only']) {
-					sendBuildMetrics(appPackageJson.name, buildTime);
-				}
-
 				if (options.production && fs.existsSync(path.join(process.cwd(), 'Procfile'))) {
 					return shellpipe('haikro build');
 				}
