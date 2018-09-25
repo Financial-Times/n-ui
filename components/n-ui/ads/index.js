@@ -43,6 +43,12 @@ function initOAds (flags, appName, adOptions) {
 		const containers = [].slice.call(document.querySelectorAll('.o-ads'));
 		slotCount = containers.length;
 		utils.log.info(slotCount + ' ad slots found on page');
+
+		if (!res) {
+			// TODO: Investigate why res.slots can be empty
+			return;
+		}
+
 		containers.forEach(res.slots.initSlot.bind(res.slots));
 	});
 }
