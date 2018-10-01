@@ -98,6 +98,9 @@
 		{{#if @root.flags.moatAdsTraffic}}
 			<script async id="moat-ivt" src="https://sejs.moatads.com/financialtimesprebidheader859796398452/yi.js"></script>
 		{{/if}}
+		{{#if @root.flags.adsInizioSurvey}}
+			<script async src="https://cdn.brandmetrics.com/survey/script/45b903c6675b4a9b85db13385a3d6084.js"></script>
+		{{/if}}
 	</head>
 	<body data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
 		{{#if withGcs}}
@@ -146,6 +149,9 @@
 
 	{{#if @root.flags.fastlyInsights}}
 		{{>layout/partials/fastly-insights}}
+	{{/if}}
+	{{#if @root.flags.adsInizioSurvey}}
+		{{>n-ui/brandmetrics/template}}
 	{{/if}}
 	</body>
 </html>
