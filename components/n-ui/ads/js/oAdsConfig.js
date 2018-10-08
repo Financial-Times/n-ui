@@ -1,5 +1,6 @@
 const utils = require('./utils');
 const sandbox = require('./sandbox');
+const oTrackingCore = require('o-tracking/src/javascript/core.js');
 const extend = require('o-ads').utils.extend;
 const apiUrlRoot = 'https://ads-api.ft.com/v1/';
 
@@ -124,8 +125,8 @@ module.exports = function (flags, appName, adOptions) {
 			page: getContextualTargeting(appName),
 			usePageZone: true
 		},
+		rootid: oTrackingCore.getRootID(),
 		disableConsentCookie: flags.get('adsDisableCookieConsent'),
 		validateAdsTraffic: flags.get('moatAdsTraffic')
 	};
-
 };
