@@ -1,6 +1,6 @@
 {{#*inline "DrawerParentItem"}}
 	<div class="o-header__drawer-menu-toggle-wrapper">
-		<a class="o-header__drawer-menu-link o-header__drawer-menu-link--parent o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
+		<a class="o-header__drawer-menu-link o-header__drawer-menu-link--parent o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#if selected}}aria-label="Current page" aria-current="true"{{/if}} data-trackable="{{label}}">{{label}}</a>
 		<button class="o-header__drawer-menu-toggle o-header__drawer-menu-toggle--{{#if selected}}selected{{else}}unselected{{/if}}" aria-controls="o-header-drawer-child-{{@index}}" data-trackable="sub-level-toggle | {{label}}">
 			Show more {{label}} links
 		</button>
@@ -8,18 +8,18 @@
 	<ul class="o-header__drawer-menu-list o-header__drawer-menu-list--child" id="o-header-drawer-child-{{@index}}" data-trackable="sub-level">
 		{{#each submenu.items}}
 		<li class="o-header__drawer-menu-item">
-			<a class="o-header__drawer-menu-link o-header__drawer-menu-link--child o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
+			<a class="o-header__drawer-menu-link o-header__drawer-menu-link--child o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#if selected}}aria-label="Current page" aria-current="true"{{/if}} data-trackable="{{label}}">{{label}}</a>
 		</li>
 		{{/each}}
 	</ul>
 {{/inline}}
 
 {{#*inline "DrawerSingleItem"}}
-	<a class="o-header__drawer-menu-link o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
+	<a class="o-header__drawer-menu-link o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#if selected}}aria-label="Current page" aria-current="true"{{/if}} data-trackable="{{label}}">{{label}}</a>
 {{/inline}}
 
 {{#*inline "DrawerSpecialItem"}}
-	<a class="o-header__drawer-menu-link o-header__drawer-menu-link--secondary o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="{{label}}">{{label}}</a>
+	<a class="o-header__drawer-menu-link o-header__drawer-menu-link--secondary o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#if selected}}aria-label="Current page" aria-current="true"{{/if}} data-trackable="{{label}}">{{label}}</a>
 {{/inline}}
 
 <div class="o-header__drawer" id="o-header-drawer" role="navigation" aria-label="Drawer menu" data-o-header-drawer data-o-header-drawer--no-js data-trackable="drawer" data-trackable-terminate>
@@ -40,9 +40,9 @@
 		</div>
 
 		<div class="o-header__drawer-search">
-			<form class="o-header__drawer-search-form" action="/search" role="search" aria-label="Site search" data-typeahead data-typeahead-categories="concepts,equities" data-typeahead-view-all>
+			<form class="o-header__drawer-search-form" action="/search" role="search" aria-label="Site search" data-n-topic-search data-n-topic-search-categories="concepts,equities" data-n-topic-search-view-all>
 				<label class="o-header__visually-hidden" for="o-header-drawer-search-term">Search the <abbr title="Financial Times">FT</abbr></label>
-				<input class="o-header__drawer-search-term" id="o-header-drawer-search-term" name="q" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search the FT" data-trackable="search-term" data-typeahead-input>
+				<input class="o-header__drawer-search-term" id="o-header-drawer-search-term" name="q" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search the FT" data-trackable="search-term" data-n-topic-search-input>
 				<button class="o-header__drawer-search-submit" type="submit" data-trackable="search-submit">
 					<span class="o-header__visually-hidden">Search</span>
 				</button>
@@ -61,22 +61,6 @@
 						</li>
 					{{/each}}
 				{{/if}}
-
-				{{#unless @root.anon.userIsAnonymous}}
-				{{#if @root.flags.compactView}}
-					{{#ifEquals @root.__name "front-page"}}
-						{{#ifEquals @root.viewStyle "compact"}}
-							<li class="o-header__drawer-menu-item" data-trackable="viewtoggle">
-								<a class="o-header__drawer-menu-link" href="viewtoggle/standard" data-trackable="standard">Turn off compact homepage</a>
-							</li>
-						{{else}}
-							<li class="o-header__drawer-menu-item">
-								<a class="o-header__drawer-menu-link" href="/viewtoggle/compact" data-trackable="compact">Turn on compact homepage</a>
-							</li>
-						{{/ifEquals}}
-					{{/ifEquals}}
-				{{/if}}
-				{{/unless}}
 			</ul>
 
 			<ul class="o-header__drawer-menu-list">

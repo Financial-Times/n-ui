@@ -1,11 +1,9 @@
 const krux = require('./js/krux');
 const Ads = window.oAds = require('o-ads');
-// TODO move to central shared utils
+//TODO move to central shared utils
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
-const Reporter = require('./js/reporter');
 const sendMetrics = require('./js/metrics');
-const Sticky = require('./js/sticky');
 
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 import { perfMark } from 'n-ui-foundations';
@@ -26,6 +24,7 @@ function initOAds (flags, appName, adOptions) {
 	document.addEventListener('oAds.ready', function (){
 		if (!oadsReadyCalled) {
 			customTimings.firstAdRequested = new Date().getTime();
+			perfMark('firstAdRequested');
 			oadsReadyCalled = true;
 		}
 	});
@@ -44,19 +43,14 @@ function initOAds (flags, appName, adOptions) {
 		const containers = [].slice.call(document.querySelectorAll('.o-ads'));
 		slotCount = containers.length;
 		utils.log.info(slotCount + ' ad slots found on page');
+
+		if (!res) {
+			// TODO: Investigate why res.slots can be empty
+			return;
+		}
+
 		containers.forEach(res.slots.initSlot.bind(res.slots));
 	});
-}
-
-function initStickyHeaderAdvert (flags) {
-	if(flags && flags.get('stickyHeaderAd')) {
-		const stickyAd = new Sticky(
-			document.querySelector('[data-sticky-ad]'),
-			document.querySelector('.n-layout'),
-			document.querySelector('.o-header__row.o-header__top')
-		);
-		stickyAd.init();
-	}
 }
 
 function onAdsComplete (flags, event) {
@@ -65,13 +59,6 @@ function onAdsComplete (flags, event) {
 	if (detail.type !== 'oop') {
 		/* istanbul ignore else  */
 
-		if(flags && flags.get('brokenAdReporter') && detail.slot && detail.slot.container) {
-			if(detail.slot.reporter) {
-				detail.slot.reporter.destroy();
-			}
-			detail.slot.reporter = new Reporter(detail.slot);
-		}
-
 		if (detail.slot.gpt && detail.slot.gpt.isEmpty === false) {
 			utils.log.info('Ad loaded in slot', event);
 			if (slotsRendered === 0) {
@@ -79,7 +66,6 @@ function onAdsComplete (flags, event) {
 
 					customTimings.firstAdLoaded = new Date().getTime();
 					const iframeLoadedCallback = () => {
-						initStickyHeaderAdvert(flags);
 						if (/spoor-id=3/.test(document.cookie)) {
 							customTimings.adIframeLoaded = new Date().getTime();
 							perfMark('adIframeLoaded');
@@ -121,7 +107,7 @@ module.exports = {
 					return Promise.resolve()
 						.then(() => {
 							// slotsRendered = 0; // Note - this is a global var for this module
-							// TODO get appName from appInfo
+							//TODO get appName from appInfo
 							const appName = appInfo.name;
 							if (flags && flags.get('ads') && appName) {
 								initOAds(flags, appName, adOptions);

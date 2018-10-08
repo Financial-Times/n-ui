@@ -1,3 +1,5 @@
-import {bootstrap} from '../../browser/js/main';
+import { onAppInitialized, tracking } from 'n-ui';
 
-bootstrap({ preset: 'complete' }, () => {});
+tracking.scrollDepth.init('n-ui test');
+
+onAppInitialized();

@@ -14,9 +14,9 @@ const loadAssetHashesJson = path => {
 module.exports = ({ appName, isProduction, directory, useLocalAppShell }) => {
 
 	const assetHashes = loadAssetHashesJson(`${directory}/public/asset-hashes.json`);
-	const nUiAssetHashes = loadAssetHashesJson(`${directory}/public/n-ui-asset-hashes.json`);
+	const nUiAssetHashes = loadAssetHashesJson(`${directory}/public/n-ui/asset-hashes.json`);
 	const nUiReleaseName = nUiManager.getReleaseName(directory);
-	const nUiUnhashedAssetsRoot = useLocalAppShell ? `/${appName}/n-ui/` : `//www.ft.com/__assets/n-ui/cached/${nUiReleaseName}/`;
+	const nUiUnhashedAssetsRoot = useLocalAppShell ? `/__dev/assets/${appName}/n-ui/` : `//www.ft.com/__assets/n-ui/cached/${nUiReleaseName}/`;
 
 	const getAssetUrl = assetConfig => {
 
@@ -24,17 +24,14 @@ module.exports = ({ appName, isProduction, directory, useLocalAppShell }) => {
 			assetConfig = { file: assetConfig };
 		}
 
-		const {file, isNUi = false, flags = {}} = assetConfig;
+		const {file, isNUi = false} = assetConfig;
 
 		if (isNUi) {
-			if (flags.nUiHashedAssets) {
-				const fallback = `/${appName}/n-ui/${file}`;
-				const hash = nUiAssetHashes[file];
-				return (useLocalAppShell || !hash) ? fallback : `//www.ft.com/__assets/hashed/n-ui/${hash}`;
-			}
-			return `${nUiUnhashedAssetsRoot}${file}`;
+			const fallback = `${nUiUnhashedAssetsRoot}${file}`;
+			const hash = nUiAssetHashes[file];
+			return (useLocalAppShell || !hash) ? fallback : `//www.ft.com/__assets/hashed/n-ui/${hash}`;
 		} else {
-			const fallback = `/${appName}/${file}`;
+			const fallback = `/__dev/assets/${appName}/${file}`;
 			const hash = assetHashes[file];
 			return (!isProduction || !hash) ? fallback : `//www.ft.com/__assets/hashed/${appName}/${hash}`;
 		}

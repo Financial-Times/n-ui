@@ -2,17 +2,19 @@
 
 .core .o--if-js,
 .enhanced .o--if-no-js {
+	/* stylelint-disable declaration-no-important  */
 	display: none !important;
+	/* stylelint-enable */
 }
 
 html {
 	@include oColorsFor(page);
+}
 
-	&.enhanced {
-		// Prevent navigation menus from creating
-		// extra space on sides of the page
-		overflow-x: hidden;
-	}
+.enhanced {
+	// Prevent navigation menus from creating
+	// extra space on sides of the page
+	overflow-x: hidden;
 }
 
 body {

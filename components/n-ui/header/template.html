@@ -6,9 +6,6 @@
 {{#if content.before}}
 	<div class="o-header-before">{{{content.before}}}</div>
 {{/if}}
-{{#unlessEquals nUi.header.variant 'logo-only'}}
-	{{> n-ui/header/partials/marketing-promo/template}}
-{{/unlessEquals}}
 
 {{#ifEquals @root.viewStyle 'compact'}}
 	<header id="site-navigation" class="o-header o-header--simple" data-o-component="o-header" data-o-header--no-js tabindex="-1">
@@ -17,29 +14,35 @@
 {{/ifEquals}}
 
 
-
-	{{#ifEquals nUi.header.variant 'logo-only'}}
-		{{> n-ui/header/partials/header/top}}
+	{{#if @root.flags.hideOutboundLinks}}
+		{{> n-ui/header/partials/header/top-no-links}}
 	{{else}}
+		{{#ifEquals nUi.header.variant 'logo-only'}}
+		{{> n-ui/header/partials/header/top}}
+		{{else}}
 		{{> n-ui/header/partials/header/anon}}
 
 		{{> n-ui/header/partials/header/top}}
 		{{> n-ui/header/partials/header/search context="primary"}}
 		{{> n-ui/header/partials/header/nav}}
 
-	{{/ifEquals}}
+		{{/ifEquals}}
 
-	{{#outputBlock 'sub-header'}}{{/outputBlock}}
+		{{#outputBlock 'sub-header'}}{{/outputBlock}}
 
-	{{#unlessEquals nUi.header.variant 'logo-only'}}
+		{{#unlessEquals nUi.header.variant 'logo-only'}}
 		{{>n-ui/header/partials/subnav/template}}
-	{{/unlessEquals}}
+		{{/unlessEquals}}
+	{{/if}}
+
 </header>
 
 {{#unless nUi.header.disableSticky}}
-	<header class="o-header o-header--simple o-header--sticky o--if-js" aria-hidden="true" role="presentation" data-o-header--sticky>
-		{{> n-ui/header/partials/header/sticky}}
+	{{#unless @root.flags.hideOutboundLinks}}
+		<header class="o-header o-header--simple o-header--sticky o--if-js" aria-hidden="true" data-o-header--sticky>
+			{{> n-ui/header/partials/header/sticky}}
 
-		{{> n-ui/header/partials/header/search context="sticky"}}
-	</header>
+			{{> n-ui/header/partials/header/search context="sticky"}}
+		</header>
+	{{/unless}}
 {{/unless}}

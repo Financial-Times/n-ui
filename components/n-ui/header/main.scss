@@ -1,28 +1,69 @@
 @import 'o-header/main';
-@import 'scss/marketing-promo';
-@import '../typeahead/main';
-
+@import 'n-topic-search/main';
 
 @include nUiStylesheetStart('head-n-ui-core');
 
-	@include oHeader(('subnav', 'search', 'nav', 'anon', 'megamenu', 'simple'));
+	@include oHeader(('search', 'nav', 'anon', 'megamenu', 'simple'));
 	// force display of search row
 	// <https://github.com/Financial-Times/o-header/blob/2ebf2cbe6b7508a03e0989ff57f1029e12c0506c/src/scss/rows/_search.scss#L13-L15>
 	.core [data-o-header-search] {
 		display: block;
 	}
 
-	// inelegant gymnastics to fix focus outline of the first breadcrumb link
-	.o-header__subnav-wrap-outside {
-		margin-left: -2px;
+	// inlined logo
+	.o-header__top-logo.o-header__top-logo--inlined {
+		background-image: none;
+
+		// tinted
+		* {
+			fill: getColor('black-80');
+		}
 	}
-	.o-header__subnav-list--breadcrumb .o-header__subnav-item:first-child .o-header__subnav-link {
-		margin-left: 2px;
+
+	// inlined icons (menu, search & myFT)
+	.o-header__top-link.o-header__top-link--inlined {
+		width: 40px;
+		height: 40px;
+
+		&:before {
+			content: none;
+		}
+
+		// myFT needs some special handling
+		&.o-header__top-link--myft {
+			width: 35px;
+
+			@include oGridRespondTo($from: M) {
+				width: 44px;
+			}
+
+			@include oGridRespondTo($from: L) {
+				width: 52px;
+			}
+
+			svg {
+				width: 35px;
+				height: 40px;
+
+				@include oGridRespondTo($from: M) {
+					width: 44px;
+				}
+
+				@include oGridRespondTo($from: L) {
+					width: 52px;
+				}
+			}
+		}
+
+		// tinted
+		* {
+			fill: getColor('black-80'); // tint for the inlined SVG
+		}
 	}
 
 	// add next opt-out buttons
 	.o-header__drawer-menu-button {
-		@include oButtons('medium', 'standout');
+		@include oButtons($theme: primary);
 		display: block;
 		margin: $_o-header-drawer-padding-x;
 	}
@@ -43,11 +84,11 @@
 		top: 1em;
 		left: -9999px;
 		padding: 0.5em 1em;
-		background: getColor('purple-1');
+		background: getColor('velvet');
 		color: getColor('white');
 
 		&:focus {
-			@include oEffectsShadowsElevation('high');
+			@include oVisualEffectsShadowsElevation('high');
 			left: 0;
 			color: getColor('white');
 		}
@@ -57,7 +98,6 @@
 		margin-bottom: -3px;
 	}
 
-	@include nUiHeaderMarketingPromo;
 	.n-typeahead {
 		display: none;
 	}
@@ -66,17 +106,15 @@
 
 @include oHeaderDrawer;
 @include oHeaderSticky;
-@include nTypeahead;
+@include nTopicSearch;
 // fix up z-indexes
 .o-header__drawer {
 	@include nUiZIndexFor('drawer');
-}
-.o-header--sticky {
-	@include nUiZIndexFor('sticky-header');
+	display: block;
 }
 
-.o-header__drawer,
 .o-header--sticky {
+	@include nUiZIndexFor('sticky-header');
 	display: block;
 }
 
@@ -119,9 +157,9 @@
 }
 
 .o-header__drawer-homepage {
-	border-top: 2px solid getColor('pink-tint2');
+	border-top: 2px solid getColor('black-10');
 }
 
 .o-header__drawer-search {
-	border-top: 2px solid getColor('pink-tint2');
+	border-top: 2px solid getColor('black-10');
 }

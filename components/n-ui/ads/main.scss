@@ -20,28 +20,14 @@ $ad-max-responsive-width: 1440px;
 
 	@media print {
 		.o-ads {
+			/* stylelint-disable declaration-no-important  */
 			display: none !important;
+			/* stylelint-enable */
 		}
 	}
 
 	.advert {
 		position: relative;
-	}
-
-	.advert__report-link {
-		font-size: 12px;
-		line-height: 22px;
-		padding: 4px;
-		font-weight: bold;
-		position: absolute;
-		top: 0;
-
-		&:before,
-		&:after {
-			content: "";
-			display: block;
-			clear: both;
-		}
 	}
 }
 

@@ -6,7 +6,7 @@ const fs = require('fs');
 // Models
 const navigation = require('./models/navigation/');
 const EditionsModel = require('./models/navigation/editionsModel');
-const anon = require('./models/anon');
+const currentYearModelMiddleware = require('./models/current-year');
 
 // templating and assets
 const handlebars = require('./lib/handlebars');
@@ -15,23 +15,33 @@ const assetManager = require('./lib/asset-manager');
 module.exports = options => {
 
 	options = Object.assign({}, {
-		withHandlebars: true,
-		withNavigation: true,
-		withAnonMiddleware: true,
+		// hack: shouldn't be able to turn off, but it makes writing tests SOOO much easier
 		withAssets: true,
+		withHandlebars: true,
+
 		withJsonLd: false,
-		withFlags: true,
 		withBackendAuthentication: true,
 		withServiceMetrics: true,
+		product: '',
 		layoutsDir: path.join(__dirname, '../browser/layout'),
-	}, options || {});
+	}, options || {}, {
+		// the options below are forced to be on
+		withNavigation: true,
+		withAnonMiddleware: true,
+		withCurrentYearMiddleware: true,
+		withFlags: true,
+		withConsent: true
+	});
 
 	const {app, meta, addInitPromise} = nExpress.getAppContainer(options);
 
 	app.locals.__name = meta.name;
+	app.locals.__product = options.product;
 	app.locals.__environment = process.env.NODE_ENV || '';
 	app.locals.__isProduction = app.locals.__environment.toUpperCase() === 'PRODUCTION';
 	app.locals.__rootDirectory = meta.directory;
+	// Strip out the private key portion of the Sentry DSN (data source name).
+	app.locals.__sentryEndpoint = process.env.RAVEN_URL && process.env.RAVEN_URL.replace(/(https?:\/\/[a-z0-9]+)(:[^@]+)@/, '$1@');
 
 	try {
 		// expose app version to the client side
@@ -46,7 +56,7 @@ module.exports = options => {
 
 	// 100% public end points
 	if (!app.locals.__isProduction) {
-		app.use('/' + meta.name, nExpress.static(meta.directory + '/public', { redirect: false }));
+		app.use('/__dev/assets/' + meta.name, nExpress.static(meta.directory + '/public', { redirect: false }));
 	}
 
 	// set the edition so it can be added to the html tag and used for tracking
@@ -63,10 +73,15 @@ module.exports = options => {
 		next();
 	});
 
+	// set whether or not to disable the app install banner.
+	app.use(function (req, res, next) {
+		app.locals.__disableMobilePhoneBanner = !res.locals.flags.subscriberCohort;
+		next();
+	});
 
 	if (options.withJsonLd) {
 		app.use(function (req, res, next) {
-			if (res.locals.flags && res.locals.flags.newSchema) {
+			if (res.locals.flags.newSchema) {
 				res.locals.jsonLd = [nextJsonLd.webPage()];
 			}
 			next();
@@ -81,14 +96,25 @@ module.exports = options => {
 		app.use(navigation.middleware);
 	}
 
-	if (options.withAnonMiddleware) {
-		app.use(anon.middleware);
+	if (options.withCurrentYearMiddleware) {
+		app.use(currentYearModelMiddleware);
 	}
 
 	// Handle the akamai -> fastly -> akamai etc. circular redirect bug
 	app.use(function (req, res, next) {
 		res.locals.forceOptInDevice = req.get('FT-Force-Opt-In-Device') === 'true';
 		res.vary('FT-Force-Opt-In-Device');
+		next();
+	});
+
+	app.use(function (req, res, next) {
+		res.locals.realUrl = req.get('ft-real-url');
+		next();
+	});
+
+	// Adding flag for the USA sale @todo remove when sale has finished
+	app.use(function (req, res, next) {
+		res.locals.isUsa = req.get('Country-Code') === 'USA';
 		next();
 	});
 

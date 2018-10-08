@@ -4,25 +4,32 @@ const extend = require('o-ads').utils.extend;
 const apiUrlRoot = 'https://ads-api.ft.com/v1/';
 
 module.exports = function (flags, appName, adOptions) {
+
 	adOptions = adOptions || {};
-	const eidMatch = document.cookie.match(/EID=(\d+)/);
 
-	//Temporarily get EID from FT_U cookie until all ad systems stop using it
-	const userCookieMetadata = {
-		eid: eidMatch && eidMatch.length > 1 ? eidMatch[1] : null
-	};
-
-	const targeting = extend({
+	const targetingOptions = {
 		pt: appName.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName(),
 		mvt: utils.getABTestState()
-	}, userCookieMetadata);
+	};
 
+	if (flags.get('adsEnableTestCreatives')) {
+		targetingOptions.testads = true;
+	}
+
+	// TO-DO: Check if we can get rid of this 'extend' and pass an object literal
+	let targeting = extend(targetingOptions);
+
+	// This is a beta feature from google to enable long lived pageview data.
+	// This is needed for master companion ads when there could be ads out of view further down the page
+	if (appName === 'article') {
+		targeting['gpt-beta'] = 'hzwxrfqd';
+	}
 
 	const kruxConfig = (flags.get('krux')) && !adOptions.noTargeting && {
 		id: 'KHUSeE3x',
 		attributes: {
-			user: userCookieMetadata,
+			user: {},
 			page: {}
 		}
 	};
@@ -45,7 +52,8 @@ module.exports = function (flags, appName, adOptions) {
 		}
 
 		return url;
-	};
+	}
+
 
 	function getZone () {
 		let zone = [ utils.getMetaData('dfp_site'), utils.getMetaData('dfp_zone') ].filter( a => a );
@@ -55,39 +63,31 @@ module.exports = function (flags, appName, adOptions) {
 		return zone.join('/');
 	}
 
-	function setViewportMarginBy (variant) {
-		switch (variant) {
-			case '50':
-				return'50%';
-				break;
-			case '100':
-				return '100%';
-				break;
-			case '150':
-				return '150%';
-				break;
-			default:
-				return '0%';
+	function getLazyLoadConfig () {
+		// Switch off lazy loading in Q4.
+		if(/^front/.test(appName) && flags.get('noLazyLoadingFrontPage')) {
+			return false;
 		}
-	}
-
-	function isSmallSize () {
-		return utils.getScreenSize() < 760;
-	}
-
-	function isMediumSize () {
-		return utils.getScreenSize() >= 760 && utils.getScreenSize() < 980;
+		else {
+			return {
+				viewportMargin: getViewportMargin()
+			};
+		}
 	}
 
 	function getViewportMargin () {
 		let viewportMargin = '0%';
-		if (flags.get('adOptimizeLazyLoadSmall') && isSmallSize() ) {
-			const variant = flags.get('adOptimizeLazyLoadSmall');
-			viewportMargin = setViewportMarginBy(variant);
-		}
-		if (flags.get('adOptimizeLazyLoadMedium') && isMediumSize() ) {
-			const variant = flags.get('adOptimizeLazyLoadMedium');
-			viewportMargin = setViewportMarginBy(variant);
+		let pt = appName;
+		let scrnSize = utils.getScreenSize();
+		if (scrnSize < 980 && !/^article/.test(pt)) {
+			if (/^front/.test(pt)) {
+				if (scrnSize < 760) {viewportMargin = '15%';}
+				else {viewportMargin ='5%';}
+			}
+			if (/^stream/.test(pt)){
+				if (scrnSize < 760) {viewportMargin ='5%';}
+				else {viewportMargin = '15%';}
+			}
 		}
 		return viewportMargin;
 	}
@@ -101,6 +101,12 @@ module.exports = function (flags, appName, adOptions) {
 		formats: {
 			PaidPost: {
 				sizes: 'fluid'
+			},
+			OneByOne: {
+				sizes: [1,1]
+			},
+			Outstream: {
+				sizes: [1,1]
 			}
 		},
 		responsive: {
@@ -112,12 +118,14 @@ module.exports = function (flags, appName, adOptions) {
 		krux: kruxConfig,
 		collapseEmpty: 'before',
 		dfp_targeting: utils.keyValueString(targeting),
-		lazyLoad: { viewportMargin: getViewportMargin() },
+		lazyLoad: getLazyLoadConfig(),
 		targetingApi: adOptions.noTargeting ? null : {
 			user: `${apiUrlRoot}user`,
 			page: getContextualTargeting(appName),
 			usePageZone: true
-		}
+		},
+		disableConsentCookie: flags.get('adsDisableCookieConsent'),
+		validateAdsTraffic: flags.get('moatAdsTraffic')
 	};
 
 };

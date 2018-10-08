@@ -66,7 +66,11 @@ module.exports = class NavigationModelV2 {
 		const currentPathName = url.parse(currentUrl).pathname;
 		for(let item of navData.items){
 			if(typeof item.url === 'string' && item.url.includes('${currentPath}')){
-				item.url = item.url.replace('${currentPath}', currentUrl);
+				if(!currentPathName || !/\/(products|barriers|errors)/.test(currentPathName)) {
+					item.url = item.url.replace('${currentPath}', currentUrl);
+				} else {
+					item.url = item.url.replace('${currentPath}', '%2F');
+				}
 			}
 
 			if(item.url === currentPathName){
@@ -97,8 +101,6 @@ module.exports = class NavigationModelV2 {
 			return;
 		}
 
-		log.info({event:'NAVIGATION_MIDDLEWARE', datasource:'origami', menus:Object.keys(data).join(',')});
-
 		for(let [menuName, menuSource] of menuNameMap){
 			let menuData = typeof menuSource === 'object' ? data[menuSource[currentEdition]] : data[menuSource];
 			if(!menuData){
@@ -118,7 +120,6 @@ module.exports = class NavigationModelV2 {
 		}
 
 		if(this.options.withNavigationHierarchy){
-			log.info({event:'NAVIGATION_HIERARCHY_ENABLED'});
 			res.locals.navigation.idMap = this.idMapPoller.getData() || {};
 			let hierarcyApiUrl = this.apiHierarcyUrl + currentUrl;
 			fetch(hierarcyApiUrl)
@@ -144,7 +145,6 @@ module.exports = class NavigationModelV2 {
 				})
 				.then(next);
 		}else{
-			log.info({event:'NAVIGATION_HIERARCHY_DISABLED'});
 			next();
 		}
 	}

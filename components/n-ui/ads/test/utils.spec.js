@@ -7,7 +7,7 @@ let sandbox;
 describe('Utils', () => {
 
 	beforeEach(() => {
-		sandbox = sinon.sandbox.create();
+		sandbox = sinon.createSandbox();
 		markup.setupContainer();
 		windowConsole = window.console;
 	});
@@ -60,7 +60,7 @@ describe('Utils', () => {
 	});
 
 	it('Should not log messages if debug is off', () => {
-		sandbox.stub(utils.log, 'isOn', () => false );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => false );
 		const logStub = sandbox.spy(window.console, 'log');
 		utils.log('test', 'message');
 		expect(logStub).not.to.have.been.called;
@@ -69,7 +69,7 @@ describe('Utils', () => {
 	it('Should not log messages if console not available', () => {
 		const logStub = sandbox.spy(window.console, 'log');
 		window.console = undefined;
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		utils.log('test', 'message');
 		expect(logStub).not.to.have.been.called;
 	});
@@ -80,7 +80,7 @@ describe('Utils', () => {
 		const warnStub = sandbox.spy(window.console, 'warn');
 		const errorStub = sandbox.spy(window.console, 'error');
 		const infoStub = sandbox.spy(window.console, 'info');
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 
 		window.console['log'] = undefined;
 		utils.log('log', 'message');
@@ -99,70 +99,70 @@ describe('Utils', () => {
 
 
 	it('Should default log method to log type', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const logStub = sandbox.stub(window.console, 'log');
 		utils.log('message');
 		expect(logStub).to.have.been.calledWith('message');
 	});
 
 	it('Should default log method to log type - log', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const logStub = sandbox.stub(window.console, 'log');
 		utils.log('log', 'message');
 		expect(logStub).to.have.been.calledWith('message');
 	});
 
 	it('Should take first arguments to log as type - warn', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const logStub = sandbox.stub(window.console, 'warn');
 		utils.log('warn', 'message');
 		expect(logStub).to.have.been.calledWith('message');
 	});
 
 	it('Should take first arguments to log as type - error', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const logStub = sandbox.stub(window.console, 'error');
 		utils.log('error', 'message');
 		expect(logStub).to.have.been.calledWith('message');
 	});
 
 	it('Should take first arguments to log as type - info', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const logStub = sandbox.stub(window.console, 'info');
 		utils.log('info', 'message');
 		expect(logStub).to.have.been.calledWith('message');
 	});
 
 	it('Should provide a wrapper for warn log', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const logStub = sandbox.stub(window.console, 'warn');
 		utils.log.warn('message');
 		expect(logStub).to.have.been.calledWith('message');
 	});
 
 	it('Should provide a wrapper for error log', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const logStub = sandbox.stub(window.console, 'error');
 		utils.log.error('message');
 		expect(logStub).to.have.been.calledWith('message');
 	});
 
 	it('Should provide a wrapper for info log', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const logStub = sandbox.stub(window.console, 'info');
 		utils.log.info('message');
 		expect(logStub).to.have.been.calledWith('message');
 	});
 
 	it('Should provide a wrapper log group start ', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const groupCollapsedStub = sandbox.stub(window.console, 'groupCollapsed');
 		utils.log.start();
 		expect(groupCollapsedStub).to.have.been.calledWith('next-ads-component');
 	});
 
 	it('Should return early from log group start if groupCollapsed is not available', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const groupCollapsedStub = sandbox.stub(window.console, 'groupCollapsed');
 		window.console['groupCollapsed'] = undefined;
 		utils.log.start();
@@ -170,7 +170,7 @@ describe('Utils', () => {
 	});
 
 	it('Should return early from log group start if console is not available', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const groupCollapsedStub = sandbox.stub(window.console, 'groupCollapsed');
 		window.console = undefined;
 		utils.log.start();
@@ -178,21 +178,21 @@ describe('Utils', () => {
 	});
 
 	it('Should return early from log group start if debug mode is off', () => {
-		sandbox.stub(utils.log, 'isOn', () => false );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => false );
 		const groupCollapsedStub = sandbox.stub(window.console, 'groupCollapsed');
 		utils.log.start();
 		expect(groupCollapsedStub).not.to.have.been.called;
 	});
 
 	it('Should provide a wrapper for log group end', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const groupEndStub = sandbox.stub(window.console, 'groupEnd');
 		utils.log.end();
 		expect(groupEndStub).to.have.been.called;
 	});
 
 	it('Should return early from log group end if groupCollapsed is not available', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const groupEndStub = sandbox.stub(window.console, 'groupEnd');
 		window.console['groupEnd'] = undefined;
 		utils.log.end();
@@ -200,7 +200,7 @@ describe('Utils', () => {
 	});
 
 	it('Should return early from log group end if console is not available', () => {
-		sandbox.stub(utils.log, 'isOn', () => true );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => true );
 		const groupEndStub = sandbox.stub(window.console, 'groupEnd');
 		window.console = undefined;
 		utils.log.end();
@@ -208,7 +208,7 @@ describe('Utils', () => {
 	});
 
 	it('Should return early from log group end if debug mode is off', () => {
-		sandbox.stub(utils.log, 'isOn', () => false );
+		sandbox.stub(utils.log, 'isOn').callsFake(() => false );
 		const groupEndStub = sandbox.stub(window.console, 'groupEnd');
 		utils.log.end();
 		expect(groupEndStub).not.to.have.been.called;

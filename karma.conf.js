@@ -1,31 +1,37 @@
-// Karma configuration
-// Generated on Fri Apr 18 2014 18:19:03 GMT+0100 (BST)
+const webpackMerge = require('webpack-merge');
+const commonConfig = require('./build/webpack/webpack.common.config.js');
 
 const componentsToTest = [
 	'browser',
 	'components/n-ui/ads',
 	'components/n-ui/tracking',
+	'components/n-ui/speedcurve-lux'
 ];
 
 module.exports = function (karma) {
-
 	const config = {
 		basePath: '',
 		frameworks: ['mocha', 'chai', 'sinon', 'sinon-chai'],
-		files: [
-			require('./server/lib/asset-manager/polyfill-io')({}).enhanced
-		].concat(componentsToTest.map(name => name + '/**/*.spec.js')),
+		files: [require('./server/lib/asset-manager/polyfill-io').enhanced].concat(
+			componentsToTest.map(name => name + '/**/*.spec.js')
+		),
 		preprocessors: componentsToTest.reduce((obj, name) => {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap'];
 			return obj;
 		}, {}),
-		webpack: require('./build/deploy/webpack.deploy.config'),
+		webpack: webpackMerge(commonConfig(['commonOptions', 'es5']), {
+			devtool: 'inline-source-map'
+		}),
+		webpackMiddleware: {
+			stats: 'errors-only',
+			noInfo: true
+		},
 		reporters: ['progress'],
 		port: 9876,
 		colors: true,
 		// possible values: karma.LOG_DISABLE || karma.LOG_ERROR || karma.LOG_WARN || karma.LOG_INFO || karma.LOG_DEBUG
 		logLevel: karma.LOG_INFO,
-		browsers: ['Chrome'],
+		browsers: ['ChromeHeadless'],
 		plugins: [
 			require('karma-mocha'),
 			require('karma-chai'),
@@ -34,45 +40,65 @@ module.exports = function (karma) {
 			require('karma-sourcemap-loader'),
 			require('karma-webpack'),
 			require('karma-chrome-launcher'),
-			require('karma-sauce-launcher'),
+			require('karma-browserstack-launcher'),
 			require('karma-html-reporter')
 		],
 		client: {
-				mocha: {
-						reporter: 'html',
-						ui: 'bdd',
-						timeout: 0
-				}
+			mocha: {
+				reporter: 'html',
+				ui: 'bdd',
+				timeout: 0
+			}
 		},
-		captureTimeout: (1000 * 60),
+		captureTimeout: 1000 * 60,
 		singleRun: true,
+		browserNoActivityTimeout: 50000,
+		browserDisconnectTolerance: 3,
 		autoWatch: false
 	};
 
-
 	if (process.env.CI) {
-		const nightwatchBrowsers = require('@financial-times/n-heroku-tools/config/nightwatch').test_settings;
-		const unstableBrowsers = (process.env.SAUCELABS_UNSTABLE_BROWSERS_JS || '').split(',').concat((process.env.SAUCELABS_UNSTABLE_BROWSERS || '').split(','));
-		// FIXME - mocha + chai do not support ie9. Can we switch to something else I wonder? Or try to polyfill the features it needs
-		unstableBrowsers.push('ie9');
-		const whitelistedBrowsers = process.env.SAUCELABS_BROWSERS.split(',');
-		const sauceBrowsers = Object.keys(nightwatchBrowsers).reduce((browserList, browserName) => {
-			if (browserName === 'default' || unstableBrowsers.indexOf(browserName) > -1 || whitelistedBrowsers.indexOf(browserName) === -1) {
-				return browserList;
-			}
-			browserList[`${browserName}_sauce`] = Object.assign({base: 'SauceLabs'}, nightwatchBrowsers[browserName].desiredCapabilities);
-			return browserList;
-		}, {});
-		config.customLaunchers = sauceBrowsers;
-		config.sauceLabs = {
-			testName: 'n-ui unit tests',
-			username: process.env.SAUCE_USER,
-			accessKey: process.env.SAUCE_KEY,
-			recordScreenshots: true
+		config.browserStack = {
+			username: process.env.BROWSERSTACK_USER,
+			accessKey: process.env.BROWSERSTACK_KEY,
+			project: 'n-ui',
+			name: 'Unit Tests'
 		};
 
-		config.browsers = Object.keys(sauceBrowsers);
-		config.reporters.push('saucelabs');
+		config.customLaunchers = {
+			chromeLatest: {
+				base: 'BrowserStack',
+				browser: 'chrome',
+				browser_version: 'latest',
+				os: 'Windows',
+				os_version: '10'
+			},
+			firefoxLatest: {
+				base: 'BrowserStack',
+				browser: 'firefox',
+				browser_version: 'latest',
+				os: 'Windows',
+				os_version: '10'
+			},
+			ie11: {
+				base: 'BrowserStack',
+				browser: 'IE',
+				browser_version: '11',
+				os: 'Windows',
+				os_version: '7'
+			},
+			safari: {
+				base: 'BrowserStack',
+				os: 'OS X',
+				os_version: 'High Sierra',
+				browser: 'Safari',
+				browser_version: 'latest'
+			}
+		};
+
+		config.browsers = Object.keys(config.customLaunchers);
+
+		config.reporters.push('BrowserStack');
 	}
 
 	karma.set(config);

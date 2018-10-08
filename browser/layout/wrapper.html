@@ -3,9 +3,13 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>{{#title}}{{{this}}}{{/title}}</title>
+		<title>{{#title}}{{{this}}} | {{/title}}Financial Times</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="theme-color" content="#333333">
+		<style>html{background-color:#fff1e5;}</style>
+		{{#if @root.flags.speedcurveLux}}
+		{{>layout/partials/speedcurve-lux}}
+		{{/if}}
 		{{#unless @root.flags.serviceWorker}}
 		{{>n-service-worker/unregister}}
 		{{/unless}}
@@ -17,25 +21,32 @@
 		{{/each}}
 		<link rel="preconnect" href="https://spoor-api.ft.com">
 		<link rel="preconnect" href="https://session-next.ft.com" crossorigin="use-credentials">
-
 		<link rel="preconnect" href="https://ads-api.ft.com">
 		<link rel="preconnect" href="https://www.googletagservices.com">
-		<link rel="preconnect" href="https://partner.googleadservices.com">
-		<link rel="preconnect" href="https://securepubads.g.doubleclick.net">
 
 		{{#each preconnect}}
 		<link rel="preconnect" href="{{host}}"{{#if crossorigin}} crossorigin="{{crossorigin}}"{{/if}}>
 		{{/each}}
-		{{>layout/partials/fire-condition}}
+		{{>layout/partials/env-setup}}
 		{{>layout/partials/stylesheets}}
 
-		<link rel="icon" type="image/png" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-32x32.png" sizes="32x32">
-		<link rel="icon" type="image/png" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png" sizes="194x194">
-		<link rel="apple-touch-icon" sizes="180x180" href="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/apple-touch-icon-180x180.png">
-		<link rel="manifest" href="/assets/manifest/manifest-v4.json">
+		<link rel="icon" type="image/png" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=update-logos&width=32&height=32&format=png" sizes="32x32">
+		<link rel="icon" type="image/png" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=update-logos&width=194&height=194&format=png" sizes="194x194">
+		<link rel="apple-touch-icon" sizes="180x180" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=update-logos&width=180&height=180&format=png">
+
+		{{#unless __disableMobilePhoneBanner}}
+		<meta name="apple-itunes-app" content="app-id=1200842933, affiliate-data=ct=smart-banner&pt=246269, app-argument={{#if canonicalUrl}}{{canonicalUrl}}{{else}}https://www.ft.com{{/if}}">
+		{{/unless}}
+		{{#if __disableMobilePhoneBanner}}
+		<script>
+			// Don't show the Android install banner
+			window.addEventListener('beforeinstallprompt', function (ev) { ev.preventDefault(); return false; });
+		</script>
+		{{/if}}
+		<link rel="manifest" href="/assets/manifest/manifest-v6.json">
 
 		<meta name="msapplication-TileColor" content="#fff1e0">
-		<meta name="msapplication-TileImage" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/mstile-144x144.png">
+		<meta name="msapplication-TileImage" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v3/mstile-144x144.png">
 
 		{{#each openGraph}}
 		{{#each this}}
@@ -55,7 +66,9 @@
 		{{#unless openGraph.og.type}}
 		<meta property="og:type" content="website">
 		{{/unless}}
-
+		{{#unless openGraph.fb.pages}}
+		<meta property="fb:pages" content="8860325749" />
+		{{/unless}}
 		{{#each twitterCard}}
 		{{#if this}}
 		<meta name="twitter:{{@key}}" content="{{this}}">
@@ -63,14 +76,18 @@
 		{{/each}}
 		<meta name="twitter:site" content="@FinancialTimes">
 		{{#unless openGraph.og.image}}
-		<meta name="twitter:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v2/favicon-194x194.png">
+		<meta name="og:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v3/open-graph.png">
+		<meta name="twitter:image" content="https://www.ft.com/__assets/creatives/brand-ft/icons/v3/open-graph.png">
 		{{/unless}}
+		{{#if @root.flags.googleSiteVerificationMeta}}
+		<meta name="google-site-verification" content="4-t8sFaPvpO5FH_Gnw1dkM28CQepjzo8UjjAkdDflTw" />
+		{{/if}}
 
 		{{#outputBlock 'head'}}{{/outputBlock}}
 
 		<script>
 			{{>layout/partials/ctm}}
-			{{>n-ui-foundations/typography/enhance-fonts}}
+			{{>layout/partials/enhance-fonts}}
 		</script>
 
 		{{#each jsonLd}}
@@ -78,28 +95,31 @@
 				{{{json this}}}
 			</script>
 		{{/each}}
+		{{#if @root.flags.moatAdsTraffic}}
+			<script async id="moat-ivt" src="https://sejs.moatads.com/financialtimesprebidheader859796398452/yi.js"></script>
+		{{/if}}
+		{{#if @root.flags.adsInizioSurvey}}
+			<script async src="https://cdn.brandmetrics.com/survey/script/45b903c6675b4a9b85db13385a3d6084.js"></script>
+		{{/if}}
 	</head>
 	<body data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
 		{{#if withGcs}}
 			<script type="text/javascript">
-				(function() {
-					var ARTICLE_URL = window.location.href;
-					var CONTENT_ID = 'everything';
-					document.write(
-						'<scr' + 'ipt ' +
-						'src="//survey.g.doubleclick.net/survey?site=_ykzfqallocklxfmrw3y6sankbe' +
-						'&amp;url=' + encodeURIComponent(ARTICLE_URL) +
-						(CONTENT_ID ? '&amp;cid=' + encodeURIComponent(CONTENT_ID) : '') +
-						'&amp;random=' + (new Date).getTime() +
-						'" type="text/javascript">' + '\x3C/scr' + 'ipt>'
-					);
-				})();
+				var triggerGoogleCustomerSurvey = function(articleUrl, contentId) {
+					var ARTICLE_URL = articleUrl;
+					var CONTENT_ID = contentId || '';
+					var el = document.createElement('script');
+					var url = '//survey.g.doubleclick.net/survey?site=_ykzfqallocklxfmrw3y6sankbe' +
+						'&url=' + encodeURIComponent(ARTICLE_URL) +
+						(CONTENT_ID ? '&cid=' + encodeURIComponent(CONTENT_ID) : '') +
+						'&random=' + (new Date).getTime() +
+						'&after=1';
+						el.setAttribute('src', url);
+						var head = document.getElementsByTagName('head')[0] ||
+						document.getElementsByTagName('body')[0];
+						head.appendChild(el);
+				};
 			</script>
-		{{/if}}
-		<div class="o-cookie-message o-cookie-message--banner-centric" data-o-component="o-cookie-message"></div>
-
-		{{#if @root.flags.stickyHeaderAd}}
-			{{#outputBlock 'sticky-advert'}}{{/outputBlock}}
 		{{/if}}
 
 		<div class="n-layout">
@@ -111,22 +131,27 @@
 				{{{body}}}
 			</div>
 
-			{{#if @root.flags.offlineToastMessage}}
-				{{>n-ui/offline-toast/template}}
-			{{/if}}
+			{{>n-feedback/templates/feedback-container}}
+
+			{{#unless @root.flags.hideOutboundLinks}}
 
 			<div class="n-layout__row n-layout__row--footer">
 				{{#outputBlock 'footer'}}{{/outputBlock}}
 				{{>n-ui/footer/template}}
-				{{#if @root.flags.fancyDrawer}}
-					{{#unlessEquals nUi.header.variant 'logo-only'}}
-						{{>n-ui/header/partials/drawer/template}}
-					{{/unlessEquals}}
-				{{/if}}
+				{{#unlessEquals nUi.header.variant 'logo-only'}}
+					{{>n-ui/header/partials/drawer/template}}
+				{{/unlessEquals}}
 			</div>
+			{{/unless}}
 		</div>
 	{{>layout/partials/bootstrapper}}
 	{{>n-ui/tracking/templates/core-analytics}}
-	{{>n-service-worker/appcache/iframe}}
+
+	{{#if @root.flags.fastlyInsights}}
+		{{>layout/partials/fastly-insights}}
+	{{/if}}
+	{{#if @root.flags.adsInizioSurvey}}
+		{{>n-ui/brandmetrics/template}}
+	{{/if}}
 	</body>
 </html>

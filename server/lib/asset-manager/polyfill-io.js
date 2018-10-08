@@ -1,3 +1,4 @@
+const polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
 function buildQueryString (qsConfig) {
 	const qs = [];
 
@@ -11,7 +12,6 @@ function buildQueryString (qsConfig) {
 	return `?${qs.join('&')}`;
 }
 
-const callback = 'ftNextPolyfillServiceCallback';
 const queryStrings = {
 	enhanced: buildQueryString({
 		features: [
@@ -28,10 +28,12 @@ const queryStrings = {
 			'Map',
 			'Array.from',
 			'NodeList.prototype.@@iterator',
-			'Array.prototype.@@iterator'
+			'Array.prototype.@@iterator',
+			'EventSource',
+			'Number.isInteger',
+			'Object.entries'
 		],
-		flags: 'gated',
-		callback
+		flags: 'gated'
 	}),
 	core: buildQueryString({
 		features: [
@@ -40,15 +42,7 @@ const queryStrings = {
 	})
 };
 
-module.exports = flags => {
-	/* istanbul ignore if */
-	const polyfillRoot = 'https://' +
-		(flags.polyfillQA ? 'qa.polyfill.io/' : 'www.ft.com/__origami/service/polyfill/') +
-		'v2/polyfill.min.js';
-
-	return {
-		callback,
-		enhanced: polyfillRoot + queryStrings['enhanced'],
-		core: polyfillRoot + queryStrings['core']
-	};
+module.exports = {
+	enhanced: polyfillRoot + queryStrings['enhanced'],
+	core: polyfillRoot + queryStrings['core']
 };

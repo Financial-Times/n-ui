@@ -1,0 +1,33 @@
+@include nUiStylesheetStart('head-n-ui-core');
+
+	.enhanced[data-perf-janky="calm"],
+	.enhanced[data-perf-janky="calm-middle"] {
+
+		// we start with enough of space for relative time, and keep it blank
+		// until we get the relative time
+
+		[data-o-component="o-date"] {
+
+			&[data-o-date-format="time-ago-limit-4-hours"],
+			&[data-o-date-format="time-ago-abbreviated-limit-4-hours"] {
+				display: inline-block;
+				vertical-align: bottom;
+				visibility: hidden;
+				white-space: nowrap;
+			}
+
+			&[data-o-date-format="time-ago-limit-4-hours"] {
+				width: 90px; // widest possible is "55 MINUTES AGO"
+			}
+
+			&[data-o-date-format="time-ago-abbreviated-limit-4-hours"] {
+				width: 50px; // widest possible is "55M AGO"
+			}
+
+			&[data-o-date-js] {
+				visibility: visible; // show only after the date's been formatted (indicated by [data-o-date-js])
+			}
+		}
+	}
+
+@include nUiStylesheetEnd('head-n-ui-core');

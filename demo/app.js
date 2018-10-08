@@ -24,9 +24,11 @@ const app = module.exports = express({
 	directory: process.cwd()
 });
 
+app.locals.nUiConfig = { preset: 'complete' };
+
 app.use(require('./middleware/assets'));
 
-app.get('/', (req, res) => {
+app.get(/^\/(test-page.html)?$/, (req, res) => {
 	res.render('default', {
 		isFrontPage: true,
 		title: 'Test App',
@@ -89,6 +91,10 @@ app.listen(5005)
 				}
 			})
 				.then(res => res.text())
+				// hack to make sure the demo page deployed to s3 for browser testing
+				// includes the css and js properly (unlike the real local app we can't
+				// map /public to any path we like on s3)
+				.then(text => text.replace(/__dev\/assets\//g, ''))
 				.then(text => fs.writeFileSync(path.join(process.cwd(), 'test-page.html'), text))
 				.then(() => app.close())
 				.then(() => {
@@ -96,12 +102,17 @@ app.listen(5005)
 						files: [
 							'test-page.html',
 							'public/main.css',
-							'public/main-without-n-ui.js',
-							'public/main.css.map',
-							'public/main-without-n-ui.js.map'
+							'public/main.js',
+							'public/main.js.map',
+							'public/n-ui/appshell.js',
+							'public/n-ui/appshell.js.map',
+							'public/n-ui/font-loader.js',
+							'public/n-ui/font-loader.js.map',
+							'public/n-ui/o-errors.js',
+							'public/n-ui/o-errors.js.map'
 						],
 						destination: `n-ui/test-page/${process.env.CIRCLE_BUILD_NUM}/`,
-						bucket: 'ft-next-n-ui-prod',
+						bucket: 'ft-next-test-artefacts',
 						cacheControl: 'no-cache, must-revalidate',
 					})
 						.catch(err => {

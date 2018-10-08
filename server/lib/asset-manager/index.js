@@ -1,11 +1,9 @@
 const logger = require('@financial-times/n-logger').default;
-const path = require('path');
 const stylesheetManager = require('./stylesheet-manager');
 const messages = require('../messages');
 const verifyExistence = require('./verify-existence');
 const middlewareFactory = require('./middleware-factory');
 const assetUrlGenerator = require('./asset-url-generator');
-const linkHeaderHelperFactory = require('./link-header-helper-factory');
 
 function init (options, directory, app) {
 
@@ -20,14 +18,6 @@ function init (options, directory, app) {
 	/* istanbul ignore next */
 	if (useLocalAppShell) {
 		logger.warn(messages.APP_SHELL_WARNING);
-	}
-
-	// make n-ui config for the client side available globally
-	try {
-		app.locals.nUiConfig = Object.assign({}, require(path.join(directory, 'client/n-ui-config')), {preload: true});
-	} catch (e) {
-		// TODO turn this on in the next major release
-		// throw new Error('error loading n-ui config');
 	}
 
 	// initialise helper for calculating paths to assets
@@ -45,9 +35,8 @@ function init (options, directory, app) {
 	// use all the above in middleware to be used on each request
 	app.use(middlewareFactory({
 		getAssetUrl,
-		useLocalAppShell,
 		stylesheetManager,
-		linkHeaderHelper: linkHeaderHelperFactory(getAssetUrl)
+		useLocalAppShell
 	}));
 }
 

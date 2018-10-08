@@ -6,7 +6,7 @@ const expect = require('chai').expect;
 
 describe('configuring n-express', () => {
 	it('should turn things on by default in n-express', () => {
-		sinon.stub(nExpress, 'getAppContainer', () => ({app: {
+		sinon.stub(nExpress, 'getAppContainer').callsFake(() => ({app: {
 			locals: {},
 			use: () => null
 		}, meta: {}, addInitPromise: () => null}));
@@ -22,7 +22,7 @@ describe('configuring n-express', () => {
 	});
 
 	it('should be possible to turn things off in n-express', () => {
-		sinon.stub(nExpress, 'getAppContainer', () => ({app: {
+		sinon.stub(nExpress, 'getAppContainer').callsFake(() => ({app: {
 			locals: {},
 			use: () => null
 		}, meta: {}, addInitPromise: () => null}));
@@ -30,18 +30,16 @@ describe('configuring n-express', () => {
 			withAssets: false,
 			withHandlebars: false,
 			withBackendAuthentication: false,
-			withServiceMetrics: false,
-			withFlags: false
+			withServiceMetrics: false
 		});
 		const nExpressOpts = nExpress.getAppContainer.args[0][0];
 		expect(nExpressOpts.withBackendAuthentication).to.be.false;
 		expect(nExpressOpts.withServiceMetrics).to.be.false;
-		expect(nExpressOpts.withFlags).to.be.false;
 		nExpress.getAppContainer.restore();
 	});
 
 	it('should pass healthchecks to n-express', () => {
-		sinon.stub(nExpress, 'getAppContainer', () => ({app: {
+		sinon.stub(nExpress, 'getAppContainer').callsFake(() => ({app: {
 			locals: {},
 			use: () => null
 		}, meta: {}, addInitPromise: () => null}));

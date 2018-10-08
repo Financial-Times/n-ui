@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const shellpromise = require('shellpromise');
 const shellpipe = require('./shellpipe');
-const downloadAssets = require('./download-assets');
+const grabNUiAssets = require('./grab-n-ui-assets');
 const assetHashes = require('../lib/generate-asset-hashes');
 
 const exit = err => {
@@ -22,11 +22,14 @@ const devAdvice = () => {
 };
 const nUiVersion = require('../../package.json').version;
 
+let appPackageJson;
 const aboutJson = () => {
+	appPackageJson = require(path.join(process.cwd(), '/package.json'));
+
 	return shellpromise('git rev-parse HEAD | xargs echo -n')
 		.then(version => {
 			return {
-				description: require(path.join(process.cwd(), '/package.json')).name,
+				description: appPackageJson.name,
 				support: 'next.team@ft.com',
 				supportStatus: 'active',
 				appVersion: version,
@@ -37,23 +40,48 @@ const aboutJson = () => {
 		.then(about => fs.writeFileSync(path.join(process.cwd(), '/public/__about.json'), JSON.stringify(about, null, 2)));
 };
 
+const buildConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
+const cssEntryPoints = Object.keys(buildConfig.entry)
+	.map(target => [target, buildConfig.entry[target]])
+	.filter(([target]) => target.includes('.css'));
 
 program.version(nUiVersion);
 
-const webpackConfPath = path.join(__dirname, 'webpack.js');
+const webpackConfPath = path.join(__dirname, 'webpack.config.js');
 
 program
 	.command('build')
 	.description('Builds n-ui apps, ready to be deployed to your favourite s3 bucket or heroku host')
 	.option('--production', 'Builds with production settings')
+	.option('--sass-only', 'Builds Sass only')
+	.option('--js-only', 'Builds JavaScript only')
 	.action(options => {
 
 		devAdvice();
+		let concurrentCommands = [];
 
-		shellpipe(`webpack --bail --config ${webpackConfPath} ${options.production ? '-p' : ''}`)
+		const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
+		const commands = {
+			jsOnly: `'webpack ${options.production ? '--mode=production' : ''} --config ${webpackConfPath}'`,
+			sassOnly: `${cssEntryPoints
+				.map(([target, entry]) => `'export CSS_SOURCE_MAPS=${!options.production} && ${script} ${entry} ${target}'`)
+				.join(' ')}`
+		};
+
+		for(let key in commands) {
+			if(!!options[key]) {
+				concurrentCommands.push(commands[key]);
+			}
+		}
+
+		concurrentCommands = concurrentCommands.length
+			? concurrentCommands
+			: Object.keys(commands).map(c => commands[c]);
+
+		shellpipe(`concurrently ${concurrentCommands.join(' ')}`)
 			.then(() => options.production && assetHashes())
 			.then(aboutJson)
-			.then(downloadAssets)
+			.then(grabNUiAssets)
 			.then(() => {
 				if (options.production && fs.existsSync(path.join(process.cwd(), 'Procfile'))) {
 					return shellpipe('haikro build');
@@ -68,9 +96,15 @@ program
 	.action(() => {
 
 		devAdvice();
+		const cssBuildWatchCommands = cssEntryPoints.map(([target, entry]) => {
+			const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
+			const entryDirectory = path.dirname(entry);
+			const command = `${script} ${entry} ${target}`;
+			return `"watch-run -ip '${entryDirectory}/**/*.scss' ${command}"`;
+		}).join(' ');
 
-		downloadAssets()
-			.then(() => shellpipe(`webpack --watch --config ${webpackConfPath}`)	)
+		grabNUiAssets()
+			.then(() => shellpipe(`concurrently "webpack --watch --config ${webpackConfPath}" ${cssBuildWatchCommands}`))
 			.catch(exit);
 	});
 

@@ -2,19 +2,41 @@ const polyfillIo = require('./polyfill-io');
 
 module.exports = ({
 	getAssetUrl,
-	useLocalAppShell,
 	stylesheetManager,
-	linkHeaderHelper
+	useLocalAppShell
 }) => {
+
+	const linkResource = function (file, meta, opts) {
+		meta = meta || {};
+		opts = opts || {};
+		const header = [];
+		header.push(`<${opts.hashed ? getAssetUrl(file) : file }>`);
+		Object.keys(meta).forEach(key => {
+			header.push(`${key}="${meta[key]}"`);
+		});
+
+		if (!meta.rel) {
+			header.push('rel="preload"');
+		}
+
+		header.push('nopush');
+
+		this.locals.resourceHints[opts.priority || 'normal'].push(header.join('; '));
+	};
+
+	const getBundleConfig = ({ file, url, isNUi, stopsExecutionOnLoadError = false }) => ({
+		file: url || getAssetUrl({ file, isNUi }),
+		stopsExecutionOnLoadError
+	});
 
 	return (req, res, next) => {
 
-		// define a helper for adding a link header
 		res.locals.resourceHints = {
 			highest: [],
 			normal: []
 		};
-		res.linkResource = linkHeaderHelper;
+
+		res.linkResource = linkResource;
 
 		if (req.accepts('text/html')) {
 			res.locals.javascriptBundles = [];
@@ -27,26 +49,38 @@ module.exports = ({
 			res.locals.stylesheets.inline = ['head'];
 			res.locals.stylesheets.lazy = ['main'];
 
-			res.locals.polyfillIo = polyfillIo(res.locals.flags);
+			res.locals.polyfillIo = polyfillIo;
 
 			res.locals.javascriptBundles.push(
-				res.locals.polyfillIo.enhanced,
-				getAssetUrl({
-					file: `es5${(res.locals.flags.nUiBundleUnminified || useLocalAppShell ) ? '' : '.min'}.js`,
-					flags: res.locals.flags,
+				getBundleConfig({
+					url: res.locals.polyfillIo.enhanced,
+					stopsExecutionOnLoadError: true
+				}),
+				getBundleConfig({
+					file: 'font-loader.js',
 					isNUi: true
 				}),
-				getAssetUrl('main-without-n-ui.js')
+				getBundleConfig({
+					file: 'o-errors.js',
+					isNUi: true
+				}),
+				getBundleConfig({
+					file: 'appshell.js',
+					isNUi: true,
+					stopsExecutionOnLoadError: true
+				}),
+				getBundleConfig({
+					file: 'main.js',
+					stopsExecutionOnLoadError: true
+				})
 			);
-
-			res.locals.javascriptBundles.push();
 
 			// output the default link headers just before rendering
 			const originalRender = res.render;
 
 			res.render = function (template, templateData) {
 				// Add standard n-ui stylesheets
-				res.locals.stylesheets.inline.unshift('head-n-ui-core');
+				res.locals.stylesheets.inline.unshift(`${useLocalAppShell ? '' : 'n-ui/'}head-n-ui-core`);
 				// For now keep building n-ui-core in the main app stylesheet
 				// res.locals.stylesheets.lazy.unshift('n-ui-core');
 
@@ -60,23 +94,29 @@ module.exports = ({
 
 				res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
 				res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, { as: 'style' }, { priority: 'highest' }));
-				res.locals.javascriptBundles.forEach(file => res.linkResource(file, { as: 'script' }, { priority: 'highest' }));
+				res.locals.javascriptBundles.map(({ file, stopsExecutionOnLoadError }) => ({
+					file: res.linkResource(file, { as: 'script' }, { priority: 'highest' }),
+					stopsExecutionOnLoadError
+				}));
 
 				// TODO make this a setting on the app - template data feels like a messy place
 				if (templateData.withAssetPrecache) {
 					res.locals.stylesheets.lazy.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
 					res.locals.stylesheets.blocking.forEach(file => res.linkResource(file, {as: 'style', rel: 'precache'}));
-					res.locals.javascriptBundles.forEach(file => res.linkResource(file, {as: 'script', rel: 'precache'}));
+					res.locals.javascriptBundles.map(({ file, stopsExecutionOnLoadError }) => ({
+						file: res.linkResource(file, {as: 'script', rel: 'precache'}),
+						stopsExecutionOnLoadError
+					}));
 				}
+
 				// supercharge the masthead image
 				res.linkResource(
-					'https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-masthead?source=o-header&tint=%23333333,%23333333&format=svg',
+					'https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-masthead?source=o-header&tint=%2333302E,%2333302E&format=svg',
 					{ as: 'image' },
 					{ priority: 'highest' }
 				);
 
-				res.append('Link', this.locals.resourceHints.highest);
-				res.append('Link', this.locals.resourceHints.normal);
+				res.append('Link', this.locals.resourceHints.highest.concat(this.locals.resourceHints.normal));
 
 				return originalRender.apply(res, [].slice.call(arguments));
 			};

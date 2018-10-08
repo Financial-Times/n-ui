@@ -5,18 +5,18 @@ This component is responsible for initialising o-ads with the correct config for
 To include an ad slot, place an HTML element where the ad is supposed to go, as below:
 ```
 <div
-  class="o-ads my-advert-class
-  o-ads__label-left"
-  data-o-ads-name="mpu"
-  data-o-ads-center="true"
-  data-o-ads-label="true"
-  data-o-ads-targeting="pos=mpu;"
-  data-o-ads-formats-default="MediumRectangle,Responsive"
-  data-o-ads-formats-small="MediumRectangle,Responsive"
-  data-o-ads-formats-medium="MediumRectangle,Responsive"
-  data-o-ads-formats-large="false"
-  data-o-ads-formats-extra="false"
-  aria-hidden="true"></div>
+	class="o-ads my-advert-class
+	o-ads__label-left"
+	data-o-ads-name="mpu"
+	data-o-ads-center="true"
+	data-o-ads-label="true"
+	data-o-ads-targeting="pos=mpu;"
+	data-o-ads-formats-default="MediumRectangle,Responsive"
+	data-o-ads-formats-small="MediumRectangle,Responsive"
+	data-o-ads-formats-medium="MediumRectangle,Responsive"
+	data-o-ads-formats-large="false"
+	data-o-ads-formats-extra="false"
+	aria-hidden="true"></div>
 ```
 
 See the documentation for [<o-ads>](http://registry.origami.ft.com/components/o-ads) for more.
@@ -52,9 +52,9 @@ e.g.
 
 ```
 {{#if @root.flags.advertsLayoutTest}}
-    <div class="o-ads" data-o-ads-formats-large="Billboard,Responsive"...>
+	<div class="o-ads" data-o-ads-formats-large="Billboard,Responsive"...>
 {{#else}}
-    <div class="o-ads" data-o-ads-formats-large="Leaderboard,Responsive"...>
+	<div class="o-ads" data-o-ads-formats-large="Leaderboard,Responsive"...>
 {{#endif}}
 ```
 
@@ -64,11 +64,11 @@ This is also the 'tag manager' for ads on Next. It's to be used to house all thi
 
 ## Background
 
-ft.com has an eglalitarian means of adding JavaScript to the web page.
+The old ft.com had an eglalitarian means of adding JavaScript to the web page.
 
-This causes problems for web page performance, technical support, and managing overall coherance of the product.
+This caused problems for web page performance, technical support, and managing overall coherance of the product.
 
-This project is a stab at centralising our third-party code to give everyone more oversight about what's being added to ft.com.
+On the new ft.com we aim to centralise our third-party code to give everyone more oversight about what's being added to ft.com.
 
 ## Ground rules
 
@@ -78,7 +78,7 @@ Successful requests will be reviewed and merged in to the FT code base.
 
 ### Management
 
-- Each script MUST have an expiring [feature flag](https://github.com/Financial-Times/next-flags-api) to allow it to be toggled on and off.
+- Each script MUST have an expiring [flag](https://github.com/Financial-Times/next-flags-api) to allow it to be toggled on and off.
 - You MUST scope the loading of the tag to collect the minimally useful data set. _Eg, scope the script to a geographic region, individual URL, group of users, or use sampling techniques._
 - You MUST document what the tag does and its impact on performance, network etc. in the pull request and/or the code as a comment.
 - You MUST document the browser support.

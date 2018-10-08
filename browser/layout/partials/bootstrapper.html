@@ -1,38 +1,44 @@
 {{#if @root.flags.javascript}}
 <script>
-	window.nextFeatureFlags = {{{json @root.flagsArray}}};
-	{{#if @root.nUiConfig}}
-		window.ftNextUiConfig = {{{json @root.nUiConfig}}};
-	{{/if}}
-	{{#if anon}}window.nextIsAnonymous = {{anon.userIsAnonymous}};{{/if}}
-
-	window.ftNextLoadScript = function (src) {
-		var d = document, o = d.createElement('script');
-		o.async = o.defer = true;
-		o.src = src;
-		var s = d.getElementsByTagName('script')[0];
-		s.parentNode.insertBefore(o, s.nextSibling);
-		return o;
-	};
-
 	{{>layout/partials/css-loader}}
-
-	window.{{@root.polyfillIo.callback}} = function () {
-		window.ftNextFireCondition('PolyfillLoaded');
-	};
-
+	window.FT.flags = {{{json @root.flags}}};
+	{{#if @root.nUiConfig}}
+		window.FT.nUiConfig = {{{json @root.nUiConfig}}};
+	{{/if}}
+	{{#if anon}}window.FT.isAnonymous = {{anon.userIsAnonymous}};{{/if}}
 	(function () {
+
+		function loadError (err) {
+			{{! If a script fails to load we'll get loads of errors which we can't prevent - not helpful to send them to sentry }}
+			window.FT.disableOErrors = true;
+			{{! log load failure to spoor }}
+			var img = new Image();
+			img.src = 'https://spoor-api.ft.com/px.gif?data=%7B%22category%22%3A%22javascript%22%2C%22action%22%3A%22load-error%22%2C%22system%22%3A%7B%22source%22%3A%22non-ctm%22%7D%2C%22user%22%3A%7B%7D%2C%22context%22%3A%7B%22product%22%3A%22next%22%2C%22script%22%3A%22' + encodeURIComponent(err.target.src) + '%22%7D%7D';
+			throw new URIError('Failed to load ' + err.target.src + ': falling back to core experience.');
+		};
+
+		function loadScript (src, stopsExecutionOnLoadError) {
+			var script = document.createElement('script');
+			{{! For dynamically created scripts this has the same effect as adding the defer
+				attribute to inline scripts, i.e. load asynchronously, execute in order}}
+			script.async = false;
+			script.src = src;
+			if (stopsExecutionOnLoadError) {
+				script.onerror = loadError;
+			}
+			document.head.appendChild(script);
+		};
+
 		if (cutsTheMustard) {
 			{{#each @root.javascriptBundles}}
-				ftNextLoadScript('{{{this}}}');
+				loadScript('{{{file}}}', {{stopsExecutionOnLoadError}});
 			{{/each}}
 		} else {
-			ftNextLoadScript('{{{@root.polyfillIo.core}}}');
+			loadScript('{{{@root.polyfillIo.core}}}');
 		}
-	})();
-
+	})()
 </script>
 {{else}}
-	<!-- always load the picturefill polyfill -->
+	{{! always load the picturefill polyfill }}
 	<script src="{{@root.polyfillIo.core}}"></script>
 {{/if}}

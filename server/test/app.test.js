@@ -167,16 +167,23 @@ describe('simple app', function () {
 			expect(typeof app.getHashedAssetUrl).to.equal('function');
 		});
 
+		it('should allow pushing route-specific JS files', (done) => {
+			request(app)
+				.get('/route-specific-js')
+				.expect(200, /<script src="\/\/www.ft.com\/__assets\/hashed\/demo-app\/123abc\/route-specific.js"/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/123abc\/route-specific\.js>; as="script"; rel="preload"; nopush/, done);
+
+		});
+
 		it('should inline head.css & head-n-ui-core.css', (done) => {
 			request(app)
 				.get('/with-layout?layout=wrapper')
 				.expect(200, /<style class="n-layout-head-css">\s*head-n-ui-core\.css\s*head\.css\s*<\/style>/, done);
 		});
 
-		it('should have preload link tags for main.css and n-ui-core.css', (done) => {
+		it('should have preload link tags for main.css', (done) => {
 			request(app)
 				.get('/with-layout?layout=wrapper')
-				// .expect(200, /<link data-is-next rel="preload" href="\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css" as="style" onload=/)
 				.expect(200, /<link data-is-next rel="preload" href="\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/56f3a89e\/main\.css" as="style" onload=/, done);
 		});
 
@@ -193,17 +200,13 @@ describe('simple app', function () {
 			request(app)
 				.get('/templated')
 				.expect('Link', /<https:\/\/www\.ft\.com\/.*polyfill.min\.js.*>; as="script"; rel="preload"; nopush/)
-				.expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/es5\.min\.js>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/123456\/appshell\.js>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/1234567\/o-errors\.js>; as="script"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/12345678\/font-loader\.js>; as="script"; rel="preload"; nopush/)
 				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/56f3a89e\/main\.css>; as="style"; rel="preload"; nopush/)
-				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/6988e3b1\/main-without-n-ui\.js>; as="script"; rel="preload"; nopush/, done);
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/6988e3b1\/main\.js>; as="script"; rel="preload"; nopush/, done);
 		});
 
-		it.skip('should preload hashed n-ui when flag is on', done => {
-			request(app)
-				.get('/templated')
-				.set('Cookie', 'next-flags=nUiHashedAssets:on')
-				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/n-ui\/123456\/es5\.min\.js>; as="script"; rel="preload"; nopush/, done);
-		});
 
 		it('should have preload link header for masthead', done => {
 			request(app)
@@ -221,24 +224,23 @@ describe('simple app', function () {
 		it('should load different choice of css files', done => {
 			request(app)
 				.get('/css-variants?lazy=jam,marmalade&blocking=peanut')
-				// .expect('Link', /<\/\/www\.ft\.com\/__assets\/n-ui\/cached\/v1\.1\.1\/n-ui-core\.css>; as="style"; rel="preload"; nopush/)
-				.expect('Link', /<\/demo-app\/jam\.css>; as="style"; rel="preload"; nopush/)
-				.expect('Link', /<\/demo-app\/marmalade\.css>; as="style"; rel="preload"; nopush/)
-				.expect(200, /<link data-is-next rel="preload" href="\/demo-app\/jam\.css" as="style" onload=/)
-				.expect(200, /<link data-is-next rel="preload" href="\/demo-app\/marmalade\.css" as="style" onload=/)
-				.expect('Link', /<\/demo-app\/peanut\.css>; as="style"; rel="preload"; nopush/)
-				.expect(200, /<link rel="stylesheet" href="\/demo-app\/peanut\.css"/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/123abc\/jam\.css>; as="style"; rel="preload"; nopush/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/456def\/marmalade\.css>; as="style"; rel="preload"; nopush/)
+				.expect(200, /<link data-is-next rel="preload" href="\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/123abc\/jam\.css" as="style" onload=/)
+				.expect(200, /<link data-is-next rel="preload" href="\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/456def\/marmalade\.css" as="style" onload=/)
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/789ghi\/peanut\.css>; as="style"; rel="preload"; nopush/)
+				.expect(200, /<link rel="stylesheet" href="\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/789ghi\/peanut\.css"/)
 				.expect(res => {
 					expect(res.headers.link.indexOf('main.css')).to.equal(-1);
 				})
 				.end(done);
-
 		});
 
 		it('should be possible to preload any file on any request', done => {
 			request(app)
 				.get('/with-layout?preload=true')
-				.expect('Link', /<\/demo-app\/it\.js>; rel="preload"; as="script"; nopush, <https:\/\/place\.com\/it\.js>; rel="preload"; as="script"; nopush/, done);
+				.expect('Link', /<\/\/www\.ft\.com\/__assets\/hashed\/demo-app\/012345\/it\.js>; rel="preload"; as="script"; nopush/)
+				.expect('Link', /<https:\/\/place\.com\/it\.js>; rel="preload"; as="script"; nopush/, done);
 		});
 
 	});

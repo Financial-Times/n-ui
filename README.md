@@ -1,30 +1,44 @@
-# n-ui [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-ui/badge.svg)](https://coveralls.io/github/Financial-Times/n-ui)
+# n-ui
 
-Server, build and client side bootstrapping for next's user-facing applications.
+[![CircleCI](https://circleci.com/gh/Financial-Times/n-ui.svg?style=svg)](https://circleci.com/gh/Financial-Times/n-ui) [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-ui/badge.svg)](https://coveralls.io/github/Financial-Times/n-ui)
+
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSf5InA7UJK9yNBCzidFKI_WNkfbl6of1eRlIACRspGXUcBx8A/viewform?usp=pp_url&entry.78759464=n-ui" target="_blank"><img src="https://i.imgur.com/UmScdZ4.png" alt="Yak button" border="0" align="right" width="150" title="Report a yak shaving incident for this repository"></a>
+
+Server, build and client side bootstrapping for ft.com’s user-facing applications.
+
+**PLEASE DON’T USE THIS OUTSIDE OF USER-FACING FT.COM APPLICATIONS. If you need a good Express server with Handlebars, metrics etc available consider using [n-internal-tool](https://github.com/Financial-Times/n-internal-tool), [n-express](https://github.com/Financial-Times/n-express) or copying what you need from n-ui**
+
+<br clear="right">
 
 ## Quickstart
 
-n-ui has three parts - a server, a client side 'app shell' (js, css & handlebars layout), and a build. **Expect things to break if you don't use all 3.**
+n-ui has three parts – a server, a client side “app shell” (JS, CSS & Handlebars layout), and a build. **Expect things to break if you don’t use all 3.**
 
 ### Server
 
-n-ui is a wrapper around n-express which adds templating and asset loading features
+n-ui is a wrapper around n-express which adds templating and asset-loading features.
 
 `npm install @financial-times/n-ui`
 
+```javascript
+const app = require('@financial-times/n-ui')(opts);
+
+app.locals.nUiConfig = {
+	preset: 'complete', // 'discrete' will turn off ads & various popups
+	features: {
+		lazyLoadImages: true // turns individual features on/off. Check `/browser/bootstrap/js/component-initializer.js` for an up-to-date feature list
+	}
+};
 ```
-const app = require('@financial-times/n-ui')(opts)
 
-```
+Where opts is an object supporting all `n-express`’s options, but with many set to `true` by default (see `/server/index.js` for details). Additional options include:
 
-Where opts is an object supporting all `n-express`'s options, but with many set to `true` by default (see `/server/index.js` for details). Additioanl options include
-
-- `partialsDirectory` String or array - path[s] to load partials from, this in addition to the standard `views/partials` that is set for every app
-- `layoutsDir` String - a path to load handlebars views from defults to `node_modules/@financial-times/n-ui/layout`
-- `withJsonLd` Boolean - output jsonLD schema information in the page head
+- `partialsDirectory` String or array – path[s] to load partials from, this in addition to the standard `views/partials` that is set for every app
+- `layoutsDir` String – a path to load Handlebars views from defults to `node_modules/@financial-times/n-ui/layout`
+- `withJsonLd` Boolean – output jsonLD schema information in the page head
 
 ### Build
-n-ui comes bundled with its own build tool - basically `webpack`, `haikro build` and a little bit of other stuff. To use it, add the following to your Makefile:
+n-ui comes bundled with its own build tool – basically `webpack`, `haikro build` and a little bit of other stuff. To use it, add the following to your Makefile:
 
 ```Makefile
 build:
@@ -37,150 +51,178 @@ watch:
 	nui watch
 ```
 
-To define entry points for your assets use a `n-ui-build.config.js` file in the root of your project, which can export any object compatible with n-webpack
+#### Custom build config
+It is possible to use a add custom webpack-style configuration file to your project. Simply add a `n-ui-build.config.js` file in the root of your project.
+This supports the following properties:
+- `entry` - defines entry points for your assets as documented in the [webpack entrypoints documentation](https://webpack.js.org/concepts/entry-points/)
+- `plugins` - defines custom plugins as documented in the [webpack plugins documentation](https://webpack.js.org/concepts/plugins/)
+- `pragma` - configures the `pragma` used by [babel-transform-react-jsx](https://www.npmjs.com/package/babel-plugin-transform-react-jsx#usage) (_defaults to `React.createElement`_).
+
+To define entry points for your assets, use a `n-ui-build.config.js` file in the root of your project, which can export any object compatible with webpack.
 
 
 ### JS
 
-#### Config
-This should live in a `/client/n-ui-config.js` file
-
-```javascript
-module.exports = {
-	preset: 'complete', // 'discrete' will turn off ads & various popups
-	features: {
-		lazyLoadImages: true // turns individual features on/off. Check `/browser/bootstrap/js/component-initializer.js` for an upto date feature list
-	}
-}
-```
-
 #### App bootstrapping
 
-n-ui takes care of loading polyfills etc, and your application code shoudl be wrapped in the bootstrap method
+n-ui takes care of loading polyfills etc, in order. n-ui exports 4 things you’ll want to use:
+- `flags` – the feature/development/maintenance/MVT flags object
+- `appInfo` – metadata about the app that's serving the page
+- `allStylesLoaded` – a promise that resolves once all the lazy-loaded styles are in place
+- `onAppInitialized` [required] – a function to call once the app js has successfully executed. This tells integration tests when the page is “complete” among other things
+
+`import` one or more of the above from n-ui in your application code, which no longer needs to be wrapped in a function.
 
 e.g.
 
 ```javascript
-import { bootstrap } from 'n-ui';
+import { flags , allStylesLoaded, onAppInitialized } from 'n-ui';
 
-bootstrap(({ flags , appInfo, allStylesLoaded }) => {
-    if (flags.get('feature')) {
-        component.init();
-    }
+if (flags.get('feature')) {
+	component.init();
+}
 
-    allStylesLoaded
-	    .then(() => {
-	        lazyComponent.init();
-	    });
-});
+allStylesLoaded
+	.then(() => {
+		lazyComponent.init();
+		onAppInitialized(); // it’s up to you to define when your app is “ready”
+	});
 ```
 
 ### Sass
-Nothing fancy going on here any more 😄. No mixins (though the n-ui-foundations module has a few you will want to use), no tricky critical path css stuff.
+
+`bower install n-ui`
+
+
+Nothing fancy going on here anymore 😄. No mixins (though the n-ui-foundations module has a few you will want to use), no tricky critical path CSS stuff.
 
 ```sass
-@import "n-ui/main"
+@import "n-ui/main";
 ```
-This will, when using the n-ui build tool, split n-ui's styles into head-n-ui-core.css and n-ui-core.css files, and the server will inline/linnk to these appropriately.
-
+This will, when using the n-ui build tool, split n-ui’s styles into head-n-ui-core.css and n-ui-core.css files, and the server will inline/link to these appropriately.
 
 ### Local development
 
 #### Working in n-ui
-You should be able to work in n-ui as if it's an app - `make watch` and `make run` shodul work and serve a demo app on `local.ft.com:5005`
+You should be able to work in n-ui as if it’s an app – `make watch` and `make run` should work and serve a demo app on `local.ft.com:5005`.
 
 #### Testing in an app
-`export NEXT_APP_SHELL=local` then use all your usual make tasks. Your app will build and serve n-ui from your locally installed bower components. You can do this whether you're bower/npm linking n-ui or not
+In local n-ui:
+- `make install`
+- `make build-css-loader`
+- `npm link`
+- `bower link`
 
+In the app (e.g. next-article):
+- `export NEXT_APP_SHELL=local`
+- `bower link n-ui`
+- `npm link @financial-times/n-ui`
+- `make build` - !! need to do this for each change in either n-ui or front facing app.
+- `make run`
 
 ### Releasing n-ui
 
-When you release an n-ui tag 3 things happen
+When you release an n-ui tag, 3 things happen:
 
 - assets are built and deployed to s3, from where they are linked to/downloaded by apps
 - the npm package is published
 - during work hours (9am to 4pm), all user-facing apps are rebuilt to pick up the changes
 
-## APIs
+## Server side APIs
 
 ### Linked Resources (preload) `res.linkResource(url, meta, options)`
-Adds link headers to optimise requests for assets, defaulting to preload behaviour
-- `url` - absolute or relative path to the resource
-- `meta` - object defining additional properties to add to the header
+Adds link headers to optimise requests for assets, defaulting to preload behaviour:
+- `url` – absolute or relative path to the resource
+- `meta` – object defining additional properties to add to the header
 	- `rel` [default: 'preload'] - value of the `rel` property
-	- `as` - value of the `as` property e.g. 'stylesheet'
-- `options` - additional options when creating the header
-	- `priority` - a value of highest will add the link header _before_ all previously added resources that do not specify this (shodul not normally used by apps - used internally to ensure n-ui's resources are always loaded as wuickly as possible)
-	- `hashed` - if true the path to the asset will be resolved to the equivalent hashed aset path
-
-
-# Anything below here isn't necessarily 100% up to date - n-ui has changed a lot recently and updating the docs is ongoing
-
-
-
-### Dev workflow
-
-[Overview of how the n-ui js bundle is delivered](https://docs.google.com/presentation/d/1UyeVsxE8GqGe-jVZDB5ppMLeRk2Ad49OuBBO8xDvyxs/edit#slide=id.p)
-
-#### Standalone development
-
-* `make build run` will
-	- start a server on `localhost:5005` which serves a demo page of most of the core n-ui components. *Note: Any changes to templates require restarting the server*
-	- build an n-ui bundle that will bootstrap the js and css for the page
-* `make test-unit-dev` will run unit tests in Chrome using karma. To add tests for a new subcomponents, or to only run tests for a single subcomponent, modify the `componentsToTest` list in karma.config.js. In CI these tests are run in more browsers using saucelabs
-
-#### Bower linking
-
-To work with n-ui when it's bower linked into an app you will need to `export NEXT_APP_SHELL=local` in your app and then proceed exactly as you would for any other component
-
-## A11y testing
-
-We hope to be able to a11y test all components before they are used in an app and end up causing lots of applications to fail builds. For now we are testing components in CI using pa11y and this requires some additional set up when creating a new component. Any directory in the root is considered to be a component and will require this additional set up.
-
-* Inside a component directory there must be a `pa11y-config.js` that must return JSON
-* The must have an `entry` property and and may contain a `data` property if required
-	* The `entry` value should point to the main template for the component without any file extension and relative to the component root.
-	* The `data` can be used if you need to pass any fixture data to the component for testing.
-
-
-## Adding subcomponents
-
-**Don't** - n-ui is no longer a place to dump all next components. If you need to create a new shared component create a new repo for it and use the `n-ui-foundations` component to access primitive styles as used in next.
-
-## JS usage
-
-### Opting out of using a component provided by n-ui
-
-If, for example, you want to use a beta of an origami component in a single app, or use React instead of preact
-In your app’s webpack.config.js, you can pass an `nUiExcludes` array as an option to nWebpack e.g. `nUiExcludes: [‘React’, ‘React-Dom’]`
-
-
+	- `as` – value of the `as` property e.g. 'stylesheet'
+- `options` – additional options when creating the header
+	- `priority` – a value of highest will add the link header _before_ all previously added resources that do not specify this (should not normally used by apps – used internally to ensure n-ui’s resources are always loaded as quickly as possible)
+	- `hashed` – if true the path to the asset will be resolved to the equivalent hashed asset path
 
 ### Navigation
-If you pass `withNavigation:true` in the init options, you will have navigation data available in `res.locals.navigation`.  this data comes from polling the [navigation API](https://github.com/Financial-Times/next-navigation-api).  This data is used to populate the various menus and navigation items on the apps.  The following data is available
+If you pass `withNavigation:true` in the init options, you will have navigation data available in `res.locals.navigation`. This data comes from polling the [navigation API](https://github.com/Financial-Times/next-navigation-api). This data is used to populate the various menus and navigation items on the apps. The following data is available:
 
+```javascript
 	res.locals.navigation = {
 		lists: {
 			navbar_desktop: // data for the main nav in the header (only on large screens)
- 			navbar_mobile: //data for the white strip that appears on the homepage and fastFT pages only on small screens
+			navbar_mobile: //data for the white strip that appears on the homepage and fastFT pages only on small screens
 			drawer: //data for the slide-out menu
 			footer: // data for the footer
 		}
-	}
+	};
+```
 
-### Navigation Hierarchy
-If you also pass `withNavigationHierarchy: true` in the init options you get some additonal properties detailing the current page's position in the hierarchy.  This is only currently useful on stream pages.  The following properties are added:
+#### Subnavigation
 
- 	res.locals.navigation.currentItem // the current item
- 	res.locals.navigation.children //an array of the direct decendents of the current page
- 	res.locals.navigation.ancestors // an array of the parent items of the current page (top level first)
+See the [MyFT page](https://www.ft.com/myft/following) for a rendered copy of this config.
 
-### Editions
-The navigation model also controls the edition switching logic.  The following properties are added
+```javascript
+res.locals.navigation = {
+    // other settings here...
 
+    showSubNav: true,
+    // this populates the breadcrumb section at the left of the subnav
+    breadcrumb: [
+        {
+            id: 'my-ft',
+            label: 'My FT',
+            url: '/myft/following'
+        }
+    ],
+    // this populates the current level of subnav
+    subsections: [
+        {
+            id: 'feed',
+            label: 'myFT Feed',
+            url: '/myft/following'
+        },
+        {
+            id: 'alerts',
+            label: 'Emails & Alerts',
+            url: '/myft/alerts'
+        }
+    ],
+    // optionally, add a 'Sign out' link to the right of the subnav (default is off)
+    showSignOut: true
+}
+```
+
+#### Navigation Hierarchy
+If you also pass `withNavigationHierarchy: true` in the init options you get some additonal properties detailing the current page’s position in the hierarchy. This is only currently useful on stream pages. The following properties are added:
+
+```javascript
+	res.locals.navigation.currentItem // the current item
+	res.locals.navigation.children // an array of the direct descendant of the current page
+	res.locals.navigation.ancestors // an array of the parent items of the current page (top-level first)
+```
+
+#### Editions
+The navigation model also controls the edition switching logic. The following properties are added:
+
+```javascript
 	res.locals.editions.current // the currently selected edition
 	res.locals.editions.others //  and array of other possible editions
+```
+
+#### Header with clickable logo
+In same cases you might need to show only the FT logo in the header, and hide all other navigation. This pattern is used in several conversion apps.
+
+```javascript
+{
+    nUi: {
+        header: {
+            variant: 'logo-only'
+        }
+    }
+}
+```
+
+#### Header with not-clickable logo, and hide footer
+If your page will be linked to from the iOS app, and no outbound navigation from it is allowed, then the flag 'hideOutboundLinks' will be set to true for you.
+This will render the header logo without it being a link, and hide the page footer.
 
 ### Other enhancements
-- Our [Handlebars](http://handlebarsjs.com/) engine loads partials from `bower_components` and has a number of [additional helpers](https://github.com/Financial-Times/n-handlebars). It also points to [n-layout](https://github.com/Financial-Times/n-layout) to provide a vanilla and 'wrapper' layout
-- Exposes everything in the app's `./public` folder via `./{{name-of-app}}` (only in non-production environments, please use [next-assets](https://github.com/Financial-Times/next-assets) or hashed-assets in production)
+- Our [Handlebars](http://handlebarsjs.com/) engine loads partials from `bower_components` and has a number of [additional helpers](https://github.com/Financial-Times/n-handlebars). It also points to [n-layout](https://github.com/Financial-Times/n-layout) to provide a vanilla and “wrapper” layout
+- Exposes everything in the app’s `./public` folder via `./{{name-of-app}}` (only in non-production environments, please use [next-assets](https://github.com/Financial-Times/next-assets) or hashed-assets in production)

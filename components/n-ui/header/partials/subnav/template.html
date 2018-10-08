@@ -10,7 +10,7 @@
 							<ol class="o-header__subnav-list o-header__subnav-list--breadcrumb" aria-label="Breadcrumb" data-trackable="breadcrumb">
 								{{#each @root.navigation.breadcrumb}}
 								<li class="o-header__subnav-item">
-									<a class="o-header__subnav-link {{#if selected}}o-header__subnav-link--highlight{{/if}}" href="{{url}}" aria-selected="{{selected}}" data-trackable="{{label}}">
+									<a class="o-header__subnav-link {{#if selected}}o-header__subnav-link--highlight{{/if}}" href="{{url}}" {{#if selected}}aria-current="true"{{/if}} data-trackable="{{label}}">
 										{{label}}
 									</a>
 								</li>
@@ -21,8 +21,8 @@
 						{{#if @root.navigation.subsections}}
 							<ul class="o-header__subnav-list o-header__subnav-list--subsections" aria-label="Subsections" data-trackable="subsections">
 								{{#each @root.navigation.subsections}}
-								<li class="o-header__subnav-item">
-									<a class="o-header__subnav-link {{#if selected}}o-header__subnav-link--highlight{{/if}}" href="{{url}}" aria-selected="{{selected}}" data-trackable="{{label}}">
+								<li class="o-header__subnav-item"{{#if id}} data-id="subnav-{{id}}"{{/if}}>
+									<a class="o-header__subnav-link {{#if selected}}o-header__subnav-link--highlight{{/if}}" href="{{url}}" {{#if selected}}aria-current="true"{{/if}} data-trackable="{{label}}">
 										{{label}}
 									</a>
 								</li>
@@ -30,6 +30,11 @@
 							</ul>
 						{{/if}}
 
+						{{#if @root.navigation.showSignOut}}
+						<div class="o-header__subnav-link--right">
+							<a class="o-header__subnav-link" href="/logout" data-trackable="Sign Out">Sign out</a>
+						</div>
+						{{/if}}
 					</div>
 				</div>
 				<button class="o-header__subnav-button o-header__subnav-button--left" title="scroll left" aria-label="scroll left" aria-hidden="true" disabled></button>

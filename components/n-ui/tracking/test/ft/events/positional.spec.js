@@ -3,14 +3,17 @@ const Positional = require('../../../ft/events/positional');
 
 describe('Positional', function () {
 	let p;
-
-	afterEach(function () {
-		document.body.innerHTML = '';
+	let rootEl;
+	before(() => {
+		rootEl = document.createElement('div');
+		document.body.appendChild(rootEl);
+	});
+	after(function () {
+		rootEl.parentNode.removeChild(rootEl);
 		p && p.destroy();
 	});
 
 	it('Decorate anchors with positional data', function (done) {
-		const rootEl = document.body;
 		rootEl.innerHTML += `<div data-next-app='front-page'><div role='main'>
 					<section>
 						<article><a data-trackable='xyz' id='a'>hello</a></article>

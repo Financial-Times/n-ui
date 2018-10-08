@@ -1,4 +1,9 @@
 {
-  "main-without-n-ui.js": "6988e3b1/main-without-n-ui.js",
-  "main.css": "56f3a89e/main.css"
+  "main.js": "6988e3b1/main.js",
+  "main.css": "56f3a89e/main.css",
+  "jam.css": "123abc/jam.css",
+  "marmalade.css": "456def/marmalade.css",
+  "peanut.css": "789ghi/peanut.css",
+  "it.js": "012345/it.js",
+  "route-specific.js": "123abc/route-specific.js"
 }

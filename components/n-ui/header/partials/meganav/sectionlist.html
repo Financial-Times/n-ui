@@ -5,7 +5,7 @@
 				{{#each data}}
 					{{#each this}}
 						<li class="o-header__mega-item">
-							<a class="o-header__mega-link" href="{{url}}" {{#selected}}aria-label="Current page" aria-selected="true"{{/selected}} data-trackable="link">
+							<a class="o-header__mega-link" href="{{url}}" {{#if selected}}aria-label="Current page" aria-current="true"{{/if}} data-trackable="link">
 								{{label}}
 							</a>
 						</li>
