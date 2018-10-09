@@ -2,7 +2,6 @@
 const utils = require('../js/utils');
 const oAdsConfig = require('../js/oAdsConfig');
 const adsSandbox = require('../js/sandbox');
-const oTrackingCore = require('o-tracking/src/javascript/core.js');
 const fakeArticleUuid = '123456';
 const fakeConceptUuid = '12345678';
 
@@ -158,13 +157,6 @@ describe('Config', () => {
 	});
 
 	describe('o-ads', () => {
-
-		it('should pass rootId parameter', () => {
-			const flags = { get: () => true };
-			const config = oAdsConfig(flags, 'article');
-			expect(config.rootid).to.equal(oTrackingCore.getRootID());
-		});
-
 		it('Should pass the correct url to o-ads fetch', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article' );
