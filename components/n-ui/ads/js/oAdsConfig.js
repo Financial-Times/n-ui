@@ -11,7 +11,8 @@ module.exports = function (flags, appName, adOptions) {
 	const targetingOptions = {
 		pt: appName.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName(),
-		mvt: utils.getABTestState()
+		mvt: utils.getABTestState(),
+		rootid: oTrackingCore.getRootID()
 	};
 
 	if (flags.get('adsEnableTestCreatives')) {
@@ -31,7 +32,9 @@ module.exports = function (flags, appName, adOptions) {
 		id: 'KHUSeE3x',
 		attributes: {
 			user: {},
-			page: {}
+			page: {
+				rootid: oTrackingCore.getRootID()
+			}
 		}
 	};
 
@@ -125,7 +128,6 @@ module.exports = function (flags, appName, adOptions) {
 			page: getContextualTargeting(appName),
 			usePageZone: true
 		},
-		rootid: oTrackingCore.getRootID(),
 		disableConsentCookie: flags.get('adsDisableCookieConsent'),
 		validateAdsTraffic: flags.get('moatAdsTraffic')
 	};
