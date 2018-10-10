@@ -157,7 +157,6 @@ describe('Config', () => {
 	});
 
 	describe('o-ads', () => {
-
 		it('Should pass the correct url to o-ads fetch', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article' );

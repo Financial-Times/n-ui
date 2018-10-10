@@ -1,5 +1,6 @@
 const utils = require('./utils');
 const sandbox = require('./sandbox');
+const oTrackingCore = require('o-tracking/src/javascript/core.js');
 const extend = require('o-ads').utils.extend;
 const apiUrlRoot = 'https://ads-api.ft.com/v1/';
 
@@ -10,7 +11,8 @@ module.exports = function (flags, appName, adOptions) {
 	const targetingOptions = {
 		pt: appName.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName(),
-		mvt: utils.getABTestState()
+		mvt: utils.getABTestState(),
+		rootid: oTrackingCore.getRootID()
 	};
 
 	if (flags.get('adsEnableTestCreatives')) {
@@ -30,7 +32,9 @@ module.exports = function (flags, appName, adOptions) {
 		id: 'KHUSeE3x',
 		attributes: {
 			user: {},
-			page: {}
+			page: {
+				rootid: oTrackingCore.getRootID()
+			}
 		}
 	};
 
@@ -127,5 +131,4 @@ module.exports = function (flags, appName, adOptions) {
 		disableConsentCookie: flags.get('adsDisableCookieConsent'),
 		validateAdsTraffic: flags.get('moatAdsTraffic')
 	};
-
 };
