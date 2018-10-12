@@ -45,7 +45,7 @@ function initOAds (flags, appName, adOptions) {
 		utils.log.info(slotCount + ' ad slots found on page');
 
 		if (!res) {
-			// TODO: Investigate why res.slots can be empty
+			utils.log.warn('Empty init response, likely an issue with o-ads, ads might not work properly');
 			return;
 		}
 
