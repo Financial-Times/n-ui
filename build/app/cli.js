@@ -82,11 +82,6 @@ program
 			.then(() => options.production && assetHashes())
 			.then(aboutJson)
 			.then(grabNUiAssets)
-			.then(() => {
-				if (options.production && fs.existsSync(path.join(process.cwd(), 'Procfile'))) {
-					return shellpipe('haikro build');
-				}
-			})
 			.catch(exit);
 	});
 
