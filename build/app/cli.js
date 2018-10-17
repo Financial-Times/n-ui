@@ -83,7 +83,7 @@ program
 			.then(aboutJson)
 			.then(grabNUiAssets)
 			.then(() => {
-				if (options.production && fs.existsSync(path.join(process.cwd(), 'Procfile'))) {
+				if (options.production && fs.existsSync(path.join(process.cwd(), 'Procfile')) && !process.env.NO_HAIKRO) {
 					return shellpipe('haikro build');
 				}
 			})
