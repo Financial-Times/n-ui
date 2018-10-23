@@ -67,6 +67,16 @@ module.exports = function (flags, appName, adOptions) {
 		return zone.join('/');
 	}
 
+	function getGptRenderingMode () {
+		// (SRA) is a rendering mode available in the GPT library to request ads in a single call.
+		if (flags.get('enableAdsSRA')) {
+			return 'sra';
+		}
+
+		// defaults to o-ads settings
+		return null;
+	}
+
 	function getLazyLoadConfig () {
 		// Switch off lazy loading in Q4.
 		if(/^front/.test(appName) && flags.get('noLazyLoadingFrontPage')) {
@@ -100,7 +110,8 @@ module.exports = function (flags, appName, adOptions) {
 		gpt: {
 			network: '5887',
 			site: sandbox.isActive() ? 'sandbox.next.ft' :'ft.com',
-			zone: getZone()
+			zone: getZone(),
+			rendering: getGptRenderingMode()
 		},
 		formats: {
 			PaidPost: {
