@@ -29,6 +29,6 @@
     "o-header": "^7.5.12",
     "o-tracking": "^1.4.0",
     "logo-images": "^1.6.0",
-    "n-feedback": "^1.0.0-beta.10"
+    "n-feedback": "^4.0.0"
   }
 }
