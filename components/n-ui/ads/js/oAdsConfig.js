@@ -69,7 +69,7 @@ module.exports = function (flags, appName, adOptions) {
 
 	function getGptRenderingMode () {
 		// (SRA) is a rendering mode available in the GPT library to request ads in a single call.
-		if (flags.get('enableAdsSRA')) {
+		if (flags.get('adsEnableSRA')) {
 			return 'sra';
 		}
 
