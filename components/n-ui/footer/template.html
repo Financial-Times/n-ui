@@ -1,32 +1,13 @@
-<footer id="site-footer" class="o-footer o-footer--theme-dark" data-o-component="o-footer">
+<footer id="site-footer"
+		class="o-footer o-footer--{{#unless nUi.footer.themeLight}}theme-dark{{else}}theme-light{{/unless}}"
+		data-o-component="o-footer">
 	<div class="o-footer__container">
 
-		<div class="o-footer__row">
-			<nav class="o-footer__matrix" role="navigation" aria-label="Useful links">
-				{{#each @root.navigation.menus.footer.items}}
-				{{#if submenu}}
-				<div class="o-footer__matrix-group o-footer__matrix-group--{{submenu.items.length}}">
-					<div class="o-footer__matrix-title" {{#ifEquals submenu.items.length 2}}aria-controls="o-footer-section-{{@index}}"{{/ifEquals}}>
-					{{{label}}}
-					</div>
-					<div class="o-footer__matrix-content" id="o-footer-section-{{@index}}">
-						{{#each submenu.items}}
-						<div class="o-footer__matrix-column">
-							{{#each this}}
-							<a class="o-footer__matrix-link" href="{{url}}" data-trackable="{{label}}" {{#disableTracking}}data-o-tracking-do-not-track="true"{{/disableTracking}}>{{{label}}}</a>
-							{{/each}}
-						</div>
-						{{/each}}
-					</div>
-				</div>
-				{{/if}}
-				{{/each}}
-			</nav>
-
-			<div class="o-footer__external-link o-footer__matrix-title">
-				<a class="o-footer__more-from-ft o-footer__matrix-title" href="http://ft.com/more-from-ft-group" data-trackable="more-from-ft">More from the FT Group</a>
-			</div>
-		</div>
+		{{#if nUi.footer.legalOnly}}
+		{{>n-ui/footer/partials/legal/template}}
+		{{else}}
+		{{>n-ui/footer/partials/menu/template}}
+		{{/if}}
 
 		<div class="o-footer__copyright" role="contentinfo">
 			<small>
