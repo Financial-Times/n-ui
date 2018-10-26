@@ -3,11 +3,11 @@
 		data-o-component="o-footer">
 	<div class="o-footer__container">
 
-		{{#ifEquals nUi.footer.menu 'no-menu'}}
+		{{#if nUi.footer.legalOnly}}
 		{{>n-ui/footer/partials/legal/template}}
 		{{else}}
 		{{>n-ui/footer/partials/menu/template}}
-		{{/ifEquals}}
+		{{/if}}
 
 		<div class="o-footer__copyright" role="contentinfo">
 			<small>

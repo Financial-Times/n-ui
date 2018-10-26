@@ -229,9 +229,8 @@ Similar nUi controls exist for footer. Current configuration allows footer theme
 {
     nUi: {
         footer: {
-            themeLight: 'true',
-            menu:       'no-menu',
-            legal:      'true'
+            themeLight: true,
+            legalOnly:  true
         }
     }
 }
