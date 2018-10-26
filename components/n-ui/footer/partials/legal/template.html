@@ -1,0 +1,18 @@
+{{#each @root.navigation.menus.footer.items}}
+	{{#if submenu}}
+		{{#ifEquals label 'Legal & Privacy'}}
+			<div>
+				{{#each submenu.items}}
+				<ul class="o-footer__legal-links">
+					{{#each this}}
+					<li>
+						<a href="{{url}}" data-trackable="{{label}}"
+						   {{#disableTracking}}data-o-tracking-do-not-track="true" {{/disableTracking}}>{{{label}}}</a>
+					</li>
+					{{/each}}
+				</ul>
+				{{/each}}
+			</div>
+		{{/ifEquals}}
+	{{/if}}
+{{/each}}

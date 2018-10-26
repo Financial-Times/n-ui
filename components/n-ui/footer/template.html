@@ -1,9 +1,13 @@
-<footer id="site-footer" class="o-footer o-footer--{{#unless nUi.footer.themeLight}}theme-dark{{else}}theme-light{{/unless}}" data-o-component="o-footer">
+<footer id="site-footer"
+		class="o-footer o-footer--{{#unless nUi.footer.themeLight}}theme-dark{{else}}theme-light{{/unless}}"
+		data-o-component="o-footer">
 	<div class="o-footer__container">
 
-		{{#unlessEquals nUi.footer.links 'no-links'}}
-		{{>n-ui/footer/partials/menu/template}}
-		{{/unlessEquals}}
+		{{#ifEquals nUi.footer.menu 'no-menu'}}
+			{{>n-ui/footer/partials/legal/template}}
+		{{else}}
+			{{>n-ui/footer/partials/menu/template}}
+		{{/ifEquals}}
 
 		<div class="o-footer__copyright" role="contentinfo">
 			<small>

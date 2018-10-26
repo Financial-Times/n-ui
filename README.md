@@ -230,7 +230,8 @@ Similar nUi controls exist for footer. Current configuration allows footer theme
     nUi: {
         footer: {
             themeLight: 'true',
-            links:      'no-links'
+            menu:       'no-menu',
+            legal:      'true'
         }
     }
 }
