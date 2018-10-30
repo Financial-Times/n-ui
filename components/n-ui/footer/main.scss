@@ -3,10 +3,3 @@
 $o-footer-is-silent: false !default;
 
 @import "o-footer/main";
-
-.n-footer__link--s {
-	display: none;
-	@include oGridRespondTo('S') {
-		display: block;
-	}
-}
