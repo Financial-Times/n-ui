@@ -23,11 +23,21 @@ const devAdvice = () => {
 const nUiVersion = require('../../package.json').version;
 
 let appPackageJson;
+
+const getAppVersion = () => {
+	if(process.env.HEROKU_SLUG_COMMIT) {
+		// For apps that use the heroku-postbuild to build, there is no git repository
+		// so we need to enable Dyno Metadata and get the commit hash from environment variable
+		return Promise.resolve(process.env.HEROKU_SLUG_COMMIT);
+	} else {
+		return shellpromise('git rev-parse HEAD | xargs echo -n');
+	}
+};
+
 const aboutJson = () => {
 	appPackageJson = require(path.join(process.cwd(), '/package.json'));
 
-	return shellpromise('git rev-parse HEAD | xargs echo -n')
-		.then(version => {
+	return getAppVersion().then(version => {
 			return {
 				description: appPackageJson.name,
 				support: 'next.team@ft.com',
