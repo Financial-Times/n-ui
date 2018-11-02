@@ -41,6 +41,11 @@ module.exports = {
 		// paths are looked up directly the order is respected
 		modules: ['bower_components', 'node_modules'],
 
+		// Automatically resolve certain extensions. This defaults to: ['.wasm', '.mjs', '.js', '.json']
+		extensions: [
+			'.wasm', '.mjs', '.js', '.json', '.jsx'
+		],
+
 		// package description files
 		descriptionFiles: ['bower.json', 'package.json'],
 
