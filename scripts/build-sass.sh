@@ -6,8 +6,9 @@
 node-sass ${1:-client/main.scss} \
 ${CSS_SOURCE_MAPS:+--source-map true} \
 --output-style compressed \
---include-path bower_components \
+--include-path node_modules \
 --include-path node_modules/@financial-times \
+--include-path node_modules/@chee \
 --output ./tmp \
 && \
 scssfile=${1##*/}
