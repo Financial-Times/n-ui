@@ -68,6 +68,8 @@ const oTrackingWrapper = {
 				context.referrer = pageViewConf.context.referrer = window.parent.document.referrer;
 				context.errorStatus = pageViewConf.context.errorStatus = errorStatus;
 
+				context.metricName = `page-error.${context.app}.${errorStatus}`;
+
 				if (errorReason) {
 					context.errorReason = pageViewConf.context.errorReason = errorReason;
 				}
