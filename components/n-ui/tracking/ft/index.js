@@ -16,7 +16,7 @@ function getRootData (name) {
 }
 
 function findInQueryString (name) {
-	let exp = new RegExp(`[?&]${name}=([^?&]+)`);
+	let exp = new RegExp(`[?&]${name}=([^?&#]+)`);
 	return (String(window.location.search).match(exp) || [])[1];
 }
 
