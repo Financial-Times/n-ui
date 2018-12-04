@@ -6,6 +6,8 @@ const shellpromise = require('shellpromise');
 const shellpipe = require('./shellpipe');
 const grabNUiAssets = require('./grab-n-ui-assets');
 const assetHashes = require('../lib/generate-asset-hashes');
+const fetchres = require('fetchres');
+const circleFetch = require('./circle-fetch');
 
 const exit = err => {
 	logger.error(err);
@@ -50,14 +52,59 @@ const aboutJson = () => {
 		.then(about => fs.writeFileSync(path.join(process.cwd(), '/public/__about.json'), JSON.stringify(about, null, 2)));
 };
 
-const buildConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
-const cssEntryPoints = Object.keys(buildConfig.entry)
-	.map(target => [target, buildConfig.entry[target]])
-	.filter(([target]) => target.includes('.css'));
-
 program.version(nUiVersion);
 
 const webpackConfPath = path.join(__dirname, 'webpack.config.js');
+
+const DEFAULT_REGISTRY_URI = 'https://next-registry.ft.com/v2/services.json';
+
+const triggerMasterBuild = (project) => circleFetch(`/${project}/build`, { method: 'POST', body: JSON.stringify({ branch: 'master' }) });
+
+const lastMasterBuild = (project) => circleFetch(`/${project}/tree/master`);
+
+const getRepoName = ({ repository }) => {
+	if (/https?:\/\/github\.com\/Financial-Times\//.test(repository)) {
+		return repository
+			.replace(/https?:\/\/github\.com\/Financial-Times\//, '')
+			.replace(/\/$/, ''); // trim trailing "/"
+	}
+};
+
+const serves = type => app => type ? app.types && app.types.includes(type) : true;
+
+async function rebuild (options) {
+	const apps = options.apps;
+	const allApps = options.all;
+	const registry = options.registry || DEFAULT_REGISTRY_URI;
+	let appsToRebuild = [];
+
+	const areAppsToRebuild = (apps.length) || allApps;
+	if (!areAppsToRebuild) {
+		console.log('Use the --all flag to rebuild all apps or supply a specific app name.'); // eslint-disable-line no-console
+		process.exit(1);
+	}
+
+	if (apps.length) {
+		appsToRebuild = apps;
+	} else if (allApps) {
+		const registryData = await fetch(registry).then(fetchres.json);
+		appsToRebuild = registryData
+			.filter(serves(options.serves))
+			.map(getRepoName)
+			.filter(repo => repo);
+	}
+
+	return Promise.all(appsToRebuild.map(async app => {
+		console.log(`Considering whether to rebuild ${app}`); // eslint-disable-line no-console
+		try {
+			const [lastBuild] = await lastMasterBuild(app);
+			console.log(`Triggering master build for ${app} (git commit: ${lastBuild.vcs_revision})`); // eslint-disable-line no-console
+			await triggerMasterBuild(app);
+		} catch (error) {
+			console.log(`Skipped rebuild of ${app}, probably because Circle CI not set up for this repo`); // eslint-disable-line no-console
+		}
+	}));
+};
 
 program
 	.command('build')
@@ -69,6 +116,11 @@ program
 
 		devAdvice();
 		let concurrentCommands = [];
+
+		const buildConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
+		const cssEntryPoints = Object.keys(buildConfig.entry)
+			.map(target => [target, buildConfig.entry[target]])
+			.filter(([target]) => target.includes('.css'));
 
 		const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
 		const commands = {
@@ -106,6 +158,11 @@ program
 	.action(() => {
 
 		devAdvice();
+		const buildConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
+		const cssEntryPoints = Object.keys(buildConfig.entry)
+			.map(target => [target, buildConfig.entry[target]])
+			.filter(([target]) => target.includes('.css'));
+
 		const cssBuildWatchCommands = cssEntryPoints.map(([target, entry]) => {
 			const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
 			const entryDirectory = path.dirname(entry);
@@ -116,6 +173,22 @@ program
 		grabNUiAssets()
 			.then(() => shellpipe(`concurrently "webpack --watch --config ${webpackConfPath}" ${cssBuildWatchCommands}`))
 			.catch(exit);
+	});
+
+program
+	.command('rebuild [apps...]')
+	.description('Trigger a rebuild of the latest master on Circle')
+	.option('--all', 'Trigger rebuilds of all apps.')
+	.option('--registry [registry-uri]', `use this registry, instead of the default: ${DEFAULT_REGISTRY_URI}`, DEFAULT_REGISTRY_URI)
+	.option('--serves <type>', 'Trigger rebuilds of apps where type is served.')
+	.action((apps, opts) => {
+		devAdvice();
+		return rebuild({
+			apps: apps,
+			serves: opts.serves,
+			registry: opts.registry,
+			all: opts.all
+		}).catch(exit);
 	});
 
 program
