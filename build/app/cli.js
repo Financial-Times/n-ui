@@ -73,9 +73,7 @@ const getRepoName = ({ repository }) => {
 const serves = type => app => type ? app.types && app.types.includes(type) : true;
 
 async function rebuild (options) {
-	const apps = options.apps;
-	const allApps = options.all;
-	const registry = options.registry || DEFAULT_REGISTRY_URI;
+	const { apps, allApps, registry = DEFAULT_REGISTRY_URI } = options;
 	let appsToRebuild = [];
 
 	const areAppsToRebuild = (apps.length) || allApps;
