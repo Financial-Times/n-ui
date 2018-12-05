@@ -8,6 +8,7 @@ const grabNUiAssets = require('./grab-n-ui-assets');
 const assetHashes = require('../lib/generate-asset-hashes');
 const fetchres = require('fetchres');
 const circleFetch = require('./circle-fetch');
+const fetch = require('node-fetch');
 
 const exit = err => {
 	logger.error(err);
@@ -72,8 +73,20 @@ const getRepoName = ({ repository }) => {
 
 const serves = type => app => type ? app.types && app.types.includes(type) : true;
 
+const allAppsToRebuild = async (allApps, registry, servesType) => {
+	let appsToRebuildArray = [];
+
+	const registryData = await fetch(registry).then(fetchres.json);
+	appsToRebuildArray = registryData
+		.filter(serves(servesType))
+		.map(getRepoName)
+		.filter(repo => repo);
+
+	return appsToRebuildArray;
+};
+
 async function rebuild (options) {
-	const { apps, allApps, registry = DEFAULT_REGISTRY_URI } = options;
+	const { apps, allApps, servesType, registry = DEFAULT_REGISTRY_URI } = options;
 	let appsToRebuild = [];
 
 	const areAppsToRebuild = (apps.length) || allApps;
@@ -85,11 +98,7 @@ async function rebuild (options) {
 	if (apps.length) {
 		appsToRebuild = apps;
 	} else if (allApps) {
-		const registryData = await fetch(registry).then(fetchres.json);
-		appsToRebuild = registryData
-			.filter(serves(options.serves))
-			.map(getRepoName)
-			.filter(repo => repo);
+		appsToRebuild = await allAppsToRebuild(allApps, registry, servesType);
 	}
 
 	return Promise.all(appsToRebuild.map(async app => {
@@ -183,9 +192,9 @@ program
 		devAdvice();
 		return rebuild({
 			apps: apps,
-			serves: opts.serves,
+			servesType: opts.serves,
 			registry: opts.registry,
-			all: opts.all
+			allApps: opts.all
 		}).catch(exit);
 	});
 
