@@ -53,6 +53,13 @@ const aboutJson = () => {
 		.then(about => fs.writeFileSync(path.join(process.cwd(), '/public/__about.json'), JSON.stringify(about, null, 2)));
 };
 
+const getCssEntryPoints = () => {
+	const buildConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
+	return Object.keys(buildConfig.entry)
+		.map(target => [target, buildConfig.entry[target]])
+		.filter(([target]) => target.includes('.css'));
+};
+
 program.version(nUiVersion);
 
 const webpackConfPath = path.join(__dirname, 'webpack.config.js');
@@ -73,16 +80,16 @@ const getRepoName = ({ repository }) => {
 
 const serves = type => app => type ? app.types && app.types.includes(type) : true;
 
-const allAppsToRebuild = async (allApps, registry, servesType) => {
-	let appsToRebuildArray = [];
+const getAllAppsToRebuild = async (allApps, registry, servesType) => {
+	let allAppsToRebuild = [];
 
 	const registryData = await fetch(registry).then(fetchres.json);
-	appsToRebuildArray = registryData
+	allAppsToRebuild = registryData
 		.filter(serves(servesType))
 		.map(getRepoName)
 		.filter(repo => repo);
 
-	return appsToRebuildArray;
+	return allAppsToRebuild;
 };
 
 async function rebuild (options) {
@@ -98,7 +105,7 @@ async function rebuild (options) {
 	if (apps.length) {
 		appsToRebuild = apps;
 	} else if (allApps) {
-		appsToRebuild = await allAppsToRebuild(allApps, registry, servesType);
+		appsToRebuild = await getAllAppsToRebuild(allApps, registry, servesType);
 	}
 
 	return Promise.all(appsToRebuild.map(async app => {
@@ -124,11 +131,7 @@ program
 		devAdvice();
 		let concurrentCommands = [];
 
-		const buildConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
-		const cssEntryPoints = Object.keys(buildConfig.entry)
-			.map(target => [target, buildConfig.entry[target]])
-			.filter(([target]) => target.includes('.css'));
-
+		const cssEntryPoints = getCssEntryPoints();
 		const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
 		const commands = {
 			jsOnly: `'webpack ${options.production ? '--mode=production' : ''} --config ${webpackConfPath}'`,
@@ -165,10 +168,7 @@ program
 	.action(() => {
 
 		devAdvice();
-		const buildConfig = require(path.join(process.cwd(), 'n-ui-build.config.js'));
-		const cssEntryPoints = Object.keys(buildConfig.entry)
-			.map(target => [target, buildConfig.entry[target]])
-			.filter(([target]) => target.includes('.css'));
+		const cssEntryPoints = getCssEntryPoints();
 
 		const cssBuildWatchCommands = cssEntryPoints.map(([target, entry]) => {
 			const script = './node_modules/@financial-times/n-ui/scripts/build-sass.sh';
