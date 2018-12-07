@@ -94,7 +94,7 @@ async function rebuild (options) {
 	const { apps, allApps, servesType, registry = DEFAULT_REGISTRY_URI } = options;
 	let appsToRebuild = [];
 
-	const areAppsToRebuild = (apps.length) || allApps;
+	const areAppsToRebuild = apps.length || allApps;
 	if (!areAppsToRebuild) {
 		console.log('Use the --all flag to rebuild all apps or supply a specific app name.'); // eslint-disable-line no-console
 		process.exit(1);
