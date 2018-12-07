@@ -84,12 +84,10 @@ const getAllAppsToRebuild = async (allApps, registry, servesType) => {
 	let allAppsToRebuild = [];
 
 	const registryData = await fetch(registry).then(fetchres.json);
-	allAppsToRebuild = registryData
+	return allAppsToRebuild = registryData
 		.filter(serves(servesType))
 		.map(getRepoName)
 		.filter(repo => repo);
-
-	return allAppsToRebuild;
 };
 
 async function rebuild (options) {
