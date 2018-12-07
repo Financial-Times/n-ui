@@ -87,7 +87,7 @@ const getAllAppsToRebuild = async (allApps, registry, servesType) => {
 	return allAppsToRebuild = registryData
 		.filter(serves(servesType))
 		.map(getRepoName)
-		.filter(repo => repo);
+		.filter(Boolean);
 };
 
 async function rebuild (options) {
