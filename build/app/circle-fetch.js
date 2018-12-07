@@ -1,10 +1,4 @@
 const fetch = require('node-fetch');
-const keys = require('../lib/rebuild-keys');
-
-const getCircleToken = () =>
-	process.env.CIRCLECI_REBUILD_KEY
-		? Promise.resolve(process.env.CIRCLECI_REBUILD_KEY)
-		: keys().then(env => env.CIRCLECI_REBUILD_KEY);
 
 module.exports = async function circleFetch (path, opts) {
 	const defaultOptions = {
@@ -15,7 +9,7 @@ module.exports = async function circleFetch (path, opts) {
 		}
 	};
 
-	const circleToken = await getCircleToken();
+	const circleToken = process.env.CIRCLECI_REBUILD_KEY;
 	const options = Object.assign(defaultOptions, opts);
 	const url = `https://circleci.com/api/v1.1/project/github/Financial-Times${path}?circle-token=${circleToken}`;
 
