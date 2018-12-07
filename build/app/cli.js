@@ -81,10 +81,9 @@ const getRepoName = ({ repository }) => {
 const serves = type => app => type ? app.types && app.types.includes(type) : true;
 
 const getAllAppsToRebuild = async (allApps, registry, servesType) => {
-	let allAppsToRebuild = [];
 
 	const registryData = await fetch(registry).then(fetchres.json);
-	return allAppsToRebuild = registryData
+	return registryData
 		.filter(serves(servesType))
 		.map(getRepoName)
 		.filter(Boolean);
