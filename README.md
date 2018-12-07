@@ -120,7 +120,7 @@ In the app (e.g. next-article):
 - `make build` - !! need to do this for each change in either n-ui or front facing app.
 - `make run`
 
-To test the cli locally, use `../n-ui/./bin/nui.js build` or `../n-ui/./bin/nui.js watch` from within a local copy of a user-facing app. To test the rebuild command first set the `CIRCLECI_REBUILD_KEY` environment variable using `export CIRCLECI_REBUILD_KEY={key}` (you can find the key in n-ui's continuous-integration folder in Vault). You can then use `./bin/nui.js rebuild next-search-page` within your local copy of n-ui (perhaps comment out the call to `triggerMasterBuild` in the rebuild function when testing the `./bin/nui.js rebuild --all --serves user-page` command so you avoid actually causing all apps to rebuild ;)).
+To test the cli locally, use `../n-ui/bin/nui.js build` or `../n-ui/bin/nui.js watch` from within a local copy of a user-facing app. To test the rebuild command first set the `CIRCLECI_REBUILD_KEY` environment variable using `export CIRCLECI_REBUILD_KEY={key}` (you can find the key in n-ui's continuous-integration folder in Vault). You can then use `./bin/nui.js rebuild next-search-page` within your local copy of n-ui (perhaps comment out the call to `triggerMasterBuild` in the rebuild function when testing the `./bin/nui.js rebuild --all --serves user-page` command so you avoid actually causing all apps to rebuild ;)).
 
 
 ### Releasing n-ui
