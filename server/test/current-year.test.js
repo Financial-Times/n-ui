@@ -26,14 +26,14 @@ describe('current year middleware', () => {
 			.end(done);
 	});
 
-	it('should set the res.locals.currentYear property to 2018', (done) => {
+	it('should set the res.locals.currentYear property to 2019', (done) => {
 		request(app)
 			.get('/')
 			.expect(() => {
 				expect(locals).to.have.own.property('currentYear');
 				// this will break every year, but better to be sure it's working
 				// than using the same code logic to validate the year
-				expect(locals.currentYear).to.equal(2018);
+				expect(locals.currentYear).to.equal(2019);
 			})
 			.end(done);
 	});
