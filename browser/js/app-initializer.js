@@ -10,7 +10,6 @@ import * as serviceWorker from 'n-service-worker';
 import * as syndication from 'n-syndication';
 import feedback from 'n-feedback';
 import { perfMark } from 'n-ui-foundations';
-import speedcurveLux from '../../components/n-ui/speedcurve-lux';
 
 //Polyfill for :focus-visible https://github.com/WICG/focus-visible
 import 'focus-visible';
@@ -131,10 +130,6 @@ export class AppInitializer {
 
 		if (this.enabledFeatures.lazyLoadImages) {
 			lazyLoadImages();
-		}
-
-		if (flags.get('speedcurveLuxFlagsSupport')) {
-			speedcurveLux.addFlags();
 		}
 
 		allStylesLoaded
