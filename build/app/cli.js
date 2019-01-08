@@ -30,7 +30,7 @@ let appPackageJson;
 const getAppVersion = () => {
 	if(process.env.SOURCE_VERSION) {
 		// For apps that use the heroku-postbuild to build, there is no git repository
-		// so we need to enable Dyno Metadata and get the commit hash from environment variable
+		// so we need get the commit hash from environment variable
 		return Promise.resolve(process.env.SOURCE_VERSION);
 	} else {
 		return shellpromise('git rev-parse HEAD | xargs echo -n');
