@@ -98,6 +98,17 @@
 		{{#if @root.flags.adsInizioSurvey}}
 			<script async src="https://cdn.brandmetrics.com/survey/script/45b903c6675b4a9b85db13385a3d6084.js"></script>
 		{{/if}}
+		{{#if @root.flags.floodlight}}
+			<!-- Global site tag (gtag.js) - Google Marketing Platform -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=DC-9073629"></script>
+			<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag() { dataLayer.push(arguments); }
+				gtag('js', new Date());
+
+				gtag('config', 'DC-9073629');
+			</script>
+		{{/if}}
 	</head>
 	<body data-next-is-logged-in="{{@root.anon.userIsLoggedIn}}" data-trackable="page:{{@root.__name}}{{#if @root.trackablePageName}}/{{@root.trackablePageName}}{{/if}}">
 		{{#if withGcs}}
