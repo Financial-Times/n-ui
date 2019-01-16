@@ -11,6 +11,8 @@ const getTeaserTestContext = function (teasersUnderTest) {
 		Object.assign({}, {contentId: element.getAttribute('data-content-id'), variant: element.getAttribute('data-trackable-context-teaser-variant') } );
 	} );
 
+	console.log('transformed teasers = ' + JSON.stringify(transformedTeasers));
+
 	return {hello: 'roland'};
 
 };
