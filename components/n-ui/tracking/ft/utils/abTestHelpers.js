@@ -1,20 +1,18 @@
 
-const getTeaserTestContext = function (teasersUnderTest) {
+const getTeaserTestContext = function (doc) {
 
-	for (i=0; i<teasersUnderTest.length; i++) {
-	  alert(i);
+	const teasersUnderTest = [].slice.call(doc.querySelectorAll('[data-trackable-context-teaser-variant]'));
+	var transformedTeasers = [];
+	for (var i=0; i<teasersUnderTest.length; i++) {
+	  transformedTeasers.push(
+		{
+			content_id: teasersUnderTest[i].getAttribute('data-content-id'),
+			variant: teasersUnderTest[i].getAttribute('data-trackable-context-teaser-variant'),
+			headline_text: teasersUnderTest[i].innerText
+		} 
+	  );
 	}
-
-		// todo go through each one and get the contentid, the variant name and (optionally, the variant text).
-	// todo include the actual headline text
-	const transformedTeasers = teasersUnderTest.map( (element, index, array) => { 
-		Object.assign({}, {contentId: element.getAttribute('data-content-id'), variant: element.getAttribute('data-trackable-context-teaser-variant') } );
-	} );
-
-	console.log('transformed teasers = ' + JSON.stringify(transformedTeasers));
-
-	return {hello: 'roland'};
-
+	return transformedTeasers;
 };
 
-module.exports = getTeaserTestContext;
+module.exports.getTeaserTestContext = getTeaserTestContext;

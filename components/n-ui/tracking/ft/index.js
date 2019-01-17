@@ -122,8 +122,6 @@ const oTrackingWrapper = {
 				useSendBeacon: flags.get('sendBeacon')
 			});
 
-			alert('1 hello. in tracking index.js, about to set page context with headline testing info ');
-
 			//headline testing, add variant to the page view event as long as there is only one article under test
 			if (location.pathname === '/') {
 				const alternativeHeadlines = [].slice.call(document.querySelectorAll('[data-trackable-context-headline-variant]'));
@@ -134,11 +132,10 @@ const oTrackingWrapper = {
 					pageViewConf.context['headline-uuid'] = articleUuid;
 				}
 			}
-			//teaser testing (supersedes 'headline' testing). Add extra page context info related to the relevant teasers under test.
+
+			//teaser-testing (supersedes 'headline' testing). Add extra page context info related to the relevant teasers under test.
 			if (location.pathname === '/') {
-				const teasersUnderTest = [].slice.call(document.querySelectorAll('[data-trackable-context-teaser-variant]'));
-				const transformedTeasers = abTestHelpers.getTeaserTestContext(teasersUnderTest);
-				pageViewConf.context['teaser-testing'] = transformedTeasers;
+				pageViewConf.context['teaser_tests'] = abTestHelpers.getTeaserTestContext(document);
 			}
 
 			// barriers
