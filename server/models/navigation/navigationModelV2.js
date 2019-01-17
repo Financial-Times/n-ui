@@ -121,11 +121,11 @@ module.exports = class NavigationModelV2 {
 
 		if(this.options.withNavigationHierarchy){
 			res.locals.navigation.idMap = this.idMapPoller.getData() || {};
-			let hierarcyApiUrl = this.apiHierarcyUrl + currentUrl;
-			fetch(hierarcyApiUrl)
+			let hierarchyApiUrl = this.apiHierarcyUrl + currentUrl;
+			fetch(hierarchyApiUrl)
 				.then(response => {
 					if(!response.ok){
-						return Promise.reject({event:'NAVIGATION_HIERARCHY_FAILED', status:response.status, url:hierarcyApiUrl});
+						return Promise.reject({event:'NAVIGATION_HIERARCHY_FAILED', status:response.status, url:hierarchyApiUrl});
 					}else{
 						return response.json();
 					}
