@@ -15,9 +15,7 @@ describe('abTestHelpers', function () {
 			data-trackable="main-link"							
 			data-trackable-context-headline-variant="variant1"
 			data-trackable-context-teaser-variant="variant77"
-		>
-			Greece racks up surplus by keeping foot on brake
-		</a>
+		>Greece racks up surplus by keeping foot on brake</a>
 	</div>
 	<div class="o-teaser__heading js-teaser-heading">
 	<a 	href="/content/00000000-0000-0000-0000-222222222222"
@@ -26,9 +24,7 @@ describe('abTestHelpers', function () {
 		data-trackable="main-link"							
 		data-trackable-context-headline-variant="variant2"
 		data-trackable-context-teaser-variant="variant4"
-	>
-		A second teaser headline
-</a>
+	>A second teaser headline</a>
 </div>
 `;
 
