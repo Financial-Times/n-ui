@@ -2,16 +2,15 @@
 const getTeaserTestContext = function (doc) {
 
 	const teasersUnderTest = [].slice.call(doc.querySelectorAll('[data-trackable-context-teaser-variant]'));
-	var transformedTeasers = [];
-	for (var i=0; i<teasersUnderTest.length; i++) {
-	  transformedTeasers.push(
-		{
-			content_id: teasersUnderTest[i].getAttribute('data-content-id'),
-			variant: teasersUnderTest[i].getAttribute('data-trackable-context-teaser-variant'),
-			headline_text: teasersUnderTest[i].innerText
-		} 
-	  );
-	}
+
+	const transformedTeasers = teasersUnderTest.map(teaser => 
+     ({
+				content_id: teaser.getAttribute('data-content-id'),
+				variant: teaser.getAttribute('data-trackable-context-teaser-variant'),
+				headline_text: teaser.innerText
+    })
+	);
+
 	return transformedTeasers;
 };
 
