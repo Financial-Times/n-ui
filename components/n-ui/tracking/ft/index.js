@@ -2,6 +2,7 @@ const oTracking = require('o-tracking');
 const oGrid = require('o-grid');
 const oViewport = require('o-viewport');
 const nextEvents = require('./next-events');
+const abTestHelpers = require('./utils/abTestHelpers');
 
 
 import {broadcast} from 'n-ui-foundations';
@@ -130,6 +131,11 @@ const oTrackingWrapper = {
 					const articleUuid = alternativeHeadlines[0].getAttribute('href').replace('/content/', '');
 					pageViewConf.context['headline-uuid'] = articleUuid;
 				}
+			}
+
+			//teaser-testing (supersedes 'headline' testing). Add extra page context info related to the relevant teasers under test.
+			if (location.pathname === '/') {
+				pageViewConf.context['teaser_tests'] = abTestHelpers.getTeaserTestContext(document);
 			}
 
 			// barriers
