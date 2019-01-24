@@ -26,20 +26,24 @@ module.exports = function (flags) {
 	const spoor = (spoorId) ? spoorId[1] : '';
 	const ts = Date.now();
 
-	const addPixel = (src) => {
-		const i = new Image();
-		i.src = src;
+	// NOTE: this is sometimes referred to as NGDA
+	const customTrackingEvent = (data) => {
 		let event = new CustomEvent('oTracking.event', {
 			detail: {
 				category: 'marketing-floodlight',
 				action: 'fired',
-				data: {
-					source: src
-				}
+				data
 			},
 			bubbles: true
 		});
 		document.body.dispatchEvent(event);
+	};
+
+	const addPixel = (src) => {
+		const i = new Image();
+		i.src = src;
+
+		customTrackingEvent({ source: src })
 	};
 
 	const gtagEvent = (sendTo) => {
@@ -67,10 +71,14 @@ module.exports = function (flags) {
 			gtagEvent('DC-9073629/ftcon0/ftsub0+standard');
 		} else if (isBarrier) {
 			gtagEvent('DC-9073629/ftbar0/ftlan0+standard');
+			// Note: move this call into the `gtagEvent` call when removing the old code.
+			customTrackingEvent();
 		} else if (isSubscriber) {
 			gtagEvent('DC-9073629/ftsub0/ftlog0+standard');
+			customTrackingEvent();
 		} else if (isRegistered) {
 			gtagEvent('DC-9073629/ftreg0/ftlog0+standard');
+			customTrackingEvent();
 		} else if (isAnonymous) {
 			addPixel(`${host};type=homeo886;cat=ft-ne000;u10=${spoor};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=${ts};num=1`);
 			gtagEvent('DC-9073629/ftrem0/ftsit0+standard');
