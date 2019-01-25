@@ -31,7 +31,8 @@ const queryStrings = {
 			'Array.prototype.@@iterator',
 			'EventSource',
 			'Number.isInteger',
-			'Object.entries'
+			'Object.entries',
+			'String.prototype.padStart'
 		],
 		flags: 'gated'
 	}),
