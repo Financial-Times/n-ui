@@ -112,12 +112,6 @@ module.exports = options => {
 		next();
 	});
 
-	// Adding flag for the USA sale @todo remove when sale has finished
-	app.use(function (req, res, next) {
-		res.locals.isUsa = req.get('Country-Code') === 'USA';
-		next();
-	});
-
 	if (options.withAssets) {
 		assetManager.init(options, meta.directory, app);
 	}

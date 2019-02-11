@@ -33,9 +33,9 @@ describe('Config', () => {
 			const gptAttributes = {
 				network: '5887',
 				site: 'ft.com',
-				zone: 'unclassified'
+				zone: 'unclassified',
+				rendering: 'sra'
 			};
-
 			expect(config.gpt).to.deep.equal(gptAttributes);
 		});
 
@@ -46,11 +46,17 @@ describe('Config', () => {
 			const gptAttributes = {
 				network: '5887',
 				site: 'sandbox.next.ft',
-				zone: 'unclassified'
+				zone: 'unclassified',
+				rendering: 'sra'
 			};
 			expect(config.gpt).to.deep.equal(gptAttributes);
 		});
 
+		it('Should not set sra when flag is set to false', () => {
+			const flags = { get: (param) => param === 'adsEnableSRA' ? false : true };
+			const config = oAdsConfig(flags, 'article');
+			expect(config.gpt.rendering).not.to.be.ok;
+		});
 
 		it('Should set krux configuration when flag is set to false', () => {
 			const flags = { get: () => true };

@@ -2,6 +2,7 @@ const oTracking = require('o-tracking');
 const oGrid = require('o-grid');
 const oViewport = require('o-viewport');
 const nextEvents = require('./next-events');
+const abTestHelpers = require('./utils/abTestHelpers');
 
 
 import {broadcast} from 'n-ui-foundations';
@@ -51,10 +52,9 @@ const oTrackingWrapper = {
 				context.rootContentId = contentId;
 			}
 
-			const conceptId = getRootData('concept-idv1') || getRootData('concept-id');
+			const conceptId = getRootData('concept-id');
 			if (conceptId) {
 				context.rootConceptId = conceptId;
-				context.rootConceptIdV1 = getRootData('concept-idv1');
 				context.rootTaxonomy = getRootData('taxonomy');
 			}
 
@@ -68,6 +68,8 @@ const oTrackingWrapper = {
 				context.url = pageViewConf.context.url = window.parent.location.toString();
 				context.referrer = pageViewConf.context.referrer = window.parent.document.referrer;
 				context.errorStatus = pageViewConf.context.errorStatus = errorStatus;
+
+				context.metricName = `page-error.${context.app}.${errorStatus}`;
 
 				if (errorReason) {
 					context.errorReason = pageViewConf.context.errorReason = errorReason;
@@ -129,6 +131,11 @@ const oTrackingWrapper = {
 					const articleUuid = alternativeHeadlines[0].getAttribute('href').replace('/content/', '');
 					pageViewConf.context['headline-uuid'] = articleUuid;
 				}
+			}
+
+			//teaser-testing (supersedes 'headline' testing). Add extra page context info related to the relevant teasers under test.
+			if (location.pathname === '/') {
+				pageViewConf.context['teaser_tests'] = abTestHelpers.getTeaserTestContext(document);
 			}
 
 			// barriers

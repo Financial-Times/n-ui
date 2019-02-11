@@ -121,11 +121,11 @@ module.exports = class NavigationModelV2 {
 
 		if(this.options.withNavigationHierarchy){
 			res.locals.navigation.idMap = this.idMapPoller.getData() || {};
-			let hierarcyApiUrl = this.apiHierarcyUrl + currentUrl;
-			fetch(hierarcyApiUrl)
+			let hierarchyApiUrl = this.apiHierarcyUrl + currentUrl;
+			fetch(hierarchyApiUrl)
 				.then(response => {
 					if(!response.ok){
-						return Promise.reject({event:'NAVIGATION_HIERARCHY_FAILED', status:response.status, url:hierarcyApiUrl});
+						return Promise.reject({event:'NAVIGATION_HIERARCHY_FAILED', status:response.status, url:hierarchyApiUrl});
 					}else{
 						return response.json();
 					}
@@ -138,7 +138,11 @@ module.exports = class NavigationModelV2 {
 				})
 				.catch(e => {
 					if(e.event){
-						log.error(e);
+						if (e.status === 404) {
+							log.debug(e); // No need to log 404 as an error, as it might spam the logs
+						} else {
+							log.error(e);
+						}						
 					}else{
 						log.error({event:'NAVIGATION_HIERARCHY_ERROR', error:e.message});
 					}

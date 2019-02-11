@@ -61,13 +61,6 @@
 		}
 	}
 
-	// add next opt-out buttons
-	.o-header__drawer-menu-button {
-		@include oButtons($theme: primary);
-		display: block;
-		margin: $_o-header-drawer-padding-x;
-	}
-
 	.o-header__mega {
 		@include nUiZIndexFor('meganav');
 	}
@@ -116,28 +109,6 @@
 .o-header--sticky {
 	@include nUiZIndexFor('sticky-header');
 	display: block;
-}
-
-.o-header__drawer__viewtoggle {
-	display: flex;
-	align-items: center;
-	padding: 0 16px;
-	font-size: 18px;
-	width: 100%;
-	box-sizing: border-box;
-	border-top: 1px solid #cec6b9;
-	border-bottom: 1px solid #cec6b9;
-
-	.o-header__viewtoggle__label {
-		padding: 12px 12px 12px 0;
-	}
-}
-
-.o-header__drawer__view-toggle-item--active {
-	color: getColorFor(page, text);
-	border: 0;
-	cursor: text;
-	font-weight: bold;
 }
 
 @media print {

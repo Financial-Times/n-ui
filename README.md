@@ -120,6 +120,9 @@ In the app (e.g. next-article):
 - `make build` - !! need to do this for each change in either n-ui or front facing app.
 - `make run`
 
+To test the cli locally, use `../n-ui/bin/nui.js build` or `../n-ui/bin/nui.js watch` from within a local copy of a user-facing app. To test the rebuild command first set the `CIRCLECI_REBUILD_KEY` environment variable using `export CIRCLECI_REBUILD_KEY={key}` (you can find the key in n-ui's continuous-integration folder in Vault). You can then use `./bin/nui.js rebuild next-search-page` within your local copy of n-ui (perhaps comment out the call to `triggerMasterBuild` in the rebuild function when testing the `./bin/nui.js rebuild --all --serves user-page` command so you avoid actually causing all apps to rebuild ;)).
+
+
 ### Releasing n-ui
 
 When you release an n-ui tag, 3 things happen:
@@ -219,9 +222,22 @@ In same cases you might need to show only the FT logo in the header, and hide al
 }
 ```
 
-#### Header with not-clickable logo, and hide footer
+##### Header with not-clickable logo, and hide footer
 If your page will be linked to from the iOS app, and no outbound navigation from it is allowed, then the flag 'hideOutboundLinks' will be set to true for you.
 This will render the header logo without it being a link, and hide the page footer.
+
+#### Footer modifications
+Similar nUi controls exist for footer. Current configuration allows footer theme changes and option disabling.
+```javascript
+{
+    nUi: {
+        footer: {
+            themeLight: true,
+            legalOnly:  true
+        }
+    }
+}
+```
 
 ### Other enhancements
 - Our [Handlebars](http://handlebarsjs.com/) engine loads partials from `bower_components` and has a number of [additional helpers](https://github.com/Financial-Times/n-handlebars). It also points to [n-layout](https://github.com/Financial-Times/n-layout) to provide a vanilla and “wrapper” layout
