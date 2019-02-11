@@ -24,15 +24,18 @@ const queryStrings = {
 			'Array.prototype.find',
 			'Array.prototype.findIndex',
 			'Array.prototype.includes',
+			'Array.prototype.@@iterator',
 			'IntersectionObserver',
 			'Map',
+			'Set',
 			'Array.from',
+			'NodeList.prototype.forEach',
 			'NodeList.prototype.@@iterator',
-			'Array.prototype.@@iterator',
 			'EventSource',
 			'Number.isInteger',
 			'Object.entries',
-			'String.prototype.padStart'
+			'String.prototype.padStart',
+			'String.prototype.padEnd'
 		],
 		flags: 'gated'
 	}),
