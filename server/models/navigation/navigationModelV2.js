@@ -142,7 +142,7 @@ module.exports = class NavigationModelV2 {
 							log.debug(e); // No need to log 404 as an error, as it might spam the logs
 						} else {
 							log.error(e);
-						}						
+						}
 					}else{
 						log.error({event:'NAVIGATION_HIERARCHY_ERROR', error:e.message});
 					}

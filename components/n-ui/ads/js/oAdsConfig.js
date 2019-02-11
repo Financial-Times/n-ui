@@ -78,15 +78,9 @@ module.exports = function (flags, appName, adOptions) {
 	}
 
 	function getLazyLoadConfig () {
-		// Switch off lazy loading in Q4.
-		if(/^front/.test(appName) && flags.get('noLazyLoadingFrontPage')) {
-			return false;
-		}
-		else {
-			return {
-				viewportMargin: getViewportMargin()
-			};
-		}
+		return {
+			viewportMargin: getViewportMargin()
+		};
 	}
 
 	function getViewportMargin () {
