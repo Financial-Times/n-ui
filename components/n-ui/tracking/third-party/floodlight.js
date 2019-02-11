@@ -43,7 +43,7 @@ module.exports = function (flags) {
 		const i = new Image();
 		i.src = src;
 
-		customTrackingEvent({ source: src })
+		customTrackingEvent({ source: src });
 	};
 
 	const gtagEvent = (sendTo) => {
