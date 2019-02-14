@@ -1,4 +1,4 @@
-import { broadcast } from 'n-ui-foundations';
+const broadcast = require('n-ui-foundations').broadcast;
 
 module.exports = (timingsObject, slotDetails) => {
 	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
