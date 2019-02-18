@@ -1,8 +1,11 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
 const sendMetrics = require('../js/metrics');
-const utils = require('n-ui-foundations');
+const broadcastStub = sinon.stub();
 
-const broadcast = sinon.stub(utils, 'broadcast').callsFake(() => {});
+// Inject the broadcastStub into sendMetrics with Rewire
+// https://github.com/speedskater/babel-plugin-rewire
+// set in /build/webpack/loaders/es5.js
+sendMetrics.__Rewire__('broadcast', broadcastStub);
 
 const timingsObject = {
 	firstAdLoaded: 1000,
@@ -18,7 +21,7 @@ describe('Metrics', () => {
 
 	afterEach(() => {
 		window.performance = saveWindowPerformance;
-		broadcast.reset();
+		broadcastStub.reset();
 	});
 
 	it('should call broadcast with correct values', () => {
@@ -55,18 +58,18 @@ describe('Metrics', () => {
 			},
 			container: { getAttribute: () => 'Billboard' }
 		});
-		expect(broadcast).to.have.been.calledWith('oTracking.event', expectedTrackingObject);
+		expect(broadcastStub).to.have.been.calledWith('oTracking.event', expectedTrackingObject);
 	});
 
 	it('should not broadcast if performance is undefined', () => {
 		window.performance = undefined;
 		sendMetrics(timingsObject);
-		expect(broadcast).not.to.have.been.called;
+		expect(broadcastStub).not.to.have.been.called;
 	});
 
 	it('should not broadcast if not passed an object', () => {
 		sendMetrics();
-		expect(broadcast).not.to.have.been.called;
+		expect(broadcastStub).not.to.have.been.called;
 	});
 
 });

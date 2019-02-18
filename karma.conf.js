@@ -19,7 +19,7 @@ module.exports = function (karma) {
 			obj[name + '/**/*.spec.js'] = ['webpack', 'sourcemap'];
 			return obj;
 		}, {}),
-		webpack: webpackMerge(commonConfig(['commonOptions', 'es5']), {
+		webpack: webpackMerge(commonConfig(['commonOptions', ['es5', { karmaTest: true }]]), {
 			devtool: 'inline-source-map'
 		}),
 		webpackMiddleware: {

@@ -55,7 +55,7 @@ function babelLoaderConfig (opts) {
 }
 
 function loaderPluginsConfig (opts) {
-	return [
+	const loaderPlugins = [
 		// converts `export default 'foo'` to `exports.default = 'foo'`
 		require.resolve('babel-plugin-add-module-exports'),
 		// includes Babel's regenerator	runtime (once only)
@@ -74,4 +74,8 @@ function loaderPluginsConfig (opts) {
 			}
 		]
 	];
+	if(opts.karmaTest) {
+		loaderPlugins.push(require.resolve('babel-plugin-rewire'));
+	}
+	return loaderPlugins;
 }

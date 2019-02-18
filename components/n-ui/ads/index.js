@@ -5,8 +5,8 @@ const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
 const sendMetrics = require('./js/metrics');
 
-import nCounterAdBlocking from 'n-counter-ad-blocking';
-import { perfMark } from 'n-ui-foundations';
+const nCounterAdBlocking = require('n-counter-ad-blocking');
+const perfMark = require('n-ui-foundations').perfMark;
 
 let slotCount;
 let slotsRendered = 0;
