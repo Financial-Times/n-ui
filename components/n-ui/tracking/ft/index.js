@@ -3,9 +3,7 @@ const oGrid = require('o-grid');
 const oViewport = require('o-viewport');
 const nextEvents = require('./next-events');
 const abTestHelpers = require('./utils/abTestHelpers');
-const nUiFoundations = require('n-ui-foundations');
-const broadcast = nUiFoundations.broadcast;
-
+const broadcast = require('n-ui-foundations').broadcast;
 
 function nodesToArray (nodelist) {
 	return [].slice.call(nodelist);
