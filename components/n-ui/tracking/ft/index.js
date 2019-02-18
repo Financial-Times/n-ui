@@ -4,6 +4,7 @@ const oViewport = require('o-viewport');
 const nextEvents = require('./next-events');
 const abTestHelpers = require('./utils/abTestHelpers');
 const nUiFoundations = require('n-ui-foundations');
+const broadcast = nUiFoundations.broadcast;
 
 
 function nodesToArray (nodelist) {
@@ -167,7 +168,7 @@ const oTrackingWrapper = {
 
 				const barrierReferrer = (/barrierReferrer=(\w+)/.exec(window.location.search) || [])[1];
 
-				nUiFoundations.broadcast('oTracking.event', Object.assign({
+				broadcast('oTracking.event', Object.assign({
 					category: 'barrier',
 					action: 'view',
 					opportunity: opportunity,
@@ -180,7 +181,7 @@ const oTrackingWrapper = {
 			}
 
 		} catch (err) {
-			nUiFoundations.broadcast('oErrors.log', {
+			broadcast('oErrors.log', {
 				error: err,
 				info: {
 					message: 'Failed to init o-tracking'
