@@ -1,4 +1,4 @@
-const polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v2/polyfill.min.js';
+const polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v3/polyfill.min.js';
 function buildQueryString (qsConfig) {
 	const qs = [];
 
