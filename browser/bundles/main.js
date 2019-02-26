@@ -1,5 +1,5 @@
 // Expose entry points to shared bundle
-import oAds from 'o-ads';
+import oAds from '@financial-times/o-ads';
 import ads from '../../components/n-ui/ads';
 import tracking from '../../components/n-ui/tracking';
 import roe from '../../components/n-ui/roe';

@@ -1,6 +1,6 @@
 const Superstore = require('superstore');
 const store = new Superstore('session', 'next-krux');
-const oAds = require('o-ads');
+const oAds = require('@financial-times/o-ads');
 
 const addPixel = (src) => {
 	const img = new Image();

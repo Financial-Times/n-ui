@@ -1,5 +1,5 @@
 const krux = require('./js/krux');
-const Ads = window.oAds = require('o-ads');
+const Ads = window.oAds = require('@financial-times/o-ads');
 //TODO move to central shared utils
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');

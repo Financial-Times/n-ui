@@ -1,5 +1,5 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
-const ads = require('o-ads');
+const ads = require('@financial-times/o-ads');
 const main = require('../index');
 const utils = require('../js/utils');
 const markup = require('./helpers/markup');

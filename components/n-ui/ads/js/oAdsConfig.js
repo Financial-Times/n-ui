@@ -1,7 +1,7 @@
 const utils = require('./utils');
 const sandbox = require('./sandbox');
 const oTrackingCore = require('o-tracking/src/javascript/core.js');
-const extend = require('o-ads').utils.extend;
+const extend = require('@financial-times/o-ads').utils.extend;
 const apiUrlRoot = 'https://ads-api.ft.com/v1/';
 
 module.exports = function (flags, appName, adOptions) {
