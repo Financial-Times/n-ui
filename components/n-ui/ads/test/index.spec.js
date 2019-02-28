@@ -67,8 +67,7 @@ describe('Main', () => {
 			.then(() =>{
 				document.addEventListener('oAdsLogTestDone', () => {
 					expect(info).to.have.been.calledWith('Ad loaded in slot');
-					expect(perfMark).to.have.been.calledOnce;
-					expect(perfMark).to.have.been.calledWith('firstAdLoaded');
+					expect(perfMark).to.have.been.calledOnceWith('firstAdLoaded');
 					done();
 				});
 				document.dispatchEvent(new CustomEvent('oAds.complete', { detail: { type: 's1', slot: { gpt: { isEmpty: false }}}}));
