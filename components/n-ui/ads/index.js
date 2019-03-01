@@ -65,7 +65,6 @@ function onAdsComplete (flags, event) {
 		if (detail.slot.gpt && detail.slot.gpt.isEmpty === false) {
 			utils.log.info('Ad loaded in slot', event);
 			if (slotsRendered === 0) {
-				console.log('firstAdLoaded');
 				perfMark('firstAdLoaded');
 
 					customTimings.firstAdLoaded = new Date().getTime();
@@ -83,7 +82,6 @@ function onAdsComplete (flags, event) {
 			utils.log.warn('Failed to load ad, details below');
 			utils.log(event);
 		}
-		console.log('increase slot rendered');
 		slotsRendered++;
 	}
 

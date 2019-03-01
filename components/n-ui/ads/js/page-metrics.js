@@ -9,10 +9,8 @@ const setupPageMetrics = () => {
 
 const recordPerfMarkForEvent = (eventName) => {
 	const listenerName = 'oAds.' + eventName;
-	console.log('adding + ', listenerName);
 	document.addEventListener(listenerName, function handler() {
 		perfMark(eventToPerfmarkMap[eventName]);
-		console.log('removing + ', listenerName);
 		document.removeEventListener(listenerName, handler);
 	});
 };
