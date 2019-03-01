@@ -7,13 +7,19 @@ const setupPageMetrics = () => {
 	mapEventsToPerfMarks();
 };
 
+const recordPerfMarkForEvent = (eventName) => {
+	const listenerName = 'oAds.' + eventName;
+	console.log('adding + ', listenerName);
+	document.addEventListener(listenerName, function handler() {
+		perfMark(eventToPerfmarkMap[eventName]);
+		console.log('removing + ', listenerName);
+		document.removeEventListener(listenerName, handler);
+	});
+};
+
 const mapEventsToPerfMarks = () => {
 	for (const eventName in eventToPerfmarkMap) {
-		const listenerName = 'oAds.' + eventName;
-		document.addEventListener(listenerName, function handler() {
-			perfMark(eventToPerfmarkMap[eventName]);
-			document.removeEventListener(listenerName, handler);
-		});
+		recordPerfMarkForEvent(eventName);
 	}
 };
 
@@ -59,4 +65,4 @@ const getPagePerfMarks = (markNames) => {
 	return marks;
 };
 
-module.exports = setupPageMetrics;
+module.exports = { setupPageMetrics };

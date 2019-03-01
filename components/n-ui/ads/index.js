@@ -4,7 +4,7 @@ const Ads = window.oAds = require('o-ads');
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
 const sendMetrics = require('./js/metrics');
-const setupPageMetrics = require('./js/page-metrics');
+const pageMetrics = require('./js/page-metrics');
 
 const nCounterAdBlocking = require('n-counter-ad-blocking');
 const perfMark = require('n-ui-foundations').perfMark;
@@ -19,7 +19,7 @@ let oadsGptDisplay = false;
 function initOAds (flags, appName, adOptions) {
 	const initObj = oAdsConfig(flags, appName, adOptions);
 
-	setupPageMetrics();
+	pageMetrics.setupPageMetrics();
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
@@ -65,6 +65,7 @@ function onAdsComplete (flags, event) {
 		if (detail.slot.gpt && detail.slot.gpt.isEmpty === false) {
 			utils.log.info('Ad loaded in slot', event);
 			if (slotsRendered === 0) {
+				console.log('firstAdLoaded');
 				perfMark('firstAdLoaded');
 
 					customTimings.firstAdLoaded = new Date().getTime();
@@ -82,6 +83,7 @@ function onAdsComplete (flags, event) {
 			utils.log.warn('Failed to load ad, details below');
 			utils.log(event);
 		}
+		console.log('increase slot rendered');
 		slotsRendered++;
 	}
 

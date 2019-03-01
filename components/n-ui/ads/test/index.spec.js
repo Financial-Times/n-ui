@@ -4,6 +4,7 @@ const main = require('../index');
 const utils = require('../js/utils');
 const markup = require('./helpers/markup');
 const fakeArticleUuid = '123456';
+const pageMetrics = require('../js/page-metrics');
 
 let sandbox;
 let targeting;
@@ -28,6 +29,7 @@ describe('Main', () => {
 	it('Should init if flag is set to true and appname given', () => {
 		const flags = { get: () => true };
 		const initSpy = sandbox.stub(ads, 'init').callsFake(() => Promise.resolve({ slots: { initSlot: sinon.stub()}, config: sinon.stub() }));
+		sandbox.stub(pageMetrics, "setupPageMetrics").callsFake(() => {});
 		return main.init(flags, { name: 'article' }).then(() => {
 			expect(initSpy).to.have.been.called;
 		});
@@ -45,6 +47,8 @@ describe('Main', () => {
 	it('Should bind the adverts found on page to o-ads library', () => {
 		const flags = { get: () => true };
 		const adInit = sandbox.stub(ads.slots, 'initSlot');
+		sandbox.stub(pageMetrics, "setupPageMetrics").callsFake(() => {});
+
 		sandbox.stub(ads, 'init').callsFake(() => Promise.resolve({
 			targeting : {
 				get : function (){return 'abc';}
@@ -61,13 +65,15 @@ describe('Main', () => {
 		if(!window.performance) {
 			window.performance = { mark: () => {}};
 		};
+		sandbox.stub(pageMetrics, "setupPageMetrics").callsFake(() => {});
 		const perfMark = sandbox.stub(window.performance, 'mark').callsFake(() => true );
 		const info = sandbox.stub(utils.log, 'info');
 		main.init(flags, { name: 'earle' })
 			.then(() =>{
 				document.addEventListener('oAdsLogTestDone', () => {
 					expect(info).to.have.been.calledWith('Ad loaded in slot');
-					expect(perfMark).to.have.been.calledOnceWith('firstAdLoaded');
+					expect(perfMark).to.have.been.calledOnce;
+					expect(perfMark).to.have.been.calledWith('firstAdLoaded');
 					done();
 				});
 				document.dispatchEvent(new CustomEvent('oAds.complete', { detail: { type: 's1', slot: { gpt: { isEmpty: false }}}}));
