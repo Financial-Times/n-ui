@@ -42,7 +42,7 @@ const sendMetrics = () => {
 	if (inMetricsSample()) {
 		broadcast('oTracking.event', {
 			category: 'ads',
-			action: 'pageInitialised',
+			action: 'page-initialised',
 			timings: { marks }
 		});
 	}
