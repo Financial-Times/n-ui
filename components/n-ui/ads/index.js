@@ -4,6 +4,7 @@ const Ads = window.oAds = require('o-ads');
 const utils = require('./js/utils');
 const oAdsConfig = require('./js/oAdsConfig');
 const sendMetrics = require('./js/metrics');
+const pageMetrics = require('./js/page-metrics');
 
 const nCounterAdBlocking = require('n-counter-ad-blocking');
 const perfMark = require('n-ui-foundations').perfMark;
@@ -17,6 +18,8 @@ let oadsGptDisplay = false;
 
 function initOAds (flags, appName, adOptions) {
 	const initObj = oAdsConfig(flags, appName, adOptions);
+
+	pageMetrics.setupPageMetrics();
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
@@ -66,7 +69,7 @@ function onAdsComplete (flags, event) {
 
 					customTimings.firstAdLoaded = new Date().getTime();
 					const iframeLoadedCallback = () => {
-						if (/spoor-id=3/.test(document.cookie)) {
+						if (utils.inMetricsSample()) {
 							customTimings.adIframeLoaded = new Date().getTime();
 							perfMark('adIframeLoaded');
 							sendMetrics(customTimings, detail.slot);

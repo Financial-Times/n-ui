@@ -122,6 +122,10 @@ function getScreenSize () {
 	return window.innerWidth;
 }
 
+function inMetricsSample() {
+	return /spoor-id=3/.test(document.cookie);
+}
+
 module.exports = {
 	debounce: debounce,
 	getLayoutName: getLayoutName,
@@ -131,5 +135,6 @@ module.exports = {
 	keyValueString: keyValueString,
 	isEmpty: isEmpty,
 	log: log,
-	getScreenSize: getScreenSize
+	getScreenSize: getScreenSize,
+	inMetricsSample: inMetricsSample
 };
