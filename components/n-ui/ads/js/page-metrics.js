@@ -37,7 +37,13 @@ const sendPageMetricsWhenPageReady = () => {
 
 const sendMetrics = () => {
 	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-	const marks = getPagePerfMarks(Object.values(eventToPerfmarkMap));
+	let pageMetricsMarkNames = [];
+
+	for (const key in eventToPerfmarkMap) {
+		pageMetricsMarkNames.push(eventToPerfmarkMap[key]);
+	}
+
+	const marks = getPerfMarks(pageMetricsMarkNames);
 
 	if (inMetricsSample()) {
 		broadcast('oTracking.event', {
@@ -48,7 +54,7 @@ const sendMetrics = () => {
 	}
 };
 
-const getPagePerfMarks = (markNames) => {
+const getPerfMarks = (markNames) => {
 	if (!performance || !performance.getEntriesByName) {
 		return {};
 	}
