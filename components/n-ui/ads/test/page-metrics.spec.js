@@ -21,41 +21,34 @@ describe('Page Metrics', () => {
 		broadcastStub.reset();
 	});
 
-	it('should call broadcast with correct values', () => {
-		const getEntriesByNameStub = sinon.stub();
-		getEntriesByNameStub.withArgs('adsInitialising').returns([{ name: 'adsInitialising', startTime: 500 }]);
-		getEntriesByNameStub.withArgs('adsIVTComplete').returns([{ name: 'adsIVTComplete', startTime: 600 }]);
-		getEntriesByNameStub.withArgs('adsTargetingComplete').returns([{ name: 'adsTargetingComplete', startTime: 700 }]);
-		getEntriesByNameStub.withArgs('adsPreparationComplete').returns([{ name: 'adsPreparationComplete', startTime: 705 }]);
-
-		window.performance = {
-			getEntriesByName: getEntriesByNameStub
+	it('should record a performance mark for each of the expected events only once', (done) => {
+		const eventToPerfmarkMap = {
+			foo: 'fooPerfMark',
+			bar: 'barPerfMark'
 		};
 
-		const expectedTrackingObject = {
-			category: 'ads',
-			action: 'page-initialised',
-			timings: {
-				marks: {
-					adsInitialising: 500,
-					adsIVTComplete: 600,
-					adsTargetingComplete: 700,
-					adsPreparationComplete: 705
-				}
-			}
-		};
+		pageMetrics.recordMarksForEvents(eventToPerfmarkMap);
 
-		pageMetrics.setupPageMetrics();
-		document.dispatchEvent(new CustomEvent('oAds.adServerLoadSuccess'));
-		expect(broadcastStub).to.have.been.calledWith('oTracking.event', expectedTrackingObject);
+		document.dispatchEvent(new CustomEvent('oAds.foo'));
+		document.dispatchEvent(new CustomEvent('oAds.bar'));
+		document.dispatchEvent(new CustomEvent('oAds.bar'));
+
+		setTimeout( () => {
+			const mark1 = window.performance.getEntriesByName('fooPerfMark');
+			const mark2 = window.performance.getEntriesByName('barPerfMark');
+			expect(mark1.length).to.equal(1);
+			expect(mark2.length).to.equal(1);
+			done();
+		}, 0);
 	});
 
-	it('should call record perfMark for', () => {
+	it('should broadcast oTracking.event with the right performance marks', () => {
 		const getEntriesByNameStub = sinon.stub();
-		getEntriesByNameStub.withArgs('adsInitialising').returns([{ name: 'adsInitialising', startTime: 500 }]);
-		getEntriesByNameStub.withArgs('adsIVTComplete').returns([{ name: 'adsIVTComplete', startTime: 600 }]);
-		getEntriesByNameStub.withArgs('adsTargetingComplete').returns([{ name: 'adsTargetingComplete', startTime: 700 }]);
-		getEntriesByNameStub.withArgs('adsPreparationComplete').returns([{ name: 'adsPreparationComplete', startTime: 705 }]);
+		getEntriesByNameStub.withArgs('somethingElse').returns([{ name: 'somethingElse', startTime: 400 }]);
+		getEntriesByNameStub.withArgs('adsInitialising').returns([{ name: 'adsInitialising', startTime: 500.22 }]);
+		getEntriesByNameStub.withArgs('adsIVTComplete').returns([{ name: 'adsIVTComplete', startTime: 600.64 }]);
+		getEntriesByNameStub.withArgs('adsTargetingComplete').returns([{ name: 'adsTargetingComplete', startTime: 700.45 }]);
+		getEntriesByNameStub.withArgs('adsPreparationComplete').returns([{ name: 'adsPreparationComplete', startTime: 705.57 }]);
 
 		window.performance = {
 			getEntriesByName: getEntriesByNameStub
@@ -67,9 +60,9 @@ describe('Page Metrics', () => {
 			timings: {
 				marks: {
 					adsInitialising: 500,
-					adsIVTComplete: 600,
+					adsIVTComplete: 601,
 					adsTargetingComplete: 700,
-					adsPreparationComplete: 705
+					adsPreparationComplete: 706
 				}
 			}
 		};

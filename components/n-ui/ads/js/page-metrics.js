@@ -2,25 +2,6 @@ const inMetricsSample = require('./utils').inMetricsSample;
 const nUIFoundations = require('n-ui-foundations');
 const { broadcast, perfMark } = nUIFoundations;
 
-const setupPageMetrics = () => {
-	sendPageMetricsWhenInitialised();
-	mapEventsToPerfMarks();
-};
-
-const recordPerfMarkForEvent = (eventName) => {
-	const listenerName = 'oAds.' + eventName;
-	document.addEventListener(listenerName, function handler() {
-		perfMark(eventToPerfmarkMap[eventName]);
-		document.removeEventListener(listenerName, handler);
-	});
-};
-
-const mapEventsToPerfMarks = () => {
-	for (const eventName in eventToPerfmarkMap) {
-		recordPerfMarkForEvent(eventName);
-	}
-};
-
 const eventToPerfmarkMap = {
 	startInitialisation: 'adsInitialising',
 	moatIVTcomplete: 'adsIVTComplete',
@@ -28,7 +9,26 @@ const eventToPerfmarkMap = {
 	initialised: 'adsPreparationComplete'
 };
 
-const sendPageMetricsWhenInitialised = () => {
+const setupPageMetrics = () => {
+	sendPageMetricsWhenPageReady();
+	recordMarksForEvents(eventToPerfmarkMap);
+};
+
+const recordPerfMarkForEvent = (eventName, perfMarkName) => {
+	const listenerName = 'oAds.' + eventName;
+	document.addEventListener(listenerName, function handler() {
+		perfMark(perfMarkName);
+		document.removeEventListener(listenerName, handler);
+	});
+};
+
+const recordMarksForEvents = (events2Marks) => {
+	for (const eventName in events2Marks) {
+		recordPerfMarkForEvent(eventName, events2Marks[eventName]);
+	}
+};
+
+const sendPageMetricsWhenPageReady = () => {
 	document.addEventListener('oAds.adServerLoadSuccess', function listenOnInitialised() {
 		sendMetrics();
 		document.addEventListener('oAds.adServerLoadSuccess', listenOnInitialised);
@@ -57,10 +57,14 @@ const getPagePerfMarks = (markNames) => {
 	markNames.forEach(mName => {
 		const pMarks = performance.getEntriesByName(mName);
 		if (pMarks && pMarks.length) {
-			marks[mName] = pMarks[0].startTime;
+			// We don't need sub-millisecond precision
+			marks[mName] = Math.round(pMarks[0].startTime);
 		};
 	});
 	return marks;
 };
 
-module.exports = { setupPageMetrics };
+module.exports = {
+	setupPageMetrics,
+	recordMarksForEvents
+};
