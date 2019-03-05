@@ -8,6 +8,6 @@ module.exports = {
 		});
 	},
 	scrollDepthComponents: require('./ft/events/scroll-depth-components'),
-	scrollDepth: require('./ft/events/scroll-depth')
-
+	scrollDepth: require('./ft/events/scroll-depth'),
+	audioTeaserView: require('./ft/events/audio-teaser-view')
 };
