@@ -1,12 +1,12 @@
 const oTracking = require('o-tracking');
 
 const audioTeaserView = {
-	init: () => {
+	init: (selector) => {
 		const getContentIdFromXTeaser = el => el.getAttribute('data-id');
 		const getContentIdFromNTeaser = el => el.querySelector('.o-teaser__heading a').getAttribute('data-content-id');
 
 		oTracking.view.init({
-			selector: '.o-teaser--audio',
+			selector: selector || '.o-teaser--audio',
 			getContextData: (el) => {
 				return {
 					contentId: getContentIdFromXTeaser(el) || getContentIdFromNTeaser(el),
