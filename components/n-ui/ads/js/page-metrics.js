@@ -6,7 +6,8 @@ const eventToPerfmarkMap = {
 	startInitialisation: 'adsInitialising',
 	moatIVTcomplete: 'adsIVTComplete',
 	apiRequestsComplete: 'adsTargetingComplete',
-	initialised: 'adsPreparationComplete'
+	initialised: 'adsPreparationComplete',
+	adServerLoadSuccess: 'adsServerLoaded'
 };
 
 const setupPageMetrics = () => {
@@ -30,8 +31,9 @@ const recordMarksForEvents = (events2Marks) => {
 
 const sendPageMetricsWhenPageReady = () => {
 	document.addEventListener('oAds.adServerLoadSuccess', function listenOnInitialised() {
-		sendMetrics();
-		document.addEventListener('oAds.adServerLoadSuccess', listenOnInitialised);
+		// We must ensure the 'adsServerLoaded' perfMark has been recorded first
+		setTimeout(sendMetrics, 0)
+		document.removeEventListener('oAds.adServerLoadSuccess', listenOnInitialised);
 	});
 };
 
