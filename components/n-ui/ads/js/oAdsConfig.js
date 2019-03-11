@@ -22,12 +22,6 @@ module.exports = function (flags, appName, adOptions) {
 	// TO-DO: Check if we can get rid of this 'extend' and pass an object literal
 	let targeting = extend(targetingOptions);
 
-	// This is a beta feature from google to enable long lived pageview data.
-	// This is needed for master companion ads when there could be ads out of view further down the page
-	if (appName === 'article') {
-		targeting['gpt-beta'] = 'hzwxrfqd';
-	}
-
 	const kruxConfig = (flags.get('krux')) && !adOptions.noTargeting && {
 		id: 'KHUSeE3x',
 		attributes: {
