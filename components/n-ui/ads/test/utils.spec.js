@@ -218,4 +218,16 @@ describe('Utils', () => {
 		expect(utils.getReferrer()).to.equal(document.referrer);
 	});
 
+	it.only('Should return the same value for inMetricsSample when called multiple times', () => {
+		const firstValue = utils.inMetricsSample();
+
+		let count = 0;
+		for (let i = 0; i < 100; i++) {
+			if (utils.inMetricsSample() === firstValue) {
+				count++;
+			}
+		}
+		expect(count).to.equal(100);
+	});
+
 });
