@@ -130,7 +130,7 @@ const inMetricsSample = (() => {
 	const decideInMetricsSample = () => {
 
 		// We are caching the value since we want to be consistent with the user
-		// allocation throughout one same session
+		// allocation throughout one same page visit
 		if (typeof userSendsMetrics !== 'undefined') {
 			return userSendsMetrics;
 		}
