@@ -25,12 +25,12 @@ describe('Page Metrics', () => {
 	});
 
 	it('should record a performance mark for each of the expected events only once', (done) => {
-		const eventToPerfmarkMap = {
+		const pageEventMarkMap = {
 			foo: 'fooPerfMark',
 			bar: 'barPerfMark'
 		};
 
-		pageMetrics.recordMarksForEvents(eventToPerfmarkMap);
+		pageMetrics.recordMarksForEvents(pageEventMarkMap);
 
 		document.dispatchEvent(new CustomEvent('oAds.foo'));
 		document.dispatchEvent(new CustomEvent('oAds.bar'));

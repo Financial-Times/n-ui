@@ -2,7 +2,7 @@ const inMetricsSample = require('./utils').inMetricsSample;
 const nUIFoundations = require('n-ui-foundations');
 const { broadcast, perfMark } = nUIFoundations;
 
-const eventToPerfmarkMap = {
+const pageEventMarkMap = {
 	startInitialisation: 'adsInitialising',
 	moatIVTcomplete: 'adsIVTComplete',
 	apiRequestsComplete: 'adsTargetingComplete',
@@ -10,9 +10,23 @@ const eventToPerfmarkMap = {
 	adServerLoadSuccess: 'adsServerLoaded'
 };
 
+const kruxEventMarkMap = {
+	kruxScriptLoaded: 'kruxScriptLoaded',
+	kruxConsentOptinOK: 'kruxConsentOptinOK',
+	kruxConsentOptinFailed: 'kruxConsentOptinFailed',
+	kruxKuidAck: 'kruxKuidAck',
+	kruxKuidError: 'kruxKuidError'
+};
+
 const setupPageMetrics = () => {
-	sendPageMetricsWhenPageReady();
-	recordMarksForEvents(eventToPerfmarkMap);
+	sendMetricsOnEvent('oAds.adServerLoadSuccess', sendPageMetrics);
+	recordMarksForEvents(pageEventMarkMap);
+
+	sendMetricsOnEvent('oAds.kruxKuidAck', sendKruxMetrics);
+	recordMarksForEvents(kruxEventMarkMap);
+	sendMetricsOnEvent('oAds.kruxKuidError', sendKruxMetrics);
+	recordMarksForEvents(kruxEventMarkMap);
+
 };
 
 const recordPerfMarkForEvent = (eventName, perfMarkName) => {
@@ -29,31 +43,48 @@ const recordMarksForEvents = (events2Marks) => {
 	}
 };
 
-const sendPageMetricsWhenPageReady = () => {
-	document.addEventListener('oAds.adServerLoadSuccess', function listenOnInitialised() {
-		// We must ensure the 'adsServerLoaded' perfMark has been recorded first
-		setTimeout(sendMetrics, 0)
-		document.removeEventListener('oAds.adServerLoadSuccess', listenOnInitialised);
-	});
-};
+const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 
-const sendMetrics = () => {
-	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-	let pageMetricsMarkNames = [];
+const getMarksForEventMarkMap = eventMarkMap => {
+	let markNames = [];
 
-	for (const key in eventToPerfmarkMap) {
-		pageMetricsMarkNames.push(eventToPerfmarkMap[key]);
+	for (const key in eventMarkMap) {
+		markNames.push(eventMarkMap[key]);
 	}
 
-	const marks = getPerfMarks(pageMetricsMarkNames);
+	return getPerfMarks(markNames);
+}
 
+const sendPageMetrics = () => {
 	if (inMetricsSample()) {
+		const marks = getMarksForEventMarkMap(pageEventMarkMap);
+
 		broadcast('oTracking.event', {
 			category: 'ads',
 			action: 'page-initialised',
 			timings: { marks }
 		});
 	}
+};
+
+const sendKruxMetrics = () => {
+	if (inMetricsSample()) {
+		const marks = getMarksForEventMarkMap(kruxEventMarkMap);
+
+		broadcast('oTracking.event', {
+			category: 'ads',
+			action: 'krux',
+			timings: { marks }
+		});
+	}
+};
+
+const sendMetricsOnEvent = (eventName, callback) => {
+	document.addEventListener(eventName, function listenOnInitialised() {
+		// We must ensure the 'adsServerLoaded' perfMark has been recorded first
+		setTimeout(callback, 0)
+		document.removeEventListener(eventName, listenOnInitialised);
+	});
 };
 
 const getPerfMarks = (markNames) => {
