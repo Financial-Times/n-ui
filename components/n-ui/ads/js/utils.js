@@ -122,9 +122,25 @@ function getScreenSize () {
 	return window.innerWidth;
 }
 
-function inMetricsSample() {
-	return /spoor-id=3/.test(document.cookie);
-}
+// Fraction of all users that will actually send ads metrics to Spoor
+const METRICS_SAMPLE_SIZE = 0.1;
+
+const inMetricsSample = (() => {
+	let userSendsMetrics;
+	const decideInMetricsSample = () => {
+
+		// We are caching the value since we want to be consistent with the user
+		// allocation throughout one same page visit
+		if (typeof userSendsMetrics !== 'undefined') {
+			return userSendsMetrics;
+		}
+
+		userSendsMetrics = (Math.random() < METRICS_SAMPLE_SIZE);
+		return userSendsMetrics;
+
+	};
+	return decideInMetricsSample;
+})();
 
 module.exports = {
 	debounce: debounce,
