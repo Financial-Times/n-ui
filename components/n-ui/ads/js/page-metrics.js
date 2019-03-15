@@ -23,8 +23,8 @@ const setupPageMetrics = () => {
 	recordMarksForEvents(pageEventMarkMap);
 
 	sendMetricsOnEvent('oAds.kruxKuidAck', sendKruxMetrics);
-	recordMarksForEvents(kruxEventMarkMap);
 	sendMetricsOnEvent('oAds.kruxKuidError', sendKruxMetrics);
+	sendMetricsOnEvent('oAds.kruxConsentOptinFailed', sendKruxMetrics);
 	recordMarksForEvents(kruxEventMarkMap);
 
 };
@@ -42,8 +42,6 @@ const recordMarksForEvents = (events2Marks) => {
 		recordPerfMarkForEvent(eventName, events2Marks[eventName]);
 	}
 };
-
-const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 
 const getMarksForEventMarkMap = eventMarkMap => {
 	let markNames = [];
@@ -88,6 +86,7 @@ const sendMetricsOnEvent = (eventName, callback) => {
 };
 
 const getPerfMarks = (markNames) => {
+	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 	if (!performance || !performance.getEntriesByName) {
 		return {};
 	}
