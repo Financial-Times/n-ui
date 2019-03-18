@@ -1,4 +1,12 @@
 const polyfillRoot = 'https://www.ft.com/__origami/service/polyfill/v3/polyfill.min.js';
+
+/**
+ * For the instances where we need to clear polyfill.io responses from users' browsers
+ * Generated using:
+ * node -e 'console.log(parseInt((new Date().getTime())/1000))'
+ */
+const cacheBuster = 1552915810;
+
 function buildQueryString (qsConfig) {
 	const qs = [];
 
@@ -7,7 +15,7 @@ function buildQueryString (qsConfig) {
 		qs.push(`${key}=${Array.isArray(val) ? val.join(',') : val}`);
 	});
 
-	qs.push('source=next', 'unknown=polyfill');
+	qs.push('source=next', 'unknown=polyfill', `cb=${cacheBuster}`);
 
 	return `?${qs.join('&')}`;
 }
