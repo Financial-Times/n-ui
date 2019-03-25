@@ -22,9 +22,9 @@ const setupPageMetrics = () => {
 	sendMetricsOnEvent('oAds.adServerLoadSuccess', sendPageMetrics);
 	recordMarksForEvents(pageEventMarkMap);
 
-	// sendMetricsOnEvent('oAds.kruxKuidAck', sendKruxMetrics);
-	// sendMetricsOnEvent('oAds.kruxKuidError', sendKruxMetrics);
-	// sendMetricsOnEvent('oAds.kruxConsentOptinFailed', sendKruxMetrics);
+	sendMetricsOnEvent('oAds.kruxKuidAck', sendKruxMetrics);
+	sendMetricsOnEvent('oAds.kruxKuidError', sendKruxMetrics);
+	sendMetricsOnEvent('oAds.kruxConsentOptinFailed', sendKruxMetrics);
 	recordMarksForEvents(kruxEventMarkMap);
 
 };
