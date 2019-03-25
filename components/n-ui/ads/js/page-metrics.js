@@ -22,9 +22,9 @@ const setupPageMetrics = () => {
 	sendMetricsOnEvent('oAds.adServerLoadSuccess', sendPageMetrics);
 	recordMarksForEvents(pageEventMarkMap);
 
-	sendMetricsOnEvent('oAds.kruxKuidAck', sendKruxMetrics);
-	sendMetricsOnEvent('oAds.kruxKuidError', sendKruxMetrics);
-	sendMetricsOnEvent('oAds.kruxConsentOptinFailed', sendKruxMetrics);
+	// sendMetricsOnEvent('oAds.kruxKuidAck', sendKruxMetrics);
+	// sendMetricsOnEvent('oAds.kruxKuidError', sendKruxMetrics);
+	// sendMetricsOnEvent('oAds.kruxConsentOptinFailed', sendKruxMetrics);
 	recordMarksForEvents(kruxEventMarkMap);
 
 };
@@ -53,28 +53,24 @@ const getMarksForEventMarkMap = eventMarkMap => {
 	return getPerfMarks(markNames);
 }
 
-const sendPageMetrics = () => {
+const sendMetrics = (eventMarkMap, actionName) => {
 	if (inMetricsSample()) {
-		const marks = getMarksForEventMarkMap(pageEventMarkMap);
+		const marks = getMarksForEventMarkMap(eventMarkMap);
 
 		broadcast('oTracking.event', {
 			category: 'ads',
-			action: 'page-initialised',
+			action: actionName,
 			timings: { marks }
 		});
 	}
 };
 
-const sendKruxMetrics = () => {
-	if (inMetricsSample()) {
-		const marks = getMarksForEventMarkMap(kruxEventMarkMap);
+const sendPageMetrics = () => {
+	sendMetrics(pageEventMarkMap, 'page-initialised');
+};
 
-		broadcast('oTracking.event', {
-			category: 'ads',
-			action: 'krux',
-			timings: { marks }
-		});
-	}
+const sendKruxMetrics = () => {
+	sendMetrics(kruxEventMarkMap, 'krux');
 };
 
 const sendMetricsOnEvent = (eventName, callback) => {
