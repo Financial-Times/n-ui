@@ -218,7 +218,7 @@ describe('Utils', () => {
 		expect(utils.getReferrer()).to.equal(document.referrer);
 	});
 
-	it.only('Should return the same value for inMetricsSample when called multiple times', () => {
+	it('Should return the same value for inMetricsSample when called multiple times', () => {
 		const firstValue = utils.inMetricsSample();
 
 		let count = 0;

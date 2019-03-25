@@ -2,7 +2,7 @@ const inMetricsSample = require('./utils').inMetricsSample;
 const nUIFoundations = require('n-ui-foundations');
 const { broadcast, perfMark } = nUIFoundations;
 
-const eventToPerfmarkMap = {
+const pageEventMarkMap = {
 	startInitialisation: 'adsInitialising',
 	moatIVTcomplete: 'adsIVTComplete',
 	apiRequestsComplete: 'adsTargetingComplete',
@@ -10,9 +10,23 @@ const eventToPerfmarkMap = {
 	adServerLoadSuccess: 'adsServerLoaded'
 };
 
+const kruxEventMarkMap = {
+	kruxScriptLoaded: 'kruxScriptLoaded',
+	kruxConsentOptinOK: 'kruxConsentOptinOK',
+	kruxConsentOptinFailed: 'kruxConsentOptinFailed',
+	kruxKuidAck: 'kruxKuidAck',
+	kruxKuidError: 'kruxKuidError'
+};
+
 const setupPageMetrics = () => {
-	sendPageMetricsWhenPageReady();
-	recordMarksForEvents(eventToPerfmarkMap);
+	sendMetricsOnEvent('oAds.adServerLoadSuccess', sendPageMetrics);
+	recordMarksForEvents(pageEventMarkMap);
+
+	sendMetricsOnEvent('oAds.kruxKuidAck', sendKruxMetrics);
+	sendMetricsOnEvent('oAds.kruxKuidError', sendKruxMetrics);
+	sendMetricsOnEvent('oAds.kruxConsentOptinFailed', sendKruxMetrics);
+	recordMarksForEvents(kruxEventMarkMap);
+
 };
 
 const recordPerfMarkForEvent = (eventName, perfMarkName) => {
@@ -29,34 +43,46 @@ const recordMarksForEvents = (events2Marks) => {
 	}
 };
 
-const sendPageMetricsWhenPageReady = () => {
-	document.addEventListener('oAds.adServerLoadSuccess', function listenOnInitialised() {
-		// We must ensure the 'adsServerLoaded' perfMark has been recorded first
-		setTimeout(sendMetrics, 0)
-		document.removeEventListener('oAds.adServerLoadSuccess', listenOnInitialised);
-	});
-};
+const getMarksForEventMarkMap = eventMarkMap => {
+	let markNames = [];
 
-const sendMetrics = () => {
-	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-	let pageMetricsMarkNames = [];
-
-	for (const key in eventToPerfmarkMap) {
-		pageMetricsMarkNames.push(eventToPerfmarkMap[key]);
+	for (const key in eventMarkMap) {
+		markNames.push(eventMarkMap[key]);
 	}
 
-	const marks = getPerfMarks(pageMetricsMarkNames);
+	return getPerfMarks(markNames);
+}
 
+const sendMetrics = (eventMarkMap, actionName) => {
 	if (inMetricsSample()) {
+		const marks = getMarksForEventMarkMap(eventMarkMap);
+
 		broadcast('oTracking.event', {
 			category: 'ads',
-			action: 'page-initialised',
+			action: actionName,
 			timings: { marks }
 		});
 	}
 };
 
+const sendPageMetrics = () => {
+	sendMetrics(pageEventMarkMap, 'page-initialised');
+};
+
+const sendKruxMetrics = () => {
+	sendMetrics(kruxEventMarkMap, 'krux');
+};
+
+const sendMetricsOnEvent = (eventName, callback) => {
+	document.addEventListener(eventName, function listenOnInitialised() {
+		// We must ensure the 'adsServerLoaded' perfMark has been recorded first
+		setTimeout(callback, 0)
+		document.removeEventListener(eventName, listenOnInitialised);
+	});
+};
+
 const getPerfMarks = (markNames) => {
+	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 	if (!performance || !performance.getEntriesByName) {
 		return {};
 	}

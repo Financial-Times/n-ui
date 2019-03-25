@@ -25,12 +25,12 @@ describe('Page Metrics', () => {
 	});
 
 	it('should record a performance mark for each of the expected events only once', (done) => {
-		const eventToPerfmarkMap = {
+		const pageEventMarkMap = {
 			foo: 'fooPerfMark',
 			bar: 'barPerfMark'
 		};
 
-		pageMetrics.recordMarksForEvents(eventToPerfmarkMap);
+		pageMetrics.recordMarksForEvents(pageEventMarkMap);
 
 		document.dispatchEvent(new CustomEvent('oAds.foo'));
 		document.dispatchEvent(new CustomEvent('oAds.bar'));
@@ -98,7 +98,140 @@ describe('Page Metrics', () => {
 			expect(marksObject.adsServerLoaded).to.be.a('number');
 			done();
 		});
-		// expect(broadcastStub).to.have.been.calledWith('oTracking.event');
+	});
+
+	it('should broadcast an oTracking.event with the right krux marks when Kuid has been acknowledged', (done) => {
+		const getEntriesByNameStub = sinon.stub();
+		getEntriesByNameStub.withArgs('kruxScriptLoaded').returns([{ name: 'kruxScriptLoaded', startTime: 700.45 }]);
+		getEntriesByNameStub.withArgs('kruxConsentOptinOK').returns([{ name: 'kruxConsentOptinOK', startTime: 705.57 }]);
+		getEntriesByNameStub.withArgs('kruxKuidAck').returns([{ name: 'kruxKuidAck', startTime: 905.57 }]);
+
+		window.performance = {
+			getEntriesByName: getEntriesByNameStub
+		};
+
+		const expectedTrackingObject = {
+			category: 'ads',
+			action: 'krux',
+			timings: {
+				marks: {
+					kruxScriptLoaded: 700,
+					kruxConsentOptinOK: 706,
+					kruxKuidAck: 906
+				}
+			}
+		};
+
+		pageMetrics.setupPageMetrics();
+		document.dispatchEvent(new CustomEvent('oAds.kruxKuidAck'));
+		setTimeout( () => {
+			expect(broadcastStub).to.have.been.calledWith('oTracking.event', expectedTrackingObject);
+			done();
+		});
+	});
+
+	it('should broadcast an oTracking.event with the right krux marks when Kuid has NOT been acknowledged', (done) => {
+		const getEntriesByNameStub = sinon.stub();
+		getEntriesByNameStub.withArgs('kruxScriptLoaded').returns([{ name: 'kruxScriptLoaded', startTime: 700.45 }]);
+		getEntriesByNameStub.withArgs('kruxConsentOptinOK').returns([{ name: 'kruxConsentOptinOK', startTime: 705.57 }]);
+		getEntriesByNameStub.withArgs('kruxKuidError').returns([{ name: 'kruxKuidError', startTime: 905.57 }]);
+
+		window.performance = {
+			getEntriesByName: getEntriesByNameStub
+		};
+
+		const expectedTrackingObject = {
+			category: 'ads',
+			action: 'krux',
+			timings: {
+				marks: {
+					kruxScriptLoaded: 700,
+					kruxConsentOptinOK: 706,
+					kruxKuidError: 906
+				}
+			}
+		};
+
+		pageMetrics.setupPageMetrics();
+		document.dispatchEvent(new CustomEvent('oAds.kruxKuidAck'));
+		setTimeout( () => {
+			expect(broadcastStub).to.have.been.calledWith('oTracking.event', expectedTrackingObject);
+			done();
+		});
+	});
+
+	it('should broadcast an oTracking.event with the right krux marks when consent was not given', (done) => {
+		const getEntriesByNameStub = sinon.stub();
+		getEntriesByNameStub.withArgs('kruxScriptLoaded').returns([{ name: 'kruxScriptLoaded', startTime: 700.45 }]);
+		getEntriesByNameStub.withArgs('kruxConsentOptinFailed').returns([{ name: 'kruxConsentOptinFailed', startTime: 705.57 }]);
+
+		window.performance = {
+			getEntriesByName: getEntriesByNameStub
+		};
+
+		const expectedTrackingObject = {
+			category: 'ads',
+			action: 'krux',
+			timings: {
+				marks: {
+					kruxScriptLoaded: 700,
+					kruxConsentOptinFailed: 706
+				}
+			}
+		};
+
+		pageMetrics.setupPageMetrics();
+		document.dispatchEvent(new CustomEvent('oAds.kruxConsentOptinFailed'));
+		setTimeout( () => {
+			expect(broadcastStub).to.have.been.calledWith('oTracking.event', expectedTrackingObject);
+			done();
+		});
+	});
+
+	it('captures all the expected krux metrics when Kuid has been acknowledged', (done) => {
+		pageMetrics.setupPageMetrics();
+		document.dispatchEvent(new CustomEvent('oAds.kruxScriptLoaded'));
+		document.dispatchEvent(new CustomEvent('oAds.kruxConsentOptinOK'));
+		document.dispatchEvent(new CustomEvent('oAds.kruxKuidAck'));
+
+		setTimeout( () => {
+			expect(broadcastStub).to.have.been.called;
+			const marksObject = broadcastStub.firstCall.args[1].timings.marks;
+			expect(marksObject.kruxScriptLoaded).to.be.a('number');
+			expect(marksObject.kruxConsentOptinOK).to.be.a('number');
+			expect(marksObject.kruxKuidAck).to.be.a('number');
+			done();
+		});
+	});
+
+	it('captures all the expected krux metrics when Kuid has NOT been acknowledged', (done) => {
+		pageMetrics.setupPageMetrics();
+		document.dispatchEvent(new CustomEvent('oAds.kruxScriptLoaded'));
+		document.dispatchEvent(new CustomEvent('oAds.kruxConsentOptinOK'));
+		document.dispatchEvent(new CustomEvent('oAds.kruxKuidError'));
+
+		setTimeout( () => {
+			expect(broadcastStub).to.have.been.called;
+			const marksObject = broadcastStub.firstCall.args[1].timings.marks;
+			expect(marksObject.kruxScriptLoaded).to.be.a('number');
+			expect(marksObject.kruxConsentOptinOK).to.be.a('number');
+			expect(marksObject.kruxKuidError).to.be.a('number');
+			done();
+		});
+	});
+
+	it('captures all the expected krux metrics when consent was not given', (done) => {
+		pageMetrics.setupPageMetrics();
+		document.dispatchEvent(new CustomEvent('oAds.kruxScriptLoaded'));
+		document.dispatchEvent(new CustomEvent('oAds.kruxConsentOptinFailed'));
+
+		setTimeout( () => {
+			expect(broadcastStub).to.have.been.called;
+			const marksObject = broadcastStub.firstCall.args[1].timings.marks;
+			expect(marksObject.kruxScriptLoaded).to.be.a('number');
+			expect(marksObject.kruxConsentOptinFailed).to.be.a('number');
+			done();
+		});
 	});
 });
 
