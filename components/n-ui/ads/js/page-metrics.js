@@ -11,11 +11,11 @@ const pageEventMarkMap = {
 };
 
 const kruxEventMarkMap = {
-	kruxScriptLoaded: 'kruxScriptLoaded',
-	kruxConsentOptinOK: 'kruxConsentOptinOK',
-	kruxConsentOptinFailed: 'kruxConsentOptinFailed',
-	kruxKuidAck: 'kruxKuidAck',
-	kruxKuidError: 'kruxKuidError'
+	kruxScriptLoaded,
+	kruxConsentOptinOK,
+	kruxConsentOptinFailed,
+	kruxKuidAck,
+	kruxKuidError,
 };
 
 const setupPageMetrics = () => {
