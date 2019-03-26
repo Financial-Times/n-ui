@@ -1,6 +1,6 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
-const utils = require('../js/utils');
-const markup = require('./helpers/markup');
+import utils from '../js/utils';
+import markup from './helpers/markup';
 let windowConsole;
 let sandbox;
 

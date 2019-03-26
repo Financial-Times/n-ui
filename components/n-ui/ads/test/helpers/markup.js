@@ -15,8 +15,8 @@ function destroyContainer () {
 	}
 }
 
-module.exports = {
-	setupContainer: setupContainer,
-	set: set,
-	destroyContainer: destroyContainer
+export default {
+	setupContainer,
+	set,
+	destroyContainer
 };

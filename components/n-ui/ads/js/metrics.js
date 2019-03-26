@@ -1,6 +1,6 @@
-const broadcast = require('n-ui-foundations').broadcast;
+import { broadcast } from 'n-ui-foundations';
 
-module.exports = (timingsObject, slotDetails) => {
+export default (timingsObject, slotDetails) => {
 	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 	if (performance && performance.mark && timingsObject) {
 		const offsets = _calculateOffsets(performance, timingsObject);

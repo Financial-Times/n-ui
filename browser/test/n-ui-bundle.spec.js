@@ -1,4 +1,4 @@
-/*global require,describe,afterEach,beforeEach,it,expect,sinon*/
+/*global require,describe,it,expect,sinon*/
 window.FT = {flags: {aFlag: 'cohort'}};
 import { AppInitializer } from '../js/app-initializer';
 

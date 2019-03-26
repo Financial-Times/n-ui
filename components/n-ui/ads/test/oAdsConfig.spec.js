@@ -1,7 +1,7 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
-const utils = require('../js/utils');
-const oAdsConfig = require('../js/oAdsConfig');
-const adsSandbox = require('../js/sandbox');
+import utils from '../js/utils';
+import oAdsConfig from '../js/oAdsConfig';
+import adsSandbox from '../js/sandbox';
 const fakeArticleUuid = '123456';
 const fakeConceptUuid = '12345678';
 

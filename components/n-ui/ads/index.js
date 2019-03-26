@@ -1,13 +1,13 @@
-const krux = require('./js/krux');
-const Ads = window.oAds = require('o-ads');
+import krux from './js/krux';
+import Ads from 'o-ads';
 //TODO move to central shared utils
-const utils = require('./js/utils');
-const oAdsConfig = require('./js/oAdsConfig');
-const sendMetrics = require('./js/metrics');
-const pageMetrics = require('./js/page-metrics');
+import utils from './js/utils';
+import oAdsConfig from './js/oAdsConfig';
+import sendMetrics from './js/metrics';
+import pageMetrics from './js/page-metrics';
 
-const nCounterAdBlocking = require('n-counter-ad-blocking');
-const perfMark = require('n-ui-foundations').perfMark;
+import nCounterAdBlocking from 'n-counter-ad-blocking';
+import { perfMark } from 'n-ui-foundations';
 
 let slotCount;
 let slotsRendered = 0;
@@ -15,6 +15,8 @@ let onAdsCompleteCallback;
 const customTimings = {};
 let oadsReadyCalled = false;
 let oadsGptDisplay = false;
+
+window.oAds = Ads;
 
 function initOAds (flags, appName, adOptions) {
 	const initObj = oAdsConfig(flags, appName, adOptions);
@@ -91,7 +93,7 @@ function onAdsComplete (flags, event) {
 	}
 }
 
-module.exports = {
+export default {
 	init: (flags, appInfo, opts) => {
 
 		window.addEventListener('ftNextLoaded', function () {

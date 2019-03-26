@@ -1,5 +1,3 @@
-function sandbox () {
-	return location.hash.indexOf('adsandbox') > -1;
-}
-
-module.exports.isActive = sandbox;
+export default {
+	isActive: () => location.hash.indexOf('adsandbox') > -1
+};

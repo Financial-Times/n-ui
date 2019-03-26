@@ -1,4 +1,4 @@
-/*global describe, it, expect, afterEach*/
+/*global describe, it, expect*/
 const Positional = require('../../../ft/events/positional');
 
 describe('Positional', function () {

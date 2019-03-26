@@ -1,5 +1,5 @@
 /*istanbul ignore next*/
-function debounce (func, wait, immediate) {
+export function debounce (func, wait, immediate) {
 	let timeout;
 	return function () {
 		const context = this;
@@ -17,7 +17,7 @@ function debounce (func, wait, immediate) {
 	};
 };
 
-function getLayoutName () {
+export function getLayoutName () {
 	let layout = 'default';
 
 	if (window.location.search.indexOf('adsLayout') === 1) {
@@ -31,7 +31,7 @@ function getLayoutName () {
 	return layout;
 }
 
-function getABTestState () {
+export function getABTestState () {
 	let abState = '-';
 	const abStateEl = document.querySelector('[data-ab-state]');
 	if(abStateEl) {
@@ -40,7 +40,7 @@ function getABTestState () {
 	return abState;
 }
 
-function getMetaData (name) {
+export function getMetaData (name) {
 	const meta = document.querySelector('meta[name="'+name+'"]');
 	if (meta) {
 		return meta.getAttribute('content');
@@ -48,21 +48,21 @@ function getMetaData (name) {
 	return false;
 }
 
-function keyValueString (obj) {
+export function keyValueString (obj) {
 	return Object.keys(obj).map(function (key) {
 		return key + '=' + obj[key];
 	}).join(';');
 }
 
-function getReferrer () {
+export function getReferrer () {
 	return document.referrer;
 }
 
-function isEmpty (htmlNode) {
+export function isEmpty (htmlNode) {
 	return htmlNode.firstChild === null || htmlNode.firstChild.nodeType !== 1 || htmlNode.firstChild.style.display === 'none';
 }
 
-function log () {
+export function log () {
 	let type;
 	let args;
 	let argsIndex;
@@ -118,14 +118,14 @@ log.isOn = function () {
 	return location.search.indexOf('DEBUG=ADS') > -1;
 };
 
-function getScreenSize () {
+export function getScreenSize () {
 	return window.innerWidth;
 }
 
 // Fraction of all users that will actually send ads metrics to Spoor
 const METRICS_SAMPLE_SIZE = 0.1;
 
-const inMetricsSample = (() => {
+export const inMetricsSample = (() => {
 	let userSendsMetrics;
 	const decideInMetricsSample = () => {
 
@@ -142,15 +142,15 @@ const inMetricsSample = (() => {
 	return decideInMetricsSample;
 })();
 
-module.exports = {
-	debounce: debounce,
-	getLayoutName: getLayoutName,
-	getABTestState: getABTestState,
-	getMetaData: getMetaData,
-	getReferrer: getReferrer,
-	keyValueString: keyValueString,
-	isEmpty: isEmpty,
-	log: log,
-	getScreenSize: getScreenSize,
-	inMetricsSample: inMetricsSample
+export default {
+	debounce,
+	getLayoutName,
+	getABTestState,
+	getMetaData,
+	getReferrer,
+	keyValueString,
+	isEmpty,
+	log,
+	getScreenSize,
+	inMetricsSample
 };

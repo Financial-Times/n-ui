@@ -1,5 +1,5 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
-const pageMetrics = require('../js/page-metrics');
+import pageMetrics from '../js/page-metrics';
 const broadcastStub = sinon.stub();
 
 // In reality, we are sampling the number of users that send metrics
@@ -234,4 +234,3 @@ describe('Page Metrics', () => {
 		});
 	});
 });
-
