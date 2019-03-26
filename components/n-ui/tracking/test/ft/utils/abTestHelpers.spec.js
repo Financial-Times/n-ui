@@ -1,4 +1,4 @@
-/*global describe, it, expect, beforeEach, afterEach*/
+/*global describe, it, expect*/
 /*jshint expr: true */
 const abTestHelpers = require('../../../ft/utils/abTestHelpers');
 

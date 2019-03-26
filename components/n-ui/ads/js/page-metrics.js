@@ -1,5 +1,5 @@
-const inMetricsSample = require('./utils').inMetricsSample;
-const nUIFoundations = require('n-ui-foundations');
+import { inMetricsSample } from'./utils';
+import nUIFoundations from 'n-ui-foundations';
 const { broadcast, perfMark } = nUIFoundations;
 
 const pageEventMarkMap = {
@@ -31,14 +31,14 @@ const setupPageMetrics = () => {
 
 const recordPerfMarkForEvent = (eventName, perfMarkName) => {
 	const listenerName = 'oAds.' + eventName;
-	document.addEventListener(listenerName, function handler() {
+	document.addEventListener(listenerName, function handler () {
 		perfMark(perfMarkName);
 		document.removeEventListener(listenerName, handler);
 	});
 };
 
 const recordMarksForEvents = (events2Marks) => {
-	for (const eventName in events2Marks) {
+	for (const eventName in events2Marks) { // eslint-disable-line guard-for-in
 		recordPerfMarkForEvent(eventName, events2Marks[eventName]);
 	}
 };
@@ -46,12 +46,12 @@ const recordMarksForEvents = (events2Marks) => {
 const getMarksForEventMarkMap = eventMarkMap => {
 	let markNames = [];
 
-	for (const key in eventMarkMap) {
+	for (const key in eventMarkMap) { // eslint-disable-line guard-for-in
 		markNames.push(eventMarkMap[key]);
 	}
 
 	return getPerfMarks(markNames);
-}
+};
 
 const sendMetrics = (eventMarkMap, actionName) => {
 	if (inMetricsSample()) {
@@ -74,9 +74,9 @@ const sendKruxMetrics = () => {
 };
 
 const sendMetricsOnEvent = (eventName, callback) => {
-	document.addEventListener(eventName, function listenOnInitialised() {
+	document.addEventListener(eventName, function listenOnInitialised () {
 		// We must ensure the 'adsServerLoaded' perfMark has been recorded first
-		setTimeout(callback, 0)
+		setTimeout(callback, 0);
 		document.removeEventListener(eventName, listenOnInitialised);
 	});
 };
@@ -98,7 +98,7 @@ const getPerfMarks = (markNames) => {
 	return marks;
 };
 
-module.exports = {
+export default {
 	setupPageMetrics,
 	recordMarksForEvents
 };

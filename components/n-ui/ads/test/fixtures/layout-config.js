@@ -1,6 +1,6 @@
 'use strict'; //eslint-disable-line
 
-module.exports = {
+export default {
 	'test-page' : {
 		default: {
 			'pageType': 'ind',
