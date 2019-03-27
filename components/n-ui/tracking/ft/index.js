@@ -59,6 +59,12 @@ const oTrackingWrapper = {
 			const errorReason = (/nextErrorReason=(\w+)/.exec(window.location.search) || [])[1];
 			const pageViewConf = {context: {}};
 
+			if (getRootData('content-type') === 'podcast' || getRootData('content-type') === 'audio') {
+				pageViewConf.context.content = {
+					asset_type: 'audio'
+				};
+			}
+
 			if (errorStatus) {
 				// TODO after https://github.com/Financial-Times/o-tracking/issues/122#issuecomment-194970465
 				// this should be redundant as context would propagate down to each event in its entirety
