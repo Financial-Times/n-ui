@@ -30,7 +30,8 @@ var eventDefinitions = [
 		marks: {
 			render: 'slotInView',
 			gptDisplay: 'slotAdRequested'
-		}
+		},
+		multiple: true
 	}
 ];
 
@@ -46,13 +47,15 @@ function setupMetrics() {
 function sendMetricsOnEvent(eventName, eMarkMap) {
 	document.addEventListener(eventName, function listenOnInitialised(event) {
 		sendMetrics(eMarkMap, event.detail);
-		document.removeEventListener(eventName, listenOnInitialised);
+		if (!eMarkMap.multiple) {
+			document.removeEventListener(eventName, listenOnInitialised);
+		}
 	});
 }
 
 function sendMetrics(eMarkMap, eventDetails) {
 	if (true) {
-	// if (inMetricsSample()) {
+		// if (inMetricsSample()) {
 
 		var suffix = (eventDetails && 'pos' in eventDetails) ? eventDetails.name + '__' + eventDetails.pos + '__' + eventDetails.size : '';
 		var marks = getMarksForEventMarkMap(eMarkMap.marks, suffix);
