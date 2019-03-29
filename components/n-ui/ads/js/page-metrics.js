@@ -1,104 +1,107 @@
-const inMetricsSample = require('./utils').inMetricsSample;
-const nUIFoundations = require('n-ui-foundations');
-const { broadcast, perfMark } = nUIFoundations;
+var inMetricsSample = require('./utils').inMetricsSample;
+var nUIFoundations = require('n-ui-foundations');
 
-const pageEventMarkMap = {
-	startInitialisation: 'adsInitialising',
-	moatIVTcomplete: 'adsIVTComplete',
-	apiRequestsComplete: 'adsTargetingComplete',
-	initialised: 'adsPreparationComplete',
-	adServerLoadSuccess: 'adsServerLoaded'
-};
+var eventDefinitions = [
+	{
+		spoorAction: 'page-initialised',
+		triggers: ['adServerLoadSuccess'],
+		marks: {
+			startInitialisation: 'adsInitialising',
+			moatIVTcomplete: 'adsIVTComplete',
+			apiRequestsComplete: 'adsTargetingComplete',
+			initialised: 'adsPreparationComplete',
+			adServerLoadSuccess: 'adsServerLoaded'
+		}
+	},
+	{
+		spoorAction: 'krux',
+		triggers: ['kruxKuidAck', 'kruxKuidError', 'kruxConsentOptinFailed'],
+		marks: {
+			kruxScriptLoaded: 'kruxScriptLoaded',
+			kruxConsentOptinOK: 'kruxConsentOptinOK',
+			kruxConsentOptinFailed: 'kruxConsentOptinFailed',
+			kruxKuidAck: 'kruxKuidAck',
+			kruxKuidError: 'kruxKuidError'
+		}
+	},
+	{
+		spoorAction: 'slot-requested',
+		triggers: ['gptDisplay'],
+		marks: {
+			render: 'slotInView',
+			gptDisplay: 'slotAdRequested'
+		}
+	}
+];
 
-const kruxEventMarkMap = {
-	kruxScriptLoaded: 'kruxScriptLoaded',
-	kruxConsentOptinOK: 'kruxConsentOptinOK',
-	kruxConsentOptinFailed: 'kruxConsentOptinFailed',
-	kruxKuidAck: 'kruxKuidAck',
-	kruxKuidError: 'kruxKuidError'
-};
-
-const setupPageMetrics = () => {
-	sendMetricsOnEvent('oAds.adServerLoadSuccess', sendPageMetrics);
-	recordMarksForEvents(pageEventMarkMap);
-
-	sendMetricsOnEvent('oAds.kruxKuidAck', sendKruxMetrics);
-	sendMetricsOnEvent('oAds.kruxKuidError', sendKruxMetrics);
-	sendMetricsOnEvent('oAds.kruxConsentOptinFailed', sendKruxMetrics);
-	recordMarksForEvents(kruxEventMarkMap);
-
-};
-
-const recordPerfMarkForEvent = (eventName, perfMarkName) => {
-	const listenerName = 'oAds.' + eventName;
-	document.addEventListener(listenerName, function handler() {
-		perfMark(perfMarkName);
-		document.removeEventListener(listenerName, handler);
+function setupMetrics() {
+	eventDefinitions.forEach( function(eDef) {
+		var triggers = Array.isArray(eDef.triggers) ? eDef.triggers : [];
+		triggers.forEach(function(trigger) {
+			sendMetricsOnEvent('oAds.' + trigger, eDef);
+		});
 	});
-};
+}
 
-const recordMarksForEvents = (events2Marks) => {
-	for (const eventName in events2Marks) {
-		recordPerfMarkForEvent(eventName, events2Marks[eventName]);
+function sendMetricsOnEvent(eventName, eMarkMap) {
+	document.addEventListener(eventName, function listenOnInitialised(event) {
+		sendMetrics(eMarkMap, event.detail);
+		document.removeEventListener(eventName, listenOnInitialised);
+	});
+}
+
+function sendMetrics(eMarkMap, eventDetails) {
+	if (true) {
+	// if (inMetricsSample()) {
+
+		var suffix = (eventDetails && 'pos' in eventDetails) ? eventDetails.name + '__' + eventDetails.pos + '__' + eventDetails.size : '';
+		var marks = getMarksForEventMarkMap(eMarkMap.marks, suffix);
+		console.log('-----------------------------------');
+		console.log('suffix', suffix);
+		console.log('eMarkMap.marks', eMarkMap.marks);
+		console.log('performance.getEntriesByType("mark").map.( x => x.name )', performance.getEntriesByType("mark").map( x => x.name ));
+		console.log('marks', marks);
+		console.log('eventDetails', eventDetails);
+
+		nUIFoundations.broadcast('oTracking.event', {
+			category: 'ads',
+			action: eMarkMap.spoorAction,
+			timings: { marks: marks }
+		});
 	}
-};
+}
 
-const getMarksForEventMarkMap = eventMarkMap => {
-	let markNames = [];
+function getMarksForEventMarkMap(eventMarkMap, suffix) {
+	var markNames = [];
 
-	for (const key in eventMarkMap) {
-		markNames.push(eventMarkMap[key]);
+	for (var key in eventMarkMap) {
+		markNames.push('oAds.' + key);
+		if (suffix) {
+			markNames.push('oAds.' + key + '__' + suffix);
+		}
 	}
+
+	console.log('markNames', markNames);
 
 	return getPerfMarks(markNames);
 }
 
-const sendMetrics = (eventMarkMap, actionName) => {
-	if (inMetricsSample()) {
-		const marks = getMarksForEventMarkMap(eventMarkMap);
-
-		broadcast('oTracking.event', {
-			category: 'ads',
-			action: actionName,
-			timings: { marks }
-		});
-	}
-};
-
-const sendPageMetrics = () => {
-	sendMetrics(pageEventMarkMap, 'page-initialised');
-};
-
-const sendKruxMetrics = () => {
-	sendMetrics(kruxEventMarkMap, 'krux');
-};
-
-const sendMetricsOnEvent = (eventName, callback) => {
-	document.addEventListener(eventName, function listenOnInitialised() {
-		// We must ensure the 'adsServerLoaded' perfMark has been recorded first
-		setTimeout(callback, 0)
-		document.removeEventListener(eventName, listenOnInitialised);
-	});
-};
-
-const getPerfMarks = (markNames) => {
-	const performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+function getPerfMarks(markNames) {
+	var performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 	if (!performance || !performance.getEntriesByName) {
 		return {};
 	}
 
-	const marks = {};
-	markNames.forEach(mName => {
-		const pMarks = performance.getEntriesByName(mName);
+	var marks = {};
+	markNames.forEach(function(mName) {
+		var pMarks = performance.getEntriesByName(mName);
 		if (pMarks && pMarks.length) {
 			// We don't need sub-millisecond precision
 			marks[mName] = Math.round(pMarks[0].startTime);
 		};
 	});
 	return marks;
-};
+}
 
-module.exports = {
-	setupPageMetrics,
-	recordMarksForEvents
-};
+module.exports.setupMetrics = setupMetrics;
+
