@@ -28,8 +28,19 @@ var eventDefinitions = [
 		spoorAction: 'slot-requested',
 		triggers: ['gptDisplay'],
 		marks: {
+			ready: 'slotReady',
 			render: 'slotInView',
 			gptDisplay: 'slotAdRequested'
+		},
+		multiple: true
+	},
+	{
+		spoorAction: 'slot-rendered',
+		triggers: ['adIframeLoaded'],
+		marks: {
+			rendered: 'slotR1',
+			complete: 'slotComplete',
+			adIframeLoaded: 'slotRendered'
 		},
 		multiple: true
 	}
@@ -59,12 +70,6 @@ function sendMetrics(eMarkMap, eventDetails) {
 
 		var suffix = (eventDetails && 'pos' in eventDetails) ? eventDetails.name + '__' + eventDetails.pos + '__' + eventDetails.size : '';
 		var marks = getMarksForEventMarkMap(eMarkMap.marks, suffix);
-		console.log('-----------------------------------');
-		console.log('suffix', suffix);
-		console.log('eMarkMap.marks', eMarkMap.marks);
-		console.log('performance.getEntriesByType("mark").map.( x => x.name )', performance.getEntriesByType("mark").map( x => x.name ));
-		console.log('marks', marks);
-		console.log('eventDetails', eventDetails);
 
 		nUIFoundations.broadcast('oTracking.event', {
 			category: 'ads',
@@ -76,11 +81,13 @@ function sendMetrics(eMarkMap, eventDetails) {
 
 function getMarksForEventMarkMap(eventMarkMap, suffix) {
 	var markNames = [];
+	var eventName;
 
 	for (var key in eventMarkMap) {
-		markNames.push('oAds.' + key);
+		eventName = 'oAds.' + key;
+		markNames.push(eventName);
 		if (suffix) {
-			markNames.push('oAds.' + key + '__' + suffix);
+			markNames.push(eventName + '__' + suffix);
 		}
 	}
 
