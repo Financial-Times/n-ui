@@ -1,5 +1,6 @@
 var inMetricsSample = require('./utils').inMetricsSample;
 var nUIFoundations = require('n-ui-foundations');
+var oAds = require('o-ads');
 
 var eventDefinitions = [
 	{
@@ -68,14 +69,23 @@ function sendMetrics(eMarkMap, eventDetails) {
 	if (true) {
 		// if (inMetricsSample()) {
 
-		var suffix = (eventDetails && 'pos' in eventDetails) ? eventDetails.name + '__' + eventDetails.pos + '__' + eventDetails.size : '';
+		var suffix = (eventDetails && 'pos' in eventDetails) ? '__' + eventDetails.pos + '__' + eventDetails.size : '';
 		var marks = getMarksForEventMarkMap(eMarkMap.marks, suffix);
 
-		nUIFoundations.broadcast('oTracking.event', {
+		var eventPayload = {
 			category: 'ads',
 			action: eMarkMap.spoorAction,
 			timings: { marks: marks }
-		});
+		};
+
+		if (eventDetails && 'pos' in eventDetails) {
+			eventPayload.creative = {
+				ad_pos: eventDetails.pos,
+				ad_size: eventDetails.size && eventDetails.size.toString()
+			};
+		}
+
+		nUIFoundations.broadcast('oTracking.event', eventPayload);
 	}
 }
 
@@ -84,19 +94,14 @@ function getMarksForEventMarkMap(eventMarkMap, suffix) {
 	var eventName;
 
 	for (var key in eventMarkMap) {
-		eventName = 'oAds.' + key;
+		eventName = 'oAds.' + key + suffix;
 		markNames.push(eventName);
-		if (suffix) {
-			markNames.push(eventName + '__' + suffix);
-		}
 	}
 
-	console.log('markNames', markNames);
-
-	return getPerfMarks(markNames);
+	return getPerfMarks(markNames, suffix);
 }
 
-function getPerfMarks(markNames) {
+function getPerfMarks(markNames, suffix) {
 	var performance = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 	if (!performance || !performance.getEntriesByName) {
 		return {};
@@ -105,9 +110,10 @@ function getPerfMarks(markNames) {
 	var marks = {};
 	markNames.forEach(function(mName) {
 		var pMarks = performance.getEntriesByName(mName);
+		var markName = mName.replace('oAds.', '').replace(suffix, '');
 		if (pMarks && pMarks.length) {
 			// We don't need sub-millisecond precision
-			marks[mName] = Math.round(pMarks[0].startTime);
+			marks[markName] = Math.round(pMarks[0].startTime);
 		};
 	});
 	return marks;
