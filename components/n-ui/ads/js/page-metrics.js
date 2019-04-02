@@ -6,43 +6,43 @@ var eventDefinitions = [
 	{
 		spoorAction: 'page-initialised',
 		triggers: ['adServerLoadSuccess'],
-		marks: {
-			startInitialisation: 'adsInitialising',
-			moatIVTcomplete: 'adsIVTComplete',
-			apiRequestsComplete: 'adsTargetingComplete',
-			initialised: 'adsPreparationComplete',
-			adServerLoadSuccess: 'adsServerLoaded'
-		}
+		marks: [
+			'startInitialisation',
+			'moatIVTcomplete',
+			'apiRequestsComplete',
+			'initialised',
+			'adServerLoadSuccess',
+		]
 	},
 	{
 		spoorAction: 'krux',
 		triggers: ['kruxKuidAck', 'kruxKuidError', 'kruxConsentOptinFailed'],
-		marks: {
-			kruxScriptLoaded: 'kruxScriptLoaded',
-			kruxConsentOptinOK: 'kruxConsentOptinOK',
-			kruxConsentOptinFailed: 'kruxConsentOptinFailed',
-			kruxKuidAck: 'kruxKuidAck',
-			kruxKuidError: 'kruxKuidError'
-		}
+		marks: [
+			'kruxScriptLoaded',
+			'kruxConsentOptinOK',
+			'kruxConsentOptinFailed',
+			'kruxKuidAck',
+			'kruxKuidError',
+		]
 	},
 	{
 		spoorAction: 'slot-requested',
 		triggers: ['gptDisplay'],
-		marks: {
-			ready: 'slotReady',
-			render: 'slotInView',
-			gptDisplay: 'slotAdRequested'
-		},
+		marks: [
+			'ready',
+			'render',
+			'gptDisplay',
+		],
 		multiple: true
 	},
 	{
 		spoorAction: 'slot-rendered',
 		triggers: ['adIframeLoaded'],
-		marks: {
-			rendered: 'slotR1',
-			complete: 'slotComplete',
-			adIframeLoaded: 'slotRendered'
-		},
+		marks: [
+			'rendered',
+			'complete',
+			'adIframeLoaded',
+		],
 		multiple: true
 	}
 ];
