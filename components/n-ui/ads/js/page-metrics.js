@@ -27,28 +27,27 @@ var eventDefinitions = [
 	},
 	{
 		spoorAction: 'slot-requested',
-		triggers: ['gptDisplay'],
+		triggers: ['slotGoRender'],
 		marks: [
-			'ready',
-			'render',
-			'gptDisplay',
+			'slotReady',
+			'slotCanRender',
+			'slotGoRender',
 		],
 		multiple: true
 	},
 	{
 		spoorAction: 'slot-rendered',
-		triggers: ['adIframeLoaded'],
+		triggers: ['slotRenderEnded'],
 		marks: [
-			'rendered',
-			'complete',
-			'adIframeLoaded',
+			'slotRenderStart',
+			'slotExpand',
+			'slotRenderEnded',
 		],
 		multiple: true
 	}
 ];
 
 function sendMetrics(eventPayload) {
-	console.log('eventPayload', eventPayload);
 	if (true) {
 		// if (inMetricsSample()) {
 		nUIFoundations.broadcast('oTracking.event', eventPayload);
@@ -59,5 +58,5 @@ function setupMetrics() {
 	utils.setupMetrics(eventDefinitions, sendMetrics);
 }
 
-module.exports.setupMetrics = setupMetrics;
+module.exports = setupMetrics;
 
