@@ -30,5 +30,8 @@
     "o-tracking": "^1.4.1",
     "logo-images": "^1.6.0",
     "n-feedback": "^4.1.1"
+  },
+  "resolutions": {
+    "ftdomdelegate": "^3.0.0"
   }
 }
