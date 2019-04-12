@@ -10,12 +10,12 @@ export default (timingsObject, slotDetails) => {
 			category: 'ads',
 			action: 'first-load',
 			timings: { offsets, marks },
+			consent: oAds.consents,
 			creative: {
 				id: slotDetails.gpt.creativeId,
 				serviceName: slotDetails.gpt.serviceName,
 				size: slotDetails.container.getAttribute('data-o-ads-loaded')
 			}
-
 		});
 	}
 };
