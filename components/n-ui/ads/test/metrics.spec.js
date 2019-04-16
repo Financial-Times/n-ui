@@ -42,6 +42,7 @@ describe('Metrics', () => {
 				serviceName: 'gpt',
 				size: 'Billboard'
 			},
+			consent: { behavioral: true },
 			timings: {
 				offsets: {
 					firstAdLoaded: { domContentLoadedEventEnd: 900, loadEventEnd: 900, domInteractive: 900 },
