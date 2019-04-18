@@ -1,5 +1,5 @@
 /* globals describe, it, beforeEach,expect */
-const adsSandbox = require('../js/sandbox');
+import adsSandbox from '../js/sandbox';
 
 describe('Sandbox', () => {
 	beforeEach(() => {

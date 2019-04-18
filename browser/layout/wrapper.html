@@ -95,6 +95,12 @@
 		{{#if @root.flags.moatAdsTraffic}}
 			<script async id="moat-ivt" src="https://sejs.moatads.com/financialtimesprebidheader859796398452/yi.js"></script>
 		{{/if}}
+
+		{{#if @root.flags.AdsIHSindexBasedTargeting}}
+		<!-- Temporarily adding an IHS Markits script for stock-index based ad-targeting. This is to test the feature behind a flag; (only for companes/energy section). An api based solution will be rolled out in a future update and the script will be removed after the test -->
+		<script async type="text/javascript" src="//ad.wsod.com/pub/d270ad52d0e8a39449c32782950c8cc9/0.0.async/"></script>
+		{{/if}}
+
 		{{#if @root.flags.adsInizioSurvey}}
 			<script async src="https://cdn.brandmetrics.com/survey/script/45b903c6675b4a9b85db13385a3d6084.js"></script>
 		{{/if}}

@@ -1,6 +1,6 @@
-var inMetricsSample = require('./utils').inMetricsSample;
-var nUIFoundations = require('n-ui-foundations');
-var utils = require('o-ads').utils;
+// import { inMetricsSample } from'./utils';
+import nUIFoundations from 'n-ui-foundations';
+import { utils } from 'o-ads';
 
 var eventDefinitions = [
 	{
@@ -58,5 +58,5 @@ function setupMetrics() {
 	utils.setupMetrics(eventDefinitions, sendMetrics);
 }
 
-module.exports = setupMetrics;
+export default setupMetrics;
 

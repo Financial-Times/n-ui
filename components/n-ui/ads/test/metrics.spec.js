@@ -1,5 +1,5 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
-const sendMetrics = require('../js/metrics');
+import sendMetrics from '../js/metrics';
 const broadcastStub = sinon.stub();
 
 // Inject the broadcastStub into sendMetrics with Rewire

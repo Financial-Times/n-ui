@@ -1,10 +1,11 @@
-const utils = require('./utils');
-const sandbox = require('./sandbox');
-const oTrackingCore = require('o-tracking/src/javascript/core.js');
-const extend = require('o-ads').utils.extend;
-const apiUrlRoot = 'https://ads-api.ft.com/v1/';
+import utils from './utils';
+import sandbox from './sandbox';
+import { getRootID } from 'o-tracking/src/javascript/core.js';
+import { extend } from 'o-ads/src/js/utils';
 
-module.exports = function (flags, appName, adOptions) {
+const API_URL_ROOT = 'https://ads-api.ft.com/v1/';
+
+export default function (flags, appName, adOptions) {
 
 	adOptions = adOptions || {};
 
@@ -12,7 +13,7 @@ module.exports = function (flags, appName, adOptions) {
 		pt: appName.toLowerCase().substr(0, 3),
 		nlayout: utils.getLayoutName(),
 		mvt: utils.getABTestState(),
-		rootid: oTrackingCore.getRootID()
+		rootid: getRootID()
 	};
 
 	if (flags.get('adsEnableTestCreatives')) {
@@ -27,7 +28,7 @@ module.exports = function (flags, appName, adOptions) {
 		attributes: {
 			user: {},
 			page: {
-				rootid: oTrackingCore.getRootID()
+				rootid: getRootID()
 			}
 		}
 	};
@@ -123,7 +124,7 @@ module.exports = function (flags, appName, adOptions) {
 		dfp_targeting: utils.keyValueString(targeting),
 		lazyLoad: getLazyLoadConfig(),
 		targetingApi: adOptions.noTargeting ? null : {
-			user: `${apiUrlRoot}user`,
+			user: `${API_URL_ROOT}user`,
 			page: getContextualTargeting(appName),
 			usePageZone: true
 		},

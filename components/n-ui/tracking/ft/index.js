@@ -59,6 +59,12 @@ const oTrackingWrapper = {
 			const errorReason = (/nextErrorReason=(\w+)/.exec(window.location.search) || [])[1];
 			const pageViewConf = {context: {}};
 
+			if (getRootData('content-type') === 'podcast' || getRootData('content-type') === 'audio') {
+				pageViewConf.context.content = {
+					asset_type: 'audio'
+				};
+			}
+
 			if (errorStatus) {
 				// TODO after https://github.com/Financial-Times/o-tracking/issues/122#issuecomment-194970465
 				// this should be redundant as context would propagate down to each event in its entirety
@@ -118,17 +124,6 @@ const oTrackingWrapper = {
 				user: userData,
 				useSendBeacon: flags.get('sendBeacon')
 			});
-
-			//headline testing, add variant to the page view event as long as there is only one article under test
-			if (location.pathname === '/') {
-				const alternativeHeadlines = [].slice.call(document.querySelectorAll('[data-trackable-context-headline-variant]'));
-				const isOnlyOneArticle = alternativeHeadlines.every((element, index, array) => element.getAttribute('href') === array[0].getAttribute('href'));
-				if (alternativeHeadlines.length && isOnlyOneArticle) {
-					pageViewConf.context['headline-variant'] = alternativeHeadlines[0].getAttribute('data-trackable-context-headline-variant');
-					const articleUuid = alternativeHeadlines[0].getAttribute('href').replace('/content/', '');
-					pageViewConf.context['headline-uuid'] = articleUuid;
-				}
-			}
 
 			//teaser-testing (supersedes 'headline' testing). Add extra page context info related to the relevant teasers under test.
 			if (location.pathname === '/') {

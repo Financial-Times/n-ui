@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/Financial-Times/n-ui#readme",
   "devDependencies": {
-    "@financial-times/n-gage": "3.4.0",
+    "@financial-times/n-gage": "^3.6.0",
     "@financial-times/n-heroku-tools": "^7.4.0",
     "@financial-times/n-test": "^1.13.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",

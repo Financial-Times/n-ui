@@ -1,6 +1,7 @@
-const Superstore = require('superstore');
+import Superstore from 'superstore';
+import oAds from 'o-ads';
+
 const store = new Superstore('session', 'next-krux');
-const oAds = require('o-ads');
 
 const addPixel = (src) => {
 	const img = new Image();
@@ -21,8 +22,7 @@ const frequencyCap = (name, limit, fn) => {
 	}).catch(() => {});
 };
 
-exports.init = (flags) => {
-
+function init (flags) {
 	document.body.addEventListener('oAds.kruxScriptLoaded', () => {
 		//If local/sessionStorage unavailable, don't run any of these scripts.
 		if(typeof window.Krux === 'undefined' || !Superstore.isPersisting()) {
@@ -50,6 +50,9 @@ exports.init = (flags) => {
 				});
 			}
 		}
-
 	});
+}
+
+export default {
+	init
 };
