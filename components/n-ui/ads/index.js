@@ -4,10 +4,8 @@ import Ads from 'o-ads';
 //TODO move to central shared utils
 import utils from './js/utils';
 import oAdsConfig from './js/oAdsConfig';
-import setupPageMetrics from './js/page-metrics';
-
+import setupPageMetrics from './js/metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
-import { perfMark } from 'n-ui-foundations';
 
 let slotCount;
 let slotsRendered = 0;

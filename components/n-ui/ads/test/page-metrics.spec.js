@@ -1,5 +1,5 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
-import pageMetrics from '../js/page-metrics';
+import metrics from '../js/metrics';
 const broadcastStub = sinon.stub();
 
 // In reality, we are sampling the number of users that send metrics
@@ -9,8 +9,8 @@ const inMetricsSampleStub = sinon.stub().callsFake(() => true);
 // Inject the broadcastStub into sendMetrics with Rewire
 // https://github.com/speedskater/babel-plugin-rewire
 // set in /build/webpack/loaders/es5.js
-pageMetrics.__Rewire__('broadcast', broadcastStub);
-pageMetrics.__Rewire__('inMetricsSample', inMetricsSampleStub);
+metrics.__Rewire__('broadcast', broadcastStub);
+metrics.__Rewire__('inMetricsSample', inMetricsSampleStub);
 
 describe('Page Metrics', () => {
 	let saveWindowPerformance;
@@ -30,7 +30,7 @@ describe('Page Metrics', () => {
 			bar: 'barPerfMark'
 		};
 
-		pageMetrics.recordMarksForEvents(pageEventMarkMap);
+		metrics.recordMarksForEvents(pageEventMarkMap);
 
 		document.dispatchEvent(new CustomEvent('oAds.foo'));
 		document.dispatchEvent(new CustomEvent('oAds.bar'));
@@ -72,7 +72,7 @@ describe('Page Metrics', () => {
 			}
 		};
 
-		pageMetrics.setupPageMetrics();
+		metrics.setupPageMetrics();
 		document.dispatchEvent(new CustomEvent('oAds.adServerLoadSuccess'));
 		setTimeout( () => {
 			expect(broadcastStub).to.have.been.calledWith('oTracking.event', expectedTrackingObject);
@@ -81,7 +81,7 @@ describe('Page Metrics', () => {
 	});
 
 	it('captures all the expected page metrics', (done) => {
-		pageMetrics.setupPageMetrics();
+		metrics.setupPageMetrics();
 		document.dispatchEvent(new CustomEvent('oAds.startInitialisation'));
 		document.dispatchEvent(new CustomEvent('oAds.apiRequestsComplete'));
 		document.dispatchEvent(new CustomEvent('oAds.moatIVTcomplete'));
@@ -122,7 +122,7 @@ describe('Page Metrics', () => {
 			}
 		};
 
-		pageMetrics.setupPageMetrics();
+		metrics.setupPageMetrics();
 		document.dispatchEvent(new CustomEvent('oAds.kruxKuidAck'));
 		setTimeout( () => {
 			expect(broadcastStub).to.have.been.calledWith('oTracking.event', expectedTrackingObject);
@@ -152,7 +152,7 @@ describe('Page Metrics', () => {
 			}
 		};
 
-		pageMetrics.setupPageMetrics();
+		metrics.setupPageMetrics();
 		document.dispatchEvent(new CustomEvent('oAds.kruxKuidAck'));
 		setTimeout( () => {
 			expect(broadcastStub).to.have.been.calledWith('oTracking.event', expectedTrackingObject);
@@ -180,7 +180,7 @@ describe('Page Metrics', () => {
 			}
 		};
 
-		pageMetrics.setupPageMetrics();
+		metrics.setupPageMetrics();
 		document.dispatchEvent(new CustomEvent('oAds.kruxConsentOptinFailed'));
 		setTimeout( () => {
 			expect(broadcastStub).to.have.been.calledWith('oTracking.event', expectedTrackingObject);
@@ -189,7 +189,7 @@ describe('Page Metrics', () => {
 	});
 
 	it('captures all the expected krux metrics when Kuid has been acknowledged', (done) => {
-		pageMetrics.setupPageMetrics();
+		metrics.setupPageMetrics();
 		document.dispatchEvent(new CustomEvent('oAds.kruxScriptLoaded'));
 		document.dispatchEvent(new CustomEvent('oAds.kruxConsentOptinOK'));
 		document.dispatchEvent(new CustomEvent('oAds.kruxKuidAck'));
@@ -205,7 +205,7 @@ describe('Page Metrics', () => {
 	});
 
 	it('captures all the expected krux metrics when Kuid has NOT been acknowledged', (done) => {
-		pageMetrics.setupPageMetrics();
+		metrics.setupPageMetrics();
 		document.dispatchEvent(new CustomEvent('oAds.kruxScriptLoaded'));
 		document.dispatchEvent(new CustomEvent('oAds.kruxConsentOptinOK'));
 		document.dispatchEvent(new CustomEvent('oAds.kruxKuidError'));
@@ -221,7 +221,7 @@ describe('Page Metrics', () => {
 	});
 
 	it('captures all the expected krux metrics when consent was not given', (done) => {
-		pageMetrics.setupPageMetrics();
+		metrics.setupPageMetrics();
 		document.dispatchEvent(new CustomEvent('oAds.kruxScriptLoaded'));
 		document.dispatchEvent(new CustomEvent('oAds.kruxConsentOptinFailed'));
 
