@@ -2,16 +2,16 @@
 import nUIFoundations from 'n-ui-foundations';
 import { utils } from 'o-ads';
 
-var eventDefinitions = [
+const metricsDefinitions = [
 	{
 		spoorAction: 'page-initialised',
-		triggers: ['adServerLoadSuccess'],
+		triggers: ['serverScriptLoaded'],
 		marks: [
-			'startInitialisation',
-			'moatIVTcomplete',
-			'apiRequestsComplete',
+			'initialising',
+			'IVTcomplete',
+			'adsAPIComplete',
 			'initialised',
-			'adServerLoadSuccess',
+			'serverScriptLoaded',
 		]
 	},
 	{
@@ -47,15 +47,15 @@ var eventDefinitions = [
 	}
 ];
 
-function sendMetrics(eventPayload) {
+function sendMetrics (eventPayload) {
 	if (true) {
 		// if (inMetricsSample()) {
 		nUIFoundations.broadcast('oTracking.event', eventPayload);
 	}
 }
 
-function setupMetrics() {
-	utils.setupMetrics(eventDefinitions, sendMetrics);
+function setupMetrics () {
+	utils.setupMetrics(metricsDefinitions, sendMetrics);
 }
 
 export default setupMetrics;
