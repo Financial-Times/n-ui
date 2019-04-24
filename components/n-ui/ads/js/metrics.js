@@ -8,7 +8,7 @@ const metricsDefinitions = [
 		triggers: ['serverScriptLoaded'],
 		marks: [
 			'initialising',
-			'IVTcomplete',
+			'IVTComplete',
 			'adsAPIComplete',
 			'initialised',
 			'serverScriptLoaded',
@@ -59,4 +59,3 @@ function setupMetrics () {
 }
 
 export default setupMetrics;
-
