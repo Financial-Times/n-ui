@@ -122,25 +122,6 @@ export function getScreenSize () {
 	return window.innerWidth;
 }
 
-// Fraction of all users that will actually send ads metrics to Spoor
-const METRICS_SAMPLE_SIZE = 0.1;
-
-export const inMetricsSample = (() => {
-	let userSendsMetrics;
-	const decideInMetricsSample = () => {
-
-		// We are caching the value since we want to be consistent with the user
-		// allocation throughout one same page visit
-		if (typeof userSendsMetrics !== 'undefined') {
-			return userSendsMetrics;
-		}
-
-		userSendsMetrics = (Math.random() < METRICS_SAMPLE_SIZE);
-		return userSendsMetrics;
-
-	};
-	return decideInMetricsSample;
-})();
 
 export default {
 	debounce,
@@ -151,6 +132,5 @@ export default {
 	keyValueString,
 	isEmpty,
 	log,
-	getScreenSize,
-	inMetricsSample
+	getScreenSize
 };

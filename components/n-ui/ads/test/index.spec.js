@@ -4,7 +4,7 @@ import main from '../index';
 import utils from '../js/utils';
 import markup from './helpers/markup';
 const fakeArticleUuid = '123456';
-const metrics = require('../js/metrics');
+// const setupMetrics = require('../js/metrics');
 
 let sandbox;
 let targeting;
@@ -29,7 +29,6 @@ describe('Main', () => {
 	it('Should init if flag is set to true and appname given', () => {
 		const flags = { get: () => true };
 		const initSpy = sandbox.stub(ads, 'init').callsFake(() => Promise.resolve({ slots: { initSlot: sinon.stub()}, config: sinon.stub() }));
-		sandbox.stub(metrics, 'setupPageMetrics').callsFake(() => {});
 		return main.init(flags, { name: 'article' }).then(() => {
 			expect(initSpy).to.have.been.called;
 		});
@@ -47,7 +46,6 @@ describe('Main', () => {
 	it('Should bind the adverts found on page to o-ads library', () => {
 		const flags = { get: () => true };
 		const adInit = sandbox.stub(ads.slots, 'initSlot');
-		sandbox.stub(metrics, 'setupPageMetrics').callsFake(() => {});
 
 		sandbox.stub(ads, 'init').callsFake(() => Promise.resolve({
 			targeting : {
@@ -65,7 +63,6 @@ describe('Main', () => {
 		if(!window.performance) {
 			window.performance = { mark: () => {}};
 		};
-		sandbox.stub(metrics, 'setupPageMetrics').callsFake(() => {});
 		const perfMark = sandbox.stub(window.performance, 'mark').callsFake(() => true );
 		const info = sandbox.stub(utils.log, 'info');
 		main.init(flags, { name: 'earle' })

@@ -4,7 +4,7 @@ import Ads from 'o-ads';
 //TODO move to central shared utils
 import utils from './js/utils';
 import oAdsConfig from './js/oAdsConfig';
-import setupPageMetrics from './js/metrics';
+import { setupMetrics } from './js/metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 
 let slotCount;
@@ -16,7 +16,7 @@ window.oAds = Ads;
 function initOAds (flags, appName, adOptions) {
 	const initObj = oAdsConfig(flags, appName, adOptions);
 
-	setupPageMetrics();
+	setupMetrics();
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);

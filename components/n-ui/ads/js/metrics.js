@@ -1,6 +1,25 @@
-// import { inMetricsSample } from'./utils';
 import nUIFoundations from 'n-ui-foundations';
-import { utils } from 'o-ads';
+import { oAdsUtils } from 'o-ads';
+
+// Probability that a page view is chosen to be send ads-related metrics
+const METRICS_SAMPLE_SIZE = 0.1;
+
+export const inMetricsSample = (function () {
+	let userSendsMetrics;
+	const decideInMetricsSample = function () {
+
+		// We are caching the value since we want to be consistent with the user
+		// allocation throughout one same page visit
+		if (typeof userSendsMetrics !== 'undefined') {
+			return userSendsMetrics;
+		}
+
+		userSendsMetrics = (Math.random() < METRICS_SAMPLE_SIZE);
+		return userSendsMetrics;
+
+	};
+	return decideInMetricsSample;
+}());
 
 const metricsDefinitions = [
 	{
@@ -48,14 +67,12 @@ const metricsDefinitions = [
 ];
 
 function sendMetrics (eventPayload) {
-	if (true) {
-		// if (inMetricsSample()) {
+	if (inMetricsSample()) {
 		nUIFoundations.broadcast('oTracking.event', eventPayload);
 	}
 }
 
-function setupMetrics () {
-	utils.setupMetrics(metricsDefinitions, sendMetrics);
+export function setupMetrics () {
+	oAdsUtils.setupMetrics(metricsDefinitions, sendMetrics);
 }
 
-export default setupMetrics;
