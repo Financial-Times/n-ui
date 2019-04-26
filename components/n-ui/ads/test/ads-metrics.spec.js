@@ -15,14 +15,12 @@ describe('Ads Metrics', () => {
 	});
 
 	it('sendMetrics should call broadcast with the right params if user is in metrics sample', () => {
-		// In production, we are sampling the number of users that send metrics
-		// to Spoor which, without this stub, would lead to flaky tests
-		// const inMetricsSampleStub = sandbox.stub(AdsMetrics, 'inAdsMetricsSample').callsFake(() => true);
-		AdsMetrics.__Rewire__('inAdsMetricsSample', () => true);
+		const inMetricsSampleStub = sandbox.stub().callsFake(() => true);
+		AdsMetrics.__Rewire__('inAdsMetricsSample', inMetricsSampleStub);
 		const broadcastStub = sandbox.stub(nUIFoundations, 'broadcast');
 		const eventPayload = { a: 'aa', b: 'bb' };
 		sendMetrics(eventPayload);
-		// expect(inMetricsSampleStub).to.have.been.called;
+		expect(inMetricsSampleStub).to.have.been.called;
 		expect(broadcastStub).to.have.been.calledWith('oTracking.event', eventPayload);
 		AdsMetrics.__ResetDependency__('inAdsMetricsSample');
 	});
