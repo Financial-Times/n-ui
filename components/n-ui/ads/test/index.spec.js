@@ -1,10 +1,9 @@
 /* globals describe, it, beforeEach, afterEach,expect,sinon */
 import ads from 'o-ads';
 import main from '../index';
-import utils from '../js/utils';
 import markup from './helpers/markup';
 const fakeArticleUuid = '123456';
-// const setupMetrics = require('../js/metrics');
+const AdsMetrics = require('../js/ads-metrics');
 
 let sandbox;
 let targeting;
@@ -57,27 +56,12 @@ describe('Main', () => {
 		});
 	});
 
-	it('Should log info and performance mark for the first ad when ads are loaded in slots', (done) => {
+	it('Should setup ads monitoring functionality', () => {
 		const flags = { get: () => true };
-		//PhantomJS doesn't have window.performance so fake it
-		if(!window.performance) {
-			window.performance = { mark: () => {}};
-		};
-		const perfMark = sandbox.stub(window.performance, 'mark').callsFake(() => true );
-		const info = sandbox.stub(utils.log, 'info');
-		main.init(flags, { name: 'earle' })
-			.then(() =>{
-				document.addEventListener('oAdsLogTestDone', () => {
-					expect(info).to.have.been.calledWith('Ad loaded in slot');
-					expect(perfMark).to.have.been.calledOnce;
-					expect(perfMark).to.have.been.calledWith('firstAdLoaded');
-					done();
-				});
-				document.dispatchEvent(new CustomEvent('oAds.complete', { detail: { type: 's1', slot: { gpt: { isEmpty: false }}}}));
-				document.dispatchEvent(new CustomEvent('oAds.complete', { detail: { type: 's1', slot: { gpt: { isEmpty: false }}}}));
-				document.dispatchEvent(new CustomEvent('oAdsLogTestDone', { detail: { type: 's1', slot: { gpt: { isEmpty: false }}}}));
-			});
+		const setupMetricsStub = sandbox.stub(AdsMetrics, 'setupAdsMetrics');
 
-
+		return main.init(flags, { name: 'article' }).then(() => {
+			expect(setupMetricsStub).to.have.been.called;
+		});
 	});
 });
