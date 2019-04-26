@@ -6,7 +6,7 @@ const METRICS_SAMPLE_SIZE = 0.1;
 
 let userSendsMetrics;
 
-export function inAdsMetricsSample () {
+const inAdsMetricsSample = function () {
 	// We cache the value in order to be consistent with the user
 	// allocation throughout a page view
 	if (typeof userSendsMetrics !== 'undefined') {
@@ -62,13 +62,13 @@ const metricsDefinitions = [
 	}
 ];
 
-export function sendMetrics (eventPayload) {
-	if (this.inAdsMetricsSample()) {
+function sendMetrics (eventPayload) {
+	if (inAdsMetricsSample()) {
 		nUIFoundations.broadcast('oTracking.event', eventPayload);
 	}
 }
 
-export function setupAdsMetrics () {
+function setupAdsMetrics () {
 	oAdsUtils.setupMetrics(metricsDefinitions, sendMetrics);
 }
 
