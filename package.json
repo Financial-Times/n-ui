@@ -90,7 +90,7 @@
     "raw-loader": "^0.5.1",
     "semver": "^5.5.0",
     "shellpromise": "^1.4.0",
-    "ts-loader": "^4.4.1",
+    "ts-loader": "^5.0.0",
     "uglifyjs": "^2.4.11",
     "watch-run": "^1.2.5",
     "webpack": "^4.12.1",
