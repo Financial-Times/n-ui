@@ -1,47 +1,27 @@
 import krux from './js/krux';
 import Ads from 'o-ads';
+
 //TODO move to central shared utils
 import utils from './js/utils';
 import oAdsConfig from './js/oAdsConfig';
-import sendMetrics from './js/metrics';
-import pageMetrics from './js/page-metrics';
-
+import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
-import { perfMark } from 'n-ui-foundations';
 
 let slotCount;
 let slotsRendered = 0;
 let onAdsCompleteCallback;
-const customTimings = {};
-let oadsReadyCalled = false;
-let oadsGptDisplay = false;
 
 window.oAds = Ads;
 
 function initOAds (flags, appName, adOptions) {
 	const initObj = oAdsConfig(flags, appName, adOptions);
 
-	pageMetrics.setupPageMetrics();
+	setupAdsMetrics();
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
 
-	document.addEventListener('oAds.ready', function (){
-		if (!oadsReadyCalled) {
-			customTimings.firstAdRequested = new Date().getTime();
-			perfMark('firstAdRequested');
-			oadsReadyCalled = true;
-		}
-	});
-
-	document.addEventListener('oAds.gptDisplay', function (){
-		if (!oadsGptDisplay) {
-			customTimings.firstAdGptRequest = new Date().getTime();
-			oadsGptDisplay = true;
-		}
-	});
-
-	document.addEventListener('oAds.complete', onAdsCompleteCallback);
+	document.addEventListener('oAds.slotExpand', onAdsCompleteCallback);
 
 	const ads = Ads.init(initObj);
 	ads.then(res => {
@@ -66,20 +46,6 @@ function onAdsComplete (flags, event) {
 
 		if (detail.slot.gpt && detail.slot.gpt.isEmpty === false) {
 			utils.log.info('Ad loaded in slot', event);
-			if (slotsRendered === 0) {
-				perfMark('firstAdLoaded');
-
-					customTimings.firstAdLoaded = new Date().getTime();
-					const iframeLoadedCallback = () => {
-						if (utils.inMetricsSample()) {
-							customTimings.adIframeLoaded = new Date().getTime();
-							perfMark('adIframeLoaded');
-							sendMetrics(customTimings, detail.slot);
-						}
-						document.body.removeEventListener('oAds.adIframeLoaded', iframeLoadedCallback);
-					};
-					document.body.addEventListener('oAds.adIframeLoaded', iframeLoadedCallback);
-			}
 		} else if (detail.slot.gpt && detail.slot.gpt.isEmpty === true) {
 			utils.log.warn('Failed to load ad, details below');
 			utils.log(event);
