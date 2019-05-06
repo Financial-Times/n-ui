@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "precommit": "node_modules/.bin/secret-squirrel",
     "prepush": "make verify -j3",
-    "commitmsg": "node_modules/.bin/secret-squirrel-commitmsg"
+    "commitmsg": "node_modules/.bin/secret-squirrel-commitmsg",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "engines": {
     "node": "^8.9.4"
@@ -96,7 +98,8 @@
     "webpack": "^4.12.1",
     "webpack-cli": "^3.0.8",
     "webpack-merge": "^4.1.3",
-    "word-listener": "^1.0.1"
+    "word-listener": "^1.0.1",
+    "snyk": "^1.161.1"
   },
   "eslintConfig": {
     "rules": {
@@ -128,5 +131,6 @@
       "threshold": "8.4 Kb"
     }
   ],
-  "false": {}
+  "false": {},
+  "snyk": true
 }
