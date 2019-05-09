@@ -22,6 +22,8 @@ const metricsDefinitions = [
 		spoorAction: 'page-initialised',
 		triggers: ['serverScriptLoaded'],
 		marks: [
+			'consentBehavioral',
+			'consentProgrammatic',
 			'initialising',
 			'IVTComplete',
 			'adsAPIComplete',
