@@ -1,5 +1,6 @@
 import krux from './js/krux';
 import Ads from 'o-ads';
+import oPermutive from 'o-permutive';
 
 //TODO move to central shared utils
 import utils from './js/utils';
@@ -65,7 +66,9 @@ export default {
 		window.addEventListener('ftNextLoaded', function () {
 			nCounterAdBlocking.init(flags);
 		});
-
+		if (flags && flags.get('AdsPermutive')) {
+			oPermutive.init();
+		}
 		const adOptions = typeof opts === 'object' ? opts : {};
 
 		return Promise.resolve()
