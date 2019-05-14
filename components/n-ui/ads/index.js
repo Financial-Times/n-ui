@@ -59,9 +59,6 @@ function onAdsComplete (flags, event) {
 		utils.log('Ads component finished');
 	}
 }
-
-export default {
-	//Permutive trial - config
 	const oPermConf = {
 		'appInfo' : {
 			'appName' : 'article',
@@ -74,8 +71,9 @@ export default {
 		'adsApi' : {
 			'user' : 'https://ads-api.ft.com/v1/user',
 			'content' : 'https://ads-api.ft.com/v1/content/'
-		}
+			}
 	};
+export default {
 	init: (flags, appInfo, opts) => {
 
 		window.addEventListener('ftNextLoaded', function () {
