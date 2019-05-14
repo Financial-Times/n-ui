@@ -81,7 +81,10 @@ module.exports = {
 			'c225ddde-d85b-11e4-ba53-00144feab7de', // server/test/stubs/navigationv2Data.json:3918|5595
 			'0f3e15c2-dc07-11e6-86ac-f253db7791c6', // server/test/stubs/navigationv2Data.json:3922|5599
 			'/circleci/project/github/RedSparr0w/node', // README.md:1
-			'k=8d2aeb08-16bf-4429-88ff-78f0dca00004' // browser/layout/partials/fastly-insights.html
+			'k=8d2aeb08-16bf-4429-88ff-78f0dca00004', // browser/layout/partials/fastly-insights.html
+			'e1c3fd73-dd41-4abd-b80b-4278d52bf7aa', // Permutive Trial public Api id - remove after trial
+			'b2b3b748-e1f6-4bd5-b2f2-26debc8075a3', // Permutive Trial public key - remove after trial
+			'5cfae92e-6cc5-11e9-80c7-60ee53e6681d' // Permutive Trial content UUID - remove after trial
 		]
 	}
 };
