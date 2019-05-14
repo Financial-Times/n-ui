@@ -3,7 +3,6 @@ import tracking from '../../components/n-ui/tracking';
 import date from 'o-date';
 import header from '../../components/n-ui/header';
 import roe from '../../components/n-ui/roe';
-import evenMoreJanky from '../../components/n-ui/perf-janky/more-janky';
 import footer from 'o-footer';
 import { lazyLoad as lazyLoadImages } from 'n-image';
 import * as serviceWorker from 'n-service-worker';
@@ -27,8 +26,7 @@ export const presets = {
 		ads: true,
 		syndication: true,
 		roe: true,
-		feedback: false,
-		evenMoreJanky: true
+		feedback: false
 	}
 };
 
@@ -149,10 +147,6 @@ export class AppInitializer {
 
 				if (this.enabledFeatures.roe) {
 					roe.init(flags);
-				}
-
-				if (this.enabledFeatures.evenMoreJanky) {
-					evenMoreJanky.init(flags);
 				}
 
 			});
