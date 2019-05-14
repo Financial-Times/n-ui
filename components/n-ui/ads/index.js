@@ -59,6 +59,8 @@ function onAdsComplete (flags, event) {
 		utils.log('Ads component finished');
 	}
 }
+
+//Permutive Trial - config options for o-permutive component.
 const oPermConf = {
 	'appInfo' : {
 		'appName' : 'article',
