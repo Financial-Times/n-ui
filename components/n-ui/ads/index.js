@@ -62,7 +62,7 @@ function onAdsComplete (flags, event) {
 
 export default {
 	//Permutive trial - config
-	let oPermConf = {
+	const oPermConf = {
 		'appInfo' : {
 			'appName' : 'article',
 			'contentId' : '5cfae92e-6cc5-11e9-80c7-60ee53e6681d'
