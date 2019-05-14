@@ -11,7 +11,7 @@ function set (markup) {
 
 function destroyContainer () {
 	if (container.parentNode) {
-			container.parentNode.removeChild(container);
+		container.parentNode.removeChild(container);
 	}
 }
 

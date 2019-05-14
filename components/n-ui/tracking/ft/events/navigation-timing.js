@@ -49,7 +49,7 @@ const getMarks = performance =>
 				marks[mark.name] = Math.round(mark.startTime);
 				return marks;
 			}, {}) :
-	{};
+		{};
 
 const getCustom = (window, performance) => {
 	const custom = {};

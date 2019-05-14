@@ -95,10 +95,10 @@ describe('Config', () => {
 			sandbox.stub(utils, 'getMetaData').callsFake((param) => {
 				switch (param) {
 					case 'dfp_site':
-							return 'testDfpSite';
+						return 'testDfpSite';
 						break;
 					case 'dfp_zone':
-							return 'testDfpZone';
+						return 'testDfpZone';
 						break;
 				}
 			});
@@ -112,7 +112,7 @@ describe('Config', () => {
 
 	describe('lazyLoad viewportMargin', () => {
 
-	// tests for adOptimizeLazyLoad flag
+		// tests for adOptimizeLazyLoad flag
 		it('Should pass 0% when screen size is wider than 980px', () => {
 			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 980; });
 			const flags = { get: () => true };

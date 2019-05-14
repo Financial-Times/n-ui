@@ -35,7 +35,7 @@ function init (flags) {
 
 			// DoubleClick handles display advertising. This matches up the user ID formats so Krux can send segment populations to them.
 			if(flags.get('kruxGoogleIntegration')) {
-			frequencyCap('doubleclick', 2, () => { addPixel('https://usermatch.krxd.net/um/v2?partner=google'); });
+				frequencyCap('doubleclick', 2, () => { addPixel('https://usermatch.krxd.net/um/v2?partner=google'); });
 			}
 
 			// The following four scripts are user matching scripts for Kruxdata partners
