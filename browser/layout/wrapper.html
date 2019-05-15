@@ -167,5 +167,12 @@
 	{{#if @root.flags.adsInizioSurvey}}
 		{{>n-ui/brandmetrics/template}}
 	{{/if}}
+	{{#if @root.flags.AdsPermutive}}
+	//Trial behind a flag - Testing permutive functionality
+	<div style="display:none">
+		<div class="o-permutive" data-o-component="o-permutive"
+		data-o-permutive-auoto-init="false"></div>
+	</div>
+	{{/if}}
 	</body>
 </html>
