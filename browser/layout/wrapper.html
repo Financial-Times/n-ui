@@ -30,6 +30,9 @@
 		<link rel="icon" type="image/png" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=update-logos&width=32&height=32&format=png" sizes="32x32">
 		<link rel="icon" type="image/png" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=update-logos&width=194&height=194&format=png" sizes="194x194">
 		<link rel="apple-touch-icon" sizes="180x180" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft-logo-square-coloured?source=update-logos&width=180&height=180&format=png">
+		{{#if @root.flags.appleTouchBarIcon}}
+		<link rel="mask-icon" href="https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo-v1%3Abrand-ft?source=update-logos&format=svg" color="#1a1817">
+		{{/if}}
 
 		{{#unless __disableMobilePhoneBanner}}
 		<meta name="apple-itunes-app" content="app-id=1200842933, affiliate-data=ct=smart-banner&pt=246269, app-argument={{#if canonicalUrl}}{{canonicalUrl}}{{else}}https://www.ft.com{{/if}}">
