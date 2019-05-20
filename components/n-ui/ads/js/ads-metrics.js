@@ -32,17 +32,6 @@ const metricsDefinitions = [
 		]
 	},
 	{
-		spoorAction: 'krux',
-		triggers: ['kruxKuidAck', 'kruxKuidError', 'kruxConsentOptinFailed'],
-		marks: [
-			'kruxScriptLoaded',
-			'kruxConsentOptinOK',
-			'kruxConsentOptinFailed',
-			'kruxKuidAck',
-			'kruxKuidError',
-		]
-	},
-	{
 		spoorAction: 'slot-requested',
 		triggers: ['slotGoRender'],
 		marks: [
