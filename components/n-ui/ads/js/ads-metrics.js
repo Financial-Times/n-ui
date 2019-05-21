@@ -12,6 +12,7 @@ const metricsDefinitions = [
 		marks: [
 			'consentBehavioral',
 			'consentProgrammatic',
+			'moatTimeout',
 			'initialising',
 			'IVTComplete',
 			'adsAPIComplete',
