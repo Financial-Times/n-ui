@@ -4,26 +4,15 @@ import { utils as oAdsUtils } from 'o-ads';
 // Probability that a page view is chosen to be send ads-related metrics
 const METRICS_SAMPLE_SIZE = 0.1;
 
-let userSendsMetrics;
-
-const inAdsMetricsSample = function () {
-	// We cache the value in order to be consistent with the user
-	// allocation throughout a page view
-	if (typeof userSendsMetrics !== 'undefined') {
-		return userSendsMetrics;
-	}
-
-	userSendsMetrics = (Math.random() < METRICS_SAMPLE_SIZE);
-	return userSendsMetrics;
-};
-
 const metricsDefinitions = [
 	{
+		sampleSize: METRICS_SAMPLE_SIZE,
 		spoorAction: 'page-initialised',
 		triggers: ['serverScriptLoaded'],
 		marks: [
 			'consentBehavioral',
 			'consentProgrammatic',
+			'moatTimeout',
 			'initialising',
 			'IVTComplete',
 			'adsAPIComplete',
@@ -32,6 +21,7 @@ const metricsDefinitions = [
 		]
 	},
 	{
+		sampleSize: METRICS_SAMPLE_SIZE,
 		spoorAction: 'slot-requested',
 		triggers: ['slotGoRender'],
 		marks: [
@@ -42,6 +32,7 @@ const metricsDefinitions = [
 		multiple: true
 	},
 	{
+		sampleSize: METRICS_SAMPLE_SIZE,
 		spoorAction: 'slot-rendered',
 		triggers: ['slotRenderEnded'],
 		marks: [
@@ -54,9 +45,7 @@ const metricsDefinitions = [
 ];
 
 function sendMetrics (eventPayload) {
-	if (inAdsMetricsSample()) {
-		nUIFoundations.broadcast('oTracking.event', eventPayload);
-	}
+	nUIFoundations.broadcast('oTracking.event', eventPayload);
 }
 
 function setupAdsMetrics () {
@@ -65,7 +54,6 @@ function setupAdsMetrics () {
 
 
 export default {
-	inAdsMetricsSample,
 	sendMetrics,
 	setupAdsMetrics
 };
