@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "precommit": "node_modules/.bin/secret-squirrel",
     "prepush": "make verify -j3",
-    "commitmsg": "node_modules/.bin/secret-squirrel-commitmsg"
+    "commitmsg": "node_modules/.bin/secret-squirrel-commitmsg",
+    "prepare": "npx snyk protect || npx snyk protect -d || true"
   },
   "engines": {
     "node": "^8.9.4"
@@ -54,6 +55,7 @@
     "proxyquire": "^2.0.1",
     "sinon": "^6.0.1",
     "sinon-chai": "^3.2.0",
+    "snyk": "^1.168.0",
     "supertest": "^3.1.0"
   },
   "dependencies": {
