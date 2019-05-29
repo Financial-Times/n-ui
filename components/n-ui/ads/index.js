@@ -5,6 +5,7 @@ import oPermutive from 'o-permutive';
 //TODO move to central shared utils
 import utils from './js/utils';
 import oAdsConfig from './js/oAdsConfig';
+import { getOPermutiveConfig, getOPermutiveMetaData } from './js/oPermutiveConfig';
 import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 
@@ -25,7 +26,7 @@ function initOAds (flags, appName, adOptions) {
 	document.addEventListener('oAds.slotExpand', onAdsCompleteCallback);
 
 	const ads = Ads.init(initObj);
-	ads.then(res => {
+	return ads.then(res => {
 		const containers = [].slice.call(document.querySelectorAll('.o-ads'));
 		slotCount = containers.length;
 		utils.log.info(slotCount + ' ad slots found on page');
@@ -60,28 +61,13 @@ function onAdsComplete (flags, event) {
 	}
 }
 
-//Permutive Trial - config options for o-permutive component.
-const oPermConf = {
-	'appInfo' : {
-		'appName' : 'article',
-		'contentId' : '5cfae92e-6cc5-11e9-80c7-60ee53e6681d'
-	},
-	'publicApiKeys' : {
-		'id' : 'e1c3fd73-dd41-4abd-b80b-4278d52bf7aa',
-		'key' : 'b2b3b748-e1f6-4bd5-b2f2-26debc8075a3'
-	},
-	'adsApi' : {
-		'user' : 'https://ads-api.ft.com/v1/user',
-		'content' : 'https://ads-api.ft.com/v1/content/'
-	}
-};
 export default {
 	init: (flags, appInfo, opts) => {
 
 		window.addEventListener('ftNextLoaded', function () {
 			nCounterAdBlocking.init(flags);
 		});
-		if (flags && flags.get('AdsPermutive')) { oPermutive.init(false, oPermConf);}
+
 		const adOptions = typeof opts === 'object' ? opts : {};
 
 		return Promise.resolve()
@@ -92,14 +78,34 @@ export default {
 					}
 
 					return Promise.resolve()
+						// o-ads
 						.then(() => {
 							// slotsRendered = 0; // Note - this is a global var for this module
-							//TODO get appName from appInfo
-							const appName = appInfo.name;
-							if (flags && flags.get('ads') && appName) {
-								initOAds(flags, appName, adOptions);
+							if (flags && flags.get('ads') && appInfo.name) {
+								return initOAds(flags, appInfo.name, adOptions);
 							}
 						})
+						// o-permutive
+						.then(() => {
+							if (flags && flags.get('AdsPermutive')) {
+								const contentId = (appInfo.name === 'article')
+									? document.documentElement.getAttribute('data-content-id')
+									: null;
+
+								const oPermutiveConfig = getOPermutiveConfig(appInfo.name, contentId);
+								oPermutive.init(false, oPermutiveConfig);
+
+								const metaData = getOPermutiveMetaData(appInfo.name, Ads.krux.customAttributes, contentId);
+								const userIdent = {
+									spoorID: Ads.targeting.get().device_spoor_id,
+									guid: Ads.targeting.get().guid
+								};
+
+								oPermutive.setPageMetaData(metaData);
+								oPermutive.identifyUser(userIdent);
+							}
+						})
+						// krux
 						.then(() => {
 							if(flags && flags.get('krux') && !adOptions.noTargeting) {
 								//Though krux is activated through nextAdsComponent, we also need to load all the additional user matching scripts
