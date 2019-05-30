@@ -4,16 +4,11 @@
  * @param {String} appName Name of the app loading n-ui
  * @param {String} contentId UUID of article page
  */
-export function getOPermutiveConfig (appName, contentId = null) {
+export function getOPermutiveConfig () {
 	return {
-		appInfo : {
-			appName : appName,
-			contentId : contentId
-		},
-		publicApiKeys : {
-			id : 'e1c3fd73-dd41-4abd-b80b-4278d52bf7aa',
-			key : 'b2b3b748-e1f6-4bd5-b2f2-26debc8075a3'
-		}
+		projectId: 'e1c3fd73-dd41-4abd-b80b-4278d52bf7aa',
+		publicApiKey : 'b2b3b748-e1f6-4bd5-b2f2-26debc8075a3',
+		consentFtCookie: true
 	};
 }
 

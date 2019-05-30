@@ -92,7 +92,7 @@ export default {
 									? document.documentElement.getAttribute('data-content-id')
 									: null;
 
-								const oPermutiveConfig = getOPermutiveConfig(appInfo.name, contentId);
+								const oPermutiveConfig = getOPermutiveConfig();
 								oPermutive.init(false, oPermutiveConfig);
 
 								const metaData = getOPermutiveMetaData(appInfo.name, Ads.krux.customAttributes, contentId);
