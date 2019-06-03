@@ -5,10 +5,6 @@ const nextEvents = require('./next-events');
 const abTestHelpers = require('./utils/abTestHelpers');
 const broadcast = require('n-ui-foundations').broadcast;
 
-function nodesToArray (nodelist) {
-	return [].slice.call(nodelist);
-}
-
 function getRootData (name) {
 	return document.documentElement.getAttribute(`data-${name}`);
 }
@@ -57,7 +53,7 @@ const oTrackingWrapper = {
 
 			const errorStatus = (/nextErrorStatus=(\d{3})/.exec(window.location.search) || [])[1];
 			const errorReason = (/nextErrorReason=(\w+)/.exec(window.location.search) || [])[1];
-			const pageViewConf = {context: {}};
+			const pageViewConf = { context: {} };
 
 			if (getRootData('content-type') === 'podcast' || getRootData('content-type') === 'audio') {
 				pageViewConf.context.content = {
@@ -132,7 +128,6 @@ const oTrackingWrapper = {
 
 			// barriers
 			let barrierType = document.querySelector('[data-barrier]');
-			let productSelectorFlag = document.querySelector('[data-barrier-is-product-selector]');
 
 			if (barrierType) {
 				pageViewConf.context.barrier = true;
@@ -141,36 +136,17 @@ const oTrackingWrapper = {
 
 			// FIXME - should not fire on barriers, but needs to be around for a while data analytics fix their SQL
 			// Page view must not be triggered in any form of frameset, only a genuine page view, or the error page domain, as error pages are served in iframes.
-			if(window === window.top || window.location.hostname === 'errors-next.ft.com') {
+			if (window === window.top || window.location.hostname === 'errors-next.ft.com') {
 				oTracking.page(pageViewConf.context);
 			}
 
 			if (barrierType) {
-
-				const isProductSelector = (productSelectorFlag) ? productSelectorFlag.getAttribute('data-barrier-is-product-selector') === 'true' : false;
-
-				// https://docs.google.com/document/d/18_yV2s813XCrBF7w6196FLhLJzWXK4hXT2sIpDZVvhQ/edit?ts=575e9368#
-				const opportunity = {
-					type: (isProductSelector) ? 'products' : 'barrier',
-					subtype: barrierType.getAttribute('data-opportunity-subtype') || barrierType.getAttribute('data-barrier')
-				};
-
-				const offers = document.querySelectorAll('[data-offer-id]');
-				const acquisitionContext = document.querySelectorAll('[data-acquisition-context]');
-				const messaging = barrierType.getAttribute('data-barrier-messaging');
-
-				const barrierReferrer = (/barrierReferrer=(\w+)/.exec(window.location.search) || [])[1];
+				const customTracking = JSON.parse(barrierType.getAttribute('data-tracking-object'));
 
 				broadcast('oTracking.event', Object.assign({
 					category: 'barrier',
-					action: 'view',
-					opportunity: opportunity,
-					barrierReferrer: barrierReferrer,
-					type: barrierType.getAttribute('data-barrier'),
-					commsType: messaging,
-					acquisitionContext: nodesToArray(acquisitionContext).map(e => e.getAttribute('data-acquisition-context')),
-					offers: nodesToArray(offers).map(e => e.getAttribute('data-offer-id'))
-				}, context));
+					action: 'view'
+				}, context, customTracking));
 			}
 
 		} catch (err) {
