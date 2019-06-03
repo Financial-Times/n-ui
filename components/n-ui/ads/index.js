@@ -67,7 +67,6 @@ export default {
 		window.addEventListener('ftNextLoaded', function () {
 			nCounterAdBlocking.init(flags);
 		});
-
 		const adOptions = typeof opts === 'object' ? opts : {};
 
 		return Promise.resolve()
