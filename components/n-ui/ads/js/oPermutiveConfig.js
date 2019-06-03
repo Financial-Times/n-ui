@@ -7,7 +7,7 @@
 export function getOPermutiveConfig () {
 	return {
 		projectId: 'e1c3fd73-dd41-4abd-b80b-4278d52bf7aa',
-		publicApiKey : 'b2b3b748-e1f6-4bd5-b2f2-26debc8075a3',
+		publicApiKey : 'b2b3b748-e1f6-4bd5-b2f2-26debc8075a3', // public, it's ok, don't panic.
 		consentFtCookie: true
 	};
 }

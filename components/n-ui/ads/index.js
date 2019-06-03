@@ -93,7 +93,7 @@ export default {
 									: null;
 
 								const oPermutiveConfig = getOPermutiveConfig();
-								oPermutive.init(false, oPermutiveConfig);
+								oPermutive.init(oPermutiveConfig);
 
 								const metaData = getOPermutiveMetaData(appInfo.name, Ads.krux.customAttributes, contentId);
 								const userIdent = {
