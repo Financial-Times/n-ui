@@ -18,7 +18,7 @@ window.oAds = Ads;
 function initOAds (flags, appName, adOptions) {
 	const initObj = oAdsConfig(flags, appName, adOptions);
 
-	setupAdsMetrics();
+	setupAdsMetrics(flags && flags.adsDisableMetricsSampling);
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
