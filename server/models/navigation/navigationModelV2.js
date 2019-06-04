@@ -131,9 +131,12 @@ module.exports = class NavigationModelV2 {
 					}
 				})
 				.then(data => {
+					// We need to add the appropriate labels to this when rendered, so mark it as selected.
+					const currentItem = { ...data.item, selected: true };
+
 					res.locals.navigation.showSubNav = true;
 					res.locals.navigation.hierarchy = data;
-					res.locals.navigation.breadcrumb = data.ancestors.concat([data.item]);
+					res.locals.navigation.breadcrumb = data.ancestors.concat(currentItem);
 					res.locals.navigation.subsections = data.children;
 				})
 				.catch(e => {
