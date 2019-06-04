@@ -60,8 +60,10 @@ export function getOPermutiveMetaData (appName, kruxMeta, contentId = null) {
 
 
 	return {
-		type: appName,
-		article: pageMeta,
-		user: userMeta
+		page: {
+			type: appName,
+			article: pageMeta,
+			user: userMeta
+		}
 	};
 }
