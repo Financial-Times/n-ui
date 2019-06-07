@@ -2,7 +2,7 @@
 	<div class="o-header__drawer-menu-toggle-wrapper">
 		<a class="o-header__drawer-menu-link o-header__drawer-menu-link--parent o-header__drawer-menu-link--{{#if selected}}selected{{else}}unselected{{/if}}" href="{{url}}" {{#if selected}}aria-label="{{label}}, current page" aria-current="page"{{/if}} data-trackable="{{label}}">{{label}}</a>
 		<button class="o-header__drawer-menu-toggle o-header__drawer-menu-toggle--{{#if selected}}selected{{else}}unselected{{/if}}" aria-controls="o-header-drawer-child-{{@index}}" data-trackable="sub-level-toggle | {{label}}">
-			Show more {{label}} links
+			Show more {{label}}
 		</button>
 	</div>
 	<ul class="o-header__drawer-menu-list o-header__drawer-menu-list--child" id="o-header-drawer-child-{{@index}}" data-trackable="sub-level">
