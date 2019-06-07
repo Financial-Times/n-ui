@@ -57,11 +57,14 @@ describe('Main', () => {
 	});
 
 	it('Should setup ads monitoring functionality', () => {
-		const flags = { get: () => true };
+		const flags = {
+			get: () => true,
+			adsDisableMetricsSampling: true
+		};
 		const setupMetricsStub = sandbox.stub(AdsMetrics, 'setupAdsMetrics');
 
 		return main.init(flags, { name: 'article' }).then(() => {
-			expect(setupMetricsStub).to.have.been.called;
+			expect(setupMetricsStub).to.have.been.calledWith(true);
 		});
 	});
 });

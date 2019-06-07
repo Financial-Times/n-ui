@@ -48,8 +48,8 @@ function sendMetrics (eventPayload) {
 	nUIFoundations.broadcast('oTracking.event', eventPayload);
 }
 
-function setupAdsMetrics () {
-	oAdsUtils.setupMetrics(metricsDefinitions, sendMetrics);
+function setupAdsMetrics (disableSampling) {
+	oAdsUtils.setupMetrics(metricsDefinitions, sendMetrics, disableSampling);
 }
 
 
