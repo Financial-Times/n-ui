@@ -126,27 +126,15 @@ const oTrackingWrapper = {
 				pageViewConf.context['teaser_tests'] = abTestHelpers.getTeaserTestContext(document);
 			}
 
-			// barriers
-			let barrierType = document.querySelector('[data-barrier]');
-
-			if (barrierType) {
-				pageViewConf.context.barrier = true;
-				pageViewConf.context.barrierType = barrierType.getAttribute('data-barrier');
-			};
-
 			// FIXME - should not fire on barriers, but needs to be around for a while data analytics fix their SQL
 			// Page view must not be triggered in any form of frameset, only a genuine page view, or the error page domain, as error pages are served in iframes.
 			if (window === window.top || window.location.hostname === 'errors-next.ft.com') {
 				oTracking.page(pageViewConf.context);
 			}
 
-			if (barrierType) {
-				const customTracking = JSON.parse(barrierType.getAttribute('data-tracking-object'));
-
-				broadcast('oTracking.event', Object.assign({
-					category: 'barrier',
-					action: 'view'
-				}, context, customTracking));
+			if (window.FT && window.FT.nUi) {
+				// This gets picked up by next-product and next-epaper to get sent with custom page view events (barrier view in this instance).
+				window.FT.nUi.trackingContext = context;
 			}
 
 		} catch (err) {
