@@ -38,8 +38,15 @@ const metricsDefinitions = [
 		marks: [
 			'slotRenderStart',
 			'slotExpand',
-			'slotRenderEnded',
+			'slotRenderEnded'
 		],
+		multiple: true
+	},
+	{
+		sampleSize: METRICS_SAMPLE_SIZE,
+		spoorAction: 'slot-collapsed',
+		triggers: ['slotCollapsed'],
+		marks: [ 'slotCollapsed' ],
 		multiple: true
 	}
 ];
