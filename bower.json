@@ -15,7 +15,7 @@
   "dependencies": {
     "ftdomdelegate": "^3.0.0",
     "n-counter-ad-blocking": "^3.1.7",
-    "n-image": "^5.0.3",
+    "n-image": "^5.1.2",
     "n-service-worker": "^2.0.0",
     "n-sliding-popup": "^2.0.0",
     "n-syndication": "3.20.0",
