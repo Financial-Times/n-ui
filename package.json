@@ -76,7 +76,7 @@
     "commander": "^2.15.1",
     "concurrently": "^3.6.0",
     "enhanced-resolve": "^3.4.1",
-    "focus-visible": "^4.1.4",
+    "focus-visible": "^5.0.0",
     "fs-extra": "^6.0.1",
     "ft-poller": "^3.0.1",
     "handlebars-loader": "^1.7.0",
