@@ -118,7 +118,7 @@ const oTrackingWrapper = {
 				server: 'https://spoor-api.ft.com/ingest',
 				context: context,
 				user: userData,
-				useSendBeacon: flags.get('sendBeacon')
+				useSendBeacon: true
 			});
 
 			//teaser-testing (supersedes 'headline' testing). Add extra page context info related to the relevant teasers under test.
