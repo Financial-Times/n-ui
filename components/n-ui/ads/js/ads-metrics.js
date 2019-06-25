@@ -18,7 +18,8 @@ const metricsDefinitions = [
 			'adsAPIComplete',
 			'initialised',
 			'serverScriptLoaded',
-		]
+		],
+		navigation: ['domInteractive']
 	},
 	{
 		sampleSize: METRICS_SAMPLE_SIZE,
