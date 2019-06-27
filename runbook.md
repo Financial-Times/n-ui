@@ -22,8 +22,6 @@ next
 
 next
 
-## Technical Owner
-
 ## Known About By
 
 - rhys.evans
@@ -47,12 +45,6 @@ NPM
 
 ## First Line Troubleshooting
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
-
-```
-<p><br></p>
-```
-
 ## Second Line Troubleshooting
 
 ### General tips for troubleshooting Customer Products systems
@@ -65,51 +57,6 @@ NPM
 ## Monitoring
 
 None
-
-## Failover Architecture Type
-
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
-
-```
-ActiveActive
-```
-
-✏️ This section should be one of the following.
-
-ActiveActive | ActivePassive | None
-
-## Failover Process Type
-
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
-
-```
-FullyAutomated
-```
-
-✏️ This section should be one of the following.
-
-Don’t Know | Fully Automated | PartiallyAutomated | Manual | Not applicable
-
-## Failback Process Type
-
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
-
-```
-FullyAutomated
-```
-
-✏️ This section should be one of the following.
-
-Don’t Know | Fully Automated | PartiallyAutomated | Manual | Not applicable
-None
-
-## Failover Details
-
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
-
-```
-Automated US/EU routing via Fastly
-```
 
 ## Data Recovery Process Type
 
@@ -145,7 +92,6 @@ When you release an n-ui tag, 3 things happen:
 
 https://github.com/Financial-Times/n-ui#releasing-n-ui
 
-## Heroku Pipeline Name
 
 ## Key Management Process Type
 
@@ -155,16 +101,6 @@ PartiallyAutomated
 
 You can read about how to rotate an AWS key [over on the Customer Products Wiki](https://customer-products.in.ft.com/wiki/Rotating-AWS-Keys)
 See the Customer Products [key management and troubleshooting wiki page](https://customer-products.in.ft.com/wiki/Key-Management-and-Troubleshooting)
-
-## Dependencies
-
-👋 This section expects a list
-
-## Installs Packages
-
-👋 This section expects a list
-
-## Replaces
 
 ## More Information
 
