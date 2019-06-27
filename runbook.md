@@ -63,10 +63,6 @@ None
 
 Not applicable
 
-## Data Recovery Details
-
-Assets are not stored in n-ui. See the [hashed assets](https://biz-ops.in.ft.com/System/next-hashedasset) system’s failover instructions.
-
 ## Release Process Type
 
 PartiallyAutomated
