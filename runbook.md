@@ -39,11 +39,12 @@ false
 
 ## Host Platform
 
-NPM
+npm
 
 ## Architecture
 
 ## First Line Troubleshooting
+Problems with n-ui are likely to manifest in the user-facing applications which depend on it. Please follow the troubleshooting guide for the affected application.
 
 ## Second Line Troubleshooting
 
