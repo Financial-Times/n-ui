@@ -134,6 +134,17 @@ None
 
 ## Release Details
 
+This app is released using Circle CI.
+Rollback is done manually on Github. See [the guide on the wiki](https://customer-products.in.ft.com/wiki/How-does-deploying-our-Heroku-apps-work%3F) for instructions on how to deploy.
+
+When you release an n-ui tag, 3 things happen:
+
+- assets are built and deployed to s3, from where they are linked to/downloaded by apps
+- the npm package is published
+- during work hours (9am to 4pm), all user-facing apps are rebuilt to pick up the changes
+
+https://github.com/Financial-Times/n-ui#releasing-n-ui
+
 ## Heroku Pipeline Name
 
 ## Key Management Process Type
