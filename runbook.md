@@ -1,4 +1,4 @@
-# n-ui (ft.com)
+# next n-ui
 
 Server, build and client side bootstrapping for ft.com’s user-facing applications.
 
