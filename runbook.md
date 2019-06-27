@@ -158,8 +158,7 @@ Fully Automated | PartiallyAutomated | Manual | Not applicable | None
 
 There are no monitoring services set up for n-ui. Services which depend on it are individually monitored.
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
+n-ui is degraded from Platinum to Bronze. Assets from n-ui are stored in the FT.com Hashed Assets bucket which is monitored as Platinum service.
+https://biz-ops.in.ft.com/System/next-hashedasset
 
-```
-<p>See&nbsp;<a href="https://github.com/Financial-Times/n-ui" target="_blank" rel="noopener">https://github.com/Financial-Times/n-ui</a></p>
-```
+‍https://github.com/Financial-Times/n-ui
