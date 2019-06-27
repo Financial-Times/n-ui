@@ -8,7 +8,7 @@ https://www.npmjs.com/package/@financial-times/n-ui
 
 ## Service Tier
 
-Platinum
+Bronze
 
 ## Lifecycle Stage
 
