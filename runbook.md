@@ -60,24 +60,19 @@ None
 
 ## Data Recovery Process Type
 
-✏️ This section should be one of the following.
-
-Fully Automated | PartiallyAutomated | Manual | Not applicable | None
+Not applicable
 
 ## Data Recovery Details
 
+Assets are not stored in n-ui. See the [hashed assets](https://biz-ops.in.ft.com/System/next-hashedasset) system’s failover instructions.
+
 ## Release Process Type
 
-✏️ This section should be one of the following.
-
-Fully Automated | PartiallyAutomated | Manual | Not applicable | None
+PartiallyAutomated
 
 ## Rollback Process Type
 
-✏️ This section should be one of the following.
-
-Don’t Know | Fully Automated | PartiallyAutomated | Manual | Not applicable
-None
+PartiallyAutomated
 
 ## Release Details
 
