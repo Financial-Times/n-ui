@@ -4,61 +4,40 @@ Serves static assets from n-ui, notably the shared js bundle
 
 ## Primary URL
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
-http://ft-next-n-ui-prod.s3-website-eu-west-1.amazonaws.com
-```
+https://www.npmjs.com/package/@financial-times/n-ui
 
 ## Service Tier
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
 Platinum
-```
 
 ## Lifecycle Stage
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
 Production
-```
 
 ## Delivered By
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
 next
-```
 
 ## Supported By
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
 next
-```
 
 ## Technical Owner
 
 ## Known About By
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
-- dora.militaru
 - rhys.evans
-
-```
+- dora.militaru
+- matt.hinchliffe
+- maggie.allen
 
 ## Contains Personal Data
 
 ## Contains Sensitive Data
 
 ## Host Platform
+
+NPM
 
 ## Architecture
 
