@@ -4,67 +4,50 @@ Serves static assets from n-ui, notably the shared js bundle
 
 ## Primary URL
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
-http://ft-next-n-ui-prod.s3-website-eu-west-1.amazonaws.com
-```
+https://www.npmjs.com/package/@financial-times/n-ui
 
 ## Service Tier
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
 Platinum
-```
 
 ## Lifecycle Stage
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
 Production
-```
 
 ## Delivered By
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
 next
-```
 
 ## Supported By
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
 next
-```
 
 ## Technical Owner
 
 ## Known About By
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
-
-```
-- dora.militaru
 - rhys.evans
-
-```
+- dora.militaru
+- matt.hinchliffe
+- maggie.allen
 
 ## Contains Personal Data
 
+false
+
 ## Contains Sensitive Data
 
+false
+
 ## Host Platform
+
+NPM
 
 ## Architecture
 
 ## First Line Troubleshooting
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
+👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
 
 ```
 <p><br></p>
@@ -103,7 +86,7 @@ next
 
 ## Failover Architecture Type
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
+👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
 
 ```
 ActiveActive
@@ -115,7 +98,7 @@ ActiveActive | ActivePassive | None
 
 ## Failover Process Type
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
+👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
 
 ```
 FullyAutomated
@@ -127,7 +110,7 @@ Don’t Know | Fully Automated | PartiallyAutomated | Manual | Not applicable
 
 ## Failback Process Type
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
+👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
 
 ```
 FullyAutomated
@@ -140,7 +123,7 @@ None
 
 ## Failover Details
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
+👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
 
 ```
 Automated US/EU routing via Fastly
@@ -191,7 +174,7 @@ Fully Automated | PartiallyAutomated | Manual | Not applicable | None
 
 ## More Information
 
-👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks. 
+👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
 
 ```
 <p>See&nbsp;<a href="https://github.com/Financial-Times/n-ui" target="_blank" rel="noopener">https://github.com/Financial-Times/n-ui</a></p>
