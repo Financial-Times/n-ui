@@ -138,11 +138,12 @@ None
 
 ## Key Management Process Type
 
-✏️ This section should be one of the following.
-
-Fully Automated | PartiallyAutomated | Manual | Not applicable | None
+PartiallyAutomated
 
 ## Key Management Details
+
+You can read about how to rotate an AWS key [over on the Customer Products Wiki](https://customer-products.in.ft.com/wiki/Rotating-AWS-Keys)
+See the Customer Products [key management and troubleshooting wiki page](https://customer-products.in.ft.com/wiki/Key-Management-and-Troubleshooting)
 
 ## Dependencies
 
