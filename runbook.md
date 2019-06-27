@@ -64,25 +64,7 @@ NPM
 
 ## Monitoring
 
-[General information about monitoring and troubleshooting FT.com systems (wiki)](https://customer-products.in.ft.com/wiki/Monitoring-and-Troubleshooting-systems)
-
-
-### Grafana
-✏️ Fill me in!
-
-### Pingdom
-✏️ Fill me in!
-
-### Healthchecks
-✏️ Fill me in!
-
-### Splunk searches
-✏️ Fill me in!
-
-### Sentry
-✏️ Fill me in!
-
-## Healthchecks
+None
 
 ## Failover Architecture Type
 
@@ -173,6 +155,8 @@ Fully Automated | PartiallyAutomated | Manual | Not applicable | None
 ## Replaces
 
 ## More Information
+
+There are no monitoring services set up for n-ui. Services which depend on it are individually monitored.
 
 👩‍💻 The following was auto-populated, either from BizOps or inferred from the system type. Please check it and then remove the backticks.
 
