@@ -126,6 +126,12 @@ const oTrackingWrapper = {
 				pageViewConf.context['teaser_tests'] = abTestHelpers.getTeaserTestContext(document);
 			}
 
+			// Barriers - We need to keep this here because the data team relies on the barrier type being on the page:view event.
+			let barrierType = document.querySelector('[data-barrier]');
+			if (barrierType) {
+				pageViewConf.context.barrierType = barrierType.getAttribute('data-barrier');
+			};
+
 			// FIXME - should not fire on barriers, but needs to be around for a while data analytics fix their SQL
 			// Page view must not be triggered in any form of frameset, only a genuine page view, or the error page domain, as error pages are served in iframes.
 			if (window === window.top || window.location.hostname === 'errors-next.ft.com') {
