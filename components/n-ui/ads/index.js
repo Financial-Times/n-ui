@@ -9,10 +9,6 @@ import { getOPermutiveConfig, getOPermutiveMetaData } from './js/oPermutiveConfi
 import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 
-let slotCount;
-let slotsRendered = 0;
-let onAdsCompleteCallback;
-
 window.oAds = Ads;
 
 function initOAds (flags, appName, adOptions) {
@@ -21,15 +17,11 @@ function initOAds (flags, appName, adOptions) {
 	setupAdsMetrics(flags && flags.adsDisableMetricsSampling);
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
-	onAdsCompleteCallback = onAdsComplete.bind(this, flags);
-
-	document.addEventListener('oAds.slotExpand', onAdsCompleteCallback);
 
 	const ads = Ads.init(initObj);
 	return ads.then(res => {
 		const containers = [].slice.call(document.querySelectorAll('.o-ads'));
-		slotCount = containers.length;
-		utils.log.info(slotCount + ' ad slots found on page');
+		utils.log.info(containers.length + ' ad slots found on page');
 
 		if (!res) {
 			utils.log.warn('Empty init response, likely an issue with o-ads, ads might not work properly');
@@ -38,27 +30,6 @@ function initOAds (flags, appName, adOptions) {
 
 		containers.forEach(res.slots.initSlot.bind(res.slots));
 	});
-}
-
-function onAdsComplete (flags, event) {
-	const detail = event.detail;
-	/* istanbul ignore else  */
-	if (detail.type !== 'oop') {
-		/* istanbul ignore else  */
-
-		if (detail.slot.gpt && detail.slot.gpt.isEmpty === false) {
-			utils.log.info('Ad loaded in slot', event);
-		} else if (detail.slot.gpt && detail.slot.gpt.isEmpty === true) {
-			utils.log.warn('Failed to load ad, details below');
-			utils.log(event);
-		}
-		slotsRendered++;
-	}
-
-	/* istanbul ignore else  */
-	if (slotsRendered === slotCount) {
-		utils.log('Ads component finished');
-	}
 }
 
 export default {
