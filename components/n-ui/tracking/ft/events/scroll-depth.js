@@ -42,7 +42,7 @@ const scrollDepth = {
 		if (element && window.IntersectionObserver) {
 			const observer = new IntersectionObserver(
 				function (changes) {
-					intersectionCallback(this, changes);
+					intersectionCallback(observer, changes);
 				}
 			);
 			percentages.forEach(percentage => {

@@ -18,7 +18,8 @@ const metricsDefinitions = [
 			'adsAPIComplete',
 			'initialised',
 			'serverScriptLoaded',
-		]
+		],
+		navigation: ['domInteractive']
 	},
 	{
 		sampleSize: METRICS_SAMPLE_SIZE,
@@ -38,8 +39,15 @@ const metricsDefinitions = [
 		marks: [
 			'slotRenderStart',
 			'slotExpand',
-			'slotRenderEnded',
+			'slotRenderEnded'
 		],
+		multiple: true
+	},
+	{
+		sampleSize: METRICS_SAMPLE_SIZE,
+		spoorAction: 'slot-collapsed',
+		triggers: ['slotCollapsed'],
+		marks: [ 'slotCollapsed' ],
 		multiple: true
 	}
 ];
@@ -48,8 +56,8 @@ function sendMetrics (eventPayload) {
 	nUIFoundations.broadcast('oTracking.event', eventPayload);
 }
 
-function setupAdsMetrics () {
-	oAdsUtils.setupMetrics(metricsDefinitions, sendMetrics);
+function setupAdsMetrics (disableSampling) {
+	oAdsUtils.setupMetrics(metricsDefinitions, sendMetrics, disableSampling);
 }
 
 

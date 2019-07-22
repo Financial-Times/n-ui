@@ -9,8 +9,8 @@ module.exports = function (flags) {
 	const $trial = document.querySelector('[data-signup-is-trial]');
 
 	// sign-up funnel flags
-	const isSignUpForm = /^\/signup/.test(location.pathname);
-	const isSubscriptionConfirmation = /^\/thank-you/.test(location.pathname);
+	const isSignUpForm = /^\/signup/.test(location.pathname) || /^\/buy\/offer/.test(location.pathname);
+	const isSubscriptionConfirmation = /^\/thank-you/.test(location.pathname) || /^\/buy\/offer\/[^/]+\/confirmation$/.test(location.pathname);
 	const isTrialConfirmation = ($trial) ? $trial.getAttribute('data-signup-is-trial') === 'true' : undefined;
 	const isBarrier = !!document.querySelector('[data-trackable="page:product"]');
 	const isSubscriber = window.FT.flags.subscriberCohort;

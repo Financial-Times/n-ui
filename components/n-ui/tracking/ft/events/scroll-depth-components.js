@@ -22,7 +22,7 @@ const init = () => {
 	}
 	const observer = new IntersectionObserver(
 		function (changes) {
-			intersectionCallback(this, changes);
+			intersectionCallback(observer, changes);
 		}
 	);
 	[...document.querySelectorAll('.js-track-scroll-event')]
