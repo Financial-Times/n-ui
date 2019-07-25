@@ -38,14 +38,14 @@ export function getOPermutiveMetaData (appName, kruxMeta, contentId = null) {
 			const type = Array.isArray(kruxPageMeta.genre) && kruxPageMeta.genre.length > 0 ? kruxPageMeta.genre[0] : null;
 
 			pageMeta = {
-					id: contentId,
-					type: type,
-					organisations: kruxPageMeta.organisations,
-					people: kruxPageMeta.people,
-					categories: kruxPageMeta.ca,
-					authors: kruxPageMeta.authors,
-					topics: kruxPageMeta.topics,
-					admants: kruxPageMeta.ad
+				id: contentId,
+				type: type,
+				organisations: kruxPageMeta.organisations,
+				people: kruxPageMeta.people,
+				categories: kruxPageMeta.ca,
+				authors: kruxPageMeta.authors,
+				topics: kruxPageMeta.topics,
+				admants: kruxPageMeta.ad
 			};
 		}
 	}

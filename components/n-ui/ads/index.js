@@ -72,7 +72,9 @@ export default {
 								};
 
 								oPermutive.setPageMetaData(metaData);
-								oPermutive.identifyUser(userIdent);
+								if (typeof userIdent.guid !== 'undefined') {
+									oPermutive.identifyUser(userIdent);
+								}
 							}
 						})
 						// krux
