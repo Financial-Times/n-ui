@@ -54,7 +54,10 @@ export function getOPermutiveMetaData (appName, kruxMeta, contentId = null) {
 		userMeta = {
 			industry: kruxUserMeta.industry,
 			position: kruxUserMeta.job_position,
-			responsibility: kruxUserMeta.job_responsibility
+			responsibility: kruxUserMeta.job_responsibility,
+			gender: kruxUserMeta.gender,
+			subscriptionLevel: kruxUserMeta.subscription_level,
+			indb2b: kruxUserMeta.indb2b
 		};
 	}
 
