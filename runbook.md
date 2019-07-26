@@ -39,7 +39,7 @@ false
 
 ## Host Platform
 
-npm
+npm, Bower, S3
 
 ## Architecture
 
