@@ -74,7 +74,6 @@ PartiallyAutomated
 ## Release Details
 
 This app is released using Circle CI.
-Rollback is done manually on Github. See [the guide on the wiki](https://customer-products.in.ft.com/wiki/How-does-deploying-our-Heroku-apps-work%3F) for instructions on how to deploy.
 
 When you release an n-ui tag, 3 things happen:
 
