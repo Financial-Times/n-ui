@@ -47,6 +47,17 @@ npm, Bower, S3
 
 ## Architecture
 
+n-ui operates on both the server and the client and is installed as a module via both npm and Bower. Some of its main concerns are:
+
+### server-side concerns
+- exports n-express
+- provides an application shell
+- provides an application bootstrap
+
+### client-side concerns
+- initialises some origami modules
+- integrates flags, tracking and ads for ft.com
+
 ## First Line Troubleshooting
 
 Problems with n-ui are likely to manifest in the user-facing applications which depend on it. Please follow the troubleshooting guide for the affected application.
