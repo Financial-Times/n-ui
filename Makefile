@@ -132,7 +132,7 @@ deploy-s3:
 	# deploy to hashed urls on s3
 	nht deploy-hashed-assets --directory public/n-ui --monitor-assets
 
-deploy: deploy-s3 npm-publish rebuild-user-facing-apps
+deploy: deploy-s3 npm-publish rebuild-user-facing-apps change-api
 	@$(DONE) # This is required so that n-gage's `deploy` target doesn't run
 
 rebuild-user-facing-apps:
