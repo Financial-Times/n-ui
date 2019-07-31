@@ -16,7 +16,7 @@ Bronze
 
 ## Lifecycle Stage
 
-Production
+Deprecated
 
 ## Delivered By
 
