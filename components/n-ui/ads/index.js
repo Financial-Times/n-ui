@@ -66,13 +66,14 @@ export default {
 								oPermutive.init(oPermutiveConfig);
 
 								const metaData = getOPermutiveMetaData(appInfo.name, Ads.krux.customAttributes, contentId);
-								const userIdent = {
-									spoorID: Ads.targeting.get().device_spoor_id,
-									guid: Ads.targeting.get().guid
-								};
+								const spId = Ads.targeting.get().device_spoor_id;
+								const gId = Ads.targeting.get().guid;
+								let userIdent = {};
+								if (typeof spId !== 'undefined') {userIdent.spoorId = spId;}
+								if (typeof gId !== 'undefined') {userIdent.guid = gId;}
 
 								oPermutive.setPageMetaData(metaData);
-								if (typeof userIdent.guid !== 'undefined') {
+								if (userIdent.spoorId || userIdent.guid) {
 									oPermutive.identifyUser(userIdent);
 								}
 							}
