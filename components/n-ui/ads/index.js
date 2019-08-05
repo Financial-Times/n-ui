@@ -68,13 +68,12 @@ export default {
 								const metaData = getOPermutiveMetaData(appInfo.name, Ads.krux.customAttributes, contentId);
 								const spId = Ads.targeting.get().device_spoor_id;
 								const gId = Ads.targeting.get().guid;
-								let userIdent = {};
-								if (typeof spId !== 'undefined') {userIdent.spoorId = spId;}
-								if (typeof gId !== 'undefined') {userIdent.guid = gId;}
-
+								let userIdent = [];
+								if (typeof spId !== 'undefined') {userIdent.push({id: spId, tag: 'SporeID'});}
+								if (typeof gId !== 'undefined') {userIdent.push({id : gId, tag : 'GUID'});}
 								oPermutive.setPageMetaData(metaData);
-								if (userIdent.spoorId || userIdent.guid) {
-									oPermutive.identifyUser(userIdent);
+								if (userIdent.length > 0 && window.permutive) {
+									window.permutive.identify(userIdent);
 								}
 							}
 						})
