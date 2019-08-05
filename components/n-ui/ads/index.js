@@ -72,8 +72,8 @@ export default {
 								if (typeof spId !== 'undefined') {userIdent.push({id: spId, tag: 'SporeID'});}
 								if (typeof gId !== 'undefined') {userIdent.push({id : gId, tag : 'GUID'});}
 								oPermutive.setPageMetaData(metaData);
-								if (userIdent.length > 0) {
-								  window.permutive.identify(userIdent);
+								if (userIdent.length > 0 && window.permutive) {
+									window.permutive.identify(userIdent);
 								}
 							}
 						})
