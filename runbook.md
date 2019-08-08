@@ -70,7 +70,7 @@ Problems with n-ui are likely to manifest in the user-facing applications which 
 
 ### n-ui Parity issues
 
-- n-ui release failures cause parity issues for any user-facing app which depends on it. The CircleCI build will fail with the message: "Projects using n-ui must maintain parity between versions."
+- n-ui release failures cause build issues for any user-facing app which depends on it. The CircleCI build will fail with the message: "Projects using n-ui must maintain parity between versions."
 	- Attempt a rebuild of the failed CircleCI workflow.
 
 ### General tips for troubleshooting Customer Products systems
