@@ -3,7 +3,7 @@ import sandbox from './sandbox';
 import { getRootID } from 'o-tracking/src/javascript/core.js';
 import { extend } from 'o-ads/src/js/utils';
 
-const API_URL_ROOT = 'https://ads-api.ft.com/v1/';
+const API_URL_ROOT = 'https://ads-api.ft.com/v2/';
 
 export default function (flags, appName, adOptions) {
 
@@ -36,23 +36,22 @@ export default function (flags, appName, adOptions) {
 	function getContextualTargeting (appName) {
 		let uuid;
 		let url;
-		const apiUrlRoot = 'https://ads-api.ft.com/v1/';
+
 		if (appName === 'article') {
 			uuid = document.documentElement.getAttribute('data-content-id');
 
 			const referrer = utils.getReferrer();
-			url = `${apiUrlRoot}content/${uuid}`;
+			url = `${API_URL_ROOT}content/${uuid}`;
 			if(referrer) {
 				url += `?referrer=${encodeURIComponent(referrer.split(/[?#]/)[0])}`;
 			}
 		} else if (appName === 'stream-page') {
 			uuid = document.documentElement.getAttribute('data-concept-id');
-			url = `${apiUrlRoot}concept/${uuid}`;
+			url = `${API_URL_ROOT}concept/${uuid}`;
 		}
 
 		return url;
 	}
-
 
 	function getZone () {
 		let zone = [ utils.getMetaData('dfp_site'), utils.getMetaData('dfp_zone') ].filter( a => a );
@@ -119,7 +118,6 @@ export default function (flags, appName, adOptions) {
 			medium: [760, 0], //reasonable width to show a leaderboard (tablet portrait)
 			small: [0, 0] //Mobile
 		},
-		krux: kruxConfig,
 		collapseEmpty: 'before',
 		dfp_targeting: utils.keyValueString(targeting),
 		lazyLoad: getLazyLoadConfig(),

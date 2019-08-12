@@ -21,43 +21,39 @@ export function getOPermutiveConfig () {
  *
  * @param {String} appName Name of the app loading n-ui
  */
-export function getOPermutiveMetaData (appName, kruxMeta, contentId = null) {
+export function getOPermutiveMetaData (appName, targetingData, contentId = null) {
 	let pageMeta = {};
 	let userMeta = {};
 
-	const kruxUserMeta = kruxMeta.user;
+	const inputUserMeta = targetingData.user;
 
-	if(appName === 'article') {
-		const kruxPageMeta = kruxMeta.page;
+	if (appName === 'article') {
+		const inputPageMeta = targetingData.content;
 
-		if(contentId) {
-			pageMeta.id = contentId;
-		}
-
-		if(kruxPageMeta) {
-			const type = Array.isArray(kruxPageMeta.genre) && kruxPageMeta.genre.length > 0 ? kruxPageMeta.genre[0] : null;
+		if (inputPageMeta) {
+			const type = Array.isArray(inputPageMeta.genre) && inputPageMeta.genre.length > 0 ? inputPageMeta.genre[0] : null;
 
 			pageMeta = {
-				id: contentId,
+				id: inputPageMeta.uuid || contentId,
 				type: type,
-				organisations: kruxPageMeta.organisations,
-				people: kruxPageMeta.people,
-				categories: kruxPageMeta.ca,
-				authors: kruxPageMeta.authors,
-				topics: kruxPageMeta.topics,
-				admants: kruxPageMeta.ad
+				organisations: inputPageMeta.organisation,
+				people: inputPageMeta.person,
+				categories: inputPageMeta.categories,
+				authors: inputPageMeta.person,
+				topics: inputPageMeta.topic,
+				admants: inputPageMeta.admants,
 			};
 		}
 	}
 
-	if(kruxUserMeta) {
+	if (inputUserMeta) {
 		userMeta = {
-			industry: kruxUserMeta.industry,
-			position: kruxUserMeta.job_position,
-			responsibility: kruxUserMeta.job_responsibility,
-			gender: kruxUserMeta.gender,
-			subscriptionLevel: kruxUserMeta.subscription_level,
-			indb2b: kruxUserMeta.indb2b
+			industry: inputUserMeta.industry && inputUserMeta.industry.code,
+			position: inputUserMeta.position && inputUserMeta.position.code,
+			responsibility: inputUserMeta.responsibility && inputUserMeta.responsibility.code,
+			gender: inputUserMeta.hui && inputUserMeta.hui.gender,
+			subscriptionLevel: inputUserMeta.subscriptionLevel,
+			indb2b: inputUserMeta.hui && inputUserMeta.hui.indb2b,
 		};
 	}
 
