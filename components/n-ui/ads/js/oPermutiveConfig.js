@@ -15,8 +15,7 @@ export function getOPermutiveConfig () {
 /**
  * Get meta data about the user and current page and format it for o-permutive
  *
- * Note: This is currently done by accessing the properties set by o-ads and krux.
- * This should change so that the fetch to the ads-api is done first, and the data passed
+ * The data is first fetched from the ads-api, and then passed
  * to o-ads and o-permutive respectively.
  *
  * @param {String} appName Name of the app loading n-ui

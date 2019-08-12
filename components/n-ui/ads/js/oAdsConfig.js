@@ -23,16 +23,6 @@ export default function (flags, appName, adOptions) {
 	// TO-DO: Check if we can get rid of this 'extend' and pass an object literal
 	let targeting = extend(targetingOptions);
 
-	const kruxConfig = (flags.get('krux')) && !adOptions.noTargeting && {
-		id: 'KHUSeE3x',
-		attributes: {
-			user: {},
-			page: {
-				rootid: getRootID()
-			}
-		}
-	};
-
 	function getContextualTargeting (appName) {
 		let uuid;
 		let url;
