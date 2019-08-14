@@ -95,17 +95,20 @@ export default {
 								const targeting = Ads.targeting.get();
 								const metaData = getOPermutiveMetaData(appInfo.name, targeting, contentId);
 
-								const spId = targeting.user.spoorId;
-								const gId = targeting.user.uuid;
+								if (targeting.user) {
+									const spId = targeting.user.spoorId;
+									const gId = targeting.user.uuid;
 
-								let userIdent = [];
-								if (typeof spId !== 'undefined') { userIdent.push({id: spId, tag: 'SporeID'}); }
-								if (typeof gId !== 'undefined') { userIdent.push({id : gId, tag : 'GUID'}); }
+									let userIdent = [];
+									if (typeof spId !== 'undefined') { userIdent.push({id: spId, tag: 'SporeID'}); }
+									if (typeof gId !== 'undefined') { userIdent.push({id : gId, tag : 'GUID'}); }
+
+									if (userIdent.length > 0 && window.permutive) {
+										window.permutive.identify(userIdent);
+									}
+								}
 
 								oPermutive.setPageMetaData(metaData);
-								if (userIdent.length > 0 && window.permutive) {
-									window.permutive.identify(userIdent);
-								}
 							}
 						});
 				}
