@@ -3,7 +3,7 @@ import sandbox from './sandbox';
 import { getRootID } from 'o-tracking/src/javascript/core.js';
 import { extend } from 'o-ads/src/js/utils';
 
-const API_URL_ROOT = 'https://ads-api.ft.com/';
+const API_URL_ROOT = 'https://ads-api.ft.com';
 const API_URL_ROOT_V1 = `${API_URL_ROOT}/v1/`;
 const API_URL_ROOT_V2 = `${API_URL_ROOT}/v2/`;
 
