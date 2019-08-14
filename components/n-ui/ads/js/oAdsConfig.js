@@ -3,7 +3,9 @@ import sandbox from './sandbox';
 import { getRootID } from 'o-tracking/src/javascript/core.js';
 import { extend } from 'o-ads/src/js/utils';
 
-const API_URL_ROOT = 'https://ads-api.ft.com/v2/';
+const API_URL_ROOT = 'https://ads-api.ft.com/';
+const API_URL_ROOT_V1 = `${API_URL_ROOT}/v1/`;
+const API_URL_ROOT_V2 = `${API_URL_ROOT}/v2/`;
 
 export default function (flags, appName, adOptions) {
 
@@ -31,13 +33,13 @@ export default function (flags, appName, adOptions) {
 			uuid = document.documentElement.getAttribute('data-content-id');
 
 			const referrer = utils.getReferrer();
-			url = `${API_URL_ROOT}content/${uuid}`;
+			url = `${API_URL_ROOT_V2}content/${uuid}`;
 			if(referrer) {
 				url += `?referrer=${encodeURIComponent(referrer.split(/[?#]/)[0])}`;
 			}
 		} else if (appName === 'stream-page') {
 			uuid = document.documentElement.getAttribute('data-concept-id');
-			url = `${API_URL_ROOT}concept/${uuid}`;
+			url = `${API_URL_ROOT_V1}concept/${uuid}`;
 		}
 
 		return url;
@@ -112,7 +114,7 @@ export default function (flags, appName, adOptions) {
 		dfp_targeting: utils.keyValueString(targeting),
 		lazyLoad: getLazyLoadConfig(),
 		targetingApi: adOptions.noTargeting ? null : {
-			user: `${API_URL_ROOT}user`,
+			user: `${API_URL_ROOT_V2}user`,
 			page: getContextualTargeting(appName),
 			usePageZone: true
 		},
