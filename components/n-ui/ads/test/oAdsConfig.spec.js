@@ -71,10 +71,10 @@ describe('Config', () => {
 			sandbox.stub(utils, 'getMetaData').callsFake((param) => {
 				switch (param) {
 					case 'dfp_site':
-							return 'testDfpSite';
+						return 'testDfpSite';
 						break;
 					case 'dfp_zone':
-							return 'testDfpZone';
+						return 'testDfpZone';
 						break;
 				}
 			});
@@ -88,7 +88,7 @@ describe('Config', () => {
 
 	describe('lazyLoad viewportMargin', () => {
 
-	// tests for adOptimizeLazyLoad flag
+		// tests for adOptimizeLazyLoad flag
 		it('Should pass 0% when screen size is wider than 980px', () => {
 			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 980; });
 			const flags = { get: () => true };
@@ -136,8 +136,8 @@ describe('Config', () => {
 		it('Should pass the correct url to o-ads fetch', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article' );
-			const userUrl = 'https://ads-api.ft.com/v1/user';
-			const pageUrl = 'https://ads-api.ft.com/v1/content/';
+			const userUrl = 'https://ads-api.ft.com/v2/user';
+			const pageUrl = 'https://ads-api.ft.com/v2/content/';
 
 			expect(config.targetingApi.user).to.equal(userUrl);
 			expect(config.targetingApi.page).to.equal(pageUrl + fakeArticleUuid);
