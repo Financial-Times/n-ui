@@ -47,12 +47,12 @@ export function getOPermutiveMetaData (appName, targetingData, contentId = null)
 
 	if (inputUserMeta) {
 		userMeta = {
-			industry: inputUserMeta.industry && inputUserMeta.industry.code,
-			position: inputUserMeta.position && inputUserMeta.position.code,
-			responsibility: inputUserMeta.responsibility && inputUserMeta.responsibility.code,
-			gender: inputUserMeta.hui && inputUserMeta.hui.gender,
+			industry: inputUserMeta.industry ? inputUserMeta.industry.code : null,
+			position: inputUserMeta.position ? inputUserMeta.position.code : null,
+			responsibility: inputUserMeta.responsibility ? inputUserMeta.responsibility.code : null,
+			gender: inputUserMeta.hui ? inputUserMeta.hui.gender : null,
+			indb2b: inputUserMeta.hui ? inputUserMeta.hui.indb2b : null,
 			subscriptionLevel: inputUserMeta.subscriptionLevel,
-			indb2b: inputUserMeta.hui && inputUserMeta.hui.indb2b,
 		};
 	}
 

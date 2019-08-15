@@ -12,9 +12,11 @@ const handleResponseV2 = function ([user, content]) {
 	Ads.utils.broadcast('adsAPIComplete');
 	this.data = [user, content];
 
-	user && this.instance.targeting.add({
-		user,
-	});
+	if (user) {
+		this.instance.targeting.add({
+			user,
+		});
+	}
 
 	if (content) {
 		this.instance.targeting.add({
