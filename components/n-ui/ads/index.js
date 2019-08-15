@@ -11,7 +11,9 @@ import nCounterAdBlocking from 'n-counter-ad-blocking';
 const handleResponseV2 = function (adsApiResponses) {
 	Ads.utils.broadcast('adsAPIComplete');
 	this.data = adsApiResponses;
-	const [user, content] = adsApiResponses;
+
+	const user = adsApiResponses[0];
+	const content = adsApiResponses[1];
 
 	if (user) {
 		this.instance.targeting.add({
