@@ -25,7 +25,7 @@ function addZone (content) {
 	}
 }
 
-function handleResponse (user, content) {
+function handleResponse ([user, content]) {
 	Ads.utils.broadcast('adsAPIComplete');
 	this.data = [user, content];
 
@@ -41,8 +41,8 @@ function handleResponse (user, content) {
 	return [user, content];
 };
 
-Ads.api.addToTargeting = addToTargeting.bind(addToTargeting);
-Ads.api.addZone = addZone.bind(addZone);
+Ads.api.addToTargeting = addToTargeting.bind(Ads.api);
+Ads.api.addZone = addZone.bind(Ads.api);
 Ads.api.handleResponse = handleResponse.bind(Ads.api);
 
 window.oAds = Ads;
@@ -117,6 +117,7 @@ export default {
 									}
 								}
 
+								console.log('META', metaData)
 								oPermutive.setPageMetaData(metaData);
 							}
 						});
