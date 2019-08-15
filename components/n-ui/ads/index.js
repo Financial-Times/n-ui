@@ -8,38 +8,36 @@ import { getOPermutiveConfig, getOPermutiveMetaData } from './js/oPermutiveConfi
 import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 
-function handleResponseV2 (adsApiResponses) {
-	this.data = adsApiResponses;
+function handleResponseV2 (user, content) {
+	this.data = [user, content];
 
-	// data from Ads API User endpoint
-	if (adsApiResponses[0]) {
+	if (user) {
 		this.instance.targeting.add({
-			user: adsApiResponses[0],
+			user,
 		});
 	}
 
-	// data from Ads API Content endpoint
-	if (adsApiResponses[1]) {
+	if (content) {
 		this.instance.targeting.add({
-			content: adsApiResponses[1],
+			content,
 		});
 
-		if (this.config.usePageZone && adsApiResponses[1].adUnit) {
+		if (this.config.usePageZone && content.adUnit) {
 			const gpt = this.instance.config('gpt');
 
 			/* istanbul ignore else  */
 			if (gpt && gpt.zone) {
-				gpt.zone = adsApiResponses[1].adUnit.join('/');
+				gpt.zone = content.adUnit.join('/');
 			}
 		}
 	}
 
-	return adsApiResponses;
+	return [user, content];
 };
 
-Ads.api.handleResponse = () => {
+Ads.api.handleResponse = (adsApiResponses) => {
 	Ads.utils.broadcast('adsAPIComplete');
-	return handleResponseV2.bind(Ads.api);
+	return handleResponseV2.bind(adsApiResponses[0], adsApiResponses[1]);
 };
 
 window.oAds = Ads;
