@@ -8,12 +8,9 @@ import { getOPermutiveConfig, getOPermutiveMetaData } from './js/oPermutiveConfi
 import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 
-const handleResponseV2 = function (adsApiResponses) {
+function handleResponseV2 ([user, content]) {
 	Ads.utils.broadcast('adsAPIComplete');
-	this.data = adsApiResponses;
-
-	const user = adsApiResponses[0];
-	const content = adsApiResponses[1];
+	this.data = [user, content];
 
 	if (user) {
 		this.instance.targeting.add({
@@ -36,7 +33,7 @@ const handleResponseV2 = function (adsApiResponses) {
 		}
 	}
 
-	return adsApiResponses;
+	return [user, content];
 };
 
 Ads.api.handleResponse = handleResponseV2.bind(Ads.api);
