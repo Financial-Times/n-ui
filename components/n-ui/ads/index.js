@@ -9,8 +9,8 @@ import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 
 function handleResponseV2 (adsApiResponses) {
-	const user = adsApiResponses[0];
-	const content = adsApiResponses[1];
+	const user = adsApiResponses[0] || null;
+	const content = adsApiResponses[1] || null;
 
 	this.data = adsApiResponses;
 
