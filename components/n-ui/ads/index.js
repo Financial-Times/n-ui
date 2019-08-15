@@ -8,37 +8,42 @@ import { getOPermutiveConfig, getOPermutiveMetaData } from './js/oPermutiveConfi
 import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 
+function addToTargeting (something) {
+	this.instance.targeting.add({
+		something,
+	});
+}
+
+function addZone (content) {
+	if (this.config.usePageZone && content.adUnit) {
+		const gpt = this.instance.config('gpt');
+
+		/* istanbul ignore else  */
+		if (gpt && gpt.zone) {
+			gpt.zone = content.adUnit.join('/');
+		}
+	}
+}
+
 function handleResponse (user, content) {
+	Ads.utils.broadcast('adsAPIComplete');
 	this.data = [user, content];
 
 	if (user) {
-		this.instance.targeting.add({
-			user,
-		});
+		addToTargeting(user);
 	}
 
 	if (content) {
-		this.instance.targeting.add({
-			content,
-		});
-
-		if (this.config.usePageZone && content.adUnit) {
-			const gpt = this.instance.config('gpt');
-
-			/* istanbul ignore else  */
-			if (gpt && gpt.zone) {
-				gpt.zone = content.adUnit.join('/');
-			}
-		}
+		this.addToTargeting(content);
+		this.addZone(content);
 	}
 
 	return [user, content];
 };
 
-Ads.api.handleResponse = (adsApiResponses) => {
-	Ads.utils.broadcast('adsAPIComplete');
-	return handleResponse.bind(adsApiResponses[0], adsApiResponses[1]);
-};
+Ads.api.addToTargeting = addToTargeting.bind(addToTargeting);
+Ads.api.addZone = addZone.bind(addZone);
+Ads.api.handleResponse = handleResponse.bind(Ads.api);
 
 window.oAds = Ads;
 
@@ -104,8 +109,8 @@ export default {
 									const gId = targeting.user.uuid;
 
 									let userIdent = [];
-									if (typeof spId !== 'undefined') { userIdent.push({id: spId, tag: 'SporeID'}); }
-									if (typeof gId !== 'undefined') { userIdent.push({id : gId, tag : 'GUID'}); }
+									if (typeof spId !== 'undefined') { userIdent.push({ id: spId, tag: 'SporeID' }); }
+									if (typeof gId !== 'undefined') { userIdent.push({ id: gId, tag: 'GUID' }); }
 
 									if (userIdent.length > 0 && window.permutive) {
 										window.permutive.identify(userIdent);
