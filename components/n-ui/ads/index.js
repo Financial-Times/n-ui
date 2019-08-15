@@ -12,10 +12,10 @@ const broadcastAdsEvent = (message) => Ads.utils.broadcast(message);
 
 function handleResponseV2 (adsApiResponses) {
 	broadcastAdsEvent('adsAPIComplete');
-	this.data = adsApiResponses;
-
 	const user = adsApiResponses[0];
 	const content = adsApiResponses[1];
+
+	this.data = adsApiResponses;
 
 	if (user) {
 		this.instance.targeting.add({
