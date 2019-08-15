@@ -117,7 +117,6 @@ export default {
 									}
 								}
 
-								console.log('META', metaData)
 								oPermutive.setPageMetaData(metaData);
 							}
 						});
