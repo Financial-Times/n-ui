@@ -9,28 +9,27 @@ import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 
 function handleResponseV2 (adsApiResponses) {
-	const user = adsApiResponses[0] || null;
-	const content = adsApiResponses[1] || null;
-
 	this.data = adsApiResponses;
 
-	if (user) {
+	// data from Ads API User endpoint
+	if (adsApiResponses[0]) {
 		this.instance.targeting.add({
-			user,
+			user: adsApiResponses[0],
 		});
 	}
 
-	if (content) {
+	// data from Ads API Content endpoint
+	if (adsApiResponses[1]) {
 		this.instance.targeting.add({
-			content,
+			content: adsApiResponses[1],
 		});
 
-		if (this.config.usePageZone && content.adUnit) {
+		if (this.config.usePageZone && adsApiResponses[1].adUnit) {
 			const gpt = this.instance.config('gpt');
 
 			/* istanbul ignore else  */
 			if (gpt && gpt.zone) {
-				gpt.zone = content.adUnit.join('/');
+				gpt.zone = adsApiResponses[1].adUnit.join('/');
 			}
 		}
 	}
