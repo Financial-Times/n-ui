@@ -15,44 +15,49 @@ export function getOPermutiveConfig () {
 /**
  * Get meta data about the user and current page and format it for o-permutive
  *
- * The data is first fetched from the ads-api, and then passed
+ * Note: This is currently done by accessing the properties set by o-ads and krux.
+ * This should change so that the fetch to the ads-api is done first, and the data passed
  * to o-ads and o-permutive respectively.
  *
  * @param {String} appName Name of the app loading n-ui
  */
-export function getOPermutiveMetaData (appName, targetingData, contentId = null) {
+export function getOPermutiveMetaData (appName, kruxMeta, contentId = null) {
 	let pageMeta = {};
 	let userMeta = {};
 
-	const inputUserMeta = targetingData.user;
+	const kruxUserMeta = kruxMeta.user;
 
-	if (appName === 'article') {
-		const inputPageMeta = targetingData.content;
+	if(appName === 'article') {
+		const kruxPageMeta = kruxMeta.page;
 
-		if (inputPageMeta) {
-			const type = Array.isArray(inputPageMeta.genre) && inputPageMeta.genre.length > 0 ? inputPageMeta.genre[0] : null;
+		if(contentId) {
+			pageMeta.id = contentId;
+		}
+
+		if(kruxPageMeta) {
+			const type = Array.isArray(kruxPageMeta.genre) && kruxPageMeta.genre.length > 0 ? kruxPageMeta.genre[0] : null;
 
 			pageMeta = {
-				id: inputPageMeta.uuid || contentId,
+				id: contentId,
 				type: type,
-				organisations: inputPageMeta.organisation,
-				people: inputPageMeta.person,
-				categories: inputPageMeta.categories,
-				authors: inputPageMeta.person,
-				topics: inputPageMeta.topic,
-				admants: inputPageMeta.admants,
+				organisations: kruxPageMeta.organisations,
+				people: kruxPageMeta.people,
+				categories: kruxPageMeta.ca,
+				authors: kruxPageMeta.authors,
+				topics: kruxPageMeta.topics,
+				admants: kruxPageMeta.ad
 			};
 		}
 	}
 
-	if (inputUserMeta) {
+	if(kruxUserMeta) {
 		userMeta = {
-			industry: inputUserMeta.industry ? inputUserMeta.industry.code : null,
-			position: inputUserMeta.position ? inputUserMeta.position.code : null,
-			responsibility: inputUserMeta.responsibility ? inputUserMeta.responsibility.code : null,
-			gender: inputUserMeta.hui ? inputUserMeta.hui.gender : null,
-			indb2b: inputUserMeta.hui ? inputUserMeta.hui.indb2b : null,
-			subscriptionLevel: inputUserMeta.subscriptionLevel,
+			industry: kruxUserMeta.industry,
+			position: kruxUserMeta.job_position,
+			responsibility: kruxUserMeta.job_responsibility,
+			gender: kruxUserMeta.gender,
+			subscriptionLevel: kruxUserMeta.subscription_level,
+			indb2b: kruxUserMeta.indb2b
 		};
 	}
 
