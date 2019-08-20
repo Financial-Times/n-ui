@@ -8,12 +8,6 @@ import { getOPermutiveConfig, getOPermutiveMetaData } from './js/oPermutiveConfi
 import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 
-function addToTargeting (something) {
-	this.instance.targeting.add({
-		something,
-	});
-}
-
 function addZone (content) {
 	if (this.config.usePageZone && content.adUnit) {
 		const gpt = this.instance.config('gpt');
@@ -30,18 +24,17 @@ function handleResponse ([user, content]) {
 	this.data = [user, content];
 
 	if (user) {
-		addToTargeting(user);
+		this.instance.targeting.add({ user });
 	}
 
 	if (content) {
-		this.addToTargeting(content);
+		this.instance.targeting.add({ content });
 		this.addZone(content);
 	}
 
 	return [user, content];
 };
 
-Ads.api.addToTargeting = addToTargeting.bind(Ads.api);
 Ads.api.addZone = addZone.bind(Ads.api);
 Ads.api.handleResponse = handleResponse.bind(Ads.api);
 
