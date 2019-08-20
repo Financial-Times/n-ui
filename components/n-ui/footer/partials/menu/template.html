@@ -3,9 +3,9 @@
 		{{#each @root.navigation.menus.footer.items}}
 		{{#if submenu}}
 		<div class="o-footer__matrix-group o-footer__matrix-group--{{submenu.items.length}}">
-			<div class="o-footer__matrix-title" {{#ifEquals submenu.items.length 2}}aria-controls="o-footer-section-{{@index}}"{{/ifEquals}}>
+			<h2 class="o-footer__matrix-title" {{#ifEquals submenu.items.length 2}}aria-controls="o-footer-section-{{@index}}"{{/ifEquals}}>
 			{{{label}}}
-		</div>
+			</h2>
 		<div class="o-footer__matrix-content" id="o-footer-section-{{@index}}">
 			{{#each submenu.items}}
 			<div class="o-footer__matrix-column">
