@@ -81,6 +81,6 @@ describe('getDomPath', function () {
 												</section>`;
 		const path = getDomPath(document.getElementById('x1'), []);
 		expect(path).to.deep.equal(['b', 'c']);
-	expect(document.getElementById('x2').getAttribute('data-trackable')).to.equal('b');
+		expect(document.getElementById('x2').getAttribute('data-trackable')).to.equal('b');
 	});
 });
