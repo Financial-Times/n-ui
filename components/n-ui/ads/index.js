@@ -9,7 +9,10 @@ import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 
 function addZone (content) {
-	if (this.config.usePageZone && content.adUnit) {
+	if (this.config.usePageZone
+		&& content.adUnit
+		&& Array.isArray(content.adUnit)
+	) {
 		const gpt = this.instance.config('gpt');
 
 		/* istanbul ignore else  */
