@@ -1,11 +1,12 @@
 <div class="o-footer__row">
+	<h2 class="o-normalise-visually-hidden">Useful links</h2>
 	<nav class="o-footer__matrix" role="navigation" aria-label="Useful links">
 		{{#each @root.navigation.menus.footer.items}}
 		{{#if submenu}}
 		<div class="o-footer__matrix-group o-footer__matrix-group--{{submenu.items.length}}">
-			<h2 class="o-footer__matrix-title" {{#ifEquals submenu.items.length 2}}aria-controls="o-footer-section-{{@index}}"{{/ifEquals}}>
+			<h3 class="o-footer__matrix-title" {{#ifEquals submenu.items.length 2}}aria-controls="o-footer-section-{{@index}}"{{/ifEquals}}>
 			{{{label}}}
-			</h2>
+			</h3>
 			<div class="o-footer__matrix-content" id="o-footer-section-{{@index}}">
 				{{#each submenu.items}}
 				<div class="o-footer__matrix-column">
