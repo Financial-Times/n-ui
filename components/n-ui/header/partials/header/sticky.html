@@ -38,16 +38,19 @@
 							<ul class="o-header__nav-list o-header__nav-list--right" data-trackable="user-nav">
 								{{#outputBlock 'mobile-sticky-header'}}{{/outputBlock}}
 								{{#each @root.navigation.menus.navbar-right-anon.items}}
-									<li class="o-header__nav-item {{#ifEquals label 'Subscribe'}}o-header__nav-item--expanded{{/ifEquals}}">
-										<a
-											class="o-header__nav-{{#ifEquals label 'Subscribe'}}button{{else}}link{{/ifEquals}}"
-											href="{{url}}"
-											data-trackable="{{label}}"
-											tabindex="-1"
-										>
-											{{label}}
-										</a>
-									</li>
+									{{#ifEquals label 'Subscribe'}}
+										<li class="o-header__nav-item o-header__nav-item--expanded">
+											<a class="o-header__nav-button" href="{{url}}" data-trackable="{{label}}" role="button" tabindex="-1">
+												{{label}}
+											</a>
+										</li>
+									{{else}}
+										<li class="o-header__nav-item">
+											<a class="o-header__nav-link" href="{{url}}" data-trackable="{{label}}" tabindex="-1">
+												{{label}}
+											</a>
+										</li>
+									{{/ifEquals}}
 								{{/each}}
 							</ul>
 						</div>
