@@ -139,6 +139,13 @@
 			</script>
 		{{/if}}
 
+		{{!-- It's important for this to be where it is so that there's a good tab order from an a11y perspective. --}}
+		<a data-trackable="a11y-survey-screen-reader" class="n-skip-link" href="https://www.ft.com/accessibility" tabindex="1">Accessibility help</a>
+		<a data-trackable="a11y-skip-to-navigation" class="n-skip-link" href="#site-navigation" tabindex="1">Skip to navigation</a>
+		<a data-trackable="a11y-skip-to-content" class="n-skip-link" href="#site-content" tabindex="1">Skip to content</a>
+		<a data-trackable="a11y-skip-to-footer" class="n-skip-link" href="#site-footer" tabindex="1">Skip to footer</a>
+		{{#outputBlock 'messaging-slot-bottom'}}{{/outputBlock}}
+
 		<div class="n-layout">
 			<div class="n-layout__row n-layout__row--header">
 				{{#outputBlock 'above-header'}}{{/outputBlock}}
