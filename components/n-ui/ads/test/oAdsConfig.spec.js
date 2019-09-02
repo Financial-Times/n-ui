@@ -58,30 +58,6 @@ describe('Config', () => {
 			expect(config.gpt.rendering).not.to.be.ok;
 		});
 
-		it('Should set krux configuration when flag is set to false', () => {
-			const flags = { get: () => true };
-			document.cookie = 'FT_U=EID=1234_PID=abc';
-			const config = oAdsConfig(flags, 'article' );
-
-			expect(config.krux.id).to.be.ok;
-			expect(config.krux.attributes).to.be.ok;
-			expect(config.krux.attributes.user).to.be.ok;
-		});
-
-		it('Should not set krux configuration when flag is set to false', () => {
-			const flags = { get: (param) => param === 'krux' ? false : true };
-			const config = oAdsConfig(flags, 'article' );
-
-			expect(config.krux).to.be.false;
-		});
-
-		it('Should not set krux configuration when app requests no targeting', () => {
-			const flags = { get: () => true };
-			const config = oAdsConfig(flags, 'article', { noTargeting: true } );
-
-			expect(config.krux).to.be.false;
-		});
-
 		it('Should set dfp_targeting config', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article' );
@@ -95,10 +71,10 @@ describe('Config', () => {
 			sandbox.stub(utils, 'getMetaData').callsFake((param) => {
 				switch (param) {
 					case 'dfp_site':
-							return 'testDfpSite';
+						return 'testDfpSite';
 						break;
 					case 'dfp_zone':
-							return 'testDfpZone';
+						return 'testDfpZone';
 						break;
 				}
 			});
@@ -112,7 +88,7 @@ describe('Config', () => {
 
 	describe('lazyLoad viewportMargin', () => {
 
-	// tests for adOptimizeLazyLoad flag
+		// tests for adOptimizeLazyLoad flag
 		it('Should pass 0% when screen size is wider than 980px', () => {
 			sandbox.stub(utils, 'getScreenSize').callsFake(() => { return 980; });
 			const flags = { get: () => true };
@@ -160,8 +136,8 @@ describe('Config', () => {
 		it('Should pass the correct url to o-ads fetch', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article' );
-			const userUrl = 'https://ads-api.ft.com/v1/user';
-			const pageUrl = 'https://ads-api.ft.com/v1/content/';
+			const userUrl = 'https://ads-api.ft.com/v2/user';
+			const pageUrl = 'https://ads-api.ft.com/v2/content/';
 
 			expect(config.targetingApi.user).to.equal(userUrl);
 			expect(config.targetingApi.page).to.equal(pageUrl + fakeArticleUuid);
