@@ -1,4 +1,3 @@
-import krux from './js/krux';
 import Ads from 'o-ads';
 import oPermutive from 'o-permutive';
 
@@ -8,6 +7,39 @@ import oAdsConfig from './js/oAdsConfig';
 import { getOPermutiveConfig, getOPermutiveMetaData } from './js/oPermutiveConfig';
 import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
+
+function addZone (content) {
+	if (this.config.usePageZone
+		&& content.adUnit
+		&& Array.isArray(content.adUnit)
+	) {
+		const gpt = this.instance.config('gpt');
+
+		/* istanbul ignore else  */
+		if (gpt && gpt.zone) {
+			gpt.zone = content.adUnit.join('/');
+		}
+	}
+}
+
+function handleResponse ([user, content]) {
+	Ads.utils.broadcast('adsAPIComplete');
+	this.data = [user, content];
+
+	if (user) {
+		this.instance.targeting.add({ user });
+	}
+
+	if (content) {
+		this.instance.targeting.add({ content });
+		this.addZone(content);
+	}
+
+	return [user, content];
+};
+
+Ads.api.addZone = addZone.bind(Ads.api);
+Ads.api.handleResponse = handleResponse.bind(Ads.api);
 
 window.oAds = Ads;
 
@@ -65,24 +97,23 @@ export default {
 								const oPermutiveConfig = getOPermutiveConfig();
 								oPermutive.init(oPermutiveConfig);
 
-								const metaData = getOPermutiveMetaData(appInfo.name, Ads.krux.customAttributes, contentId);
-								const spId = Ads.targeting.get().device_spoor_id;
-								const gId = Ads.targeting.get().guid;
-								let userIdent = [];
-								if (typeof spId !== 'undefined') {userIdent.push({id: spId, tag: 'SporeID'});}
-								if (typeof gId !== 'undefined') {userIdent.push({id : gId, tag : 'GUID'});}
-								oPermutive.setPageMetaData(metaData);
-								if (userIdent.length > 0 && window.permutive) {
-									window.permutive.identify(userIdent);
+								const targeting = Ads.targeting.get();
+								const metaData = getOPermutiveMetaData(appInfo.name, targeting, contentId);
+
+								if (targeting.user) {
+									const spId = targeting.user.spoorId;
+									const gId = targeting.user.uuid;
+
+									let userIdent = [];
+									if (typeof spId !== 'undefined') { userIdent.push({ id: spId, tag: 'SporeID' }); }
+									if (typeof gId !== 'undefined') { userIdent.push({ id: gId, tag: 'GUID' }); }
+
+									if (userIdent.length > 0 && window.permutive) {
+										window.permutive.identify(userIdent);
+									}
 								}
-							}
-						})
-						// krux
-						.then(() => {
-							if(flags && flags.get('krux') && !adOptions.noTargeting) {
-								//Though krux is activated through nextAdsComponent, we also need to load all the additional user matching scripts
-								//that would have been loaded via their tag manager
-								krux.init(flags);
+
+								oPermutive.setPageMetaData(metaData);
 							}
 						});
 				}
