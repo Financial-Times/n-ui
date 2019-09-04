@@ -132,7 +132,7 @@ module.exports = class NavigationModelV2 {
 				NavigationModelV2.decorateSelected(menuData, currentUrl);
 			}
 
-			if( res.locals.flags.renameCompaniesToBusiness ) {
+			if( res.locals.flags && res.locals.flags.renameCompaniesToBusiness ) {
 				renameCompaniesToBusiness(menuData);
 			}
 
