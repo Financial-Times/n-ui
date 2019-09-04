@@ -18,12 +18,12 @@ const clone = obj => JSON.parse(JSON.stringify(obj));
 
 // Function to support the A/B test of renaming the "Companies" section to "Business"
 // This function can be removed once the test is complete.
-function renameCompaniesToBusiness( obj ) {
+function renameCompaniesToBusiness ( obj ) {
 	if( Array.isArray(obj) ) {
 		obj.forEach(renameCompaniesToBusiness);
 	} else if( obj ) {
 		if( obj.label ) {
-			obj.label = obj.label.replace(/Companies/, 'Business');
+			obj.label = obj.label.replace(/^Companies/, 'Business');
 		}
 		renameCompaniesToBusiness(obj.items);
 		renameCompaniesToBusiness(obj.data);
