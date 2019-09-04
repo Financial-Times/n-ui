@@ -22,6 +22,36 @@ function addZone (content) {
 	}
 }
 
+const contentIsV2 = content => !(content && content.dfp);
+
+function handleContentV2 (content) {
+	this.instance.targeting.add({ content });
+	this.addZone(content);
+}
+
+function handleContentV1 (content) {
+	if (content.dfp.targeting) {
+		this.instance.targeting.add(this.instance.utils.buildObjectFromArray(content.dfp.targeting));
+	}
+
+	if (this.config.usePageZone && content.dfp && content.dfp.adUnit) {
+		const gpt = this.instance.config('gpt');
+
+		/* istanbul ignore else  */
+		if (gpt && gpt.zone) {
+			gpt.zone = content.dfp.adUnit.join('/');
+		}
+	}
+}
+
+function handleContent (content) {
+	if (contentIsV2(content)) {
+		this.handleContentV2(content);
+	} else {
+		this.handleContentV1(content);
+	}
+}
+
 function handleResponse ([user, content]) {
 	Ads.utils.broadcast('adsAPIComplete');
 	this.data = [user, content];
@@ -31,14 +61,16 @@ function handleResponse ([user, content]) {
 	}
 
 	if (content) {
-		this.instance.targeting.add({ content });
-		this.addZone(content);
+		this.handleContent(content);
 	}
 
 	return [user, content];
 };
 
 Ads.api.addZone = addZone.bind(Ads.api);
+Ads.api.handleContentV1 = handleContentV1.bind(Ads.api);
+Ads.api.handleContentV2 = handleContentV2.bind(Ads.api);
+Ads.api.handleContent = handleContent.bind(Ads.api);
 Ads.api.handleResponse = handleResponse.bind(Ads.api);
 
 window.oAds = Ads;
