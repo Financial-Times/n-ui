@@ -16,6 +16,22 @@ const menuNameMap = new Map([
 
 const clone = obj => JSON.parse(JSON.stringify(obj));
 
+// Function to support the A/B test of renaming the "Companies" section to "Business"
+// This function can be removed once the test is complete.
+function renameCompaniesToBusiness( obj ) {
+	if( Array.isArray(obj) ) {
+		obj.forEach(renameCompaniesToBusiness);
+	} else if( obj ) {
+		if( obj.label ) {
+			obj.label = obj.label.replace(/Companies/, 'Business');
+		}
+		renameCompaniesToBusiness(obj.items);
+		renameCompaniesToBusiness(obj.data);
+		renameCompaniesToBusiness(obj.submenu);
+		renameCompaniesToBusiness(obj.meganav);
+	}
+}
+
 module.exports = class NavigationModelV2 {
 
 	constructor (options){
@@ -114,6 +130,10 @@ module.exports = class NavigationModelV2 {
 
 			if(menuData && menuData !== 'footer'){
 				NavigationModelV2.decorateSelected(menuData, currentUrl);
+			}
+
+			if( res.locals.flags && res.locals.flags.renameCompaniesToBusiness ) {
+				renameCompaniesToBusiness(menuData);
 			}
 
 			res.locals.navigation.menus[menuName] = menuData;
