@@ -153,7 +153,9 @@ module.exports = class NavigationModelV2 {
 				.then(data => {
 					// We need to add the appropriate labels to this when rendered, so mark it as selected.
 					const currentItem = { ...data.item, selected: true };
-
+					if( res.locals.flags && res.locals.flags.renameCompaniesToBusiness ) {
+						renameCompaniesToBusiness(currentItem);
+					}
 					res.locals.navigation.showSubNav = true;
 					res.locals.navigation.hierarchy = data;
 					res.locals.navigation.breadcrumb = data.ancestors.concat(currentItem);
