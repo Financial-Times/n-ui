@@ -46,12 +46,12 @@ module.exports = function (flags) {
 	};
 
 	if (flags && (flags.get('floodlight') && spoorId)) {
-		if (isSignUpForm) {
-			gtagEvent({ sendTo: 'DC-9073629/ftsig0/ftmem0+standard', conversionLabel: 'LbQoCMCdwpgBEJvYgv4C' });
-		} else if (isTrialConfirmation) {
+		if (isTrialConfirmation) {
 			gtagEvent({ sendTo: 'DC-9073629/ftcon00/fttri0+standard', conversionLabel: 'PgrhCNn-uJgBEJvYgv4C' });
 		} else if (isSubscriptionConfirmation) {
 			gtagEvent({ sendTo: 'DC-9073629/ftcon0/ftsub0+standard', conversionLabel: 'ACJ0COO0rpgBEJvYgv4C' });
+		} else if (isSignUpForm) {
+			gtagEvent({ sendTo: 'DC-9073629/ftsig0/ftmem0+standard', conversionLabel: 'LbQoCMCdwpgBEJvYgv4C' });
 		} else if (isBarrier) {
 			gtagEvent({ sendTo: 'DC-9073629/ftbar0/ftlan0+standard', conversionLabel: 'I9pgCMe2rpgBEJvYgv4C' });
 			// Note: move this call into the `gtagEvent` call when removing the old code.
