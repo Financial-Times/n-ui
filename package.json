@@ -55,7 +55,7 @@
     "proxyquire": "^2.0.1",
     "sinon": "^6.0.1",
     "sinon-chai": "^3.2.0",
-    "snyk": "1.230.4",
+    "snyk": "^1.168.0",
     "supertest": "^3.1.0"
   },
   "dependencies": {
