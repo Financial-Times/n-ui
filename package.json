@@ -59,7 +59,7 @@
     "supertest": "^3.1.0"
   },
   "dependencies": {
-    "@financial-times/n-express": "^19.21.3",
+    "@financial-times/n-express": "^19.22.1",
     "@financial-times/n-feedback": "^4.6.2",
     "@financial-times/n-handlebars": "^1.21.0",
     "@financial-times/next-json-ld": "^0.4.0",
