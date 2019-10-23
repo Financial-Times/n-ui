@@ -36,6 +36,14 @@
 						<a class="o-header__nav-button" href="{{url}}" role="button" data-trackable="{{label}}">{{label}}</a>
 					</li>
 					{{/with}}
+				{{else}}
+					{{#unless @root.flags.accountNavOnMyft}}
+						{{#each @root.navigation.menus.navbar-right.items}}
+							<li class="o-header__nav-item">
+								<a class="o-header__nav-link" href="{{url}}" data-trackable="{{label}}">{{label}}</a>
+							</li>
+						{{/each}}
+					{{/unless}}
 				{{/if}}
 			</ul>
 		{{/unlessEquals}}
