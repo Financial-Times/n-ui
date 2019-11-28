@@ -1,3 +1,5 @@
+$system-code: 'n-ui' !default;
+
 // horrible hack to cope with lack of silent mode in n-ui-foundations
 $n-ui-foundations-applied: true;
 @import 'n-ui-foundations/main';
