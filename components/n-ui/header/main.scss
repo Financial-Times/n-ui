@@ -3,7 +3,7 @@
 
 @include nUiStylesheetStart('head-n-ui-core');
 
-	@include oHeader(('search', 'nav', 'anon', 'megamenu', 'simple'));
+	@include oHeader(('top', 'search', 'nav', 'anon', 'megamenu', 'simple'));
 	// force display of search row
 	// <https://github.com/Financial-Times/o-header/blob/2ebf2cbe6b7508a03e0989ff57f1029e12c0506c/src/scss/rows/_search.scss#L13-L15>
 	.core [data-o-header-search] {
@@ -14,9 +14,10 @@
 	.o-header__top-logo.o-header__top-logo--inlined {
 		background-image: none;
 
+		// TODO: clean up
 		// tinted
 		* {
-			fill: getColor('black-80');
+			fill: oColorsByName('black-80');
 		}
 	}
 
@@ -41,6 +42,7 @@
 				width: 52px;
 			}
 
+			// TODO: clean up
 			svg {
 				width: 35px;
 				height: 40px;
@@ -57,7 +59,7 @@
 
 		// tinted
 		* {
-			fill: getColor('black-80'); // tint for the inlined SVG
+			fill: oColorsByName('black-80'); // tint for the inlined SVG
 		}
 	}
 
@@ -77,13 +79,12 @@
 		top: 1em;
 		left: -9999px;
 		padding: 0.5em 1em;
-		background: getColor('velvet');
-		color: getColor('white');
+		background: oColorsByName('velvet');
+		color: oColorsByName('white');
 
 		&:focus {
-			@include oVisualEffectsShadowsElevation('high');
 			left: 0;
-			color: getColor('white');
+			color: oColorsByName('white');
 		}
 	}
 
@@ -97,9 +98,10 @@
 
 @include nUiStylesheetEnd('head-n-ui-core');
 
-@include oHeaderDrawer;
-@include oHeaderSticky;
+@include oHeader(('drawer', 'sticky'));
+
 @include nTopicSearch;
+
 // fix up z-indexes
 .o-header__drawer {
 	@include nUiZIndexFor('drawer');
@@ -122,15 +124,14 @@
 }
 
 .o-header__drawer-current-edition {
-	// not in o-colors! Blame Ollie
-	color: #66605a;
+	color: oColorsByName('black-60');
 	margin: 0.5em 0;
 }
 
 .o-header__drawer-homepage {
-	border-top: 2px solid getColor('black-10');
+	border-top: 2px solid oColorsByName('black-10');
 }
 
 .o-header__drawer-search {
-	border-top: 2px solid getColor('black-10');
+	border-top: 2px solid oColorsByName('black-10');
 }
