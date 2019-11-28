@@ -13,26 +13,26 @@
   ],
   "main": "browser/js/main.js",
   "dependencies": {
-    "ftdomdelegate": "^3.0.0",
-    "n-counter-ad-blocking": "^3.1.7",
-    "n-image": "^5.1.2",
+    "ftdomdelegate": "^4.0.0",
+    "n-counter-ad-blocking": "^4.0.0-beta.1",
+    "n-image": "^6.0.0",
     "n-service-worker": "^2.0.0",
-    "n-sliding-popup": "^2.0.0",
-    "n-syndication": "3.20.1",
-    "n-topic-search": "^1.0.3",
-    "n-ui-foundations": "^3.0.6",
+    "n-sliding-popup": "^3.0.0",
+    "n-syndication": "^4.0.0",
+    "n-topic-search": "^2.0.0",
+    "n-ui-foundations": "^4.0.0-beta.2",
     "next-session-client": "^2.3.4",
-    "o-ads": "^12.12.0",
+    "o-ads": "^14.0.0",
     "o-permutive": "^1.0.7",
-    "o-errors": "^3.6.1",
-    "o-expander": "^4.4.4",
-    "o-footer": "^6.0.10",
-    "o-header": "^7.8.10",
-    "o-tracking": "^1.4.1",
-    "logo-images": "^1.6.0",
-    "n-feedback": "^4.1.1"
+    "o-errors": "^4.0.2",
+    "o-expander": "^5.0.0",
+    "o-footer": "^7.0.0",
+    "o-header": "^8.0.0",
+    "o-tracking": "^2.0.2",
+    "logo-images": "^1.10.0",
+    "n-feedback": "^5.0.0"
   },
   "resolutions": {
-    "ftdomdelegate": "^3.0.0"
+    "ftdomdelegate": "^4.0.0"
   }
 }
