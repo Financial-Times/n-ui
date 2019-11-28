@@ -3,33 +3,21 @@
 		<div class="o-header__top-wrapper">
 			{{#unlessEquals nUi.header.variant 'logo-only'}}
 				<div class="o-header__top-column o-header__top-column--left">
-					<a href="#o-header-drawer" class="o-header__top-link o-header__top-link--menu {{#ifEqualsSome @root.flags.perfJanky "calm" "calm-middle"}}o-header__top-link--inlined{{/ifEqualsSome}}" aria-controls="o-header-drawer" title="Open drawer menu" data-trackable="drawer-toggle">
-						{{#ifEqualsSome @root.flags.perfJanky "calm" "calm-middle"}}
-							{{#inline file='fticons/svg/hamburger.svg'}}{{/inline}}
-						{{/ifEqualsSome}}
+					<a href="#o-header-drawer" class="o-header__top-link o-header__top-link--menu" aria-controls="o-header-drawer" title="Open drawer menu" data-trackable="drawer-toggle">
 						<span class="o-header__top-link-label">Open drawer menu</span>
 					</a>
-					<a href="#o-header-search-primary" class="o-header__top-link o-header__top-link--search {{#if @root.flags.perfJanky}}o-header__top-link--inlined{{/if}}" aria-controls="o-header-search-primary" title="Open search bar" data-trackable="search-toggle">
-						{{#ifEqualsSome @root.flags.perfJanky "calm" "calm-middle"}}
-							{{#inline file='fticons/svg/search.svg'}}{{/inline}}
-						{{/ifEqualsSome}}
+					<a href="#o-header-search-primary" class="o-header__top-link o-header__top-link--search" aria-controls="o-header-search-primary" title="Open search bar" data-trackable="search-toggle">
 						<span class="o-header__top-link-label">Open search bar</span>
 					</a>
 				</div>
 			{{/unlessEquals}}
 			<div class="o-header__top-column o-header__top-column--center">
 				{{#if @root.flags.hideOutboundLinks}}
-				<div class="o-header__top-logo {{#ifEqualsSome @root.flags.perfJanky "calm" "calm-middle"}}o-header__top-logo--inlined{{/ifEqualsSome}}">
-					{{#ifEqualsSome @root.flags.perfJanky "calm" "calm-middle"}}
-						{{#inline file='logo-images/src/brand-ft-masthead.svg'}}{{/inline}}
-					{{/ifEqualsSome}}
+				<div class="o-header__top-logo">
 					<span class="o-header__visually-hidden">Financial Times</span>
 				</div>
 				{{else}}
-				<a class="o-header__top-logo {{#ifEqualsSome @root.flags.perfJanky "calm" "calm-middle"}}o-header__top-logo--inlined{{/ifEqualsSome}}" data-trackable="logo" href="/" title="Go to Financial Times homepage">
-					{{#ifEqualsSome @root.flags.perfJanky "calm" "calm-middle"}}
-						{{#inline file='logo-images/src/brand-ft-masthead.svg'}}{{/inline}}
-					{{/ifEqualsSome}}
+				<a class="o-header__top-logo" data-trackable="logo" href="/" title="Go to Financial Times homepage">
 					<span class="o-header__visually-hidden">Financial Times</span>
 				</a>
 				{{/if}}
@@ -37,10 +25,7 @@
 			{{#unlessEquals nUi.header.variant 'logo-only'}}
 				<div class="o-header__top-column o-header__top-column--right">
 					<span class="o-header__top-link--myft__container">
-						<a class="o-header__top-link o-header__top-link--myft {{#ifEqualsSome @root.flags.perfJanky "calm" "calm-middle"}}o-header__top-link--inlined{{/ifEqualsSome}}" href="/myft" data-trackable="my-ft" data-tour-stage="myFt" aria-label="My F T">
-							{{#ifEqualsSome @root.flags.perfJanky "calm" "calm-middle"}}
-								{{#inline file='logo-images/src/brand-myft.svg'}}{{/inline}}
-							{{/ifEqualsSome}}
+						<a class="o-header__top-link o-header__top-link--myft" href="/myft" data-trackable="my-ft" data-tour-stage="myFt" aria-label="My F T">
 							<span class="o-header__visually-hidden">myFT</span>
 						</a>
 					</span>
