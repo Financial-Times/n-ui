@@ -1,4 +1,4 @@
-const oTracking = require('o-tracking');
+const oTracking = require('o-tracking').default;
 const Timing = require('./events/navigation-timing');
 const Copy = require('./events/copy');
 const Attention = require('./events/page-attention');
