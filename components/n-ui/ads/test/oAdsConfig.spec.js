@@ -58,30 +58,6 @@ describe('Config', () => {
 			expect(config.gpt.rendering).not.to.be.ok;
 		});
 
-		it('Should set krux configuration when flag is set to false', () => {
-			const flags = { get: () => true };
-			document.cookie = 'FT_U=EID=1234_PID=abc';
-			const config = oAdsConfig(flags, 'article' );
-
-			expect(config.krux.id).to.be.ok;
-			expect(config.krux.attributes).to.be.ok;
-			expect(config.krux.attributes.user).to.be.ok;
-		});
-
-		it('Should not set krux configuration when flag is set to false', () => {
-			const flags = { get: (param) => param === 'krux' ? false : true };
-			const config = oAdsConfig(flags, 'article' );
-
-			expect(config.krux).to.be.false;
-		});
-
-		it('Should not set krux configuration when app requests no targeting', () => {
-			const flags = { get: () => true };
-			const config = oAdsConfig(flags, 'article', { noTargeting: true } );
-
-			expect(config.krux).to.be.false;
-		});
-
 		it('Should set dfp_targeting config', () => {
 			const flags = { get: () => true };
 			const config = oAdsConfig(flags, 'article' );
