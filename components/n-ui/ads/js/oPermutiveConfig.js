@@ -21,45 +21,45 @@ export function getOPermutiveConfig () {
  *
  * @param {String} appName Name of the app loading n-ui
  */
-export function getOPermutiveMetaData (appName, kruxMeta, contentId = null) {
+export function getOPermutiveMetaData (appName, permMeta, contentId = null) {
 	let pageMeta = {};
 	let userMeta = {};
 
-	const kruxUserMeta = kruxMeta.user;
+	const permUserMeta = permMeta.user;
 
 	if(appName === 'article') {
-		const kruxPageMeta = kruxMeta.page;
+		const permPageMeta = permMeta.page;
 
 		if(contentId) {
 			pageMeta.id = contentId;
 		}
-
-		if(kruxPageMeta) {
-			const type = Array.isArray(kruxPageMeta.genre) && kruxPageMeta.genre.length > 0 ? kruxPageMeta.genre[0] : null;
-
-			pageMeta = {
-				id: contentId,
-				type: type,
-				organisations: kruxPageMeta.organisations,
-				people: kruxPageMeta.people,
-				categories: kruxPageMeta.ca,
-				authors: kruxPageMeta.authors,
-				topics: kruxPageMeta.topics,
-				admants: kruxPageMeta.ad
+		
+			if(permPageMeta) {
+				const type = Array.isArray(permPageMeta.genre) && permPageMeta.genre.length > 0 ? permPageMeta.genre[0] : null;
+	
+				pageMeta = {
+					id: contentId,
+					type: type,
+					organisations: permPageMeta.organisations,
+					people: permPageMeta.people,
+					categories: permPageMeta.ca,
+					authors: permPageMeta.authors,
+					topics: permPageMeta.topics,
+					admants: permPageMeta.ad
+				};
+			}
+		}
+	
+		if(permUserMeta) {
+			userMeta = {
+				industry: permUserMet.industry,
+				position: permUserMet.job_position,
+				responsibility: permUserMet.job_responsibility,
+				gender: permUserMet.gender,
+				subscriptionLevel: permUserMet.subscription_level,
+				indb2b: permUserMet.indb2b
 			};
 		}
-	}
-
-	if(kruxUserMeta) {
-		userMeta = {
-			industry: kruxUserMeta.industry,
-			position: kruxUserMeta.job_position,
-			responsibility: kruxUserMeta.job_responsibility,
-			gender: kruxUserMeta.gender,
-			subscriptionLevel: kruxUserMeta.subscription_level,
-			indb2b: kruxUserMeta.indb2b
-		};
-	}
 
 
 	return {

@@ -4,7 +4,7 @@ import oPermutive from 'o-permutive';
 //TODO move to central shared utils
 import utils from './js/utils';
 import oAdsConfig from './js/oAdsConfig';
-import { getOPermutiveConfig, /*getOPermutiveMetaData*/ } from './js/oPermutiveConfig';
+import { getOPermutiveConfig, getOPermutiveMetaData } from './js/oPermutiveConfig';
 import { setupAdsMetrics } from './js/ads-metrics';
 import nCounterAdBlocking from 'n-counter-ad-blocking';
 
@@ -57,14 +57,14 @@ export default {
 						// o-permutive
 						.then(() => {
 							if (flags && flags.get('AdsPermutive')) {
-								// const contentId = (appInfo.name === 'article')
-								// 	? document.documentElement.getAttribute('data-content-id')
-								// 	: null;
+								const contentId = (appInfo.name === 'article')
+								? document.documentElement.getAttribute('data-content-id')
+								: null;
 
 								const oPermutiveConfig = getOPermutiveConfig();
 								oPermutive.init(oPermutiveConfig);
 
-								// const metaData = getOPermutiveMetaData(appInfo.name, Ads.krux.customAttributes, contentId);
+								const metaData = getOPermutiveMetaData(appInfo.name, Ads.config('permutive'), contentId);
 								const metaData = {};
 								const spId = Ads.targeting.get().device_spoor_id;
 								const gId = Ads.targeting.get().guid;
