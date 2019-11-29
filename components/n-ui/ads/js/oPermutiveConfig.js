@@ -33,33 +33,33 @@ export function getOPermutiveMetaData (appName, permMeta, contentId = null) {
 		if(contentId) {
 			pageMeta.id = contentId;
 		}
-		
-			if(permPageMeta) {
-				const type = Array.isArray(permPageMeta.genre) && permPageMeta.genre.length > 0 ? permPageMeta.genre[0] : null;
-	
-				pageMeta = {
-					id: contentId,
-					type: type,
-					organisations: permPageMeta.organisations,
-					people: permPageMeta.people,
-					categories: permPageMeta.ca,
-					authors: permPageMeta.authors,
-					topics: permPageMeta.topics,
-					admants: permPageMeta.ad
-				};
-			}
-		}
-	
-		if(permUserMeta) {
-			userMeta = {
-				industry: permUserMet.industry,
-				position: permUserMet.job_position,
-				responsibility: permUserMet.job_responsibility,
-				gender: permUserMet.gender,
-				subscriptionLevel: permUserMet.subscription_level,
-				indb2b: permUserMet.indb2b
+
+		if(permPageMeta) {
+			const type = Array.isArray(permPageMeta.genre) && permPageMeta.genre.length > 0 ? permPageMeta.genre[0] : null;
+
+			pageMeta = {
+				id: contentId,
+				type: type,
+				organisations: permPageMeta.organisations,
+				people: permPageMeta.people,
+				categories: permPageMeta.ca,
+				authors: permPageMeta.authors,
+				topics: permPageMeta.topics,
+				admants: permPageMeta.ad
 			};
 		}
+	}
+
+	if(permUserMeta) {
+		userMeta = {
+			industry: permUserMeta.industry,
+			position: permUserMeta.job_position,
+			responsibility: permUserMeta.job_responsibility,
+			gender: permUserMeta.gender,
+			subscriptionLevel: permUserMeta.subscription_level,
+			indb2b: permUserMeta.indb2b
+		};
+	}
 
 
 	return {

@@ -65,7 +65,6 @@ export default {
 								oPermutive.init(oPermutiveConfig);
 
 								const metaData = getOPermutiveMetaData(appInfo.name, Ads.config('permutive'), contentId);
-								const metaData = {};
 								const spId = Ads.targeting.get().device_spoor_id;
 								const gId = Ads.targeting.get().guid;
 								let userIdent = [];
