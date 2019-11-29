@@ -32,7 +32,6 @@ export function getOPermutiveMetaData (appName, permMeta, contentId = null) {
 
 		if(permPageMeta) {
 			const type = Array.isArray(permPageMeta.genre) && permPageMeta.genre.length > 0 ? permPageMeta.genre[0] : null;
-  
 			pageMeta = {
 				id: contentId,
 				type: type,
