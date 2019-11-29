@@ -58,13 +58,13 @@ export default {
 						.then(() => {
 							if (flags && flags.get('AdsPermutive')) {
 								const contentId = (appInfo.name === 'article')
-								? document.documentElement.getAttribute('data-content-id')
-								: null;
+									? document.documentElement.getAttribute('data-content-id')
+									: null;
 
 								const oPermutiveConfig = getOPermutiveConfig();
 								oPermutive.init(oPermutiveConfig);
 
-								const metaData = getOPermutiveMetaData(appInfo.name, Ads.config('permutive'), contentId);
+								const metaData = getOPermutiveMetaData(appInfo.name, Ads.config('behavioralMeta'), contentId);
 								const spId = Ads.targeting.get().device_spoor_id;
 								const gId = Ads.targeting.get().guid;
 								let userIdent = [];
