@@ -1,4 +1,3 @@
-import krux from './js/krux';
 import Ads from 'o-ads';
 import oPermutive from 'o-permutive';
 
@@ -65,7 +64,7 @@ export default {
 								const oPermutiveConfig = getOPermutiveConfig();
 								oPermutive.init(oPermutiveConfig);
 
-								const metaData = getOPermutiveMetaData(appInfo.name, Ads.krux.customAttributes, contentId);
+								const metaData = getOPermutiveMetaData(appInfo.name, Ads.config('behavioralMeta'), contentId);
 								const spId = Ads.targeting.get().device_spoor_id;
 								const gId = Ads.targeting.get().guid;
 								let userIdent = [];
@@ -75,14 +74,6 @@ export default {
 								if (userIdent.length > 0 && window.permutive) {
 									window.permutive.identify(userIdent);
 								}
-							}
-						})
-						// krux
-						.then(() => {
-							if(flags && flags.get('krux') && !adOptions.noTargeting) {
-								//Though krux is activated through nextAdsComponent, we also need to load all the additional user matching scripts
-								//that would have been loaded via their tag manager
-								krux.init(flags);
 							}
 						});
 				}

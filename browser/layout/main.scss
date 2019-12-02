@@ -8,7 +8,8 @@
 }
 
 html {
-	@include oColorsFor(page);
+	background: oColorsByUsecase('page', 'background');
+	color: oColorsByUsecase('body', 'text');
 }
 
 .enhanced {

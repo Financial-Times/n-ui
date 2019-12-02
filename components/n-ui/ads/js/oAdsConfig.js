@@ -23,16 +23,6 @@ export default function (flags, appName, adOptions) {
 	// TO-DO: Check if we can get rid of this 'extend' and pass an object literal
 	let targeting = extend(targetingOptions);
 
-	const kruxConfig = (flags.get('krux')) && !adOptions.noTargeting && {
-		id: 'KHUSeE3x',
-		attributes: {
-			user: {},
-			page: {
-				rootid: getRootID()
-			}
-		}
-	};
-
 	function getContextualTargeting (appName) {
 		let uuid;
 		let url;
@@ -119,7 +109,6 @@ export default function (flags, appName, adOptions) {
 			medium: [760, 0], //reasonable width to show a leaderboard (tablet portrait)
 			small: [0, 0] //Mobile
 		},
-		krux: kruxConfig,
 		collapseEmpty: 'before',
 		dfp_targeting: utils.keyValueString(targeting),
 		lazyLoad: getLazyLoadConfig(),

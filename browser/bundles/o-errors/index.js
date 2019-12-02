@@ -1,4 +1,4 @@
-const oErrors = require('o-errors');
+const oErrors = require('o-errors').default;
 
 const filterError = require('./filter-error');
 
