@@ -25,37 +25,36 @@ export function getOPermutiveMetaData (appName, permMeta, contentId = null) {
 	let pageMeta = {};
 	let userMeta = {};
 
-	const permUserMeta = permMeta.user;
+	//const permUserMeta = permMeta && permMeta.user;
 
 	if(appName === 'article') {
-		const permPageMeta = permMeta.page;
+		//const permPageMeta = permMeta.page;
 
-		if(permPageMeta) {
-			const type = Array.isArray(permPageMeta.genre) && permPageMeta.genre.length > 0 ? permPageMeta.genre[0] : null;
+		if(permMeta && permMeta.page) {
+			const type = Array.isArray(permMeta.page.genre) && permMeta.page.genre.length > 0 ? permMeta.page.genre[0] : null;
 			pageMeta = {
 				id: contentId,
 				type: type,
-				organisations: permPageMeta.organisations,
-				people: permPageMeta.people,
-				categories: permPageMeta.ca,
-				authors: permPageMeta.authors,
-				topics: permPageMeta.topics,
-				admants: permPageMeta.ad
+				organisations: permMeta.page.organisations,
+				people: permMeta.page.people,
+				categories: permMeta.page.ca,
+				authors: permMeta.page.authors,
+				topics: permMeta.page.topics,
+				admants: permMeta.page.ad
 			};
 		}
 	}
 
-	if(permUserMeta) {
+	if(permMeta && permMeta.user) {
 		userMeta = {
-			industry: permUserMeta.industry,
-			position: permUserMeta.job_position,
-			responsibility: permUserMeta.job_responsibility,
-			gender: permUserMeta.gender,
-			subscriptionLevel: permUserMeta.subscription_level,
-			indb2b: permUserMeta.indb2b
+			industry: permMeta.user.industry,
+			position: permMeta.user.job_position,
+			responsibility: permMeta.user.job_responsibility,
+			gender: permMeta.user.gender,
+			subscriptionLevel: permMeta.user.subscription_level,
+			indb2b: permMeta.user.indb2b
 		};
 	}
-
 
 	return {
 		page: {
