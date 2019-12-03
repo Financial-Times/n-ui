@@ -4,6 +4,8 @@
 
 <a href="https://docs.google.com/forms/d/e/1FAIpQLSf5InA7UJK9yNBCzidFKI_WNkfbl6of1eRlIACRspGXUcBx8A/viewform?usp=pp_url&entry.78759464=n-ui" target="_blank"><img src="https://i.imgur.com/UmScdZ4.png" alt="Yak button" border="0" align="right" width="150" title="Report a yak shaving incident for this repository"></a>
 
+⚠️ This component is deprecated. Please use [Page Kit](https://github.com/Financial-Times/dotcom-page-kit) to build new applications. Only bug and security fixes should be committed to this repo. If you need to add new features an application powered by `n-ui` please speak to the Core UI team. ⚠️
+
 Server, build and client side bootstrapping for ft.com’s user-facing applications.
 
 **PLEASE DON’T USE THIS OUTSIDE OF USER-FACING FT.COM APPLICATIONS. If you need a good Express server with Handlebars, metrics etc available consider using [n-internal-tool](https://github.com/Financial-Times/n-internal-tool), [n-express](https://github.com/Financial-Times/n-express) or copying what you need from n-ui**
