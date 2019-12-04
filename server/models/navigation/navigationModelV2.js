@@ -16,22 +16,6 @@ const menuNameMap = new Map([
 
 const clone = obj => JSON.parse(JSON.stringify(obj));
 
-// Function to support the A/B test of renaming the "Companies" section to "Business"
-// This function can be removed once the test is complete.
-function renameCompaniesToBusiness ( obj ) {
-	if( Array.isArray(obj) ) {
-		obj.forEach(renameCompaniesToBusiness);
-	} else if( obj ) {
-		if( obj.label ) {
-			obj.label = obj.label.replace(/^Companies/, 'Business');
-		}
-		renameCompaniesToBusiness(obj.items);
-		renameCompaniesToBusiness(obj.data);
-		renameCompaniesToBusiness(obj.submenu);
-		renameCompaniesToBusiness(obj.meganav);
-	}
-}
-
 module.exports = class NavigationModelV2 {
 
 	constructor (options){
@@ -132,10 +116,6 @@ module.exports = class NavigationModelV2 {
 				NavigationModelV2.decorateSelected(menuData, currentUrl);
 			}
 
-			if( res.locals.flags && res.locals.flags.renameCompaniesToBusiness ) {
-				renameCompaniesToBusiness(menuData);
-			}
-
 			res.locals.navigation.menus[menuName] = menuData;
 		}
 
@@ -153,9 +133,6 @@ module.exports = class NavigationModelV2 {
 				.then(data => {
 					// We need to add the appropriate labels to this when rendered, so mark it as selected.
 					const currentItem = { ...data.item, selected: true };
-					if( res.locals.flags && res.locals.flags.renameCompaniesToBusiness ) {
-						renameCompaniesToBusiness(currentItem);
-					}
 					res.locals.navigation.showSubNav = true;
 					res.locals.navigation.hierarchy = data;
 					res.locals.navigation.breadcrumb = data.ancestors.concat(currentItem);
