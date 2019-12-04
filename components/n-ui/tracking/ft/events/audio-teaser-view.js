@@ -1,4 +1,4 @@
-const oTracking = require('o-tracking');
+const oTracking = require('o-tracking').default;
 
 const audioTeaserView = {
 	init: (selector) => {
