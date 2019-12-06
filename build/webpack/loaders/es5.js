@@ -57,7 +57,12 @@ function babelLoaderConfig (opts) {
 function loaderPluginsConfig (opts) {
 	const loaderPlugins = [
 		// converts `export default 'foo'` to `exports.default = 'foo'`
-		require.resolve('babel-plugin-add-module-exports'),
+		[
+			require.resolve('babel-plugin-add-module-exports'),
+			{
+				addDefaultProperty: true
+			}
+		],
 		// includes Babel's regenerator	runtime (once only)
 		// for client-side async/await support
 		[
