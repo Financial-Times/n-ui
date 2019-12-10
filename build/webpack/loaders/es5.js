@@ -79,8 +79,6 @@ function loaderPluginsConfig (opts) {
 			}
 		]
 	];
-	if(opts.karmaTest) {
-		loaderPlugins.push(require.resolve('babel-plugin-rewire'));
-	}
+
 	return loaderPlugins;
 }
