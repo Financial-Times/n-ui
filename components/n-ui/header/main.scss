@@ -45,7 +45,7 @@
 
 @include nUiStylesheetEnd('head-n-ui-core');
 
-@include oHeader(('drawer', 'sticky'));
+@include oHeader($opts: ('drawer', 'sticky'), $include-base-styles: false);
 
 @include nTopicSearch;
 
