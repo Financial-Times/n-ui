@@ -31,7 +31,7 @@
     "o-header": "^8.0.0",
     "o-tracking": "^2.0.4",
     "logo-images": "^1.10.0",
-    "n-feedback": "^5.0.0"
+    "n-feedback": "^5.0.1"
   },
   "resolutions": {
     "ftdomdelegate": "^4.0.0"
