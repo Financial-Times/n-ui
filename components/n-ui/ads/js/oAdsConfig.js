@@ -117,7 +117,7 @@ export default function (flags, appName, adOptions) {
 			page: getContextualTargeting(appName),
 			usePageZone: true
 		},
-		disableConsentCookie: flags.get('adsDisableCookieConsent'),
+		disableConsentCookie: false,
 		validateAdsTraffic: flags.get('moatAdsTraffic')
 	};
 };
