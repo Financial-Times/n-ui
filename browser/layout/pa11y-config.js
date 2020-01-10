@@ -6,7 +6,7 @@ module.exports = {
 	pa11yData: [
 		{
 			rootElement: 'html',
-			hideElements: '.n-skip-link, iframe[src*=doubleclick]',
+			hideElements: '.n-skip-link',
 			page: {
 				headers: {
 					'FT-Flags': 'ads:off,javascript:off,enableGTM:off'
@@ -15,7 +15,7 @@ module.exports = {
 		},
 		{
 			rootElement: 'html',
-			hideElements: '.n-skip-link, iframe[src*=doubleclick]',
+			hideElements: '.n-skip-link',
 			page: {
 				headers: {
 					'FT-Flags': 'ads:off,javascript:on,enableGTM:off'
