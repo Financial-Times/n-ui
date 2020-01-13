@@ -58,8 +58,7 @@ describe('Main', () => {
 
 	it('Should setup ads monitoring functionality', () => {
 		const flags = {
-			get: () => true,
-			adsDisableMetricsSampling: true
+			get: () => true
 		};
 		const setupMetricsStub = sandbox.stub(AdsMetrics, 'setupAdsMetrics');
 
