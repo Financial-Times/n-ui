@@ -13,7 +13,7 @@ window.oAds = Ads;
 function initOAds (flags, appName, adOptions) {
 	const initObj = oAdsConfig(flags, appName, adOptions);
 
-	setupAdsMetrics(flags && flags.adsDisableMetricsSampling);
+	setupAdsMetrics();
 
 	utils.log('dfp_targeting', initObj.dfp_targeting);
 
