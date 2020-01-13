@@ -9,7 +9,7 @@ module.exports = {
 			hideElements: '.n-skip-link',
 			page: {
 				headers: {
-					'FT-Flags': 'ads:off,javascript:off'
+					'FT-Flags': 'ads:off,javascript:off,enableGTM:off'
 				}
 			}
 		},
@@ -18,7 +18,7 @@ module.exports = {
 			hideElements: '.n-skip-link',
 			page: {
 				headers: {
-					'FT-Flags': 'ads:off,javascript:on'
+					'FT-Flags': 'ads:off,javascript:on,enableGTM:off'
 				}
 			}
 		}
