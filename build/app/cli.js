@@ -41,15 +41,15 @@ const aboutJson = () => {
 	appPackageJson = require(path.join(process.cwd(), '/package.json'));
 
 	return getAppVersion().then(version => {
-			return {
-				description: appPackageJson.name,
-				support: 'next.team@ft.com',
-				supportStatus: 'active',
-				appVersion: version,
-				buildCompletionTime: new Date().toISOString(),
-				nUiVersion
-			};
-		})
+		return {
+			description: appPackageJson.name,
+			support: 'next.team@ft.com',
+			supportStatus: 'active',
+			appVersion: version,
+			buildCompletionTime: new Date().toISOString(),
+			nUiVersion
+		};
+	})
 		.then(about => fs.writeFileSync(path.join(process.cwd(), '/public/__about.json'), JSON.stringify(about, null, 2)));
 };
 

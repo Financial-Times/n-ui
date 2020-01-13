@@ -26,14 +26,14 @@ describe('built asset expectations', () => {
 	it('should fail to start if there is a missing asset', () => {
 		createGitignore('/public/main.js', '/public/main.css');
 		return shellpromise(`rm -rf ${appPath}/public/main.js`, { verbose: true })
-		.then(() => {
-			return appStart()
-				.then(() => {
-					throw new Error('app should not have successfully started');
-				}, err => {
-					expect(err.toString()).to.contain('main.js');
-				});
-		});
+			.then(() => {
+				return appStart()
+					.then(() => {
+						throw new Error('app should not have successfully started');
+					}, err => {
+						expect(err.toString()).to.contain('main.js');
+					});
+			});
 
 	});
 

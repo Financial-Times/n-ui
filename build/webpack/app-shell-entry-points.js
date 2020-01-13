@@ -4,8 +4,8 @@
 */
 
 const nUiPath = require(`${process.cwd()}/bower.json`).name === 'n-ui'
-		? './'
-		: './bower_components/n-ui/';
+	? './'
+	: './bower_components/n-ui/';
 
 module.exports = {
 	entry: {

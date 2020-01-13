@@ -9,12 +9,12 @@ const expectedBuiltFiles = require('./expected-built-files');
 
 function purgeOnce (path, message) {
 	return fetch(path, {
-			method: 'PURGE',
-			headers: {
-				'Fastly-Soft-Purge': 1,
-				'Fastly-Key': process.env.FASTLY_API_KEY
-			}
-		})
+		method: 'PURGE',
+		headers: {
+			'Fastly-Soft-Purge': 1,
+			'Fastly-Key': process.env.FASTLY_API_KEY
+		}
+	})
 		.then(res => {
 			if(!res.ok) {
 				throw new Error(`failed to purge ${path}: status ${res.status}`);
