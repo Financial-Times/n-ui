@@ -92,7 +92,7 @@ app.listen(5005)
 		else if (process.env.CIRCLE_BUILD_NUM) {
 			fetch('http://localhost:5005/', {
 				headers: {
-					'FT-Flags': 'ads:off;enableGTM:off'
+					'FT-Flags': 'ads:off'
 				}
 			})
 				.then(res => res.text())
