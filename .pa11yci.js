@@ -2,7 +2,7 @@ const config = {
 	defaults: {
 		timeout: 10000,
 		headers: {
-			Cookie: 'next-flags=ads:off,sourcepoint:off;secure=true;enableGTM:off'
+			Cookie: 'next-flags=ads:off,sourcepoint:off,secure=true,enableGTM:off'
 		}
 	},
 	urls: [
