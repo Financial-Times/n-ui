@@ -85,10 +85,26 @@ export default function (flags, appName, adOptions) {
 		return viewportMargin;
 	}
 
+	function getSite () {
+
+		let site = 'ft.com';
+
+		if (sandbox.isActive()) {
+			site = 'sandbox.next.ft';
+		}
+
+		// Setting up an ad unit that doesn't contain the moat wrapper to gauge its impact
+		if (location.hash.indexOf('moatwrappertest') > -1) {
+			site = 'test.5887.moatperformance';
+		}
+
+		return site;
+	}
+
 	return {
 		gpt: {
 			network: '5887',
-			site: sandbox.isActive() ? 'sandbox.next.ft' :'ft.com',
+			site: getSite(),
 			zone: getZone(),
 			rendering: getGptRenderingMode()
 		},
