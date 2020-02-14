@@ -1,7 +1,8 @@
 # Next n-ui
 
 Server, build and client side bootstrapping for ft.com’s user-facing applications. Most of the user-facing apps on ft.com currently rely on n-ui, it is a critical part of our infrastructure.
-_NOTE_: n-ui has been now been replaced with [Page Kit](https://biz-ops.in.ft.com/Repository/github%3AFinancial-Times%2Fdotcom-page-kit) in some ft.com applications._
+
+_NOTE_: n-ui has been now been replaced with [Page Kit](https://biz-ops.in.ft.com/Repository/github%3AFinancial-Times%2Fdotcom-page-kit) in ft.com applications._
 
 
 ## Primary URL
@@ -14,7 +15,7 @@ Bronze
 
 ## Lifecycle Stage
 
-Production
+Deprecated
 
 ## Delivered By
 
