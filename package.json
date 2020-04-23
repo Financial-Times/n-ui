@@ -63,7 +63,7 @@
     "@financial-times/n-feedback": "^5.0.1",
     "@financial-times/n-handlebars": "^1.21.0",
     "@financial-times/next-json-ld": "^0.4.0",
-    "autoprefixer": "8.6.4",
+    "autoprefixer": "9.7.4",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-add-module-exports": "^1.0.2",
